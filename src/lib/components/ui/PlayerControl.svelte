@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Play from 'lucide-svelte/icons/play';
 	import Square from 'lucide-svelte/icons/square';
-	import { formatComposerName, formatLifespan } from '$lib/utils';
+	import { formatComposerName, formatLifespan, formatYearRange } from '$lib/utils';
 	import { deezerPlayer } from '$lib/services';
 	import type { Track } from '$lib/types';
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';
@@ -37,6 +37,14 @@
 
 	let isHoldingReveal = $state(false);
 	let holdTimer: number | null = null;
+	let isDismissing = $state(false); // Track dismiss animation
+
+	// Reset dismiss animation when reveal state changes
+	$effect(() => {
+		if (!isRevealed) {
+			isDismissing = false;
+		}
+	});
 
 	const composerName = $derived(track ? formatComposerName(track.composer.name) : '');
 	const lifespan = $derived(
@@ -67,11 +75,7 @@
 	const displayYear = $derived.by(() => {
 		const { begin_year, end_year } = track?.work ?? {};
 
-		if (!begin_year && !end_year) return '';
-		if (!end_year || begin_year === end_year) return String(begin_year ?? end_year);
-		if (!begin_year) return String(end_year);
-
-		return `${begin_year}–${end_year}`;
+		return formatYearRange(begin_year, end_year);
 	});
 
 	function handleClick() {
@@ -112,7 +116,7 @@
 
 	// Calculate circular progress path
 	const progressPath = $derived.by(() => {
-		const buttonSize = 140; // Button diameter
+		const buttonSize = 156; // Match wheel center (78 radius * 2)
 		const ringStrokeWidth = 8; // Thicker ring
 		const ringGap = 8; // Gap between button and ring
 		const ringRadius = buttonSize / 2 + ringGap + ringStrokeWidth / 2;
@@ -130,6 +134,16 @@
 			strokeWidth: ringStrokeWidth
 		};
 	});
+
+	function handleNext() {
+		// Trigger dismiss animation
+		isDismissing = true;
+
+		// Wait for animation to complete before calling onNext
+		setTimeout(() => {
+			onNext();
+		}, 300); // Match animation duration
+	}
 </script>
 
 <div
@@ -140,7 +154,7 @@
 >
 	{#if isRevealed && track}
 		<!-- Revealed state: enlarged rounded square with track details -->
-		<div class="reveal-card">
+		<div class="reveal-card" class:dismissing={isDismissing}>
 			<div class="reveal-content">
 				<!-- Composer -->
 				<div class="info-section">
@@ -150,26 +164,24 @@
 					<p class="text-center text-base text-gray-400">({lifespan})</p>
 				</div>
 
-				<!-- Year (prominent) -->
-				<div class="year-section">
-					<p
-						class="bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text text-center text-5xl font-bold text-transparent"
-					>
-						{displayYear}
-					</p>
-				</div>
-
-				<!-- Work -->
+				<!-- Work with Year -->
 				<div class="info-section">
 					<p class="text-center text-xl font-semibold wrap-break-word text-white">
 						{track.work.name}
+						{#if displayYear}
+							<span
+								class="ml-2 bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text font-normal text-nowrap text-transparent"
+							>
+								({displayYear})
+							</span>
+						{/if}
 					</p>
 				</div>
 
 				<!-- Part (only if different from work, with stripped prefix) -->
 				{#if shouldShowPart}
 					<div class="info-section">
-						<p class="text-center text-lg wrap-break-word text-gray-300 italic">
+						<p class="text-center text-lg wrap-break-word text-gray-300">
 							{displayPartName}
 						</p>
 					</div>
@@ -178,12 +190,12 @@
 				<!-- Artist/Performer (only if not unknown) -->
 				{#if shouldShowArtist}
 					<div class="info-section">
-						<p class="text-center text-sm text-gray-400">{artistName}</p>
+						<p class="text-center text-xs text-gray-400">{artistName}</p>
 					</div>
 				{/if}
 
 				<!-- Continue button -->
-				<button type="button" onclick={onNext} class="continue-button">
+				<button type="button" onclick={handleNext} class="continue-button">
 					{$_('game.nextRound')}
 					<ArrowRight class="h-5 w-5" />
 				</button>
@@ -239,7 +251,7 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		z-index: 20;
+		z-index: 30;
 		transition: opacity 0.3s ease-out;
 	}
 
@@ -255,8 +267,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 140px;
-		height: 140px;
+		width: 156px;
+		height: 156px;
 		border-radius: 50%;
 		border: 4px solid #22d3ee;
 		background: linear-gradient(135deg, #22d3ee 0%, #a855f7 100%);
@@ -308,7 +320,7 @@
 
 	/* Revealed state */
 	.player-control-container.revealed {
-		animation: flipAndEnlarge 0.5s ease-out forwards;
+		animation: growFromCenter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 	}
 
 	.reveal-card {
@@ -319,6 +331,11 @@
 		border: 2px solid #22d3ee;
 		background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
 		box-shadow: 0 0 60px rgba(34, 211, 238, 0.6);
+		transition: all 0.3s ease-out;
+	}
+
+	.reveal-card.dismissing {
+		animation: shrinkToCenter 0.3s ease-out forwards;
 	}
 
 	.reveal-content {
@@ -331,12 +348,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: 6px;
-	}
-
-	.year-section {
-		padding: 16px 0;
-		border-top: 1px solid rgba(34, 211, 238, 0.3);
-		border-bottom: 1px solid rgba(34, 211, 238, 0.3);
 	}
 
 	.continue-button {
@@ -365,15 +376,25 @@
 		transform: scale(0.98);
 	}
 
-	@keyframes flipAndEnlarge {
+	@keyframes growFromCenter {
 		0% {
-			transform: translate(-50%, -50%) perspective(1000px) rotateY(0deg) scale(1);
-		}
-		50% {
-			transform: translate(-50%, -50%) perspective(1000px) rotateY(90deg) scale(1.2);
+			transform: translate(-50%, -50%) scale(0.2);
+			opacity: 0;
 		}
 		100% {
-			transform: translate(-50%, -50%) perspective(1000px) rotateY(0deg) scale(1);
+			transform: translate(-50%, -50%) scale(1);
+			opacity: 1;
+		}
+	}
+
+	@keyframes shrinkToCenter {
+		0% {
+			transform: scale(1);
+			opacity: 1;
+		}
+		100% {
+			transform: scale(0.2);
+			opacity: 0;
 		}
 	}
 </style>

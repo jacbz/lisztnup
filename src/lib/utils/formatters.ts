@@ -13,20 +13,22 @@ export function formatComposerName(sortName: string): string {
 /**
  * Formats a year range for display
  */
-export function formatYearRange(beginYear: number, endYear: number): string {
-	if (beginYear === endYear) {
-		return beginYear.toString();
-	}
-	return `${beginYear}-${endYear}`;
+export function formatYearRange(beginYear?: number, endYear?: number): string {
+	if (!beginYear && !endYear) return '';
+	if (!endYear || beginYear === endYear) return String(beginYear ?? endYear);
+	if (!beginYear) return String(endYear);
+	return `${beginYear}–${endYear}`;
 }
 
 /**
  * Formats a composer's lifespan
  */
-export function formatLifespan(birthYear: number, deathYear: number): string {
-	return `${birthYear}-${deathYear}`;
+export function formatLifespan(birthYear?: number, deathYear?: number): string {
+	if (!birthYear && !deathYear) return '';
+	if (!deathYear) return `* ${birthYear}`;
+	if (!birthYear) return `† ${deathYear}`;
+	return `${birthYear}–${deathYear}`;
 }
-
 /**
  * Gets the decade from a year (e.g., 1805 -> "1800s")
  */

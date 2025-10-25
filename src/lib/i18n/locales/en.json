@@ -52,7 +52,7 @@
 	"game": {
 		"round": "Round {current} of {total}",
 		"home": "Home",
-		"spin": "Spin the wheel!",
+		"spin": "Spin",
 		"play": "Play",
 		"pause": "Pause",
 		"guessCategory": "Guess: {category}",

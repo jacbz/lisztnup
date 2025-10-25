@@ -20,6 +20,7 @@
 
 	let audioProgress = $state(0); // 0-1
 	let progressInterval: number | null = null;
+	let hasSpunOnce = $state(false); // Track if wheel has been spun in this round
 
 	onMount(async () => {
 		// Load first track
@@ -46,6 +47,7 @@
 			...state,
 			isSpinning: true
 		}));
+		hasSpunOnce = true; // Mark that wheel has been spun
 	}
 
 	function handleSpinEnd() {
@@ -105,6 +107,9 @@
 		// Stop current playback
 		deezerPlayer.pause();
 		stopProgressTracking();
+
+		// Reset hasSpunOnce for new round
+		hasSpunOnce = false;
 
 		// Move to next round
 		nextRoundFn();
@@ -203,8 +208,16 @@
 	{:else if currentTrack}
 		<!-- Main Game Area -->
 		<div class="flex h-screen items-center justify-center">
+			<!-- Dim overlay when reveal is shown -->
+			{#if $currentRound.isRevealed}
+				<div
+					class="pointer-events-none absolute inset-0 z-10 bg-black/60 transition-opacity duration-300"
+				></div>
+			{/if}
+
 			<!-- Spinning Wheel (fills screen) -->
 			<SpinningWheel
+				currentRoundIndex={$currentRound.currentTrackIndex}
 				onCategorySelected={handleCategorySelected}
 				onSpinStart={handleSpinStart}
 				onSpinEnd={handleSpinEnd}
@@ -212,7 +225,7 @@
 
 			<!-- Player Control (overlaid on wheel center) -->
 			<PlayerControl
-				visible={!$currentRound.isSpinning}
+				visible={hasSpunOnce && !$currentRound.isSpinning}
 				isPlaying={$currentRound.isPlaying}
 				playbackEnded={$currentRound.playbackEnded}
 				isRevealed={$currentRound.isRevealed}

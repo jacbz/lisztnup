@@ -7,12 +7,14 @@
 		onCategorySelected?: (category: GuessCategory) => void;
 		onSpinStart?: () => void;
 		onSpinEnd?: () => void;
+		currentRoundIndex?: number; // Used to reset state between rounds
 	}
 
 	let {
 		onCategorySelected = () => {},
 		onSpinStart = () => {},
-		onSpinEnd = () => {}
+		onSpinEnd = () => {},
+		currentRoundIndex = 0
 	}: Props = $props();
 
 	const categories: {
@@ -20,15 +22,16 @@
 		color1: string;
 		color2: string;
 		glowColor: string;
-		icon: string;
+		iconPath: string;
 	}[] = [
 		{
 			id: 'composer',
 			color1: '#06b6d4',
 			color2: '#22d3ee',
 			glowColor: 'rgba(6, 182, 212, 0.8)',
-			// Person icon
-			icon: 'M200,140 m-15,0 a15,15 0 1,0 30,0 a15,15 0 1,0 -30,0 M185,160 q0,-5 7.5,-5 q7.5,0 7.5,5 q0,0 0,10 q15,0 15,0 q0,0 0,-10 q0,-5 7.5,-5 q7.5,0 7.5,5 l0,15 q0,8 -7.5,8 l-30,0 q-7.5,0 -7.5,-8 z'
+			// Person icon (user-circle)
+			iconPath:
+				'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'
 		},
 		{
 			id: 'composition',
@@ -36,7 +39,8 @@
 			color2: '#f472b6',
 			glowColor: 'rgba(236, 72, 153, 0.8)',
 			// Music note icon
-			icon: 'M210,145 l0,35 q-5,3 -10,3 q-8,0 -8,-8 q0,-8 8,-8 q3,0 5,1 l0,-28 l-15,3 l0,30 q-5,3 -10,3 q-8,0 -8,-8 q0,-8 8,-8 q3,0 5,1 l0,-35 z'
+			iconPath:
+				'M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'
 		},
 		{
 			id: 'year',
@@ -44,15 +48,17 @@
 			color2: '#a78bfa',
 			glowColor: 'rgba(139, 92, 246, 0.8)',
 			// Calendar icon
-			icon: 'M185,145 l30,0 q3,0 3,3 l0,30 q0,3 -3,3 l-30,0 q-3,0 -3,-3 l0,-30 q0,-3 3,-3 z M190,150 l0,5 l20,0 l0,-5 z M190,158 l0,17 l20,0 l0,-17 z M193,152 l0,-5 M197,152 l0,-5 M202,152 l0,-5 M207,152 l0,-5'
+			iconPath:
+				'M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z'
 		},
 		{
 			id: 'type',
 			color1: '#f59e0b',
 			color2: '#fbbf24',
 			glowColor: 'rgba(245, 158, 11, 0.8)',
-			// Instrument (violin) icon
-			icon: 'M195,145 q3,0 5,2 l8,8 q2,2 2,5 q0,3 -2,5 l-8,8 q-2,2 -5,2 q-3,0 -5,-2 l-8,-8 q-2,-2 -2,-5 q0,-3 2,-5 l8,-8 q2,-2 5,-2 z M198,155 l-6,0 l0,3 l6,0 z M198,161 l-6,0 l0,3 l6,0 z'
+			// Piano/keyboard icon
+			iconPath:
+				'M4 2v20h16V2H4zm6 18H6v-6h4v6zm0-8H6V6h4v6zm5 8h-4v-6h4v6zm0-8h-4V6h4v6zm5 8h-4v-6h4v6zm0-8h-4V6h4v6z'
 		},
 		{
 			id: 'decade',
@@ -60,14 +66,25 @@
 			color2: '#34d399',
 			glowColor: 'rgba(16, 185, 129, 0.8)',
 			// Clock icon
-			icon: 'M200,145 m-18,0 a18,18 0 1,0 36,0 a18,18 0 1,0 -36,0 M200,150 l0,10 l8,0'
+			iconPath:
+				'M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z'
 		}
 	];
 
 	let rotation = $state(0);
 	let isSpinning = $state(false);
+	let showSpinText = $state(true); // Show SPIN text - controlled by round changes
 	let selectedCategory = $state<GuessCategory | null>(null);
 	let wheelSize = $state(600); // Default size
+	let prevRoundIndex = $state(currentRoundIndex);
+
+	// Reset showSpinText when moving to a new round (after Next Round is clicked)
+	$effect(() => {
+		if (currentRoundIndex !== prevRoundIndex) {
+			showSpinText = true;
+			prevRoundIndex = currentRoundIndex;
+		}
+	});
 
 	onMount(() => {
 		updateWheelSize();
@@ -85,6 +102,7 @@
 		if (isSpinning) return;
 
 		isSpinning = true;
+		showSpinText = false; // Hide SPIN text immediately when spinning starts
 		selectedCategory = null;
 		onSpinStart();
 
@@ -125,8 +143,14 @@
 
 <div class="wheel-wrapper" style="width: {wheelSize}px; height: {wheelSize}px;">
 	<!-- Beautiful redesigned pointer -->
-	<div class="pointer-container">
-		<svg width="60" height="60" viewBox="0 0 60 60" class="pointer-svg">
+	<div class="pointer-container" style="top: 20px;">
+		<svg
+			width="60"
+			height="60"
+			viewBox="0 0 60 60"
+			class="pointer-svg"
+			style="transform: rotate(180deg); transform-origin: top;"
+		>
 			<defs>
 				<linearGradient id="pointerGradient" x1="0%" y1="0%" x2="0%" y2="100%">
 					<stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
@@ -231,11 +255,11 @@
 				<!-- Icon for each segment -->
 				<g
 					transform="translate({200 + 135 * Math.cos((midAngle * Math.PI) / 180)}, {200 +
-						135 * Math.sin((midAngle * Math.PI) / 180)}) rotate({midAngle + 90})"
+						135 * Math.sin((midAngle * Math.PI) / 180)}) rotate({midAngle + 90}) scale(1.5)"
 				>
 					<path
-						d={category.icon}
-						transform="translate(-200, -145)"
+						d={category.iconPath}
+						transform="translate(-12, -12)"
 						fill="white"
 						opacity="0.9"
 						filter="url(#glow-{i})"
@@ -269,6 +293,13 @@
 				filter="url(#centerGlow)"
 			/>
 
+			<!-- "Spin" text when wheel hasn't been spun -->
+			{#if showSpinText}
+				<text x="200" y="210" text-anchor="middle" class="spin-text" pointer-events="none">
+					{$_('game.spin').toUpperCase()}
+				</text>
+			{/if}
+
 			<!-- Center circle gradient and glow -->
 			<defs>
 				<linearGradient id="centerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -296,7 +327,6 @@
 
 	.pointer-container {
 		position: absolute;
-		top: -30px;
 		left: 50%;
 		transform: translateX(-50%);
 		z-index: 30;
@@ -349,5 +379,17 @@
 	.segment-text-inner {
 		font-size: 16px;
 		font-weight: 700;
+	}
+
+	.spin-text {
+		fill: white;
+		font-size: 32px;
+		font-weight: 800;
+		font-family:
+			system-ui,
+			-apple-system,
+			sans-serif;
+		letter-spacing: 0.2em;
+		filter: drop-shadow(0 2px 8px rgba(34, 211, 238, 0.8));
 	}
 </style>
