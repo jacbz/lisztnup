@@ -7,6 +7,7 @@
 	import PlayerControl from '../ui/PlayerControl.svelte';
 	import RevealPopup from './RevealPopup.svelte';
 	import Home from 'lucide-svelte/icons/home';
+	import { _ } from 'svelte-i18n';
 
 	interface Props {
 		onHome?: () => void;
@@ -89,13 +90,14 @@
                  transition-colors hover:bg-gray-700/80"
 		>
 			<Home class="h-5 w-5" />
-			Home
+			{$_('game.home')}
 		</button>
 
 		<div class="text-center">
-			<p class="text-sm text-gray-400">Round</p>
-			<p class="text-2xl font-bold text-cyan-400">
-				{$currentRound.currentTrackIndex + 1} / {$tracklist.length}
+			<p class="text-sm text-gray-400">
+				{$_('game.round', {
+					values: { current: $currentRound.currentTrackIndex + 1, total: $tracklist.length }
+				})}
 			</p>
 		</div>
 
@@ -116,7 +118,7 @@
 				<h1
 					class="mb-8 bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text text-6xl font-bold text-transparent"
 				>
-					Game Over!
+					{$_('game.gameOver')}
 				</h1>
 				<p class="mb-8 text-2xl text-gray-300">
 					You completed all {$tracklist.length} rounds!
@@ -129,7 +131,7 @@
                          transition-all
                          hover:shadow-[0_0_40px_rgba(34,211,238,0.6)] active:scale-95"
 				>
-					Back to Home
+					{$_('game.home')}
 				</button>
 			</div>
 		</div>
@@ -150,9 +152,10 @@
 			<div
 				class="absolute bottom-12 left-1/2 -translate-x-1/2 rounded-2xl border-2 border-cyan-400 bg-gray-900/90 px-8 py-4 backdrop-blur-sm"
 			>
-				<p class="mb-1 text-sm font-semibold tracking-wider text-cyan-400 uppercase">Guess the:</p>
-				<p class="text-2xl font-bold text-white capitalize">
-					{$currentRound.category === 'composition' ? 'Work Name' : $currentRound.category}
+				<p class="mb-1 text-sm font-semibold tracking-wider text-cyan-400 uppercase">
+					{$_('game.guessCategory', {
+						values: { category: $_(`game.categories.${$currentRound.category}`) }
+					})}
 				</p>
 			</div>
 		{/if}

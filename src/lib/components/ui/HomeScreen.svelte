@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Settings from 'lucide-svelte/icons/settings';
 	import Play from 'lucide-svelte/icons/play';
+	import { _ } from 'svelte-i18n';
 
 	interface Props {
 		onStart?: () => void;
@@ -16,11 +17,11 @@
 		<h1
 			class="neon-title mb-16 bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text text-8xl font-bold text-transparent"
 		>
-			Liszt'n Up!
+			{$_('app.title')}
 		</h1>
 
 		<!-- Subtitle -->
-		<p class="mb-12 text-xl text-cyan-300">The Classical Music Guessing Game</p>
+		<p class="mb-12 text-xl text-cyan-300">{$_('app.subtitle')}</p>
 
 		<!-- Start Button -->
 		<button
@@ -34,7 +35,7 @@
                  transition-all duration-200 hover:shadow-[0_0_60px_rgba(34,211,238,0.8)] active:scale-95"
 		>
 			<Play class="h-8 w-8" fill="white" />
-			START
+			{$_('home.start')}
 		</button>
 
 		<!-- Settings Button -->
@@ -49,7 +50,7 @@
                  duration-200 hover:border-cyan-400 hover:bg-gray-700 active:scale-95"
 		>
 			<Settings class="h-5 w-5" />
-			Settings
+			{$_('home.settings')}
 		</button>
 	</div>
 </div>

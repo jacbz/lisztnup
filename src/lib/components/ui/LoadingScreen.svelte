@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { loadGameData, isDataLoaded } from '$lib/stores';
+	import { _ } from 'svelte-i18n';
 
 	let progress = $state(0);
 	let error = $state<string | null>(null);
@@ -37,7 +38,7 @@
 
 <div class="flex h-screen w-full items-center justify-center bg-gray-950">
 	<div class="text-center">
-		<h1 class="mb-8 animate-pulse text-6xl font-bold text-cyan-400">Liszt'n Up!</h1>
+		<h1 class="mb-8 animate-pulse text-6xl font-bold text-cyan-400">{$_('app.title')}</h1>
 
 		{#if error}
 			<div class="text-xl text-red-400">
@@ -51,7 +52,7 @@
 					style="width: {progress}%"
 				></div>
 			</div>
-			<p class="mt-4 text-sm text-cyan-300">Loading classical music database...</p>
+			<p class="mt-4 text-sm text-cyan-300">{$_('loading.progress')}</p>
 		{/if}
 	</div>
 </div>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { GuessCategory } from '$lib/types';
 	import { createEventDispatcher, onMount } from 'svelte';
+	import { _ } from 'svelte-i18n';
 
 	interface Props {
 		onCategorySelected?: (category: GuessCategory) => void;
@@ -8,12 +9,12 @@
 
 	let { onCategorySelected = () => {} }: Props = $props();
 
-	const categories: { id: GuessCategory; label: string; color: string }[] = [
-		{ id: 'composer', label: 'Composer', color: '#06b6d4' }, // cyan
-		{ id: 'decade', label: 'Decade', color: '#8b5cf6' }, // violet
-		{ id: 'year', label: 'Year', color: '#ec4899' }, // pink
-		{ id: 'composition', label: 'Work Name', color: '#f59e0b' }, // amber
-		{ id: 'type', label: 'Type', color: '#10b981' } // emerald
+	const categories: { id: GuessCategory; color: string }[] = [
+		{ id: 'composer', color: '#06b6d4' }, // cyan
+		{ id: 'decade', color: '#8b5cf6' }, // violet
+		{ id: 'year', color: '#ec4899' }, // pink
+		{ id: 'composition', color: '#f59e0b' }, // amber
+		{ id: 'type', color: '#10b981' } // emerald
 	];
 
 	let rotation = $state(0);
@@ -86,7 +87,7 @@
 						class="text-lg font-bold text-white"
 						style="transform: rotate({90 - 360 / categories.length / 2}deg);"
 					>
-						{category.label}
+						{$_(`game.categories.${category.id}`)}
 					</span>
 				</div>
 			</div>

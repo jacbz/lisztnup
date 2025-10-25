@@ -1,0 +1,78 @@
+{
+	"app": {
+		"title": "Liszt'n Up!",
+		"subtitle": "The Classical Music Guessing Game"
+	},
+	"loading": {
+		"title": "Loading",
+		"progress": "Loading music database..."
+	},
+	"home": {
+		"start": "START",
+		"settings": "Settings"
+	},
+	"settings": {
+		"title": "Settings",
+		"back": "Back",
+		"save": "Save Settings",
+		"reset": "Reset to Default",
+		"numberOfTracks": "Number of Tracks",
+		"gameMode": "Game Mode",
+		"language": "Language",
+		"presets": {
+			"default": "Default",
+			"piano": "Piano",
+			"concerto": "Concerto",
+			"chamber": "Chamber",
+			"ballet": "Ballet",
+			"opera": "Opera",
+			"custom": "Custom"
+		},
+		"presetInfo": {
+			"default": "{composers} composers, {works} works, {tracks} tracks",
+			"piano": "Piano works only",
+			"concerto": "Concertos only",
+			"chamber": "Chamber music only",
+			"ballet": "Ballet music only",
+			"opera": "Opera music only",
+			"custom": "Customize category weights below"
+		},
+		"categoryWeights": "Category Weights",
+		"categories": {
+			"vocal": "Vocal",
+			"chamber": "Chamber",
+			"orchestral": "Orchestral",
+			"piano": "Piano",
+			"concerto": "Concerto",
+			"opera": "Opera",
+			"ballet": "Ballet",
+			"unknown": "Unknown"
+		}
+	},
+	"game": {
+		"round": "Round {current} of {total}",
+		"home": "Home",
+		"spin": "Spin the wheel!",
+		"play": "Play",
+		"pause": "Pause",
+		"guessCategory": "Guess: {category}",
+		"reveal": "Reveal Answer",
+		"nextRound": "Next Round",
+		"gameOver": "Game Over!",
+		"playAgain": "Play Again",
+		"categories": {
+			"composer": "Composer",
+			"decade": "Decade",
+			"year": "Year",
+			"composition": "Composition",
+			"type": "Type"
+		}
+	},
+	"reveal": {
+		"composer": "Composer",
+		"work": "Work",
+		"part": "Part",
+		"type": "Type",
+		"years": "Years"
+	}
+}

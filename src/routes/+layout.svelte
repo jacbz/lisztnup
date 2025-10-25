@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '../app.css';
+	import '$lib/i18n'; // Initialize i18n
 	import favicon from '$lib/assets/favicon.svg';
 
 	let { children } = $props();

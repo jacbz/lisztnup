@@ -5,7 +5,10 @@
 	import { TracklistGenerator } from '$lib/services';
 	import ArrowLeft from 'lucide-svelte/icons/arrow-left';
 	import RotateCcw from 'lucide-svelte/icons/rotate-ccw';
+	import Globe from 'lucide-svelte/icons/globe';
 	import { get } from 'svelte/store';
+	import { _, locale } from 'svelte-i18n';
+	import { locales } from '$lib/i18n';
 
 	interface Props {
 		onBack?: () => void;
@@ -16,15 +19,16 @@
 
 	let localSettings = $state<GameSettings>({ ...$settingsStore });
 	let presetInfo = $state<{ composers: number; works: number; tracks: number } | null>(null);
+	let currentLocale = $state($locale || 'en');
 
-	const presets: { value: Preset; label: string }[] = [
-		{ value: 'default', label: 'Default (All Music)' },
-		{ value: 'piano', label: 'Piano Works' },
-		{ value: 'concerto', label: 'Concertos' },
-		{ value: 'chamber', label: 'Chamber Music' },
-		{ value: 'ballet', label: 'Ballet' },
-		{ value: 'opera', label: 'Opera' },
-		{ value: 'custom', label: 'Custom' }
+	const presets: { value: Preset }[] = [
+		{ value: 'default' },
+		{ value: 'piano' },
+		{ value: 'concerto' },
+		{ value: 'chamber' },
+		{ value: 'ballet' },
+		{ value: 'opera' },
+		{ value: 'custom' }
 	];
 
 	// Update preset info when preset changes
@@ -55,6 +59,14 @@
 	function handleReset() {
 		localSettings = { ...DEFAULT_SETTINGS };
 	}
+
+	function handleLocaleChange(newLocale: string) {
+		currentLocale = newLocale;
+		locale.set(newLocale);
+		if (typeof window !== 'undefined') {
+			localStorage.setItem('locale', newLocale);
+		}
+	}
 </script>
 
 <div class="min-h-screen w-full bg-gray-950 p-8 text-white">
@@ -68,13 +80,13 @@
                      transition-colors hover:bg-gray-700"
 			>
 				<ArrowLeft class="h-5 w-5" />
-				Back
+				{$_('settings.back')}
 			</button>
 
 			<h1
 				class="bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text text-4xl font-bold text-transparent"
 			>
-				Settings
+				{$_('settings.title')}
 			</h1>
 
 			<button
@@ -84,7 +96,7 @@
                      transition-colors hover:bg-gray-700"
 			>
 				<RotateCcw class="h-5 w-5" />
-				Reset
+				{$_('settings.reset')}
 			</button>
 		</div>
 
@@ -92,7 +104,7 @@
 			<!-- Number of Tracks -->
 			<div class="rounded-xl border border-gray-800 bg-gray-900 p-6">
 				<label class="mb-4 block">
-					<span class="text-lg font-semibold text-cyan-400">Number of Tracks</span>
+					<span class="text-lg font-semibold text-cyan-400">{$_('settings.numberOfTracks')}</span>
 					<div class="mt-2 flex items-center gap-4">
 						<input
 							type="range"
@@ -108,9 +120,33 @@
 				</label>
 			</div>
 
+			<!-- Language Selection - Hidden when only one language available -->
+			{#if locales.length > 1}
+				<div class="rounded-xl border border-gray-800 bg-gray-900 p-6">
+					<h2 class="mb-4 text-lg font-semibold text-cyan-400">{$_('settings.language')}</h2>
+					<div class="grid grid-cols-2 gap-3 md:grid-cols-3">
+						{#each locales as lang}
+							<button
+								type="button"
+								onclick={() => handleLocaleChange(lang.code)}
+								class="flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-semibold transition-all
+	                             {currentLocale === lang.code
+									? 'bg-linear-to-r from-cyan-500 to-purple-600 text-white shadow-[0_0_20px_rgba(34,211,238,0.4)]'
+									: 'bg-gray-800 text-gray-300 hover:bg-gray-700'}"
+							>
+								{#if currentLocale === lang.code}
+									<Globe class="h-4 w-4" />
+								{/if}
+								{lang.name}
+							</button>
+						{/each}
+					</div>
+				</div>
+			{/if}
+
 			<!-- Preset Selection -->
 			<div class="rounded-xl border border-gray-800 bg-gray-900 p-6">
-				<h2 class="mb-4 text-lg font-semibold text-cyan-400">Preset</h2>
+				<h2 class="mb-4 text-lg font-semibold text-cyan-400">{$_('settings.gameMode')}</h2>
 				<div class="grid grid-cols-2 gap-3 md:grid-cols-3">
 					{#each presets as preset}
 						<button
@@ -121,15 +157,20 @@
 								? 'bg-linear-to-r from-cyan-500 to-purple-600 text-white shadow-[0_0_20px_rgba(34,211,238,0.4)]'
 								: 'bg-gray-800 text-gray-300 hover:bg-gray-700'}"
 						>
-							{preset.label}
+							{$_(`settings.presets.${preset.value}`)}
 						</button>
 					{/each}
 				</div>
 
 				{#if presetInfo && localSettings.preset !== 'custom'}
 					<p class="mt-4 text-sm text-gray-400">
-						{presetInfo.composers} composers • {presetInfo.works} works • {presetInfo.tracks} tracks
-						available
+						{$_('settings.presetInfo.' + localSettings.preset, {
+							values: {
+								composers: presetInfo.composers,
+								works: presetInfo.works,
+								tracks: presetInfo.tracks
+							}
+						})}
 					</p>
 				{/if}
 			</div>
@@ -137,16 +178,18 @@
 			<!-- Custom Settings (only visible when preset is 'custom') -->
 			{#if localSettings.preset === 'custom'}
 				<div class="rounded-xl border border-gray-800 bg-gray-900 p-6">
-					<h2 class="mb-4 text-lg font-semibold text-purple-400">Category Weights</h2>
+					<h2 class="mb-4 text-lg font-semibold text-purple-400">
+						{$_('settings.categoryWeights')}
+					</h2>
 					<p class="mb-4 text-sm text-gray-400">
-						Adjust the weights to control how often each category appears. Set to 0 to exclude.
+						{$_('settings.presetInfo.custom')}
 					</p>
 
 					<div class="space-y-4">
 						{#each Object.entries(localSettings.categoryWeights) as [category, weight]}
 							<label class="block">
 								<div class="mb-2 flex items-center justify-between">
-									<span class="text-gray-300 capitalize">{category}</span>
+									<span class="text-gray-300">{$_(`settings.categories.${category}`)}</span>
 									<span class="font-semibold text-cyan-400">{weight}</span>
 								</div>
 								<input
@@ -172,7 +215,7 @@
                      transition-all
                      duration-200 hover:shadow-[0_0_40px_rgba(34,211,238,0.6)] active:scale-98"
 			>
-				Save Settings
+				{$_('settings.save')}
 			</button>
 		</div>
 	</div>

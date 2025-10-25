@@ -2,6 +2,7 @@
 	import type { Track } from '$lib/types';
 	import { formatComposerName, formatLifespan } from '$lib/utils';
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';
+	import { _ } from 'svelte-i18n';
 
 	interface Props {
 		track: Track;
@@ -30,7 +31,9 @@
 	>
 		<!-- Composer -->
 		<div class="mb-6">
-			<h3 class="mb-2 text-sm font-semibold tracking-wider text-cyan-400 uppercase">Composer</h3>
+			<h3 class="mb-2 text-sm font-semibold tracking-wider text-cyan-400 uppercase">
+				{$_('reveal.composer')}
+			</h3>
 			<p class="text-3xl font-bold text-white">
 				{composerName}
 			</p>
@@ -39,10 +42,12 @@
 
 		<!-- Work -->
 		<div class="mb-6">
-			<h3 class="mb-2 text-sm font-semibold tracking-wider text-purple-400 uppercase">Work</h3>
+			<h3 class="mb-2 text-sm font-semibold tracking-wider text-purple-400 uppercase">
+				{$_('reveal.work')}
+			</h3>
 			<p class="text-2xl font-semibold wrap-break-word text-white">{track.work.name}</p>
 			<p class="mt-1 text-sm text-gray-400">
-				{track.work.type.charAt(0).toUpperCase() + track.work.type.slice(1)} •
+				{$_(`settings.categories.${track.work.type}`)} •
 				{track.work.begin_year === track.work.end_year
 					? track.work.begin_year
 					: `${track.work.begin_year}-${track.work.end_year}`}
@@ -51,7 +56,9 @@
 
 		<!-- Part -->
 		<div class="mb-8">
-			<h3 class="mb-2 text-sm font-semibold tracking-wider text-pink-400 uppercase">Movement</h3>
+			<h3 class="mb-2 text-sm font-semibold tracking-wider text-pink-400 uppercase">
+				{$_('reveal.part')}
+			</h3>
 			<p class="text-xl wrap-break-word text-white">{track.part.name}</p>
 		</div>
 
@@ -64,7 +71,7 @@
                  transition-all
                  duration-200 hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-95"
 		>
-			Next Round
+			{$_('game.nextRound')}
 			<ArrowRight class="h-6 w-6" />
 		</button>
 	</div>
