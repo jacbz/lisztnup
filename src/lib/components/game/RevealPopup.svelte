@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Track } from '$lib/types';
 	import { formatComposerName, formatLifespan } from '$lib/utils';
+	import { deezerPlayer } from '$lib/services';
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';
 	import { _ } from 'svelte-i18n';
 
@@ -13,6 +14,7 @@
 
 	const composerName = $derived(formatComposerName(track.composer.name));
 	const lifespan = $derived(formatLifespan(track.composer.birth_year, track.composer.death_year));
+	const artistName = $derived(deezerPlayer.getArtistName() || 'Unknown Artist');
 </script>
 
 <div
@@ -55,11 +57,19 @@
 		</div>
 
 		<!-- Part -->
-		<div class="mb-8">
+		<div class="mb-6">
 			<h3 class="mb-2 text-sm font-semibold tracking-wider text-pink-400 uppercase">
 				{$_('reveal.part')}
 			</h3>
 			<p class="text-xl wrap-break-word text-white">{track.part.name}</p>
+		</div>
+
+		<!-- Artist/Performer -->
+		<div class="mb-8">
+			<h3 class="mb-2 text-sm font-semibold tracking-wider text-amber-400 uppercase">
+				Artist/Performer
+			</h3>
+			<p class="text-lg text-gray-300">{artistName}</p>
 		</div>
 
 		<!-- Next button -->

@@ -1,41 +1,91 @@
+interface DeezerTrackData {
+	id: number;
+	title: string;
+	title_short: string;
+	duration: number;
+	preview: string;
+	artist: {
+		id: number;
+		name: string;
+		picture: string;
+		picture_small: string;
+		picture_medium: string;
+		picture_big: string;
+		picture_xl: string;
+	};
+	album: {
+		id: number;
+		title: string;
+		cover: string;
+		cover_small: string;
+		cover_medium: string;
+		cover_big: string;
+		cover_xl: string;
+	};
+}
+
 export class DeezerPlayer {
-	private iframe: HTMLIFrameElement | null = null;
+	private audio: HTMLAudioElement | null = null;
 	private currentTrackId: number | null = null;
+	private currentTrackData: DeezerTrackData | null = null;
+	private volume: number = 1.0;
 
 	/**
-	 * Initializes the Deezer player with an iframe element
+	 * Fetches track metadata from Deezer API
 	 */
-	init(iframe: HTMLIFrameElement): void {
-		this.iframe = iframe;
+	private async fetchTrackData(deezerId: number): Promise<DeezerTrackData | null> {
+		try {
+			const response = await fetch(`https://api.deezer.com/track/${deezerId}`);
+			if (!response.ok) {
+				console.error(`DeezerPlayer: Failed to fetch track ${deezerId}`);
+				return null;
+			}
+			const data = await response.json();
+			return data;
+		} catch (error) {
+			console.error('DeezerPlayer: Error fetching track data', error);
+			return null;
+		}
 	}
 
 	/**
 	 * Loads a track by Deezer ID
 	 */
-	load(deezerId: number): void {
-		if (!this.iframe) {
-			console.warn('DeezerPlayer: iframe not initialized');
+	async load(deezerId: number): Promise<void> {
+		this.currentTrackId = deezerId;
+
+		// Fetch track metadata
+		this.currentTrackData = await this.fetchTrackData(deezerId);
+
+		if (!this.currentTrackData) {
+			console.warn('DeezerPlayer: Could not load track data');
 			return;
 		}
 
-		this.currentTrackId = deezerId;
-		this.iframe.src = `https://widget.deezer.com/widget/auto/track/${deezerId}`;
+		// Create or reset audio element
+		if (this.audio) {
+			this.audio.pause();
+			this.audio.src = '';
+		}
+
+		this.audio = new Audio(this.currentTrackData.preview);
+		this.audio.volume = this.volume;
+		this.audio.loop = true; // Loop the 30-second preview
 	}
 
 	/**
 	 * Plays the current track
 	 */
-	play(): void {
-		if (!this.iframe) {
-			console.warn('DeezerPlayer: iframe not initialized');
+	async play(): Promise<void> {
+		if (!this.audio) {
+			console.warn('DeezerPlayer: No track loaded');
 			return;
 		}
 
-		// Deezer widget auto-plays by default
-		// If we need to control playback, we'd use the Deezer widget API
-		// For now, just reload the iframe to start playing
-		if (this.currentTrackId !== null) {
-			this.iframe.src = `https://widget.deezer.com/widget/auto/track/${this.currentTrackId}`;
+		try {
+			await this.audio.play();
+		} catch (error) {
+			console.error('DeezerPlayer: Error playing track', error);
 		}
 	}
 
@@ -43,24 +93,41 @@ export class DeezerPlayer {
 	 * Pauses the current track
 	 */
 	pause(): void {
-		if (!this.iframe) {
-			console.warn('DeezerPlayer: iframe not initialized');
+		if (!this.audio) {
+			console.warn('DeezerPlayer: No track loaded');
 			return;
 		}
 
-		// To pause, we'd need to use the Deezer widget API
-		// For simplicity, we can stop playback by setting an empty src
-		// Note: This is a workaround; proper implementation would use the widget API
-		this.iframe.src = 'about:blank';
+		this.audio.pause();
 	}
 
 	/**
 	 * Seeks to a specific time in the track
 	 */
 	seek(time: number): void {
-		// Seeking requires Deezer widget API integration
-		// This is a placeholder for future implementation
-		console.log(`Seek to ${time}s (not implemented)`);
+		if (!this.audio) {
+			console.warn('DeezerPlayer: No track loaded');
+			return;
+		}
+
+		this.audio.currentTime = time;
+	}
+
+	/**
+	 * Sets the volume (0.0 to 1.0)
+	 */
+	setVolume(volume: number): void {
+		this.volume = Math.max(0, Math.min(1, volume));
+		if (this.audio) {
+			this.audio.volume = this.volume;
+		}
+	}
+
+	/**
+	 * Gets the current volume
+	 */
+	getVolume(): number {
+		return this.volume;
 	}
 
 	/**
@@ -71,26 +138,51 @@ export class DeezerPlayer {
 	}
 
 	/**
-	 * Shows or hides the iframe (for debugging)
+	 * Gets the artist name from the loaded track data
 	 */
-	setVisible(visible: boolean): void {
-		if (!this.iframe) {
-			return;
-		}
+	getArtistName(): string | null {
+		return this.currentTrackData?.artist.name || null;
+	}
 
-		if (visible) {
-			this.iframe.style.opacity = '1';
-			this.iframe.style.pointerEvents = 'auto';
-			this.iframe.style.position = 'fixed';
-			this.iframe.style.bottom = '20px';
-			this.iframe.style.right = '20px';
-			this.iframe.style.zIndex = '1000';
-		} else {
-			this.iframe.style.opacity = '0';
-			this.iframe.style.pointerEvents = 'none';
-			this.iframe.style.position = 'fixed';
-			this.iframe.style.bottom = '-1000px';
+	/**
+	 * Gets the full track data
+	 */
+	getTrackData(): DeezerTrackData | null {
+		return this.currentTrackData;
+	}
+
+	/**
+	 * Checks if audio is currently playing
+	 */
+	isPlaying(): boolean {
+		return this.audio ? !this.audio.paused : false;
+	}
+
+	/**
+	 * Gets current playback time in seconds
+	 */
+	getCurrentTime(): number {
+		return this.audio?.currentTime || 0;
+	}
+
+	/**
+	 * Gets track duration in seconds
+	 */
+	getDuration(): number {
+		return this.audio?.duration || 0;
+	}
+
+	/**
+	 * Cleanup resources
+	 */
+	destroy(): void {
+		if (this.audio) {
+			this.audio.pause();
+			this.audio.src = '';
+			this.audio = null;
 		}
+		this.currentTrackData = null;
+		this.currentTrackId = null;
 	}
 }
 

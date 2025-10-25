@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import type { GuessCategory } from '$lib/types';
 	import { gameData, tracklist, currentRound, nextRound as nextRoundFn } from '$lib/stores';
 	import { deezerPlayer } from '$lib/services';
@@ -15,23 +15,20 @@
 
 	let { onHome = () => {} }: Props = $props();
 
-	let iframeElement: HTMLIFrameElement | undefined = $state();
-	let showDebugPlayer = $state(false);
-
 	const currentTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
 
 	const isGameOver = $derived($currentRound.currentTrackIndex >= $tracklist.length);
 
-	onMount(() => {
-		// Initialize Deezer player
-		if (iframeElement) {
-			deezerPlayer.init(iframeElement);
-		}
-
+	onMount(async () => {
 		// Load first track
 		if (currentTrack) {
-			deezerPlayer.load(currentTrack.part.deezer);
+			await deezerPlayer.load(currentTrack.part.deezer);
 		}
+	});
+
+	onDestroy(() => {
+		// Cleanup player resources
+		deezerPlayer.destroy();
 	});
 
 	function handleCategorySelected(category: GuessCategory) {
@@ -41,7 +38,7 @@
 		}));
 	}
 
-	function handlePlayerClick() {
+	async function handlePlayerClick() {
 		if (!currentTrack) return;
 
 		if ($currentRound.isRevealed) {
@@ -50,7 +47,7 @@
 				deezerPlayer.pause();
 				currentRound.update((state) => ({ ...state, isPlaying: false }));
 			} else {
-				deezerPlayer.play();
+				await deezerPlayer.play();
 				currentRound.update((state) => ({ ...state, isPlaying: true }));
 			}
 		} else if ($currentRound.category) {
@@ -58,25 +55,19 @@
 			currentRound.update((state) => ({ ...state, isRevealed: true }));
 		} else {
 			// Start playing
-			deezerPlayer.play();
+			await deezerPlayer.play();
 			currentRound.update((state) => ({ ...state, isPlaying: true }));
 		}
 	}
 
-	function handleNextRound() {
+	async function handleNextRound() {
 		nextRoundFn();
 
 		// Load next track
 		const nextTrack = $tracklist[$currentRound.currentTrackIndex];
 		if (nextTrack) {
-			deezerPlayer.load(nextTrack.part.deezer);
-			deezerPlayer.setVisible(showDebugPlayer);
+			await deezerPlayer.load(nextTrack.part.deezer);
 		}
-	}
-
-	function toggleDebugPlayer() {
-		showDebugPlayer = !showDebugPlayer;
-		deezerPlayer.setVisible(showDebugPlayer);
 	}
 </script>
 
@@ -101,14 +92,8 @@
 			</p>
 		</div>
 
-		<button
-			type="button"
-			onclick={toggleDebugPlayer}
-			class="rounded-lg bg-gray-800/80 px-4 py-2 text-sm text-gray-400 backdrop-blur-sm
-                 transition-colors hover:bg-gray-700/80"
-		>
-			{showDebugPlayer ? 'Hide' : 'Show'} Player
-		</button>
+		<!-- Spacer for symmetry -->
+		<div class="w-24"></div>
 	</div>
 
 	<!-- Game Over Screen -->
@@ -165,16 +150,4 @@
 			<RevealPopup track={currentTrack} onNext={handleNextRound} />
 		{/if}
 	{/if}
-
-	<!-- Hidden Deezer iframe -->
-	<iframe
-		bind:this={iframeElement}
-		title="deezer-widget"
-		src="about:blank"
-		width="100%"
-		height="300"
-		frameborder="0"
-		allow="encrypted-media; clipboard-write"
-		class="pointer-events-none fixed bottom-[-1000px] opacity-0"
-	></iframe>
 </div>
