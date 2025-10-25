@@ -1,0 +1,6 @@
+.mypy_cache
+.DS*
+data/*.sql
+data/*.txt
+data/lisztnup.md
+data/musicbrainz.json
