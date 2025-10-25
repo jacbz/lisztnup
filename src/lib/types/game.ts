@@ -5,6 +5,8 @@ export type GameState = 'loading' | 'home' | 'settings' | 'game';
 export interface RoundState {
 	currentTrackIndex: number;
 	category: GuessCategory | null;
-	isRevealed: boolean;
+	isSpinning: boolean;
 	isPlaying: boolean;
+	playbackEnded: boolean;
+	isRevealed: boolean;
 }

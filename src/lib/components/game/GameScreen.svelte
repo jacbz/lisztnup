@@ -5,7 +5,7 @@
 	import { deezerPlayer } from '$lib/services';
 	import SpinningWheel from './SpinningWheel.svelte';
 	import PlayerControl from '../ui/PlayerControl.svelte';
-	import RevealPopup from './RevealPopup.svelte';
+	import VolumeControl from '../ui/VolumeControl.svelte';
 	import Home from 'lucide-svelte/icons/home';
 	import { _ } from 'svelte-i18n';
 
@@ -16,8 +16,10 @@
 	let { onHome = () => {} }: Props = $props();
 
 	const currentTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
-
 	const isGameOver = $derived($currentRound.currentTrackIndex >= $tracklist.length);
+
+	let audioProgress = $state(0); // 0-1
+	let progressInterval: number | null = null;
 
 	onMount(async () => {
 		// Load first track
@@ -27,7 +29,8 @@
 	});
 
 	onDestroy(() => {
-		// Cleanup player resources
+		// Cleanup
+		if (progressInterval) clearInterval(progressInterval);
 		deezerPlayer.destroy();
 	});
 
@@ -38,29 +41,72 @@
 		}));
 	}
 
-	async function handlePlayerClick() {
+	function handleSpinStart() {
+		currentRound.update((state) => ({
+			...state,
+			isSpinning: true
+		}));
+	}
+
+	function handleSpinEnd() {
+		currentRound.update((state) => ({
+			...state,
+			isSpinning: false
+		}));
+	}
+
+	async function handlePlay() {
 		if (!currentTrack) return;
 
-		if ($currentRound.isRevealed) {
-			// If already revealed, just toggle play/pause
-			if ($currentRound.isPlaying) {
-				deezerPlayer.pause();
-				currentRound.update((state) => ({ ...state, isPlaying: false }));
-			} else {
-				await deezerPlayer.play();
-				currentRound.update((state) => ({ ...state, isPlaying: true }));
-			}
-		} else if ($currentRound.category) {
-			// If category is selected and not revealed, reveal the answer
-			currentRound.update((state) => ({ ...state, isRevealed: true }));
-		} else {
-			// Start playing
-			await deezerPlayer.play();
-			currentRound.update((state) => ({ ...state, isPlaying: true }));
-		}
+		await deezerPlayer.play();
+		currentRound.update((state) => ({
+			...state,
+			isPlaying: true,
+			playbackEnded: false
+		}));
+
+		// Start tracking progress
+		startProgressTracking();
+	}
+
+	function handleStop() {
+		deezerPlayer.pause();
+		currentRound.update((state) => ({
+			...state,
+			isPlaying: false,
+			playbackEnded: true
+		}));
+
+		stopProgressTracking();
+	}
+
+	function handleReveal() {
+		currentRound.update((state) => ({
+			...state,
+			isRevealed: true
+		}));
+	}
+
+	async function handleReplay() {
+		// Restart playback from beginning
+		deezerPlayer.seek(0);
+		await deezerPlayer.play();
+
+		currentRound.update((state) => ({
+			...state,
+			isPlaying: true,
+			playbackEnded: false
+		}));
+
+		startProgressTracking();
 	}
 
 	async function handleNextRound() {
+		// Stop current playback
+		deezerPlayer.pause();
+		stopProgressTracking();
+
+		// Move to next round
 		nextRoundFn();
 
 		// Load next track
@@ -68,6 +114,37 @@
 		if (nextTrack) {
 			await deezerPlayer.load(nextTrack.part.deezer);
 		}
+	}
+
+	function startProgressTracking() {
+		stopProgressTracking(); // Clear any existing interval
+
+		progressInterval = window.setInterval(() => {
+			const current = deezerPlayer.getCurrentTime();
+			const duration = deezerPlayer.getDuration();
+
+			if (duration > 0) {
+				audioProgress = current / duration;
+
+				// Check if playback ended
+				if (current >= duration - 0.1 || !deezerPlayer.isPlaying()) {
+					currentRound.update((state) => ({
+						...state,
+						isPlaying: false,
+						playbackEnded: true
+					}));
+					stopProgressTracking();
+				}
+			}
+		}, 100); // Update every 100ms
+	}
+
+	function stopProgressTracking() {
+		if (progressInterval) {
+			clearInterval(progressInterval);
+			progressInterval = null;
+		}
+		audioProgress = 0;
 	}
 </script>
 
@@ -96,6 +173,9 @@
 		<div class="w-24"></div>
 	</div>
 
+	<!-- Volume Control -->
+	<VolumeControl />
+
 	<!-- Game Over Screen -->
 	{#if isGameOver}
 		<div class="flex h-screen items-center justify-center">
@@ -123,17 +203,31 @@
 	{:else if currentTrack}
 		<!-- Main Game Area -->
 		<div class="flex h-screen items-center justify-center">
-			<div class="relative">
-				<!-- Spinning Wheel -->
-				<SpinningWheel onCategorySelected={handleCategorySelected} />
+			<!-- Spinning Wheel (fills screen) -->
+			<SpinningWheel
+				onCategorySelected={handleCategorySelected}
+				onSpinStart={handleSpinStart}
+				onSpinEnd={handleSpinEnd}
+			/>
 
-				<!-- Player Control (centered on wheel) -->
-				<PlayerControl isPlaying={$currentRound.isPlaying} onClick={handlePlayerClick} />
-			</div>
+			<!-- Player Control (overlaid on wheel center) -->
+			<PlayerControl
+				visible={!$currentRound.isSpinning}
+				isPlaying={$currentRound.isPlaying}
+				playbackEnded={$currentRound.playbackEnded}
+				isRevealed={$currentRound.isRevealed}
+				progress={audioProgress}
+				track={currentTrack}
+				onPlay={handlePlay}
+				onStop={handleStop}
+				onReveal={handleReveal}
+				onReplay={handleReplay}
+				onNext={handleNextRound}
+			/>
 		</div>
 
-		<!-- Category Display -->
-		{#if $currentRound.category && !$currentRound.isRevealed}
+		<!-- Category Display (shown briefly when wheel stops) -->
+		{#if $currentRound.category && !$currentRound.isRevealed && !$currentRound.isSpinning}
 			<div
 				class="absolute bottom-12 left-1/2 -translate-x-1/2 rounded-2xl border-2 border-cyan-400 bg-gray-900/90 px-8 py-4 backdrop-blur-sm"
 			>
@@ -143,11 +237,6 @@
 					})}
 				</p>
 			</div>
-		{/if}
-
-		<!-- Reveal Popup -->
-		{#if $currentRound.isRevealed}
-			<RevealPopup track={currentTrack} onNext={handleNextRound} />
 		{/if}
 	{/if}
 </div>

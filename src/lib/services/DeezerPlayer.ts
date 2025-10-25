@@ -70,7 +70,7 @@ export class DeezerPlayer {
 
 		this.audio = new Audio(this.currentTrackData.preview);
 		this.audio.volume = this.volume;
-		this.audio.loop = true; // Loop the 30-second preview
+		this.audio.loop = false;
 	}
 
 	/**
