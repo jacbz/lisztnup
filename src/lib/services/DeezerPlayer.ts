@@ -24,6 +24,13 @@ interface DeezerTrackData {
 	};
 }
 
+// Extend window interface for JSONP callbacks
+interface WindowWithDeezerCallbacks extends Window {
+	[key: string]: unknown;
+}
+
+declare const window: WindowWithDeezerCallbacks;
+
 export class DeezerPlayer {
 	private audio: HTMLAudioElement | null = null;
 	private currentTrackId: number | null = null;
@@ -31,21 +38,49 @@ export class DeezerPlayer {
 	private volume: number = 1.0;
 
 	/**
-	 * Fetches track metadata from Deezer API
+	 * Fetches track metadata from Deezer API using JSONP to bypass CORS
 	 */
 	private async fetchTrackData(deezerId: number): Promise<DeezerTrackData | null> {
-		try {
-			const response = await fetch(`https://api.deezer.com/track/${deezerId}`);
-			if (!response.ok) {
+		return new Promise((resolve) => {
+			// Generate unique callback name
+			const callbackName = `deezerCallback_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+			// Create script element for JSONP
+			const script = document.createElement('script');
+			const timeout = setTimeout(() => {
+				cleanup();
+				console.error(`DeezerPlayer: Timeout fetching track ${deezerId}`);
+				resolve(null);
+			}, 10000); // 10 second timeout
+
+			// Define global callback function
+			window[callbackName] = (data: DeezerTrackData) => {
+				cleanup();
+				resolve(data);
+			};
+
+			// Cleanup function
+			const cleanup = () => {
+				clearTimeout(timeout);
+				delete window[callbackName];
+				if (script.parentNode) {
+					script.parentNode.removeChild(script);
+				}
+			};
+
+			// Handle script load errors
+			script.onerror = () => {
+				cleanup();
 				console.error(`DeezerPlayer: Failed to fetch track ${deezerId}`);
-				return null;
-			}
-			const data = await response.json();
-			return data;
-		} catch (error) {
-			console.error('DeezerPlayer: Error fetching track data', error);
-			return null;
-		}
+				resolve(null);
+			};
+
+			// Set script source with JSONP callback parameter
+			script.src = `https://api.deezer.com/track/${deezerId}?output=jsonp&callback=${callbackName}`;
+
+			// Append script to DOM to trigger request
+			document.head.appendChild(script);
+		});
 	}
 
 	/**
