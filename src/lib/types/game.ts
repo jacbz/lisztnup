@@ -1,6 +1,6 @@
 export type GuessCategory = 'composer' | 'decade' | 'year' | 'composition' | 'type';
 
-export type GameState = 'loading' | 'home' | 'settings' | 'game';
+export type GameState = 'loading' | 'home' | 'settings' | 'generating' | 'game';
 
 export interface RoundState {
 	currentTrackIndex: number;

@@ -14,13 +14,19 @@
 	});
 
 	function handleStartGame() {
-		// Generate tracklist
-		if ($gameData) {
-			const generator = new TracklistGenerator($gameData);
-			const tracks = generator.generateTracklist($settings);
-			tracklist.set(tracks);
-			gameState.set('game');
-		}
+		// Show loading state
+		gameState.set('generating');
+
+		// Use setTimeout to allow UI to update before heavy computation
+		setTimeout(() => {
+			// Generate tracklist
+			if ($gameData) {
+				const generator = new TracklistGenerator($gameData);
+				const tracks = generator.generateTracklist($settings);
+				tracklist.set(tracks);
+				gameState.set('game');
+			}
+		}, 50);
 	}
 
 	function handleOpenSettings() {
@@ -43,6 +49,8 @@
 </script>
 
 {#if $gameState === 'loading'}
+	<LoadingScreen />
+{:else if $gameState === 'generating'}
 	<LoadingScreen />
 {:else if $gameState === 'home'}
 	<HomeScreen onStart={handleStartGame} onSettings={handleOpenSettings} />

@@ -65,10 +65,13 @@
 	});
 
 	const displayYear = $derived.by(() => {
-		if (!track) return '';
-		return track.work.begin_year === track.work.end_year
-			? track.work.begin_year.toString()
-			: `${track.work.begin_year}–${track.work.end_year}`;
+		const { begin_year, end_year } = track?.work ?? {};
+
+		if (!begin_year && !end_year) return '';
+		if (!end_year || begin_year === end_year) return String(begin_year ?? end_year);
+		if (!begin_year) return String(end_year);
+
+		return `${begin_year}–${end_year}`;
 	});
 
 	function handleClick() {
@@ -109,18 +112,22 @@
 
 	// Calculate circular progress path
 	const progressPath = $derived.by(() => {
-		const size = 120;
+		const buttonSize = 140; // Button diameter
+		const ringStrokeWidth = 8; // Thicker ring
+		const ringGap = 8; // Gap between button and ring
+		const ringRadius = buttonSize / 2 + ringGap + ringStrokeWidth / 2;
+		const size = (ringRadius + ringStrokeWidth / 2) * 2;
 		const center = size / 2;
-		const radius = size / 2 - 6;
-		const circumference = 2 * Math.PI * radius;
+		const circumference = 2 * Math.PI * ringRadius;
 		const offset = circumference * (1 - progress);
 
 		return {
 			size,
 			center,
-			radius,
+			radius: ringRadius,
 			circumference,
-			offset
+			offset,
+			strokeWidth: ringStrokeWidth
 		};
 	});
 </script>
@@ -183,23 +190,15 @@
 			</div>
 		</div>
 	{:else}
-		<!-- Normal state: circular button -->
-		<button
-			type="button"
-			class="player-button"
-			onclick={handleClick}
-			onpointerdown={handlePointerDown}
-			onpointerup={handlePointerUp}
-			onpointerleave={handlePointerUp}
-			aria-label={isPlaying ? 'Stop' : playbackEnded ? 'Reveal' : 'Play'}
-		>
-			<!-- Progress ring (only during playback) -->
+		<!-- Normal state: circular button with external progress ring -->
+		<div class="player-wrapper">
+			<!-- Progress ring (only during playback) - positioned outside button -->
 			{#if isPlaying}
 				<svg class="progress-ring" width={progressPath.size} height={progressPath.size}>
 					<circle
 						class="progress-ring-circle"
 						stroke="#22d3ee"
-						stroke-width="6"
+						stroke-width={progressPath.strokeWidth}
 						fill="transparent"
 						r={progressPath.radius}
 						cx={progressPath.center}
@@ -209,17 +208,28 @@
 				</svg>
 			{/if}
 
-			<!-- Button content -->
-			<div class="button-content">
-				{#if playbackEnded}
-					<span class="reveal-text">REVEAL</span>
-				{:else if isPlaying}
-					<Square class="h-12 w-12 text-white" fill="white" />
-				{:else}
-					<Play class="ml-1 h-12 w-12 text-white" fill="white" />
-				{/if}
-			</div>
-		</button>
+			<!-- Play button -->
+			<button
+				type="button"
+				class="player-button"
+				onclick={handleClick}
+				onpointerdown={handlePointerDown}
+				onpointerup={handlePointerUp}
+				onpointerleave={handlePointerUp}
+				aria-label={isPlaying ? 'Stop' : playbackEnded ? 'Reveal' : 'Play'}
+			>
+				<!-- Button content -->
+				<div class="button-content">
+					{#if playbackEnded}
+						<span class="reveal-text">REVEAL</span>
+					{:else if isPlaying}
+						<Square class="h-16 w-16 text-white" fill="white" />
+					{:else}
+						<Play class="ml-2 h-16 w-16 text-white" fill="white" />
+					{/if}
+				</div>
+			</button>
+		</div>
 	{/if}
 </div>
 
@@ -233,13 +243,20 @@
 		transition: opacity 0.3s ease-out;
 	}
 
+	.player-wrapper {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
 	.player-button {
 		position: relative;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 120px;
-		height: 120px;
+		width: 140px;
+		height: 140px;
 		border-radius: 50%;
 		border: 4px solid #22d3ee;
 		background: linear-gradient(135deg, #22d3ee 0%, #a855f7 100%);
@@ -247,6 +264,7 @@
 		cursor: pointer;
 		transition: all 0.2s ease-out;
 		touch-action: none;
+		z-index: 2;
 	}
 
 	.player-button:hover {
@@ -260,14 +278,16 @@
 
 	.progress-ring {
 		position: absolute;
-		top: 0;
-		left: 0;
-		transform: rotate(-90deg);
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%) rotate(-90deg);
 		pointer-events: none;
+		z-index: 1;
 	}
 
 	.progress-ring-circle {
 		transition: stroke-dashoffset 0.1s linear;
+		filter: drop-shadow(0 0 6px #22d3ee);
 	}
 
 	.button-content {
