@@ -139,64 +139,109 @@ LABEL_PREFERENCE = [
 # --- Data Class Definitions ---
 # ==============================================================================
 
+
 # --- Input Data Classes (matching 'musicbrainz.json') ---
 @dataclass
 class MBRecording:
     """Represents a single recording from the Musicbrainz data."""
-    gid: str; name: str; isrc: str; label: Optional[str]; deezerId: int
+
+    gid: str
+    name: str
+    isrc: str
+    label: Optional[str]
+    deezerId: int
+
 
 @dataclass
 class MBWork:
     """Represents a single work (which can have sub-works) from the Musicbrainz data."""
-    gid: str; name: str; type: str; begin_year: Optional[int]; end_year: Optional[int]
-    recordings: List[MBRecording]; subworks: List['MBWork']
-    total_recordings_count: int = 0; total_subworks_count: int = 0
+
+    gid: str
+    name: str
+    type: str
+    begin_year: Optional[int]
+    end_year: Optional[int]
+    recordings: List[MBRecording]
+    subworks: List["MBWork"]
+    total_recordings_count: int = 0
+    total_subworks_count: int = 0
+
 
 @dataclass
 class MBComposer:
     """Represents a single composer and their top-level works from the Musicbrainz data."""
-    gid: str; name: str; birth_year: Optional[int]; death_year: Optional[int]; works: List[MBWork]
+
+    gid: str
+    name: str
+    birth_year: Optional[int]
+    death_year: Optional[int]
+    works: List[MBWork]
+
 
 # --- Output Data Classes (for 'lisztnup.json') ---
 @dataclass
 class FinalPart:
     """Represents a single, curated part of a work in the final dataset."""
-    name: str; recordingsCount: int; deezerId: int
+
+    name: str
+    deezer: int
     score: float  # Relative score (0-100) compared to the work's most popular part.
 
-    def to_dict(self) -> Dict[str, Any]: return self.__dict__
+    def to_dict(self) -> Dict[str, Any]:
+        return self.__dict__
+
 
 @dataclass
 class FinalWork:
     """Represents a single, curated root work in the final dataset."""
-    gid: str; composerGid: str; name: str; type: str; begin_year: Optional[int]; end_year: Optional[int]
-    recordingsCount: int; subworkCount: int
+
+    gid: str
+    composer: str
+    name: str
+    type: str
+    begin_year: Optional[int]
+    end_year: Optional[int]
     score: float  # The absolute Work Significance Score (WSS).
     parts: List[FinalPart]
 
     def to_dict(self) -> Dict[str, Any]:
         return {**self.__dict__, "parts": [p.to_dict() for p in self.parts]}
 
+
 @dataclass
 class FinalComposer:
     """Represents a composer present in the final dataset."""
-    gid: str; name: str; birth_year: Optional[int]; death_year: Optional[int]
-    def to_dict(self) -> Dict[str, Any]: return self.__dict__
+
+    gid: str
+    name: str
+    birth_year: Optional[int]
+    death_year: Optional[int]
+
+    def to_dict(self) -> Dict[str, Any]:
+        return self.__dict__
+
 
 @dataclass
 class FinalOutput:
     """Top-level container for the final JSON output."""
-    composers: List[FinalComposer]; works: Dict[str, List[FinalWork]]
+
+    composers: List[FinalComposer]
+    works: Dict[str, List[FinalWork]]
 
     def to_dict(self) -> Dict[str, Any]:
         return {
             "composers": [c.to_dict() for c in self.composers],
-            "works": {type_name: [w.to_dict() for w in works_list] for type_name, works_list in self.works.items()}
+            "works": {
+                type_name: [w.to_dict() for w in works_list]
+                for type_name, works_list in self.works.items()
+            },
         }
+
 
 # ==============================================================================
 # --- Main Processing Class ---
 # ==============================================================================
+
 
 class MusicbrainzProcessor:
     """
@@ -221,10 +266,20 @@ class MusicbrainzProcessor:
         :param raw_data: The list of composer data loaded from JSON.
         :return: A list of MBComposer instances.
         """
-        return [MBComposer(gid=c['gid'], name=c['name'], birth_year=c['birth_year'], death_year=c['death_year'],
-                           works=[self._parse_work_tree(w) for w in c['works']]) for c in raw_data]
+        return [
+            MBComposer(
+                gid=c["gid"],
+                name=c["name"],
+                birth_year=c["birth_year"],
+                death_year=c["death_year"],
+                works=[self._parse_work_tree(w) for w in c["works"]],
+            )
+            for c in raw_data
+        ]
 
-    def _parse_work_tree(self, work_dict: Dict[str, Any], parent_type: Optional[str] = None) -> MBWork:
+    def _parse_work_tree(
+        self, work_dict: Dict[str, Any], parent_type: Optional[str] = None
+    ) -> MBWork:
         """
         Recursively parses a work and its sub-works, ensuring type inheritance.
 
@@ -234,12 +289,21 @@ class MusicbrainzProcessor:
         :param parent_type: The type of the parent work, passed down during recursion.
         :return: An MBWork instance representing the work tree.
         """
-        current_type = work_dict.get('type', parent_type or 'Unknown')
-        subworks = [self._parse_work_tree(sub, current_type) for sub in work_dict.get('subworks', [])]
-        recordings = [MBRecording(**rec) for rec in work_dict.get('recordings', [])]
-        return MBWork(gid=work_dict['gid'], name=work_dict['name'], type=current_type,
-                      begin_year=work_dict['begin_year'], end_year=work_dict['end_year'],
-                      recordings=recordings, subworks=subworks)
+        current_type = work_dict.get("type", parent_type or "Unknown")
+        subworks = [
+            self._parse_work_tree(sub, current_type)
+            for sub in work_dict.get("subworks", [])
+        ]
+        recordings = [MBRecording(**rec) for rec in work_dict.get("recordings", [])]
+        return MBWork(
+            gid=work_dict["gid"],
+            name=work_dict["name"],
+            type=current_type,
+            begin_year=work_dict["begin_year"],
+            end_year=work_dict["end_year"],
+            recordings=recordings,
+            subworks=subworks,
+        )
 
     def process(self) -> FinalOutput:
         """
@@ -247,36 +311,44 @@ class MusicbrainzProcessor:
 
         :return: A FinalOutput object containing the curated composers and works.
         """
-        self.stats['initial_composers'] = len(self.composers)
+        self.stats["initial_composers"] = len(self.composers)
 
         # Stage 1: Initial filtering and candidate generation (includes dynamic part filtering)
         composers_by_birth_year = self._filter_composers_by_birth_year(self.composers)
         work_candidates = self._generate_work_candidates(composers_by_birth_year)
-        
+
         # Stage 2: Group and filter works by their absolute significance score (WSS)
         works_by_type = self._group_works_by_type(work_candidates)
         works_after_wss = self._filter_works_by_wss(works_by_type)
 
         # Stage 3: Finalize the composer list based on who has works remaining
-        final_composers = self._filter_final_composers(composers_by_birth_year, works_after_wss)
-        self.stats['final_composers'] = len(final_composers)
+        final_composers = self._filter_final_composers(
+            composers_by_birth_year, works_after_wss
+        )
+        self.stats["final_composers"] = len(final_composers)
 
         # Stage 4: Synchronize lists, removing works by composers who were dropped
         final_composer_gids = {c.gid for c in final_composers}
         final_works: Dict[str, List[FinalWork]] = {}
         for work_type, works in works_after_wss.items():
-            synced_list = [work for work in works if work.composerGid in final_composer_gids]
+            synced_list = [
+                work for work in works if work.composer in final_composer_gids
+            ]
             if synced_list:
                 final_works[work_type] = synced_list
-        
+
         # Stage 5: Write logs and return the final packaged data
         self._write_unresolved_log(final_works)
         return FinalOutput(composers=final_composers, works=final_works)
 
-    def _filter_composers_by_birth_year(self, composers: List[MBComposer]) -> List[MBComposer]:
+    def _filter_composers_by_birth_year(
+        self, composers: List[MBComposer]
+    ) -> List[MBComposer]:
         """Filters out composers born before the configured MIN_BIRTH_YEAR."""
-        filtered = [c for c in composers if c.birth_year and c.birth_year >= MIN_BIRTH_YEAR]
-        self.stats['composers_dropped_birth_year'] = len(composers) - len(filtered)
+        filtered = [
+            c for c in composers if c.birth_year and c.birth_year >= MIN_BIRTH_YEAR
+        ]
+        self.stats["composers_dropped_birth_year"] = len(composers) - len(filtered)
         return filtered
 
     def _get_dynamic_part_score_threshold(self, work_wss: float) -> float:
@@ -316,21 +388,23 @@ class MusicbrainzProcessor:
         all_works: List[FinalWork] = []
         for composer in composers:
             for root_work in composer.works:
-                self.stats['total_root_works_considered'] += 1
+                self.stats["total_root_works_considered"] += 1
                 self._calculate_recursive_counts(root_work)
                 leaf_parts = self._filter_and_flatten_tree(root_work)
                 if not leaf_parts:
                     continue
 
-                parts_with_pss = [(part, math.log(1 + len(part.recordings))) for part in leaf_parts]
+                parts_with_pss = [
+                    (part, math.log(1 + len(part.recordings))) for part in leaf_parts
+                ]
                 if not parts_with_pss:
                     continue
-                
+
                 pss_values = [pss for _, pss in parts_with_pss]
                 avg_pss = sum(pss_values) / len(pss_values)
                 max_pss = max(pss_values)
                 wss = (1 - POPULARITY_ALPHA) * avg_pss + POPULARITY_ALPHA * max_pss
-                
+
                 # Get the dynamic threshold for this specific work
                 dynamic_threshold = self._get_dynamic_part_score_threshold(wss)
 
@@ -339,71 +413,103 @@ class MusicbrainzProcessor:
                     deezer_id = self._select_deezer_id(part.recordings)
                     if deezer_id:
                         part_score = (pss / max_pss) * 100 if max_pss > 0 else 0
-                        potential_parts.append(FinalPart(
-                            name=part.name, recordingsCount=len(part.recordings),
-                            deezerId=deezer_id, score=round(part_score, 2)))
+                        potential_parts.append(
+                            FinalPart(
+                                name=part.name,
+                                deezer=deezer_id,
+                                score=round(part_score, 2),
+                            )
+                        )
                     else:
-                        self.stats['parts_dropped_no_deezerid'] += 1
-                
+                        self.stats["parts_dropped_no_deezerid"] += 1
+
                 # Filter parts based on the calculated dynamic threshold
-                final_parts = [p for p in potential_parts if p.score >= dynamic_threshold]
-                self.stats['parts_dropped_by_dynamic_score'] += len(potential_parts) - len(final_parts)
-                
+                final_parts = [
+                    p for p in potential_parts if p.score >= dynamic_threshold
+                ]
+                self.stats["parts_dropped_by_dynamic_score"] += len(
+                    potential_parts
+                ) - len(final_parts)
+
                 if not final_parts:
                     if potential_parts:
-                        self.stats['works_dropped_became_empty'] += 1
+                        self.stats["works_dropped_became_empty"] += 1
                     continue
 
-                all_works.append(FinalWork(
-                    gid=root_work.gid, composerGid=composer.gid, name=root_work.name,
-                    type=self._transform_type(root_work, composer.gid),
-                    begin_year=root_work.begin_year, end_year=root_work.end_year,
-                    recordingsCount=root_work.total_recordings_count,
-                    subworkCount=root_work.total_subworks_count,
-                    score=round(wss, 2), parts=final_parts))
+                all_works.append(
+                    FinalWork(
+                        gid=root_work.gid,
+                        composer=composer.gid,
+                        name=root_work.name,
+                        type=self._transform_type(root_work, composer.gid),
+                        begin_year=root_work.begin_year,
+                        end_year=root_work.end_year,
+                        score=round(wss, 2),
+                        parts=final_parts,
+                    )
+                )
         return all_works
 
-    def _group_works_by_type(self, works: List[FinalWork]) -> Dict[str, List[FinalWork]]:
+    def _group_works_by_type(
+        self, works: List[FinalWork]
+    ) -> Dict[str, List[FinalWork]]:
         """Groups a list of FinalWork objects into a dictionary keyed by work type."""
         grouped: Dict[str, List[FinalWork]] = defaultdict(list)
         for work in works:
             grouped[work.type].append(work)
         return grouped
 
-    def _filter_works_by_wss(self, works_by_type: Dict[str, List[FinalWork]]) -> Dict[str, List[FinalWork]]:
+    def _filter_works_by_wss(
+        self, works_by_type: Dict[str, List[FinalWork]]
+    ) -> Dict[str, List[FinalWork]]:
         """Filters works in each type category by the MINIMUM_WSS threshold."""
         filtered_map: Dict[str, List[FinalWork]] = {}
         for work_type, works in works_by_type.items():
             initial_count = len(works)
             filtered_list = [work for work in works if work.score >= MINIMUM_WSS]
-            self.stats['works_dropped_by_min_wss'] += (initial_count - len(filtered_list))
-            
+            self.stats["works_dropped_by_min_wss"] += initial_count - len(filtered_list)
+
             filtered_list.sort(key=lambda w: w.score, reverse=True)
             if filtered_list:
                 filtered_map[work_type] = filtered_list
         return filtered_map
 
-    def _filter_final_composers(self, original_composers: List[MBComposer], final_works: Dict[str, List[FinalWork]]) -> List[FinalComposer]:
+    def _filter_final_composers(
+        self,
+        original_composers: List[MBComposer],
+        final_works: Dict[str, List[FinalWork]],
+    ) -> List[FinalComposer]:
         """
         Determines the final list of composers based on who has enough works
         surviving in the final dataset.
         """
-        composer_work_counts: Counter = Counter(w.composerGid for works in final_works.values() for w in works)
+        composer_work_counts: Counter = Counter(
+            w.composer for works in final_works.values() for w in works
+        )
         final_composers: List[FinalComposer] = []
         for composer in original_composers:
             if composer_work_counts[composer.gid] >= MIN_WORKS_PER_COMPOSER:
-                final_composers.append(FinalComposer(gid=composer.gid, name=composer.name,
-                                                     birth_year=composer.birth_year, death_year=composer.death_year))
+                final_composers.append(
+                    FinalComposer(
+                        gid=composer.gid,
+                        name=composer.name,
+                        birth_year=composer.birth_year,
+                        death_year=composer.death_year,
+                    )
+                )
             elif composer.gid in composer_work_counts:
-                 self.stats['composers_dropped_min_works'] += 1
+                self.stats["composers_dropped_min_works"] += 1
         return sorted(final_composers, key=lambda c: c.name)
 
     def _calculate_recursive_counts(self, work: MBWork) -> None:
         """Recursively traverses a work tree to sum up total recordings and sub-works."""
         if not work.subworks:
-            work.total_recordings_count, work.total_subworks_count = len(work.recordings), 0
+            work.total_recordings_count, work.total_subworks_count = (
+                len(work.recordings),
+                0,
+            )
             return
-        
+
         rec_count, sub_count = 0, 0
         for sub in work.subworks:
             self._calculate_recursive_counts(sub)
@@ -419,10 +525,12 @@ class MusicbrainzProcessor:
         if not work.subworks:
             if len(work.recordings) >= MIN_RECORDINGS_PER_PART:
                 return [work]
-            self.stats['parts_dropped_min_recordings'] += 1
+            self.stats["parts_dropped_min_recordings"] += 1
             return []
-        
-        filtered_leafs = [leaf for sub in work.subworks for leaf in self._filter_and_flatten_tree(sub)]
+
+        filtered_leafs = [
+            leaf for sub in work.subworks for leaf in self._filter_and_flatten_tree(sub)
+        ]
         if not filtered_leafs and len(work.recordings) >= MIN_RECORDINGS_PER_PART:
             return [work]
         return filtered_leafs
@@ -431,13 +539,22 @@ class MusicbrainzProcessor:
         """
         Applies a series of rules to map a Musicbrainz work type to the custom taxonomy.
         """
-        if composer_gid == "09ff1fe8-d61c-4b98-bb82-18487c74d7b7" and work.type == "Unknown": return "piano" # Chopin
-        if "Piano Sonata" in work.name and work.type == "Sonata": return "piano"
-        if work.type in TYPE_MAPPING: return TYPE_MAPPING[work.type]
+        if (
+            composer_gid == "09ff1fe8-d61c-4b98-bb82-18487c74d7b7"
+            and work.type == "Unknown"
+        ):
+            return "piano"  # Chopin
+        if "Piano Sonata" in work.name and work.type == "Sonata":
+            return "piano"
+        if work.type in TYPE_MAPPING:
+            return TYPE_MAPPING[work.type]
         for pattern, new_type in KEYWORD_RULES:
-            if re.search(pattern, work.name, re.IGNORECASE): return new_type
-        
-        self.unresolved_work_candidates[work.name] = f"'{work.name}' (Original Type: {work.type})"
+            if re.search(pattern, work.name, re.IGNORECASE):
+                return new_type
+
+        self.unresolved_work_candidates[work.name] = (
+            f"'{work.name}' (Original Type: {work.type})"
+        )
         return "unknown"
 
     def _select_deezer_id(self, recordings: List[MBRecording]) -> Optional[int]:
@@ -445,82 +562,121 @@ class MusicbrainzProcessor:
         Selects a single representative Deezer ID from a list of recordings
         based on preferred record labels.
         """
-        if not recordings: return None
+        if not recordings:
+            return None
         with_labels = [r for r in recordings if r.label]
         for pref in LABEL_PREFERENCE:
             for rec in with_labels:
-                if pref.lower() in rec.label.lower(): return rec.deezerId
-        if with_labels: return with_labels[0].deezerId
+                if rec.label and pref.lower() in rec.label.lower():
+                    return rec.deezerId
+        if with_labels:
+            return with_labels[0].deezerId
         return recordings[0].deezerId
 
     def _write_unresolved_log(self, final_works: Dict[str, List[FinalWork]]) -> None:
         """Writes a log of works in the final output whose types remain 'unknown'."""
-        if not self.unresolved_work_candidates: return
+        if not self.unresolved_work_candidates:
+            return
         final_unresolved_names = {w.name for w in final_works.get("unknown", [])}
-        final_messages = sorted([msg for name, msg in self.unresolved_work_candidates.items() if name in final_unresolved_names])
-        if not final_messages: return
-            
-        with open("unresolved_types.txt", 'w', encoding='utf-8') as f:
-            f.write("List of works in the final output whose types could not be resolved by defined rules:\n")
-            f.write("="*80 + "\n")
+        final_messages = sorted(
+            [
+                msg
+                for name, msg in self.unresolved_work_candidates.items()
+                if name in final_unresolved_names
+            ]
+        )
+        if not final_messages:
+            return
+
+        with open("unresolved_types.txt", "w", encoding="utf-8") as f:
+            f.write(
+                "List of works in the final output whose types could not be resolved by defined rules:\n"
+            )
+            f.write("=" * 80 + "\n")
             f.writelines(f"{item}\n" for item in final_messages)
 
     def print_summary(self, final_output: FinalOutput) -> None:
         """Prints a detailed statistical summary of the entire transformation process."""
-        print("\n" + "="*80)
+        print("\n" + "=" * 80)
         print(" " * 28 + "TRANSFORMATION SUMMARY")
-        print("="*80 + "\n--- Composer Filtering Pipeline ---")
+        print("=" * 80 + "\n--- Composer Filtering Pipeline ---")
         print(f"{'Initial composers loaded:':<45} {self.stats['initial_composers']}")
-        print(f"{f'Composers dropped (birth year < {MIN_BIRTH_YEAR}):':<45} {self.stats['composers_dropped_birth_year']}")
-        print(f"{f'Composers dropped (< {MIN_WORKS_PER_COMPOSER} final works):':<45} {self.stats['composers_dropped_min_works']}")
+        print(
+            f"{f'Composers dropped (birth year < {MIN_BIRTH_YEAR}):':<45} {self.stats['composers_dropped_birth_year']}"
+        )
+        print(
+            f"{f'Composers dropped (< {MIN_WORKS_PER_COMPOSER} final works):':<45} {self.stats['composers_dropped_min_works']}"
+        )
         print(f"{'Final composers in output:':<45} {self.stats['final_composers']}")
-        
+
         all_final_works = [w for works in final_output.works.values() for w in works]
         total_final_works = len(all_final_works)
         total_final_parts = sum(len(w.parts) for w in all_final_works)
         print("\n--- Work & Part Filtering Pipeline ---")
-        print(f"{'Total root works considered:':<45} {self.stats['total_root_works_considered']}")
-        print(f"{f'Parts dropped (< {MIN_RECORDINGS_PER_PART} recordings):':<45} {self.stats['parts_dropped_min_recordings']}")
-        print(f"{'Parts dropped (no Deezer ID):':<45} {self.stats['parts_dropped_no_deezerid']}")
-        print(f"{f'Works dropped (WSS < {MINIMUM_WSS}):':<45} {self.stats['works_dropped_by_min_wss']}")
-        print(f"{'Parts dropped (dynamic score threshold):':<45} {self.stats['parts_dropped_by_dynamic_score']}")
-        print(f"{'Works dropped (all parts filtered out):':<45} {self.stats['works_dropped_became_empty']}")
+        print(
+            f"{'Total root works considered:':<45} {self.stats['total_root_works_considered']}"
+        )
+        print(
+            f"{f'Parts dropped (< {MIN_RECORDINGS_PER_PART} recordings):':<45} {self.stats['parts_dropped_min_recordings']}"
+        )
+        print(
+            f"{'Parts dropped (no Deezer ID):':<45} {self.stats['parts_dropped_no_deezerid']}"
+        )
+        print(
+            f"{f'Works dropped (WSS < {MINIMUM_WSS}):':<45} {self.stats['works_dropped_by_min_wss']}"
+        )
+        print(
+            f"{'Parts dropped (dynamic score threshold):':<45} {self.stats['parts_dropped_by_dynamic_score']}"
+        )
+        print(
+            f"{'Works dropped (all parts filtered out):':<45} {self.stats['works_dropped_became_empty']}"
+        )
         print(f"{'Total final works in output:':<45} {total_final_works}")
         print(f"{'Total final parts in output:':<45} {total_final_parts}")
 
         composer_map = {c.gid: c.name for c in final_output.composers}
         composer_stats = []
         for gid, name in composer_map.items():
-            works_for_composer = [w for w in all_final_works if w.composerGid == gid]
+            works_for_composer = [w for w in all_final_works if w.composer == gid]
             work_count = len(works_for_composer)
             part_count = sum(len(w.parts) for w in works_for_composer)
             avg_parts = part_count / work_count if work_count > 0 else 0
             composer_stats.append((name, work_count, part_count, avg_parts))
-        
+
         composer_stats.sort(key=lambda x: x[1], reverse=True)
         print("\n--- Top 100 Composers by Final Work Count ---")
         print(f"{'#':>3} {'Composer':<35} {'Works':>7} {'Parts':>7} {'Avg Parts':>10}")
         print(f"{'-'*3} {'-'*35} {'-'*7} {'-'*7} {'-'*10}")
         for i, (name, wc, pc, ap) in enumerate(composer_stats[:100]):
             print(f"{i+1:3}. {name:<35} {wc:>7} {pc:>7} {ap:>10.1f}")
-        
+
         print("\n--- Top 50 Works by Score (All Types) ---")
         all_final_works.sort(key=lambda w: w.score, reverse=True)
         for i, work in enumerate(all_final_works[:50]):
-            print(f"{i+1:3}. {work.name:<50} ({composer_map.get(work.composerGid, 'N/A')}) -> Score: {work.score:.2f}")
+            print(
+                f"{i+1:3}. {work.name:<50} ({composer_map.get(work.composer, 'N/A')}) -> Score: {work.score:.2f}"
+            )
 
         print("\n--- Final Data Distribution by Type ---")
-        type_counts = {type_name: len(works) for type_name, works in final_output.works.items()}
-        for type_name, count in sorted(type_counts.items(), key=lambda item: item[1], reverse=True):
+        type_counts = {
+            type_name: len(works) for type_name, works in final_output.works.items()
+        }
+        for type_name, count in sorted(
+            type_counts.items(), key=lambda item: item[1], reverse=True
+        ):
             print(f"  - {type_name:<12}: {count} works")
-        
+
         if final_output.works.get("unknown"):
-            print(f"\nWrote {len(final_output.works['unknown'])} unresolved work types to 'unresolved_types.txt'.")
-        print("="*80)
+            print(
+                f"\nWrote {len(final_output.works['unknown'])} unresolved work types to 'unresolved_types.txt'."
+            )
+        print("=" * 80)
+
 
 # ==============================================================================
 # --- Standalone Helper Functions ---
 # ==============================================================================
+
 
 def generate_markdown_report(final_output: FinalOutput) -> None:
     """
@@ -530,25 +686,27 @@ def generate_markdown_report(final_output: FinalOutput) -> None:
     """
     composer_map = {c.gid: c.name for c in final_output.composers}
     all_works = [w for works_list in final_output.works.values() for w in works_list]
-    
-    all_works.sort(key=lambda w: (composer_map.get(w.composerGid, "Z"), w.name))
-    
+
+    all_works.sort(key=lambda w: (composer_map.get(w.composer, "Z"), w.name))
+
     works_by_type: Dict[str, List[FinalWork]] = defaultdict(list)
     for work in all_works:
         works_by_type[work.type].append(work)
-        
+
     with open("lisztnup.md", "w", encoding="utf-8") as f:
         f.write("# LisztNUp Curated Works\n\n")
-        f.write("A curated list of classical works, sorted by composer and work title within each category.\n\n")
-        
+        f.write(
+            "A curated list of classical works, sorted by composer and work title within each category.\n\n"
+        )
+
         for type_name in sorted(works_by_type.keys()):
             f.write(f"## {type_name.capitalize()}\n\n")
             f.write("| Composer | Work (Year) | Score | Parts (Score) |\n")
             f.write("| :--- | :--- | :---: | :--- |\n")
-            
+
             for work in works_by_type[type_name]:
-                composer_name = composer_map.get(work.composerGid, "N/A")
-                
+                composer_name = composer_map.get(work.composer, "N/A")
+
                 year_str = ""
                 if work.begin_year:
                     if work.end_year and work.end_year != work.begin_year:
@@ -557,22 +715,26 @@ def generate_markdown_report(final_output: FinalOutput) -> None:
                         year_str = f"({work.begin_year})"
                 elif work.end_year:
                     year_str = f"({work.end_year})"
-                
+
                 work_cell = f"{work.name} {year_str}".strip()
                 work_score_cell = f"{work.score:.2f}"
-                
+
                 parts_cell_items = []
                 for part in sorted(work.parts, key=lambda p: p.name):
                     parts_cell_items.append(f"* {part.name} ({part.score:.2f})")
                 parts_cell = "<br>".join(parts_cell_items)
-                
-                f.write(f"| {composer_name} | {work_cell} | {work_score_cell} | {parts_cell} |\n")
+
+                f.write(
+                    f"| {composer_name} | {work_cell} | {work_score_cell} | {parts_cell} |\n"
+                )
             f.write("\n")
     print("Generated markdown report 'lisztnup.md'.")
+
 
 # ==============================================================================
 # --- Main Execution Block ---
 # ==============================================================================
+
 
 def main() -> None:
     """
@@ -580,23 +742,27 @@ def main() -> None:
     and generates reports.
     """
     try:
-        with open("musicbrainz.json", 'r', encoding='utf-8') as f:
+        with open("musicbrainz.json", "r", encoding="utf-8") as f:
             composers_data: List[Dict[str, Any]] = json.load(f)
     except FileNotFoundError:
-        print("Error: 'musicbrainz.json' not found. Please run the data extraction script first.")
+        print(
+            "Error: 'musicbrainz.json' not found. Please run the data extraction script first."
+        )
         return
 
-    print(f"Loaded {len(composers_data)} composers from 'musicbrainz.json'. Starting processing...")
-    
+    print(
+        f"Loaded {len(composers_data)} composers from 'musicbrainz.json'. Starting processing..."
+    )
+
     processor = MusicbrainzProcessor(composers_data)
     final_output = processor.process()
-    
-    with open("lisztnup.json", 'w', encoding='utf-8') as f:
+
+    with open("../static/lisztnup.json", "w", encoding="utf-8") as f:
         json.dump(final_output.to_dict(), f, indent=2, ensure_ascii=False)
     print(f"\nSuccessfully processed data and saved to 'lisztnup.json'.")
 
     generate_markdown_report(final_output)
-    
+
     processor.print_summary(final_output)
 
 
