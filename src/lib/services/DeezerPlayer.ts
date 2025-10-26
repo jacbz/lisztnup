@@ -97,7 +97,13 @@ export class DeezerPlayer {
 
 		if (!this.currentTrackData) {
 			console.warn('DeezerPlayer: Could not load track data');
-			return;
+			throw new Error('Failed to fetch track data');
+		}
+
+		// Check if preview URL exists
+		if (!this.currentTrackData.preview) {
+			console.warn('DeezerPlayer: Track has no preview URL');
+			throw new Error('Track has no preview URL');
 		}
 
 		// Create or reset audio element

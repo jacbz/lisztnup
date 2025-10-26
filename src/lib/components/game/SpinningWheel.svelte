@@ -298,61 +298,6 @@
 		ctx.restore();
 	}
 
-	function spin() {
-		if (isSpinning) return;
-
-		isSpinning = true;
-		showSpinText = false;
-		selectedCategory = null;
-		onSpinStart();
-
-		const spins = 5 + Math.random() * 3;
-		const randomOffset = Math.random() * 360;
-		const targetRotation = rotation + spins * 360 + randomOffset;
-
-		const startRotation = rotation;
-		const startTime = Date.now();
-		const duration = 3000;
-
-		function animate() {
-			const elapsed = Date.now() - startTime;
-			const progress = Math.min(elapsed / duration, 1);
-
-			// Ease out cubic
-			const eased = 1 - Math.pow(1 - progress, 3);
-
-			currentRotation = startRotation + (targetRotation - startRotation) * eased;
-			drawWheel();
-
-			if (progress < 1) {
-				animationFrameId = requestAnimationFrame(animate);
-			} else {
-				rotation = targetRotation;
-				currentRotation = targetRotation;
-				isSpinning = false;
-
-				// Calculate which category the pointer is pointing at
-				// Segments are drawn starting from -90° (right) + rotation
-				// Pointer is at top: 90° (or -270°)
-				// We need to find which segment contains the angle: 90° - currentRotation
-				const segmentSize = 360 / categories.length;
-				const normalizedRotation = ((currentRotation % 360) + 360) % 360;
-
-				// Pointer angle relative to segment 0's starting position
-				// Segment 0 starts at -90° when rotation is 0
-				// Pointer is at 90°, which is 180° from segment 0's start
-				const angleFromSegment0 = (180 - normalizedRotation + 360) % 360;
-				const categoryIndex = Math.floor(angleFromSegment0 / segmentSize) % categories.length;
-
-				selectedCategory = categories[categoryIndex].id;
-				onSpinEnd();
-				onCategorySelected(selectedCategory);
-			}
-		}
-
-		animate();
-	}
-
 	function spinWithVelocity(velocity: number) {
 		if (isSpinning) return;
 
@@ -382,7 +327,7 @@
 			if (Math.abs(currentVelocity) > minVelocity) {
 				animationFrameId = requestAnimationFrame(animate);
 			} else {
-				// Stop where it naturally stops - NO SNAPPING
+				// Stop where it naturally stops
 				rotation = currentRotation;
 				isSpinning = false;
 

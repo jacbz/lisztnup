@@ -27,10 +27,11 @@
 	let hasSpunOnce = $state(false); // Track if wheel has been spun in this round
 	let showInGameSettings = $state(false);
 	let showQuitDialog = $state(false);
+	let preloadedTrackIndex = $state(-1); // Index of the preloaded track
 
 	onMount(() => {
-		// Sample first track
-		sampleNextTrack();
+		// Sample and preload first track
+		sampleAndPreloadTrack();
 
 		// Add beforeunload listener to warn when navigating away
 		const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -59,6 +60,31 @@
 		return track;
 	}
 
+	async function sampleAndPreloadTrack(): Promise<void> {
+		// Keep sampling until we get a track with a valid preview
+		while (true) {
+			const track = sampleNextTrack();
+
+			if (!track) {
+				// No more tracks available
+				console.error('No more tracks available to sample');
+				return;
+			}
+
+			try {
+				await deezerPlayer.load(track.part.deezer);
+				preloadedTrackIndex = $currentRound.currentTrackIndex;
+				// Successfully loaded, exit loop
+				return;
+			} catch (error) {
+				// Track has no preview or failed to load - silently remove and try again
+				console.warn('Track preview unavailable, sampling another:', error);
+				tracklist.update((t) => t.slice(0, -1));
+				// Continue loop to sample next track
+			}
+		}
+	}
+
 	function handleCategorySelected(category: GuessCategory) {
 		currentRound.update((state) => ({
 			...state,
@@ -74,7 +100,7 @@
 		hasSpunOnce = true; // Mark that wheel has been spun
 	}
 
-	function handleSpinEnd() {
+	async function handleSpinEnd() {
 		currentRound.update((state) => ({
 			...state,
 			isSpinning: false
@@ -85,7 +111,7 @@
 		if (!currentTrack) return;
 
 		try {
-			await deezerPlayer.load(currentTrack.part.deezer);
+			// Track should already be preloaded, just play it
 			await deezerPlayer.play();
 			currentRound.update((state) => ({
 				...state,
@@ -96,19 +122,8 @@
 			// Start tracking progress
 			startProgressTracking();
 		} catch (error) {
-			console.error('Error loading track:', error);
-			toast.show('error', 'Failed to load track. Sampling another...');
-
-			// Remove failed track and sample a new one
-			tracklist.update((t) => t.slice(0, -1));
-			const newTrack = sampleNextTrack();
-
-			if (newTrack) {
-				// Try again with the new track
-				setTimeout(() => handlePlay(), 100);
-			} else {
-				toast.show('error', 'No more tracks available.');
-			}
+			console.error('Error playing track:', error);
+			toast.show('error', 'Failed to play track.');
 		}
 	}
 
@@ -155,9 +170,9 @@
 		// Move to next round
 		nextRoundFn();
 
-		// Sample next track if needed
+		// Sample and preload next track
 		if ($currentRound.currentTrackIndex >= $tracklist.length) {
-			sampleNextTrack();
+			await sampleAndPreloadTrack();
 		}
 	}
 
