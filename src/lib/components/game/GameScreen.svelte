@@ -32,11 +32,23 @@
 	let showInGameSettings = $state(false);
 	let showQuitDialog = $state(false);
 
-	onMount(async () => {
+	onMount(() => {
 		// Load first track
 		if (currentTrack) {
-			await deezerPlayer.load(currentTrack.part.deezer);
+			deezerPlayer.load(currentTrack.part.deezer);
 		}
+
+		// Add beforeunload listener to warn when navigating away
+		const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+			e.preventDefault();
+			e.returnValue = ''; // Modern browsers ignore custom messages
+		};
+
+		window.addEventListener('beforeunload', handleBeforeUnload);
+
+		return () => {
+			window.removeEventListener('beforeunload', handleBeforeUnload);
+		};
 	});
 
 	onDestroy(() => {
@@ -190,14 +202,6 @@
 			{$_('game.home')}
 		</button>
 
-		<div class="text-center">
-			<p class="text-sm text-gray-400">
-				{$_('game.round', {
-					values: { current: $currentRound.currentTrackIndex + 1, total: $tracklist.length }
-				})}
-			</p>
-		</div>
-
 		<!-- Settings Button -->
 		<button
 			type="button"
@@ -207,6 +211,13 @@
 		>
 			<SettingsIcon class="h-5 w-5" />
 		</button>
+	</div>
+
+	<!-- Round Indicator - Bottom Left -->
+	<div class="absolute bottom-6 left-6 z-20">
+		<p class="text-3xl font-bold text-cyan-400">
+			{$currentRound.currentTrackIndex + 1}/{$tracklist.length}
+		</p>
 	</div>
 
 	<!-- Game Over Screen -->

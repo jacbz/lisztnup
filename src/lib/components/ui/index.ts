@@ -7,3 +7,5 @@ export { default as Popup } from './Popup.svelte';
 export { default as Dialog } from './Dialog.svelte';
 export { default as InGameSettings } from './InGameSettings.svelte';
 export { default as ModeSelector } from './ModeSelector.svelte';
+export { default as NumberSelector } from './NumberSelector.svelte';
+export { default as Slider } from './Slider.svelte';

@@ -1,6 +1,6 @@
 {
 	"app": {
-		"title": "Liszt'n Up!",
+		"title": "Liszt’n Up!",
 		"subtitle": "The Classical Music Guessing Game"
 	},
 	"loading": {
@@ -52,11 +52,12 @@
 	},
 	"modeSelector": {
 		"title": "Select Game Mode",
+		"done": "Done",
 		"descriptions": {
 			"default": "A balanced mix of all classical music types",
-			"piano": "Focus on keyboard works and performances",
+			"piano": "Focus on piano works and performances",
 			"concerto": "Concertos for various instruments",
-			"chamber": "Chamber music ensembles and solo performances (except keyboard)",
+			"chamber": "Intimate chamber music ensembles",
 			"ballet": "Music composed for ballet performances",
 			"opera": "Operatic works and arias",
 			"custom": "Customize your own category weights"

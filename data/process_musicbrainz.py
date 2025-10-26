@@ -77,7 +77,7 @@ KEYWORD_RULES = [
     # These are specific and should be checked first.
     # ========================================================================
     (r'(?i)\bopera\b|Singspiel|Musikdrama|Zoroastre|Armide|Orfeo|dramatico|Acte\b|Atto\b', 'opera'),
-    (r'(?i)\bBallet\b|Swan Lake|Nutcracker|Creatures of Prometheus|L\'Arlésienne', 'ballet'),
+    (r'(?i)Swan Lake|Nutcracker|Creatures of Prometheus|L\'Arlésienne', 'ballet'),
 
     # ========================================================================
     # 2. Large-Scale Vocal Works (Sacred and Secular)
@@ -111,7 +111,7 @@ KEYWORD_RULES = [
     (r'(?i)Cello Sonata|Violin Sonata|Flute Sonata|Sonata for .* and|Trio Sonata|Triosonate|Pianoforte und Violine|violino e fagotto', 'chamber'),
     (r'(?i)\bDuo\b|\bDuet\b|Trio\b(?! for Piano)|Quartet|Quintet|Sextet|Septet|Octet|Nonet', 'chamber'), # Excludes Piano Trio to avoid double-matching
     (r'(?i)Serenade for (Flute|Violin|Strings)|Divertimento for (Violin|Strings|Winds)', 'chamber'),
-    (r'(?i)for Violin and Piano|for Cello and Piano|for Clarinet and Viola|for 2 Violins|Violino Solo', 'chamber'),
+    (r'(?i)for (.+) and Piano|for Clarinet and Viola|for .+ Violins|Violino Solo', 'chamber'),
 
     # ========================================================================
     # 6. Keyboard Works (Piano, Harpsichord, Organetc.)
@@ -120,9 +120,9 @@ KEYWORD_RULES = [
     (r'(?i)Piano Sonata|Klaviersonate|Keyboard Sonata|Harpsichord Sonata|Orgel', 'piano'),
     (r'(?i)for Piano|für Klavier|Klavierstück|for Harpsichord|pour le Clavecin|Pièces de Clavecin|for Keyboard', 'piano'),
     # --- Specific Keyboard Forms ---
-    (r'(?i)Bagatelle|Étude|Estudio|Waltz|Walzer|Valse|Ländler|Polonaise|Mazurka|Nocturne|Impromptu|Album für die Jugend|Children|Consolation', 'piano'),
+    (r'(?i)Bagatelle|Étude|Estudio|Ländler|Polonaise|Mazurka|Nocturne|Impromptu|Album für die Jugend|Children|Consolation', 'piano'),
     (r'(?i)Rhapsody|Rhapsodie|Intermezzo|Scherzo(?!.*(Orchestra|Symphony))|Ballade|Arabeske|Humoreske|Tarantella|Barcarolle|Berceuse', 'piano'),
-    (r'(?i)Fantasia|Fantasie|Fantasiestück|Toccata|Caprice|Capriccio(?!.*(Orchestra))', 'piano'),
+    (r'(?i)Fantasiestück|Toccata|Caprice|Capriccio(?!.*(Orchestra))', 'piano'),
     (r'(?i)Prelude|Präludium|Fugue|Fuge|Fughetta(?!.*(Orchestra|Symphony))', 'piano'),
     (r'(?i)\bVariations? for Piano|\bVariationen für Klavier|Goldberg Variations|Diabelli Variations', 'piano'),
     (r'(?i)Kinderszenen|Albumblatt|Albumblätter|Papillons|Carnaval|Kreisleriana|Davidsbündlertänze|Waldszenen', 'piano'),

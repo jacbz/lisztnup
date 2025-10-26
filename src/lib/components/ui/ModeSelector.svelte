@@ -1,22 +1,27 @@
 <script lang="ts">
-	import type { Preset } from '$lib/types';
-	import { gameData } from '$lib/stores';
+	import type { Preset, WorkCategory, CategoryWeights } from '$lib/types';
+	import { gameData, settings as settingsStore } from '$lib/stores';
 	import { TracklistGenerator } from '$lib/services';
 	import { get } from 'svelte/store';
 	import Popup from './Popup.svelte';
+	import Slider from './Slider.svelte';
 	import { _ } from 'svelte-i18n';
 
 	interface Props {
 		visible?: boolean;
 		selectedPreset?: Preset;
+		categoryWeights?: CategoryWeights;
 		onSelect?: (preset: Preset) => void;
+		onWeightsChange?: (weights: CategoryWeights) => void;
 		onClose?: () => void;
 	}
 
 	let {
 		visible = false,
 		selectedPreset = 'default',
+		categoryWeights = $settingsStore.categoryWeights,
 		onSelect = () => {},
+		onWeightsChange = () => {},
 		onClose = () => {}
 	}: Props = $props();
 
@@ -59,6 +64,18 @@
 
 	function handleSelect(preset: Preset) {
 		onSelect(preset);
+		// Don't close if custom is selected - user needs to configure weights
+		if (preset !== 'custom') {
+			onClose();
+		}
+	}
+
+	function handleWeightChange(category: WorkCategory, value: number) {
+		const newWeights = { ...categoryWeights, [category]: value };
+		onWeightsChange(newWeights);
+	}
+
+	function handleDone() {
 		onClose();
 	}
 </script>
@@ -69,7 +86,8 @@
 	>
 		<h2 class="mb-6 text-2xl font-bold text-cyan-400">{$_('modeSelector.title')}</h2>
 
-		<div class="grid gap-3 md:grid-cols-2">
+		<!-- Mode Selection Grid -->
+		<div class="mb-6 grid gap-3 md:grid-cols-2">
 			{#each presets as preset}
 				<button
 					type="button"
@@ -83,11 +101,14 @@
 						{$_(`settings.presets.${preset.value}`)}
 					</span>
 					<span
-						class="text-sm {selectedPreset === preset.value ? 'text-cyan-100' : 'text-gray-400'}"
+						class="text-sm leading-relaxed {selectedPreset === preset.value
+							? 'text-cyan-100'
+							: 'text-gray-400'}"
 					>
-						{#if preset.value === 'custom'}
-							{$_('settings.presetInfo.custom')}
-						{:else if presetInfoMap[preset.value]}
+						{$_(`modeSelector.descriptions.${preset.value}`)}
+					</span>
+					{#if preset.value !== 'custom' && presetInfoMap[preset.value]}
+						<span class="mt-1 text-xs opacity-70">
 							{$_('settings.presetInfo.default', {
 								values: {
 									composers: presetInfoMap[preset.value]?.composers ?? 0,
@@ -95,12 +116,39 @@
 									tracks: presetInfoMap[preset.value]?.tracks ?? 0
 								}
 							})}
-						{:else}
-							{$_(`modeSelector.descriptions.${preset.value}`)}
-						{/if}
-					</span>
+						</span>
+					{/if}
 				</button>
 			{/each}
 		</div>
+
+		<!-- Category Weights (only visible when custom is selected) -->
+		{#if selectedPreset === 'custom'}
+			<div class="border-t-2 border-gray-700 pt-6">
+				<h3 class="mb-4 text-lg font-semibold text-purple-400">
+					{$_('settings.categoryWeights')}
+				</h3>
+				<div class="mb-6 space-y-4">
+					{#each Object.entries(categoryWeights) as [category, weight]}
+						<Slider
+							value={weight}
+							min={0}
+							max={10}
+							step={0.5}
+							label={$_(`settings.categories.${category}`)}
+							showValue={true}
+							onChange={(val) => handleWeightChange(category as WorkCategory, val)}
+						/>
+					{/each}
+				</div>
+				<button
+					type="button"
+					onclick={handleDone}
+					class="w-full rounded-xl bg-linear-to-r from-cyan-500 to-purple-600 px-6 py-3 font-semibold text-white shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-95"
+				>
+					{$_('modeSelector.done')}
+				</button>
+			</div>
+		{/if}
 	</div>
 </Popup>

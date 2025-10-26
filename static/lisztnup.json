@@ -953,6 +953,22 @@
         ]
       },
       {
+        "gid": "95557a03-c668-3619-ab8f-74a141f277dc",
+        "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
+        "name": "Fantasia no. 4 in C minor, K. 475",
+        "type": "unknown",
+        "begin_year": 1785,
+        "end_year": 1785,
+        "score": 3.58,
+        "parts": [
+          {
+            "name": "Fantasia no. 4 in C minor, K. 475",
+            "deezer": 2444674085,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "6763c20d-f2df-3347-8a0e-7abad42a5a56",
         "composer": "8255db36-4902-4cf6-8612-0f2b4288bc9a",
         "name": "On the Beautiful Blue Danube, op. 314",
@@ -1227,6 +1243,22 @@
         ]
       },
       {
+        "gid": "17c5bf4e-cf3a-3c9a-b127-5b62662a991e",
+        "composer": "8255db36-4902-4cf6-8612-0f2b4288bc9a",
+        "name": "Emperor Waltz, op. 437",
+        "type": "unknown",
+        "begin_year": 1889,
+        "end_year": 1889,
+        "score": 3.09,
+        "parts": [
+          {
+            "name": "Emperor Waltz, op. 437",
+            "deezer": 2768357321,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "d36844df-c927-3678-a1a4-5a47a7212220",
         "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
         "name": "Ich ruf zu dir, Herr Jesu Christ, BWV 639",
@@ -1417,6 +1449,52 @@
         ]
       },
       {
+        "gid": "1b9379af-25ea-4cec-acea-6e06d9d4093f",
+        "composer": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
+        "name": "7 Fantasias, op. 116",
+        "type": "unknown",
+        "begin_year": 1892,
+        "end_year": 1892,
+        "score": 2.82,
+        "parts": [
+          {
+            "name": "7 Fantasias, op. 116: No. 1 in D minor. Capriccio. Presto energico",
+            "deezer": 396420892,
+            "score": 89.63
+          },
+          {
+            "name": "7 Fantasias, op. 116: No. 2 in A minor. Intermezzo. Andante",
+            "deezer": 1649000672,
+            "score": 91.97
+          },
+          {
+            "name": "7 Fantasias, op. 116: No. 3 in G minor. Capriccio. Allegro passionato",
+            "deezer": 1649000682,
+            "score": 87.11
+          },
+          {
+            "name": "7 Fantasias, op. 116: No. 4 in E major. Intermezzo. Adagio",
+            "deezer": 396420902,
+            "score": 100.0
+          },
+          {
+            "name": "7 Fantasias, op. 116: No. 5 in E minor. Intermezzo. Andante con grazia ed intimissimo sentimento",
+            "deezer": 1649000702,
+            "score": 94.16
+          },
+          {
+            "name": "7 Fantasias, op. 116: No. 6 in E major. Intermezzo. Andanti teneramente",
+            "deezer": 1649000712,
+            "score": 89.63
+          },
+          {
+            "name": "7 Fantasias, op. 116: No. 7 in D minor. Capriccio. Allegro agitato",
+            "deezer": 1649000722,
+            "score": 87.11
+          }
+        ]
+      },
+      {
         "gid": "d4abeff1-5db2-470e-968f-f66be99c6049",
         "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
         "name": "Serenade no. 12 for Winds in C minor, K. 384a/388 \"Nacht musique\"",
@@ -1496,6 +1574,22 @@
         ]
       },
       {
+        "gid": "4158a0a6-19f7-48c0-b2c8-2ed183402f3e",
+        "composer": "f6486fc7-90ef-48ad-8ca3-905af1354afe",
+        "name": "Fantasie in F-sharp minor, H 300, Wq. 67",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 2.71,
+        "parts": [
+          {
+            "name": "Fantasie in F-sharp minor, H 300, Wq. 67",
+            "deezer": 71861988,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "aae3bff6-174f-378a-93ce-d50f9112febf",
         "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
         "name": "Herr Christ, der ein'ge Gottessohn, BWV 601",
@@ -1507,6 +1601,22 @@
           {
             "name": "Herr Christ, der ein'ge Gottessohn, BWV 601",
             "deezer": 1522710682,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "982af684-2449-35de-abdb-04dfcd61358b",
+        "composer": "2cd475bb-1abd-40c4-9904-6d4b691c752c",
+        "name": "Mephisto Waltz no. 1, S. 514 \"Der Tanz in der Dorfschenke\"",
+        "type": "unknown",
+        "begin_year": 1860,
+        "end_year": 1860,
+        "score": 2.71,
+        "parts": [
+          {
+            "name": "Mephisto Waltz no. 1, S. 514 \"Der Tanz in der Dorfschenke\"",
+            "deezer": 6959562,
             "score": 100.0
           }
         ]
@@ -1672,6 +1782,22 @@
             "name": "Serenade no. 9 in D major, K. 320 \"Posthorn\": VII. Finale. Presto",
             "deezer": 66243523,
             "score": 97.45
+          }
+        ]
+      },
+      {
+        "gid": "69bd825f-a2d7-389a-a035-039101d98a38",
+        "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
+        "name": "Fantasia for Mechanical Organ in F minor, K. 608",
+        "type": "unknown",
+        "begin_year": 1791,
+        "end_year": 1791,
+        "score": 2.64,
+        "parts": [
+          {
+            "name": "Fantasia for Mechanical Organ in F minor, K. 608",
+            "deezer": 71883650,
+            "score": 100.0
           }
         ]
       },
@@ -2210,6 +2336,22 @@
         ]
       },
       {
+        "gid": "40003498-54e1-316a-95e6-99e2ef224309",
+        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
+        "name": "Fantasia super \"Jesu, meine Freude\", BWV 713",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 2.4,
+        "parts": [
+          {
+            "name": "Fantasia super \"Jesu, meine Freude\", BWV 713",
+            "deezer": 7791026,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "9a9d5320-053b-3ce2-9225-84395e9becc4",
         "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
         "name": "Gelobet seist du, Jesu Christ, BWV 604",
@@ -2727,6 +2869,22 @@
         ]
       },
       {
+        "gid": "5e6ae2e4-823a-349b-994f-47201434c8f5",
+        "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
+        "name": "Fantasia for Mechanical Organ in F minor, K. 594: Adagio - Allegro",
+        "type": "unknown",
+        "begin_year": 1790,
+        "end_year": 1790,
+        "score": 2.3,
+        "parts": [
+          {
+            "name": "Fantasia for Mechanical Organ in F minor, K. 594: Adagio - Allegro",
+            "deezer": 2800519322,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "3c55e424-513f-328b-b41d-d8976c167c43",
         "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
         "name": "Hear My Prayer, O Lord, Z. 15",
@@ -2791,6 +2949,22 @@
           {
             "name": "Légende, op. 17",
             "deezer": 2310183045,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "06780369-eaa0-39cb-84ad-fe51fe2e3153",
+        "composer": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
+        "name": "16 Waltzes, op. 39",
+        "type": "unknown",
+        "begin_year": 1865,
+        "end_year": 1865,
+        "score": 2.29,
+        "parts": [
+          {
+            "name": "Walzer, op. 39: Nr. 15 As-dur",
+            "deezer": 1582433172,
             "score": 100.0
           }
         ]
@@ -3481,6 +3655,22 @@
         ]
       },
       {
+        "gid": "d45aab77-ae3f-4a03-8fc5-c4ed80df7ce5",
+        "composer": "2cd475bb-1abd-40c4-9904-6d4b691c752c",
+        "name": "Valses oubliées, S. 215",
+        "type": "unknown",
+        "begin_year": 1881,
+        "end_year": 1885,
+        "score": 2.17,
+        "parts": [
+          {
+            "name": "Valse oubliée no. 1, S. 215 no. 1",
+            "deezer": 915300602,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "31c4ff6c-609e-48be-8fba-2fee2a8af695",
         "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
         "name": "Birthday Ode for Queen Mary \"Come Ye Sons of Art\", Z. 323",
@@ -4056,6 +4246,22 @@
         ]
       },
       {
+        "gid": "93a379b0-03df-3142-a16b-b17e1a400c05",
+        "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
+        "name": "Fantasia no. 2 in C minor, K. 385f / 396",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 2.08,
+        "parts": [
+          {
+            "name": "Fantasia no. 2 in C minor, K. 385f / 396",
+            "deezer": 2444674145,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "06518142-0960-41e8-a667-f6ee69572042",
         "composer": "f91e3a88-24ee-4563-8963-fab73d2765ed",
         "name": "Divertissement sur des motifs originaux français, D. 823",
@@ -4146,6 +4352,22 @@
           {
             "name": "Leichtes Blut Galop, op. 319",
             "deezer": 2787541502,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "840f637a-ddeb-3b7a-8db2-a84da9744d7f",
+        "composer": "9942ef92-91a2-46f7-aff4-32389df33c9e",
+        "name": "Delirien Waltz, op. 212",
+        "type": "unknown",
+        "begin_year": 1867,
+        "end_year": 1867,
+        "score": 2.08,
+        "parts": [
+          {
+            "name": "Delirien Waltz, op. 212",
+            "deezer": 2792714142,
             "score": 100.0
           }
         ]
@@ -4418,6 +4640,22 @@
         ]
       },
       {
+        "gid": "7880d4a3-13e8-37cc-96ca-8695cc46fe80",
+        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
+        "name": "Fantasia super: Christ lag in Todesbanden, BWV 695",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.95,
+        "parts": [
+          {
+            "name": "Fantasia super: Christ lag in Todesbanden, BWV 695",
+            "deezer": 7791008,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "67e78c4f-a5f6-337d-b656-b173de3a502a",
         "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
         "name": "Gott, durch deine Güte (Gottes Sohn ist kommen), BWV 724",
@@ -4498,6 +4736,22 @@
           {
             "name": "Sechs Choräle von Verschiedener Art (Schübler-Choräle): Wachet auf, ruft uns die Stimme, BWV 645",
             "deezer": 3325601241,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "4b381e10-450e-3199-ace0-8e446ffc5a1a",
+        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
+        "name": "Valet will ich dir geben (fantasia super), BWV 735",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.95,
+        "parts": [
+          {
+            "name": "Valet will ich dir geben (fantasia super), BWV 735",
+            "deezer": 7791048,
             "score": 100.0
           }
         ]
@@ -4662,6 +4916,22 @@
           {
             "name": "Sonata in C major, K 95, L 358: -",
             "deezer": 2306985385,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "af3372ee-902d-3bf1-839a-ab6034a86cfc",
+        "composer": "3cd3882c-00f8-4362-a0c2-ad89ed248533",
+        "name": "Fantasie für Violine und Orchester C-dur, op. 131",
+        "type": "unknown",
+        "begin_year": 1853,
+        "end_year": 1853,
+        "score": 1.95,
+        "parts": [
+          {
+            "name": "Fantasie für Violine und Orchester C-dur, op. 131",
+            "deezer": 124185100,
             "score": 100.0
           }
         ]
@@ -5017,6 +5287,38 @@
           {
             "name": "Christus, der uns selig macht, BWV 747",
             "deezer": 1526168372,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "176c9e4a-67fa-3fb1-8d8d-dc39e7b3c627",
+        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
+        "name": "Fantasia con imitazione h-Moll, BWV 563",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.79,
+        "parts": [
+          {
+            "name": "Fantasia con imitazione h-Moll, BWV 563",
+            "deezer": 1748595007,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "2844c4b8-d453-37ad-8257-30449a98bd5a",
+        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
+        "name": "Fantasie c-Moll, BWV 1121",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.79,
+        "parts": [
+          {
+            "name": "Fantasie c-Moll, BWV 1121",
+            "deezer": 1748595137,
             "score": 100.0
           }
         ]
@@ -5438,47 +5740,6 @@
         ]
       },
       {
-        "gid": "fdd00d19-25eb-4c20-8e55-8f02c233727b",
-        "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
-        "name": "Divertimento no. 10 for 2 Horns, 2 Violins, Viola & Double Bass in F major, K. 247 \"Lodronische Nachtmusik\"",
-        "type": "unknown",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.79,
-        "parts": [
-          {
-            "name": "Divertimento no. 10 for 2 Horns, 2 Violins, Viola & Double Bass in F major, K. 247 \"Lodronische Nachtmusik\": I. Allegro",
-            "deezer": 532426862,
-            "score": 100.0
-          },
-          {
-            "name": "Divertimento no. 10 for 2 Horns, 2 Violins, Viola & Double Bass in F major, K. 247 \"Lodronische Nachtmusik\": II. Andante grazioso",
-            "deezer": 532426872,
-            "score": 100.0
-          },
-          {
-            "name": "Divertimento no. 10 for 2 Horns, 2 Violins, Viola & Double Bass in F major, K. 247 \"Lodronische Nachtmusik\": III. Minuetto",
-            "deezer": 532426882,
-            "score": 100.0
-          },
-          {
-            "name": "Divertimento no. 10 for 2 Horns, 2 Violins, Viola & Double Bass in F major, K. 247 \"Lodronische Nachtmusik\": IV. Adagio",
-            "deezer": 532426892,
-            "score": 100.0
-          },
-          {
-            "name": "Divertimento no. 10 for 2 Horns, 2 Violins, Viola & Double Bass in F major, K. 247 \"Lodronische Nachtmusik\": V. Minuetto",
-            "deezer": 532426902,
-            "score": 100.0
-          },
-          {
-            "name": "Divertimento no. 10 for 2 Horns, 2 Violins, Viola & Double Bass in F major, K. 247 \"Lodronische Nachtmusik\": VI. Andante - Allegro assai",
-            "deezer": 532426912,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "89eee92d-3ea6-4f38-9036-f68f74da2414",
         "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
         "name": "Divertimento no. 12 for 2 Oboes, 2 Horns & 2 Bassoons in E-flat major, K. 240a/252",
@@ -5669,6 +5930,22 @@
         ]
       },
       {
+        "gid": "be482645-9064-3ea1-8fb1-45407f8ce722",
+        "composer": "8255db36-4902-4cf6-8612-0f2b4288bc9a",
+        "name": "Accelerations Waltz, op. 234",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.79,
+        "parts": [
+          {
+            "name": "Accelerations Waltz, op. 234",
+            "deezer": 1614050642,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "dd995231-b239-325a-b606-1d34408e9dd0",
         "composer": "8255db36-4902-4cf6-8612-0f2b4288bc9a",
         "name": "Vergnügungszug, op. 281",
@@ -5818,6 +6095,37 @@
         ]
       },
       {
+        "gid": "2fb90abe-398d-4589-b376-02ecd4d4dfcd",
+        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
+        "name": "12 Fantasias for Violin without Bass, TWV 40:14-25",
+        "type": "unknown",
+        "begin_year": 1735,
+        "end_year": 1735,
+        "score": 1.75,
+        "parts": [
+          {
+            "name": "Fantasia in B major, TWV 40:22: I. Siciliana",
+            "deezer": 2786364902,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in B major, TWV 40:22: II. Vivace",
+            "deezer": 2786364912,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in B major, TWV 40:22: III. Allegro",
+            "deezer": 2786364922,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in F major, TWV 40:24: I. Un poco vivace",
+            "deezer": 1487966152,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "9d777eb5-fa61-4a42-8503-769d7051a89e",
         "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
         "name": "Divertimento no. 9 for 2 Oboes, 2 Horns & 2 Bassoons in B-flat major, K. 240",
@@ -5892,6 +6200,43 @@
           {
             "name": "Polovtsian Dances no. 8, “Dance of the Polovtsian Maidens”: Presto, 6/8, F major",
             "deezer": 2552277632,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "392e79df-0931-383b-93df-965791053282",
+        "composer": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
+        "name": "16 Waltzes, op. 39",
+        "type": "unknown",
+        "begin_year": 1865,
+        "end_year": 1865,
+        "score": 1.68,
+        "parts": [
+          {
+            "name": "16 Waltzes, op. 39: No. 11 in B minor",
+            "deezer": 3095322051,
+            "score": 100.0
+          },
+          {
+            "name": "16 Waltzes, op. 39: No. 15 in A-flat major",
+            "deezer": 1395235062,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "3b01d683-f3ec-4d43-a6ef-e067e366ebce",
+        "composer": "1f9df192-a621-4f54-8850-2c5373b7eac9",
+        "name": "Music for a Knight's Ballet, WoO 1",
+        "type": "unknown",
+        "begin_year": 1790,
+        "end_year": 1790,
+        "score": 1.63,
+        "parts": [
+          {
+            "name": "Musik zu einem Ritterballett, WoO 1: II. Deutscher Gesang. Allegro moderato",
+            "deezer": 3381848891,
             "score": 100.0
           }
         ]
@@ -6068,6 +6413,22 @@
           {
             "name": "Ehre sei dir, Christe, der du leidest Not, BWV 1097",
             "deezer": 138872149,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "37043dac-5863-4b00-88e5-ccf85f59d772",
+        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
+        "name": "Fantasia sur « Wo Gott der Herr nicht bei uns halt », BWV 1128",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.61,
+        "parts": [
+          {
+            "name": "Fantasia sur « Wo Gott der Herr nicht bei uns halt », BWV 1128",
+            "deezer": 1526168322,
             "score": 100.0
           }
         ]
@@ -6452,6 +6813,22 @@
           {
             "name": "Joyeuse marche",
             "deezer": 126772643,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "15c4958f-62b5-4dea-ab9d-af0a35acc78a",
+        "composer": "8e547295-32b8-403c-ac33-41423422fe3f",
+        "name": "16 Valses Favorites de Johann Strauss, op. 7",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.61,
+        "parts": [
+          {
+            "name": "16 Valses Favorites de Johann Strauss, op. 7",
+            "deezer": 3351526111,
             "score": 100.0
           }
         ]
@@ -7003,6 +7380,70 @@
         ]
       },
       {
+        "gid": "7f69f2d0-d8b8-3316-a9e6-61c814fdc210",
+        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
+        "name": "Fantasia for strings No. 10, Z. 741",
+        "type": "unknown",
+        "begin_year": 1680,
+        "end_year": 1680,
+        "score": 1.61,
+        "parts": [
+          {
+            "name": "Fantasia for strings No. 10, Z. 741",
+            "deezer": 2618844302,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "b2d9fa15-f97c-3d1c-8331-027a4405f10f",
+        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
+        "name": "Fantasia for strings No. 11, Z. 742",
+        "type": "unknown",
+        "begin_year": 1680,
+        "end_year": 1680,
+        "score": 1.61,
+        "parts": [
+          {
+            "name": "Fantasia for strings No. 11, Z. 742",
+            "deezer": 2618844312,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "7f6635a4-056a-37fa-93bd-7847b620fb06",
+        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
+        "name": "Fantasia for strings No. 6, Z. 737",
+        "type": "unknown",
+        "begin_year": 1680,
+        "end_year": 1680,
+        "score": 1.61,
+        "parts": [
+          {
+            "name": "Fantasia for strings No. 6, Z. 737",
+            "deezer": 2618844242,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "4649f1b9-3264-3c0a-9382-8caf1932de6f",
+        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
+        "name": "Fantasia for strings No. 8, Z. 739",
+        "type": "unknown",
+        "begin_year": 1680,
+        "end_year": 1680,
+        "score": 1.61,
+        "parts": [
+          {
+            "name": "Fantasia for strings No. 8, Z. 739",
+            "deezer": 2618844272,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "d818fbff-b0e5-46e4-a269-64bac1f7fd18",
         "composer": "f91e3a88-24ee-4563-8963-fab73d2765ed",
         "name": "Sechs Melodien von Franz Schubert, S. 563",
@@ -7118,6 +7559,22 @@
         ]
       },
       {
+        "gid": "ddd082b1-083e-43d3-889b-136acb97bb93",
+        "composer": "8255db36-4902-4cf6-8612-0f2b4288bc9a",
+        "name": "Lagunen-Walzer, op. 411",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.61,
+        "parts": [
+          {
+            "name": "Lagunen-Walzer, op. 411",
+            "deezer": 65342716,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "577ff828-99dd-3753-b046-e33feac220c5",
         "composer": "8255db36-4902-4cf6-8612-0f2b4288bc9a",
         "name": "Morgenblätter, op. 279",
@@ -7134,6 +7591,22 @@
         ]
       },
       {
+        "gid": "75c83b7a-6d8c-40bf-a83e-2f95d3f80a3f",
+        "composer": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
+        "name": "6 Pieces, op. 51 no. 6: Valse sentimentale",
+        "type": "unknown",
+        "begin_year": 1882,
+        "end_year": 1882,
+        "score": 1.61,
+        "parts": [
+          {
+            "name": "6 Pieces, op. 51 no. 6: Valse sentimentale",
+            "deezer": 102777572,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "3fc55991-443e-4b46-b0cc-6ce2085a3fd4",
         "composer": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
         "name": "Souvenir d’un lieu cher, op. 42: III. Mélodie",
@@ -7145,6 +7618,84 @@
           {
             "name": "Souvenir d’un lieu cher, op. 42: III. Mélodie",
             "deezer": 65658310,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "ab7efd1d-396b-4185-8538-b0f194f93fef",
+        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
+        "name": "Fantasia in C minor, TWV 40:26",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.61,
+        "parts": [
+          {
+            "name": "Fantasia in C minor, TWV 40:26: I. Adagio – Allegro",
+            "deezer": 2776073441,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in C minor, TWV 40:26: II. Allegro",
+            "deezer": 2776073451,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "32a6fa4e-84b9-4818-8e18-dd08cd425c59",
+        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
+        "name": "Fantasia in D major, TWV 40:27",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.61,
+        "parts": [
+          {
+            "name": "Fantasia in D major, TWV 40:27: I. Vivace",
+            "deezer": 2776073461,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in D major, TWV 40:27: II. Andante",
+            "deezer": 2776073471,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in D major, TWV 40:27: III. Vivace",
+            "deezer": 2776073471,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in D major, TWV 40:27: IV. Presto",
+            "deezer": 2776073481,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "fe219c96-943f-418a-b784-5299e6c08ac0",
+        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
+        "name": "Fantasia in E minor, TWV 40:28",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.61,
+        "parts": [
+          {
+            "name": "Fantasia in E minor, TWV 40:28: I. Largo",
+            "deezer": 2776073491,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in E minor, TWV 40:28: II. Presto",
+            "deezer": 2776073501,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in E minor, TWV 40:28: III. Vivace",
+            "deezer": 2776073511,
             "score": 100.0
           }
         ]
@@ -7383,6 +7934,22 @@
         ]
       },
       {
+        "gid": "090ef217-d79d-43d3-a17d-ba7a7f7f0a40",
+        "composer": "f6486fc7-90ef-48ad-8ca3-905af1354afe",
+        "name": "Fantasia in D major, Wq 117 no. 14, H 160",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia in D major, Wq 117 no. 14, H 160",
+            "deezer": 1785021737,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "c1d6c1a6-2fdf-3a0b-9acc-14ab00fbe743",
         "composer": "f6486fc7-90ef-48ad-8ca3-905af1354afe",
         "name": "Marche in G major, BWV Anh. 124, H. 1/3",
@@ -7538,6 +8105,90 @@
           {
             "name": "Erhalt uns, Herr, bei deinem Wort, BWV Anh. 50",
             "deezer": 525444652,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "1b34ee8a-521a-3288-aa84-7bea99f172a1",
+        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
+        "name": "Fantasia a-Moll, BWV 922",
+        "type": "unknown",
+        "begin_year": 1707,
+        "end_year": 1710,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia a-Moll, BWV 922",
+            "deezer": 2769644031,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "cc815d5b-7980-33d6-a11e-6c657700315a",
+        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
+        "name": "Fantasia In G Major",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia G-Dur, BWV 572: I. Trés vitement",
+            "deezer": 65687405,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia G-Dur, BWV 572: II. Gravement",
+            "deezer": 65687406,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia G-Dur, BWV 572: III. Lentement",
+            "deezer": 65687407,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "c3f5b274-3977-3d9c-92d9-86030ea22e70",
+        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
+        "name": "Fantasie G-Dur, BWV 571",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasie G-Dur, BWV 571: I. Allegro",
+            "deezer": 1748595317,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasie G-Dur, BWV 571: II. Adagio",
+            "deezer": 1748595327,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasie G-Dur, BWV 571: III. Allegro",
+            "deezer": 1748595337,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "11aa8eb7-dc56-3380-9e2f-03b7a49f6589",
+        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
+        "name": "Fantasie g-Moll, BWV 917",
+        "type": "unknown",
+        "begin_year": 1710,
+        "end_year": 1710,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasie g-Moll, BWV 917",
+            "deezer": 7791079,
             "score": 100.0
           }
         ]
@@ -7920,6 +8571,22 @@
         ]
       },
       {
+        "gid": "5a4dd2c0-caa9-3eb5-a060-ff9c8f5242af",
+        "composer": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
+        "name": "Fantasia on 'Wie schön leuchtet der Morgenstern', BuxWV 223",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia on 'Wie schön leuchtet der Morgenstern', BuxWV 223",
+            "deezer": 138312751,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "8b591369-933a-34e8-a738-71ad99619c54",
         "composer": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
         "name": "Gelobet seist du, Jesu Christ, BuxWV 189",
@@ -8091,6 +8758,38 @@
           {
             "name": "Andantino quietoso, op. 6, CFF 115",
             "deezer": 2804786952,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "35c02b7e-038c-4f74-880c-5f7252c9edab",
+        "composer": "e539699a-5cb3-4f73-b60f-691b1499d0af",
+        "name": "Valse-fantaisie",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Valse-fantaisie",
+            "deezer": 3315510,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "ee961390-dcdd-42e7-ba5a-73646bdb8199",
+        "composer": "cd4636e1-06a3-41fc-848a-624b84bbb023",
+        "name": "Concert Waltz (from Faust)",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Concert Waltz (from Faust)",
+            "deezer": 2949644261,
             "score": 100.0
           }
         ]
@@ -8313,6 +9012,22 @@
         ]
       },
       {
+        "gid": "0b3aaebb-2a32-4b57-8887-eaa0b9d3863f",
+        "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
+        "name": "Fantasia for Mechanical Organ in F minor, BV B 91",
+        "type": "unknown",
+        "begin_year": 1791,
+        "end_year": 1791,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia for Mechanical Organ in F minor, BV B 91",
+            "deezer": 2607587052,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "e9896e95-1151-44d4-9b60-236e57d88e30",
         "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
         "name": "Piano piece in C, K. 671",
@@ -8388,6 +9103,22 @@
           {
             "name": "Une larme",
             "deezer": 670794122,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "e77ae2ae-6bfa-4c2f-a41e-4335d7ab248b",
+        "composer": "2251b277-2dfb-4cf1-83f3-27e29f902440",
+        "name": "Fantasia in E-flat major, P. 127, T. 254",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia in E-flat major, P. 127, T. 254",
+            "deezer": 66318971,
             "score": 100.0
           }
         ]
@@ -8617,6 +9348,166 @@
         ]
       },
       {
+        "gid": "5ba4551f-5197-3b64-984f-cb7701bb4f73",
+        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
+        "name": "Fantasia for strings No. 1, Z. 732",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia for strings No. 1, Z. 732",
+            "deezer": 2618844352,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "c636e9f6-85d1-36a3-8ac8-b7ab67a6d143",
+        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
+        "name": "Fantasia for strings No. 12, Z. 743",
+        "type": "unknown",
+        "begin_year": 1680,
+        "end_year": 1680,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia for strings No. 12, Z. 743",
+            "deezer": 2618844322,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "b1838ee6-d651-398e-95ee-5a1077c84c3b",
+        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
+        "name": "Fantasia for strings No. 2, Z. 733",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia for strings No. 2, Z. 733",
+            "deezer": 2618844362,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "529bfa63-13b4-3f72-ae11-760f7ff22557",
+        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
+        "name": "Fantasia for strings No. 3, Z. 734",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia for strings No. 3, Z. 734",
+            "deezer": 2618844372,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "32ec4b1e-e98d-3ac6-b45e-9e344603d19d",
+        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
+        "name": "Fantasia for strings No. 4, Z. 735",
+        "type": "unknown",
+        "begin_year": 1680,
+        "end_year": 1680,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia for strings No. 4, Z. 735",
+            "deezer": 2618844212,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "fc9658d9-c232-36cb-92d2-789b82cdee9b",
+        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
+        "name": "Fantasia for strings No. 5, Z. 736",
+        "type": "unknown",
+        "begin_year": 1680,
+        "end_year": 1680,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia for strings No. 5, Z. 736",
+            "deezer": 2618844222,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "7765904a-dbe6-3373-86fb-638fbfa4336d",
+        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
+        "name": "Fantasia for strings No. 7, Z. 738",
+        "type": "unknown",
+        "begin_year": 1680,
+        "end_year": 1680,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia for strings No. 7, Z. 738",
+            "deezer": 2618844252,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "7b3de139-250b-35ac-9d57-0b32defac974",
+        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
+        "name": "Fantasia for strings No. 9, Z. 740",
+        "type": "unknown",
+        "begin_year": 1680,
+        "end_year": 1680,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia for strings No. 9, Z. 740",
+            "deezer": 2618844282,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "00607609-fe2d-388f-864e-679bffc00a25",
+        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
+        "name": "Fantasia for strings upon one note, Z. 745",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia for strings upon one note, Z. 745",
+            "deezer": 2618844342,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "735a94d2-5c2c-39c8-80ae-6946defe0d1a",
+        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
+        "name": "Fantasia, 3 parts on a Ground for three recorders, Z. 731",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia, 3 parts on a Ground for three recorders, Z. 731",
+            "deezer": 3231093261,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "670cdde1-a562-40d6-bd84-5536a573800f",
         "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
         "name": "I was glad when they said unto me, Z. 19",
@@ -8761,6 +9652,37 @@
         ]
       },
       {
+        "gid": "5ace0f06-d3d8-4ee8-8731-4dfe3acacc59",
+        "composer": "f91e3a88-24ee-4563-8963-fab73d2765ed",
+        "name": "Fantasia in F minor, op. 103, D. 940",
+        "type": "unknown",
+        "begin_year": 1828,
+        "end_year": 1828,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia in F minor, op. 103, D. 940: I. Allegro molto moderato",
+            "deezer": 1557423032,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in F minor, op. 103, D. 940: II. Largo",
+            "deezer": 1557423042,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in F minor, op. 103, D. 940: III. Scherzo. Allegro vivace",
+            "deezer": 1557423052,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in F minor, op. 103, D. 940: IV. Finale. Allegro molto moderato",
+            "deezer": 1557423062,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "f02e5835-4695-425e-867b-0b40af4f2ff0",
         "composer": "f91e3a88-24ee-4563-8963-fab73d2765ed",
         "name": "Fantasy in F minor (after Schubert)",
@@ -8804,6 +9726,22 @@
           {
             "name": "Rondo for violin and strings in A major, D. 438",
             "deezer": 71835711,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "6fe8b512-1188-4d0a-a1be-984849414fc4",
+        "composer": "f91e3a88-24ee-4563-8963-fab73d2765ed",
+        "name": "Rosamunde, D. 797: Ballet Music no. 1",
+        "type": "unknown",
+        "begin_year": 1823,
+        "end_year": 1823,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Rosamunde, D. 797: Ballet Music no. 1",
+            "deezer": 909481852,
             "score": 100.0
           }
         ]
@@ -8904,6 +9842,22 @@
         ]
       },
       {
+        "gid": "5a498219-a200-3402-93ca-1ea4b9d83a60",
+        "composer": "8255db36-4902-4cf6-8612-0f2b4288bc9a",
+        "name": "Treasure-Waltz, Op. 418",
+        "type": "unknown",
+        "begin_year": 1885,
+        "end_year": 1885,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Treasure-Waltz, Op. 418",
+            "deezer": 2768357341,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "ed538401-17dd-3d0b-a891-cc0258a4a06c",
         "composer": "8255db36-4902-4cf6-8612-0f2b4288bc9a",
         "name": "Wiener Bonbons, op. 307",
@@ -8984,6 +9938,27 @@
         ]
       },
       {
+        "gid": "b908a5cf-5909-4aa6-9f47-d3024b917d08",
+        "composer": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
+        "name": "Concert Fantasia, op. 56",
+        "type": "unknown",
+        "begin_year": 1884,
+        "end_year": 1884,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Concert Fantasy for Piano and Orchestra, op. 56: I. Quasi Rondo",
+            "deezer": 2444663255,
+            "score": 100.0
+          },
+          {
+            "name": "Concert Fantasy for Piano and Orchestra, op. 56: II. Contrastes",
+            "deezer": 2444663265,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "6b6b815e-0dd1-41c1-866b-65f356101c3f",
         "composer": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
         "name": "Souvenir de Hapsal, op. 2: III. Chant sans paroles",
@@ -8995,6 +9970,204 @@
           {
             "name": "Souvenir de Hapsal, op. 2: III. Chant sans paroles",
             "deezer": 3496686,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "0ba0ac65-42da-4644-b21a-48f7edaa932e",
+        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
+        "name": "Fantasia in A major, TWV 40:33",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia in A major, TWV 40:33: I. Allegro",
+            "deezer": 2776073641,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in A major, TWV 40:33: II. Grave",
+            "deezer": 2776073651,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in A major, TWV 40:33: III. Vivace",
+            "deezer": 2776073661,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "578230ac-81b9-4c03-97ea-e91f6205898b",
+        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
+        "name": "Fantasia in C major, TWV 40:34",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia in C major, TWV 40:34: I. Presto",
+            "deezer": 2776073671,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in C major, TWV 40:34: II. Grave",
+            "deezer": 2776073681,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in C major, TWV 40:34: III. Allegro",
+            "deezer": 2776073691,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "524ff9c2-c3a4-4fda-9e48-7f7cc71b2ac8",
+        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
+        "name": "Fantasia in D minor, TWV 40:36",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia in D minor, TWV 40:36: I. Allegro",
+            "deezer": 2776073731,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in D minor, TWV 40:36: II. Grave",
+            "deezer": 2776073741,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in D minor, TWV 40:36: III. Allegro",
+            "deezer": 2776073751,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "e166b679-ff03-46bf-9c1f-e939880f1c4e",
+        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
+        "name": "Fantasia in E major, TWV 40:35",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia in E major, TWV 40:35: I. Dolce – Allegro",
+            "deezer": 2776073701,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in E major, TWV 40:35: II. Siciliana",
+            "deezer": 2776073711,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in E major, TWV 40:35: III. Scherzando",
+            "deezer": 2776073721,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "f9694727-5def-49a0-9130-bc632c4d9cc4",
+        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
+        "name": "Fantasia in F major, TWV 40:29",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia in F major, TWV 40:29: I. Vivace",
+            "deezer": 2776073521,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in F major, TWV 40:29: II. Grave",
+            "deezer": 2776073531,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in F major, TWV 40:29: III. Allegro",
+            "deezer": 2776073541,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "9bbcc848-3877-45d6-9714-411e362d3228",
+        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
+        "name": "Fantasia in G major, TWV 40:31",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia in G major, TWV 40:31: I. Scherzando",
+            "deezer": 2776073581,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in G major, TWV 40:31: II. Dolce",
+            "deezer": 2776073591,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in G major, TWV 40:31: III. Spirituoso",
+            "deezer": 2776073601,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "4b144d65-49f2-4f3b-be92-7b5738c8c2d3",
+        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
+        "name": "Fantasia in G minor, TWV 40:32",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia in G minor, TWV 40:32: I. Andante",
+            "deezer": 2776073611,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in G minor, TWV 40:32: II. Vivace",
+            "deezer": 2776073621,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia in G minor, TWV 40:32: III. Allegro",
+            "deezer": 2776073631,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "7528f5af-ec7d-4c13-a441-02dff788c471",
+        "composer": "480aa5f2-97e6-4e79-a364-6629d7b63b55",
+        "name": "Fantasia on Rossini's 'La Donna del Lago', op. 40",
+        "type": "unknown",
+        "begin_year": 1840,
+        "end_year": 1840,
+        "score": 1.39,
+        "parts": [
+          {
+            "name": "Fantasia on Rossini's 'La Donna del Lago', op. 40",
+            "deezer": 1011814082,
             "score": 100.0
           }
         ]
@@ -9538,6 +10711,53 @@
           {
             "name": "12 estudios, op. 29: N.º 13 en si mayor",
             "deezer": 2439142275,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "6250d7da-8672-4da2-9b7c-913624b26496",
+        "composer": "f91e3a88-24ee-4563-8963-fab73d2765ed",
+        "name": "34 Valses sentimentales, D. 779",
+        "type": "unknown",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.26,
+        "parts": [
+          {
+            "name": "34 Valses sentimentales, D. 779: Nr. 1",
+            "deezer": 2377553655,
+            "score": 100.0
+          }
+        ]
+      },
+      {
+        "gid": "38b77958-aa1e-4e71-9427-17c45476b88b",
+        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
+        "name": "12 Fantasias for Flute without Bass, TWV 40:2-13",
+        "type": "unknown",
+        "begin_year": 1733,
+        "end_year": 1733,
+        "score": 1.26,
+        "parts": [
+          {
+            "name": "Fantasia no. 3 in B minor, TWV 40:4: I. Largo - Vivace",
+            "deezer": 1578453072,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia no. 3 in B minor, TWV 40:4: II. Allegro",
+            "deezer": 1578453082,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia no. 9 in E major, TWV 40:10: III. Grave - Vivace",
+            "deezer": 1578453252,
+            "score": 100.0
+          },
+          {
+            "name": "Fantasia no. 11 in G major, TWV 40:12: II. Adagio – Vivace",
+            "deezer": 1578453312,
             "score": 100.0
           }
         ]
@@ -21005,6 +22225,22 @@
         ]
       },
       {
+        "gid": "76486bff-1b97-3800-a1e8-757d83983858",
+        "composer": "1f9df192-a621-4f54-8850-2c5373b7eac9",
+        "name": "12 Variations for Piano in A major on a Russian Dance from Paul Wranitzky's ballet \"Das Waldmädchen\", WoO 71",
+        "type": "vocal",
+        "begin_year": 1796,
+        "end_year": 1797,
+        "score": 1.61,
+        "parts": [
+          {
+            "name": "12 Variations for Piano in A major on a Russian Dance from Paul Wranitzky's ballet \"Das Waldmädchen\", WoO 71",
+            "deezer": 2770741881,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "b4069c57-523c-4b58-8bc0-63128b07a31b",
         "composer": "1f9df192-a621-4f54-8850-2c5373b7eac9",
         "name": "8 Lieder, op. 52",
@@ -31222,22 +32458,6 @@
         ]
       },
       {
-        "gid": "3b01d683-f3ec-4d43-a6ef-e067e366ebce",
-        "composer": "1f9df192-a621-4f54-8850-2c5373b7eac9",
-        "name": "Music for a Knight's Ballet, WoO 1",
-        "type": "ballet",
-        "begin_year": 1790,
-        "end_year": 1790,
-        "score": 1.63,
-        "parts": [
-          {
-            "name": "Musik zu einem Ritterballett, WoO 1: II. Deutscher Gesang. Allegro moderato",
-            "deezer": 3381848891,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "6742b25e-1012-48cd-9b00-ec4353ccee56",
         "composer": "fd14da1b-3c2d-4cc8-9ca6-fc8c62ce6988",
         "name": "The Wooden Prince, op. 13, Sz. 60",
@@ -31249,22 +32469,6 @@
           {
             "name": "The Wooden Prince, Sz. 60: V. Dance 4: Dance of the Princess With the Wooden Doll",
             "deezer": 2079362807,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "76486bff-1b97-3800-a1e8-757d83983858",
-        "composer": "1f9df192-a621-4f54-8850-2c5373b7eac9",
-        "name": "12 Variations for Piano in A major on a Russian Dance from Paul Wranitzky's ballet \"Das Waldmädchen\", WoO 71",
-        "type": "ballet",
-        "begin_year": 1796,
-        "end_year": 1797,
-        "score": 1.61,
-        "parts": [
-          {
-            "name": "12 Variations for Piano in A major on a Russian Dance from Paul Wranitzky's ballet \"Das Waldmädchen\", WoO 71",
-            "deezer": 2770741881,
             "score": 100.0
           }
         ]
@@ -31350,22 +32554,6 @@
           {
             "name": "Gayaneh: Act III, Scene VII (Expiation). Sabre Dance",
             "deezer": 113107812,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "6fe8b512-1188-4d0a-a1be-984849414fc4",
-        "composer": "f91e3a88-24ee-4563-8963-fab73d2765ed",
-        "name": "Rosamunde, D. 797: Ballet Music no. 1",
-        "type": "ballet",
-        "begin_year": 1823,
-        "end_year": 1823,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Rosamunde, D. 797: Ballet Music no. 1",
-            "deezer": 909481852,
             "score": 100.0
           }
         ]
@@ -70274,6 +71462,47 @@
         ]
       },
       {
+        "gid": "fdd00d19-25eb-4c20-8e55-8f02c233727b",
+        "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
+        "name": "Divertimento no. 10 for 2 Horns, 2 Violins, Viola & Double Bass in F major, K. 247 \"Lodronische Nachtmusik\"",
+        "type": "chamber",
+        "begin_year": null,
+        "end_year": null,
+        "score": 1.79,
+        "parts": [
+          {
+            "name": "Divertimento no. 10 for 2 Horns, 2 Violins, Viola & Double Bass in F major, K. 247 \"Lodronische Nachtmusik\": I. Allegro",
+            "deezer": 532426862,
+            "score": 100.0
+          },
+          {
+            "name": "Divertimento no. 10 for 2 Horns, 2 Violins, Viola & Double Bass in F major, K. 247 \"Lodronische Nachtmusik\": II. Andante grazioso",
+            "deezer": 532426872,
+            "score": 100.0
+          },
+          {
+            "name": "Divertimento no. 10 for 2 Horns, 2 Violins, Viola & Double Bass in F major, K. 247 \"Lodronische Nachtmusik\": III. Minuetto",
+            "deezer": 532426882,
+            "score": 100.0
+          },
+          {
+            "name": "Divertimento no. 10 for 2 Horns, 2 Violins, Viola & Double Bass in F major, K. 247 \"Lodronische Nachtmusik\": IV. Adagio",
+            "deezer": 532426892,
+            "score": 100.0
+          },
+          {
+            "name": "Divertimento no. 10 for 2 Horns, 2 Violins, Viola & Double Bass in F major, K. 247 \"Lodronische Nachtmusik\": V. Minuetto",
+            "deezer": 532426902,
+            "score": 100.0
+          },
+          {
+            "name": "Divertimento no. 10 for 2 Horns, 2 Violins, Viola & Double Bass in F major, K. 247 \"Lodronische Nachtmusik\": VI. Andante - Allegro assai",
+            "deezer": 532426912,
+            "score": 100.0
+          }
+        ]
+      },
+      {
         "gid": "80b390e6-7e28-4166-aa41-3296eec31139",
         "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
         "name": "Quartet for Strings no. 10 in C major, K. 170 \"Quartetti Vienna\"",
@@ -77647,22 +78876,6 @@
         ]
       },
       {
-        "gid": "95557a03-c668-3619-ab8f-74a141f277dc",
-        "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
-        "name": "Fantasia no. 4 in C minor, K. 475",
-        "type": "piano",
-        "begin_year": 1785,
-        "end_year": 1785,
-        "score": 3.58,
-        "parts": [
-          {
-            "name": "Fantasia no. 4 in C minor, K. 475",
-            "deezer": 2444674085,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "3fdac4f1-9077-3e58-a704-994e6ce3562a",
         "composer": "09ff1fe8-d61c-4b98-bb82-18487c74d7b7",
         "name": "Fantaisie‐impromptu in C‐sharp minor, op. 66",
@@ -78661,22 +79874,6 @@
             "name": "5 Stücke im Volkston für Klavier und Cello, op. 102: V. Stark und markiert",
             "deezer": 2787318842,
             "score": 95.54
-          }
-        ]
-      },
-      {
-        "gid": "17c5bf4e-cf3a-3c9a-b127-5b62662a991e",
-        "composer": "8255db36-4902-4cf6-8612-0f2b4288bc9a",
-        "name": "Emperor Waltz, op. 437",
-        "type": "piano",
-        "begin_year": 1889,
-        "end_year": 1889,
-        "score": 3.09,
-        "parts": [
-          {
-            "name": "Emperor Waltz, op. 437",
-            "deezer": 2768357321,
-            "score": 100.0
           }
         ]
       },
@@ -79859,52 +81056,6 @@
         ]
       },
       {
-        "gid": "1b9379af-25ea-4cec-acea-6e06d9d4093f",
-        "composer": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
-        "name": "7 Fantasias, op. 116",
-        "type": "piano",
-        "begin_year": 1892,
-        "end_year": 1892,
-        "score": 2.82,
-        "parts": [
-          {
-            "name": "7 Fantasias, op. 116: No. 1 in D minor. Capriccio. Presto energico",
-            "deezer": 396420892,
-            "score": 89.63
-          },
-          {
-            "name": "7 Fantasias, op. 116: No. 2 in A minor. Intermezzo. Andante",
-            "deezer": 1649000672,
-            "score": 91.97
-          },
-          {
-            "name": "7 Fantasias, op. 116: No. 3 in G minor. Capriccio. Allegro passionato",
-            "deezer": 1649000682,
-            "score": 87.11
-          },
-          {
-            "name": "7 Fantasias, op. 116: No. 4 in E major. Intermezzo. Adagio",
-            "deezer": 396420902,
-            "score": 100.0
-          },
-          {
-            "name": "7 Fantasias, op. 116: No. 5 in E minor. Intermezzo. Andante con grazia ed intimissimo sentimento",
-            "deezer": 1649000702,
-            "score": 94.16
-          },
-          {
-            "name": "7 Fantasias, op. 116: No. 6 in E major. Intermezzo. Andanti teneramente",
-            "deezer": 1649000712,
-            "score": 89.63
-          },
-          {
-            "name": "7 Fantasias, op. 116: No. 7 in D minor. Capriccio. Allegro agitato",
-            "deezer": 1649000722,
-            "score": 87.11
-          }
-        ]
-      },
-      {
         "gid": "e7aa2f0b-ebba-4809-98e2-253b5882cda1",
         "composer": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
         "name": "Klavierstücke, op. 119",
@@ -80265,22 +81416,6 @@
         ]
       },
       {
-        "gid": "4158a0a6-19f7-48c0-b2c8-2ed183402f3e",
-        "composer": "f6486fc7-90ef-48ad-8ca3-905af1354afe",
-        "name": "Fantasie in F-sharp minor, H 300, Wq. 67",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 2.71,
-        "parts": [
-          {
-            "name": "Fantasie in F-sharp minor, H 300, Wq. 67",
-            "deezer": 71861988,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "3e14c8a3-287a-39b5-87c6-f3177444d366",
         "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
         "name": "Toccata G-Dur, BWV 916",
@@ -80355,22 +81490,6 @@
           {
             "name": "Waltz in E major, KK IVa/12",
             "deezer": 66412342,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "982af684-2449-35de-abdb-04dfcd61358b",
-        "composer": "2cd475bb-1abd-40c4-9904-6d4b691c752c",
-        "name": "Mephisto Waltz no. 1, S. 514 \"Der Tanz in der Dorfschenke\"",
-        "type": "piano",
-        "begin_year": 1860,
-        "end_year": 1860,
-        "score": 2.71,
-        "parts": [
-          {
-            "name": "Mephisto Waltz no. 1, S. 514 \"Der Tanz in der Dorfschenke\"",
-            "deezer": 6959562,
             "score": 100.0
           }
         ]
@@ -80549,22 +81668,6 @@
           {
             "name": "Waltz in E-flat major, KK IVa/14",
             "deezer": 66412341,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "69bd825f-a2d7-389a-a035-039101d98a38",
-        "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
-        "name": "Fantasia for Mechanical Organ in F minor, K. 608",
-        "type": "piano",
-        "begin_year": 1791,
-        "end_year": 1791,
-        "score": 2.64,
-        "parts": [
-          {
-            "name": "Fantasia for Mechanical Organ in F minor, K. 608",
-            "deezer": 71883650,
             "score": 100.0
           }
         ]
@@ -81418,22 +82521,6 @@
         ]
       },
       {
-        "gid": "40003498-54e1-316a-95e6-99e2ef224309",
-        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
-        "name": "Fantasia super \"Jesu, meine Freude\", BWV 713",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 2.4,
-        "parts": [
-          {
-            "name": "Fantasia super \"Jesu, meine Freude\", BWV 713",
-            "deezer": 7791026,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "f26d0532-3e21-4fe8-b91d-c8febb1e360b",
         "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
         "name": "Prelude in B minor, BWV 855a",
@@ -82005,22 +83092,6 @@
         ]
       },
       {
-        "gid": "5e6ae2e4-823a-349b-994f-47201434c8f5",
-        "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
-        "name": "Fantasia for Mechanical Organ in F minor, K. 594: Adagio - Allegro",
-        "type": "piano",
-        "begin_year": 1790,
-        "end_year": 1790,
-        "score": 2.3,
-        "parts": [
-          {
-            "name": "Fantasia for Mechanical Organ in F minor, K. 594: Adagio - Allegro",
-            "deezer": 2800519322,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "c32961cd-cd03-3c29-b5fd-e16be3877aa0",
         "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
         "name": "Minuet for Piano in D major, K. 576b / (K3) 594a / KV 355 Fr *178X/c (fragment): Minuetto",
@@ -82111,22 +83182,6 @@
           {
             "name": "Praeludium, Fuge und Allegro Es-Dur, BWV 998: I. Praeludium",
             "deezer": 1864524517,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "06780369-eaa0-39cb-84ad-fe51fe2e3153",
-        "composer": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
-        "name": "16 Waltzes, op. 39",
-        "type": "piano",
-        "begin_year": 1865,
-        "end_year": 1865,
-        "score": 2.29,
-        "parts": [
-          {
-            "name": "Walzer, op. 39: Nr. 15 As-dur",
-            "deezer": 1582433172,
             "score": 100.0
           }
         ]
@@ -82653,22 +83708,6 @@
         ]
       },
       {
-        "gid": "d45aab77-ae3f-4a03-8fc5-c4ed80df7ce5",
-        "composer": "2cd475bb-1abd-40c4-9904-6d4b691c752c",
-        "name": "Valses oubliées, S. 215",
-        "type": "piano",
-        "begin_year": 1881,
-        "end_year": 1885,
-        "score": 2.17,
-        "parts": [
-          {
-            "name": "Valse oubliée no. 1, S. 215 no. 1",
-            "deezer": 915300602,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "ea1b28a6-116e-43b0-93f0-f57ddab5ea6c",
         "composer": "c130b0fb-5dce-449d-9f40-1437f889f7fe",
         "name": "Piano Sonata no. 60 in C major, Hob. XVI:50",
@@ -83061,22 +84100,6 @@
         ]
       },
       {
-        "gid": "93a379b0-03df-3142-a16b-b17e1a400c05",
-        "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
-        "name": "Fantasia no. 2 in C minor, K. 385f / 396",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 2.08,
-        "parts": [
-          {
-            "name": "Fantasia no. 2 in C minor, K. 385f / 396",
-            "deezer": 2444674145,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "e70d0050-2865-4fe3-ba10-450bf706b34f",
         "composer": "0e43fe9d-c472-4b62-be9e-55f971a023e1",
         "name": "Piano Sonata no. 6 in A major, op. 82",
@@ -83135,22 +84158,6 @@
           {
             "name": "Piano Sonata no. 8, op. 66. Lento - Allegro agitato",
             "deezer": 3511340,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "840f637a-ddeb-3b7a-8db2-a84da9744d7f",
-        "composer": "9942ef92-91a2-46f7-aff4-32389df33c9e",
-        "name": "Delirien Waltz, op. 212",
-        "type": "piano",
-        "begin_year": 1867,
-        "end_year": 1867,
-        "score": 2.08,
-        "parts": [
-          {
-            "name": "Delirien Waltz, op. 212",
-            "deezer": 2792714142,
             "score": 100.0
           }
         ]
@@ -83346,22 +84353,6 @@
         ]
       },
       {
-        "gid": "7880d4a3-13e8-37cc-96ca-8695cc46fe80",
-        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
-        "name": "Fantasia super: Christ lag in Todesbanden, BWV 695",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.95,
-        "parts": [
-          {
-            "name": "Fantasia super: Christ lag in Todesbanden, BWV 695",
-            "deezer": 7791008,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "bd0adba3-41ce-3e96-8a95-631d13912658",
         "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
         "name": "Fuge C-Dur, BWV 953",
@@ -83452,22 +84443,6 @@
           {
             "name": "Präludium und Fuge e-Moll, BWV 548: II. Fuge",
             "deezer": 1748595207,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "4b381e10-450e-3199-ace0-8e446ffc5a1a",
-        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
-        "name": "Valet will ich dir geben (fantasia super), BWV 735",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.95,
-        "parts": [
-          {
-            "name": "Valet will ich dir geben (fantasia super), BWV 735",
-            "deezer": 7791048,
             "score": 100.0
           }
         ]
@@ -83699,22 +84674,6 @@
         ]
       },
       {
-        "gid": "af3372ee-902d-3bf1-839a-ab6034a86cfc",
-        "composer": "3cd3882c-00f8-4362-a0c2-ad89ed248533",
-        "name": "Fantasie für Violine und Orchester C-dur, op. 131",
-        "type": "piano",
-        "begin_year": 1853,
-        "end_year": 1853,
-        "score": 1.95,
-        "parts": [
-          {
-            "name": "Fantasie für Violine und Orchester C-dur, op. 131",
-            "deezer": 124185100,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "6636e0db-6958-3650-915f-c5a902816400",
         "composer": "3cd3882c-00f8-4362-a0c2-ad89ed248533",
         "name": "Toccata in C major, op. 7",
@@ -83932,38 +84891,6 @@
           {
             "name": "9 kleine Präludien: Präludium g-Moll, BWV 930",
             "deezer": 2959700121,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "176c9e4a-67fa-3fb1-8d8d-dc39e7b3c627",
-        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
-        "name": "Fantasia con imitazione h-Moll, BWV 563",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.79,
-        "parts": [
-          {
-            "name": "Fantasia con imitazione h-Moll, BWV 563",
-            "deezer": 1748595007,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "2844c4b8-d453-37ad-8257-30449a98bd5a",
-        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
-        "name": "Fantasie c-Moll, BWV 1121",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.79,
-        "parts": [
-          {
-            "name": "Fantasie c-Moll, BWV 1121",
-            "deezer": 1748595137,
             "score": 100.0
           }
         ]
@@ -84584,22 +85511,6 @@
         ]
       },
       {
-        "gid": "be482645-9064-3ea1-8fb1-45407f8ce722",
-        "composer": "8255db36-4902-4cf6-8612-0f2b4288bc9a",
-        "name": "Accelerations Waltz, op. 234",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.79,
-        "parts": [
-          {
-            "name": "Accelerations Waltz, op. 234",
-            "deezer": 1614050642,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "8a6f5b55-e5f8-4d67-8d06-ff859612b48d",
         "composer": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
         "name": "Nocturne in D minor, TH 64, ČW 349",
@@ -84611,37 +85522,6 @@
           {
             "name": "Nocturne in D minor, TH 64, ČW 349",
             "deezer": 3270536191,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "2fb90abe-398d-4589-b376-02ecd4d4dfcd",
-        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
-        "name": "12 Fantasias for Violin without Bass, TWV 40:14-25",
-        "type": "piano",
-        "begin_year": 1735,
-        "end_year": 1735,
-        "score": 1.75,
-        "parts": [
-          {
-            "name": "Fantasia in B major, TWV 40:22: I. Siciliana",
-            "deezer": 2786364902,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in B major, TWV 40:22: II. Vivace",
-            "deezer": 2786364912,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in B major, TWV 40:22: III. Allegro",
-            "deezer": 2786364922,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in F major, TWV 40:24: I. Un poco vivace",
-            "deezer": 1487966152,
             "score": 100.0
           }
         ]
@@ -84709,27 +85589,6 @@
         ]
       },
       {
-        "gid": "392e79df-0931-383b-93df-965791053282",
-        "composer": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
-        "name": "16 Waltzes, op. 39",
-        "type": "piano",
-        "begin_year": 1865,
-        "end_year": 1865,
-        "score": 1.68,
-        "parts": [
-          {
-            "name": "16 Waltzes, op. 39: No. 11 in B minor",
-            "deezer": 3095322051,
-            "score": 100.0
-          },
-          {
-            "name": "16 Waltzes, op. 39: No. 15 in A-flat major",
-            "deezer": 1395235062,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "80edd680-fcbb-4bdf-ab4b-f83144c7b146",
         "composer": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
         "name": "18 Pieces for Piano, op. 72",
@@ -84741,22 +85600,6 @@
           {
             "name": "18 Pieces for Piano, op. 72: V. Meditation",
             "deezer": 1160969822,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "37043dac-5863-4b00-88e5-ccf85f59d772",
-        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
-        "name": "Fantasia sur « Wo Gott der Herr nicht bei uns halt », BWV 1128",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.61,
-        "parts": [
-          {
-            "name": "Fantasia sur « Wo Gott der Herr nicht bei uns halt », BWV 1128",
-            "deezer": 1526168322,
             "score": 100.0
           }
         ]
@@ -85161,22 +86004,6 @@
           {
             "name": "Variations brillantes on “Je vends des scapulaires” from the Opera “Ludovic” by F. Hérold and F. Halévy in B‐flat major, op. 12",
             "deezer": 1135923282,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "15c4958f-62b5-4dea-ab9d-af0a35acc78a",
-        "composer": "8e547295-32b8-403c-ac33-41423422fe3f",
-        "name": "16 Valses Favorites de Johann Strauss, op. 7",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.61,
-        "parts": [
-          {
-            "name": "16 Valses Favorites de Johann Strauss, op. 7",
-            "deezer": 3351526111,
             "score": 100.0
           }
         ]
@@ -85594,70 +86421,6 @@
         ]
       },
       {
-        "gid": "7f69f2d0-d8b8-3316-a9e6-61c814fdc210",
-        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
-        "name": "Fantasia for strings No. 10, Z. 741",
-        "type": "piano",
-        "begin_year": 1680,
-        "end_year": 1680,
-        "score": 1.61,
-        "parts": [
-          {
-            "name": "Fantasia for strings No. 10, Z. 741",
-            "deezer": 2618844302,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "b2d9fa15-f97c-3d1c-8331-027a4405f10f",
-        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
-        "name": "Fantasia for strings No. 11, Z. 742",
-        "type": "piano",
-        "begin_year": 1680,
-        "end_year": 1680,
-        "score": 1.61,
-        "parts": [
-          {
-            "name": "Fantasia for strings No. 11, Z. 742",
-            "deezer": 2618844312,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "7f6635a4-056a-37fa-93bd-7847b620fb06",
-        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
-        "name": "Fantasia for strings No. 6, Z. 737",
-        "type": "piano",
-        "begin_year": 1680,
-        "end_year": 1680,
-        "score": 1.61,
-        "parts": [
-          {
-            "name": "Fantasia for strings No. 6, Z. 737",
-            "deezer": 2618844242,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "4649f1b9-3264-3c0a-9382-8caf1932de6f",
-        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
-        "name": "Fantasia for strings No. 8, Z. 739",
-        "type": "piano",
-        "begin_year": 1680,
-        "end_year": 1680,
-        "score": 1.61,
-        "parts": [
-          {
-            "name": "Fantasia for strings No. 8, Z. 739",
-            "deezer": 2618844272,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "3434173c-301b-4a83-b758-9b52e9159aad",
         "composer": "95c7a1d1-5cfd-41d5-99f9-0611262de8e1",
         "name": "Sonata in B-flat major, K 42, L S36: Minuetto",
@@ -85733,116 +86496,6 @@
           {
             "name": "Piano Sonata no. 1, op. 12",
             "deezer": 404169722,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "ddd082b1-083e-43d3-889b-136acb97bb93",
-        "composer": "8255db36-4902-4cf6-8612-0f2b4288bc9a",
-        "name": "Lagunen-Walzer, op. 411",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.61,
-        "parts": [
-          {
-            "name": "Lagunen-Walzer, op. 411",
-            "deezer": 65342716,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "75c83b7a-6d8c-40bf-a83e-2f95d3f80a3f",
-        "composer": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
-        "name": "6 Pieces, op. 51 no. 6: Valse sentimentale",
-        "type": "piano",
-        "begin_year": 1882,
-        "end_year": 1882,
-        "score": 1.61,
-        "parts": [
-          {
-            "name": "6 Pieces, op. 51 no. 6: Valse sentimentale",
-            "deezer": 102777572,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "ab7efd1d-396b-4185-8538-b0f194f93fef",
-        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
-        "name": "Fantasia in C minor, TWV 40:26",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.61,
-        "parts": [
-          {
-            "name": "Fantasia in C minor, TWV 40:26: I. Adagio – Allegro",
-            "deezer": 2776073441,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in C minor, TWV 40:26: II. Allegro",
-            "deezer": 2776073451,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "32a6fa4e-84b9-4818-8e18-dd08cd425c59",
-        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
-        "name": "Fantasia in D major, TWV 40:27",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.61,
-        "parts": [
-          {
-            "name": "Fantasia in D major, TWV 40:27: I. Vivace",
-            "deezer": 2776073461,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in D major, TWV 40:27: II. Andante",
-            "deezer": 2776073471,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in D major, TWV 40:27: III. Vivace",
-            "deezer": 2776073471,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in D major, TWV 40:27: IV. Presto",
-            "deezer": 2776073481,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "fe219c96-943f-418a-b784-5299e6c08ac0",
-        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
-        "name": "Fantasia in E minor, TWV 40:28",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.61,
-        "parts": [
-          {
-            "name": "Fantasia in E minor, TWV 40:28: I. Largo",
-            "deezer": 2776073491,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in E minor, TWV 40:28: II. Presto",
-            "deezer": 2776073501,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in E minor, TWV 40:28: III. Vivace",
-            "deezer": 2776073511,
             "score": 100.0
           }
         ]
@@ -86007,22 +86660,6 @@
         ]
       },
       {
-        "gid": "090ef217-d79d-43d3-a17d-ba7a7f7f0a40",
-        "composer": "f6486fc7-90ef-48ad-8ca3-905af1354afe",
-        "name": "Fantasia in D major, Wq 117 no. 14, H 160",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia in D major, Wq 117 no. 14, H 160",
-            "deezer": 1785021737,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "e89ae717-eef9-3628-82d8-a69b44b0eae8",
         "composer": "f6486fc7-90ef-48ad-8ca3-905af1354afe",
         "name": "Polonaise in G minor, BWV Anh. 125, H. 1/4",
@@ -86181,90 +86818,6 @@
           {
             "name": "Clavier-büchlein für Anna Magdalena Bach 1725: Menuet F-Dur, BWV Anh. 113",
             "deezer": 3223398121,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "1b34ee8a-521a-3288-aa84-7bea99f172a1",
-        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
-        "name": "Fantasia a-Moll, BWV 922",
-        "type": "piano",
-        "begin_year": 1707,
-        "end_year": 1710,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia a-Moll, BWV 922",
-            "deezer": 2769644031,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "cc815d5b-7980-33d6-a11e-6c657700315a",
-        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
-        "name": "Fantasia In G Major",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia G-Dur, BWV 572: I. Trés vitement",
-            "deezer": 65687405,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia G-Dur, BWV 572: II. Gravement",
-            "deezer": 65687406,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia G-Dur, BWV 572: III. Lentement",
-            "deezer": 65687407,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "c3f5b274-3977-3d9c-92d9-86030ea22e70",
-        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
-        "name": "Fantasie G-Dur, BWV 571",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasie G-Dur, BWV 571: I. Allegro",
-            "deezer": 1748595317,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasie G-Dur, BWV 571: II. Adagio",
-            "deezer": 1748595327,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasie G-Dur, BWV 571: III. Allegro",
-            "deezer": 1748595337,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "11aa8eb7-dc56-3380-9e2f-03b7a49f6589",
-        "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
-        "name": "Fantasie g-Moll, BWV 917",
-        "type": "piano",
-        "begin_year": 1710,
-        "end_year": 1710,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasie g-Moll, BWV 917",
-            "deezer": 7791079,
             "score": 100.0
           }
         ]
@@ -86819,22 +87372,6 @@
         ]
       },
       {
-        "gid": "5a4dd2c0-caa9-3eb5-a060-ff9c8f5242af",
-        "composer": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
-        "name": "Fantasia on 'Wie schön leuchtet der Morgenstern', BuxWV 223",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia on 'Wie schön leuchtet der Morgenstern', BuxWV 223",
-            "deezer": 138312751,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "21933798-2492-3032-bafa-0d549ed896e2",
         "composer": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
         "name": "Toccata in F major, BuxWV 157",
@@ -87322,22 +87859,6 @@
         ]
       },
       {
-        "gid": "35c02b7e-038c-4f74-880c-5f7252c9edab",
-        "composer": "e539699a-5cb3-4f73-b60f-691b1499d0af",
-        "name": "Valse-fantaisie",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Valse-fantaisie",
-            "deezer": 3315510,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "1bf56528-dbaa-3bc6-a109-ab3ae40fd189",
         "composer": "22790383-30ea-4dcc-a8d6-882fb1eb4669",
         "name": "Andantino for Piano in E-flat major, K. 588b/236",
@@ -87349,22 +87870,6 @@
           {
             "name": "Andantino for Piano in E-flat major, K. 588b/236",
             "deezer": 71871336,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "ee961390-dcdd-42e7-ba5a-73646bdb8199",
-        "composer": "cd4636e1-06a3-41fc-848a-624b84bbb023",
-        "name": "Concert Waltz (from Faust)",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Concert Waltz (from Faust)",
-            "deezer": 2949644261,
             "score": 100.0
           }
         ]
@@ -87545,22 +88050,6 @@
         ]
       },
       {
-        "gid": "0b3aaebb-2a32-4b57-8887-eaa0b9d3863f",
-        "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
-        "name": "Fantasia for Mechanical Organ in F minor, BV B 91",
-        "type": "piano",
-        "begin_year": 1791,
-        "end_year": 1791,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia for Mechanical Organ in F minor, BV B 91",
-            "deezer": 2607587052,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "4909e9cd-b1c7-39e8-ac2c-fb0ceeb14fb8",
         "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
         "name": "Menuet in D major, K. 94",
@@ -87593,22 +88082,6 @@
         ]
       },
       {
-        "gid": "e77ae2ae-6bfa-4c2f-a41e-4335d7ab248b",
-        "composer": "2251b277-2dfb-4cf1-83f3-27e29f902440",
-        "name": "Fantasia in E-flat major, P. 127, T. 254",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia in E-flat major, P. 127, T. 254",
-            "deezer": 66318971,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "2af25560-4844-4f2a-8782-b87cb8388d40",
         "composer": "0e43fe9d-c472-4b62-be9e-55f971a023e1",
         "name": "Piano Sonata no. 5, op. 38",
@@ -87630,166 +88103,6 @@
           {
             "name": "Piano Sonata no. 5, op. 38: III. Un poco allegretto",
             "deezer": 1216715212,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "5ba4551f-5197-3b64-984f-cb7701bb4f73",
-        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
-        "name": "Fantasia for strings No. 1, Z. 732",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia for strings No. 1, Z. 732",
-            "deezer": 2618844352,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "c636e9f6-85d1-36a3-8ac8-b7ab67a6d143",
-        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
-        "name": "Fantasia for strings No. 12, Z. 743",
-        "type": "piano",
-        "begin_year": 1680,
-        "end_year": 1680,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia for strings No. 12, Z. 743",
-            "deezer": 2618844322,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "b1838ee6-d651-398e-95ee-5a1077c84c3b",
-        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
-        "name": "Fantasia for strings No. 2, Z. 733",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia for strings No. 2, Z. 733",
-            "deezer": 2618844362,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "529bfa63-13b4-3f72-ae11-760f7ff22557",
-        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
-        "name": "Fantasia for strings No. 3, Z. 734",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia for strings No. 3, Z. 734",
-            "deezer": 2618844372,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "32ec4b1e-e98d-3ac6-b45e-9e344603d19d",
-        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
-        "name": "Fantasia for strings No. 4, Z. 735",
-        "type": "piano",
-        "begin_year": 1680,
-        "end_year": 1680,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia for strings No. 4, Z. 735",
-            "deezer": 2618844212,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "fc9658d9-c232-36cb-92d2-789b82cdee9b",
-        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
-        "name": "Fantasia for strings No. 5, Z. 736",
-        "type": "piano",
-        "begin_year": 1680,
-        "end_year": 1680,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia for strings No. 5, Z. 736",
-            "deezer": 2618844222,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "7765904a-dbe6-3373-86fb-638fbfa4336d",
-        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
-        "name": "Fantasia for strings No. 7, Z. 738",
-        "type": "piano",
-        "begin_year": 1680,
-        "end_year": 1680,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia for strings No. 7, Z. 738",
-            "deezer": 2618844252,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "7b3de139-250b-35ac-9d57-0b32defac974",
-        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
-        "name": "Fantasia for strings No. 9, Z. 740",
-        "type": "piano",
-        "begin_year": 1680,
-        "end_year": 1680,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia for strings No. 9, Z. 740",
-            "deezer": 2618844282,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "00607609-fe2d-388f-864e-679bffc00a25",
-        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
-        "name": "Fantasia for strings upon one note, Z. 745",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia for strings upon one note, Z. 745",
-            "deezer": 2618844342,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "735a94d2-5c2c-39c8-80ae-6946defe0d1a",
-        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
-        "name": "Fantasia, 3 parts on a Ground for three recorders, Z. 731",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia, 3 parts on a Ground for three recorders, Z. 731",
-            "deezer": 3231093261,
             "score": 100.0
           }
         ]
@@ -87827,37 +88140,6 @@
           {
             "name": "6 Moments musicaux for Piano, op. 94, D. 780: No. 3 in F minor. Allegro moderato",
             "deezer": 2770611221,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "5ace0f06-d3d8-4ee8-8731-4dfe3acacc59",
-        "composer": "f91e3a88-24ee-4563-8963-fab73d2765ed",
-        "name": "Fantasia in F minor, op. 103, D. 940",
-        "type": "piano",
-        "begin_year": 1828,
-        "end_year": 1828,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia in F minor, op. 103, D. 940: I. Allegro molto moderato",
-            "deezer": 1557423032,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in F minor, op. 103, D. 940: II. Largo",
-            "deezer": 1557423042,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in F minor, op. 103, D. 940: III. Scherzo. Allegro vivace",
-            "deezer": 1557423052,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in F minor, op. 103, D. 940: IV. Finale. Allegro molto moderato",
-            "deezer": 1557423062,
             "score": 100.0
           }
         ]
@@ -87961,43 +88243,6 @@
         ]
       },
       {
-        "gid": "5a498219-a200-3402-93ca-1ea4b9d83a60",
-        "composer": "8255db36-4902-4cf6-8612-0f2b4288bc9a",
-        "name": "Treasure-Waltz, Op. 418",
-        "type": "piano",
-        "begin_year": 1885,
-        "end_year": 1885,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Treasure-Waltz, Op. 418",
-            "deezer": 2768357341,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "b908a5cf-5909-4aa6-9f47-d3024b917d08",
-        "composer": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
-        "name": "Concert Fantasia, op. 56",
-        "type": "piano",
-        "begin_year": 1884,
-        "end_year": 1884,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Concert Fantasy for Piano and Orchestra, op. 56: I. Quasi Rondo",
-            "deezer": 2444663255,
-            "score": 100.0
-          },
-          {
-            "name": "Concert Fantasy for Piano and Orchestra, op. 56: II. Contrastes",
-            "deezer": 2444663265,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "4cd28af0-67d5-4d7d-ba06-6e33319b8fd5",
         "composer": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
         "name": "Pezzo capriccioso, op. 62",
@@ -88056,204 +88301,6 @@
           {
             "name": "Valse-Scherzo, op. 34",
             "deezer": 3232177201,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "0ba0ac65-42da-4644-b21a-48f7edaa932e",
-        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
-        "name": "Fantasia in A major, TWV 40:33",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia in A major, TWV 40:33: I. Allegro",
-            "deezer": 2776073641,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in A major, TWV 40:33: II. Grave",
-            "deezer": 2776073651,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in A major, TWV 40:33: III. Vivace",
-            "deezer": 2776073661,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "578230ac-81b9-4c03-97ea-e91f6205898b",
-        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
-        "name": "Fantasia in C major, TWV 40:34",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia in C major, TWV 40:34: I. Presto",
-            "deezer": 2776073671,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in C major, TWV 40:34: II. Grave",
-            "deezer": 2776073681,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in C major, TWV 40:34: III. Allegro",
-            "deezer": 2776073691,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "524ff9c2-c3a4-4fda-9e48-7f7cc71b2ac8",
-        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
-        "name": "Fantasia in D minor, TWV 40:36",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia in D minor, TWV 40:36: I. Allegro",
-            "deezer": 2776073731,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in D minor, TWV 40:36: II. Grave",
-            "deezer": 2776073741,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in D minor, TWV 40:36: III. Allegro",
-            "deezer": 2776073751,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "e166b679-ff03-46bf-9c1f-e939880f1c4e",
-        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
-        "name": "Fantasia in E major, TWV 40:35",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia in E major, TWV 40:35: I. Dolce – Allegro",
-            "deezer": 2776073701,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in E major, TWV 40:35: II. Siciliana",
-            "deezer": 2776073711,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in E major, TWV 40:35: III. Scherzando",
-            "deezer": 2776073721,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "f9694727-5def-49a0-9130-bc632c4d9cc4",
-        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
-        "name": "Fantasia in F major, TWV 40:29",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia in F major, TWV 40:29: I. Vivace",
-            "deezer": 2776073521,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in F major, TWV 40:29: II. Grave",
-            "deezer": 2776073531,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in F major, TWV 40:29: III. Allegro",
-            "deezer": 2776073541,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "9bbcc848-3877-45d6-9714-411e362d3228",
-        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
-        "name": "Fantasia in G major, TWV 40:31",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia in G major, TWV 40:31: I. Scherzando",
-            "deezer": 2776073581,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in G major, TWV 40:31: II. Dolce",
-            "deezer": 2776073591,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in G major, TWV 40:31: III. Spirituoso",
-            "deezer": 2776073601,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "4b144d65-49f2-4f3b-be92-7b5738c8c2d3",
-        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
-        "name": "Fantasia in G minor, TWV 40:32",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia in G minor, TWV 40:32: I. Andante",
-            "deezer": 2776073611,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in G minor, TWV 40:32: II. Vivace",
-            "deezer": 2776073621,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia in G minor, TWV 40:32: III. Allegro",
-            "deezer": 2776073631,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "7528f5af-ec7d-4c13-a441-02dff788c471",
-        "composer": "480aa5f2-97e6-4e79-a364-6629d7b63b55",
-        "name": "Fantasia on Rossini's 'La Donna del Lago', op. 40",
-        "type": "piano",
-        "begin_year": 1840,
-        "end_year": 1840,
-        "score": 1.39,
-        "parts": [
-          {
-            "name": "Fantasia on Rossini's 'La Donna del Lago', op. 40",
-            "deezer": 1011814082,
             "score": 100.0
           }
         ]
@@ -88445,53 +88492,6 @@
           {
             "name": "Prelude & Fugue for Violin, Viola, & Bass no. 4 in F major, K. 404a/deest: II. Fuga",
             "deezer": 1466976542,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "6250d7da-8672-4da2-9b7c-913624b26496",
-        "composer": "f91e3a88-24ee-4563-8963-fab73d2765ed",
-        "name": "34 Valses sentimentales, D. 779",
-        "type": "piano",
-        "begin_year": null,
-        "end_year": null,
-        "score": 1.26,
-        "parts": [
-          {
-            "name": "34 Valses sentimentales, D. 779: Nr. 1",
-            "deezer": 2377553655,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "38b77958-aa1e-4e71-9427-17c45476b88b",
-        "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
-        "name": "12 Fantasias for Flute without Bass, TWV 40:2-13",
-        "type": "piano",
-        "begin_year": 1733,
-        "end_year": 1733,
-        "score": 1.26,
-        "parts": [
-          {
-            "name": "Fantasia no. 3 in B minor, TWV 40:4: I. Largo - Vivace",
-            "deezer": 1578453072,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia no. 3 in B minor, TWV 40:4: II. Allegro",
-            "deezer": 1578453082,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia no. 9 in E major, TWV 40:10: III. Grave - Vivace",
-            "deezer": 1578453252,
-            "score": 100.0
-          },
-          {
-            "name": "Fantasia no. 11 in G major, TWV 40:12: II. Adagio – Vivace",
-            "deezer": 1578453312,
             "score": 100.0
           }
         ]

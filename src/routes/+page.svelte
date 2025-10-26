@@ -4,9 +4,7 @@
 	import { TracklistGenerator, deezerPlayer } from '$lib/services';
 	import LoadingScreen from '$lib/components/ui/LoadingScreen.svelte';
 	import HomeScreen from '$lib/components/ui/HomeScreen.svelte';
-	import SettingsScreen from '$lib/components/ui/SettingsScreen.svelte';
 	import GameScreen from '$lib/components/game/GameScreen.svelte';
-	import type { GameSettings } from '$lib/types';
 
 	onMount(() => {
 		// Load settings from localStorage
@@ -33,16 +31,7 @@
 		}, 50);
 	}
 
-	function handleOpenSettings() {
-		gameState.set('settings');
-	}
-
 	function handleBackToHome() {
-		gameState.set('home');
-	}
-
-	function handleSaveSettings(newSettings: GameSettings) {
-		settings.save(newSettings);
 		gameState.set('home');
 	}
 
@@ -57,9 +46,7 @@
 {:else if $gameState === 'generating'}
 	<LoadingScreen />
 {:else if $gameState === 'home'}
-	<HomeScreen onStart={handleStartGame} onSettings={handleOpenSettings} />
-{:else if $gameState === 'settings'}
-	<SettingsScreen onBack={handleBackToHome} onSave={handleSaveSettings} />
+	<HomeScreen onStart={handleStartGame} />
 {:else if $gameState === 'game'}
 	<GameScreen onHome={handleBackToHome} />
 {/if}

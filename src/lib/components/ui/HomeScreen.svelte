@@ -1,18 +1,17 @@
 <script lang="ts">
-	import Settings from 'lucide-svelte/icons/settings';
 	import Play from 'lucide-svelte/icons/play';
 	import ChevronRight from 'lucide-svelte/icons/chevron-right';
 	import { _ } from 'svelte-i18n';
 	import { settings as settingsStore } from '$lib/stores';
 	import ModeSelector from './ModeSelector.svelte';
-	import type { Preset } from '$lib/types';
+	import NumberSelector from './NumberSelector.svelte';
+	import type { Preset, CategoryWeights } from '$lib/types';
 
 	interface Props {
 		onStart?: () => void;
-		onSettings?: () => void;
 	}
 
-	let { onStart = () => {}, onSettings = () => {} }: Props = $props();
+	let { onStart = () => {} }: Props = $props();
 
 	let showModeSelector = $state(false);
 	let localSettings = $state({ ...$settingsStore });
@@ -27,11 +26,14 @@
 		settingsStore.update((s) => ({ ...s, preset }));
 	}
 
-	function handleNumberOfTracksChange(event: Event) {
-		const target = event.target as HTMLInputElement;
-		const numberOfTracks = parseInt(target.value);
-		localSettings.numberOfTracks = numberOfTracks;
-		settingsStore.update((s) => ({ ...s, numberOfTracks }));
+	function handleWeightsChange(weights: CategoryWeights) {
+		localSettings.categoryWeights = weights;
+		settingsStore.update((s) => ({ ...s, categoryWeights: weights }));
+	}
+
+	function handleNumberOfTracksChange(value: number) {
+		localSettings.numberOfTracks = value;
+		settingsStore.update((s) => ({ ...s, numberOfTracks: value }));
 	}
 </script>
 
@@ -47,9 +49,24 @@
 		<!-- Subtitle -->
 		<p class="mb-12 text-xl text-cyan-300">{$_('app.subtitle')}</p>
 
+		<!-- Start Button -->
+		<button
+			type="button"
+			onclick={onStart}
+			class="mx-auto flex items-center gap-4 rounded-2xl bg-linear-to-r from-cyan-500 to-purple-600 px-16
+                 py-10
+                 text-4xl
+                 font-bold
+                 text-white shadow-[0_0_40px_rgba(34,211,238,0.6)]
+                 transition-all duration-200 hover:shadow-[0_0_60px_rgba(34,211,238,0.8)] active:scale-95"
+		>
+			<Play class="h-8 w-8" fill="white" />
+			{$_('home.start')}
+		</button>
+
 		<!-- Game Parameters Container -->
 		<div
-			class="mx-auto mb-8 max-w-md rounded-2xl border-2 border-cyan-400/30 bg-gray-900/50 p-6 backdrop-blur-sm"
+			class="mx-auto mt-10 max-w-md rounded-2xl border-2 border-cyan-400/30 bg-gray-900/50 p-6 backdrop-blur-sm"
 		>
 			<!-- Mode Selection -->
 			<div class="mb-4">
@@ -70,51 +87,15 @@
 			</div>
 
 			<!-- Number of Tracks -->
-			<div>
-				<div class="mb-2 flex items-center justify-between">
-					<span class="text-sm font-semibold text-gray-400">{$_('settings.numberOfTracks')}</span>
-					<span class="text-xl font-bold text-cyan-400">{localSettings.numberOfTracks}</span>
-				</div>
-				<input
-					type="range"
-					min="5"
-					max="50"
+			<div class="flex items-center justify-between">
+				<span class="text-sm font-semibold text-gray-400">{$_('settings.numberOfTracks')}</span>
+				<NumberSelector
 					value={localSettings.numberOfTracks}
-					oninput={handleNumberOfTracksChange}
-					class="w-full accent-cyan-500"
+					options={[5, 10, 15, 20]}
+					onChange={handleNumberOfTracksChange}
 				/>
 			</div>
 		</div>
-
-		<!-- Start Button -->
-		<button
-			type="button"
-			onclick={onStart}
-			class="mx-auto mb-6 flex items-center gap-4 rounded-2xl bg-linear-to-r from-cyan-500 to-purple-600 px-16
-                 py-6
-                 text-2xl
-                 font-bold
-                 text-white shadow-[0_0_40px_rgba(34,211,238,0.6)]
-                 transition-all duration-200 hover:shadow-[0_0_60px_rgba(34,211,238,0.8)] active:scale-95"
-		>
-			<Play class="h-8 w-8" fill="white" />
-			{$_('home.start')}
-		</button>
-
-		<!-- Settings Button -->
-		<button
-			type="button"
-			onclick={onSettings}
-			class="mx-auto flex items-center gap-2 rounded-xl border-2
-                 border-cyan-400/50 bg-gray-800
-                 px-8 py-3
-                 font-semibold
-                 text-cyan-400 transition-all
-                 duration-200 hover:border-cyan-400 hover:bg-gray-700 active:scale-95"
-		>
-			<Settings class="h-5 w-5" />
-			{$_('home.settings')}
-		</button>
 	</div>
 </div>
 
@@ -122,7 +103,9 @@
 <ModeSelector
 	visible={showModeSelector}
 	selectedPreset={localSettings.preset}
+	categoryWeights={localSettings.categoryWeights}
 	onSelect={handleModeSelect}
+	onWeightsChange={handleWeightsChange}
 	onClose={() => (showModeSelector = false)}
 />
 

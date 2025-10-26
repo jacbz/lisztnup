@@ -121,6 +121,14 @@ export class DeezerPlayer {
 		this.audio = new Audio(this.currentTrackData.preview);
 		this.audio.volume = this.volume;
 		this.audio.loop = false;
+
+		// Add event listener to enforce track length limit
+		this.audio.addEventListener('timeupdate', () => {
+			if (this.audio && this.audio.currentTime >= this.trackLength) {
+				this.audio.pause();
+				this.audio.currentTime = this.trackLength;
+			}
+		});
 	}
 
 	/**
