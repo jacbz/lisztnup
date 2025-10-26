@@ -1,4 +1,11 @@
-export type Preset = 'default' | 'piano' | 'concerto' | 'chamber' | 'ballet' | 'opera' | 'custom';
+export type Tracklist =
+	| 'default'
+	| 'piano'
+	| 'concerto'
+	| 'chamber'
+	| 'ballet'
+	| 'opera'
+	| 'custom';
 
 export interface CategoryWeights {
 	vocal: number;
@@ -13,7 +20,7 @@ export interface CategoryWeights {
 
 export interface GameSettings {
 	numberOfTracks: number;
-	preset: Preset;
+	tracklist: Tracklist;
 	trackLength: number; // Duration in seconds (5-30)
 	volume: number; // Volume level (0-100)
 	// Custom filter options
@@ -25,7 +32,7 @@ export interface GameSettings {
 
 export const DEFAULT_SETTINGS: GameSettings = {
 	numberOfTracks: 20,
-	preset: 'default',
+	tracklist: 'default',
 	trackLength: 20,
 	volume: 100,
 	categoryWeights: {

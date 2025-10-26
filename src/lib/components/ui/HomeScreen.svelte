@@ -5,9 +5,9 @@
 	import { _, locale } from 'svelte-i18n';
 	import { settings as settingsStore } from '$lib/stores';
 	import { locales } from '$lib/i18n';
-	import ModeSelector from './ModeSelector.svelte';
+	import TracklistSelector from './TracklistSelector.svelte';
 	import NumberSelector from './NumberSelector.svelte';
-	import type { Preset, CategoryWeights } from '$lib/types';
+	import type { Tracklist, CategoryWeights } from '$lib/types';
 
 	interface Props {
 		onStart?: () => void;
@@ -15,7 +15,7 @@
 
 	let { onStart = () => {} }: Props = $props();
 
-	let showModeSelector = $state(false);
+	let showTracklistSelector = $state(false);
 	let localSettings = $state({ ...$settingsStore });
 	let currentLocale = $state($locale || 'en');
 
@@ -29,9 +29,9 @@
 		currentLocale = $locale || 'en';
 	});
 
-	function handleModeSelect(preset: Preset) {
-		localSettings.preset = preset;
-		settingsStore.update((s) => ({ ...s, preset }));
+	function handleTracklistSelect(tracklist: Tracklist) {
+		localSettings.tracklist = tracklist;
+		settingsStore.update((s) => ({ ...s, tracklist }));
 	}
 
 	function handleWeightsChange(weights: CategoryWeights) {
@@ -101,21 +101,21 @@
 		<div
 			class="mx-auto mt-10 max-w-md rounded-2xl border-2 border-cyan-400/30 bg-gray-900/50 p-6 backdrop-blur-sm"
 		>
-			<!-- Mode Selection -->
+			<!-- Tracklist Selection -->
 			<div class="mb-4">
 				<div class="mb-2 flex items-center justify-between">
-					<span class="text-sm font-semibold text-gray-400">{$_('home.mode')}</span>
+					<span class="text-sm font-semibold text-gray-400">{$_('home.tracklist')}</span>
 					<button
 						type="button"
-						onclick={() => (showModeSelector = true)}
+						onclick={() => (showTracklistSelector = true)}
 						class="flex items-center gap-1 rounded-lg px-3 py-1 text-cyan-400 transition-colors hover:bg-cyan-400/10"
 					>
-						<span class="font-bold">{$_(`settings.presets.${localSettings.preset}`)}</span>
+						<span class="font-bold">{$_(`settings.presets.${localSettings.tracklist}`)}</span>
 						<ChevronRight class="h-4 w-4" />
 					</button>
 				</div>
 				<p class="text-sm text-gray-500">
-					{$_(`modeSelector.descriptions.${localSettings.preset}`)}
+					{$_(`tracklistSelector.descriptions.${localSettings.tracklist}`)}
 				</p>
 			</div>
 
@@ -132,14 +132,13 @@
 	</div>
 </div>
 
-<!-- Mode Selector Popup -->
-<ModeSelector
-	visible={showModeSelector}
-	selectedPreset={localSettings.preset}
+<TracklistSelector
+	visible={showTracklistSelector}
+	selectedTracklist={localSettings.tracklist}
 	categoryWeights={localSettings.categoryWeights}
-	onSelect={handleModeSelect}
+	onSelect={handleTracklistSelect}
 	onWeightsChange={handleWeightsChange}
-	onClose={() => (showModeSelector = false)}
+	onClose={() => (showTracklistSelector = false)}
 />
 
 <style>

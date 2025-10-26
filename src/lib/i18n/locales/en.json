@@ -10,7 +10,7 @@
 	"home": {
 		"start": "START",
 		"settings": "Settings",
-		"mode": "Mode"
+		"tracklist": "Tracklist"
 	},
 	"settings": {
 		"title": "Settings",
@@ -18,7 +18,6 @@
 		"save": "Save Settings",
 		"reset": "Reset to Default",
 		"numberOfTracks": "Number of Tracks",
-		"gameMode": "Game Mode",
 		"language": "Language",
 		"presets": {
 			"default": "Default",
@@ -50,8 +49,8 @@
 			"other": "Other"
 		}
 	},
-	"modeSelector": {
-		"title": "Select Game Mode",
+	"tracklistSelector": {
+		"title": "Select Tracklist",
 		"done": "Done",
 		"descriptions": {
 			"default": "A balanced mix of all classical music types",

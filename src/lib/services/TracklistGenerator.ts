@@ -35,17 +35,17 @@ export class TracklistGenerator {
 		let composers = [...this.data.composers];
 		let works: Work[] = [];
 
-		// Filter by preset
-		if (settings.preset === 'default') {
+		// Filter by tracklist
+		if (settings.tracklist === 'default') {
 			// Include all categories
 			Object.keys(this.data.works).forEach((category) => {
 				works.push(...this.data.works[category as WorkCategory]);
 			});
-		} else if (settings.preset !== 'custom') {
-			// Single category preset
-			works = [...this.data.works[settings.preset as WorkCategory]];
+		} else if (settings.tracklist !== 'custom') {
+			// Single category tracklist
+			works = [...this.data.works[settings.tracklist as WorkCategory]];
 		} else {
-			// Custom preset with category weights
+			// Custom tracklist with category weights
 			Object.entries(settings.categoryWeights).forEach(([category, weight]) => {
 				if (weight > 0) {
 					works.push(...this.data.works[category as WorkCategory]);
@@ -122,7 +122,7 @@ export class TracklistGenerator {
 
 		const work = weightedRandom(composerWorks, (w) => {
 			const categoryWeight =
-				settings.preset === 'custom' ? settings.categoryWeights[w.type as WorkCategory] || 1 : 1;
+				settings.tracklist === 'custom' ? settings.categoryWeights[w.type as WorkCategory] || 1 : 1;
 			return w.score * categoryWeight;
 		});
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Preset, WorkCategory, CategoryWeights } from '$lib/types';
+	import type { Tracklist, WorkCategory, CategoryWeights } from '$lib/types';
 	import { gameData, settings as settingsStore } from '$lib/stores';
 	import { TracklistGenerator } from '$lib/services';
 	import { get } from 'svelte/store';
@@ -9,23 +9,23 @@
 
 	interface Props {
 		visible?: boolean;
-		selectedPreset?: Preset;
+		selectedTracklist?: Tracklist;
 		categoryWeights?: CategoryWeights;
-		onSelect?: (preset: Preset) => void;
+		onSelect?: (preset: Tracklist) => void;
 		onWeightsChange?: (weights: CategoryWeights) => void;
 		onClose?: () => void;
 	}
 
 	let {
 		visible = false,
-		selectedPreset = 'default',
+		selectedTracklist: selectedPreset = 'default',
 		categoryWeights = $settingsStore.categoryWeights,
 		onSelect = () => {},
 		onWeightsChange = () => {},
 		onClose = () => {}
 	}: Props = $props();
 
-	const presets: { value: Preset }[] = [
+	const presets: { value: Tracklist }[] = [
 		{ value: 'default' },
 		{ value: 'piano' },
 		{ value: 'concerto' },
@@ -39,10 +39,10 @@
 	const presetInfoMap = $derived.by(() => {
 		const data = get(gameData);
 		if (!data)
-			return {} as Record<Preset, { composers: number; works: number; tracks: number } | null>;
+			return {} as Record<Tracklist, { composers: number; works: number; tracks: number } | null>;
 
 		const generator = new TracklistGenerator(data);
-		const map: Record<Preset, { composers: number; works: number; tracks: number } | null> = {
+		const map: Record<Tracklist, { composers: number; works: number; tracks: number } | null> = {
 			default: null,
 			piano: null,
 			concerto: null,
@@ -62,7 +62,7 @@
 		return map;
 	});
 
-	function handleSelect(preset: Preset) {
+	function handleSelect(preset: Tracklist) {
 		onSelect(preset);
 		// Don't close if custom is selected - user needs to configure weights
 		if (preset !== 'custom') {
@@ -84,9 +84,9 @@
 	<div
 		class="w-full max-w-2xl rounded-2xl border-2 border-cyan-400 bg-gray-900 p-6 shadow-[0_0_40px_rgba(34,211,238,0.6)]"
 	>
-		<h2 class="mb-6 text-2xl font-bold text-cyan-400">{$_('modeSelector.title')}</h2>
+		<h2 class="mb-6 text-2xl font-bold text-cyan-400">{$_('tracklistSelector.title')}</h2>
 
-		<!-- Mode Selection Grid -->
+		<!-- Tracklist Selection Grid -->
 		<div class="mb-6 grid gap-3 md:grid-cols-2">
 			{#each presets as preset}
 				<button
@@ -105,7 +105,7 @@
 							? 'text-cyan-100'
 							: 'text-gray-400'}"
 					>
-						{$_(`modeSelector.descriptions.${preset.value}`)}
+						{$_(`tracklistSelector.descriptions.${preset.value}`)}
 					</span>
 					{#if preset.value !== 'custom' && presetInfoMap[preset.value]}
 						<span class="mt-1 text-xs opacity-70">
@@ -146,7 +146,7 @@
 					onclick={handleDone}
 					class="w-full rounded-xl bg-linear-to-r from-cyan-500 to-purple-600 px-6 py-3 font-semibold text-white shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-95"
 				>
-					{$_('modeSelector.done')}
+					{$_('tracklistSelector.done')}
 				</button>
 			</div>
 		{/if}
