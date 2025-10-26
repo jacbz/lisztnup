@@ -41,8 +41,8 @@ from typing import Dict, List, Optional, Set, Any
 # --- Data Filtering Thresholds ---
 MIN_WORKS_PER_COMPOSER = 3      # Composers with fewer final works than this will be dropped.
 MIN_BIRTH_YEAR = 1600           # Composers born before this year will be dropped.
-MIN_RECORDINGS_PER_PART = 2     # Leaf works (parts) with fewer recordings will be dropped at the start.
-MINIMUM_WSS = 1.2               # The absolute minimum Work Significance Score for a work to be considered.
+MIN_RECORDINGS_PER_PART = 3     # Leaf works (parts) with fewer recordings will be dropped at the start.
+MINIMUM_WSS = 2.3               # The absolute minimum Work Significance Score for a work to be considered.
 
 # --- Popularity Scoring Parameters ---
 POPULARITY_ALPHA = 0.5          # Balances peak vs. average part popularity in the WSS formula.
@@ -53,8 +53,8 @@ POPULARITY_ALPHA = 0.5          # Balances peak vs. average part popularity in t
 # requires its parts to be highly significant (closer to 100), while a work with a
 # very high WSS can include parts that are less significant relative to its main hit.
 DYNAMIC_PART_SCORE_FILTER = {
-    "WSS_LOWER_BOUND": 1.5,         # WSS at which the part score requirement is highest.
-    "WSS_UPPER_BOUND": 3.5,         # WSS at which the part score requirement is lowest.
+    "WSS_LOWER_BOUND": MINIMUM_WSS, # WSS at which the part score requirement is highest.
+    "WSS_UPPER_BOUND": 6.0,         # WSS at which the part score requirement is lowest.
     "PART_SCORE_AT_LOWER_WSS": 95,  # Required part score (0-100) for a work with WSS <= LOWER_BOUND.
     "PART_SCORE_AT_UPPER_WSS": 75,  # Required part score (0-100) for a work with WSS >= UPPER_BOUND.
 }
@@ -80,13 +80,13 @@ KEYWORD_RULES = [
     (r'(?i)Swan Lake|Nutcracker|Creatures of Prometheus|L\'Arlésienne', 'ballet'),
 
     # ========================================================================
-    # 2. Large-Scale Vocal Works (Sacred and Secular)
+    # 2. Vocal Works (Sacred and Secular)
     # Captures major choral, religious, and vocal ensemble pieces.
     # ========================================================================
-    (r'(?i)Cantata|Kantate|Oratorio|Stabat Mater|Requiem|Magnificat|Passion|Mass\b|Missa|Coronation Anthem|Chandos Anthem', 'vocal'),
+    (r'(?i)Cantata|Kantate|Oratorio|Stabat Mater|Requiem|Magnificat|Passion|Mass\b|Missa|Coronation Anthem|Chandos Anthem|(Gott|Herr|Jesu|Mensch).*BWV', 'vocal'),
     (r'(?i)Te Deum|Vesperae|Litaniae|Psalm|Salve Regina|Ave Maria|Kyrie|Credo|Agnus Dei|Dixit Dominus|Nisi Dominus|Offertorium|Motet|Hymn', 'vocal'),
     (r'(?i)Aria|Lied(?!chen)|Lieder|Gesänge|Chanson|Song(?!s? Without Words)|Recitative|Dichterliebe|Winterreise|Schwanengesang', 'vocal'),
-    (r'(?i)Choral\b|Chorale\b|Coro\b|Chorus|for Soprano|for Bass|for Solo Voice', 'vocal'),
+    (r'(?i)Choral|Choräl|Coro\b|Chorus|for Soprano|for Bass|for Solo Voice', 'vocal'),
 
     # ========================================================================
     # 3. Concerto
@@ -98,9 +98,9 @@ KEYWORD_RULES = [
     # 4. Orchestral Works
     # Music for a large ensemble, including symphonies, overtures, and dances.
     # ========================================================================
-    (r'(?i)Symphony|Symphonie|Sinfonia(?! (BWV 7|BWV 8))', 'orchestral'), # Excludes Bach's keyboard Sinfonias
+    (r'(?i)Symphony|Symphonie|Symphonische|Sinfonia(?! (BWV 7|BWV 8))', 'orchestral'), # Excludes Bach's keyboard Sinfonias
     (r'(?i)Overture|Ouverture|Poème symphonique|Symphonic Poem|Serenade for Orchestra|Divertimento for Orchestra|Cassation', 'orchestral'),
-    (r'(?i)\bMarch\b|Marsch|Polka|Galopp|\bDance[s]? for Orchestra|\bTänze for Orchestra|for Orchestra|for Wind Ensemble|for Military Band', 'orchestral'),
+    (r'(?i)Orchestersuite|for Orchestra|for Orchestra|for strings|for Wind Ensemble|for Military Band', 'orchestral'),
 
     # ========================================================================
     # 5. Chamber Music
@@ -110,14 +110,14 @@ KEYWORD_RULES = [
     (r'(?i)String Quartet|String Quintet|String Trio|Piano Quintet|Piano Trio|Clarinet Quintet|Horn Trio', 'chamber'),
     (r'(?i)Cello Sonata|Violin Sonata|Flute Sonata|Sonata for .* and|Trio Sonata|Triosonate|Pianoforte und Violine|violino e fagotto', 'chamber'),
     (r'(?i)\bDuo\b|\bDuet\b|Trio\b(?! for Piano)|Quartet|Quintet|Sextet|Septet|Octet|Nonet', 'chamber'), # Excludes Piano Trio to avoid double-matching
-    (r'(?i)Serenade for (Flute|Violin|Strings)|Divertimento for (Violin|Strings|Winds)', 'chamber'),
-    (r'(?i)for (.+) and Piano|for Clarinet and Viola|for .+ Violins|Violino Solo', 'chamber'),
+    (r'(?i)Serenade for (Flute|Violin|Strings)|Divertiment.* for (Violin|Strings|Winds)', 'chamber'),
+    (r'(?i)for (.+) and Piano|for Clarinet and Viola|for .+ Violins|Viol.* Solo|Divertiment', 'chamber'),
 
     # ========================================================================
     # 6. Keyboard Works (Piano, Harpsichord, Organetc.)
     # This is a broad category for solo keyboard music, with many specific forms.
     # ========================================================================
-    (r'(?i)Piano Sonata|Klaviersonate|Keyboard Sonata|Harpsichord Sonata|Orgel', 'piano'),
+    (r'(?i)Piano Sonata|Sonata .* K .* |Klaviersonate|Keyboard Sonata|Harpsichord Sonata|Orgel', 'piano'),
     (r'(?i)for Piano|für Klavier|Klavierstück|for Harpsichord|pour le Clavecin|Pièces de Clavecin|for Keyboard', 'piano'),
     # --- Specific Keyboard Forms ---
     (r'(?i)Bagatelle|Étude|Estudio|Ländler|Polonaise|Mazurka|Nocturne|Impromptu|Album für die Jugend|Children|Consolation', 'piano'),
@@ -126,8 +126,7 @@ KEYWORD_RULES = [
     (r'(?i)Prelude|Präludium|Fugue|Fuge|Fughetta(?!.*(Orchestra|Symphony))', 'piano'),
     (r'(?i)\bVariations? for Piano|\bVariationen für Klavier|Goldberg Variations|Diabelli Variations', 'piano'),
     (r'(?i)Kinderszenen|Albumblatt|Albumblätter|Papillons|Carnaval|Kreisleriana|Davidsbündlertänze|Waldszenen', 'piano'),
-    (r'(?i)Allemande|Courante|Sarabande|Gigue|Menuet|Minuet|Gavotte|Bourrée|Pavan|Ecossaise', 'piano'),
-    (r'(?i)Well-Tempered Clavier|Inventio|Partita.*BWV|Suite.*BWV', 'piano'), # Catches Bach's major keyboard cycles
+    (r'(?i)Well-Tempered Clavier|Wohltemperiert|Inventio', 'piano'), # Catches Bach's major keyboard cycles
 ]
 
 # --- Recording Selection Preferences ---
@@ -564,6 +563,7 @@ class MusicbrainzProcessor:
         """
         if not recordings:
             return None
+        recordings = [r for r in recordings if r.deezerId is not None]
         with_labels = [r for r in recordings if r.label]
         for pref in LABEL_PREFERENCE:
             for rec in with_labels:

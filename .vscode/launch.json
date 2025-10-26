@@ -2,40 +2,11 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"type": "chrome",
+			"type": "node-terminal",
 			"request": "launch",
-			"name": "Launch Chrome (Dev Server)",
-			"url": "http://localhost:5173",
-			"webRoot": "${workspaceFolder}",
-			"runtimeArgs": [
-				"--disable-web-security"
-			],
-			"preLaunchTask": "npm: dev",
-			"serverReadyAction": {
-				"pattern": "Local:\\s+(https?://[^\\s]+)",
-				"uriFormat": "%s",
-				"action": "debugWithChrome"
-			}
-		},
-		{
-			"type": "chrome",
-			"request": "attach",
-			"name": "Attach to Chrome",
-			"port": 9222,
-			"webRoot": "${workspaceFolder}",
-			"urlFilter": "http://localhost:5173/*"
-		},
-		{
-			"type": "node",
-			"request": "launch",
-			"name": "SvelteKit Build",
-			"runtimeExecutable": "npm",
-			"runtimeArgs": [
-				"run",
-				"build"
-			],
-			"cwd": "${workspaceFolder}",
-			"console": "integratedTerminal"
+			"name": "Yarn Dev",
+			"command": "yarn run dev",
+			"cwd": "${workspaceFolder}"
 		}
 	]
 }
