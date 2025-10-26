@@ -8,22 +8,17 @@
 
 ```bash
 # Install dependencies
-npm install
-
-# Add your music data
-# Place lisztnup.json in /static directory
+yarn install
 
 # Start development server
-npm run dev
-```
-
+yarn dev
 ```
 
 Open http://localhost:5173 in your browser.
 
 ## Requirements
 
-- Node.js 18+
+- Node.js 20+
 - Music data file: `static/lisztnup.json` (see IMPLEMENTATION.md for format)
 
 ## Tech Stack
@@ -33,4 +28,3 @@ SvelteKit 2 • TypeScript • Tailwind CSS 4 • Svelte i18n • Deezer API
 ## License
 
 See LICENSE file for details.
-```

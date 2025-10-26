@@ -38,7 +38,11 @@
 
 <div class="flex h-screen w-full items-center justify-center">
 	<div class="text-center">
-		<h1 class="mb-8 animate-pulse text-6xl font-bold text-cyan-400">{$_('app.title')}</h1>
+		<h1
+			class="bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text p-16 font-streamster text-9xl font-bold text-transparent select-none"
+		>
+			{$_('app.title')}
+		</h1>
 
 		{#if error}
 			<div class="text-xl text-red-400">
@@ -58,17 +62,4 @@
 </div>
 
 <style>
-	@keyframes pulse {
-		0%,
-		100% {
-			text-shadow: 0 0 20px rgba(34, 211, 238, 0.8);
-		}
-		50% {
-			text-shadow: 0 0 40px rgba(34, 211, 238, 1);
-		}
-	}
-
-	.animate-pulse {
-		animation: pulse 2s ease-in-out infinite;
-	}
 </style>
