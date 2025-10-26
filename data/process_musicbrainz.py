@@ -120,10 +120,7 @@ KEYWORD_RULES = [
     (r'(?i)Piano Sonata|Sonata .* K .* |Klaviersonate|Keyboard Sonata|Harpsichord Sonata|Orgel', 'piano'),
     (r'(?i)for Piano|für Klavier|Klavierstück|for Harpsichord|pour le Clavecin|Pièces de Clavecin|for Keyboard', 'piano'),
     # --- Specific Keyboard Forms ---
-    (r'(?i)Bagatelle|Étude|Estudio|Ländler|Polonaise|Mazurka|Nocturne|Impromptu|Album für die Jugend|Children|Consolation', 'piano'),
-    (r'(?i)Rhapsody|Rhapsodie|Intermezzo|Scherzo(?!.*(Orchestra|Symphony))|Ballade|Arabeske|Humoreske|Tarantella|Barcarolle|Berceuse', 'piano'),
-    (r'(?i)Fantasiestück|Toccata|Caprice|Capriccio(?!.*(Orchestra))', 'piano'),
-    (r'(?i)Prelude|Präludium|Fugue|Fuge|Fughetta(?!.*(Orchestra|Symphony))', 'piano'),
+    (r'(?i)Album für die Jugend|Fantasiestück', 'piano'),
     (r'(?i)\bVariations? for Piano|\bVariationen für Klavier|Goldberg Variations|Diabelli Variations', 'piano'),
     (r'(?i)Kinderszenen|Albumblatt|Albumblätter|Papillons|Carnaval|Kreisleriana|Davidsbündlertänze|Waldszenen', 'piano'),
     (r'(?i)Well-Tempered Clavier|Wohltemperiert|Inventio', 'piano'), # Catches Bach's major keyboard cycles

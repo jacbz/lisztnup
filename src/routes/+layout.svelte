@@ -9,7 +9,7 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<title>Liszt'n Up! - Classical Music Guessing Game</title>
+	<title>Liszt'n Up!</title>
 </svelte:head>
 
 <div class="min-h-screen bg-gray-950">

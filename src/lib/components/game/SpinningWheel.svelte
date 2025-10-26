@@ -71,14 +71,29 @@
 		}
 	];
 
+	let canvas: HTMLCanvasElement;
 	let rotation = $state(0);
 	let isSpinning = $state(false);
-	let showSpinText = $state(true); // Show SPIN text - controlled by round changes
+	let showSpinText = $state(true);
 	let selectedCategory = $state<GuessCategory | null>(null);
-	let wheelSize = $state(600); // Default size
+	let wheelSize = $state(600);
 	let prevRoundIndex = $state(currentRoundIndex);
+	let animationFrameId: number | null = null;
+	let currentRotation = $state(0);
 
-	// Reset showSpinText when moving to a new round (after Next Round is clicked)
+	// Drag state
+	let isDragging = $state(false);
+	let dragStartAngle = 0;
+	let dragStartRotation = 0;
+	let lastDragAngle = 0;
+	let lastDragTime = 0;
+	let dragVelocity = 0;
+	let totalDragDistance = 0;
+
+	// SVG overlay for text
+	let svgOverlay: SVGSVGElement;
+
+	// Reset showSpinText when moving to a new round
 	$effect(() => {
 		if (currentRoundIndex !== prevRoundIndex) {
 			showSpinText = true;
@@ -86,286 +101,544 @@
 		}
 	});
 
-	onMount(() => {
-		updateWheelSize();
-		window.addEventListener('resize', updateWheelSize);
-		return () => window.removeEventListener('resize', updateWheelSize);
+	// Redraw when rotation changes
+	$effect(() => {
+		if (canvas) {
+			drawWheel();
+		}
 	});
 
+	onMount(() => {
+		updateWheelSize();
+		window.addEventListener('resize', handleResize);
+		drawWheel();
+		return () => {
+			window.removeEventListener('resize', handleResize);
+			if (animationFrameId) cancelAnimationFrame(animationFrameId);
+		};
+	});
+
+	function handleResize() {
+		updateWheelSize();
+		if (canvas) {
+			drawWheel();
+		}
+	}
+
 	function updateWheelSize() {
-		// Make wheel fill most of the screen (90% of smaller dimension)
 		const minDimension = Math.min(window.innerWidth, window.innerHeight);
 		wheelSize = minDimension * 0.9;
+	}
+
+	function drawWheel() {
+		if (!canvas) return;
+
+		const ctx = canvas.getContext('2d');
+		if (!ctx) return;
+
+		const dpr = window.devicePixelRatio || 1;
+		const size = wheelSize;
+
+		// Set canvas size for high DPI displays
+		canvas.width = size * dpr;
+		canvas.height = size * dpr;
+		canvas.style.width = `${size}px`;
+		canvas.style.height = `${size}px`;
+
+		ctx.scale(dpr, dpr);
+
+		const centerX = size / 2;
+		const centerY = size / 2;
+		const radius = size * 0.42; // 42% of size for main wheel
+		const centerCircleRadius = size * 0.16; // 16% for center (was 78/500 = 15.6%)
+
+		ctx.clearRect(0, 0, size, size);
+
+		// Draw segments
+		const segmentAngle = (Math.PI * 2) / categories.length;
+
+		categories.forEach((category, i) => {
+			const startAngle = i * segmentAngle + (currentRotation * Math.PI) / 180 - Math.PI / 2;
+			const endAngle = startAngle + segmentAngle;
+			const midAngle = startAngle + segmentAngle / 2;
+
+			// Create radial gradient for segment
+			const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
+			gradient.addColorStop(0.3, category.color2);
+			gradient.addColorStop(1, category.color1);
+
+			// Draw segment
+			ctx.beginPath();
+			ctx.moveTo(centerX, centerY);
+			ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+			ctx.closePath();
+			ctx.fillStyle = gradient;
+			ctx.fill();
+
+			// Add segment border
+			ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
+			ctx.lineWidth = 2;
+			ctx.stroke();
+
+			// Draw icon
+			const iconDistance = radius * 0.68;
+			const iconX = centerX + Math.cos(midAngle) * iconDistance;
+			const iconY = centerY + Math.sin(midAngle) * iconDistance;
+
+			ctx.save();
+			ctx.translate(iconX, iconY);
+			ctx.rotate(midAngle + Math.PI / 2);
+
+			// Draw SVG path (scaled and positioned)
+			const iconScale = size / 500; // Scale based on wheel size
+			drawSVGPath(ctx, category.iconPath, iconScale * 1.5);
+
+			ctx.restore();
+		});
+
+		// Draw center circle
+		ctx.beginPath();
+		ctx.arc(centerX, centerY, centerCircleRadius, 0, Math.PI * 2);
+		ctx.fillStyle = '#0a0f1a';
+		ctx.globalAlpha = 0.95;
+		ctx.fill();
+		ctx.globalAlpha = 1;
+
+		// Center circle border with gradient
+		const centerGradient = ctx.createLinearGradient(
+			centerX - centerCircleRadius,
+			centerY - centerCircleRadius,
+			centerX + centerCircleRadius,
+			centerY + centerCircleRadius
+		);
+		centerGradient.addColorStop(0, '#22d3ee');
+		centerGradient.addColorStop(0.5, '#a855f7');
+		centerGradient.addColorStop(1, '#22d3ee');
+
+		ctx.beginPath();
+		ctx.arc(centerX, centerY, centerCircleRadius, 0, Math.PI * 2);
+		ctx.strokeStyle = centerGradient;
+		ctx.lineWidth = 4;
+		ctx.shadowColor = 'rgba(34, 211, 238, 0.6)';
+		ctx.shadowBlur = 8;
+		ctx.stroke();
+
+		// Reset shadow
+		ctx.shadowColor = 'transparent';
+		ctx.shadowBlur = 0;
+
+		// Draw SPIN text if needed
+		if (showSpinText) {
+			ctx.fillStyle = 'white';
+			ctx.font = `800 ${size * 0.064}px system-ui, -apple-system, sans-serif`;
+			ctx.textAlign = 'center';
+			ctx.textBaseline = 'middle';
+			ctx.shadowColor = 'rgba(34, 211, 238, 0.8)';
+			ctx.shadowBlur = 8;
+			ctx.shadowOffsetX = 0;
+			ctx.shadowOffsetY = 2;
+
+			const spinText = ($_('game.spin') as string).toUpperCase();
+			ctx.fillText(spinText, centerX, centerY);
+
+			ctx.shadowColor = 'transparent';
+			ctx.shadowBlur = 0;
+		}
+
+		// Draw pointer (white sleek arrow pointing down at top of wheel)
+		const pointerY = size * 0.04; // 4% from top
+		const pointerHeight = size * 0.08;
+		const pointerWidth = size * 0.06;
+
+		ctx.save();
+		ctx.translate(centerX, pointerY);
+
+		// Draw sleek white pointer
+		ctx.beginPath();
+		ctx.moveTo(0, pointerHeight); // Bottom point
+		ctx.lineTo(-pointerWidth / 2, 0); // Top left
+		ctx.lineTo(0, pointerHeight * 0.3); // Middle notch
+		ctx.lineTo(pointerWidth / 2, 0); // Top right
+		ctx.closePath();
+
+		ctx.fillStyle = 'white';
+		ctx.shadowColor = 'rgba(255, 255, 255, 0.6)';
+		ctx.shadowBlur = 12;
+		ctx.fill();
+
+		// Add subtle border
+		ctx.strokeStyle = 'rgba(0, 0, 0, 0.2)';
+		ctx.lineWidth = 1;
+		ctx.stroke();
+
+		ctx.restore();
+	}
+
+	function drawSVGPath(ctx: CanvasRenderingContext2D, pathData: string, scale: number) {
+		// This is a simplified SVG path renderer for basic shapes
+		// Parse and draw the SVG path
+		const path = new Path2D(pathData);
+
+		ctx.save();
+		ctx.scale(scale, scale);
+		ctx.translate(-12, -12); // Center the 24x24 icon
+
+		ctx.fillStyle = 'white';
+		ctx.globalAlpha = 0.9;
+		ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+		ctx.shadowBlur = 4;
+		ctx.fill(path);
+		ctx.globalAlpha = 1;
+
+		ctx.restore();
 	}
 
 	function spin() {
 		if (isSpinning) return;
 
 		isSpinning = true;
-		showSpinText = false; // Hide SPIN text immediately when spinning starts
+		showSpinText = false;
 		selectedCategory = null;
 		onSpinStart();
 
-		// Spin for 3 seconds with random final position
-		const spins = 5 + Math.random() * 3; // 5-8 full rotations
+		const spins = 5 + Math.random() * 3;
 		const randomOffset = Math.random() * 360;
 		const targetRotation = rotation + spins * 360 + randomOffset;
 
-		rotation = targetRotation;
+		const startRotation = rotation;
+		const startTime = Date.now();
+		const duration = 3000;
 
-		setTimeout(() => {
-			isSpinning = false;
-			// Calculate which category was selected
-			const normalizedRotation = ((targetRotation % 360) + 360) % 360;
-			const segmentSize = 360 / categories.length;
-			const categoryIndex =
-				Math.floor((360 - normalizedRotation + segmentSize / 2) / segmentSize) % categories.length;
+		function animate() {
+			const elapsed = Date.now() - startTime;
+			const progress = Math.min(elapsed / duration, 1);
 
-			selectedCategory = categories[categoryIndex].id;
-			onSpinEnd();
-			onCategorySelected(selectedCategory);
-		}, 3000);
+			// Ease out cubic
+			const eased = 1 - Math.pow(1 - progress, 3);
+
+			currentRotation = startRotation + (targetRotation - startRotation) * eased;
+			drawWheel();
+
+			if (progress < 1) {
+				animationFrameId = requestAnimationFrame(animate);
+			} else {
+				rotation = targetRotation;
+				currentRotation = targetRotation;
+				isSpinning = false;
+
+				// Calculate which category the pointer is pointing at
+				// Segments are drawn starting from -90° (right) + rotation
+				// Segment i starts at: i * segmentAngle - 90° + currentRotation
+				// Pointer is at top: 90° (or -270°)
+				// We need to find which segment contains the angle: 90° - currentRotation
+				const segmentSize = 360 / categories.length;
+				const normalizedRotation = ((currentRotation % 360) + 360) % 360;
+
+				// Pointer angle relative to segment 0's starting position
+				// Segment 0 starts at -90° when rotation is 0
+				// Pointer is at 90°, which is 180° from segment 0's start
+				const angleFromSegment0 = (180 - normalizedRotation + 360) % 360;
+				const categoryIndex = Math.floor(angleFromSegment0 / segmentSize) % categories.length;
+
+				selectedCategory = categories[categoryIndex].id;
+				onSpinEnd();
+				onCategorySelected(selectedCategory);
+			}
+		}
+
+		animate();
 	}
 
-	function handleTouch(event: TouchEvent) {
-		if (!isSpinning) {
-			event.preventDefault();
-			spin();
+	function spinWithVelocity(velocity: number) {
+		if (isSpinning) return;
+
+		isSpinning = true;
+		showSpinText = false;
+		selectedCategory = null;
+		onSpinStart();
+
+		// Physics-based spin with initial velocity
+		const friction = 0.98; // Smoother friction for longer, more natural spin
+		const minVelocity = 0.3; // Lower threshold for smoother final deceleration
+		let currentVelocity = velocity;
+
+		const startTime = Date.now();
+
+		function animate() {
+			const elapsed = Date.now() - startTime;
+
+			// Apply friction
+			currentVelocity *= friction;
+
+			// Update rotation
+			currentRotation += currentVelocity;
+
+			drawWheel();
+
+			if (Math.abs(currentVelocity) > minVelocity) {
+				animationFrameId = requestAnimationFrame(animate);
+			} else {
+				// Stop where it naturally stops - NO SNAPPING
+				rotation = currentRotation;
+				isSpinning = false;
+
+				// Calculate which category the pointer is pointing at
+				// Segments are drawn starting from -90° (right) + rotation
+				// Pointer is at top: 90°
+				const segmentSize = 360 / categories.length;
+				const normalizedRotation = ((currentRotation % 360) + 360) % 360;
+
+				// Angle from segment 0's starting position to pointer
+				const angleFromSegment0 = (180 - normalizedRotation + 360) % 360;
+				const categoryIndex = Math.floor(angleFromSegment0 / segmentSize) % categories.length;
+
+				selectedCategory = categories[categoryIndex].id;
+				onSpinEnd();
+				onCategorySelected(selectedCategory);
+			}
+		}
+
+		animate();
+	}
+
+	function getAngleFromEvent(event: MouseEvent | TouchEvent): number {
+		if (!canvas) return 0;
+
+		const rect = canvas.getBoundingClientRect();
+		const centerX = rect.left + rect.width / 2;
+		const centerY = rect.top + rect.height / 2;
+
+		let clientX: number, clientY: number;
+
+		if ('touches' in event && event.touches.length > 0) {
+			clientX = event.touches[0].clientX;
+			clientY = event.touches[0].clientY;
+		} else if ('clientX' in event) {
+			clientX = event.clientX;
+			clientY = event.clientY;
+		} else {
+			return 0;
+		}
+
+		const dx = clientX - centerX;
+		const dy = clientY - centerY;
+
+		return (Math.atan2(dy, dx) * 180) / Math.PI;
+	}
+
+	function handleDragStart(event: MouseEvent | TouchEvent) {
+		if (isSpinning) return;
+
+		isDragging = true;
+		totalDragDistance = 0;
+		dragStartAngle = getAngleFromEvent(event);
+		dragStartRotation = currentRotation;
+		lastDragAngle = dragStartAngle;
+		lastDragTime = Date.now();
+		dragVelocity = 0;
+
+		if (animationFrameId) {
+			cancelAnimationFrame(animationFrameId);
+			animationFrameId = null;
 		}
 	}
 
-	function handleClick() {
-		if (!isSpinning) {
-			spin();
+	function handleDragMove(event: MouseEvent | TouchEvent) {
+		if (!isDragging || isSpinning) return;
+
+		const currentAngle = getAngleFromEvent(event);
+		const currentTime = Date.now();
+
+		// Calculate angle difference (handle wrap-around)
+		let angleDiff = currentAngle - lastDragAngle;
+		if (angleDiff > 180) angleDiff -= 360;
+		if (angleDiff < -180) angleDiff += 360;
+
+		// Update rotation
+		currentRotation = dragStartRotation + (currentAngle - dragStartAngle);
+		totalDragDistance += Math.abs(angleDiff);
+
+		// Calculate velocity
+		const timeDiff = Math.max(currentTime - lastDragTime, 1);
+		dragVelocity = (angleDiff / timeDiff) * 16; // Scale to ~60fps
+
+		lastDragAngle = currentAngle;
+		lastDragTime = currentTime;
+
+		drawWheel();
+	}
+
+	function handleDragEnd(event: MouseEvent | TouchEvent) {
+		if (!isDragging) return;
+
+		isDragging = false;
+
+		// Always use physics-based deceleration
+		// Only trigger game logic if it was a forceful spin
+		const significantVelocity = 5; // Threshold for "forceful" spin that triggers game logic
+
+		rotation = currentRotation;
+
+		if (Math.abs(dragVelocity) >= significantVelocity) {
+			// Forceful spin - use physics AND trigger game callbacks
+			spinWithVelocity(dragVelocity);
+		} else {
+			// Tap or small drag - decelerate with physics but DON'T trigger game logic
+			decelerateWithPhysics(dragVelocity);
+		}
+	}
+
+	function decelerateWithPhysics(initialVelocity: number) {
+		// Physics-based deceleration without game callbacks
+		const friction = 0.94; // Smoother friction for gentler deceleration
+		const minVelocity = 0.05; // Lower threshold for smoother stop
+		let currentVelocity = initialVelocity;
+
+		function animate() {
+			// Apply friction
+			currentVelocity *= friction;
+
+			// Update rotation
+			currentRotation += currentVelocity;
+			rotation = currentRotation;
+
+			drawWheel();
+
+			if (Math.abs(currentVelocity) > minVelocity) {
+				animationFrameId = requestAnimationFrame(animate);
+			} else {
+				// Just stop - no snapping, no callbacks
+				rotation = currentRotation;
+			}
+		}
+
+		animate();
+	}
+
+	function handlePointerDown(event: MouseEvent | TouchEvent) {
+		handleDragStart(event);
+	}
+
+	function handlePointerMove(event: MouseEvent | TouchEvent) {
+		handleDragMove(event);
+	}
+
+	function handlePointerUp(event: MouseEvent | TouchEvent) {
+		handleDragEnd(event);
+	}
+
+	function handlePointerCancel(event: MouseEvent | TouchEvent) {
+		if (isDragging) {
+			isDragging = false;
+			// Reset to last stable rotation
+			currentRotation = rotation;
+			drawWheel();
 		}
 	}
 </script>
 
 <div class="wheel-wrapper" style="width: {wheelSize}px; height: {wheelSize}px;">
-	<!-- Beautiful redesigned pointer -->
-	<div class="pointer-container" style="top: 20px;">
-		<svg
-			width="60"
-			height="60"
-			viewBox="0 0 60 60"
-			class="pointer-svg"
-			style="transform: rotate(180deg); transform-origin: top;"
-		>
-			<defs>
-				<linearGradient id="pointerGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-					<stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
-					<stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
-				</linearGradient>
-				<filter id="pointerGlow">
-					<feGaussianBlur stdDeviation="3" result="coloredBlur" />
-					<feMerge>
-						<feMergeNode in="coloredBlur" />
-						<feMergeNode in="SourceGraphic" />
-					</feMerge>
-				</filter>
-			</defs>
-			<path
-				d="M 30 10 L 45 35 L 30 30 L 15 35 Z"
-				fill="url(#pointerGradient)"
-				stroke="#fbbf24"
-				stroke-width="2"
-				filter="url(#pointerGlow)"
-			/>
-			<circle cx="30" cy="30" r="8" fill="#fbbf24" stroke="#f59e0b" stroke-width="2" />
-		</svg>
-	</div>
-
-	<!-- Wheel -->
-	<button
-		type="button"
-		class="wheel-container"
-		onclick={handleClick}
-		ontouchstart={handleTouch}
-		style="transform: rotate({rotation}deg); transition: transform {isSpinning
-			? '3s cubic-bezier(0.25, 0.1, 0.25, 1)'
-			: '0.3s ease-out'};"
+	<canvas
+		bind:this={canvas}
+		class="wheel-canvas"
+		onpointerdown={handlePointerDown}
+		onpointermove={handlePointerMove}
+		onpointerup={handlePointerUp}
+		onpointercancel={handlePointerCancel}
+		onpointerleave={handlePointerUp}
 		aria-label="Spin the wheel"
+	></canvas>
+
+	<!-- SVG overlay for curved text -->
+	<svg
+		bind:this={svgOverlay}
+		class="text-overlay"
+		viewBox="0 0 {wheelSize} {wheelSize}"
+		style="transform: rotate({currentRotation}deg);"
 	>
-		<svg viewBox="0 0 400 400" class="wheel-svg">
-			<defs>
-				{#each categories as category, i}
-					{@const startAngle = (360 / categories.length) * i - 90}
-					{@const endAngle = (360 / categories.length) * (i + 1) - 90}
-					{@const midAngle = (startAngle + endAngle) / 2}
-
-					<!-- Radial gradient for each segment -->
-					<radialGradient id="gradient-{i}" cx="50%" cy="50%">
-						<stop offset="30%" style="stop-color:{category.color2};stop-opacity:1" />
-						<stop offset="100%" style="stop-color:{category.color1};stop-opacity:0.9" />
-					</radialGradient>
-
-					<!-- Glow filter for segment -->
-					<filter id="glow-{i}">
-						<feGaussianBlur stdDeviation="4" result="coloredBlur" />
-						<feMerge>
-							<feMergeNode in="coloredBlur" />
-							<feMergeNode in="SourceGraphic" />
-						</feMerge>
-					</filter>
-
-					<!-- Outer curved text path -->
-					<path
-						id="outer-curve-{i}"
-						d="M {200 + 175 * Math.cos((startAngle * Math.PI) / 180)} {200 +
-							175 * Math.sin((startAngle * Math.PI) / 180)} 
-						   A 175 175 0 0 1 {200 + 175 * Math.cos((endAngle * Math.PI) / 180)} {200 +
-							175 * Math.sin((endAngle * Math.PI) / 180)}"
-						fill="none"
-					/>
-
-					<!-- Inner curved text path -->
-					<path
-						id="inner-curve-{i}"
-						d="M {200 + 95 * Math.cos((endAngle * Math.PI) / 180)} {200 +
-							95 * Math.sin((endAngle * Math.PI) / 180)} 
-						   A 95 95 0 0 0 {200 + 95 * Math.cos((startAngle * Math.PI) / 180)} {200 +
-							95 * Math.sin((startAngle * Math.PI) / 180)}"
-						fill="none"
-					/>
-				{/each}
-			</defs>
-
-			<!-- Draw segments -->
+		<defs>
 			{#each categories as category, i}
-				{@const startAngle = (360 / categories.length) * i - 90}
-				{@const endAngle = (360 / categories.length) * (i + 1) - 90}
-				{@const midAngle = (startAngle + endAngle) / 2}
-				{@const largeArc = 360 / categories.length > 180 ? 1 : 0}
+				{@const segmentAngle = 360 / categories.length}
+				{@const startAngle = segmentAngle * i - 90}
+				{@const endAngle = segmentAngle * (i + 1) - 90}
+				{@const radius = wheelSize * 0.42}
+				{@const outerTextRadius = radius * 0.96}
+				{@const innerTextRadius = radius * 0.41}
+				{@const centerX = wheelSize / 2}
+				{@const centerY = wheelSize / 2}
 
-				<!-- Segment path with glow -->
+				<!-- Outer curved path (counter-clockwise for upside-down text) -->
 				<path
-					d="M 200 200 
-					   L {200 + 200 * Math.cos((startAngle * Math.PI) / 180)} {200 +
-						200 * Math.sin((startAngle * Math.PI) / 180)} 
-					   A 200 200 0 {largeArc} 1 {200 + 200 * Math.cos((endAngle * Math.PI) / 180)} {200 +
-						200 * Math.sin((endAngle * Math.PI) / 180)} 
-					   Z"
-					fill="url(#gradient-{i})"
-					stroke="rgba(0,0,0,0.3)"
-					stroke-width="2"
-					filter="url(#glow-{i})"
-					class="segment"
+					id="outer-curve-{i}"
+					d="M {centerX + outerTextRadius * Math.cos((endAngle * Math.PI) / 180)} {centerY +
+						outerTextRadius * Math.sin((endAngle * Math.PI) / 180)} 
+					   A {outerTextRadius} {outerTextRadius} 0 0 0 {centerX +
+						outerTextRadius * Math.cos((startAngle * Math.PI) / 180)} {centerY +
+						outerTextRadius * Math.sin((startAngle * Math.PI) / 180)}"
+					fill="none"
 				/>
 
-				<!-- Icon for each segment -->
-				<g
-					transform="translate({200 + 135 * Math.cos((midAngle * Math.PI) / 180)}, {200 +
-						135 * Math.sin((midAngle * Math.PI) / 180)}) rotate({midAngle + 90}) scale(1.5)"
-				>
-					<path
-						d={category.iconPath}
-						transform="translate(-12, -12)"
-						fill="white"
-						opacity="0.9"
-						filter="url(#glow-{i})"
-					/>
-				</g>
-
-				<!-- Outer text -->
-				<text class="segment-text-outer">
-					<textPath href="#outer-curve-{i}" startOffset="50%" text-anchor="middle">
-						{$_(`game.categories.${category.id}`).toUpperCase()}
-					</textPath>
-				</text>
-
-				<!-- Inner text -->
-				<text class="segment-text-inner">
-					<textPath href="#inner-curve-{i}" startOffset="50%" text-anchor="middle">
-						{$_(`game.categories.${category.id}`).toUpperCase()}
-					</textPath>
-				</text>
+				<!-- Inner curved path (clockwise along inner edge) -->
+				<path
+					id="inner-curve-{i}"
+					d="M {centerX + innerTextRadius * Math.cos((startAngle * Math.PI) / 180)} {centerY +
+						innerTextRadius * Math.sin((startAngle * Math.PI) / 180)} 
+					   A {innerTextRadius} {innerTextRadius} 0 0 1 {centerX +
+						innerTextRadius * Math.cos((endAngle * Math.PI) / 180)} {centerY +
+						innerTextRadius * Math.sin((endAngle * Math.PI) / 180)}"
+					fill="none"
+				/>
 			{/each}
+		</defs>
 
-			<!-- Center circle for player control area -->
-			<circle cx="200" cy="200" r="78" fill="#0a0f1a" opacity="0.95" />
-			<circle
-				cx="200"
-				cy="200"
-				r="80"
-				fill="none"
-				stroke="url(#centerGradient)"
-				stroke-width="4"
-				filter="url(#centerGlow)"
-			/>
+		<!-- Draw curved text for each segment -->
+		{#each categories as category, i}
+			{@const categoryText = ($_(`game.categories.${category.id}`) as string).toUpperCase()}
 
-			<!-- "Spin" text when wheel hasn't been spun -->
-			{#if showSpinText}
-				<text x="200" y="210" text-anchor="middle" class="spin-text" pointer-events="none">
-					{$_('game.spin').toUpperCase()}
-				</text>
-			{/if}
+			<!-- Outer text (upside down for readability from outside) -->
+			<text class="segment-text-outer" style="font-size: {wheelSize * 0.04}px;">
+				<textPath href="#outer-curve-{i}" startOffset="50%" text-anchor="middle">
+					{categoryText}
+				</textPath>
+			</text>
 
-			<!-- Center circle gradient and glow -->
-			<defs>
-				<linearGradient id="centerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-					<stop offset="0%" style="stop-color:#22d3ee;stop-opacity:1" />
-					<stop offset="50%" style="stop-color:#a855f7;stop-opacity:1" />
-					<stop offset="100%" style="stop-color:#22d3ee;stop-opacity:1" />
-				</linearGradient>
-				<filter id="centerGlow">
-					<feGaussianBlur stdDeviation="4" result="coloredBlur" />
-					<feMerge>
-						<feMergeNode in="coloredBlur" />
-						<feMergeNode in="SourceGraphic" />
-					</feMerge>
-				</filter>
-			</defs>
-		</svg>
-	</button>
+			<!-- Inner text (smaller) -->
+			<text class="segment-text-inner" style="font-size: {wheelSize * 0.025}px;">
+				<textPath href="#inner-curve-{i}" startOffset="50%" text-anchor="middle">
+					{categoryText}
+				</textPath>
+			</text>
+		{/each}
+	</svg>
 </div>
 
 <style>
 	.wheel-wrapper {
 		position: relative;
 		margin: 0 auto;
-	}
-
-	.pointer-container {
-		position: absolute;
-		left: 50%;
-		transform: translateX(-50%);
-		z-index: 30;
-		filter: drop-shadow(0 4px 12px rgba(251, 191, 36, 0.8));
-	}
-
-	.pointer-svg {
-		display: block;
-	}
-
-	.wheel-container {
-		width: 100%;
-		height: 100%;
-		cursor: pointer;
-		touch-action: none;
-		background: transparent;
-		border: none;
-		padding: 0;
-		transform-origin: center;
 		filter: drop-shadow(0 0 60px rgba(34, 211, 238, 0.6));
 	}
 
-	.wheel-svg {
+	.wheel-canvas {
+		cursor: pointer;
+		touch-action: none;
+		display: block;
+	}
+
+	.text-overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
 		width: 100%;
 		height: 100%;
-	}
-
-	.segment {
-		transition: opacity 0.3s ease;
-	}
-
-	.segment:hover {
-		opacity: 0.95;
+		pointer-events: none;
+		transform-origin: center;
+		transition: transform 0s linear;
 	}
 
 	.segment-text-outer,
 	.segment-text-inner {
 		fill: white;
-		font-size: 20px;
 		font-weight: 800;
 		font-family:
 			system-ui,
@@ -377,19 +650,6 @@
 	}
 
 	.segment-text-inner {
-		font-size: 16px;
 		font-weight: 700;
-	}
-
-	.spin-text {
-		fill: white;
-		font-size: 32px;
-		font-weight: 800;
-		font-family:
-			system-ui,
-			-apple-system,
-			sans-serif;
-		letter-spacing: 0.2em;
-		filter: drop-shadow(0 2px 8px rgba(34, 211, 238, 0.8));
 	}
 </style>

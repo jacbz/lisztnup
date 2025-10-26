@@ -7,6 +7,7 @@
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';
 	import Popup from './Popup.svelte';
 	import { _ } from 'svelte-i18n';
+	import { onMount } from 'svelte';
 
 	interface Props {
 		visible?: boolean;
@@ -39,12 +40,24 @@
 	let isHoldingReveal = $state(false);
 	let holdTimer: number | null = null;
 	let isDismissing = $state(false); // Track dismiss animation
+	let windowSize = $state({ width: 0, height: 0 });
 
 	// Reset dismiss animation when reveal state changes
 	$effect(() => {
 		if (!isRevealed) {
 			isDismissing = false;
 		}
+	});
+
+	onMount(() => {
+		windowSize = { width: window.innerWidth, height: window.innerHeight };
+
+		const handleResize = () => {
+			windowSize = { width: window.innerWidth, height: window.innerHeight };
+		};
+
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
 	});
 
 	const composerName = $derived(track ? formatComposerName(track.composer.name) : '');
@@ -118,11 +131,16 @@
 
 	// Calculate circular progress path
 	const progressPath = $derived.by(() => {
-		const buttonSize = 156; // Match wheel center (78 radius * 2)
-		const ringStrokeWidth = 8; // Thicker ring
-		const ringGap = 8; // Gap between button and ring
-		const ringRadius = buttonSize / 2 + ringGap + ringStrokeWidth / 2;
-		const size = (ringRadius + ringStrokeWidth / 2) * 2;
+		// Use percentage-based sizing relative to viewport
+		const minDimension = Math.min(
+			windowSize.width || window.innerWidth,
+			windowSize.height || window.innerHeight
+		);
+		const wheelSize = minDimension * 0.9; // 90% of smaller dimension (matching SpinningWheel)
+		const buttonSize = wheelSize * 0.14 * 2; // 16% radius * 2 (matching wheel center circle)
+		const ringStrokeWidth = buttonSize * 0.04; // 4% of button size (thinner for inside)
+		const ringRadius = buttonSize / 2 - ringStrokeWidth / 2; // Inside the button with padding
+		const size = buttonSize;
 		const center = size / 2;
 		const circumference = 2 * Math.PI * ringRadius;
 		const offset = circumference * (1 - progress);
@@ -133,7 +151,8 @@
 			radius: ringRadius,
 			circumference,
 			offset,
-			strokeWidth: ringStrokeWidth
+			strokeWidth: ringStrokeWidth,
+			buttonSize // Pass button size for styling
 		};
 	});
 
@@ -216,42 +235,44 @@
 	style="opacity: {visible ? 1 : 0}; pointer-events: {visible ? 'auto' : 'none'};"
 >
 	{#if !isRevealed}
-		<!-- Normal state: circular button with external progress ring -->
+		<!-- Normal state: circular button with internal progress ring -->
 		<div class="player-wrapper">
-			<!-- Progress ring (only during playback) - positioned outside button -->
-			{#if isPlaying}
-				<svg class="progress-ring" width={progressPath.size} height={progressPath.size}>
-					<circle
-						class="progress-ring-circle"
-						stroke="#22d3ee"
-						stroke-width={progressPath.strokeWidth}
-						fill="transparent"
-						r={progressPath.radius}
-						cx={progressPath.center}
-						cy={progressPath.center}
-						style="stroke-dasharray: {progressPath.circumference}; stroke-dashoffset: {progressPath.offset};"
-					/>
-				</svg>
-			{/if}
-
 			<!-- Play button -->
 			<button
 				type="button"
 				class="player-button"
+				style="width: {progressPath.buttonSize}px; height: {progressPath.buttonSize}px; font-size: {progressPath.buttonSize *
+					0.115}px;"
 				onclick={handleClick}
 				onpointerdown={handlePointerDown}
 				onpointerup={handlePointerUp}
 				onpointerleave={handlePointerUp}
 				aria-label={isPlaying ? 'Stop' : playbackEnded ? 'Reveal' : 'Play'}
 			>
+				<!-- Progress ring (only during playback) - positioned inside button -->
+				{#if isPlaying}
+					<svg class="progress-ring" width={progressPath.size} height={progressPath.size}>
+						<circle
+							class="progress-ring-circle"
+							stroke="white"
+							stroke-width={progressPath.strokeWidth}
+							fill="transparent"
+							r={progressPath.radius}
+							cx={progressPath.center}
+							cy={progressPath.center}
+							style="stroke-dasharray: {progressPath.circumference}; stroke-dashoffset: {progressPath.offset};"
+						/>
+					</svg>
+				{/if}
+
 				<!-- Button content -->
 				<div class="button-content">
 					{#if playbackEnded}
 						<span class="reveal-text">REVEAL</span>
 					{:else if isPlaying}
-						<Square class="h-16 w-16 text-white" fill="white" />
+						<Square class="text-white" fill="white" size={progressPath.buttonSize * 0.41} />
 					{:else}
-						<Play class="ml-2 h-16 w-16 text-white" fill="white" />
+						<Play class="ml-2 text-white" fill="white" size={progressPath.buttonSize * 0.41} />
 					{/if}
 				</div>
 			</button>
@@ -281,21 +302,12 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 156px;
-		height: 156px;
 		border-radius: 50%;
-		border: 4px solid #22d3ee;
 		background: linear-gradient(135deg, #22d3ee 0%, #a855f7 100%);
-		box-shadow: 0 0 30px rgba(34, 211, 238, 0.6);
 		cursor: pointer;
 		transition: all 0.2s ease-out;
 		touch-action: none;
 		z-index: 2;
-	}
-
-	.player-button:hover {
-		box-shadow: 0 0 50px rgba(34, 211, 238, 0.8);
-		transform: scale(1.05);
 	}
 
 	.player-button:active {
@@ -313,7 +325,6 @@
 
 	.progress-ring-circle {
 		transition: stroke-dashoffset 0.1s linear;
-		filter: drop-shadow(0 0 6px #22d3ee);
 	}
 
 	.button-content {
@@ -325,7 +336,7 @@
 	}
 
 	.reveal-text {
-		font-size: 18px;
+		/* Font size is now set via inline style for dynamic sizing */
 		font-weight: 700;
 		color: white;
 		text-transform: uppercase;
@@ -374,15 +385,6 @@
 		border: none;
 		cursor: pointer;
 		transition: all 0.2s ease-out;
-	}
-
-	.continue-button:hover {
-		box-shadow: 0 0 30px rgba(34, 211, 238, 0.6);
-		transform: scale(1.02);
-	}
-
-	.continue-button:active {
-		transform: scale(0.98);
 	}
 
 	.artist-link {
