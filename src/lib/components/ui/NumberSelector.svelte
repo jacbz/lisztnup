@@ -12,7 +12,7 @@
 	}
 </script>
 
-<div class="flex rounded-xl bg-gray-800 p-1">
+<div class="flex rounded-xl bg-gray-800 p-1 select-none">
 	{#each options as option}
 		<button
 			type="button"

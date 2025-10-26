@@ -74,7 +74,7 @@
 	<div class="text-center">
 		<!-- Title -->
 		<h1
-			class="neon-title mb-16 bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text text-8xl font-bold text-transparent"
+			class="bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text p-16 font-streamster text-9xl font-bold text-transparent select-none"
 		>
 			{$_('app.title')}
 		</h1>
@@ -143,18 +143,4 @@
 />
 
 <style>
-	.neon-title {
-		animation: neonPulse 3s ease-in-out infinite;
-		filter: drop-shadow(0 0 20px rgba(34, 211, 238, 0.8));
-	}
-
-	@keyframes neonPulse {
-		0%,
-		100% {
-			filter: drop-shadow(0 0 20px rgba(34, 211, 238, 0.8));
-		}
-		50% {
-			filter: drop-shadow(0 0 40px rgba(34, 211, 238, 1));
-		}
-	}
 </style>

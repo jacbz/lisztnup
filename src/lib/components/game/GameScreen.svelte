@@ -1,19 +1,12 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import type { GuessCategory } from '$lib/types';
-	import {
-		gameData,
-		tracklist,
-		currentRound,
-		nextRound as nextRoundFn,
-		resetGame
-	} from '$lib/stores';
+	import { tracklist, currentRound, nextRound as nextRoundFn, resetGame } from '$lib/stores';
 	import { deezerPlayer } from '$lib/services';
 	import SpinningWheel from './SpinningWheel.svelte';
 	import PlayerControl from '../ui/PlayerControl.svelte';
 	import InGameSettings from '../ui/InGameSettings.svelte';
 	import Dialog from '../ui/Dialog.svelte';
-	import Home from 'lucide-svelte/icons/home';
 	import SettingsIcon from 'lucide-svelte/icons/settings';
 	import { _ } from 'svelte-i18n';
 
@@ -195,11 +188,10 @@
 		<button
 			type="button"
 			onclick={handleHomeClick}
-			class="flex items-center gap-2 rounded-lg bg-gray-800/80 px-4 py-2 text-cyan-400 backdrop-blur-sm
-                 transition-colors hover:bg-gray-700/80"
+			class="font-streamster text-4xl text-cyan-400 transition-all select-none hover:scale-105 hover:text-cyan-300 active:scale-95"
+			style="filter: drop-shadow(0 0 10px rgba(0, 246, 255, 0.7));"
 		>
-			<Home class="h-5 w-5" />
-			{$_('game.home')}
+			{$_('app.title')}
 		</button>
 
 		<!-- Settings Button -->
@@ -214,7 +206,7 @@
 	</div>
 
 	<!-- Round Indicator - Bottom Left -->
-	<div class="absolute bottom-6 left-6 z-20">
+	<div class="absolute bottom-6 left-6 z-20 select-none">
 		<p class="text-3xl font-bold text-cyan-400">
 			{$currentRound.currentTrackIndex + 1}/{$tracklist.length}
 		</p>

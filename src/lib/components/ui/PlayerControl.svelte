@@ -164,12 +164,12 @@
 						<p class="text-center text-3xl font-bold text-white">
 							{composerName}
 						</p>
-						<p class="text-center text-base text-gray-400">({lifespan})</p>
+						<p class="text-center text-lg text-gray-400">({lifespan})</p>
 					</div>
 
 					<!-- Work with Year -->
 					<div class="info-section">
-						<p class="text-center text-xl font-semibold wrap-break-word text-white">
+						<p class="text-center text-2xl font-semibold wrap-break-word text-white">
 							{track.work.name}
 							{#if displayYear}
 								<span
@@ -184,7 +184,7 @@
 					<!-- Part (only if different from work, with stripped prefix) -->
 					{#if shouldShowPart}
 						<div class="info-section">
-							<p class="text-center text-lg wrap-break-word text-gray-300">
+							<p class="text-center text-xl wrap-break-word text-gray-300">
 								{displayPartName}
 							</p>
 						</div>
@@ -197,7 +197,7 @@
 								href={deezerTrackUrl}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="artist-link text-center text-xs text-gray-400"
+								class="artist-link text-center text-sm text-gray-400"
 							>
 								{artistName}
 							</a>

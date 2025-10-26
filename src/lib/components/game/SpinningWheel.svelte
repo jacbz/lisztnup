@@ -234,7 +234,7 @@
 
 		if (showSpinText) {
 			ctx.fillStyle = 'white';
-			ctx.font = `800 ${size * 0.064}px system-ui, -apple-system, sans-serif`;
+			ctx.font = `800 ${size * 0.064}px Rajdhani, sans-serif`;
 			ctx.textAlign = 'center';
 			ctx.textBaseline = 'middle';
 			ctx.shadowColor = 'rgba(34, 211, 238, 0.8)';
@@ -250,7 +250,7 @@
 		}
 
 		// Draw pointer
-		const pointerY = size * 0.04;
+		const pointerY = size * 0.01;
 		const pointerHeight = size * 0.08;
 		const pointerWidth = size * 0.06;
 
@@ -556,7 +556,7 @@
 	<!-- SVG overlay for curved text -->
 	<svg
 		bind:this={svgOverlay}
-		class="text-overlay"
+		class="text-overlay select-none"
 		viewBox="0 0 {wheelSize} {wheelSize}"
 		style="transform: rotate({currentRotation}deg);"
 	>
@@ -600,7 +600,7 @@
 			{@const categoryText = ($_(`game.categories.${category.id}`) as string).toUpperCase()}
 
 			<!-- Outer text (upside down for readability from outside) -->
-			<text class="segment-text-outer" style="font-size: {wheelSize * 0.04}px;">
+			<text class="segment-text-outer" style="font-size: {wheelSize * 0.05}px;">
 				<textPath href="#outer-curve-{i}" startOffset="50%" text-anchor="middle">
 					{categoryText}
 				</textPath>
@@ -642,17 +642,13 @@
 	.segment-text-outer,
 	.segment-text-inner {
 		fill: white;
-		font-weight: 800;
-		font-family:
-			system-ui,
-			-apple-system,
-			sans-serif;
-		letter-spacing: 0.1em;
+		font-weight: 300;
+		letter-spacing: 0.12em;
 		pointer-events: none;
 		filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.8));
 	}
 
 	.segment-text-inner {
-		font-weight: 700;
+		font-weight: 600;
 	}
 </style>
