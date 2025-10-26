@@ -8,7 +8,7 @@ export interface CategoryWeights {
 	concerto: number;
 	opera: number;
 	ballet: number;
-	unknown: number;
+	other: number;
 }
 
 export interface GameSettings {
@@ -36,7 +36,7 @@ export const DEFAULT_SETTINGS: GameSettings = {
 		concerto: 1,
 		opera: 1,
 		ballet: 1,
-		unknown: 1
+		other: 1
 	},
 	composerFilter: [],
 	yearFilter: null,

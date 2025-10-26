@@ -47,7 +47,7 @@
 			"concerto": "Concerto",
 			"opera": "Opera",
 			"ballet": "Ballet",
-			"unknown": "Unknown"
+			"other": "Other"
 		}
 	},
 	"modeSelector": {

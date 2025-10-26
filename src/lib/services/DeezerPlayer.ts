@@ -5,23 +5,11 @@ interface DeezerTrackData {
 	duration: number;
 	preview: string;
 	artist: {
-		id: number;
 		name: string;
-		picture: string;
-		picture_small: string;
-		picture_medium: string;
-		picture_big: string;
-		picture_xl: string;
 	};
-	album: {
-		id: number;
-		title: string;
-		cover: string;
-		cover_small: string;
-		cover_medium: string;
-		cover_big: string;
-		cover_xl: string;
-	};
+	contributors?: Array<{
+		name: string;
+	}>;
 }
 
 // Extend window interface for JSONP callbacks
@@ -199,7 +187,19 @@ export class DeezerPlayer {
 	 * Gets the artist name from the loaded track data
 	 */
 	getArtistName(): string | null {
-		return this.currentTrackData?.artist.name || null;
+		const data = this.currentTrackData;
+		if (!data) return null;
+
+		// If contributors array exists and has entries, use their names joined
+		const contributors = data.contributors;
+		if (Array.isArray(contributors) && contributors.length > 0) {
+			const names = contributors.map((c) => c?.name).filter(Boolean);
+			if (names.length > 0) {
+				return names.join(', ');
+			}
+		}
+
+		return data.artist?.name || null;
 	}
 
 	/**

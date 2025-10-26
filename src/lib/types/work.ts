@@ -23,7 +23,7 @@ export type WorkCategory =
 	| 'concerto'
 	| 'opera'
 	| 'ballet'
-	| 'unknown';
+	| 'other';
 
 export interface WorksByCategory {
 	vocal: Work[];
@@ -33,5 +33,5 @@ export interface WorksByCategory {
 	concerto: Work[];
 	opera: Work[];
 	ballet: Work[];
-	unknown: Work[];
+	other: Work[];
 }

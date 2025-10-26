@@ -55,6 +55,10 @@ body {
 	background-repeat: no-repeat;
 }
 
+button {
+	cursor: pointer;
+}
+
 @theme {
 	--font-sans: 'Rajdhani', sans-serif;
 	--font-streamster: 'Streamster', cursive;

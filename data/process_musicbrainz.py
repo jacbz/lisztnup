@@ -68,7 +68,8 @@ TYPE_MAPPING = {
     "Incidental music": "orchestral", "Symphony": "orchestral", "Symphonic poem": "orchestral",
     "Overture": "orchestral", "Suite": "orchestral",
     "Concerto": "concerto",
-    "Quartet": "chamber", "Sonata": "chamber", "Partita": "chamber"
+    "Quartet": "chamber",
+    "Sonata": "other", "Partita": "other"
 }
 
 KEYWORD_RULES = [
@@ -543,7 +544,9 @@ class MusicbrainzProcessor:
         if "Piano Sonata" in work.name and work.type == "Sonata":
             return "piano"
         if work.type in TYPE_MAPPING:
-            return TYPE_MAPPING[work.type]
+            type_map = TYPE_MAPPING[work.type]
+            if type_map != "other":
+                return type_map
         for pattern, new_type in KEYWORD_RULES:
             if re.search(pattern, work.name, re.IGNORECASE):
                 return new_type
@@ -551,7 +554,7 @@ class MusicbrainzProcessor:
         self.unresolved_work_candidates[work.name] = (
             f"'{work.name}' (Original Type: {work.type})"
         )
-        return "unknown"
+        return "other"
 
     def _select_deezer_id(self, recordings: List[MBRecording]) -> Optional[int]:
         """
@@ -571,10 +574,10 @@ class MusicbrainzProcessor:
         return recordings[0].deezerId
 
     def _write_unresolved_log(self, final_works: Dict[str, List[FinalWork]]) -> None:
-        """Writes a log of works in the final output whose types remain 'unknown'."""
+        """Writes a log of works in the final output whose types remain 'other'."""
         if not self.unresolved_work_candidates:
             return
-        final_unresolved_names = {w.name for w in final_works.get("unknown", [])}
+        final_unresolved_names = {w.name for w in final_works.get("other", [])}
         final_messages = sorted(
             [
                 msg
@@ -663,9 +666,9 @@ class MusicbrainzProcessor:
         ):
             print(f"  - {type_name:<12}: {count} works")
 
-        if final_output.works.get("unknown"):
+        if final_output.works.get("other"):
             print(
-                f"\nWrote {len(final_output.works['unknown'])} unresolved work types to 'unresolved_types.txt'."
+                f"\nWrote {len(final_output.works['other'])} unresolved work types to 'unresolved_types.txt'."
             )
         print("=" * 80)
 
