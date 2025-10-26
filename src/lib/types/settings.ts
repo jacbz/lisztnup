@@ -1,5 +1,7 @@
+/// These weights are multiplied with the number of works in each category (0-100, default 50)
+/// Because ballet has far fewer works, it has a default weight of 100 to compensate
 export interface CategoryWeights {
-	vocal: number; // 0-100, default 50
+	vocal: number;
 	chamber: number;
 	orchestral: number;
 	piano: number;

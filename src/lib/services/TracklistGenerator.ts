@@ -203,7 +203,7 @@ export class TracklistGenerator {
 		// Step 1: Select category with weight
 		const categoryIndex = weightedRandom(
 			this.categories.map((_, i) => i),
-			(i) => this.categoryWeights[i]
+			(i) => this.categoryWeights[i] * this.worksByCategory.get(this.categories[i])!.length
 		);
 		const category = this.categories[categoryIndex];
 
