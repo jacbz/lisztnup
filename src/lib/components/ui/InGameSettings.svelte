@@ -14,7 +14,7 @@
 	let { visible = false, onClose = () => {} }: Props = $props();
 
 	let volume = $state(100);
-	let trackLength = $state(20);
+	let trackLength = $state(25);
 
 	onMount(() => {
 		// Get initial values from settings store

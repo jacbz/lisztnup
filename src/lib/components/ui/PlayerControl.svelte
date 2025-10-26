@@ -54,6 +54,7 @@
 	const artistName = $derived(deezerPlayer.getArtistName());
 	const shouldShowArtist = $derived(artistName && artistName.toLowerCase() !== 'unknown artist');
 	const shouldShowPart = $derived(track && track.work.name !== track.part.name);
+	const deezerTrackUrl = $derived(track ? `https://www.deezer.com/track/${track.part.deezer}` : '');
 
 	// Strip work name prefix from part name if part starts with work name
 	const displayPartName = $derived.by(() => {
@@ -187,7 +188,14 @@
 					<!-- Artist/Performer (only if not unknown) -->
 					{#if shouldShowArtist}
 						<div class="info-section">
-							<p class="text-center text-xs text-gray-400">{artistName}</p>
+							<a
+								href={deezerTrackUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="artist-link text-center text-xs text-gray-400"
+							>
+								{artistName}
+							</a>
 						</div>
 					{/if}
 
@@ -331,7 +339,6 @@
 		border-radius: 24px;
 		border: 2px solid #22d3ee;
 		background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-		box-shadow: 0 0 60px rgba(34, 211, 238, 0.6);
 		transition: all 0.3s ease-out;
 		animation: growFromCenter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 	}
@@ -376,6 +383,17 @@
 
 	.continue-button:active {
 		transform: scale(0.98);
+	}
+
+	.artist-link {
+		color: #22d3ee;
+		text-decoration: none;
+		transition: all 0.2s ease-out;
+		display: inline-block;
+	}
+
+	.artist-link:hover {
+		text-decoration: underline;
 	}
 
 	@keyframes growFromCenter {
