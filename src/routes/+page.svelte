@@ -23,8 +23,9 @@
 				const tracks = generator.generateTracklist($settings);
 				tracklist.set(tracks);
 
-				// Initialize player with track length from settings
+				// Initialize player with settings
 				deezerPlayer.setTrackLength($settings.trackLength);
+				deezerPlayer.setVolume($settings.volume / 100);
 
 				gameState.set('game');
 			}

@@ -1,4 +1,4 @@
-import { addMessages, init } from 'svelte-i18n';
+import { addMessages, init, locale } from 'svelte-i18n';
 
 import en from './locales/en.json';
 
@@ -16,3 +16,6 @@ init({
 
 // Export available locales for the language switcher
 export const locales = [{ code: 'en', name: 'English' }];
+
+// Export locale store for external use
+export { locale };

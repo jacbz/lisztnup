@@ -17,14 +17,19 @@
 	let trackLength = $state(20);
 
 	onMount(() => {
-		// Get initial values from player and settings
-		volume = Math.round(deezerPlayer.getVolume() * 100);
+		// Get initial values from settings store
+		volume = $settingsStore.volume;
 		trackLength = $settingsStore.trackLength;
+
+		// Apply to player
+		deezerPlayer.setVolume(volume / 100);
+		deezerPlayer.setTrackLength(trackLength);
 	});
 
 	function handleVolumeChange(value: number) {
 		volume = value;
 		deezerPlayer.setVolume(value / 100);
+		settingsStore.update((s) => ({ ...s, volume: value }));
 	}
 
 	function handleTrackLengthChange(value: number) {

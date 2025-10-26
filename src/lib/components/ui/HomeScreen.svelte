@@ -1,8 +1,10 @@
 <script lang="ts">
 	import Play from 'lucide-svelte/icons/play';
 	import ChevronRight from 'lucide-svelte/icons/chevron-right';
-	import { _ } from 'svelte-i18n';
+	import Languages from 'lucide-svelte/icons/languages';
+	import { _, locale } from 'svelte-i18n';
 	import { settings as settingsStore } from '$lib/stores';
+	import { locales } from '$lib/i18n';
 	import ModeSelector from './ModeSelector.svelte';
 	import NumberSelector from './NumberSelector.svelte';
 	import type { Preset, CategoryWeights } from '$lib/types';
@@ -15,10 +17,16 @@
 
 	let showModeSelector = $state(false);
 	let localSettings = $state({ ...$settingsStore });
+	let currentLocale = $state($locale || 'en');
 
 	// Update local settings when store changes
 	$effect(() => {
 		localSettings = { ...$settingsStore };
+	});
+
+	// Update current locale when it changes
+	$effect(() => {
+		currentLocale = $locale || 'en';
 	});
 
 	function handleModeSelect(preset: Preset) {
@@ -35,9 +43,34 @@
 		localSettings.numberOfTracks = value;
 		settingsStore.update((s) => ({ ...s, numberOfTracks: value }));
 	}
+
+	function handleLocaleChange(newLocale: string) {
+		currentLocale = newLocale;
+		locale.set(newLocale);
+		if (typeof window !== 'undefined') {
+			localStorage.setItem('locale', newLocale);
+		}
+	}
 </script>
 
 <div class="flex h-screen w-full items-center justify-center bg-gray-950">
+	<!-- Locale Button (Top Right) -->
+	<div class="absolute top-8 right-8">
+		<button
+			type="button"
+			onclick={() => {
+				const currentIndex = locales.findIndex((l) => l.code === currentLocale);
+				const nextIndex = (currentIndex + 1) % locales.length;
+				handleLocaleChange(locales[nextIndex].code);
+			}}
+			class="flex items-center gap-2 rounded-lg border-2 border-cyan-400/30 bg-gray-900/50 px-4 py-2 text-cyan-400 backdrop-blur-sm transition-all hover:border-cyan-400/60 hover:bg-gray-800/70 active:scale-95"
+			title="Change Language"
+		>
+			<Languages class="h-5 w-5" />
+			<span class="font-semibold">{locales.find((l) => l.code === currentLocale)?.name}</span>
+		</button>
+	</div>
+
 	<div class="text-center">
 		<!-- Title -->
 		<h1
