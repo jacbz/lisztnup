@@ -12,7 +12,7 @@
 	<title>Liszt'n Up!</title>
 </svelte:head>
 
-<div class="min-h-screen bg-gray-950">
+<div class="min-h-screen">
 	{@render children?.()}
 	<Toast />
 </div>

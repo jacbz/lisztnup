@@ -36,7 +36,7 @@
 	});
 </script>
 
-<div class="flex h-screen w-full items-center justify-center bg-gray-950">
+<div class="flex h-screen w-full items-center justify-center">
 	<div class="text-center">
 		<h1 class="mb-8 animate-pulse text-6xl font-bold text-cyan-400">{$_('app.title')}</h1>
 

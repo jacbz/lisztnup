@@ -53,7 +53,7 @@
 	}
 </script>
 
-<div class="flex h-screen w-full items-center justify-center bg-gray-950">
+<div class="flex h-screen w-full items-center justify-center">
 	<!-- Locale Button (Top Right) -->
 	<div class="absolute top-8 right-8">
 		<button
