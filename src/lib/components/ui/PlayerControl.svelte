@@ -56,14 +56,19 @@
 	const lifespan = $derived(
 		track ? formatLifespan(track.composer.birth_year, track.composer.death_year) : ''
 	);
-	const artistName = $derived(deezerPlayer.getArtistName());
-	const shouldShowArtist = $derived(artistName && artistName.toLowerCase() !== 'unknown artist');
+	const artists = $derived.by(() => {
+		// create a dependency on `track`
+		if (!track) return [];
+		return deezerPlayer.getArtists().filter((name) => name !== composerName);
+	});
+	const shouldShowArtist = $derived(artists.length);
 	const shouldShowPart = $derived(track && track.work.name !== track.part.name);
 	const deezerTrackUrl = $derived(track ? `https://www.deezer.com/track/${track.part.deezer}` : '');
 
 	// Strip work name prefix from part name if part starts with work name
 	const displayPartName = $derived.by(() => {
 		if (!track || !shouldShowPart) return '';
+		artists;
 
 		const workName = track.work.name;
 		const partName = track.part.name;
@@ -199,7 +204,7 @@
 								rel="noopener noreferrer"
 								class="artist-link text-center text-sm text-gray-400"
 							>
-								{artistName}
+								{artists.join(', ')}
 							</a>
 						</div>
 					{/if}

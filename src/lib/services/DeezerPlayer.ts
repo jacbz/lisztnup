@@ -186,20 +186,17 @@ export class DeezerPlayer {
 	/**
 	 * Gets the artist name from the loaded track data
 	 */
-	getArtistName(): string | null {
+	getArtists(): string[] {
 		const data = this.currentTrackData;
-		if (!data) return null;
+		if (!data) return [];
 
 		// If contributors array exists and has entries, use their names joined
 		const contributors = data.contributors;
 		if (Array.isArray(contributors) && contributors.length > 0) {
-			const names = contributors.map((c) => c?.name).filter(Boolean);
-			if (names.length > 0) {
-				return names.join(', ');
-			}
+			return contributors.map((contributor) => contributor.name);
 		}
 
-		return data.artist?.name || null;
+		return data.artist?.name ? [data.artist.name] : [];
 	}
 
 	/**
