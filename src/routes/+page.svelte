@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { gameData, isDataLoaded, settings, gameState, tracklist } from '$lib/stores';
-	import { TracklistGenerator } from '$lib/services';
+	import { TracklistGenerator, deezerPlayer } from '$lib/services';
 	import LoadingScreen from '$lib/components/ui/LoadingScreen.svelte';
 	import HomeScreen from '$lib/components/ui/HomeScreen.svelte';
 	import SettingsScreen from '$lib/components/ui/SettingsScreen.svelte';
@@ -24,6 +24,10 @@
 				const generator = new TracklistGenerator($gameData);
 				const tracks = generator.generateTracklist($settings);
 				tracklist.set(tracks);
+
+				// Initialize player with track length from settings
+				deezerPlayer.setTrackLength($settings.trackLength);
+
 				gameState.set('game');
 			}
 		}, 50);

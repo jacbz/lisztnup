@@ -14,6 +14,7 @@ export interface CategoryWeights {
 export interface GameSettings {
 	numberOfTracks: number;
 	preset: Preset;
+	trackLength: number; // Duration in seconds (5-30)
 	// Custom filter options
 	categoryWeights: CategoryWeights;
 	composerFilter: string[]; // Array of composer GIDs to include
@@ -24,6 +25,7 @@ export interface GameSettings {
 export const DEFAULT_SETTINGS: GameSettings = {
 	numberOfTracks: 20,
 	preset: 'default',
+	trackLength: 20,
 	categoryWeights: {
 		vocal: 1,
 		chamber: 1,

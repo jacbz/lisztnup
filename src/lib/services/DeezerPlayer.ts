@@ -36,6 +36,21 @@ export class DeezerPlayer {
 	private currentTrackId: number | null = null;
 	private currentTrackData: DeezerTrackData | null = null;
 	private volume: number = 1.0;
+	private trackLength: number = 20; // Default 20 seconds
+
+	/**
+	 * Sets the track length limit in seconds (5-30)
+	 */
+	setTrackLength(seconds: number): void {
+		this.trackLength = Math.max(5, Math.min(30, seconds));
+	}
+
+	/**
+	 * Gets the current track length limit
+	 */
+	getTrackLength(): number {
+		return this.trackLength;
+	}
 
 	/**
 	 * Fetches track metadata from Deezer API using JSONP to bypass CORS
@@ -201,10 +216,11 @@ export class DeezerPlayer {
 	}
 
 	/**
-	 * Gets track duration in seconds
+	 * Gets track duration in seconds (limited to configured track length)
 	 */
 	getDuration(): number {
-		return this.audio?.duration || 0;
+		const actualDuration = this.audio?.duration || 0;
+		return Math.min(actualDuration, this.trackLength);
 	}
 
 	/**

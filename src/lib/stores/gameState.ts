@@ -35,3 +35,16 @@ export function nextRound() {
 		isRevealed: false
 	}));
 }
+
+export function resetGame() {
+	tracklist.set([]);
+	currentRound.set({
+		currentTrackIndex: 0,
+		category: null,
+		isSpinning: false,
+		isPlaying: false,
+		playbackEnded: false,
+		isRevealed: false
+	});
+	gameState.set('home');
+}

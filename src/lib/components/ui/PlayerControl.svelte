@@ -5,6 +5,7 @@
 	import { deezerPlayer } from '$lib/services';
 	import type { Track } from '$lib/types';
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';
+	import Popup from './Popup.svelte';
 	import { _ } from 'svelte-i18n';
 
 	interface Props {
@@ -146,62 +147,67 @@
 	}
 </script>
 
+<!-- Backdrop (using Popup component) -->
+<Popup visible={isRevealed} onClose={() => {}}>
+	{#snippet children()}
+		<div class="reveal-card" class:dismissing={isDismissing}>
+			<div class="reveal-content">
+				{#if track}
+					<!-- Composer -->
+					<div class="info-section">
+						<p class="text-center text-3xl font-bold text-white">
+							{composerName}
+						</p>
+						<p class="text-center text-base text-gray-400">({lifespan})</p>
+					</div>
+
+					<!-- Work with Year -->
+					<div class="info-section">
+						<p class="text-center text-xl font-semibold wrap-break-word text-white">
+							{track.work.name}
+							{#if displayYear}
+								<span
+									class="ml-2 bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text font-normal text-nowrap text-transparent"
+								>
+									({displayYear})
+								</span>
+							{/if}
+						</p>
+					</div>
+
+					<!-- Part (only if different from work, with stripped prefix) -->
+					{#if shouldShowPart}
+						<div class="info-section">
+							<p class="text-center text-lg wrap-break-word text-gray-300">
+								{displayPartName}
+							</p>
+						</div>
+					{/if}
+
+					<!-- Artist/Performer (only if not unknown) -->
+					{#if shouldShowArtist}
+						<div class="info-section">
+							<p class="text-center text-xs text-gray-400">{artistName}</p>
+						</div>
+					{/if}
+
+					<!-- Continue button -->
+					<button type="button" onclick={handleNext} class="continue-button">
+						{$_('game.nextRound')}
+						<ArrowRight class="h-5 w-5" />
+					</button>
+				{/if}
+			</div>
+		</div>
+	{/snippet}
+</Popup>
+
 <div
 	class="player-control-container"
 	class:visible
-	class:revealed={isRevealed}
 	style="opacity: {visible ? 1 : 0}; pointer-events: {visible ? 'auto' : 'none'};"
 >
-	{#if isRevealed && track}
-		<!-- Revealed state: enlarged rounded square with track details -->
-		<div class="reveal-card" class:dismissing={isDismissing}>
-			<div class="reveal-content">
-				<!-- Composer -->
-				<div class="info-section">
-					<p class="text-center text-3xl font-bold text-white">
-						{composerName}
-					</p>
-					<p class="text-center text-base text-gray-400">({lifespan})</p>
-				</div>
-
-				<!-- Work with Year -->
-				<div class="info-section">
-					<p class="text-center text-xl font-semibold wrap-break-word text-white">
-						{track.work.name}
-						{#if displayYear}
-							<span
-								class="ml-2 bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text font-normal text-nowrap text-transparent"
-							>
-								({displayYear})
-							</span>
-						{/if}
-					</p>
-				</div>
-
-				<!-- Part (only if different from work, with stripped prefix) -->
-				{#if shouldShowPart}
-					<div class="info-section">
-						<p class="text-center text-lg wrap-break-word text-gray-300">
-							{displayPartName}
-						</p>
-					</div>
-				{/if}
-
-				<!-- Artist/Performer (only if not unknown) -->
-				{#if shouldShowArtist}
-					<div class="info-section">
-						<p class="text-center text-xs text-gray-400">{artistName}</p>
-					</div>
-				{/if}
-
-				<!-- Continue button -->
-				<button type="button" onclick={handleNext} class="continue-button">
-					{$_('game.nextRound')}
-					<ArrowRight class="h-5 w-5" />
-				</button>
-			</div>
-		</div>
-	{:else}
+	{#if !isRevealed}
 		<!-- Normal state: circular button with external progress ring -->
 		<div class="player-wrapper">
 			<!-- Progress ring (only during playback) - positioned outside button -->
@@ -318,11 +324,6 @@
 		letter-spacing: 0.1em;
 	}
 
-	/* Revealed state */
-	.player-control-container.revealed {
-		animation: growFromCenter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-	}
-
 	.reveal-card {
 		width: 420px;
 		max-width: 90vw;
@@ -332,6 +333,7 @@
 		background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
 		box-shadow: 0 0 60px rgba(34, 211, 238, 0.6);
 		transition: all 0.3s ease-out;
+		animation: growFromCenter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 	}
 
 	.reveal-card.dismissing {
@@ -378,11 +380,11 @@
 
 	@keyframes growFromCenter {
 		0% {
-			transform: translate(-50%, -50%) scale(0.2);
+			transform: scale(0.2);
 			opacity: 0;
 		}
 		100% {
-			transform: translate(-50%, -50%) scale(1);
+			transform: scale(1);
 			opacity: 1;
 		}
 	}

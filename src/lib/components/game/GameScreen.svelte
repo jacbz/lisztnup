@@ -1,12 +1,20 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import type { GuessCategory } from '$lib/types';
-	import { gameData, tracklist, currentRound, nextRound as nextRoundFn } from '$lib/stores';
+	import {
+		gameData,
+		tracklist,
+		currentRound,
+		nextRound as nextRoundFn,
+		resetGame
+	} from '$lib/stores';
 	import { deezerPlayer } from '$lib/services';
 	import SpinningWheel from './SpinningWheel.svelte';
 	import PlayerControl from '../ui/PlayerControl.svelte';
-	import VolumeControl from '../ui/VolumeControl.svelte';
+	import InGameSettings from '../ui/InGameSettings.svelte';
+	import Dialog from '../ui/Dialog.svelte';
 	import Home from 'lucide-svelte/icons/home';
+	import SettingsIcon from 'lucide-svelte/icons/settings';
 	import { _ } from 'svelte-i18n';
 
 	interface Props {
@@ -21,6 +29,8 @@
 	let audioProgress = $state(0); // 0-1
 	let progressInterval: number | null = null;
 	let hasSpunOnce = $state(false); // Track if wheel has been spun in this round
+	let showInGameSettings = $state(false);
+	let showQuitDialog = $state(false);
 
 	onMount(async () => {
 		// Load first track
@@ -151,6 +161,20 @@
 		}
 		audioProgress = 0;
 	}
+
+	function handleHomeClick() {
+		showQuitDialog = true;
+	}
+
+	function handleConfirmQuit() {
+		showQuitDialog = false;
+		resetGame();
+		onHome();
+	}
+
+	function handleCancelQuit() {
+		showQuitDialog = false;
+	}
 </script>
 
 <div class="relative min-h-screen w-full overflow-hidden bg-gray-950 text-white">
@@ -158,7 +182,7 @@
 	<div class="absolute top-0 right-0 left-0 z-20 flex items-center justify-between p-6">
 		<button
 			type="button"
-			onclick={onHome}
+			onclick={handleHomeClick}
 			class="flex items-center gap-2 rounded-lg bg-gray-800/80 px-4 py-2 text-cyan-400 backdrop-blur-sm
                  transition-colors hover:bg-gray-700/80"
 		>
@@ -174,12 +198,16 @@
 			</p>
 		</div>
 
-		<!-- Spacer for symmetry -->
-		<div class="w-24"></div>
+		<!-- Settings Button -->
+		<button
+			type="button"
+			onclick={() => (showInGameSettings = true)}
+			class="flex items-center gap-2 rounded-lg bg-gray-800/80 px-4 py-2 text-cyan-400 backdrop-blur-sm
+                 transition-colors hover:bg-gray-700/80"
+		>
+			<SettingsIcon class="h-5 w-5" />
+		</button>
 	</div>
-
-	<!-- Volume Control -->
-	<VolumeControl />
 
 	<!-- Game Over Screen -->
 	{#if isGameOver}
@@ -208,13 +236,6 @@
 	{:else if currentTrack}
 		<!-- Main Game Area -->
 		<div class="flex h-screen items-center justify-center">
-			<!-- Dim overlay when reveal is shown -->
-			{#if $currentRound.isRevealed}
-				<div
-					class="pointer-events-none absolute inset-0 z-10 bg-black/60 transition-opacity duration-300"
-				></div>
-			{/if}
-
 			<!-- Spinning Wheel (fills screen) -->
 			<SpinningWheel
 				currentRoundIndex={$currentRound.currentTrackIndex}
@@ -253,3 +274,17 @@
 		{/if}
 	{/if}
 </div>
+
+<!-- In-Game Settings Popup -->
+<InGameSettings visible={showInGameSettings} onClose={() => (showInGameSettings = false)} />
+
+<!-- Quit Confirmation Dialog -->
+<Dialog
+	visible={showQuitDialog}
+	title={$_('quitDialog.title')}
+	message={$_('quitDialog.message')}
+	confirmText={$_('quitDialog.confirm')}
+	cancelText={$_('quitDialog.cancel')}
+	onConfirm={handleConfirmQuit}
+	onCancel={handleCancelQuit}
+/>

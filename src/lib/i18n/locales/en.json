@@ -9,7 +9,8 @@
 	},
 	"home": {
 		"start": "START",
-		"settings": "Settings"
+		"settings": "Settings",
+		"mode": "Mode"
 	},
 	"settings": {
 		"title": "Settings",
@@ -48,6 +49,31 @@
 			"ballet": "Ballet",
 			"unknown": "Unknown"
 		}
+	},
+	"modeSelector": {
+		"title": "Select Game Mode",
+		"descriptions": {
+			"default": "A balanced mix of all classical music types",
+			"piano": "Focus on keyboard works and performances",
+			"concerto": "Concertos for various instruments",
+			"chamber": "Chamber music ensembles and solo performances (except keyboard)",
+			"ballet": "Music composed for ballet performances",
+			"opera": "Operatic works and arias",
+			"custom": "Customize your own category weights"
+		}
+	},
+	"inGameSettings": {
+		"title": "Settings",
+		"volume": "Volume",
+		"trackLength": "Track Length",
+		"trackLengthHint": "Changes will apply to the next track",
+		"close": "Close"
+	},
+	"quitDialog": {
+		"title": "Quit Game?",
+		"message": "Are you sure you want to quit? Your current game progress will be lost.",
+		"confirm": "Quit",
+		"cancel": "Continue Playing"
 	},
 	"game": {
 		"round": "Round {current} of {total}",
