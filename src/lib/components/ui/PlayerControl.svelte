@@ -39,15 +39,7 @@
 
 	let isHoldingReveal = $state(false);
 	let holdTimer: number | null = null;
-	let isDismissing = $state(false); // Track dismiss animation
 	let windowSize = $state({ width: 0, height: 0 });
-
-	// Reset dismiss animation when reveal state changes
-	$effect(() => {
-		if (!isRevealed) {
-			isDismissing = false;
-		}
-	});
 
 	onMount(() => {
 		windowSize = { width: window.innerWidth, height: window.innerHeight };
@@ -157,20 +149,14 @@
 	});
 
 	function handleNext() {
-		// Trigger dismiss animation
-		isDismissing = true;
-
-		// Wait for animation to complete before calling onNext
-		setTimeout(() => {
-			onNext();
-		}, 300); // Match animation duration
+		onNext();
 	}
 </script>
 
 <!-- Backdrop (using Popup component) -->
 <Popup visible={isRevealed} onClose={() => {}}>
 	{#snippet children()}
-		<div class="reveal-card" class:dismissing={isDismissing}>
+		<div class="reveal-card">
 			<div class="reveal-content">
 				{#if track}
 					<!-- Composer -->
@@ -187,7 +173,7 @@
 							{track.work.name}
 							{#if displayYear}
 								<span
-									class="ml-2 bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text font-normal text-nowrap text-transparent"
+									class="ml-0.5 bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text font-normal text-nowrap text-transparent"
 								>
 									({displayYear})
 								</span>
@@ -350,12 +336,6 @@
 		border-radius: 24px;
 		border: 2px solid #22d3ee;
 		background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-		transition: all 0.3s ease-out;
-		animation: growFromCenter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-	}
-
-	.reveal-card.dismissing {
-		animation: shrinkToCenter 0.3s ease-out forwards;
 	}
 
 	.reveal-content {
@@ -396,27 +376,5 @@
 
 	.artist-link:hover {
 		text-decoration: underline;
-	}
-
-	@keyframes growFromCenter {
-		0% {
-			transform: scale(0.2);
-			opacity: 0;
-		}
-		100% {
-			transform: scale(1);
-			opacity: 1;
-		}
-	}
-
-	@keyframes shrinkToCenter {
-		0% {
-			transform: scale(1);
-			opacity: 1;
-		}
-		100% {
-			transform: scale(0.2);
-			opacity: 0;
-		}
 	}
 </style>
