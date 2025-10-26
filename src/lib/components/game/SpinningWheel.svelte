@@ -139,7 +139,6 @@
 		const dpr = window.devicePixelRatio || 1;
 		const size = wheelSize;
 
-		// Set canvas size for high DPI displays
 		canvas.width = size * dpr;
 		canvas.height = size * dpr;
 		canvas.style.width = `${size}px`;
@@ -149,38 +148,68 @@
 
 		const centerX = size / 2;
 		const centerY = size / 2;
-		const radius = size * 0.42; // 42% of size for main wheel
-		const centerCircleRadius = size * 0.16; // 16% for center (was 78/500 = 15.6%)
+		const radius = size * 0.42;
+		const centerCircleRadius = size * 0.16;
+		const gapWidth = size * 0.01; // The desired constant pixel width for the gap
+		const halfGap = gapWidth / 2;
 
 		ctx.clearRect(0, 0, size, size);
 
-		// Draw segments
 		const segmentAngle = (Math.PI * 2) / categories.length;
 
 		categories.forEach((category, i) => {
-			const startAngle = i * segmentAngle + (currentRotation * Math.PI) / 180 - Math.PI / 2;
-			const endAngle = startAngle + segmentAngle;
-			const midAngle = startAngle + segmentAngle / 2;
+			const baseAngle = i * segmentAngle + (currentRotation * Math.PI) / 180 - Math.PI / 2;
+			const endSegmentAngle = baseAngle + segmentAngle;
 
-			// Create radial gradient for segment
+			// To create a constant-width gap, we calculate the angular offset
+			// at both the inner and outer radius. This makes the segment sides straight lines
+			// connecting the offset points, forming a constant-width gap.
+			const outerAngleOffset = Math.asin(halfGap / radius);
+			const innerAngleOffset = Math.asin(halfGap / centerCircleRadius);
+
+			// Define the four corner angles of the segment
+			const startAngleOuter = baseAngle + outerAngleOffset;
+			const startAngleInner = baseAngle + innerAngleOffset;
+			const endAngleOuter = endSegmentAngle - outerAngleOffset;
+			const endAngleInner = endSegmentAngle - innerAngleOffset;
+
+			// The logical middle of the segment for icon placement
+			const midAngle = baseAngle + segmentAngle / 2;
+
+			ctx.shadowColor = category.glowColor;
+			ctx.shadowBlur = 100;
+
 			const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
 			gradient.addColorStop(0.3, category.color2);
 			gradient.addColorStop(1, category.color1);
 
-			// Draw segment
 			ctx.beginPath();
-			ctx.moveTo(centerX, centerY);
-			ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+			// Start at inner-left corner
+			ctx.moveTo(
+				centerX + centerCircleRadius * Math.cos(startAngleInner),
+				centerY + centerCircleRadius * Math.sin(startAngleInner)
+			);
+			// Line to outer-left corner
+			ctx.lineTo(
+				centerX + radius * Math.cos(startAngleOuter),
+				centerY + radius * Math.sin(startAngleOuter)
+			);
+			// Arc along outer edge to outer-right corner
+			ctx.arc(centerX, centerY, radius, startAngleOuter, endAngleOuter, false);
+			// Line to inner-right corner
+			ctx.lineTo(
+				centerX + centerCircleRadius * Math.cos(endAngleInner),
+				centerY + centerCircleRadius * Math.sin(endAngleInner)
+			);
+			// Arc along inner edge back to the start
+			ctx.arc(centerX, centerY, centerCircleRadius, endAngleInner, startAngleInner, true);
 			ctx.closePath();
 			ctx.fillStyle = gradient;
 			ctx.fill();
 
-			// Add segment border
-			ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
-			ctx.lineWidth = 2;
-			ctx.stroke();
+			ctx.shadowColor = 'transparent';
+			ctx.shadowBlur = 0;
 
-			// Draw icon
 			const iconDistance = radius * 0.68;
 			const iconX = centerX + Math.cos(midAngle) * iconDistance;
 			const iconY = centerY + Math.sin(midAngle) * iconDistance;
@@ -189,45 +218,20 @@
 			ctx.translate(iconX, iconY);
 			ctx.rotate(midAngle + Math.PI / 2);
 
-			// Draw SVG path (scaled and positioned)
-			const iconScale = size / 500; // Scale based on wheel size
+			const iconScale = size / 500;
 			drawSVGPath(ctx, category.iconPath, iconScale * 1.5);
 
 			ctx.restore();
 		});
 
-		// Draw center circle
+		// Cut out the center circle
+		ctx.save();
+		ctx.globalCompositeOperation = 'destination-out';
 		ctx.beginPath();
 		ctx.arc(centerX, centerY, centerCircleRadius, 0, Math.PI * 2);
-		ctx.fillStyle = '#0a0f1a';
-		ctx.globalAlpha = 0.95;
 		ctx.fill();
-		ctx.globalAlpha = 1;
+		ctx.restore();
 
-		// Center circle border with gradient
-		const centerGradient = ctx.createLinearGradient(
-			centerX - centerCircleRadius,
-			centerY - centerCircleRadius,
-			centerX + centerCircleRadius,
-			centerY + centerCircleRadius
-		);
-		centerGradient.addColorStop(0, '#22d3ee');
-		centerGradient.addColorStop(0.5, '#a855f7');
-		centerGradient.addColorStop(1, '#22d3ee');
-
-		ctx.beginPath();
-		ctx.arc(centerX, centerY, centerCircleRadius, 0, Math.PI * 2);
-		ctx.strokeStyle = centerGradient;
-		ctx.lineWidth = 4;
-		ctx.shadowColor = 'rgba(34, 211, 238, 0.6)';
-		ctx.shadowBlur = 8;
-		ctx.stroke();
-
-		// Reset shadow
-		ctx.shadowColor = 'transparent';
-		ctx.shadowBlur = 0;
-
-		// Draw SPIN text if needed
 		if (showSpinText) {
 			ctx.fillStyle = 'white';
 			ctx.font = `800 ${size * 0.064}px system-ui, -apple-system, sans-serif`;
@@ -245,30 +249,31 @@
 			ctx.shadowBlur = 0;
 		}
 
-		// Draw pointer (white sleek arrow pointing down at top of wheel)
-		const pointerY = size * 0.04; // 4% from top
+		// Draw pointer
+		const pointerY = size * 0.04;
 		const pointerHeight = size * 0.08;
 		const pointerWidth = size * 0.06;
 
 		ctx.save();
 		ctx.translate(centerX, pointerY);
 
-		// Draw sleek white pointer
 		ctx.beginPath();
-		ctx.moveTo(0, pointerHeight); // Bottom point
-		ctx.lineTo(-pointerWidth / 2, 0); // Top left
-		ctx.lineTo(0, pointerHeight * 0.3); // Middle notch
-		ctx.lineTo(pointerWidth / 2, 0); // Top right
+		ctx.moveTo(0, pointerHeight);
+		ctx.lineTo(-pointerWidth / 2, 0);
+		ctx.lineTo(pointerWidth / 2, 0);
 		ctx.closePath();
 
-		ctx.fillStyle = 'white';
-		ctx.shadowColor = 'rgba(255, 255, 255, 0.6)';
-		ctx.shadowBlur = 12;
-		ctx.fill();
+		const pointerGradient = ctx.createLinearGradient(0, 0, 0, pointerHeight);
+		pointerGradient.addColorStop(0, '#ff4d4d');
+		pointerGradient.addColorStop(1, '#ff0000');
 
-		// Add subtle border
-		ctx.strokeStyle = 'rgba(0, 0, 0, 0.2)';
-		ctx.lineWidth = 1;
+		ctx.fillStyle = pointerGradient;
+		ctx.strokeStyle = '#ff8080';
+		ctx.lineWidth = 2;
+		ctx.shadowColor = 'rgba(255, 0, 0, 0.8)';
+		ctx.shadowBlur = 15;
+
+		ctx.fill();
 		ctx.stroke();
 
 		ctx.restore();
@@ -328,7 +333,6 @@
 
 				// Calculate which category the pointer is pointing at
 				// Segments are drawn starting from -90° (right) + rotation
-				// Segment i starts at: i * segmentAngle - 90° + currentRotation
 				// Pointer is at top: 90° (or -270°)
 				// We need to find which segment contains the angle: 90° - currentRotation
 				const segmentSize = 360 / categories.length;
@@ -616,7 +620,6 @@
 	.wheel-wrapper {
 		position: relative;
 		margin: 0 auto;
-		filter: drop-shadow(0 0 60px rgba(34, 211, 238, 0.6));
 	}
 
 	.wheel-canvas {
