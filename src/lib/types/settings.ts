@@ -1,14 +1,5 @@
-export type Tracklist =
-	| 'default'
-	| 'piano'
-	| 'concerto'
-	| 'chamber'
-	| 'ballet'
-	| 'opera'
-	| 'custom';
-
 export interface CategoryWeights {
-	vocal: number;
+	vocal: number; // 0-100, default 50
 	chamber: number;
 	orchestral: number;
 	piano: number;
@@ -18,34 +9,62 @@ export interface CategoryWeights {
 	other: number;
 }
 
+// Composer filter as a discriminated union (OR type)
+export type ComposerFilter =
+	| { mode: 'include'; composers: string[] }
+	| { mode: 'exclude'; composers: string[] }
+	| { mode: 'topN'; count: number };
+
+export interface TracklistConfig {
+	categoryWeights: CategoryWeights | null;
+	composerFilter: ComposerFilter | null;
+	yearFilter: [number, number] | null; // [startYear, endYear]
+	minWorkScore: number | null; // Minimum work score threshold
+	maxTracksFromSingleWork: number | null; // Maximum tracks to sample from a single work
+}
+
+export interface Tracklist {
+	name: string;
+	description: string;
+	isDefault: boolean; // Whether this is a built-in preset
+	config: TracklistConfig;
+}
+
 export interface GameSettings {
 	numberOfTracks: number;
-	tracklist: Tracklist;
+	selectedTracklist: Tracklist; // Currently selected tracklist
 	trackLength: number; // Duration in seconds (5-30)
 	volume: number; // Volume level (0-100)
-	// Custom filter options
-	categoryWeights: CategoryWeights;
-	composerFilter: string[]; // Array of composer GIDs to include
-	yearFilter: [number, number] | null; // [startYear, endYear]
-	topNComposers: number | null; // Only include top N composers
 }
+
+// Default values for tracklist configuration
+export const DEFAULT_CATEGORY_WEIGHTS: CategoryWeights = {
+	vocal: 20,
+	chamber: 50,
+	orchestral: 50,
+	piano: 50,
+	concerto: 50,
+	opera: 50,
+	ballet: 100,
+	other: 40
+};
+
+export const DEFAULT_TRACKLIST_CONFIG: TracklistConfig = {
+	categoryWeights: null,
+	composerFilter: null,
+	yearFilter: null,
+	minWorkScore: 2.3,
+	maxTracksFromSingleWork: null
+};
 
 export const DEFAULT_SETTINGS: GameSettings = {
 	numberOfTracks: 20,
-	tracklist: 'default',
-	trackLength: 20,
-	volume: 100,
-	categoryWeights: {
-		vocal: 1,
-		chamber: 1,
-		orchestral: 1,
-		piano: 1,
-		concerto: 1,
-		opera: 1,
-		ballet: 1,
-		other: 1
+	selectedTracklist: {
+		name: 'tracklists.medium.name',
+		description: 'tracklists.medium.description',
+		isDefault: true,
+		config: { ...DEFAULT_TRACKLIST_CONFIG, minWorkScore: 4.5 }
 	},
-	composerFilter: [],
-	yearFilter: null,
-	topNComposers: null
+	trackLength: 20,
+	volume: 100
 };

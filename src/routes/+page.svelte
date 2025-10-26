@@ -6,6 +6,9 @@
 	import HomeScreen from '$lib/components/ui/HomeScreen.svelte';
 	import GameScreen from '$lib/components/game/GameScreen.svelte';
 
+	// Store reference to the generator for the current game
+	let generator: TracklistGenerator | null = null;
+
 	onMount(() => {
 		// Load settings from localStorage
 		settings.load();
@@ -17,11 +20,12 @@
 
 		// Use setTimeout to allow UI to update before heavy computation
 		setTimeout(() => {
-			// Generate tracklist
 			if ($gameData) {
-				const generator = new TracklistGenerator($gameData);
-				const tracks = generator.generateTracklist($settings);
-				tracklist.set(tracks);
+				// Create a generator with filtered data using selected tracklist
+				generator = new TracklistGenerator($gameData, $settings.selectedTracklist);
+
+				// Initialize empty tracklist - we'll sample tracks on demand
+				tracklist.set([]);
 
 				// Initialize player with settings
 				deezerPlayer.setTrackLength($settings.trackLength);
@@ -33,6 +37,7 @@
 	}
 
 	function handleBackToHome() {
+		generator = null;
 		gameState.set('home');
 	}
 
@@ -48,6 +53,6 @@
 	<LoadingScreen />
 {:else if $gameState === 'home'}
 	<HomeScreen onStart={handleStartGame} />
-{:else if $gameState === 'game'}
-	<GameScreen onHome={handleBackToHome} />
+{:else if $gameState === 'game' && generator}
+	<GameScreen {generator} numberOfTracks={$settings.numberOfTracks} onHome={handleBackToHome} />
 {/if}

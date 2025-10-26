@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import type { GuessCategory } from '$lib/types';
-	import { tracklist, currentRound, nextRound as nextRoundFn, resetGame } from '$lib/stores';
+	import type { GuessCategory, Track } from '$lib/types';
+	import type { TracklistGenerator } from '$lib/services';
+	import { tracklist, currentRound, nextRound as nextRoundFn, resetGame, toast } from '$lib/stores';
 	import { deezerPlayer } from '$lib/services';
 	import SpinningWheel from './SpinningWheel.svelte';
 	import PlayerControl from '../ui/PlayerControl.svelte';
@@ -11,13 +12,15 @@
 	import { _ } from 'svelte-i18n';
 
 	interface Props {
+		generator: TracklistGenerator;
+		numberOfTracks: number;
 		onHome?: () => void;
 	}
 
-	let { onHome = () => {} }: Props = $props();
+	let { generator, numberOfTracks, onHome = () => {} }: Props = $props();
 
 	const currentTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
-	const isGameOver = $derived($currentRound.currentTrackIndex >= $tracklist.length);
+	const isGameOver = $derived($currentRound.currentTrackIndex >= numberOfTracks);
 
 	let audioProgress = $state(0); // 0-1
 	let progressInterval: number | null = null;
@@ -26,10 +29,8 @@
 	let showQuitDialog = $state(false);
 
 	onMount(() => {
-		// Load first track
-		if (currentTrack) {
-			deezerPlayer.load(currentTrack.part.deezer);
-		}
+		// Sample first track
+		sampleNextTrack();
 
 		// Add beforeunload listener to warn when navigating away
 		const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -49,6 +50,14 @@
 		if (progressInterval) clearInterval(progressInterval);
 		deezerPlayer.destroy();
 	});
+
+	function sampleNextTrack(): Track | null {
+		const track = generator.sample();
+		if (track) {
+			tracklist.update((t) => [...t, track]);
+		}
+		return track;
+	}
 
 	function handleCategorySelected(category: GuessCategory) {
 		currentRound.update((state) => ({
@@ -75,15 +84,32 @@
 	async function handlePlay() {
 		if (!currentTrack) return;
 
-		await deezerPlayer.play();
-		currentRound.update((state) => ({
-			...state,
-			isPlaying: true,
-			playbackEnded: false
-		}));
+		try {
+			await deezerPlayer.load(currentTrack.part.deezer);
+			await deezerPlayer.play();
+			currentRound.update((state) => ({
+				...state,
+				isPlaying: true,
+				playbackEnded: false
+			}));
 
-		// Start tracking progress
-		startProgressTracking();
+			// Start tracking progress
+			startProgressTracking();
+		} catch (error) {
+			console.error('Error loading track:', error);
+			toast.show('error', 'Failed to load track. Sampling another...');
+
+			// Remove failed track and sample a new one
+			tracklist.update((t) => t.slice(0, -1));
+			const newTrack = sampleNextTrack();
+
+			if (newTrack) {
+				// Try again with the new track
+				setTimeout(() => handlePlay(), 100);
+			} else {
+				toast.show('error', 'No more tracks available.');
+			}
+		}
 	}
 
 	function handleStop() {
@@ -129,10 +155,9 @@
 		// Move to next round
 		nextRoundFn();
 
-		// Load next track
-		const nextTrack = $tracklist[$currentRound.currentTrackIndex];
-		if (nextTrack) {
-			await deezerPlayer.load(nextTrack.part.deezer);
+		// Sample next track if needed
+		if ($currentRound.currentTrackIndex >= $tracklist.length) {
+			sampleNextTrack();
 		}
 	}
 
@@ -206,11 +231,13 @@
 	</div>
 
 	<!-- Round Indicator - Bottom Left -->
-	<div class="absolute bottom-6 left-6 z-20 select-none">
-		<p class="text-3xl font-bold text-cyan-400">
-			{$currentRound.currentTrackIndex + 1}/{$tracklist.length}
-		</p>
-	</div>
+	{#if !isGameOver}
+		<div class="absolute bottom-6 left-6 z-20 select-none">
+			<p class="text-3xl font-bold text-cyan-400">
+				{$currentRound.currentTrackIndex + 1}/{numberOfTracks}
+			</p>
+		</div>
+	{/if}
 
 	<!-- Game Over Screen -->
 	{#if isGameOver}
@@ -222,11 +249,11 @@
 					{$_('game.gameOver')}
 				</h1>
 				<p class="mb-8 text-2xl text-gray-300">
-					You completed all {$tracklist.length} rounds!
+					You completed all {numberOfTracks} rounds!
 				</p>
 				<button
 					type="button"
-					onclick={onHome}
+					onclick={handleConfirmQuit}
 					class="rounded-xl bg-linear-to-r from-cyan-500 to-purple-600 px-12 py-4 text-xl font-bold text-white
                          shadow-[0_0_30px_rgba(34,211,238,0.4)]
                          transition-all

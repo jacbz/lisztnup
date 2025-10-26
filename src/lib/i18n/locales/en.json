@@ -19,23 +19,8 @@
 		"reset": "Reset to Default",
 		"numberOfTracks": "Number of Tracks",
 		"language": "Language",
-		"presets": {
-			"default": "Default",
-			"piano": "Piano",
-			"concerto": "Concerto",
-			"chamber": "Chamber",
-			"ballet": "Ballet",
-			"opera": "Opera",
-			"custom": "Custom"
-		},
 		"presetInfo": {
-			"default": "{composers} composers, {works} works, {tracks} tracks",
-			"piano": "Piano works only",
-			"concerto": "Concertos only",
-			"chamber": "Chamber music only",
-			"ballet": "Ballet music only",
-			"opera": "Opera music only",
-			"custom": "Customize category weights below"
+			"default": "{composers} composers, {works} works, {tracks} tracks"
 		},
 		"categoryWeights": "Category Weights",
 		"categories": {
@@ -49,18 +34,97 @@
 			"other": "Other"
 		}
 	},
+	"tracklists": {
+		"easy": {
+			"name": "Easy",
+			"description": "Most recorded and well-known classical pieces"
+		},
+		"medium": {
+			"name": "Medium",
+			"description": "Popular works with some lesser-known pieces"
+		},
+		"hard": {
+			"name": "Hard",
+			"description": "Mix of popular and obscure classical music"
+		},
+		"extreme": {
+			"name": "Extreme",
+			"description": "Deep cuts and rarely performed works"
+		},
+		"piano": {
+			"name": "Piano",
+			"description": "Focus on piano works and performances"
+		},
+		"concerto": {
+			"name": "Concerto",
+			"description": "Concertos for various instruments"
+		},
+		"chamber": {
+			"name": "Chamber",
+			"description": "Intimate chamber music ensembles"
+		},
+		"ballet": {
+			"name": "Ballet",
+			"description": "Music composed for ballet performances"
+		},
+		"opera": {
+			"name": "Opera",
+			"description": "Famous operatic works and arias"
+		}
+	},
 	"tracklistSelector": {
 		"title": "Select Tracklist",
 		"done": "Done",
-		"descriptions": {
-			"default": "A balanced mix of all classical music types",
-			"piano": "Focus on piano works and performances",
-			"concerto": "Concertos for various instruments",
-			"chamber": "Intimate chamber music ensembles",
-			"ballet": "Music composed for ballet performances",
-			"opera": "Operatic works and arias",
-			"custom": "Customize your own category weights"
+		"clone": "Clone",
+		"edit": "Edit",
+		"delete": "Delete",
+		"createNew": "Create New Tracklist",
+		"deleteDialog": {
+			"title": "Delete Tracklist?",
+			"message": "Are you sure you want to delete {name}? This cannot be undone.",
+			"confirm": "Delete",
+			"cancel": "Cancel"
 		}
+	},
+	"tracklistEditor": {
+		"title": "Edit Tracklist",
+		"createTitle": "Create Tracklist",
+		"name": "Name",
+		"description": "Description",
+		"filters": "Filters",
+		"enabled": "Enabled",
+		"disabled": "Disabled",
+		"categoryWeights": "Categories",
+		"categoryWeightsDesc": "Adjust how much each musical category is favored. Setting to 0 excludes that category.",
+		"composerFilter": "Composers",
+		"composerFilterDesc": "Control which composers are included in your tracklist",
+		"includeMode": "Include Only",
+		"excludeMode": "Exclude",
+		"topNMode": "Top N",
+		"searchComposers": "Search composers...",
+		"selectAll": "Select All",
+		"selectNone": "Select None",
+		"composersSelected": "composers selected",
+		"composerInclude": "Include Composers",
+		"composerExclude": "Exclude Composers",
+		"yearFilter": "Year of Composition",
+		"yearFilterDesc": "Limit works to a specific time period",
+		"yearStart": "Start Year",
+		"yearEnd": "End Year",
+		"topNComposers": "Top N Composers",
+		"minWorkScore": "Popularity",
+		"minWorkScoreDesc": "Minimum popularity for works to be included (higher = more popular)",
+		"maxTracksFromSingleWork": "Max Tracks from Single Work",
+		"maxTracksFromSingleWorkDesc": "Limit how many movements/parts to be included from large-scale works",
+		"preview": "Preview",
+		"previewComposers": "Composers",
+		"previewWorks": "Works",
+		"previewTracks": "Tracks",
+		"previewLoading": "Calculating...",
+		"save": "Save",
+		"cancel": "Cancel",
+		"enableFilter": "Enable {filter}",
+		"disableFilter": "Disable {filter}"
 	},
 	"inGameSettings": {
 		"title": "Settings",

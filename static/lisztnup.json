@@ -1246,22 +1246,6 @@
         ]
       },
       {
-        "gid": "9371034a-9490-4d29-b7d2-07a32d37e12d",
-        "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
-        "name": "[unknown work by Mozart]",
-        "type": "other",
-        "begin_year": null,
-        "end_year": null,
-        "score": 5.36,
-        "parts": [
-          {
-            "name": "[unknown work by Mozart]",
-            "deezer": 1004920552,
-            "score": 100.0
-          }
-        ]
-      },
-      {
         "gid": "9d1fcbf9-9bd2-427b-9abb-e550c24052f8",
         "composer": "f91e3a88-24ee-4563-8963-fab73d2765ed",
         "name": "4 Impromptus, op. 90, D. 899",
@@ -2861,14 +2845,14 @@
       {
         "gid": "16e024c8-fc0d-3cf0-b75c-78368dfc247f",
         "composer": "8255db36-4902-4cf6-8612-0f2b4288bc9a",
-        "name": "Where the Lemons Blossom, op. 364",
+        "name": "Where the Citrons Bloom, op. 364",
         "type": "other",
         "begin_year": null,
         "end_year": null,
         "score": 4.29,
         "parts": [
           {
-            "name": "Where the Lemons Blossom, op. 364",
+            "name": "Where the Citrons Bloom, op. 364",
             "deezer": 65342724,
             "score": 100.0
           }
@@ -3191,7 +3175,7 @@
       {
         "gid": "675ac1b7-fff4-4975-a93b-cd32fbc16f4a",
         "composer": "2cd475bb-1abd-40c4-9904-6d4b691c752c",
-        "name": "Transcendental Études",
+        "name": "Transcendental Études, S. 139, R. 2b",
         "type": "other",
         "begin_year": 1851,
         "end_year": 1851,
@@ -4376,22 +4360,6 @@
           {
             "name": "Deux épisodes d’après le Faust de Lenau, S. 110: II. Der Tanz in der Dorfschenke (Erster Mephisto-Walzer)",
             "deezer": 66242906,
-            "score": 100.0
-          }
-        ]
-      },
-      {
-        "gid": "a7ff8b8c-73b0-41f8-94e1-1798fb2a490e",
-        "composer": "ddea5540-2c7d-4266-8507-b367c2635d35",
-        "name": "[Purcell & Draghi Manuscript Discovered in 1993]",
-        "type": "other",
-        "begin_year": null,
-        "end_year": null,
-        "score": 3.95,
-        "parts": [
-          {
-            "name": "[Purcell & Draghi Manuscript Discovered in 1993]",
-            "deezer": 70441223,
             "score": 100.0
           }
         ]
@@ -9036,14 +9004,14 @@
       {
         "gid": "9a56e9b2-22a6-3802-9e27-547090c59949",
         "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
-        "name": "Church Sonata no. 1 in E-flat major, K. 67",
+        "name": "Sonata in E-flat major, KV 67",
         "type": "other",
         "begin_year": null,
         "end_year": null,
         "score": 3.18,
         "parts": [
           {
-            "name": "Church Sonata no. 1 in E-flat major, K. 67",
+            "name": "Sonata in E-flat major, KV 67",
             "deezer": 2795130022,
             "score": 100.0
           }
@@ -13748,14 +13716,14 @@
       {
         "gid": "76ab2a8e-ae01-34ef-abe7-5e2ab59f4161",
         "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
-        "name": "Menuet in F major, K. 5",
+        "name": "Minuet in F major, K. 5",
         "type": "other",
         "begin_year": null,
         "end_year": null,
         "score": 2.71,
         "parts": [
           {
-            "name": "Menuet in F major, K. 5",
+            "name": "Minuet in F major, K. 5",
             "deezer": 1401245242,
             "score": 100.0
           }
@@ -13967,8 +13935,8 @@
         "composer": "3cd3882c-00f8-4362-a0c2-ad89ed248533",
         "name": "Four Sketches, op. 58",
         "type": "other",
-        "begin_year": 1846,
-        "end_year": 1846,
+        "begin_year": 1845,
+        "end_year": 1845,
         "score": 2.67,
         "parts": [
           {
@@ -20264,14 +20232,14 @@
       {
         "gid": "3329a6c8-4785-31ee-ab7e-8ded6804598e",
         "composer": "0e85eb79-1c05-44ba-827c-7b259a3d941a",
-        "name": "Overture: The Hebrides, Op. 26 (\"Fingal's Cave\")",
+        "name": "The Hebrides, op. 26 “Fingal’s Cave”",
         "type": "orchestral",
         "begin_year": 1830,
         "end_year": 1830,
         "score": 5.27,
         "parts": [
           {
-            "name": "Overture: The Hebrides, Op. 26 (\"Fingal's Cave\")",
+            "name": "The Hebrides, op. 26 “Fingal’s Cave”",
             "deezer": 66776432,
             "score": 100.0
           }
@@ -24560,7 +24528,7 @@
       {
         "gid": "e0cc93c7-3ebb-41f7-8586-5c0188cccca8",
         "composer": "8d610e51-64b4-4654-b8df-064b0fb7a9d9",
-        "name": "Symphony no. 8 in E‐flat major “Symphony of a Thousand”",
+        "name": "Symphony of a Thousand",
         "type": "orchestral",
         "begin_year": 1906,
         "end_year": 1907,
@@ -27620,9 +27588,9 @@
         ]
       },
       {
-        "gid": "50c4a8ef-30e8-4f9a-b214-c4b714ff2f0d",
+        "gid": "06438de8-7b69-4cd1-a565-87458f3e40ef",
         "composer": "e1d521ea-5b97-4981-987c-ba988b2a87d7",
-        "name": "Three Preludes for Piano",
+        "name": "Le Fils des étoiles",
         "type": "orchestral",
         "begin_year": 1891,
         "end_year": 1891,
@@ -27891,14 +27859,14 @@
       {
         "gid": "4cf054c4-bc24-312b-81de-9636f2f0b356",
         "composer": "c1380b12-3909-47d8-a5fd-d20e76123310",
-        "name": "Night on Bald Mountain",
+        "name": "Night on Bare Mountain",
         "type": "orchestral",
         "begin_year": null,
         "end_year": null,
         "score": 3.5,
         "parts": [
           {
-            "name": "Night on Bald Mountain",
+            "name": "Night on Bare Mountain",
             "deezer": 138542259,
             "score": 100.0
           }
@@ -30072,7 +30040,7 @@
       {
         "gid": "570b4a8b-7b29-4e2e-9615-3aff940cb964",
         "composer": "4cb43d82-824e-4034-b03d-1a98f36f6e16",
-        "name": "The Would-be Noble",
+        "name": "The Bourgeois Gentleman",
         "type": "orchestral",
         "begin_year": 1920,
         "end_year": 1920,
@@ -30232,7 +30200,7 @@
       {
         "gid": "1bfa272b-e12b-48fd-a3e9-7f268b83fe7c",
         "composer": "5a0988a4-695c-4bff-bc68-4f312427495e",
-        "name": "The Golden Cockerel Suite",
+        "name": "Four Musical Pictures from the Opera \"The Golden Cockerel\"",
         "type": "orchestral",
         "begin_year": 1913,
         "end_year": 1913,
@@ -30346,7 +30314,7 @@
       {
         "gid": "1bfa272b-e12b-48fd-a3e9-7f268b83fe7c",
         "composer": "4cfe7051-f649-4d07-83b3-7a732abe7249",
-        "name": "Four Musical Pictures from the Opera \"The Golden Cockerel\"",
+        "name": "The Golden Cockerel Suite",
         "type": "orchestral",
         "begin_year": 1907,
         "end_year": 1907,
@@ -31622,8 +31590,8 @@
         "composer": "691b0e9d-9e57-41cf-932d-a3d21b068e75",
         "name": "Rakastava, op. 14",
         "type": "orchestral",
-        "begin_year": 1911,
-        "end_year": 1911,
+        "begin_year": 1894,
+        "end_year": 1894,
         "score": 3.1,
         "parts": [
           {
@@ -33198,14 +33166,14 @@
       {
         "gid": "45f59c53-b3e9-4cbe-8c3f-a7250ae0404e",
         "composer": "e539699a-5cb3-4f73-b60f-691b1499d0af",
-        "name": "Spanish Overture no. 1 “Capriccio Brilliante on the Jota Aragonesa”",
+        "name": "Spanish Overture No. 1 \"Capriccio Brilliante on the Jota Aragonesa\"",
         "type": "orchestral",
         "begin_year": 1845,
         "end_year": 1845,
         "score": 2.89,
         "parts": [
           {
-            "name": "Spanish Overture no. 1 “Capriccio Brilliante on the Jota Aragonesa”",
+            "name": "Spanish Overture No. 1 \"Capriccio Brilliante on the Jota Aragonesa\"",
             "deezer": 2899528661,
             "score": 100.0
           }
@@ -40877,14 +40845,14 @@
       {
         "gid": "937fff7e-a992-3606-8fd6-5a402f581d9e",
         "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
-        "name": "Chorale Prelude In G Minor",
+        "name": "Chorale Prelude for organ in G minor, BWV 659 “Nun komm’ der Heiden Heiland”",
         "type": "vocal",
         "begin_year": null,
         "end_year": null,
         "score": 4.74,
         "parts": [
           {
-            "name": "Chorale Prelude In G Minor",
+            "name": "Chorale Prelude for organ in G minor, BWV 659 “Nun komm’ der Heiden Heiland”",
             "deezer": 3092385381,
             "score": 100.0
           }
@@ -41410,7 +41378,7 @@
       {
         "gid": "d6565eab-6dae-353e-864e-f6c82c952d22",
         "composer": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
-        "name": "Saint Anthony Variations, op. 56a",
+        "name": "Variations on a Theme by Haydn, op. 56a",
         "type": "vocal",
         "begin_year": 1873,
         "end_year": 1873,
@@ -42283,14 +42251,14 @@
       {
         "gid": "f2f30ea4-b285-41c7-ac4e-f3be93a50d6f",
         "composer": "dd28ee68-673e-4fe9-acfc-fa3c81877469",
-        "name": "Swanee River",
+        "name": "Suwannee River",
         "type": "vocal",
         "begin_year": 1851,
         "end_year": 1851,
         "score": 4.38,
         "parts": [
           {
-            "name": "Swanee River",
+            "name": "Suwannee River",
             "deezer": 1762385967,
             "score": 100.0
           }
@@ -43267,7 +43235,7 @@
       {
         "gid": "34b9377f-ca9e-302d-b588-e56c9f9d1377",
         "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
-        "name": "Mass in C, K. 317 \"Coronation Mass\"",
+        "name": "Coronation Mass in C major, K. 317",
         "type": "vocal",
         "begin_year": null,
         "end_year": 1779,
@@ -48555,8 +48523,8 @@
         "composer": "819eaeb2-8dd8-48a5-ad07-0bcd137985ef",
         "name": "Stabat Mater, op. 58, B. 71",
         "type": "vocal",
-        "begin_year": 1876,
-        "end_year": 1876,
+        "begin_year": 1877,
+        "end_year": 1877,
         "score": 3.41,
         "parts": [
           {
@@ -48874,7 +48842,7 @@
       {
         "gid": "987e6de6-e7c3-440f-98ea-77b6cfb0dbe7",
         "composer": "edfced8a-01bc-4c22-96b2-da58edd6b8af",
-        "name": "Slavonic Mass",
+        "name": "Glagolitic Mass",
         "type": "vocal",
         "begin_year": null,
         "end_year": 1926,
@@ -62367,8 +62335,8 @@
         "composer": "1f9df192-a621-4f54-8850-2c5373b7eac9",
         "name": "Song of Fellowship for 2 Solo Voices and 3-Part Chorus accompanied by 6 Wind Instruments, op. 122",
         "type": "vocal",
-        "begin_year": 1822,
-        "end_year": 1822,
+        "begin_year": 1824,
+        "end_year": 1824,
         "score": 2.48,
         "parts": [
           {
@@ -73203,7 +73171,7 @@
       {
         "gid": "18e6d250-1e75-499c-804b-865da45f8ddb",
         "composer": "4cb43d82-824e-4034-b03d-1a98f36f6e16",
-        "name": "The Knight of the Rose",
+        "name": "The Rose-knight, op. 59",
         "type": "opera",
         "begin_year": 1909,
         "end_year": 1910,
@@ -74897,8 +74865,8 @@
         "composer": "cab67e98-340d-424e-baf1-b127902c200b",
         "name": "Arlecchino",
         "type": "opera",
-        "begin_year": 1913,
-        "end_year": 1913,
+        "begin_year": 1914,
+        "end_year": 1914,
         "score": 2.47,
         "parts": [
           {
@@ -75428,7 +75396,7 @@
         "composer": "2cd475bb-1abd-40c4-9904-6d4b691c752c",
         "name": "Concerto for Piano and Orchestra no. 2 in A major, S. 125",
         "type": "concerto",
-        "begin_year": 1839,
+        "begin_year": 1849,
         "end_year": 1861,
         "score": 6.11,
         "parts": [
@@ -80806,7 +80774,7 @@
       {
         "gid": "49db064f-bf29-4b61-ac09-45354713eb11",
         "composer": "4cb43d82-824e-4034-b03d-1a98f36f6e16",
-        "name": "French horn concerto no. 1 in E-flat major",
+        "name": "Concerto for Horn and Orchestra no. 1 in E-flat major, op. 11",
         "type": "concerto",
         "begin_year": 1882,
         "end_year": 1883,
@@ -106805,8 +106773,8 @@
         "composer": "0e43fe9d-c472-4b62-be9e-55f971a023e1",
         "name": "Piano Sonata no. 3 in A minor, op. 28",
         "type": "piano",
-        "begin_year": 1907,
-        "end_year": 1907,
+        "begin_year": 1917,
+        "end_year": 1917,
         "score": 3.61,
         "parts": [
           {

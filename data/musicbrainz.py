@@ -74,6 +74,7 @@ WHERE
     SELECT 1 FROM musicbrainz.l_work_work lww JOIN musicbrainz.link lww_link ON lww.link = lww_link.id
     WHERE lww.entity1 = w.id AND lww_link.link_type = 281
   )
+  AND w.name NOT LIKE '[%'
 ORDER BY c.sort_name, w.name;
 """
 

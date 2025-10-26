@@ -7,7 +7,9 @@
 	import { locales } from '$lib/i18n';
 	import TracklistSelector from './TracklistSelector.svelte';
 	import NumberSelector from './NumberSelector.svelte';
-	import type { Tracklist, CategoryWeights } from '$lib/types';
+	import { DEFAULT_TRACKLISTS } from '$lib/data/defaultTracklists';
+	import { SettingsService } from '$lib/services';
+	import type { Tracklist } from '$lib/types';
 
 	interface Props {
 		onStart?: () => void;
@@ -18,6 +20,9 @@
 	let showTracklistSelector = $state(false);
 	let localSettings = $state({ ...$settingsStore });
 	let currentLocale = $state($locale || 'en');
+
+	// Load custom tracklists
+	let customTracklists = $state(SettingsService.loadCustomTracklists());
 
 	// Update local settings when store changes
 	$effect(() => {
@@ -30,13 +35,9 @@
 	});
 
 	function handleTracklistSelect(tracklist: Tracklist) {
-		localSettings.tracklist = tracklist;
-		settingsStore.update((s) => ({ ...s, tracklist }));
-	}
-
-	function handleWeightsChange(weights: CategoryWeights) {
-		localSettings.categoryWeights = weights;
-		settingsStore.update((s) => ({ ...s, categoryWeights: weights }));
+		localSettings.selectedTracklist = tracklist;
+		settingsStore.update((s) => ({ ...s, selectedTracklist: tracklist }));
+		customTracklists = SettingsService.loadCustomTracklists(); // Reload in case of changes
 	}
 
 	function handleNumberOfTracksChange(value: number) {
@@ -110,12 +111,18 @@
 						onclick={() => (showTracklistSelector = true)}
 						class="flex items-center gap-1 rounded-lg px-3 py-1 text-cyan-400 transition-colors hover:bg-cyan-400/10"
 					>
-						<span class="font-bold">{$_(`settings.presets.${localSettings.tracklist}`)}</span>
+						<span class="font-bold">
+							{localSettings.selectedTracklist.isDefault
+								? $_(localSettings.selectedTracklist.name)
+								: localSettings.selectedTracklist.name}
+						</span>
 						<ChevronRight class="h-4 w-4" />
 					</button>
 				</div>
 				<p class="text-sm text-gray-500">
-					{$_(`tracklistSelector.descriptions.${localSettings.tracklist}`)}
+					{localSettings.selectedTracklist.isDefault
+						? $_(localSettings.selectedTracklist.description)
+						: localSettings.selectedTracklist.description}
 				</p>
 			</div>
 
@@ -134,10 +141,8 @@
 
 <TracklistSelector
 	visible={showTracklistSelector}
-	selectedTracklist={localSettings.tracklist}
-	categoryWeights={localSettings.categoryWeights}
+	selectedTracklist={localSettings.selectedTracklist}
 	onSelect={handleTracklistSelect}
-	onWeightsChange={handleWeightsChange}
 	onClose={() => (showTracklistSelector = false)}
 />
 

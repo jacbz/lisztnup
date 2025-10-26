@@ -127,7 +127,7 @@
 
 	function updateWheelSize() {
 		const minDimension = Math.min(window.innerWidth, window.innerHeight);
-		wheelSize = minDimension * 0.9;
+		wheelSize = minDimension < 600 ? minDimension : minDimension * 0.9;
 	}
 
 	function drawWheel() {
