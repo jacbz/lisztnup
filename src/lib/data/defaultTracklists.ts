@@ -118,7 +118,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		name: 'tracklists.chamber.name',
 		description: 'tracklists.chamber.description',
 		isDefault: true,
-		icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="14" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="16" cy="14" r="1.8"/><circle cx="12" cy="16" r="1.8"/></svg>`,
+		icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="8" r="1.8"/><circle cx="18" cy="8" r="1.8"/><circle cx="8" cy="16" r="1.8"/><circle cx="16" cy="16" r="1.8"/></svg>`,
 		config: {
 			categoryWeights: {
 				vocal: 0,
@@ -178,6 +178,84 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			yearFilter: null,
 			minWorkScore: 3.5,
 			maxTracksFromSingleWork: 3
+		}
+	},
+	{
+		name: 'tracklists.liszt.name',
+		description: 'tracklists.liszt.description',
+		isDefault: true,
+		icon: `<svg width="24" height="24" viewBox="0 0 26 26" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
+		config: {
+			categoryWeights: DEFAULT_CATEGORY_WEIGHTS,
+			composerFilter: { mode: 'include', composers: ['2cd475bb-1abd-40c4-9904-6d4b691c752c'] },
+			yearFilter: null,
+			minWorkScore: 2.3,
+			maxTracksFromSingleWork: null
+		}
+	},
+	{
+		name: 'tracklists.bach.name',
+		description: 'tracklists.bach.description',
+		isDefault: true,
+		icon: `<svg width="24" height="24" viewBox="0 0 26 26" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
+		config: {
+			categoryWeights: DEFAULT_CATEGORY_WEIGHTS,
+			composerFilter: { mode: 'include', composers: ['24f1766e-9635-4d58-a4d4-9413f9f98a4c'] },
+			yearFilter: null,
+			minWorkScore: 2.3,
+			maxTracksFromSingleWork: null
+		}
+	},
+	{
+		name: 'tracklists.chopin.name',
+		description: 'tracklists.chopin.description',
+		isDefault: true,
+		icon: `<svg width="24" height="24" viewBox="0 0 26 26" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
+		config: {
+			categoryWeights: DEFAULT_CATEGORY_WEIGHTS,
+			composerFilter: { mode: 'include', composers: ['09ff1fe8-d61c-4b98-bb82-18487c74d7b7'] },
+			yearFilter: null,
+			minWorkScore: 2.3,
+			maxTracksFromSingleWork: null
+		}
+	},
+	{
+		name: 'tracklists.mozart.name',
+		description: 'tracklists.mozart.description',
+		isDefault: true,
+		icon: `<svg width="24" height="24" viewBox="0 0 26 26" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
+		config: {
+			categoryWeights: DEFAULT_CATEGORY_WEIGHTS,
+			composerFilter: { mode: 'include', composers: ['b972f589-fb0e-474e-b64a-803b0364fa75'] },
+			yearFilter: null,
+			minWorkScore: 2.3,
+			maxTracksFromSingleWork: null
+		}
+	},
+	{
+		name: 'tracklists.tchaikovsky.name',
+		description: 'tracklists.tchaikovsky.description',
+		isDefault: true,
+		icon: `<svg width="24" height="24" viewBox="0 0 26 26" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
+		config: {
+			categoryWeights: DEFAULT_CATEGORY_WEIGHTS,
+			composerFilter: { mode: 'include', composers: ['9ddd7abc-9e1b-471d-8031-583bc6bc8be9'] },
+			yearFilter: null,
+			minWorkScore: 2.3,
+			maxTracksFromSingleWork: null
+		}
+	},
+	{
+		name: 'tracklists.vivaldi.name',
+		description: 'tracklists.vivaldi.description',
+		isDefault: true,
+		icon: `<svg width="24" height="24" viewBox="0 0 26 26" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
+		config: {
+			categoryWeights: DEFAULT_CATEGORY_WEIGHTS,
+			composerFilter: { mode: 'include', composers: ['ad79836d-9849-44df-8789-180bbc823f3c'] },
+			yearFilter: null,
+			minWorkScore: 2.3,
+			maxTracksFromSingleWork: null
 		}
 	}
 ];

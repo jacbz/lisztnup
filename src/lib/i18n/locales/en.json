@@ -20,7 +20,7 @@
 		"numberOfTracks": "Number of Tracks",
 		"language": "Language",
 		"presetInfo": {
-			"default": "{composers} composers, {works} works, {tracks} tracks"
+			"default": "{composers, plural, =0 {no composers} one {# composer} other {# composers}}, {works, plural, =0 {no works} one {# work} other {# works}}, {tracks, plural, =0 {no tracks} one {# track} other {# tracks}}"
 		},
 		"categoryWeights": "Category Weights",
 		"categories": {
@@ -74,6 +74,30 @@
 		"opera": {
 			"name": "Opera",
 			"description": "Famous operatic works and well-known arias."
+		},
+		"liszt": {
+			"name": "Lisztomania",
+			"description": "Lisznt’n up, will you?"
+		},
+		"bach": {
+			"name": "Bach to Basics",
+			"description": "Where every fugue finds its groove."
+		},
+		"chopin": {
+			"name": "Chopin Spree",
+			"description": "Every note a sigh, every chord a confession."
+		},
+		"mozart": {
+			"name": "Mozart in the Machine",
+			"description": "A symphony of precision and mischief."
+		},
+		"tchaikovsky": {
+			"name": "Tchaik It Off",
+			"description": "From Swan Lake to heartbreak."
+		},
+		"vivaldi": {
+			"name": "Viva la Vivaldi",
+			"description": "Too hot for winter, too cool for summer."
 		}
 	},
 	"tracklistSelector": {

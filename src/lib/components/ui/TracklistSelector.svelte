@@ -138,15 +138,6 @@
 	>
 		<h2 class="mb-6 text-2xl font-bold text-cyan-400">{$_('tracklistSelector.title')}</h2>
 
-		<!-- Create New Button -->
-		<button
-			type="button"
-			onclick={handleCreateNew}
-			class="mb-4 w-full rounded-xl border-2 border-dashed border-cyan-400/50 bg-gray-800/50 px-4 py-3 text-cyan-400 transition-all hover:border-cyan-400 hover:bg-gray-800"
-		>
-			+ {$_('tracklistSelector.createNew')}
-		</button>
-
 		<!-- Tracklist Selection Grid -->
 		<div class="grid gap-3 md:grid-cols-2">
 			{#each allTracklists as tracklist}
@@ -248,6 +239,15 @@
 				</div>
 			{/each}
 		</div>
+
+		<!-- Create New Button -->
+		<button
+			type="button"
+			onclick={handleCreateNew}
+			class="mt-4 w-full rounded-xl border-2 border-dashed border-cyan-400/50 bg-gray-800/50 px-4 py-3 text-cyan-400 transition-all hover:border-cyan-400 hover:bg-gray-800"
+		>
+			+ {$_('tracklistSelector.createNew')}
+		</button>
 	</div>
 </Popup>
 
