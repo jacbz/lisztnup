@@ -19,7 +19,7 @@
 
 	let {
 		visible = false,
-		selectedTracklist = DEFAULT_TRACKLISTS[1], // Easy by default
+		selectedTracklist = DEFAULT_TRACKLISTS[0], // Very Easy by default
 		onSelect = () => {},
 		onClose = () => {}
 	}: Props = $props();
