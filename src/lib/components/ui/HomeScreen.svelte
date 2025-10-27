@@ -111,6 +111,11 @@
 						onclick={() => (showTracklistSelector = true)}
 						class="flex items-center gap-1 rounded-lg px-3 py-1 text-cyan-400 transition-colors hover:bg-cyan-400/10"
 					>
+						{#if localSettings.selectedTracklist?.icon}
+							<div>
+								{@html localSettings.selectedTracklist.icon}
+							</div>
+						{/if}
 						<span class="font-bold">
 							{localSettings.selectedTracklist.isDefault
 								? $_(localSettings.selectedTracklist.name)

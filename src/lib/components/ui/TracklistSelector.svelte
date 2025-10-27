@@ -3,7 +3,7 @@
 	import { gameData } from '$lib/stores';
 	import { TracklistGenerator } from '$lib/services';
 	import { SettingsService } from '$lib/services';
-	import { DEFAULT_TRACKLISTS, findTracklist, cloneTracklist } from '$lib/data/defaultTracklists';
+	import { DEFAULT_TRACKLISTS, cloneTracklist } from '$lib/data/defaultTracklists';
 	import { get } from 'svelte/store';
 	import Popup from './Popup.svelte';
 	import Dialog from './Dialog.svelte';
@@ -19,7 +19,7 @@
 
 	let {
 		visible = false,
-		selectedTracklist = DEFAULT_TRACKLISTS[1], // Medium by default
+		selectedTracklist = DEFAULT_TRACKLISTS[1], // Easy by default
 		onSelect = () => {},
 		onClose = () => {}
 	}: Props = $props();
@@ -158,7 +158,6 @@
 						? 'bg-linear-to-r from-cyan-500 to-purple-600 text-white shadow-[0_0_20px_rgba(34,211,238,0.4)]'
 						: 'border-2 border-gray-700 bg-gray-800 text-gray-300 hover:border-cyan-400/50 hover:bg-gray-700'}"
 				>
-					<!-- Clone button (icon only) in top-right for all tracklists -->
 					<button
 						type="button"
 						onclick={() => handleClone(tracklist)}
@@ -186,17 +185,23 @@
 						</svg>
 					</button>
 
-					<!-- Main content - clickable -->
 					<button
 						type="button"
 						onclick={() => handleSelect(tracklist)}
-						class="flex w-full flex-col items-start gap-2 text-left"
+						class="flex h-full w-full flex-col items-start gap-2 text-left"
 					>
-						<span class="pr-8 text-lg font-bold">
-							{tracklist.isDefault ? $_(tracklist.name) : tracklist.name}
-						</span>
+						<div class="flex items-center gap-1 pr-8">
+							<div class="tracklist-icon medium shrink-0">
+								{#if tracklist.icon}
+									{@html tracklist.icon}
+								{/if}
+							</div>
+							<span class="text-lg font-bold"
+								>{tracklist.isDefault ? $_(tracklist.name) : tracklist.name}</span
+							>
+						</div>
 						<span
-							class="text-sm leading-relaxed {isSameTracklist(tracklist, selectedTracklist)
+							class="flex-1 text-sm leading-relaxed {isSameTracklist(tracklist, selectedTracklist)
 								? 'text-cyan-100'
 								: 'text-gray-400'}"
 						>
@@ -213,7 +218,7 @@
 
 					<!-- Action buttons for custom tracklists -->
 					{#if !tracklist.isDefault}
-						<div class="mt-2 flex gap-2 border-t border-current/20 pt-2">
+						<div class="mt-2 flex gap-2">
 							<button
 								type="button"
 								onclick={() => handleEdit(tracklist)}
@@ -233,8 +238,8 @@
 									tracklist,
 									selectedTracklist
 								)
-									? 'bg-red-500/20 hover:bg-red-500/30'
-									: 'bg-red-900/30 hover:bg-red-900/50'}"
+									? 'bg-red-300/20 hover:bg-red-500/30'
+									: 'bg-red-600/30 hover:bg-red-900/50'}"
 							>
 								{$_('tracklistSelector.delete')}
 							</button>

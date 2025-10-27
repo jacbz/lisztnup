@@ -35,41 +35,45 @@
 		}
 	},
 	"tracklists": {
+		"veryeasy": {
+			"name": "Very Easy",
+			"description": "Familiar, instantly recognizable pieces."
+		},
 		"easy": {
 			"name": "Easy",
-			"description": "Most recorded and well-known classical pieces"
+			"description": "Familiar classics and well-known favorites."
 		},
 		"medium": {
 			"name": "Medium",
-			"description": "Popular works with some lesser-known pieces"
+			"description": "Popular works with some lesser-known pieces."
 		},
 		"hard": {
 			"name": "Hard",
-			"description": "Mix of popular and obscure classical music"
+			"description": "A mix of well-known and more obscure works."
 		},
 		"extreme": {
 			"name": "Extreme",
-			"description": "Deep cuts and rarely performed works"
+			"description": "Includes obscure, rarely heard works for advanced listeners."
 		},
 		"piano": {
 			"name": "Piano",
-			"description": "Focus on piano works and performances"
+			"description": "Works focused on piano repertoire."
 		},
 		"concerto": {
 			"name": "Concerto",
-			"description": "Concertos for various instruments"
+			"description": "Concertos highlighting soloists with orchestra."
 		},
 		"chamber": {
 			"name": "Chamber",
-			"description": "Intimate chamber music ensembles"
+			"description": "Intimate chamber ensemble works."
 		},
 		"ballet": {
 			"name": "Ballet",
-			"description": "Music composed for ballet performances"
+			"description": "Music composed for ballets."
 		},
 		"opera": {
 			"name": "Opera",
-			"description": "Famous operatic works and arias"
+			"description": "Famous operatic works and well-known arias."
 		}
 	},
 	"tracklistSelector": {
@@ -113,7 +117,7 @@
 		"yearEnd": "End Year",
 		"topNComposers": "Top N Composers",
 		"minWorkScore": "Popularity",
-		"minWorkScoreDesc": "Minimum popularity for works to be included (higher = more popular)",
+		"minWorkScoreDesc": "Minimum popularity for works to be included (higher = more popular and therefore fewer works)",
 		"maxTracksFromSingleWork": "Max Tracks from Single Work",
 		"maxTracksFromSingleWorkDesc": "Limit how many movements/parts to be included from large-scale works",
 		"preview": "Preview",

@@ -29,6 +29,7 @@ export interface Tracklist {
 	name: string;
 	description: string;
 	isDefault: boolean; // Whether this is a built-in preset
+	icon?: string | null; // Optional SVG icon (as an inline SVG string)
 	config: TracklistConfig;
 }
 
@@ -65,7 +66,8 @@ export const DEFAULT_SETTINGS: GameSettings = {
 		name: 'tracklists.medium.name',
 		description: 'tracklists.medium.description',
 		isDefault: true,
-		config: { ...DEFAULT_TRACKLIST_CONFIG, minWorkScore: 4.5 }
+		config: { ...DEFAULT_TRACKLIST_CONFIG, minWorkScore: 4.5 },
+		icon: null
 	},
 	trackLength: 20,
 	volume: 100

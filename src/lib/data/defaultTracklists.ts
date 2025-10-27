@@ -2,19 +2,32 @@ import { DEFAULT_CATEGORY_WEIGHTS, type Tracklist } from '$lib/types';
 
 /**
  * Default tracklist presets based on difficulty levels
- * Difficulty is determined by minWorkScore (higher score = easier, more popular works)
  */
 
 export const DEFAULT_TRACKLISTS: Tracklist[] = [
 	{
+		name: 'tracklists.veryeasy.name',
+		description: 'tracklists.veryeasy.description',
+		isDefault: true,
+		icon: `<svg width="24" height="24" viewBox="0 0 30 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="20" width="2.8" height="4" rx="0.4" fill="currentColor"/><rect x="7" y="16" width="2.8" height="8" rx="0.4" fill="currentColor" opacity="0.25"/><rect x="11" y="12" width="2.8" height="12" rx="0.4" fill="currentColor" opacity="0.25"/><rect x="15" y="8" width="2.8" height="16" rx="0.4" fill="currentColor" opacity="0.25"/><rect x="19" y="4" width="2.8" height="20" rx="0.4" fill="currentColor" opacity="0.25"/></svg>`,
+		config: {
+			categoryWeights: DEFAULT_CATEGORY_WEIGHTS,
+			composerFilter: null,
+			yearFilter: null,
+			minWorkScore: 5.4,
+			maxTracksFromSingleWork: 1
+		}
+	},
+	{
 		name: 'tracklists.easy.name',
 		description: 'tracklists.easy.description',
 		isDefault: true,
+		icon: `<svg width="24" height="24" viewBox="0 0 30 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="20" width="2.8" height="4" rx="0.4" fill="currentColor"/><rect x="7" y="16" width="2.8" height="8" rx="0.4" fill="currentColor"/><rect x="11" y="12" width="2.8" height="12" rx="0.4" fill="currentColor" opacity="0.25"/><rect x="15" y="8" width="2.8" height="16" rx="0.4" fill="currentColor" opacity="0.25"/><rect x="19" y="4" width="2.8" height="20" rx="0.4" fill="currentColor" opacity="0.25"/></svg>`,
 		config: {
-			categoryWeights: DEFAULT_CATEGORY_WEIGHTS, // All categories equally weighted
+			categoryWeights: DEFAULT_CATEGORY_WEIGHTS,
 			composerFilter: null,
 			yearFilter: null,
-			minWorkScore: 5.3,
+			minWorkScore: 4.8,
 			maxTracksFromSingleWork: 1
 		}
 	},
@@ -22,6 +35,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		name: 'tracklists.medium.name',
 		description: 'tracklists.medium.description',
 		isDefault: true,
+		icon: `<svg width="24" height="24" viewBox="0 0 30 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="20" width="2.8" height="4" rx="0.4" fill="currentColor"/><rect x="7" y="16" width="2.8" height="8" rx="0.4" fill="currentColor"/><rect x="11" y="12" width="2.8" height="12" rx="0.4" fill="currentColor"/><rect x="15" y="8" width="2.8" height="16" rx="0.4" fill="currentColor" opacity="0.25"/><rect x="19" y="4" width="2.8" height="20" rx="0.4" fill="currentColor" opacity="0.25"/></svg>`,
 		config: {
 			categoryWeights: DEFAULT_CATEGORY_WEIGHTS,
 			composerFilter: null,
@@ -34,6 +48,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		name: 'tracklists.hard.name',
 		description: 'tracklists.hard.description',
 		isDefault: true,
+		icon: `<svg width="24" height="24" viewBox="0 0 30 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="20" width="2.8" height="4" rx="0.4" fill="currentColor"/><rect x="7" y="16" width="2.8" height="8" rx="0.4" fill="currentColor"/><rect x="11" y="12" width="2.8" height="12" rx="0.4" fill="currentColor"/><rect x="15" y="8" width="2.8" height="16" rx="0.4" fill="currentColor"/><rect x="19" y="4" width="2.8" height="20" rx="0.4" fill="currentColor" opacity="0.25"/></svg>`,
 		config: {
 			categoryWeights: DEFAULT_CATEGORY_WEIGHTS,
 			composerFilter: null,
@@ -46,6 +61,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		name: 'tracklists.extreme.name',
 		description: 'tracklists.extreme.description',
 		isDefault: true,
+		icon: `<svg width="24" height="24" viewBox="0 0 30 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="20" width="2.8" height="4" rx="0.4" fill="currentColor"/><rect x="7" y="16" width="2.8" height="8" rx="0.4" fill="currentColor"/><rect x="11" y="12" width="2.8" height="12" rx="0.4" fill="currentColor"/><rect x="15" y="8" width="2.8" height="16" rx="0.4" fill="currentColor"/><rect x="19" y="4" width="2.8" height="20" rx="0.4" fill="currentColor"/></svg>`,
 		config: {
 			categoryWeights: DEFAULT_CATEGORY_WEIGHTS,
 			composerFilter: null,
@@ -58,6 +74,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		name: 'tracklists.piano.name',
 		description: 'tracklists.piano.description',
 		isDefault: true,
+		icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3 8c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2v8c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V8zm2 0v8h3v-4h1v4h2v-4h1v4h2v-4h1v4h2v-4h1v4h3V8H5z"/></svg>`,
 		config: {
 			categoryWeights: {
 				vocal: 0,
@@ -72,13 +89,14 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			composerFilter: null,
 			yearFilter: [1800, 2000],
 			minWorkScore: 3,
-			maxTracksFromSingleWork: null
+			maxTracksFromSingleWork: 5
 		}
 	},
 	{
 		name: 'tracklists.concerto.name',
 		description: 'tracklists.concerto.description',
 		isDefault: true,
+		icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="1.5"/><circle cx="6" cy="10" r="1"/><circle cx="8" cy="10" r="1"/><circle cx="10" cy="10" r="1"/><circle cx="14" cy="10" r="1"/><circle cx="16" cy="10" r="1"/><circle cx="18" cy="10" r="1"/><circle cx="5" cy="13" r="1"/><circle cx="7" cy="13" r="1"/><circle cx="9" cy="13" r="1"/><circle cx="11" cy="13" r="1"/><circle cx="13" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><circle cx="17" cy="13" r="1"/><circle cx="19" cy="13" r="1"/><circle cx="6" cy="16" r="1"/><circle cx="8" cy="16" r="1"/><circle cx="10" cy="16" r="1"/><circle cx="14" cy="16" r="1"/><circle cx="16" cy="16" r="1"/><circle cx="18" cy="16" r="1"/></svg>`,
 		config: {
 			categoryWeights: {
 				vocal: 0,
@@ -93,13 +111,14 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			composerFilter: null,
 			yearFilter: null,
 			minWorkScore: 3,
-			maxTracksFromSingleWork: null
+			maxTracksFromSingleWork: 5
 		}
 	},
 	{
 		name: 'tracklists.chamber.name',
 		description: 'tracklists.chamber.description',
 		isDefault: true,
+		icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="14" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="16" cy="14" r="1.8"/><circle cx="12" cy="16" r="1.8"/></svg>`,
 		config: {
 			categoryWeights: {
 				vocal: 0,
@@ -114,13 +133,14 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			composerFilter: null,
 			yearFilter: null,
 			minWorkScore: 3,
-			maxTracksFromSingleWork: null
+			maxTracksFromSingleWork: 5
 		}
 	},
 	{
 		name: 'tracklists.ballet.name',
 		description: 'tracklists.ballet.description',
 		isDefault: true,
+		icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="6" r="1.5"/><path d="M11 8.5c0-.3.2-.5.5-.5h1c.3 0 .5.2.5.5v2c0 .3-.2.5-.5.5h-1c-.3 0-.5-.2-.5-.5v-2z"/><path d="M9 11l3 .5 3-.5c1 2 2 4 1.5 6.5-.3 1.5-1.2 2.5-2 2.5-.5 0-.8-.3-1-.8-.2-.5-.3-1.2-.3-2.2 0-.5-.2-.8-.5-.8s-.5.3-.5.8c0 1-.1 1.7-.3 2.2-.2.5-.5.8-1 .8-.8 0-1.7-1-2-2.5C8.5 15 9 13 10 11z"/><path d="M8.5 10.5c-.8-.3-1.5-.5-2-.5-.5 0-.8.2-.8.5s.3.5.8.5c.5 0 1.2.2 2 .5z"/><path d="M15.5 10.5c.8-.3 1.5-.5 2-.5.5 0 .8.2.8.5s-.3.5-.8.5c-.5 0-1.2.2-2 .5z"/></svg>`,
 		config: {
 			categoryWeights: {
 				vocal: 0,
@@ -142,6 +162,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		name: 'tracklists.opera.name',
 		description: 'tracklists.opera.description',
 		isDefault: true,
+		icon: `<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 6c2 2 2 6 0 8l-2-1c1-1.33 1-3.67 0-5l2-2m-2 3c1 0 1 2 0 2l-2-1c-.5-1.5 1-1.5 2-1m-1-1L11 11c-1 2-3 2-4-1s-1-4 1-5c2-1 3.5 1 3 3.5c-.5 2.5-2.5 5.5-2.5 8.5"/></svg>`,
 		config: {
 			categoryWeights: {
 				vocal: 0,
@@ -212,6 +233,7 @@ export function cloneTracklist(
 		name,
 		description: baseDescription,
 		isDefault: false,
-		config: JSON.parse(JSON.stringify(tracklist.config)) // Deep clone config
+		config: JSON.parse(JSON.stringify(tracklist.config)), // Deep clone config
+		icon: tracklist.icon ?? null
 	};
 }
