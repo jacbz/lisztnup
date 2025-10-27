@@ -564,6 +564,9 @@ class MusicbrainzProcessor:
         if not recordings:
             return None
         recordings = [r for r in recordings if r.deezerId is not None]
+        # sort recordings by length of title (longest first) - often better match
+        recordings.sort(key=lambda r: len(r.name), reverse=True)
+
         with_labels = [r for r in recordings if r.label]
         for pref in LABEL_PREFERENCE:
             for rec in with_labels:
