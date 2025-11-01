@@ -1,12 +1,20 @@
 <script lang="ts">
 	import type { Tracklist, CategoryWeights, TracklistConfig, ComposerFilter } from '$lib/types';
-	import { DEFAULT_CATEGORY_WEIGHTS, DEFAULT_TRACKLIST_CONFIG } from '$lib/types';
+	import {
+		DEFAULT_CATEGORY_WEIGHTS,
+		DEFAULT_TRACKLIST_CONFIG,
+		MIN_WORK_SCORE,
+		MAX_WORK_SCORE,
+		DEFAULT_MIN_WORK_SCORE,
+		DEFAULT_MAX_WORK_SCORE
+	} from '$lib/types';
 	import { gameData } from '$lib/stores';
 	import { TracklistGenerator, SettingsService } from '$lib/services';
 	import { DEFAULT_TRACKLISTS } from '$lib/data/defaultTracklists';
 	import { get } from 'svelte/store';
 	import Popup from './Popup.svelte';
 	import Slider from './Slider.svelte';
+	import RangeSlider from './RangeSlider.svelte';
 	import { _ } from 'svelte-i18n';
 
 	interface Props {
@@ -33,7 +41,7 @@
 	let categoryWeightsEnabled = $state(false);
 	let composerFilterEnabled = $state(false);
 	let yearFilterEnabled = $state(false);
-	let minWorkScoreEnabled = $state(true);
+	let workScoreRangeEnabled = $state(true);
 	let maxTracksFromSingleWorkEnabled = $state(false);
 
 	// Composer filter mode state
@@ -73,7 +81,7 @@
 
 				// Set enabled flags
 				categoryWeightsEnabled = config.categoryWeights !== null;
-				minWorkScoreEnabled = config.minWorkScore !== null;
+				workScoreRangeEnabled = config.workScoreRange !== null;
 				maxTracksFromSingleWorkEnabled = config.maxTracksFromSingleWork !== null;
 				yearFilterEnabled = config.yearFilter !== null;
 
@@ -98,7 +106,7 @@
 				categoryWeightsEnabled = false;
 				composerFilterEnabled = false;
 				yearFilterEnabled = false;
-				minWorkScoreEnabled = true;
+				workScoreRangeEnabled = true;
 				maxTracksFromSingleWorkEnabled = false;
 				composerFilterMode = 'include';
 				selectedComposers = [];
@@ -116,7 +124,7 @@
 			categoryWeightsEnabled,
 			composerFilterEnabled,
 			yearFilterEnabled,
-			minWorkScoreEnabled,
+			workScoreRangeEnabled,
 			maxTracksFromSingleWorkEnabled,
 			JSON.stringify(config)
 		];
@@ -220,7 +228,7 @@
 			categoryWeights: categoryWeightsEnabled ? config.categoryWeights : null,
 			composerFilter: composerFilterEnabled ? buildComposerFilter() : null,
 			yearFilter: yearFilterEnabled ? config.yearFilter : null,
-			minWorkScore: minWorkScoreEnabled ? config.minWorkScore : null,
+			workScoreRange: workScoreRangeEnabled ? config.workScoreRange : null,
 			maxTracksFromSingleWork: maxTracksFromSingleWorkEnabled
 				? config.maxTracksFromSingleWork
 				: null
@@ -271,12 +279,15 @@
 		}
 	}
 
-	function toggleMinWorkScore() {
-		minWorkScoreEnabled = !minWorkScoreEnabled;
-		if (minWorkScoreEnabled) {
-			config.minWorkScore = config.minWorkScore ?? 2.3;
+	function toggleWorkScoreRange() {
+		workScoreRangeEnabled = !workScoreRangeEnabled;
+		if (workScoreRangeEnabled) {
+			config.workScoreRange = config.workScoreRange || [
+				DEFAULT_MIN_WORK_SCORE,
+				DEFAULT_MAX_WORK_SCORE
+			];
 		} else {
-			config.minWorkScore = null;
+			config.workScoreRange = null;
 		}
 	}
 
@@ -410,32 +421,34 @@
 					</div>
 				</div>
 
-				<!-- Min Work Score -->
+				<!-- Work Score Range (Popularity) -->
 				<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
 					<div class="mb-3 flex items-center justify-between">
 						<div>
-							<span class="font-semibold text-cyan-300">{$_('tracklistEditor.minWorkScore')}</span>
-							<p class="text-xs text-gray-400">{$_('tracklistEditor.minWorkScoreDesc')}</p>
+							<span class="font-semibold text-cyan-300">{$_('tracklistEditor.workScoreRange')}</span
+							>
+							<p class="text-xs text-gray-400">{$_('tracklistEditor.workScoreRangeDesc')}</p>
 						</div>
 						<button
 							type="button"
-							onclick={toggleMinWorkScore}
-							class="rounded-lg px-3 py-1 text-sm {minWorkScoreEnabled
+							onclick={toggleWorkScoreRange}
+							class="rounded-lg px-3 py-1 text-sm {workScoreRangeEnabled
 								? 'bg-cyan-500 text-white'
 								: 'bg-gray-700 text-gray-400'}"
 						>
-							{minWorkScoreEnabled ? $_('tracklistEditor.enabled') : $_('tracklistEditor.disabled')}
+							{workScoreRangeEnabled
+								? $_('tracklistEditor.enabled')
+								: $_('tracklistEditor.disabled')}
 						</button>
 					</div>
-					{#if minWorkScoreEnabled && config.minWorkScore !== null}
-						<Slider
-							value={config.minWorkScore}
-							min={0}
-							max={10}
+					{#if workScoreRangeEnabled && config.workScoreRange !== null}
+						<RangeSlider
+							bind:valueMin={config.workScoreRange[0]}
+							bind:valueMax={config.workScoreRange[1]}
+							min={MIN_WORK_SCORE}
+							max={MAX_WORK_SCORE}
 							step={0.1}
 							label=""
-							showValue={true}
-							onChange={(val) => (config.minWorkScore = val)}
 						/>
 					{/if}
 				</div>
@@ -640,34 +653,14 @@
 						</button>
 					</div>
 					{#if yearFilterEnabled && config.yearFilter}
-						<div class="grid grid-cols-2 gap-4">
-							<div>
-								<label for="year-start" class="mb-1 block text-sm text-gray-400"
-									>{$_('tracklistEditor.yearStart')}</label
-								>
-								<input
-									id="year-start"
-									type="number"
-									bind:value={config.yearFilter[0]}
-									min="1000"
-									max="2100"
-									class="w-full rounded-lg border-2 border-gray-700 bg-gray-800 px-3 py-2 text-white focus:border-cyan-400 focus:outline-none"
-								/>
-							</div>
-							<div>
-								<label for="year-end" class="mb-1 block text-sm text-gray-400"
-									>{$_('tracklistEditor.yearEnd')}</label
-								>
-								<input
-									id="year-end"
-									type="number"
-									bind:value={config.yearFilter[1]}
-									min="1000"
-									max="2100"
-									class="w-full rounded-lg border-2 border-gray-700 bg-gray-800 px-3 py-2 text-white focus:border-cyan-400 focus:outline-none"
-								/>
-							</div>
-						</div>
+						<RangeSlider
+							bind:valueMin={config.yearFilter[0]}
+							bind:valueMax={config.yearFilter[1]}
+							min={1400}
+							max={2000}
+							step={10}
+							label=""
+						/>
 					{/if}
 				</div>
 

@@ -21,7 +21,7 @@ export interface TracklistConfig {
 	categoryWeights: CategoryWeights | null;
 	composerFilter: ComposerFilter | null;
 	yearFilter: [number, number] | null; // [startYear, endYear]
-	minWorkScore: number | null; // Minimum work score threshold
+	workScoreRange: [number, number] | null; // [minScore, maxScore]
 	maxTracksFromSingleWork: number | null; // Maximum tracks to sample from a single work
 }
 
@@ -30,6 +30,7 @@ export interface Tracklist {
 	description: string;
 	isDefault: boolean; // Whether this is a built-in preset
 	icon?: string | null; // Optional SVG icon (as an inline SVG string)
+	category?: 'difficulty' | 'categories' | 'composers' | 'custom'; // Category for organization
 	config: TracklistConfig;
 }
 
@@ -52,11 +53,17 @@ export const DEFAULT_CATEGORY_WEIGHTS: CategoryWeights = {
 	other: 30
 };
 
+// Work score range constants
+export const MIN_WORK_SCORE = 2.3;
+export const MAX_WORK_SCORE = 6.7;
+export const DEFAULT_MIN_WORK_SCORE = 2.3;
+export const DEFAULT_MAX_WORK_SCORE = 6.7;
+
 export const DEFAULT_TRACKLIST_CONFIG: TracklistConfig = {
 	categoryWeights: null,
 	composerFilter: null,
 	yearFilter: null,
-	minWorkScore: 2.3,
+	workScoreRange: [DEFAULT_MIN_WORK_SCORE, DEFAULT_MAX_WORK_SCORE],
 	maxTracksFromSingleWork: null
 };
 

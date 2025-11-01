@@ -10,3 +10,4 @@ export { default as TracklistSelector } from './TracklistSelector.svelte';
 export { default as TracklistEditor } from './TracklistEditor.svelte';
 export { default as NumberSelector } from './NumberSelector.svelte';
 export { default as Slider } from './Slider.svelte';
+export { default as RangeSlider } from './RangeSlider.svelte';

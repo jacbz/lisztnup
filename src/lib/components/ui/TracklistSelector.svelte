@@ -27,8 +27,25 @@
 	// Load custom tracklists
 	let customTracklists = $state<Tracklist[]>(SettingsService.loadCustomTracklists());
 
-	// Combined list of all tracklists
-	const allTracklists = $derived([...DEFAULT_TRACKLISTS, ...customTracklists]);
+	// Group tracklists by category
+	const groupedTracklists = $derived.by(() => {
+		const allTracklists = [...DEFAULT_TRACKLISTS, ...customTracklists];
+		const groups: Record<string, Tracklist[]> = {
+			difficulty: [],
+			categories: [],
+			composers: [],
+			custom: []
+		};
+
+		allTracklists.forEach((tracklist) => {
+			const category = tracklist.category || (tracklist.isDefault ? 'difficulty' : 'custom');
+			if (groups[category]) {
+				groups[category].push(tracklist);
+			}
+		});
+
+		return groups;
+	});
 
 	// Editor state
 	let showEditor = $state(false);
@@ -45,16 +62,18 @@
 
 		const map: Record<string, { composers: number; works: number; tracks: number }> = {};
 
-		// Calculate info for each tracklist
-		for (const tracklist of allTracklists) {
-			try {
-				const generator = new TracklistGenerator(data, tracklist);
-				map[tracklist.name] = generator.getInfo();
-			} catch (error) {
-				console.error(`Error getting info for tracklist ${tracklist.name}:`, error);
-				map[tracklist.name] = { composers: 0, works: 0, tracks: 0 };
-			}
-		}
+		// Calculate info for each tracklist in all groups
+		Object.values(groupedTracklists)
+			.flat()
+			.forEach((tracklist) => {
+				try {
+					const generator = new TracklistGenerator(data, tracklist);
+					map[tracklist.name] = generator.getInfo();
+				} catch (error) {
+					console.error(`Error getting info for tracklist ${tracklist.name}:`, error);
+					map[tracklist.name] = { composers: 0, works: 0, tracks: 0 };
+				}
+			});
 
 		return map;
 	});
@@ -138,106 +157,63 @@
 	>
 		<h2 class="mb-6 text-2xl font-bold text-cyan-400">{$_('tracklistSelector.title')}</h2>
 
-		<!-- Tracklist Selection Grid -->
-		<div class="grid gap-3 md:grid-cols-2">
-			{#each allTracklists as tracklist}
-				<div
-					class="relative flex flex-col gap-2 rounded-xl p-4 transition-all {isSameTracklist(
-						tracklist,
-						selectedTracklist
-					)
-						? 'bg-linear-to-r from-cyan-500 to-purple-600 text-white shadow-[0_0_20px_rgba(34,211,238,0.4)]'
-						: 'border-2 border-gray-700 bg-gray-800 text-gray-300 hover:border-cyan-400/50 hover:bg-gray-700'}"
-				>
-					<button
-						type="button"
-						onclick={() => handleClone(tracklist)}
-						class="absolute top-2 right-2 rounded-lg p-2 transition-all {isSameTracklist(
-							tracklist,
-							selectedTracklist
-						)
-							? 'bg-white/20 hover:bg-white/30'
-							: 'bg-gray-700 hover:bg-gray-600'}"
-						title={$_('tracklistSelector.clone')}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="16"
-							height="16"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						>
-							<rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
-							<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
-						</svg>
-					</button>
-
-					<button
-						type="button"
-						onclick={() => handleSelect(tracklist)}
-						class="flex h-full w-full flex-col items-start gap-2 text-left"
-					>
-						<div class="flex items-center gap-1 pr-8">
-							<div class="tracklist-icon medium shrink-0">
-								{#if tracklist.icon}
-									{@html tracklist.icon}
-								{/if}
-							</div>
-							<span class="text-lg font-bold"
-								>{tracklist.isDefault ? $_(tracklist.name) : tracklist.name}</span
-							>
-						</div>
-						<span
-							class="flex-1 text-sm leading-relaxed {isSameTracklist(tracklist, selectedTracklist)
-								? 'text-cyan-100'
-								: 'text-gray-400'}"
-						>
-							{tracklist.isDefault ? $_(tracklist.description) : tracklist.description}
-						</span>
-						{#if tracklistInfoMap[tracklist.name]}
-							<span class="mt-1 text-xs opacity-70">
-								{$_('settings.presetInfo.default', {
-									values: tracklistInfoMap[tracklist.name]
-								})}
-							</span>
-						{/if}
-					</button>
-
-					<!-- Action buttons for custom tracklists -->
-					{#if !tracklist.isDefault}
-						<div class="mt-2 flex gap-2">
-							<button
-								type="button"
-								onclick={() => handleEdit(tracklist)}
-								class="flex-1 rounded-lg px-3 py-1 text-sm transition-all {isSameTracklist(
-									tracklist,
-									selectedTracklist
-								)
-									? 'bg-white/20 hover:bg-white/30'
-									: 'bg-gray-700 hover:bg-gray-600'}"
-							>
-								{$_('tracklistSelector.edit')}
-							</button>
-							<button
-								type="button"
-								onclick={() => handleDeleteClick(tracklist)}
-								class="flex-1 rounded-lg px-3 py-1 text-sm transition-all {isSameTracklist(
-									tracklist,
-									selectedTracklist
-								)
-									? 'bg-red-300/20 hover:bg-red-500/30'
-									: 'bg-red-600/30 hover:bg-red-900/50'}"
-							>
-								{$_('tracklistSelector.delete')}
-							</button>
-						</div>
-					{/if}
+		<!-- Tracklist Selection by Category -->
+		<div class="space-y-6">
+			<!-- Difficulty -->
+			{#if groupedTracklists.difficulty.length > 0}
+				<div>
+					<h3 class="mb-3 text-lg font-semibold text-purple-400">
+						{$_('tracklistEditor.categoryDifficulty')}
+					</h3>
+					<div class="grid gap-3 md:grid-cols-2">
+						{#each groupedTracklists.difficulty as tracklist}
+							{@render tracklistCard(tracklist)}
+						{/each}
+					</div>
 				</div>
-			{/each}
+			{/if}
+
+			<!-- Musical Categories -->
+			{#if groupedTracklists.categories.length > 0}
+				<div>
+					<h3 class="mb-3 text-lg font-semibold text-purple-400">
+						{$_('tracklistEditor.categoryCategories')}
+					</h3>
+					<div class="grid gap-3 md:grid-cols-2">
+						{#each groupedTracklists.categories as tracklist}
+							{@render tracklistCard(tracklist)}
+						{/each}
+					</div>
+				</div>
+			{/if}
+
+			<!-- Composers -->
+			{#if groupedTracklists.composers.length > 0}
+				<div>
+					<h3 class="mb-3 text-lg font-semibold text-purple-400">
+						{$_('tracklistEditor.categoryComposers')}
+					</h3>
+					<div class="grid gap-3 md:grid-cols-2">
+						{#each groupedTracklists.composers as tracklist}
+							{@render tracklistCard(tracklist)}
+						{/each}
+					</div>
+				</div>
+			{/if}
+
+			<!-- Custom Tracklists -->
+			{#if groupedTracklists.custom.length > 0}
+				<div>
+					<h3 class="mb-3 text-lg font-semibold text-purple-400">
+						{$_('tracklistEditor.categoryCustom')}
+					</h3>
+					<div class="grid gap-3 md:grid-cols-2">
+						{#each groupedTracklists.custom as tracklist}
+							{@render tracklistCard(tracklist)}
+						{/each}
+					</div>
+				</div>
+			{/if}
 		</div>
 
 		<!-- Create New Button -->
@@ -250,6 +226,105 @@
 		</button>
 	</div>
 </Popup>
+
+{#snippet tracklistCard(tracklist: Tracklist)}
+	<div
+		class="relative flex flex-col gap-2 rounded-xl p-4 transition-all {isSameTracklist(
+			tracklist,
+			selectedTracklist
+		)
+			? 'bg-linear-to-r from-cyan-500 to-purple-600 text-white shadow-[0_0_20px_rgba(34,211,238,0.4)]'
+			: 'border-2 border-gray-700 bg-gray-800 text-gray-300 hover:border-cyan-400/50 hover:bg-gray-700'}"
+	>
+		<button
+			type="button"
+			onclick={() => handleClone(tracklist)}
+			class="absolute top-2 right-2 rounded-lg p-2 transition-all {isSameTracklist(
+				tracklist,
+				selectedTracklist
+			)
+				? 'bg-white/20 hover:bg-white/30'
+				: 'bg-gray-700 hover:bg-gray-600'}"
+			title={$_('tracklistSelector.clone')}
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="16"
+				height="16"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			>
+				<rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+				<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+			</svg>
+		</button>
+
+		<button
+			type="button"
+			onclick={() => handleSelect(tracklist)}
+			class="flex h-full w-full flex-col items-start gap-2 text-left"
+		>
+			<div class="flex items-center gap-1 pr-8">
+				<div class="tracklist-icon medium shrink-0">
+					{#if tracklist.icon}
+						{@html tracklist.icon}
+					{/if}
+				</div>
+				<span class="text-lg font-bold"
+					>{tracklist.isDefault ? $_(tracklist.name) : tracklist.name}</span
+				>
+			</div>
+			<span
+				class="flex-1 text-sm leading-relaxed {isSameTracklist(tracklist, selectedTracklist)
+					? 'text-cyan-100'
+					: 'text-gray-400'}"
+			>
+				{tracklist.isDefault ? $_(tracklist.description) : tracklist.description}
+			</span>
+			{#if tracklistInfoMap[tracklist.name]}
+				<span class="mt-1 text-xs opacity-70">
+					{$_('settings.presetInfo.default', {
+						values: tracklistInfoMap[tracklist.name]
+					})}
+				</span>
+			{/if}
+		</button>
+
+		<!-- Action buttons for custom tracklists -->
+		{#if !tracklist.isDefault}
+			<div class="mt-2 flex gap-2">
+				<button
+					type="button"
+					onclick={() => handleEdit(tracklist)}
+					class="flex-1 rounded-lg px-3 py-1 text-sm transition-all {isSameTracklist(
+						tracklist,
+						selectedTracklist
+					)
+						? 'bg-white/20 hover:bg-white/30'
+						: 'bg-gray-700 hover:bg-gray-600'}"
+				>
+					{$_('tracklistSelector.edit')}
+				</button>
+				<button
+					type="button"
+					onclick={() => handleDeleteClick(tracklist)}
+					class="flex-1 rounded-lg px-3 py-1 text-sm transition-all {isSameTracklist(
+						tracklist,
+						selectedTracklist
+					)
+						? 'bg-red-300/20 hover:bg-red-500/30'
+						: 'bg-red-600/30 hover:bg-red-900/50'}"
+				>
+					{$_('tracklistSelector.delete')}
+				</button>
+			</div>
+		{/if}
+	</div>
+{/snippet}
 
 <!-- Delete Confirmation Dialog -->
 <Dialog

@@ -11,4 +11,12 @@ export type {
 	TracklistConfig
 } from './settings';
 export type { GuessCategory, GameState, RoundState } from './game';
-export { DEFAULT_SETTINGS, DEFAULT_CATEGORY_WEIGHTS, DEFAULT_TRACKLIST_CONFIG } from './settings';
+export {
+	DEFAULT_SETTINGS,
+	DEFAULT_CATEGORY_WEIGHTS,
+	DEFAULT_TRACKLIST_CONFIG,
+	MIN_WORK_SCORE,
+	MAX_WORK_SCORE,
+	DEFAULT_MIN_WORK_SCORE,
+	DEFAULT_MAX_WORK_SCORE
+} from './settings';

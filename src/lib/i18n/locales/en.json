@@ -140,8 +140,8 @@
 		"yearStart": "Start Year",
 		"yearEnd": "End Year",
 		"topNComposers": "Top N Composers",
-		"minWorkScore": "Popularity",
-		"minWorkScoreDesc": "Minimum popularity for works to be included (higher = more popular and therefore fewer works)",
+		"workScoreRange": "Popularity Range",
+		"workScoreRangeDesc": "Filter works by popularity score (higher = more popular)",
 		"maxTracksFromSingleWork": "Max Tracks from Single Work",
 		"maxTracksFromSingleWorkDesc": "Limit how many movements/parts to be included from large-scale works",
 		"preview": "Preview",
@@ -152,7 +152,11 @@
 		"save": "Save",
 		"cancel": "Cancel",
 		"enableFilter": "Enable {filter}",
-		"disableFilter": "Disable {filter}"
+		"disableFilter": "Disable {filter}",
+		"categoryDifficulty": "Difficulty",
+		"categoryCategories": "Categories",
+		"categoryComposers": "Composers",
+		"categoryCustom": "Custom"
 	},
 	"inGameSettings": {
 		"title": "Settings",

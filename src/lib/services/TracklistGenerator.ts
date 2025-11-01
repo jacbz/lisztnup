@@ -56,9 +56,10 @@ export class TracklistGenerator {
 			works = works.filter((work) => work.begin_year >= startYear && work.end_year <= endYear);
 		}
 
-		// Step 3: Filter by minimum work score
-		if (config.minWorkScore !== null) {
-			works = works.filter((work) => work.score >= config.minWorkScore!);
+		// Step 3: Filter by work score range
+		if (config.workScoreRange !== null) {
+			const [minScore, maxScore] = config.workScoreRange;
+			works = works.filter((work) => work.score >= minScore && work.score <= maxScore);
 		}
 
 		// Step 4: Filter by composer (include/exclude/topN)
