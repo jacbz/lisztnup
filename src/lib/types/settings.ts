@@ -35,21 +35,21 @@ export interface Tracklist {
 
 export interface GameSettings {
 	numberOfTracks: number;
-	selectedTracklist: Tracklist; // Currently selected tracklist
+	selectedTracklist: string; // Name of the currently selected tracklist
 	trackLength: number; // Duration in seconds (5-30)
 	volume: number; // Volume level (0-100)
 }
 
 // Default values for tracklist configuration
 export const DEFAULT_CATEGORY_WEIGHTS: CategoryWeights = {
-	vocal: 20,
+	vocal: 50,
 	chamber: 50,
 	orchestral: 50,
 	piano: 50,
 	concerto: 50,
 	opera: 50,
-	ballet: 100,
-	other: 40
+	ballet: 30,
+	other: 30
 };
 
 export const DEFAULT_TRACKLIST_CONFIG: TracklistConfig = {
@@ -62,13 +62,7 @@ export const DEFAULT_TRACKLIST_CONFIG: TracklistConfig = {
 
 export const DEFAULT_SETTINGS: GameSettings = {
 	numberOfTracks: 20,
-	selectedTracklist: {
-		name: 'tracklists.medium.name',
-		description: 'tracklists.medium.description',
-		isDefault: true,
-		config: { ...DEFAULT_TRACKLIST_CONFIG, minWorkScore: 4.5 },
-		icon: null
-	},
-	trackLength: 20,
+	selectedTracklist: 'tracklists.veryeasy.name',
+	trackLength: 25,
 	volume: 100
 };

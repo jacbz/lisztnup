@@ -115,7 +115,7 @@
 	}
 
 	function handleSaveTracklist(tracklist: Tracklist) {
-		SettingsService.saveCustomTracklist(tracklist);
+		// SettingsService.saveCustomTracklist is now called in TracklistEditor.handleSave
 		customTracklists = SettingsService.loadCustomTracklists();
 		showEditor = false;
 		editingTracklist = null;

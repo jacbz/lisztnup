@@ -89,21 +89,38 @@ export class SettingsService {
 	/**
 	 * Adds or updates a custom tracklist
 	 * Uses name matching to find existing tracklists
+	 * If oldName is provided and different from tracklist.name, it handles renaming
 	 */
-	static saveCustomTracklist(tracklist: Tracklist): void {
+	static saveCustomTracklist(tracklist: Tracklist, oldName?: string): void {
 		const tracklists = this.loadCustomTracklists();
-		// Find by exact name match (custom tracklists only)
-		const existingIndex = tracklists.findIndex((t) => t.name === tracklist.name && !t.isDefault);
 
-		if (existingIndex >= 0) {
-			// Update existing custom tracklist
-			tracklists[existingIndex] = tracklist;
+		// Handle renaming case
+		if (oldName && oldName !== tracklist.name) {
+			// Delete the old tracklist
+			const filtered = tracklists.filter((t) => t.name !== oldName);
+			filtered.push(tracklist);
+			this.saveCustomTracklists(filtered);
+
+			// Update settings if the renamed tracklist was selected
+			const settings = this.load();
+			if (settings.selectedTracklist === oldName) {
+				settings.selectedTracklist = tracklist.name;
+				this.save(settings);
+			}
 		} else {
-			// Add new custom tracklist
-			tracklists.push(tracklist);
-		}
+			// Find by exact name match (custom tracklists only)
+			const existingIndex = tracklists.findIndex((t) => t.name === tracklist.name && !t.isDefault);
 
-		this.saveCustomTracklists(tracklists);
+			if (existingIndex >= 0) {
+				// Update existing custom tracklist
+				tracklists[existingIndex] = tracklist;
+			} else {
+				// Add new custom tracklist
+				tracklists.push(tracklist);
+			}
+
+			this.saveCustomTracklists(tracklists);
+		}
 	}
 
 	/**

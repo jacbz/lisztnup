@@ -188,6 +188,7 @@ export class TracklistGenerator {
 			// Normalize to 0-1 range (50 = neutral)
 			return weight / 50;
 		});
+		console.log('Category and weights: ', this.categories, this.categoryWeights);
 	}
 
 	/**

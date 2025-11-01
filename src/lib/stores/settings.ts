@@ -1,6 +1,8 @@
-import { writable } from 'svelte/store';
-import type { GameSettings } from '$lib/types';
+import { writable, derived } from 'svelte/store';
+import type { GameSettings, Tracklist } from '$lib/types';
 import { DEFAULT_SETTINGS } from '$lib/types';
+import { DEFAULT_TRACKLISTS } from '$lib/data/defaultTracklists';
+import { SettingsService } from '$lib/services';
 
 const SETTINGS_KEY = 'lisztnup-settings';
 
@@ -53,3 +55,22 @@ function createSettingsStore() {
 }
 
 export const settings = createSettingsStore();
+
+// Derived store to resolve the selected tracklist name to the actual Tracklist object
+export const selectedTracklist = derived<typeof settings, Tracklist>(settings, ($settings) => {
+	// Try to find in default tracklists
+	const defaultTracklist = DEFAULT_TRACKLISTS.find((t) => t.name === $settings.selectedTracklist);
+	if (defaultTracklist) {
+		return defaultTracklist;
+	}
+
+	// Try to find in custom tracklists
+	const customTracklists = SettingsService.loadCustomTracklists();
+	const customTracklist = customTracklists.find((t) => t.name === $settings.selectedTracklist);
+	if (customTracklist) {
+		return customTracklist;
+	}
+
+	// Fallback to default (Medium)
+	return DEFAULT_TRACKLISTS[1]; // Medium is at index 1
+});

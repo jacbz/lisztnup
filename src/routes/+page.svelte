@@ -1,6 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { gameData, isDataLoaded, settings, gameState, tracklist } from '$lib/stores';
+	import {
+		gameData,
+		isDataLoaded,
+		settings,
+		gameState,
+		tracklist,
+		selectedTracklist
+	} from '$lib/stores';
 	import { TracklistGenerator, deezerPlayer } from '$lib/services';
 	import LoadingScreen from '$lib/components/ui/LoadingScreen.svelte';
 	import HomeScreen from '$lib/components/ui/HomeScreen.svelte';
@@ -22,7 +29,7 @@
 		setTimeout(() => {
 			if ($gameData) {
 				// Create a generator with filtered data using selected tracklist
-				generator = new TracklistGenerator($gameData, $settings.selectedTracklist);
+				generator = new TracklistGenerator($gameData, $selectedTracklist);
 
 				// Initialize empty tracklist - we'll sample tracks on demand
 				tracklist.set([]);

@@ -3,7 +3,7 @@
 	import ChevronRight from 'lucide-svelte/icons/chevron-right';
 	import Languages from 'lucide-svelte/icons/languages';
 	import { _, locale } from 'svelte-i18n';
-	import { settings as settingsStore } from '$lib/stores';
+	import { settings as settingsStore, selectedTracklist } from '$lib/stores';
 	import { locales } from '$lib/i18n';
 	import TracklistSelector from './TracklistSelector.svelte';
 	import NumberSelector from './NumberSelector.svelte';
@@ -35,8 +35,8 @@
 	});
 
 	function handleTracklistSelect(tracklist: Tracklist) {
-		localSettings.selectedTracklist = tracklist;
-		settingsStore.update((s) => ({ ...s, selectedTracklist: tracklist }));
+		localSettings.selectedTracklist = tracklist.name;
+		settingsStore.update((s) => ({ ...s, selectedTracklist: tracklist.name }));
 		customTracklists = SettingsService.loadCustomTracklists(); // Reload in case of changes
 	}
 
@@ -111,23 +111,21 @@
 						onclick={() => (showTracklistSelector = true)}
 						class="flex items-center gap-1 rounded-lg px-3 py-1 text-cyan-400 transition-colors hover:bg-cyan-400/10"
 					>
-						{#if localSettings.selectedTracklist?.icon}
+						{#if $selectedTracklist?.icon}
 							<div>
-								{@html localSettings.selectedTracklist.icon}
+								{@html $selectedTracklist.icon}
 							</div>
 						{/if}
 						<span class="font-bold">
-							{localSettings.selectedTracklist.isDefault
-								? $_(localSettings.selectedTracklist.name)
-								: localSettings.selectedTracklist.name}
+							{$selectedTracklist.isDefault ? $_($selectedTracklist.name) : $selectedTracklist.name}
 						</span>
 						<ChevronRight class="h-4 w-4" />
 					</button>
 				</div>
 				<p class="text-sm text-gray-500">
-					{localSettings.selectedTracklist.isDefault
-						? $_(localSettings.selectedTracklist.description)
-						: localSettings.selectedTracklist.description}
+					{$selectedTracklist.isDefault
+						? $_($selectedTracklist.description)
+						: $selectedTracklist.description}
 				</p>
 			</div>
 
@@ -146,7 +144,7 @@
 
 <TracklistSelector
 	visible={showTracklistSelector}
-	selectedTracklist={localSettings.selectedTracklist}
+	selectedTracklist={$selectedTracklist}
 	onSelect={handleTracklistSelect}
 	onClose={() => (showTracklistSelector = false)}
 />

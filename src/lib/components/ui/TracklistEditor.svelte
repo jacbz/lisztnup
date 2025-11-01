@@ -2,7 +2,8 @@
 	import type { Tracklist, CategoryWeights, TracklistConfig, ComposerFilter } from '$lib/types';
 	import { DEFAULT_CATEGORY_WEIGHTS, DEFAULT_TRACKLIST_CONFIG } from '$lib/types';
 	import { gameData } from '$lib/stores';
-	import { TracklistGenerator } from '$lib/services';
+	import { TracklistGenerator, SettingsService } from '$lib/services';
+	import { DEFAULT_TRACKLISTS } from '$lib/data/defaultTracklists';
 	import { get } from 'svelte/store';
 	import Popup from './Popup.svelte';
 	import Slider from './Slider.svelte';
@@ -41,6 +42,9 @@
 	let topNCount = $state(50);
 	let composerSearchTerm = $state('');
 
+	// Error state
+	let nameError = $state<string | null>(null);
+
 	// Preview state
 	let previewInfo = $state<{ composers: number; works: number; tracks: number } | null>(null);
 	let previewComposers = $state<
@@ -60,6 +64,7 @@
 	$effect(() => {
 		if (visible && tracklist !== originalTracklist) {
 			originalTracklist = tracklist;
+			nameError = null; // Clear any previous errors
 
 			if (tracklist) {
 				name = tracklist.name;
@@ -304,7 +309,26 @@
 	}
 
 	function handleSave() {
-		if (!name.trim()) return;
+		if (!name.trim()) {
+			nameError = 'Name cannot be empty';
+			return;
+		}
+
+		// Check for duplicate names (excluding the current tracklist being edited)
+		const customTracklists = SettingsService.loadCustomTracklists();
+		const allTracklists = [...DEFAULT_TRACKLISTS, ...customTracklists];
+
+		// Allow saving if we're editing the same tracklist (name unchanged) or renaming to a unique name
+		const isDuplicate = allTracklists.some(
+			(t) => t.name === name.trim() && t.name !== originalTracklist?.name
+		);
+
+		if (isDuplicate) {
+			nameError = 'A tracklist with this name already exists';
+			return;
+		}
+
+		nameError = null;
 
 		const savedTracklist: Tracklist = {
 			name: name.trim(),
@@ -312,6 +336,11 @@
 			isDefault: false,
 			config: buildCurrentConfig()
 		};
+
+		// Pass the old name if it's being renamed
+		const oldName =
+			originalTracklist?.name !== savedTracklist.name ? originalTracklist?.name : undefined;
+		SettingsService.saveCustomTracklist(savedTracklist, oldName);
 
 		onSave(savedTracklist);
 	}
@@ -357,9 +386,15 @@
 							id="tracklist-name"
 							type="text"
 							bind:value={name}
+							oninput={() => (nameError = null)}
 							placeholder="My Custom Tracklist"
-							class="w-full rounded-lg border-2 border-gray-700 bg-gray-800 px-3 py-2 text-white focus:border-cyan-400 focus:outline-none"
+							class="w-full rounded-lg border-2 {nameError
+								? 'border-red-500'
+								: 'border-gray-700'} bg-gray-800 px-3 py-2 text-white focus:border-cyan-400 focus:outline-none"
 						/>
+						{#if nameError}
+							<p class="mt-1 text-sm text-red-500">{nameError}</p>
+						{/if}
 					</div>
 					<div>
 						<label for="tracklist-desc" class="mb-1 block text-sm font-semibold text-cyan-300">
