@@ -147,10 +147,10 @@ export class TracklistGenerator {
 		this.filteredWorks = works;
 		this.filteredComposers = composers;
 
-		// Precompute composer weights (logarithmic based on work count)
+		// Precompute composer weights (slightly logarithmic based on work count)
 		this.composerWeights = composers.map((c) => {
 			const workCount = this.worksByComposer.get(c.gid)?.length || 0;
-			const weight = Math.log(workCount + 1);
+			const weight = Math.log(workCount + 1) / Math.log(1.1); // log base 1.1 for more spread
 			this.composerWeightMap.set(c.gid, weight);
 			return weight;
 		});

@@ -590,7 +590,6 @@
 		font-weight: 300;
 		letter-spacing: 0.12em;
 		pointer-events: none;
-		filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.8));
 	}
 
 	.segment-text-inner {

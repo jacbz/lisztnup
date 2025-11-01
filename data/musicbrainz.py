@@ -3,6 +3,7 @@ import psycopg2.extras
 import json
 import re
 from collections import defaultdict, Counter
+import traceback
 
 # --- Database Configuration ---
 DB_CONFIG = {
@@ -53,10 +54,17 @@ WITH classical_composers AS (
   WHERE begin_date_year IS NOT NULL AND begin_date_year <= 1949
 )
 SELECT
-  c.id AS composer_id, c.gid AS composer_gid, c.sort_name AS composer_sort_name,
-  c.begin_date_year AS composer_birth_year, c.end_date_year AS composer_death_year,
-  w.id AS work_id, w.gid AS work_gid, w.name AS original_name, wa.name AS alias_name,
-  w.type AS work_type, l.begin_date_year AS work_begin_year, l.end_date_year AS work_end_year
+  c.id AS composer_id, 
+  c.gid AS composer_gid, 
+  c.sort_name AS composer_sort_name,
+  c.begin_date_year AS composer_birth_year, 
+  c.end_date_year AS composer_death_year,
+  w.id AS work_id, 
+  w.gid AS work_gid, 
+  COALESCE(wa.name, w.name) AS work_name,
+  w.type AS work_type, 
+  l.begin_date_year AS work_begin_year, 
+  l.end_date_year AS work_end_year
 FROM
   musicbrainz.work AS w
   JOIN musicbrainz.l_artist_work AS law ON w.id = law.entity1
@@ -65,10 +73,12 @@ FROM
   LEFT JOIN musicbrainz.work_alias AS wa ON w.id = wa.work AND wa.locale = 'en' AND wa.type = 1
 WHERE
   l.link_type = 168 -- 'composer'
+  AND c.sort_name ~ '^[A-Za-z]'
+  AND COALESCE(wa.name, w.name) ~* '^[A-Za-zÀ-ÿŒ0-9"“„‘]'
   AND COALESCE(w.type, 17) NOT IN(19, 20, 21, 22, 23, 25, 26, 28, 29) -- Non-classical filter
   AND (
-    COALESCE(w.type, 17) != 17 OR -- Include if not a Song/Unknown
-    (COALESCE(w.type, 17) = 17 AND c.end_date_year < 1900) -- Or if it is, check composer death date
+    -- Include if not a song, or if a song but composed before 1900
+    w.type IS DISTINCT FROM 17 OR c.end_date_year < 1900
   )
   AND NOT EXISTS (
     SELECT 1 FROM musicbrainz.l_work_work lww JOIN musicbrainz.link lww_link ON lww.link = lww_link.id
@@ -93,9 +103,12 @@ ORDER BY r.name;
 
 GET_SUBWORKS_FOR_WORK_SQL = """
 SELECT
-  child_work.id AS work_id, child_work.gid AS work_gid, child_work.name AS original_name,
-  wa.name AS alias_name, child_work.type AS work_type,
-  l.begin_date_year AS work_begin_year, l.end_date_year AS work_end_year
+  child_work.id AS work_id,
+  child_work.gid AS work_gid,
+  COALESCE(child_work.name, wa.name) AS work_name,
+  child_work.type AS work_type,
+  l.begin_date_year AS work_begin_year,
+  l.end_date_year AS work_end_year
 FROM musicbrainz.l_work_work AS lww
 JOIN musicbrainz.link AS l ON lww.link = l.id
 JOIN musicbrainz.work AS child_work ON lww.entity1 = child_work.id
@@ -135,7 +148,7 @@ def get_work_details_recursive(cursor, work_id, label_counter):
 
     grouped_subworks = defaultdict(list)
     for sw in subworks_data:
-        grouped_subworks[normalize_name(sw["original_name"])].append(sw)
+        grouped_subworks[normalize_name(sw["work_name"])].append(sw)
 
     valid_subworks = []
     for normalized_name, duplicates in grouped_subworks.items():
@@ -177,7 +190,7 @@ def get_work_details_recursive(cursor, work_id, label_counter):
             valid_subworks.append(
                 {
                     "gid": winner_row["work_gid"],
-                    "name": winner_row["alias_name"] or winner_row["original_name"],
+                    "name": winner_row["work_name"],
                     "begin_year": winner_row["work_begin_year"],
                     "end_year": winner_row["work_end_year"],
                     "recordings": child_recordings,
@@ -291,7 +304,7 @@ def main():
         grouped_works = defaultdict(list)
         for work in top_level_works_raw:
             grouped_works[
-                (work["composer_id"], normalize_name(work["original_name"]))
+                (work["composer_id"], normalize_name(work["work_name"]))
             ].append(work)
 
         print(
@@ -324,10 +337,10 @@ def main():
                     )
                 )
 
-            if total_recordings > 0:
+            if total_recordings > 1:
                 composer_name = winner_row["composer_sort_name"]
                 final_work_name = (
-                    winner_row["alias_name"] or winner_row["original_name"]
+                    winner_row["work_name"]
                 )
                 work_type_str = WORK_TYPES.get(winner_row["work_type"], "Unknown")
 
@@ -374,21 +387,68 @@ def main():
                 )
                 print(f"{composer_name:<30}\t{truncated_name:<60}\t{total_recordings}")
 
+        # filter composers: if composer is born after 1900, works must have at least two distinct work types not counting "Song", otherwise remove composer
+        composers_to_remove = set()
+        for composer in list(composers.values()):
+            if composer["birth_year"] and composer["birth_year"] > 1900:
+                distinct_types = set(w["type"] for w in composer["works"])
+                if "Song" in distinct_types:
+                    distinct_types.remove("Song")
+                if len(distinct_types) < 2:
+                    composers_to_remove.add(composer["gid"])
+                    print(
+                        f"Removing composer {composer['name']} born after 1900 with insufficient work types."
+                    )
+
         final_data = sorted(
-            [c for c in composers.values() if c["works"]], key=lambda c: c["name"]
+            [c for c in composers.values() if c["works"] and c["gid"] not in composers_to_remove], key=lambda c: c["name"]
         )
         output_filename = "musicbrainz.json"
         print(
             f"\nWriting {len(final_data)} composers with valid works to {output_filename}..."
         )
         with open(output_filename, "w", encoding="utf-8") as f:
-            json.dump(final_data, f, indent=2, ensure_ascii=False)
+            json.dump(final_data, f, ensure_ascii=False)
 
         print("Done.")
         print_statistics(final_data, stats)
 
     except (Exception, psycopg2.DatabaseError) as error:
-        print(f"An error occurred: {error}")
+
+        print("An error occurred while processing MusicBrainz data.")
+        print(f"Error type   : {type(error).__name__}")
+        print(f"Error message: {error!s}")
+
+        # If this is a psycopg2 DatabaseError, print available DB-specific info
+        if isinstance(error, psycopg2.DatabaseError):
+            try:
+                print(f"pgcode  : {getattr(error, 'pgcode', None)}")
+                print(f"pgerror : {getattr(error, 'pgerror', None)}")
+                diag = getattr(error, "diag", None)
+                if diag:
+                    print("Diagnostics:")
+                    for attr in (
+                        "severity",
+                        "message_primary",
+                        "context",
+                        "detail",
+                        "hint",
+                        "schema_name",
+                        "table_name",
+                        "column_name",
+                        "data_type_name",
+                        "constraint_name",
+                        "statement_position",
+                    ):
+                        val = getattr(diag, attr, None)
+                        if val:
+                            print(f"  {attr}: {val}")
+            except Exception:
+                # Avoid raising while trying to print diagnostic info
+                pass
+
+        print("Traceback (most recent call last):")
+        traceback.print_exc()
     finally:
         if conn is not None:
             conn.close()

@@ -260,7 +260,7 @@
 	function toggleYearFilter() {
 		yearFilterEnabled = !yearFilterEnabled;
 		if (yearFilterEnabled) {
-			config.yearFilter = config.yearFilter || [1600, 2000];
+			config.yearFilter = config.yearFilter || [1400, 2000];
 		} else {
 			config.yearFilter = null;
 		}

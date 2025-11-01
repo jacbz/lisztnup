@@ -12,7 +12,10 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: `<svg width="24" height="24" viewBox="0 0 30 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="20" width="2.8" height="4" rx="0.4" fill="currentColor"/><rect x="7" y="16" width="2.8" height="8" rx="0.4" fill="currentColor" opacity="0.25"/><rect x="11" y="12" width="2.8" height="12" rx="0.4" fill="currentColor" opacity="0.25"/><rect x="15" y="8" width="2.8" height="16" rx="0.4" fill="currentColor" opacity="0.25"/><rect x="19" y="4" width="2.8" height="20" rx="0.4" fill="currentColor" opacity="0.25"/></svg>`,
 		config: {
 			categoryWeights: DEFAULT_CATEGORY_WEIGHTS,
-			composerFilter: null,
+			composerFilter: {
+				mode: 'topN',
+				count: 30
+			},
 			yearFilter: null,
 			minWorkScore: 5.4,
 			maxTracksFromSingleWork: 1
@@ -25,7 +28,10 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: `<svg width="24" height="24" viewBox="0 0 30 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="20" width="2.8" height="4" rx="0.4" fill="currentColor"/><rect x="7" y="16" width="2.8" height="8" rx="0.4" fill="currentColor"/><rect x="11" y="12" width="2.8" height="12" rx="0.4" fill="currentColor" opacity="0.25"/><rect x="15" y="8" width="2.8" height="16" rx="0.4" fill="currentColor" opacity="0.25"/><rect x="19" y="4" width="2.8" height="20" rx="0.4" fill="currentColor" opacity="0.25"/></svg>`,
 		config: {
 			categoryWeights: DEFAULT_CATEGORY_WEIGHTS,
-			composerFilter: null,
+			composerFilter: {
+				mode: 'topN',
+				count: 50
+			},
 			yearFilter: null,
 			minWorkScore: 4.8,
 			maxTracksFromSingleWork: 1
@@ -38,7 +44,10 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: `<svg width="24" height="24" viewBox="0 0 30 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="20" width="2.8" height="4" rx="0.4" fill="currentColor"/><rect x="7" y="16" width="2.8" height="8" rx="0.4" fill="currentColor"/><rect x="11" y="12" width="2.8" height="12" rx="0.4" fill="currentColor"/><rect x="15" y="8" width="2.8" height="16" rx="0.4" fill="currentColor" opacity="0.25"/><rect x="19" y="4" width="2.8" height="20" rx="0.4" fill="currentColor" opacity="0.25"/></svg>`,
 		config: {
 			categoryWeights: DEFAULT_CATEGORY_WEIGHTS,
-			composerFilter: null,
+			composerFilter: {
+				mode: 'topN',
+				count: 75
+			},
 			yearFilter: null,
 			minWorkScore: 4.5,
 			maxTracksFromSingleWork: 2
@@ -51,7 +60,10 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: `<svg width="24" height="24" viewBox="0 0 30 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="20" width="2.8" height="4" rx="0.4" fill="currentColor"/><rect x="7" y="16" width="2.8" height="8" rx="0.4" fill="currentColor"/><rect x="11" y="12" width="2.8" height="12" rx="0.4" fill="currentColor"/><rect x="15" y="8" width="2.8" height="16" rx="0.4" fill="currentColor"/><rect x="19" y="4" width="2.8" height="20" rx="0.4" fill="currentColor" opacity="0.25"/></svg>`,
 		config: {
 			categoryWeights: DEFAULT_CATEGORY_WEIGHTS,
-			composerFilter: null,
+			composerFilter: {
+				mode: 'topN',
+				count: 100
+			},
 			yearFilter: null,
 			minWorkScore: 3.5,
 			maxTracksFromSingleWork: 3
@@ -110,7 +122,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			},
 			composerFilter: null,
 			yearFilter: null,
-			minWorkScore: 3,
+			minWorkScore: 3.5,
 			maxTracksFromSingleWork: 5
 		}
 	},
@@ -132,7 +144,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			},
 			composerFilter: null,
 			yearFilter: null,
-			minWorkScore: 3,
+			minWorkScore: 3.5,
 			maxTracksFromSingleWork: 5
 		}
 	},
@@ -176,7 +188,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			},
 			composerFilter: null,
 			yearFilter: null,
-			minWorkScore: 3.5,
+			minWorkScore: 3.8,
 			maxTracksFromSingleWork: 3
 		}
 	},
@@ -202,8 +214,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			categoryWeights: DEFAULT_CATEGORY_WEIGHTS,
 			composerFilter: { mode: 'include', composers: ['24f1766e-9635-4d58-a4d4-9413f9f98a4c'] },
 			yearFilter: null,
-			minWorkScore: 2.3,
-			maxTracksFromSingleWork: null
+			minWorkScore: 3.4,
+			maxTracksFromSingleWork: 5
 		}
 	},
 	{
@@ -228,8 +240,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			categoryWeights: DEFAULT_CATEGORY_WEIGHTS,
 			composerFilter: { mode: 'include', composers: ['b972f589-fb0e-474e-b64a-803b0364fa75'] },
 			yearFilter: null,
-			minWorkScore: 2.3,
-			maxTracksFromSingleWork: null
+			minWorkScore: 3,
+			maxTracksFromSingleWork: 5
 		}
 	},
 	{
@@ -254,7 +266,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			categoryWeights: DEFAULT_CATEGORY_WEIGHTS,
 			composerFilter: { mode: 'include', composers: ['ad79836d-9849-44df-8789-180bbc823f3c'] },
 			yearFilter: null,
-			minWorkScore: 2.3,
+			minWorkScore: 3,
 			maxTracksFromSingleWork: null
 		}
 	}

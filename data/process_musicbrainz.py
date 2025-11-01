@@ -24,7 +24,7 @@ This script executes a multi-stage data processing pipeline:
     containing separate lists for composers and works (grouped by type).
 11. Generates a detailed, human-readable 'lisztnup.md' markdown report.
 12. Writes a log of unresolved work types to 'unresolved_types.txt'.
-13. Prints a detailed statistical summary of the entire transformation process.
+13. Prints a summary of the entire transformation process.
 """
 
 import json
@@ -39,8 +39,8 @@ from typing import Dict, List, Optional, Set, Any
 # ==============================================================================
 
 # --- Data Filtering Thresholds ---
-MIN_WORKS_PER_COMPOSER = 3      # Composers with fewer final works than this will be dropped.
-MIN_BIRTH_YEAR = 1600           # Composers born before this year will be dropped.
+MIN_WORKS_PER_COMPOSER = 2      # Composers with fewer final works than this will be dropped.
+MIN_BIRTH_YEAR = 1400           # Composers born before this year will be dropped.
 MIN_RECORDINGS_PER_PART = 3     # Leaf works (parts) with fewer recordings will be dropped at the start.
 MINIMUM_WSS = 2.3               # The absolute minimum Work Significance Score for a work to be considered.
 
@@ -77,7 +77,7 @@ KEYWORD_RULES = [
     # 1. Stage Works (Opera, Ballet)
     # These are specific and should be checked first.
     # ========================================================================
-    (r'(?i)\bopera\b|Singspiel|Musikdrama|Zoroastre|Armide|Orfeo|dramatico|Acte\b|Atto\b', 'opera'),
+    (r'(?i)\bopera\b|Singspiel|Musikdrama|Zoroastre|Armide|Orfeo|dramatico|Acte\b|Atto\b|Porgy and Bess', 'opera'),
     (r'(?i)Swan Lake|Nutcracker|Creatures of Prometheus|L\'Arlésienne', 'ballet'),
 
     # ========================================================================
@@ -93,14 +93,14 @@ KEYWORD_RULES = [
     # 3. Concerto
     # Works featuring a soloist or group of soloists with an orchestra.
     # ========================================================================
-    (r'(?i)Concerto|Konzert|Concertante|Concertstück|Rondo for .* and Orchestra|Variations on a Rococo Theme|for .* and Orchestra', 'concerto'),
+    (r'(?i)Concerto|Konzert|Concertante|Concertstück|Rondo for .* and Orchestra|Variations on a Rococo Theme|for .* and Orchestra|Rhapsody in Blue', 'concerto'),
 
     # ========================================================================
     # 4. Orchestral Works
     # Music for a large ensemble, including symphonies, overtures, and dances.
     # ========================================================================
     (r'(?i)Symphony|Symphonie|Symphonische|Sinfonia(?! (BWV 7|BWV 8))', 'orchestral'), # Excludes Bach's keyboard Sinfonias
-    (r'(?i)Overture|Ouverture|Poème symphonique|Symphonic Poem|Serenade for Orchestra|Divertimento for Orchestra|Cassation', 'orchestral'),
+    (r'(?i)Overture|Ouverture|Poème symphonique|Symphonic|Serenade for Orchestra|Divertimento for Orchestra|Cassation|American in Paris', 'orchestral'),
     (r'(?i)Orchestersuite|for Orchestra|for Orchestra|for strings|for Wind Ensemble|for Military Band', 'orchestral'),
 
     # ========================================================================
@@ -109,28 +109,63 @@ KEYWORD_RULES = [
     # Also includes solo works except for keyboard solo works (handled separately).
     # ========================================================================
     (r'(?i)String Quartet|String Quintet|String Trio|Piano Quintet|Piano Trio|Clarinet Quintet|Horn Trio', 'chamber'),
-    (r'(?i)Cello Sonata|Violin Sonata|Flute Sonata|Sonata for .* and|Trio Sonata|Triosonate|Pianoforte und Violine|violino e fagotto', 'chamber'),
+    (r'(?i)Cello Sonata|Violin Sonata|Flute Sonata|Sonata for .* and|Trio Sonata|Triosonate|Pianoforte und Violine|violino e fagotto|Trio for Piano|four hands|4 hands', 'chamber'),
     (r'(?i)\bDuo\b|\bDuet\b|Trio\b(?! for Piano)|Quartet|Quintet|Sextet|Septet|Octet|Nonet', 'chamber'), # Excludes Piano Trio to avoid double-matching
-    (r'(?i)Serenade for (Flute|Violin|Strings)|Divertiment.* for (Violin|Strings|Winds)', 'chamber'),
-    (r'(?i)for (.+) and Piano|for Clarinet and Viola|for .+ Violins|Viol.* Solo|Divertiment', 'chamber'),
+    (r'(?i)Serenade for (Flute|Violin|Strings)|Divertiment.* for (Violin|Strings|Winds)|Caprice sur des airs', 'chamber'),
+    (r'(?i)for (.+) and (.+)|pour (.+) et (.+)|für (.+) und (.+)|for Clarinet and Viola|for .+ Violins|Viol.* Solo|Divertiment|for \d', 'chamber'),
 
     # ========================================================================
     # 6. Keyboard Works (Piano, Harpsichord, Organetc.)
     # This is a broad category for solo keyboard music, with many specific forms.
     # ========================================================================
     (r'(?i)Piano Sonata|Sonata .* K .* |Klaviersonate|Keyboard Sonata|Harpsichord Sonata|Orgel', 'piano'),
-    (r'(?i)for Piano|für Klavier|Klavierstück|for Harpsichord|pour le Clavecin|Pièces de Clavecin|for Keyboard', 'piano'),
+    (r'(?i)(for|pour) Piano|für Klavier|Klavierstück|for Harpsichord|pour le Clavecin|Pièces de Clavecin|for Keyboard', 'piano'),
     # --- Specific Keyboard Forms ---
     (r'(?i)Album für die Jugend|Fantasiestück', 'piano'),
     (r'(?i)\bVariations? for Piano|\bVariationen für Klavier|Goldberg Variations|Diabelli Variations', 'piano'),
     (r'(?i)Kinderszenen|Albumblatt|Albumblätter|Papillons|Carnaval|Kreisleriana|Davidsbündlertänze|Waldszenen', 'piano'),
-    (r'(?i)Well-Tempered Clavier|Wohltemperiert|Inventio', 'piano'), # Catches Bach's major keyboard cycles
+    (r'(?i)Well-Tempered Clavier|Wohltemperiert|Inventio|Präludium und Fuge', 'piano'), # Catches Bach's major keyboard cycles
 ]
 
 # --- Recording Selection Preferences ---
 LABEL_PREFERENCE = [
     "Deutsche Grammophon", "EMI", "Decca", "Hyperion", "Chandos", "Universal", "Philips"
 ]
+
+# --- Excluded Composers ---
+EXCLUDED_COMPOSERS: Set[str] = set([
+    "Gruber, Franz Xaver",
+    "Pierpont, James Lord",
+    "Ellington, Duke",
+    "Coltrane, John",
+    "Tizol, Juan",
+    "Gilmour, David",
+    "Mason, Nick",
+    "Waters, Roger",
+    "Wright, Richard",
+    "Young, Neil",
+    "McLaughlin, John",
+    "Townshend, Pete",
+    "Wakeman, Rick",
+    "Gardel, Carlos",
+    "Vangelis",
+    "Morricone, Ennio",
+    "Emerson, Keith",
+    "Strayhorn, Billy",
+    "Ibrahim, Abdullah",
+    "Cherry, Don",
+    "Cale, John",
+    "Handy, William Christopher",
+    "Johnson, James P.",
+    "Anderson, Leroy",
+    "Goldsmith, Jerry",
+    "Newman, Randy",
+    "Jarre, Maurice"
+])
+
+EXCLUDED_DEEZER_IDS: Set[int] = set([
+    711024922
+])
 
 # ==============================================================================
 # --- Data Class Definitions ---
@@ -485,7 +520,8 @@ class MusicbrainzProcessor:
         )
         final_composers: List[FinalComposer] = []
         for composer in original_composers:
-            if composer_work_counts[composer.gid] >= MIN_WORKS_PER_COMPOSER:
+            if composer_work_counts[composer.gid] >= MIN_WORKS_PER_COMPOSER and \
+               composer.name not in EXCLUDED_COMPOSERS:
                 final_composers.append(
                     FinalComposer(
                         gid=composer.gid,
@@ -563,7 +599,7 @@ class MusicbrainzProcessor:
         """
         if not recordings:
             return None
-        recordings = [r for r in recordings if r.deezerId is not None]
+        recordings = [r for r in recordings if r.deezerId is not None and r.deezerId not in EXCLUDED_DEEZER_IDS]
         # sort recordings by length of title (longest first) - often better match
         recordings.sort(key=lambda r: len(r.name), reverse=True)
 
@@ -574,7 +610,7 @@ class MusicbrainzProcessor:
                     return rec.deezerId
         if with_labels:
             return with_labels[0].deezerId
-        return recordings[0].deezerId
+        return recordings[0].deezerId if recordings else None
 
     def _write_unresolved_log(self, final_works: Dict[str, List[FinalWork]]) -> None:
         """Writes a log of works in the final output whose types remain 'other'."""
@@ -647,10 +683,10 @@ class MusicbrainzProcessor:
             composer_stats.append((name, work_count, part_count, avg_parts))
 
         composer_stats.sort(key=lambda x: x[1], reverse=True)
-        print("\n--- Top 100 Composers by Final Work Count ---")
+        print("\n--- Composers by Final Work Count ---")
         print(f"{'#':>3} {'Composer':<35} {'Works':>7} {'Parts':>7} {'Avg Parts':>10}")
         print(f"{'-'*3} {'-'*35} {'-'*7} {'-'*7} {'-'*10}")
-        for i, (name, wc, pc, ap) in enumerate(composer_stats[:100]):
+        for i, (name, wc, pc, ap) in enumerate(composer_stats):
             print(f"{i+1:3}. {name:<35} {wc:>7} {pc:>7} {ap:>10.1f}")
 
         print("\n--- Top 50 Works by Score (All Types) ---")

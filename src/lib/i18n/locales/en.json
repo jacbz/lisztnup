@@ -170,7 +170,7 @@
 	"game": {
 		"round": "Round {current} of {total}",
 		"home": "Home",
-		"spin": "Spin",
+		"spin": "Spin!",
 		"play": "Play",
 		"pause": "Pause",
 		"guessCategory": "Guess: {category}",
