@@ -2,6 +2,11 @@
 	import type { GuessCategory } from '$lib/types';
 	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
+	import composerIcon from '$lib/assets/icons/composer.svg?raw';
+	import compositionIcon from '$lib/assets/icons/composition.svg?raw';
+	import eraIcon from '$lib/assets/icons/era.svg?raw';
+	import formIcon from '$lib/assets/icons/form.svg?raw';
+	import decadeIcon from '$lib/assets/icons/decade.svg?raw';
 
 	interface Props {
 		onCategorySelected?: (category: GuessCategory) => void;
@@ -17,6 +22,12 @@
 		currentRoundIndex = 0
 	}: Props = $props();
 
+	// Extract path data from SVG strings
+	function extractPathFromSVG(svgString: string): string {
+		const pathMatch = svgString.match(/<path[^>]*d="([^"]*)"/);
+		return pathMatch && pathMatch[1] ? pathMatch[1] : '';
+	}
+
 	const categories: {
 		id: GuessCategory;
 		color1: string;
@@ -29,45 +40,35 @@
 			color1: '#06b6d4',
 			color2: '#22d3ee',
 			glowColor: 'rgba(6, 182, 212, 0.8)',
-			// Person icon (user-circle)
-			iconPath:
-				'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'
+			iconPath: extractPathFromSVG(composerIcon)
 		},
 		{
 			id: 'composition',
 			color1: '#ec4899',
 			color2: '#f472b6',
 			glowColor: 'rgba(236, 72, 153, 0.8)',
-			// Music note icon
-			iconPath:
-				'M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'
+			iconPath: extractPathFromSVG(compositionIcon)
 		},
 		{
 			id: 'era',
 			color1: '#8b5cf6',
 			color2: '#a78bfa',
 			glowColor: 'rgba(139, 92, 246, 0.8)',
-			// Calendar icon
-			iconPath:
-				'M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z'
+			iconPath: extractPathFromSVG(eraIcon)
 		},
 		{
 			id: 'form',
 			color1: '#f59e0b',
 			color2: '#fbbf24',
 			glowColor: 'rgba(245, 158, 11, 0.8)',
-			// Piano/keyboard icon
-			iconPath:
-				'M4 2v20h16V2H4zm6 18H6v-6h4v6zm0-8H6V6h4v6zm5 8h-4v-6h4v6zm0-8h-4V6h4v6zm5 8h-4v-6h4v6zm0-8h-4V6h4v6z'
+			iconPath: extractPathFromSVG(formIcon)
 		},
 		{
 			id: 'decade',
 			color1: '#10b981',
 			color2: '#34d399',
 			glowColor: 'rgba(16, 185, 129, 0.8)',
-			// Clock icon
-			iconPath:
-				'M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z'
+			iconPath: extractPathFromSVG(decadeIcon)
 		}
 	];
 
@@ -214,14 +215,16 @@
 			const iconX = centerX + Math.cos(midAngle) * iconDistance;
 			const iconY = centerY + Math.sin(midAngle) * iconDistance;
 
-			ctx.save();
-			ctx.translate(iconX, iconY);
-			ctx.rotate(midAngle + Math.PI / 2);
+			if (category.iconPath) {
+				ctx.save();
+				ctx.translate(iconX, iconY);
+				ctx.rotate(midAngle + Math.PI / 2);
 
-			const iconScale = size / 500;
-			drawSVGPath(ctx, category.iconPath, iconScale * 1.5);
+				const iconScale = size / 500;
+				drawSVGPath(ctx, category.iconPath, iconScale * 1.5);
 
-			ctx.restore();
+				ctx.restore();
+			}
 		});
 
 		// Cut out the center circle

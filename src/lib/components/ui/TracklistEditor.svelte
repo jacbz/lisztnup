@@ -378,7 +378,7 @@
 
 <Popup {visible} onClose={onCancel}>
 	<div
-		class="max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-2xl border-2 border-cyan-400 bg-gray-900 p-6 shadow-[0_0_40px_rgba(34,211,238,0.6)]"
+		class="max-h-[90vh] w-full max-w-5xl min-w-0 overflow-y-auto rounded-2xl border-2 border-cyan-400 bg-gray-900 p-6 shadow-[0_0_40px_rgba(34,211,238,0.6)] lg:min-w-5xl"
 	>
 		<h2 class="mb-6 text-2xl font-bold text-cyan-400">
 			{tracklist ? $_('tracklistEditor.title') : $_('tracklistEditor.createTitle')}
