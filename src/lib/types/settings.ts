@@ -18,11 +18,12 @@ export type ComposerFilter =
 	| { mode: 'topN'; count: number };
 
 export interface TracklistConfig {
-	categoryWeights: CategoryWeights | null;
-	composerFilter: ComposerFilter | null;
-	yearFilter: [number, number] | null; // [startYear, endYear]
-	workScoreRange: [number, number] | null; // [minScore, maxScore]
-	maxTracksFromSingleWork: number | null; // Maximum tracks to sample from a single work
+	categoryWeights?: CategoryWeights;
+	composerFilter?: ComposerFilter;
+	yearFilter?: [number, number]; // [startYear, endYear]
+	workScoreRange?: [number, number]; // [minScore, maxScore]
+	maxTracksFromSingleWork?: number; // Maximum tracks to sample from a single work
+	nameFilter?: string[]; // Filter works by name (supports regex when pattern starts and ends with /)
 }
 
 export interface Tracklist {
@@ -60,11 +61,7 @@ export const DEFAULT_MIN_WORK_SCORE = 2.3;
 export const DEFAULT_MAX_WORK_SCORE = 6.7;
 
 export const DEFAULT_TRACKLIST_CONFIG: TracklistConfig = {
-	categoryWeights: null,
-	composerFilter: null,
-	yearFilter: null,
-	workScoreRange: [DEFAULT_MIN_WORK_SCORE, DEFAULT_MAX_WORK_SCORE],
-	maxTracksFromSingleWork: null
+	workScoreRange: [DEFAULT_MIN_WORK_SCORE, DEFAULT_MAX_WORK_SCORE]
 };
 
 export const DEFAULT_SETTINGS: GameSettings = {

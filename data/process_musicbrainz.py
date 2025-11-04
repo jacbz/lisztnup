@@ -167,6 +167,10 @@ EXCLUDED_DEEZER_IDS: Set[int] = set([
     711024922
 ])
 
+EXCLUDED_WORKS: Set[str] = set([
+    "47fb07f5-d0dd-4107-9300-fa76c8a62b9d"
+])
+
 # ==============================================================================
 # --- Data Class Definitions ---
 # ==============================================================================
@@ -498,7 +502,7 @@ class MusicbrainzProcessor:
         filtered_map: Dict[str, List[FinalWork]] = {}
         for work_type, works in works_by_type.items():
             initial_count = len(works)
-            filtered_list = [work for work in works if work.score >= MINIMUM_WSS]
+            filtered_list = [work for work in works if work.score >= MINIMUM_WSS and work.gid not in EXCLUDED_WORKS]
             self.stats["works_dropped_by_min_wss"] += initial_count - len(filtered_list)
 
             filtered_list.sort(key=lambda w: w.score, reverse=True)

@@ -81,7 +81,6 @@ export class DeezerPlayer {
 				if (onComplete) onComplete();
 			} else {
 				this.audio.volume = startVolume + volumeDelta * progress;
-				console.log(`Fading volume: ${this.audio.volume.toFixed(2)}`);
 			}
 		}, stepDuration);
 	}

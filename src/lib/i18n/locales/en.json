@@ -75,6 +75,18 @@
 			"name": "Opera",
 			"description": "Famous operatic works and well-known arias."
 		},
+		"pianoconcerto": {
+			"name": "Piano Concertos",
+			"description": "Featuring the grandeur of piano concertos."
+		},
+		"violinconcerto": {
+			"name": "Violin Concertos",
+			"description": "Showcasing the brilliance of violin concertos."
+		},
+		"celloconcerto": {
+			"name": "Cello Concertos",
+			"description": "Exploring the depth of cello concertos."
+		},
 		"liszt": {
 			"name": "Lisztomania",
 			"description": "Lisznt’n up, will you?"
@@ -144,6 +156,10 @@
 		"workScoreRangeDesc": "Filter works by popularity score (higher = more popular)",
 		"maxTracksFromSingleWork": "Max Tracks from Single Work",
 		"maxTracksFromSingleWorkDesc": "Limit how many movements/parts to be included from large-scale works",
+		"nameFilter": "Work Name",
+		"nameFilterDesc": "Include only works whose names contain certain words or phrases. Wrap in slashes for advanced patterns (e.g., /symphony|concerto/ matches either word).",
+		"nameFilterPlaceholder": "Enter work name or /regex/",
+		"nameFilterAdd": "Add",
 		"preview": "Preview",
 		"previewComposers": "Composers",
 		"previewWorks": "Works",

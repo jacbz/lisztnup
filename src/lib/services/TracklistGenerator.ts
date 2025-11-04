@@ -65,12 +65,36 @@ export class TracklistGenerator {
 		}
 
 		// Step 3: Filter by work score range
-		if (config.workScoreRange !== null) {
+		if (config.workScoreRange) {
 			const [minScore, maxScore] = config.workScoreRange;
 			works = works.filter((work) => work.score >= minScore && work.score <= maxScore);
 		}
 
-		// Step 4: Filter by composer (include/exclude/topN)
+		// Step 4: Filter by work name
+		if (config.nameFilter && config.nameFilter.length > 0) {
+			works = works.filter((work) => {
+				const workName = work.name.toLowerCase();
+				// OR logic: match if ANY filter matches
+				return config.nameFilter!.some((filter) => {
+					// Check if filter is a regex pattern (starts and ends with /)
+					if (filter.startsWith('/') && filter.endsWith('/')) {
+						try {
+							const pattern = filter.slice(1, -1); // Remove leading and trailing /
+							const regex = new RegExp(pattern, 'i'); // Case-insensitive
+							return regex.test(work.name);
+						} catch {
+							// Invalid regex, treat as literal string
+							return workName.includes(filter.toLowerCase());
+						}
+					} else {
+						// Literal string match (case-insensitive)
+						return workName.includes(filter.toLowerCase());
+					}
+				});
+			});
+		}
+
+		// Step 5: Filter by composer (include/exclude/topN)
 		if (config.composerFilter) {
 			if (config.composerFilter.mode === 'include') {
 				// Only include specified composers
@@ -87,10 +111,10 @@ export class TracklistGenerator {
 						!config.composerFilter!.composers.includes(work.composer)
 				);
 			}
-			// Note: topN filtering happens in Step 6 after counting works
+			// Note: topN filtering happens in Step 7 after counting works
 		}
 
-		// Step 5: Build composer list and group works by composer
+		// Step 6: Build composer list and group works by composer
 		const composerSet = new Set<string>();
 		works.forEach((work) => {
 			composerSet.add(work.composer);
@@ -103,7 +127,7 @@ export class TracklistGenerator {
 		// Filter composers to those with works
 		let composers = this.data.composers.filter((c) => composerSet.has(c.gid));
 
-		// Step 6: Filter by top N composers
+		// Step 7: Filter by top N composers
 		if (config.composerFilter?.mode === 'topN') {
 			const topNCount = config.composerFilter.count;
 
@@ -132,8 +156,8 @@ export class TracklistGenerator {
 			});
 		}
 
-		// Step 7: Filter parts within each work by maxTracksFromSingleWork
-		if (config.maxTracksFromSingleWork !== null) {
+		// Step 8: Filter parts within each work by maxTracksFromSingleWork
+		if (config.maxTracksFromSingleWork !== undefined) {
 			works = works.map((work) => {
 				if (work.parts.length <= config.maxTracksFromSingleWork!) {
 					return work;

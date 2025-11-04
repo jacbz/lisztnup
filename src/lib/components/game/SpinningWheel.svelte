@@ -2,6 +2,7 @@
 	import type { GuessCategory } from '$lib/types';
 	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
+	import { extractPathFromSVG } from '$lib/utils';
 	import composerIcon from '$lib/assets/icons/composer.svg?raw';
 	import compositionIcon from '$lib/assets/icons/composition.svg?raw';
 	import eraIcon from '$lib/assets/icons/era.svg?raw';
@@ -21,12 +22,6 @@
 		onSpinEnd = () => {},
 		currentRoundIndex = 0
 	}: Props = $props();
-
-	// Extract path data from SVG strings
-	function extractPathFromSVG(svgString: string): string {
-		const pathMatch = svgString.match(/<path[^>]*d="([^"]*)"/);
-		return pathMatch && pathMatch[1] ? pathMatch[1] : '';
-	}
 
 	const categories: {
 		id: GuessCategory;

@@ -43,12 +43,17 @@
 	let yearFilterEnabled = $state(false);
 	let workScoreRangeEnabled = $state(true);
 	let maxTracksFromSingleWorkEnabled = $state(false);
+	let nameFilterEnabled = $state(false);
 
 	// Composer filter mode state
 	let composerFilterMode = $state<'include' | 'exclude' | 'topN'>('include');
 	let selectedComposers = $state<string[]>([]);
 	let topNCount = $state(50);
 	let composerSearchTerm = $state('');
+
+	// Name filter state
+	let nameFilterInput = $state('');
+	let nameFilters = $state<string[]>([]);
 
 	// Error state
 	let nameError = $state<string | null>(null);
@@ -80,13 +85,18 @@
 				config = JSON.parse(JSON.stringify(tracklist.config)); // Deep clone
 
 				// Set enabled flags
-				categoryWeightsEnabled = config.categoryWeights !== null;
-				workScoreRangeEnabled = config.workScoreRange !== null;
-				maxTracksFromSingleWorkEnabled = config.maxTracksFromSingleWork !== null;
-				yearFilterEnabled = config.yearFilter !== null;
+				categoryWeightsEnabled = config.categoryWeights !== undefined;
+				workScoreRangeEnabled = config.workScoreRange !== undefined;
+				maxTracksFromSingleWorkEnabled = config.maxTracksFromSingleWork !== undefined;
+				yearFilterEnabled = config.yearFilter !== undefined;
+				nameFilterEnabled = config.nameFilter !== undefined && config.nameFilter.length > 0;
+
+				// Name filter
+				nameFilters = config.nameFilter ? [...config.nameFilter] : [];
+				nameFilterInput = '';
 
 				// Composer filter
-				composerFilterEnabled = config.composerFilter !== null;
+				composerFilterEnabled = config.composerFilter !== undefined;
 				if (config.composerFilter) {
 					composerFilterMode = config.composerFilter.mode;
 					if (
@@ -108,9 +118,12 @@
 				yearFilterEnabled = false;
 				workScoreRangeEnabled = true;
 				maxTracksFromSingleWorkEnabled = false;
+				nameFilterEnabled = false;
 				composerFilterMode = 'include';
 				selectedComposers = [];
 				topNCount = 50;
+				nameFilters = [];
+				nameFilterInput = '';
 			}
 
 			updatePreview();
@@ -126,7 +139,9 @@
 			yearFilterEnabled,
 			workScoreRangeEnabled,
 			maxTracksFromSingleWorkEnabled,
-			JSON.stringify(config)
+			nameFilterEnabled,
+			JSON.stringify(config),
+			JSON.stringify(nameFilters)
 		];
 
 		if (visible) {
@@ -224,20 +239,40 @@
 	}
 
 	function buildCurrentConfig(): TracklistConfig {
-		const newConfig: TracklistConfig = {
-			categoryWeights: categoryWeightsEnabled ? config.categoryWeights : null,
-			composerFilter: composerFilterEnabled ? buildComposerFilter() : null,
-			yearFilter: yearFilterEnabled ? config.yearFilter : null,
-			workScoreRange: workScoreRangeEnabled ? config.workScoreRange : null,
-			maxTracksFromSingleWork: maxTracksFromSingleWorkEnabled
-				? config.maxTracksFromSingleWork
-				: null
-		};
+		const newConfig: TracklistConfig = {};
+
+		if (categoryWeightsEnabled && config.categoryWeights) {
+			newConfig.categoryWeights = config.categoryWeights;
+		}
+
+		if (composerFilterEnabled) {
+			const filter = buildComposerFilter();
+			if (filter) {
+				newConfig.composerFilter = filter;
+			}
+		}
+
+		if (yearFilterEnabled && config.yearFilter) {
+			newConfig.yearFilter = config.yearFilter;
+		}
+
+		if (workScoreRangeEnabled && config.workScoreRange) {
+			newConfig.workScoreRange = config.workScoreRange;
+		}
+
+		if (maxTracksFromSingleWorkEnabled && config.maxTracksFromSingleWork !== undefined) {
+			newConfig.maxTracksFromSingleWork = config.maxTracksFromSingleWork;
+		}
+
+		if (nameFilterEnabled && nameFilters.length > 0) {
+			newConfig.nameFilter = nameFilters;
+		}
+
 		return newConfig;
 	}
 
-	function buildComposerFilter(): ComposerFilter | null {
-		if (!composerFilterEnabled) return null;
+	function buildComposerFilter(): ComposerFilter | undefined {
+		if (!composerFilterEnabled) return undefined;
 
 		if (composerFilterMode === 'include') {
 			return { mode: 'include', composers: selectedComposers };
@@ -259,7 +294,7 @@
 		if (categoryWeightsEnabled) {
 			config.categoryWeights = config.categoryWeights || { ...DEFAULT_CATEGORY_WEIGHTS };
 		} else {
-			config.categoryWeights = null;
+			config.categoryWeights = undefined;
 		}
 	}
 
@@ -275,7 +310,7 @@
 		if (yearFilterEnabled) {
 			config.yearFilter = config.yearFilter || [1400, 2000];
 		} else {
-			config.yearFilter = null;
+			config.yearFilter = undefined;
 		}
 	}
 
@@ -287,7 +322,7 @@
 				DEFAULT_MAX_WORK_SCORE
 			];
 		} else {
-			config.workScoreRange = null;
+			config.workScoreRange = undefined;
 		}
 	}
 
@@ -296,7 +331,34 @@
 		if (maxTracksFromSingleWorkEnabled) {
 			config.maxTracksFromSingleWork = config.maxTracksFromSingleWork ?? 3;
 		} else {
-			config.maxTracksFromSingleWork = null;
+			config.maxTracksFromSingleWork = undefined;
+		}
+	}
+
+	function toggleNameFilter() {
+		nameFilterEnabled = !nameFilterEnabled;
+		if (!nameFilterEnabled) {
+			nameFilters = [];
+			nameFilterInput = '';
+		}
+	}
+
+	function addNameFilter() {
+		const trimmed = nameFilterInput.trim();
+		if (trimmed && !nameFilters.includes(trimmed)) {
+			nameFilters = [...nameFilters, trimmed];
+			nameFilterInput = '';
+		}
+	}
+
+	function removeNameFilter(filter: string) {
+		nameFilters = nameFilters.filter((f) => f !== filter);
+	}
+
+	function handleNameFilterKeydown(event: KeyboardEvent) {
+		if (event.key === 'Enter') {
+			event.preventDefault();
+			addNameFilter();
 		}
 	}
 
@@ -441,7 +503,7 @@
 								: $_('tracklistEditor.disabled')}
 						</button>
 					</div>
-					{#if workScoreRangeEnabled && config.workScoreRange !== null}
+					{#if workScoreRangeEnabled && config.workScoreRange}
 						<RangeSlider
 							bind:valueMin={config.workScoreRange[0]}
 							bind:valueMax={config.workScoreRange[1]}
@@ -664,6 +726,83 @@
 					{/if}
 				</div>
 
+				<!-- Name Filter -->
+				<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
+					<div class="mb-3 flex items-center justify-between">
+						<div>
+							<span class="font-semibold text-cyan-300">{$_('tracklistEditor.nameFilter')}</span>
+							<p class="text-xs text-gray-400">{$_('tracklistEditor.nameFilterDesc')}</p>
+						</div>
+						<button
+							type="button"
+							onclick={toggleNameFilter}
+							class="rounded-lg px-3 py-1 text-sm {nameFilterEnabled
+								? 'bg-cyan-500 text-white'
+								: 'bg-gray-700 text-gray-400'}"
+						>
+							{nameFilterEnabled ? $_('tracklistEditor.enabled') : $_('tracklistEditor.disabled')}
+						</button>
+					</div>
+					{#if nameFilterEnabled}
+						<div class="space-y-2">
+							<!-- Input field with add button -->
+							<div class="flex gap-2">
+								<input
+									type="text"
+									bind:value={nameFilterInput}
+									onkeydown={handleNameFilterKeydown}
+									placeholder={$_('tracklistEditor.nameFilterPlaceholder')}
+									class="flex-1 rounded-lg border-2 border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:border-cyan-400 focus:outline-none"
+								/>
+								<button
+									type="button"
+									onclick={addNameFilter}
+									disabled={!nameFilterInput.trim()}
+									class="rounded-lg bg-cyan-500 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-600 disabled:cursor-not-allowed disabled:opacity-50"
+								>
+									{$_('tracklistEditor.nameFilterAdd')}
+								</button>
+							</div>
+
+							<!-- Chips display -->
+							{#if nameFilters.length > 0}
+								<div class="flex flex-wrap gap-2">
+									{#each nameFilters as filter}
+										{@const isRegex = filter.startsWith('/') && filter.endsWith('/')}
+										{@const displayText = isRegex ? filter.slice(1, -1) : filter}
+										<div
+											class="flex items-center gap-2 rounded-full border-2 px-3 py-1 text-sm {isRegex
+												? 'border-purple-500 bg-purple-500/20 text-purple-300'
+												: 'border-cyan-500 bg-cyan-500/20 text-cyan-300'}"
+										>
+											<span class={isRegex ? 'font-mono text-xs' : ''}>{displayText}</span>
+											<button
+												type="button"
+												onclick={() => removeNameFilter(filter)}
+												class="hover:text-white"
+												aria-label="Remove filter"
+											>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													class="h-4 w-4"
+													viewBox="0 0 20 20"
+													fill="currentColor"
+												>
+													<path
+														fill-rule="evenodd"
+														d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+														clip-rule="evenodd"
+													/>
+												</svg>
+											</button>
+										</div>
+									{/each}
+								</div>
+							{/if}
+						</div>
+					{/if}
+				</div>
+
 				<!-- Max Tracks from Single Work -->
 				<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
 					<div class="mb-3 flex items-center justify-between">
@@ -687,7 +826,7 @@
 								: $_('tracklistEditor.disabled')}
 						</button>
 					</div>
-					{#if maxTracksFromSingleWorkEnabled && config.maxTracksFromSingleWork !== null}
+					{#if maxTracksFromSingleWorkEnabled && config.maxTracksFromSingleWork !== undefined}
 						<Slider
 							value={config.maxTracksFromSingleWork}
 							min={1}
