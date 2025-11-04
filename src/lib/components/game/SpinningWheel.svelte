@@ -309,18 +309,28 @@
 		selectedCategory = null;
 		onSpinStart();
 
+		// Add randomness factor (±10% variation)
+		const randomFactor = 0.9 + Math.random() * 0.2;
+		const adjustedVelocity = velocity * randomFactor;
+
 		// Physics-based spin with initial velocity
 		const friction = 0.98; // Smoother friction for longer, more natural spin
-		const minVelocity = 0.3; // Lower threshold for smoother final deceleration
-		let currentVelocity = velocity;
+		const minVelocity = 0.05; // Much lower threshold for gradual stop
+		let currentVelocity = adjustedVelocity;
 
 		const startTime = Date.now();
 
 		function animate() {
 			const elapsed = Date.now() - startTime;
 
-			// Apply friction
-			currentVelocity *= friction;
+			// Apply friction with gradual ease-out at the end
+			// When velocity is very low, apply even stronger friction for smooth stop
+			let appliedFriction = friction;
+			if (Math.abs(currentVelocity) < 1) {
+				// Gradually increase friction as we slow down
+				appliedFriction = friction - (1 - Math.abs(currentVelocity)) * 0.03;
+			}
+			currentVelocity *= appliedFriction;
 
 			// Update rotation
 			currentRotation += currentVelocity;
@@ -410,9 +420,10 @@
 		currentRotation = dragStartRotation + (currentAngle - dragStartAngle);
 		totalDragDistance += Math.abs(angleDiff);
 
-		// Calculate velocity
+		// Calculate velocity with mobile boost
 		const timeDiff = Math.max(currentTime - lastDragTime, 1);
-		dragVelocity = (angleDiff / timeDiff) * 16; // Scale to ~60fps
+		const baseVelocity = (angleDiff / timeDiff) * 16; // Scale to ~60fps
+		dragVelocity = baseVelocity * 2;
 
 		lastDragAngle = currentAngle;
 		lastDragTime = currentTime;
@@ -487,6 +498,44 @@
 			drawWheel();
 		}
 	}
+
+	function handleSpinTextClick(event: MouseEvent | TouchEvent) {
+		if (isSpinning || !showSpinText) return;
+
+		// Prevent the drag handler from interfering
+		event.stopPropagation();
+
+		// Check if click is near the center (where spin text is)
+		if (!canvas) return;
+
+		const rect = canvas.getBoundingClientRect();
+		const centerX = rect.left + rect.width / 2;
+		const centerY = rect.top + rect.height / 2;
+
+		let clientX: number, clientY: number;
+
+		if ('touches' in event && event.touches.length > 0) {
+			clientX = event.touches[0].clientX;
+			clientY = event.touches[0].clientY;
+		} else if ('clientX' in event) {
+			clientX = event.clientX;
+			clientY = event.clientY;
+		} else {
+			return;
+		}
+
+		const dx = clientX - centerX;
+		const dy = clientY - centerY;
+		const distance = Math.sqrt(dx * dx + dy * dy);
+		const centerCircleRadius = wheelSize * 0.16;
+
+		// Only trigger if clicked within the center circle
+		if (distance <= centerCircleRadius) {
+			// Trigger a random spin with velocity
+			const randomVelocity = (30 + Math.random() * 10) * (Math.random() > 0.5 ? 1 : -1);
+			spinWithVelocity(randomVelocity);
+		}
+	}
 </script>
 
 <div class="wheel-wrapper" style="width: {wheelSize}px; height: {wheelSize}px;">
@@ -498,6 +547,7 @@
 		onpointerup={handlePointerUp}
 		onpointercancel={handlePointerCancel}
 		onpointerleave={handlePointerUp}
+		onclick={handleSpinTextClick}
 		aria-label="Spin the wheel"
 	></canvas>
 
