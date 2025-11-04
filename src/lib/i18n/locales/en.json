@@ -185,16 +185,9 @@
 		"categories": {
 			"composer": "Composer",
 			"decade": "Decade",
-			"year": "Year",
+			"era": "Era",
 			"composition": "Composition",
-			"type": "Type"
+			"form": "Form"
 		}
-	},
-	"reveal": {
-		"composer": "Composer",
-		"work": "Work",
-		"part": "Part",
-		"type": "Type",
-		"years": "Years"
 	}
 }

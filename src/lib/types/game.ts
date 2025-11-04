@@ -1,4 +1,4 @@
-export type GuessCategory = 'composer' | 'decade' | 'year' | 'composition' | 'type';
+export type GuessCategory = 'composer' | 'decade' | 'era' | 'composition' | 'form';
 
 export type GameState = 'loading' | 'home' | 'settings' | 'generating' | 'game';
 
