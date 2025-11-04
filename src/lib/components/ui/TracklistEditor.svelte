@@ -480,8 +480,8 @@
 								<Slider
 									value={config.categoryWeights[category as keyof CategoryWeights]}
 									min={0}
-									max={100}
-									step={5}
+									max={10}
+									step={0.1}
 									label={$_(`settings.categories.${category}`)}
 									showValue={false}
 									onChange={(val) =>

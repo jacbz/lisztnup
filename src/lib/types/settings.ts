@@ -1,5 +1,5 @@
-/// These weights are multiplied with the number of works in each category (0-100, default 50)
-/// Because ballet has far fewer works, it has a default weight of 100 to compensate
+/// These weights are multiplied with the number of works in each category (0-10, default 1)
+/// E.g., 20 piano pieces (weight=1) vs 10 ballet (weight=1) -> piano is 2x as likely to be selected
 export interface CategoryWeights {
 	vocal: number;
 	chamber: number;
@@ -43,14 +43,14 @@ export interface GameSettings {
 
 // Default values for tracklist configuration
 export const DEFAULT_CATEGORY_WEIGHTS: CategoryWeights = {
-	vocal: 50,
-	chamber: 50,
-	orchestral: 50,
-	piano: 50,
-	concerto: 50,
-	opera: 50,
-	ballet: 30,
-	other: 30
+	vocal: 0.8,
+	chamber: 1,
+	orchestral: 1,
+	piano: 1,
+	concerto: 1,
+	opera: 1,
+	ballet: 1.2,
+	other: 0.8
 };
 
 // Work score range constants

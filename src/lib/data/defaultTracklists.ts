@@ -100,7 +100,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				vocal: 0,
 				chamber: 0,
 				orchestral: 0,
-				piano: 100,
+				piano: 10,
 				concerto: 0,
 				opera: 0,
 				ballet: 0,
@@ -124,7 +124,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				chamber: 0,
 				orchestral: 0,
 				piano: 0,
-				concerto: 100,
+				concerto: 10,
 				opera: 0,
 				ballet: 0,
 				other: 0
@@ -144,7 +144,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		config: {
 			categoryWeights: {
 				vocal: 0,
-				chamber: 100,
+				chamber: 10,
 				orchestral: 0,
 				piano: 0,
 				concerto: 0,
@@ -172,7 +172,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				piano: 0,
 				concerto: 0,
 				opera: 0,
-				ballet: 100,
+				ballet: 10,
 				other: 0
 			},
 			composerFilter: null,
@@ -194,7 +194,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				orchestral: 0,
 				piano: 0,
 				concerto: 0,
-				opera: 100,
+				opera: 10,
 				ballet: 0,
 				other: 0
 			},

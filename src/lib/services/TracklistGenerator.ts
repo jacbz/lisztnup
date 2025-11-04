@@ -1,4 +1,12 @@
-import type { LisztnupData, Tracklist, Track, Composer, Work, WorkCategory } from '$lib/types';
+import {
+	type LisztnupData,
+	type Tracklist,
+	type Track,
+	type Composer,
+	type Work,
+	type WorkCategory,
+	DEFAULT_CATEGORY_WEIGHTS
+} from '$lib/types';
 import { weightedRandom } from '$lib/utils/random';
 
 /**
@@ -185,11 +193,12 @@ export class TracklistGenerator {
 		// Build category list and weights
 		this.categories = Array.from(this.worksByCategory.keys());
 		this.categoryWeights = this.categories.map((category) => {
-			const weight = config.categoryWeights?.[category] ?? 50;
-			// Normalize to 0-1 range (50 = neutral)
-			return weight / 50;
+			const weight = (config.categoryWeights ?? DEFAULT_CATEGORY_WEIGHTS)[category] ?? 1;
+			const numWorksInCategory = this.worksByCategory.get(category)?.length || 0;
+			// Weight * number of works = effective sampling probability
+			// E.g., 20 piano pieces (weight=1) vs 10 ballet (weight=1) -> piano 2x as likely
+			return weight * numWorksInCategory;
 		});
-		console.log('Category and weights: ', this.categories, this.categoryWeights);
 	}
 
 	/**
@@ -205,7 +214,7 @@ export class TracklistGenerator {
 		// Step 1: Select category with weight
 		const categoryIndex = weightedRandom(
 			this.categories.map((_, i) => i),
-			(i) => this.categoryWeights[i] * this.worksByCategory.get(this.categories[i])!.length
+			(i) => this.categoryWeights[i]
 		);
 		const category = this.categories[categoryIndex];
 
