@@ -25,6 +25,9 @@ export class DeezerPlayer {
 	private currentTrackData: DeezerTrackData | null = null;
 	private volume: number = 1.0;
 	private trackLength: number = 20; // Default 20 seconds
+	private fadeIntervalId: number | null = null;
+	private readonly FADE_DURATION = 300; // Fade duration in milliseconds
+	private readonly FADE_STEPS = 30; // Number of steps in fade animation
 
 	/**
 	 * Sets the track length limit in seconds (5-30)
@@ -38,6 +41,49 @@ export class DeezerPlayer {
 	 */
 	getTrackLength(): number {
 		return this.trackLength;
+	}
+
+	/**
+	 * Cancels any ongoing fade animation
+	 */
+	private cancelFade(): void {
+		if (this.fadeIntervalId !== null) {
+			clearInterval(this.fadeIntervalId);
+			this.fadeIntervalId = null;
+		}
+	}
+
+	/**
+	 * Fades volume from current to target over FADE_DURATION
+	 */
+	private fadeVolume(targetVolume: number, onComplete?: () => void): void {
+		if (!this.audio) return;
+
+		this.cancelFade();
+
+		const startVolume = this.audio.volume;
+		const volumeDelta = targetVolume - startVolume;
+		const stepDuration = this.FADE_DURATION / this.FADE_STEPS;
+		let currentStep = 0;
+
+		this.fadeIntervalId = window.setInterval(() => {
+			if (!this.audio) {
+				this.cancelFade();
+				return;
+			}
+
+			currentStep++;
+			const progress = currentStep / this.FADE_STEPS;
+
+			if (progress >= 1) {
+				this.audio.volume = targetVolume;
+				this.cancelFade();
+				if (onComplete) onComplete();
+			} else {
+				this.audio.volume = startVolume + volumeDelta * progress;
+				console.log(`Fading volume: ${this.audio.volume.toFixed(2)}`);
+			}
+		}, stepDuration);
 	}
 
 	/**
@@ -113,14 +159,21 @@ export class DeezerPlayer {
 		}
 
 		this.audio = new Audio(this.currentTrackData.preview);
-		this.audio.volume = this.volume;
+		this.audio.volume = 0; // Start at 0 for fade in
 		this.audio.loop = false;
 
-		// Add event listener to enforce track length limit
+		// Add event listener to enforce track length limit with fade out
 		this.audio.addEventListener('timeupdate', () => {
-			if (this.audio && this.audio.currentTime >= this.trackLength) {
-				this.audio.pause();
-				this.audio.currentTime = this.trackLength;
+			if (this.audio && this.audio.currentTime >= this.trackLength - this.FADE_DURATION / 1000) {
+				// Start fade out before reaching the limit
+				if (!this.audio.paused && this.fadeIntervalId === null) {
+					this.fadeVolume(0, () => {
+						if (this.audio) {
+							this.audio.pause();
+							this.audio.currentTime = this.trackLength;
+						}
+					});
+				}
 			}
 		});
 	}
@@ -135,14 +188,24 @@ export class DeezerPlayer {
 		}
 
 		try {
+			// Start from beginning if at the end
+			if (this.audio.currentTime >= this.trackLength) {
+				this.audio.currentTime = 0;
+			}
+
+			// Set volume to 0 before playing
+			this.audio.volume = 0;
 			await this.audio.play();
+
+			// Fade in to target volume
+			this.fadeVolume(this.volume);
 		} catch (error) {
 			console.error('DeezerPlayer: Error playing track', error);
 		}
 	}
 
 	/**
-	 * Pauses the current track
+	 * Pauses the current track (no fade out - immediate stop)
 	 */
 	pause(): void {
 		if (!this.audio) {
@@ -150,7 +213,9 @@ export class DeezerPlayer {
 			return;
 		}
 
+		this.cancelFade();
 		this.audio.pause();
+		this.audio.volume = this.volume; // Restore volume for next play
 	}
 
 	/**
@@ -170,7 +235,8 @@ export class DeezerPlayer {
 	 */
 	setVolume(volume: number): void {
 		this.volume = Math.max(0, Math.min(1, volume));
-		if (this.audio) {
+		// Only update audio volume if not currently fading
+		if (this.audio && this.fadeIntervalId === null) {
 			this.audio.volume = this.volume;
 		}
 	}
@@ -238,6 +304,7 @@ export class DeezerPlayer {
 	 * Cleanup resources
 	 */
 	destroy(): void {
+		this.cancelFade();
 		if (this.audio) {
 			this.audio.pause();
 			this.audio.src = '';
