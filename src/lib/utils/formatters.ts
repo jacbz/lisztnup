@@ -66,6 +66,63 @@ const PERIODS = [
 ];
 
 /**
+ * Manual overrides for specific composers whose music fits into
+ * specific genres or movements not captured by standard period classification
+ * Key is composer name in sort format (Last, First)
+ */
+const COMPOSER_ERA_OVERRIDES: Record<string, string> = {
+	// Ragtime & Jazz Age
+	'Joplin, Scott': 'Ragtime',
+	'Gershwin, George': 'American Jazz / Classical Fusion',
+
+	// Impressionism
+	'Satie, Erik': 'Impressionism',
+	'Debussy, Claude': 'Impressionism',
+	'Ravel, Maurice': 'Impressionism',
+
+	// Les Six & Neo-Classical
+	'Poulenc, Francis': 'Les Six / Neo-Classical',
+	'Milhaud, Darius': 'Les Six / Modernism',
+
+	// Second Viennese School / Atonality
+	'Schönberg, Arnold': 'Second Viennese School / Atonality',
+	'Berg, Alban': 'Second Viennese School / Atonality',
+	'Webern, Anton': 'Second Viennese School / Atonality',
+
+	// Modernism & Neoclassicism
+	'Stravinsky, Igor Fyodorovitch': 'Modernism / Neoclassicism',
+	'Bartók, Béla': 'Modernism / Ethnomusicology',
+	'Prokofiev, Sergei Sergeyevich': 'Russian Modernism',
+	'Shostakovich, Dmitri Dmitrievich': 'Soviet Modernism',
+
+	// American Modernism
+	'Bernstein, Leonard': 'American Modernism',
+	'Copland, Aaron': 'American Modernism',
+	'Ives, Charles': 'American Experimental',
+	'Barber, Samuel': 'American Neo-Romanticism',
+	'Cage, John': 'American Avant-Garde',
+	'Adams, John': 'Minimalism / Post-Minimalism',
+
+	// Minimalism
+	'Glass, Philip': 'Minimalism',
+	'Reich, Steve': 'Minimalism',
+	'Pärt, Arvo': 'Holy Minimalism',
+
+	// Avant-Garde & Experimental
+	'Messiaen, Olivier': 'Mystical Modernism',
+	'Ligeti, György': 'Avant-Garde / Micropolyphony',
+	'Penderecki, Krzysztof': 'Polish Avant-Garde',
+
+	// Late Romantic / National Schools
+	'Rachmaninoff, Sergei Vasilievich': 'Late Romantic',
+	'Scriabin, Alexander Nikolayevich': 'Late Romantic / Mysticism',
+	'Sibelius, Jean': 'Late Romantic / Finnish Nationalism',
+	'Nielsen, Carl': 'Late Romantic / Nordic Modernism',
+	'Elgar, Edward': 'Late Romantic / English Renaissance',
+	'Vaughan Williams, Ralph': 'English Pastoral / Folk Revival'
+};
+
+/**
  * Gets the musical era/period label for a given year
  * @param year - The year to get the era for
  * @returns The era label, or empty string if year is null/undefined
@@ -82,15 +139,23 @@ export function getEra(year: number | null | undefined): string {
 
 /**
  * Gets the musical era/period label for a work based on its composition year range
- * Uses the begin_year if available, otherwise end_year
+ * and composer. Checks for manual overrides first, then falls back to year-based periods.
+ * Uses the end_year if available, otherwise begin_year
  * @param beginYear - The start year of composition
  * @param endYear - The end year of composition
+ * @param composerName - The composer's sort name (e.g., "Joplin, Scott") for override lookup
  * @returns The era label, or empty string if no valid year
  */
 export function getWorkEra(
 	beginYear: number | null | undefined,
-	endYear: number | null | undefined
+	endYear: number | null | undefined,
+	composerName?: string
 ): string {
+	if (composerName && COMPOSER_ERA_OVERRIDES[composerName]) {
+		return COMPOSER_ERA_OVERRIDES[composerName];
+	}
+
+	// Fall back to year-based period
 	const year = endYear ?? beginYear;
 	return getEra(year);
 }

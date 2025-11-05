@@ -92,7 +92,8 @@
 
 	const era = $derived.by(() => {
 		const { begin_year, end_year } = track?.work ?? {};
-		return getWorkEra(begin_year, end_year);
+		const composerName = track?.composer.name;
+		return getWorkEra(begin_year, end_year, composerName);
 	});
 
 	function handleClick() {

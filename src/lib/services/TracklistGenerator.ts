@@ -404,13 +404,13 @@ export class TracklistGenerator {
 
 		const yearRange = maxYear - minYear;
 
-		// Disable 'decade' if time range less than 20 years
-		if (yearRange < 20) {
+		// Disable 'decade' if time range less than 30 years
+		if (yearRange < 30) {
 			disabled.push('decade');
 		}
 
-		// Disable 'era' if time range less than 50 years
-		if (yearRange < 50) {
+		// Disable 'era' if time range less than 100 years for maxYear after 1800, or 200 years for maxYear before 1800
+		if ((maxYear > 1800 && yearRange < 100) || (maxYear <= 1800 && yearRange < 200)) {
 			disabled.push('era');
 		}
 

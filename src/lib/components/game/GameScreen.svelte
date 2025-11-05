@@ -111,7 +111,29 @@
 		}
 	}
 
-	function handleCategorySelected(category: GuessCategory) {
+	async function handleCategorySelected(category: GuessCategory) {
+		// Check if category requires year data and current track has valid years
+		if ((category === 'era' || category === 'decade') && currentTrack) {
+			const hasValidYears =
+				currentTrack.work.begin_year != null || currentTrack.work.end_year != null;
+
+			if (!hasValidYears) {
+				// Current track doesn't have year data, need to sample a new one
+				console.warn('Track missing year data for category:', category, currentTrack);
+
+				// Remove the invalid track from the tracklist
+				tracklist.update((t) => t.slice(0, -1));
+
+				// Sample and preload a new track
+				await sampleAndPreloadTrack();
+
+				// The category will be set after the new track is loaded
+				// We need to recursively call this function with the new track
+				await handleCategorySelected(category);
+				return;
+			}
+		}
+
 		currentRound.update((state) => ({
 			...state,
 			category
@@ -337,13 +359,6 @@
 			{@const categoryDef = getCategoryDefinition($currentRound.category)}
 			{#if categoryDef}
 				{@const positions = [
-					{
-						name: 'top',
-						containerClass: 'absolute left-1/2 top-4 -translate-x-1/2',
-						innerTransform: 'rotate(180deg)',
-						hideOnNarrow: false,
-						flyParams: { y: -100, duration: 300 }
-					},
 					{
 						name: 'bottom',
 						containerClass: 'absolute bottom-4 left-1/2 -translate-x-1/2',
