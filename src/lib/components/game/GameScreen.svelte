@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
+	import { fly } from 'svelte/transition';
 	import type { GuessCategory, Track } from '$lib/types';
 	import type { TracklistGenerator } from '$lib/services';
 	import { tracklist, currentRound, nextRound as nextRoundFn, resetGame, toast } from '$lib/stores';
@@ -10,6 +11,7 @@
 	import Dialog from '../ui/Dialog.svelte';
 	import SettingsIcon from 'lucide-svelte/icons/settings';
 	import { _ } from 'svelte-i18n';
+	import { getCategoryDefinition } from '$lib/data/categories';
 
 	interface Props {
 		generator: TracklistGenerator;
@@ -29,6 +31,29 @@
 	let showInGameSettings = $state(false);
 	let showQuitDialog = $state(false);
 	let preloadedTrackIndex = $state(-1); // Index of the preloaded track
+
+	// Track when to show category displays
+	let showCategoryDisplay = $state(false);
+	let isAnimatingOut = $state(false);
+
+	// Update showCategoryDisplay based on game state
+	$effect(() => {
+		const shouldShow =
+			$currentRound.category && !$currentRound.isRevealed && !$currentRound.isSpinning;
+
+		if (shouldShow) {
+			showCategoryDisplay = true;
+			isAnimatingOut = false;
+		} else if (showCategoryDisplay) {
+			isAnimatingOut = true;
+			const timer = setTimeout(() => {
+				showCategoryDisplay = false;
+				isAnimatingOut = false;
+			}, 300); // Match the transition duration
+
+			return () => clearTimeout(timer);
+		}
+	});
 
 	onMount(() => {
 		// Sample and preload first track
@@ -308,16 +333,66 @@
 		</div>
 
 		<!-- Category Display (shown briefly when wheel stops) -->
-		{#if $currentRound.category && !$currentRound.isRevealed && !$currentRound.isSpinning}
-			<div
-				class="absolute bottom-12 left-1/2 -translate-x-1/2 rounded-2xl border-2 border-cyan-400 bg-gray-900/90 px-8 py-4 backdrop-blur-sm"
-			>
-				<p class="mb-1 text-sm font-semibold tracking-wider text-cyan-400 uppercase">
-					{$_('game.guessCategory', {
-						values: { category: $_(`game.categories.${$currentRound.category}`) }
-					})}
-				</p>
-			</div>
+		{#if (showCategoryDisplay || isAnimatingOut) && $currentRound.category}
+			{@const categoryDef = getCategoryDefinition($currentRound.category)}
+			{#if categoryDef}
+				{@const positions = [
+					{
+						name: 'top',
+						containerClass: 'absolute left-1/2 top-4 -translate-x-1/2',
+						innerTransform: 'rotate(180deg)',
+						hideOnNarrow: false,
+						flyParams: { y: -100, duration: 300 }
+					},
+					{
+						name: 'bottom',
+						containerClass: 'absolute bottom-4 left-1/2 -translate-x-1/2',
+						innerTransform: '',
+						hideOnNarrow: false,
+						flyParams: { y: 100, duration: 300 }
+					},
+					{
+						name: 'left',
+						containerClass: 'absolute left-4 top-1/2 -translate-y-1/2',
+						innerTransform: 'translateX(-25%) rotate(90deg)',
+						hideOnNarrow: true,
+						flyParams: { x: -100, duration: 300 }
+					},
+					{
+						name: 'right',
+						containerClass: 'absolute right-4 top-1/2 -translate-y-1/2',
+						innerTransform: 'translateX(25%) rotate(-90deg)',
+						hideOnNarrow: true,
+						flyParams: { x: 100, duration: 300 }
+					}
+				]}
+
+				{#each positions as position (position.name)}
+					{#if !isAnimatingOut}
+						<div
+							class="{position.containerClass} {position.hideOnNarrow
+								? 'hidden lg:block'
+								: ''} select-none"
+							in:fly={position.flyParams}
+							out:fly={position.flyParams}
+						>
+							<div
+								class="rounded-2xl border-4 px-12 py-6 backdrop-blur-md"
+								style="background: linear-gradient(135deg, {categoryDef.color1}, {categoryDef.color2}); 
+									   border-color: {categoryDef.color2};
+									   box-shadow: 0 0 40px {categoryDef.glowColor};
+									   transform: {position.innerTransform};"
+							>
+								<p class="text-3xl font-bold tracking-wider text-white uppercase drop-shadow-lg">
+									{$_('game.guessCategory', {
+										values: { category: $_(`game.categories.${$currentRound.category}`) }
+									})}
+								</p>
+							</div>
+						</div>
+					{/if}
+				{/each}
+			{/if}
 		{/if}
 	{/if}
 </div>

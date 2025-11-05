@@ -13,7 +13,10 @@ export function formatComposerName(sortName: string): string {
 /**
  * Formats a year range for display
  */
-export function formatYearRange(beginYear?: number, endYear?: number): string {
+export function formatYearRange(
+	beginYear: number | null | undefined,
+	endYear: number | null | undefined
+): string {
 	if (!beginYear && !endYear) return '';
 	if (!endYear || beginYear === endYear) return String(beginYear ?? endYear);
 	if (!beginYear) return String(endYear);
@@ -23,7 +26,7 @@ export function formatYearRange(beginYear?: number, endYear?: number): string {
 /**
  * Formats a composer's lifespan
  */
-export function formatLifespan(birthYear?: number, deathYear?: number): string {
+export function formatLifespan(birthYear: number | null, deathYear: number | null): string {
 	if (!birthYear && !deathYear) return '';
 	if (!deathYear) return `* ${birthYear}`;
 	if (!birthYear) return `† ${deathYear}`;

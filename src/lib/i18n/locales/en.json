@@ -13,10 +13,6 @@
 		"tracklist": "Tracklist"
 	},
 	"settings": {
-		"title": "Settings",
-		"back": "Back",
-		"save": "Save Settings",
-		"reset": "Reset to Default",
 		"numberOfTracks": "Number of Tracks",
 		"language": "Language",
 		"presetInfo": {
@@ -203,7 +199,7 @@
 		"spin": "Spin!",
 		"play": "Play",
 		"pause": "Pause",
-		"guessCategory": "Guess: {category}",
+		"guessCategory": "{category}",
 		"reveal": "Reveal Answer",
 		"nextRound": "Next Round",
 		"gameOver": "Game Over!",
