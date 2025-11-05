@@ -1,4 +1,4 @@
-import { MAX_WORK_SCORE, type Tracklist } from '$lib/types';
+import { MAX_WORK_SCORE, MIN_WORK_SCORE, type Tracklist } from '$lib/types';
 import difficultyVeryEasy from '$lib/assets/icons/difficulty-veryeasy.svg?raw';
 import difficultyEasy from '$lib/assets/icons/difficulty-easy.svg?raw';
 import difficultyMedium from '$lib/assets/icons/difficulty-medium.svg?raw';
@@ -18,8 +18,8 @@ import starIcon from '$lib/assets/icons/star.svg?raw';
 export const DEFAULT_TRACKLISTS: Tracklist[] = [
 	// Difficulty-based tracklists
 	{
-		name: 'tracklists.veryeasy.name',
-		description: 'tracklists.veryeasy.description',
+		name: 'tracklists.beginner.name',
+		description: 'tracklists.beginner.description',
 		isDefault: true,
 		icon: difficultyVeryEasy,
 		category: 'difficulty',
@@ -33,8 +33,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		}
 	},
 	{
-		name: 'tracklists.easy.name',
-		description: 'tracklists.easy.description',
+		name: 'tracklists.intermediate.name',
+		description: 'tracklists.intermediate.description',
 		isDefault: true,
 		icon: difficultyEasy,
 		category: 'difficulty',
@@ -48,8 +48,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		}
 	},
 	{
-		name: 'tracklists.medium.name',
-		description: 'tracklists.medium.description',
+		name: 'tracklists.skilled.name',
+		description: 'tracklists.skilled.description',
 		isDefault: true,
 		icon: difficultyMedium,
 		category: 'difficulty',
@@ -63,8 +63,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		}
 	},
 	{
-		name: 'tracklists.hard.name',
-		description: 'tracklists.hard.description',
+		name: 'tracklists.advanced.name',
+		description: 'tracklists.advanced.description',
 		isDefault: true,
 		icon: difficultyHard,
 		category: 'difficulty',
@@ -78,12 +78,32 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		}
 	},
 	{
-		name: 'tracklists.extreme.name',
-		description: 'tracklists.extreme.description',
+		name: 'tracklists.expert.name',
+		description: 'tracklists.expert.description',
 		isDefault: true,
 		icon: difficultyExtreme,
 		category: 'difficulty',
+		config: {
+			workScoreRange: [3, MAX_WORK_SCORE]
+		}
+	},
+	{
+		name: 'tracklists.virtuoso.name',
+		description: 'tracklists.virtuoso.description',
+		isDefault: true,
+		icon: starIcon,
+		category: 'difficulty',
 		config: {}
+	},
+	{
+		name: 'tracklists.cadenza.name',
+		description: 'tracklists.cadenza.description',
+		isDefault: true,
+		icon: starIcon,
+		category: 'difficulty',
+		config: {
+			workScoreRange: [MIN_WORK_SCORE, 3]
+		}
 	},
 	// Category-based tracklists
 	{

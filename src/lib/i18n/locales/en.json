@@ -35,25 +35,33 @@
 		}
 	},
 	"tracklists": {
-		"veryeasy": {
-			"name": "Very Easy",
-			"description": "Familiar, instantly recognizable pieces."
+		"beginner": {
+			"name": "Beginner",
+			"description": "A gentle overture of timeless, familiar masterpieces."
 		},
-		"easy": {
-			"name": "Easy",
-			"description": "Familiar classics and well-known favorites."
+		"intermediate": {
+			"name": "Intermediate",
+			"description": "Broadens the repertoire with beloved concert pieces."
 		},
-		"medium": {
-			"name": "Medium",
-			"description": "Popular works with some lesser-known pieces."
+		"skilled": {
+			"name": "Skilled",
+			"description": "A balanced mix of audience favorites and refined works."
 		},
-		"hard": {
-			"name": "Hard",
-			"description": "A mix of well-known and more obscure works."
+		"advanced": {
+			"name": "Advanced",
+			"description": "Enter the concert hall of deeper, more intricate compositions."
 		},
-		"extreme": {
-			"name": "Extreme",
-			"description": "Includes obscure, rarely heard works for advanced listeners."
+		"expert": {
+			"name": "Expert",
+			"description": "Test your ear with sophisticated and lesser-known works."
+		},
+		"virtuoso": {
+			"name": "Virtuoso",
+			"description": "The complete collection — from iconic to obscure."
+		},
+		"cadenza": {
+			"name": "Cadenza",
+			"description": "For the true connoisseur seeking the ultimate challenge – no popular hits, only the rare and refined."
 		},
 		"piano": {
 			"name": "Piano",
@@ -157,7 +165,7 @@
 		"maxTracksFromSingleWork": "Max Tracks from Single Work",
 		"maxTracksFromSingleWorkDesc": "Limit how many movements/parts to be included from large-scale works",
 		"nameFilter": "Work Name",
-		"nameFilterDesc": "Include only works whose names contain certain words or phrases. Wrap in slashes for advanced patterns (e.g., /symphony|concerto/ matches either word).",
+		"nameFilterDesc": "Include only works whose names contain certain words or phrases (case-insensitive). Wrap in slashes for advanced patterns (e.g., /symphony|concerto/ matches either word).",
 		"nameFilterPlaceholder": "Enter work name or /regex/",
 		"nameFilterAdd": "Add",
 		"preview": "Preview",
