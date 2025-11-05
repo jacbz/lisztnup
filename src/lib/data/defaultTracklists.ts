@@ -28,7 +28,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				mode: 'topN',
 				count: 30
 			},
-			workScoreRange: [5.4, MAX_WORK_SCORE],
+			workScoreRange: [5.3, MAX_WORK_SCORE],
 			maxTracksFromSingleWork: 1
 		}
 	},

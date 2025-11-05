@@ -160,7 +160,8 @@ EXCLUDED_COMPOSERS: Set[str] = set([
     "Anderson, Leroy",
     "Goldsmith, Jerry",
     "Newman, Randy",
-    "Jarre, Maurice"
+    "Jarre, Maurice",
+    "Mills, Irving"
 ])
 
 EXCLUDED_DEEZER_IDS: Set[int] = set([
@@ -168,7 +169,7 @@ EXCLUDED_DEEZER_IDS: Set[int] = set([
 ])
 
 EXCLUDED_WORKS: Set[str] = set([
-    "47fb07f5-d0dd-4107-9300-fa76c8a62b9d"
+    "bf57c435-6ce0-3d57-ab04-e2a9179b178c"
 ])
 
 # ==============================================================================

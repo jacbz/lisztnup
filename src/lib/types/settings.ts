@@ -56,9 +56,9 @@ export const DEFAULT_CATEGORY_WEIGHTS: CategoryWeights = {
 
 // Work score range constants
 export const MIN_WORK_SCORE = 2.3;
-export const MAX_WORK_SCORE = 6.7;
+export const MAX_WORK_SCORE = 6.3;
 export const DEFAULT_MIN_WORK_SCORE = 2.3;
-export const DEFAULT_MAX_WORK_SCORE = 6.7;
+export const DEFAULT_MAX_WORK_SCORE = 6.3;
 
 export const DEFAULT_TRACKLIST_CONFIG: TracklistConfig = {
 	workScoreRange: [DEFAULT_MIN_WORK_SCORE, DEFAULT_MAX_WORK_SCORE]
