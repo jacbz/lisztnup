@@ -9,8 +9,8 @@ export interface Work {
 	composer: string; // Composer GID
 	name: string;
 	type: string; // e.g., "ballet", "piano", etc.
-	begin_year: number;
-	end_year: number;
+	begin_year: number | null;
+	end_year: number | null;
 	score: number; // Weight for the work
 	parts: Part[];
 }

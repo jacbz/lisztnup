@@ -20,6 +20,7 @@ export class TracklistGenerator {
 	// Filtered and weighted data pools
 	private filteredWorks: Work[] = [];
 	private filteredComposers: Composer[] = [];
+	private composerMap: Map<string, Composer> = new Map();
 	private worksByComposer: Map<string, Work[]> = new Map();
 	private worksByCategory: Map<WorkCategory, Work[]> = new Map();
 	private composersByCategory: Map<WorkCategory, Composer[]> = new Map();
@@ -31,6 +32,9 @@ export class TracklistGenerator {
 	constructor(data: LisztnupData, tracklist: Tracklist) {
 		this.data = data;
 		this.tracklist = tracklist;
+		this.data.composers.forEach((composer) => {
+			this.composerMap.set(composer.gid, composer);
+		});
 		this.filterData();
 	}
 
@@ -61,10 +65,17 @@ export class TracklistGenerator {
 		// Step 2: Filter by year range
 		if (config.yearFilter) {
 			const [startYear, endYear] = config.yearFilter;
-			works = works.filter((work) => work.begin_year >= startYear && work.end_year <= endYear);
-		}
+			works = works.filter((work) => {
+				const composer = this.composerMap.get(work.composer);
+				if (!composer) return false;
 
-		// Step 3: Filter by work score range
+				// Use composer birth/death years as fallback if work years are null
+				const workBeginYear = work.begin_year ?? composer.birth_year;
+				const workEndYear = work.end_year ?? composer.death_year ?? new Date().getFullYear();
+
+				return workBeginYear >= startYear && workEndYear <= endYear;
+			});
+		} // Step 3: Filter by work score range
 		if (config.workScoreRange) {
 			const [minScore, maxScore] = config.workScoreRange;
 			works = works.filter((work) => work.score >= minScore && work.score <= maxScore);
