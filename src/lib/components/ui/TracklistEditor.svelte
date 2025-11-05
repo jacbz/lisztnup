@@ -44,6 +44,7 @@
 	let workScoreRangeEnabled = $state(true);
 	let maxTracksFromSingleWorkEnabled = $state(false);
 	let nameFilterEnabled = $state(false);
+	let enablePopularityWeighting = $state(true);
 
 	// Composer filter mode state
 	let composerFilterMode = $state<'include' | 'exclude' | 'topN'>('include');
@@ -90,6 +91,7 @@
 				maxTracksFromSingleWorkEnabled = config.maxTracksFromSingleWork !== undefined;
 				yearFilterEnabled = config.yearFilter !== undefined;
 				nameFilterEnabled = config.nameFilter !== undefined && config.nameFilter.length > 0;
+				enablePopularityWeighting = config.enablePopularityWeighting ?? true;
 
 				// Name filter
 				nameFilters = config.nameFilter ? [...config.nameFilter] : [];
@@ -119,6 +121,7 @@
 				workScoreRangeEnabled = true;
 				maxTracksFromSingleWorkEnabled = false;
 				nameFilterEnabled = false;
+				enablePopularityWeighting = true;
 				composerFilterMode = 'include';
 				selectedComposers = [];
 				topNCount = 50;
@@ -140,6 +143,7 @@
 			workScoreRangeEnabled,
 			maxTracksFromSingleWorkEnabled,
 			nameFilterEnabled,
+			enablePopularityWeighting,
 			JSON.stringify(config),
 			JSON.stringify(nameFilters)
 		];
@@ -267,6 +271,9 @@
 		if (nameFilterEnabled && nameFilters.length > 0) {
 			newConfig.nameFilter = nameFilters;
 		}
+
+		// Always include enablePopularityWeighting (defaults to true)
+		newConfig.enablePopularityWeighting = enablePopularityWeighting;
 
 		return newConfig;
 	}
@@ -837,6 +844,31 @@
 							onChange={(val) => (config.maxTracksFromSingleWork = val)}
 						/>
 					{/if}
+				</div>
+
+				<!-- Popularity Weighting -->
+				<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
+					<div class="flex items-center justify-between">
+						<div>
+							<span class="font-semibold text-cyan-300"
+								>{$_('tracklistEditor.enablePopularityWeighting')}</span
+							>
+							<p class="text-xs text-gray-400">
+								{$_('tracklistEditor.enablePopularityWeightingDesc')}
+							</p>
+						</div>
+						<button
+							type="button"
+							onclick={() => (enablePopularityWeighting = !enablePopularityWeighting)}
+							class="rounded-lg px-3 py-1 text-sm {enablePopularityWeighting
+								? 'bg-cyan-500 text-white'
+								: 'bg-gray-700 text-gray-400'}"
+						>
+							{enablePopularityWeighting
+								? $_('tracklistEditor.enabled')
+								: $_('tracklistEditor.disabled')}
+						</button>
+					</div>
 				</div>
 			</div>
 

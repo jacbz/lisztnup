@@ -100,7 +100,7 @@
 			"description": "Liszt’n up, will you?"
 		},
 		"bach": {
-			"name": "Bach to Basics",
+			"name": "Bach to the Future",
 			"description": "Where every fugue finds its groove."
 		},
 		"chopin": {
@@ -168,6 +168,8 @@
 		"nameFilterDesc": "Include only works whose names contain certain words or phrases (case-insensitive). Wrap in slashes for advanced patterns (e.g., /symphony|concerto/ matches either word).",
 		"nameFilterPlaceholder": "Enter work name or /regex/",
 		"nameFilterAdd": "Add",
+		"enablePopularityWeighting": "Popularity Weighting",
+		"enablePopularityWeightingDesc": "Weight track selection by popularity scores. When enabled, more popular works and recordings are more likely to be selected. Disable for completely random selection.",
 		"preview": "Preview",
 		"previewComposers": "Composers",
 		"previewWorks": "Works",

@@ -173,6 +173,16 @@ export class TracklistGenerator {
 					return work;
 				}
 
+				if (config.maxTracksFromSingleWork == 1) {
+					// If all scores are >97, just take the first part
+					if (work.parts.every((part) => part.score > 97)) {
+						return {
+							...work,
+							parts: [work.parts[0]]
+						};
+					}
+				}
+
 				// Sort parts by score (highest first)
 				const sortedParts = [...work.parts].sort((a, b) => b.score - a.score);
 
@@ -284,10 +294,11 @@ export class TracklistGenerator {
 			return this.sample();
 		}
 
-		// Step 4: Select work with score weighting
+		// Step 4: Select work with optional score weighting
+		const usePopularityWeighting = this.tracklist.config.enablePopularityWeighting ?? true;
 		const workIndex = weightedRandom(
 			composerWorks.map((_, i) => i),
-			(i) => composerWorks[i].score
+			(i) => (usePopularityWeighting ? composerWorks[i].score : 1)
 		);
 		const work = composerWorks[workIndex];
 
@@ -307,10 +318,10 @@ export class TracklistGenerator {
 			return this.sample();
 		}
 
-		// Step 6: Select part with score weighting and POP it
+		// Step 6: Select part with optional score weighting and POP it
 		const partIndex = weightedRandom(
 			work.parts.map((_, i) => i),
-			(i) => work.parts[i].score
+			(i) => (usePopularityWeighting ? work.parts[i].score : 1)
 		);
 		const part = work.parts[partIndex];
 		work.parts.splice(partIndex, 1);

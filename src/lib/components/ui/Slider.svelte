@@ -31,11 +31,15 @@
 </script>
 
 <div class="slider-container">
-	{#if label}
+	{#if label || showValue}
 		<div class="mb-3 flex items-center justify-between">
-			<span class="font-semibold text-cyan-400">{label}</span>
+			{#if label}
+				<span class="font-semibold text-cyan-400">{label}</span>
+			{/if}
 			{#if showValue}
-				<span class="text-xl font-bold text-white">{value}{valueSuffix}</span>
+				<span class="text-xl font-bold text-white {!label ? 'mx-auto' : ''}"
+					>{value}{valueSuffix}</span
+				>
 			{/if}
 		</div>
 	{/if}

@@ -28,7 +28,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				mode: 'topN',
 				count: 30
 			},
-			workScoreRange: [5.3, MAX_WORK_SCORE],
+			workScoreRange: [5.2, MAX_WORK_SCORE],
 			maxTracksFromSingleWork: 1
 		}
 	},
@@ -84,7 +84,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyExtreme,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [3, MAX_WORK_SCORE]
+			workScoreRange: [3, MAX_WORK_SCORE],
+			enablePopularityWeighting: false
 		}
 	},
 	{
@@ -93,7 +94,9 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		isDefault: true,
 		icon: starIcon,
 		category: 'difficulty',
-		config: {}
+		config: {
+			enablePopularityWeighting: false
+		}
 	},
 	{
 		name: 'tracklists.cadenza.name',
@@ -102,7 +105,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: starIcon,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [MIN_WORK_SCORE, 3]
+			workScoreRange: [MIN_WORK_SCORE, 3],
+			enablePopularityWeighting: false
 		}
 	},
 	// Category-based tracklists
