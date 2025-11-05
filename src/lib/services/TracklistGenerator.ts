@@ -368,4 +368,52 @@ export class TracklistGenerator {
 			works: this.filteredWorks
 		};
 	}
+
+	/**
+	 * Determines which game categories should be disabled based on filtered data
+	 * Returns an array of GuessCategory values that should be disabled
+	 */
+	getDisabledCategories(): import('$lib/types').GuessCategory[] {
+		const disabled: import('$lib/types').GuessCategory[] = [];
+
+		// Disable 'composer' if only one composer
+		if (this.filteredComposers.length <= 1) {
+			disabled.push('composer');
+		}
+
+		// Disable 'form' if only one work category
+		if (this.worksByCategory.size <= 1) {
+			disabled.push('form');
+		}
+
+		// Calculate year range from all works
+		let minYear = Infinity;
+		let maxYear = -Infinity;
+
+		this.filteredWorks.forEach((work) => {
+			const composer = this.composerMap.get(work.composer);
+			if (!composer) return;
+
+			// Use work years if available, otherwise fall back to composer years
+			const workBeginYear = work.begin_year ?? composer.birth_year;
+			const workEndYear = work.end_year ?? composer.death_year ?? new Date().getFullYear();
+
+			if (workBeginYear < minYear) minYear = workBeginYear;
+			if (workEndYear > maxYear) maxYear = workEndYear;
+		});
+
+		const yearRange = maxYear - minYear;
+
+		// Disable 'decade' if time range less than 20 years
+		if (yearRange < 20) {
+			disabled.push('decade');
+		}
+
+		// Disable 'era' if time range less than 50 years
+		if (yearRange < 50) {
+			disabled.push('era');
+		}
+
+		return disabled;
+	}
 }

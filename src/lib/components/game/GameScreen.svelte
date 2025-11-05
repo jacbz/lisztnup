@@ -21,6 +21,7 @@
 
 	const currentTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
 	const isGameOver = $derived($currentRound.currentTrackIndex >= numberOfTracks);
+	const disabledCategories = $derived(generator.getDisabledCategories());
 
 	let audioProgress = $state(0); // 0-1
 	let progressInterval: number | null = null;
@@ -284,6 +285,7 @@
 			<!-- Spinning Wheel (fills screen) -->
 			<SpinningWheel
 				currentRoundIndex={$currentRound.currentTrackIndex}
+				{disabledCategories}
 				onCategorySelected={handleCategorySelected}
 				onSpinStart={handleSpinStart}
 				onSpinEnd={handleSpinEnd}

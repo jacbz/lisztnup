@@ -14,13 +14,15 @@
 		onSpinStart?: () => void;
 		onSpinEnd?: () => void;
 		currentRoundIndex?: number; // Used to reset state between rounds
+		disabledCategories?: GuessCategory[]; // Categories to exclude from the wheel
 	}
 
 	let {
 		onCategorySelected = () => {},
 		onSpinStart = () => {},
 		onSpinEnd = () => {},
-		currentRoundIndex = 0
+		currentRoundIndex = 0,
+		disabledCategories = []
 	}: Props = $props();
 
 	const categories: {
@@ -66,6 +68,11 @@
 			iconPath: extractPathFromSVG(decadeIcon)
 		}
 	];
+
+	// Filter out disabled categories
+	const activeCategories = $derived(
+		categories.filter((cat) => !disabledCategories.includes(cat.id))
+	);
 
 	let canvas: HTMLCanvasElement;
 	let rotation = $state(0);
@@ -151,9 +158,9 @@
 
 		ctx.clearRect(0, 0, size, size);
 
-		const segmentAngle = (Math.PI * 2) / categories.length;
+		const segmentAngle = (Math.PI * 2) / activeCategories.length;
 
-		categories.forEach((category, i) => {
+		activeCategories.forEach((category, i) => {
 			const baseAngle = i * segmentAngle + (currentRotation * Math.PI) / 180 - Math.PI / 2;
 			const endSegmentAngle = baseAngle + segmentAngle;
 
@@ -337,15 +344,15 @@
 
 				// Calculate which category the pointer is pointing at
 				// Segments are drawn starting from -90° (right) + rotation
-				// Pointer is at top: 90°
-				const segmentSize = 360 / categories.length;
+				// Pointer is at top: 270° in that coordinate system
+				const segmentSize = 360 / activeCategories.length;
 				const normalizedRotation = ((currentRotation % 360) + 360) % 360;
 
-				// Angle from segment 0's starting position to pointer
-				const angleFromSegment0 = (180 - normalizedRotation + 360) % 360;
-				const categoryIndex = Math.floor(angleFromSegment0 / segmentSize) % categories.length;
+				// Angle from segment 0's starting position to pointer (top = 270° offset from -90° start)
+				const angleFromSegment0 = (360 - normalizedRotation + 360) % 360;
+				const categoryIndex = Math.floor(angleFromSegment0 / segmentSize) % activeCategories.length;
 
-				selectedCategory = categories[categoryIndex].id;
+				selectedCategory = activeCategories[categoryIndex].id;
 				onSpinEnd();
 				onCategorySelected(selectedCategory);
 			}
@@ -550,8 +557,8 @@
 		style="transform: rotate({currentRotation}deg);"
 	>
 		<defs>
-			{#each categories as category, i}
-				{@const segmentAngle = 360 / categories.length}
+			{#each activeCategories as category, i}
+				{@const segmentAngle = 360 / activeCategories.length}
 				{@const startAngle = segmentAngle * i - 90}
 				{@const endAngle = segmentAngle * (i + 1) - 90}
 				{@const radius = wheelSize * 0.42}
@@ -585,7 +592,7 @@
 		</defs>
 
 		<!-- Draw curved text for each segment -->
-		{#each categories as category, i}
+		{#each activeCategories as category, i}
 			{@const categoryText = ($_(`game.categories.${category.id}`) as string).toUpperCase()}
 
 			<!-- Outer text (upside down for readability from outside) -->
