@@ -114,6 +114,26 @@
 		"vivaldi": {
 			"name": "Viva la Vivaldi",
 			"description": "Too hot for winter, too cool for summer."
+		},
+		"renaissance": {
+			"name": "Renaissance",
+			"description": "Music from the age of rebirth (1400-1600)."
+		},
+		"baroque": {
+			"name": "Baroque",
+			"description": "Ornate and expressive works (1600-1750)."
+		},
+		"classical": {
+			"name": "Classical",
+			"description": "Elegance and clarity of the Classical period (1750-1820)."
+		},
+		"romantic": {
+			"name": "Romantic",
+			"description": "Passionate and expressive works (1820-1910)."
+		},
+		"20thcentury": {
+			"name": "20th Century",
+			"description": "Modern and experimental works."
 		}
 	},
 	"tracklistSelector": {
@@ -178,6 +198,7 @@
 		"categoryDifficulty": "Difficulty",
 		"categoryCategories": "Categories",
 		"categoryComposers": "Composers",
+		"categoryEras": "Eras",
 		"categoryCustom": "Custom"
 	},
 	"inGameSettings": {

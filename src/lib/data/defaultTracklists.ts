@@ -344,6 +344,58 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			composerFilter: { mode: 'include', composers: ['ad79836d-9849-44df-8789-180bbc823f3c'] },
 			workScoreRange: [3, MAX_WORK_SCORE]
 		}
+	},
+
+	// Era-based tracklists
+	{
+		name: 'tracklists.renaissance.name',
+		description: 'tracklists.renaissance.description',
+		isDefault: true,
+		category: 'eras',
+		config: {
+			yearFilter: [1400, 1600],
+			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE]
+		}
+	},
+	{
+		name: 'tracklists.baroque.name',
+		description: 'tracklists.baroque.description',
+		isDefault: true,
+		category: 'eras',
+		config: {
+			yearFilter: [1600, 1750],
+			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE]
+		}
+	},
+	{
+		name: 'tracklists.classical.name',
+		description: 'tracklists.classical.description',
+		isDefault: true,
+		category: 'eras',
+		config: {
+			yearFilter: [1750, 1820],
+			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE]
+		}
+	},
+	{
+		name: 'tracklists.romantic.name',
+		description: 'tracklists.romantic.description',
+		isDefault: true,
+		category: 'eras',
+		config: {
+			yearFilter: [1820, 1910],
+			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE]
+		}
+	},
+	{
+		name: 'tracklists.20thcentury.name',
+		description: 'tracklists.20thcentury.description',
+		isDefault: true,
+		category: 'eras',
+		config: {
+			yearFilter: [1900, 1999],
+			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE]
+		}
 	}
 ];
 

@@ -92,7 +92,7 @@
 		const normalizedRotation = ((currentRotation % 360) + 360) % 360;
 		const angleFromSegment0 = (360 - normalizedRotation + 360) % 360;
 		const categoryIndex = Math.floor(angleFromSegment0 / segmentSize) % activeCategories.length;
-		
+
 		// Get the color from the category
 		const category = activeCategories[categoryIndex];
 		currentPointerColor = category.color1;

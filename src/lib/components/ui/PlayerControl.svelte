@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Play from 'lucide-svelte/icons/play';
 	import Square from 'lucide-svelte/icons/square';
-	import { formatComposerName, formatLifespan, formatYearRange } from '$lib/utils';
+	import { formatComposerName, formatLifespan, formatYearRange, getWorkEra } from '$lib/utils';
 	import { deezerPlayer } from '$lib/services';
 	import type { Track } from '$lib/types';
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';
@@ -90,6 +90,11 @@
 		return formatYearRange(begin_year, end_year);
 	});
 
+	const era = $derived.by(() => {
+		const { begin_year, end_year } = track?.work ?? {};
+		return getWorkEra(begin_year, end_year);
+	});
+
 	function handleClick() {
 		if (isRevealed) {
 			// In revealed state, clicking doesn't do anything (use continue button)
@@ -166,23 +171,36 @@
 				{#if track}
 					<!-- Composer -->
 					<div class="info-section">
-						<p class="text-center text-3xl font-bold text-white">
+						<p class="text-center text-3xl font-bold text-cyan-400">
 							{composerName}
 						</p>
 						<p class="text-center text-lg text-gray-400">({lifespan})</p>
 					</div>
 
+					{#if era || displayYear}
+						<div class="info-section">
+							<p class="text-center text-xl font-semibold tracking-wide">
+								{#if era}
+									<span class="text-purple-400 uppercase">{era}</span>
+								{/if}
+
+								{#if era && displayYear}
+									<span class="mx-2 text-gray-400">·</span>
+								{/if}
+
+								{#if displayYear}
+									<span class="bg-linear-to-r bg-clip-text text-nowrap text-green-400">
+										{displayYear}
+									</span>
+								{/if}
+							</p>
+						</div>
+					{/if}
+
 					<!-- Work with Year -->
 					<div class="info-section">
-						<p class="text-center text-2xl font-semibold wrap-break-word text-white">
+						<p class="text-center text-2xl font-semibold wrap-break-word text-pink-400">
 							{track.work.name}
-							{#if displayYear}
-								<span
-									class="ml-0.5 bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text font-normal text-nowrap text-transparent"
-								>
-									({displayYear})
-								</span>
-							{/if}
 						</p>
 					</div>
 
