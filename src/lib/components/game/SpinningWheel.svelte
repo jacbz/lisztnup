@@ -313,11 +313,7 @@
 		const minVelocity = 0.05; // Much lower threshold for gradual stop
 		let currentVelocity = adjustedVelocity;
 
-		const startTime = Date.now();
-
 		function animate() {
-			const elapsed = Date.now() - startTime;
-
 			// Apply friction with gradual ease-out at the end
 			// When velocity is very low, apply even stronger friction for smooth stop
 			let appliedFriction = friction;

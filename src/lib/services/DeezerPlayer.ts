@@ -158,7 +158,7 @@ export class DeezerPlayer {
 		}
 
 		this.audio = new Audio(this.currentTrackData.preview);
-		this.audio.volume = 0; // Start at 0 for fade in
+		this.audio.volume = 0.1; // Start at 0.1 for fade in
 		this.audio.loop = false;
 
 		// Add event listener to enforce track length limit with fade out
@@ -192,8 +192,8 @@ export class DeezerPlayer {
 				this.audio.currentTime = 0;
 			}
 
-			// Set volume to 0 before playing
-			this.audio.volume = 0;
+			// Set volume to 0.1 before playing
+			this.audio.volume = 0.1;
 			await this.audio.play();
 
 			// Fade in to target volume
