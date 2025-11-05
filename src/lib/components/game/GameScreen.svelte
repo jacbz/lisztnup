@@ -377,13 +377,13 @@
 							out:fly={position.flyParams}
 						>
 							<div
-								class="rounded-2xl border-4 px-12 py-6 backdrop-blur-md"
+								class="rounded-2xl border-4 px-10 py-2 backdrop-blur-md"
 								style="background: linear-gradient(135deg, {categoryDef.color1}, {categoryDef.color2}); 
 									   border-color: {categoryDef.color2};
 									   box-shadow: 0 0 40px {categoryDef.glowColor};
 									   transform: {position.innerTransform};"
 							>
-								<p class="text-3xl font-bold tracking-wider text-white uppercase drop-shadow-lg">
+								<p class="text-2xl font-bold tracking-wider text-white uppercase drop-shadow-lg">
 									{$_('game.guessCategory', {
 										values: { category: $_(`game.categories.${$currentRound.category}`) }
 									})}

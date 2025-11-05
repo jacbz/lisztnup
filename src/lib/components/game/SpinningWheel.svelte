@@ -34,6 +34,7 @@
 	let prevRoundIndex = $state(currentRoundIndex);
 	let animationFrameId: number | null = null;
 	let currentRotation = $state(0);
+	let currentPointerColor = $state('#ff0000'); // Track pointer color
 
 	// Drag state
 	let isDragging = $state(false);
@@ -58,6 +59,7 @@
 	// Redraw when rotation changes
 	$effect(() => {
 		if (canvas) {
+			updatePointerColor();
 			drawWheel();
 		}
 	});
@@ -82,6 +84,18 @@
 	function updateWheelSize() {
 		const minDimension = Math.min(window.innerWidth, window.innerHeight);
 		wheelSize = minDimension < 600 ? minDimension : minDimension * 0.9;
+	}
+
+	function updatePointerColor() {
+		// Calculate which category the pointer is pointing at
+		const segmentSize = 360 / activeCategories.length;
+		const normalizedRotation = ((currentRotation % 360) + 360) % 360;
+		const angleFromSegment0 = (360 - normalizedRotation + 360) % 360;
+		const categoryIndex = Math.floor(angleFromSegment0 / segmentSize) % activeCategories.length;
+		
+		// Get the color from the category
+		const category = activeCategories[categoryIndex];
+		currentPointerColor = category.color1;
 	}
 
 	function drawWheel() {
@@ -220,13 +234,15 @@
 		ctx.closePath();
 
 		const pointerGradient = ctx.createLinearGradient(0, 0, 0, pointerHeight);
-		pointerGradient.addColorStop(0, '#ff4d4d');
-		pointerGradient.addColorStop(1, '#ff0000');
+		// Create lighter and darker shades of the current color
+		const lighterColor = lightenColor(currentPointerColor, 0.3);
+		pointerGradient.addColorStop(0, lighterColor);
+		pointerGradient.addColorStop(1, currentPointerColor);
 
 		ctx.fillStyle = pointerGradient;
-		ctx.strokeStyle = '#ff8080';
+		ctx.strokeStyle = lighterColor;
 		ctx.lineWidth = 2;
-		ctx.shadowColor = 'rgba(255, 0, 0, 0.8)';
+		ctx.shadowColor = currentPointerColor;
 		ctx.shadowBlur = 15;
 
 		ctx.fill();
@@ -252,6 +268,22 @@
 		ctx.globalAlpha = 1;
 
 		ctx.restore();
+	}
+
+	function lightenColor(color: string, amount: number): string {
+		// Convert hex to RGB
+		const hex = color.replace('#', '');
+		const r = parseInt(hex.substring(0, 2), 16);
+		const g = parseInt(hex.substring(2, 4), 16);
+		const b = parseInt(hex.substring(4, 6), 16);
+
+		// Lighten by blending with white
+		const newR = Math.min(255, Math.round(r + (255 - r) * amount));
+		const newG = Math.min(255, Math.round(g + (255 - g) * amount));
+		const newB = Math.min(255, Math.round(b + (255 - b) * amount));
+
+		// Convert back to hex
+		return `#${newR.toString(16).padStart(2, '0')}${newG.toString(16).padStart(2, '0')}${newB.toString(16).padStart(2, '0')}`;
 	}
 
 	function spinWithVelocity(velocity: number) {
