@@ -527,7 +527,7 @@
 		// Only trigger if clicked within the center circle
 		if (distance <= centerCircleRadius) {
 			// Trigger a random spin with velocity
-			const randomVelocity = (30 + Math.random() * 10) * (Math.random() > 0.5 ? 1 : -1);
+			const randomVelocity = 30 + Math.random() * 10;
 			spinWithVelocity(randomVelocity);
 		}
 	}

@@ -24,7 +24,6 @@ export class TracklistGenerator {
 	private worksByComposer: Map<string, Work[]> = new Map();
 	private worksByCategory: Map<WorkCategory, Work[]> = new Map();
 	private composersByCategory: Map<WorkCategory, Composer[]> = new Map();
-	private composerWeights: number[] = [];
 	private composerWeightMap: Map<string, number> = new Map();
 	private categoryWeights: number[] = [];
 	private categories: WorkCategory[] = [];
@@ -192,7 +191,7 @@ export class TracklistGenerator {
 		this.filteredComposers = composers;
 
 		// Precompute composer weights (slightly logarithmic based on work count)
-		this.composerWeights = composers.map((c) => {
+		composers.map((c) => {
 			const workCount = this.worksByComposer.get(c.gid)?.length || 0;
 			const weight = Math.log(workCount + 1) / Math.log(1.1); // log base 1.1 for more spread
 			this.composerWeightMap.set(c.gid, weight);
