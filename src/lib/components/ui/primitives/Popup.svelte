@@ -22,7 +22,8 @@
 		class="fixed inset-0 z-40 bg-black/60"
 		onclick={handleBackdropClick}
 		role="presentation"
-		transition:fade={{ duration: 200 }}
+		in:fade={{ duration: 200 }}
+		out:fade={{ duration: 200, delay: 100 }}
 	></div>
 
 	<!-- Content -->
@@ -35,7 +36,8 @@
 			role="dialog"
 			aria-modal="true"
 			tabindex="-1"
-			transition:scale={{ duration: 300, easing: cubicOut, start: 0.9 }}
+			in:scale={{ duration: 300, easing: cubicOut, start: 0.9 }}
+			out:scale={{ duration: 200, easing: cubicOut, start: 0.9 }}
 		>
 			{@render children?.()}
 		</div>
