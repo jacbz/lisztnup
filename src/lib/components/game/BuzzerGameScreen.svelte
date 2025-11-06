@@ -29,9 +29,6 @@
 
 	const currentTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
 
-	// Get disabled categories from context
-	const disabledCategories = $derived(gameContext.disabledCategories);
-
 	// Get enableScoring from context
 	const enableScoring = $derived(gameContext.enableScoring);
 

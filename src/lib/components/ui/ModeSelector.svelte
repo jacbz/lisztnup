@@ -2,10 +2,10 @@
 	import { _ } from 'svelte-i18n';
 	import type { GameMode } from '$lib/types';
 	import Trophy from 'lucide-svelte/icons/trophy';
-	import Zap from 'lucide-svelte/icons/zap';
-	import Sparkles from 'lucide-svelte/icons/sparkles';
 	import HelpCircle from 'lucide-svelte/icons/help-circle';
 	import Dialog from './Dialog.svelte';
+	import Grid3X3 from 'lucide-svelte/icons/grid-3x3';
+	import Crown from 'lucide-svelte/icons/crown';
 
 	interface Props {
 		selectedMode?: GameMode | null;
@@ -34,12 +34,12 @@
 		},
 		{
 			id: 'buzzer' as GameMode,
-			icon: Zap,
+			icon: Crown,
 			color: '#ef4444'
 		},
 		{
 			id: 'bingo' as GameMode,
-			icon: Sparkles,
+			icon: Grid3X3,
 			color: '#a855f7'
 		}
 	];

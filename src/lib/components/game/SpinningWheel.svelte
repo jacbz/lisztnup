@@ -3,13 +3,14 @@
 	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
 	import { categories } from '$lib/data/categories';
+	import { shuffle } from '$lib/utils/random';
 
 	interface Props {
 		onCategorySelected?: (category: GuessCategory) => void;
 		onSpinStart?: () => void;
 		onSpinEnd?: () => void;
 		currentRoundIndex?: number; // Used to reset state between rounds
-		disabledCategories?: GuessCategory[]; // Categories to exclude from the wheel
+		disabledCategories?: readonly GuessCategory[]; // Categories to exclude from the wheel
 	}
 
 	let {
@@ -20,10 +21,16 @@
 		disabledCategories = []
 	}: Props = $props();
 
-	// Filter out disabled categories
-	const activeCategories = $derived(
-		categories.filter((cat) => !disabledCategories.includes(cat.id))
+	// Filter out disabled categories and shuffle for visual variety
+	// Store as state to maintain consistency across re-renders
+	let activeCategories = $state(
+		shuffle(categories.filter((cat) => !disabledCategories.includes(cat.id)))
 	);
+
+	// Update activeCategories when disabledCategories changes
+	$effect(() => {
+		activeCategories = shuffle(categories.filter((cat) => !disabledCategories.includes(cat.id)));
+	});
 
 	let canvas: HTMLCanvasElement;
 	let rotation = $state(0);

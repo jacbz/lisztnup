@@ -2,12 +2,9 @@
 	import { onMount, onDestroy, getContext } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import type { GuessCategory } from '$lib/types';
-	import { tracklist, currentRound, nextRound as nextRoundFn, resetGame, toast } from '$lib/stores';
-	import { deezerPlayer } from '$lib/services';
+	import { tracklist, currentRound, toast } from '$lib/stores';
 	import SpinningWheel from './SpinningWheel.svelte';
 	import PlayerControl from '../ui/PlayerControl.svelte';
-	import InGameSettings from '../ui/InGameSettings.svelte';
-	import Dialog from '../ui/Dialog.svelte';
 	import EdgeDisplay from '../ui/EdgeDisplay.svelte';
 	import { _ } from 'svelte-i18n';
 	import { getCategoryDefinition } from '$lib/data/categories';
@@ -15,12 +12,7 @@
 
 	const currentTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
 
-	// For now, hardcode the disabled categories since generator is in GameScreen
-	const disabledCategories = $derived([] as GuessCategory[]); // TODO: get from context or store
-
 	let hasSpunOnce = $state(false); // Track if wheel has been spun in this round
-	let showInGameSettings = $state(false);
-	let showQuitDialog = $state(false);
 
 	// Get context from parent GameScreen
 	const gameContext = getContext(GAME_SCREEN_CONTEXT) as {
@@ -31,7 +23,13 @@
 		nextRound: () => Promise<void>;
 		audioProgress: import('svelte/store').Readable<number>;
 		onHome: () => void;
+		activeCategories: readonly GuessCategory[];
+		disabledCategories: readonly GuessCategory[];
+		enableScoring: boolean;
 	};
+
+	// Get disabled categories from context
+	const disabledCategories = $derived(gameContext.disabledCategories);
 
 	// Subscribe to audio progress
 	let audioProgressValue = $state(0);
@@ -116,20 +114,6 @@
 
 		await gameContext.nextRound();
 	}
-
-	function handleHomeClick() {
-		showQuitDialog = true;
-	}
-
-	function handleConfirmQuit() {
-		showQuitDialog = false;
-		resetGame();
-		gameContext.onHome();
-	}
-
-	function handleCancelQuit() {
-		showQuitDialog = false;
-	}
 </script>
 
 <!-- Main Game Area -->
@@ -185,17 +169,3 @@
 		{/if}
 	{/snippet}
 </EdgeDisplay>
-
-<!-- In-Game Settings Popup -->
-<InGameSettings visible={showInGameSettings} onClose={() => (showInGameSettings = false)} />
-
-<!-- Quit Confirmation Dialog -->
-<Dialog
-	visible={showQuitDialog}
-	title={$_('quitDialog.title')}
-	message={$_('quitDialog.message')}
-	confirmText={$_('quitDialog.confirm')}
-	cancelText={$_('quitDialog.cancel')}
-	onConfirm={handleConfirmQuit}
-	onCancel={handleCancelQuit}
-/>

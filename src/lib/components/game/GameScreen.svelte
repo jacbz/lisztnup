@@ -26,7 +26,7 @@
 
 	// Context for sharing functions with child components
 	import { GAME_SCREEN_CONTEXT } from './context';
-	import { ALL_CATEGORIES } from '$lib/types/game';
+	import { ALL_CATEGORIES, CATEGORY_POINTS } from '$lib/types/game';
 
 	interface GameScreenContext {
 		playTrack: () => Promise<void>;
@@ -71,7 +71,9 @@
 	);
 	const sortedPlayers = $derived([...$gameSession.players].sort((a, b) => b.score - a.score));
 	const activeCategories = $derived(
-		ALL_CATEGORIES.filter((cat) => !generator.getDisabledCategories().includes(cat))
+		ALL_CATEGORIES.filter((cat) => !generator.getDisabledCategories().includes(cat)).sort(
+			(a, b) => CATEGORY_POINTS[b] - CATEGORY_POINTS[a]
+		)
 	);
 	const disabledCategories = $derived(generator.getDisabledCategories());
 
@@ -376,49 +378,49 @@
 			</div>
 		</div>
 	{/if}
+
+	<!-- Stats Button (for multiplayer modes with scoring) -->
+	{#if !isSoloMode && !isGameOver && !showScoringScreen && enableScoring}
+		<div class="fixed right-6 bottom-6 z-10 flex flex-col items-end gap-3">
+			<!-- Game Summary -->
+			<div
+				class="flex min-w-[180px] flex-col gap-2 rounded-xl border-2 border-gray-700 bg-gray-800 px-4 py-3"
+			>
+				{#each sortedPlayers as player}
+					<div class="flex items-center gap-2">
+						<div class="h-2.5 w-2.5 rounded-full" style="background-color: {player.color};"></div>
+						<span class="flex-1 text-sm font-medium text-gray-300">{player.name}</span>
+						<span class="text-sm font-bold text-cyan-400"
+							>{$_('scoring.pts', { values: { points: player.score } })}</span
+						>
+					</div>
+				{/each}
+			</div>
+
+			<!-- Stats Button -->
+			<button
+				type="button"
+				onclick={handleShowStats}
+				class="flex cursor-pointer items-center justify-center rounded-full border-2 border-cyan-400 bg-gray-900 p-3.5 text-cyan-400 shadow-[0_4px_20px_rgba(34,211,238,0.4)] transition-all duration-200 hover:scale-110 hover:shadow-[0_6px_30px_rgba(34,211,238,0.6)] active:scale-95"
+				aria-label="View statistics"
+			>
+				<BarChart class="h-6 w-6" />
+			</button>
+		</div>
+	{/if}
+
+	<!-- Solo Mode Score Display (for Classic mode) -->
+	{#if isSoloMode && !isGameOver && enableScoring && $gameSession.players.length > 0}
+		<div class="absolute right-6 bottom-6 z-20 select-none">
+			<div
+				class="rounded-xl border-2 border-cyan-400 bg-gray-900 px-4 py-2 shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+			>
+				<p class="text-sm font-semibold text-gray-400">Score</p>
+				<p class="text-right text-3xl font-bold text-cyan-400">{$gameSession.players[0].score}</p>
+			</div>
+		</div>
+	{/if}
 </div>
-
-<!-- Stats Button (for multiplayer modes with scoring) -->
-{#if !isSoloMode && !isGameOver && !showScoringScreen && enableScoring}
-	<div class="fixed right-6 bottom-6 z-10 flex flex-col items-end gap-3">
-		<!-- Game Summary -->
-		<div
-			class="flex min-w-[180px] flex-col gap-2 rounded-xl border-2 border-gray-700 bg-gray-800 px-4 py-3"
-		>
-			{#each sortedPlayers as player}
-				<div class="flex items-center gap-2">
-					<div class="h-2.5 w-2.5 rounded-full" style="background-color: {player.color};"></div>
-					<span class="flex-1 text-sm font-medium text-gray-300">{player.name}</span>
-					<span class="text-sm font-bold text-cyan-400"
-						>{$_('scoring.pts', { values: { points: player.score } })}</span
-					>
-				</div>
-			{/each}
-		</div>
-
-		<!-- Stats Button -->
-		<button
-			type="button"
-			onclick={handleShowStats}
-			class="flex cursor-pointer items-center justify-center rounded-full border-2 border-cyan-400 bg-gray-900 p-3.5 text-cyan-400 shadow-[0_4px_20px_rgba(34,211,238,0.4)] transition-all duration-200 hover:scale-110 hover:shadow-[0_6px_30px_rgba(34,211,238,0.6)] active:scale-95"
-			aria-label="View statistics"
-		>
-			<BarChart class="h-6 w-6" />
-		</button>
-	</div>
-{/if}
-
-<!-- Solo Mode Score Display (for Classic mode) -->
-{#if isSoloMode && !isGameOver && enableScoring && $gameSession.players.length > 0}
-	<div class="absolute right-6 bottom-6 z-20 select-none">
-		<div
-			class="rounded-xl border-2 border-cyan-400 bg-gray-900 px-4 py-2 shadow-[0_0_20px_rgba(34,211,238,0.3)]"
-		>
-			<p class="text-sm font-semibold text-gray-400">Score</p>
-			<p class="text-right text-3xl font-bold text-cyan-400">{$gameSession.players[0].score}</p>
-		</div>
-	</div>
-{/if}
 
 <!-- In-Game Settings -->
 <InGameSettings visible={showInGameSettings} onClose={() => (showInGameSettings = false)} />

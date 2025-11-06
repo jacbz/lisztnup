@@ -23,7 +23,6 @@
 		mode = 'classic',
 		players = [],
 		track = null,
-		currentCategory = null,
 		isSoloMode = false,
 		categories = ['work', 'composer', 'decade', 'era', 'form'] as const,
 		revealedCategories = [],
@@ -177,38 +176,6 @@
 			}
 		}
 	});
-
-	function handleCorrectPlayerClick(playerId: string | 'none' | null) {
-		// Allow toggling off the current selection
-		if (correctPlayer === playerId) {
-			correctPlayer = null;
-			return;
-		}
-
-		// Can't select a player who is already marked as wrong
-		if (playerId !== null && playerId !== 'none' && playerId === wrongPlayer) {
-			return;
-		}
-
-		// Set the new selection
-		correctPlayer = playerId;
-	}
-
-	function handleWrongPlayerClick(playerId: string | 'none' | null) {
-		// Allow toggling off the current selection
-		if (wrongPlayer === playerId) {
-			wrongPlayer = null;
-			return;
-		}
-
-		// Can't select a player who is already marked as correct
-		if (playerId !== null && playerId !== 'none' && playerId === correctPlayer) {
-			return;
-		}
-
-		// Set the new selection
-		wrongPlayer = playerId;
-	}
 </script>
 
 <Popup {visible} onClose={() => {}}>
