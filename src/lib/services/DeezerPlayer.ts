@@ -294,10 +294,13 @@ export class DeezerPlayer {
 	}
 
 	/**
-	 * Gets track duration in seconds (limited to configured track length)
+	 * Gets track duration in seconds
 	 */
-	getDuration(): number {
+	getDuration(ignoreTrackLength = false): number {
 		const actualDuration = this.audio?.duration || 0;
+		if (ignoreTrackLength) {
+			return actualDuration;
+		}
 		return Math.min(actualDuration, this.trackLength);
 	}
 

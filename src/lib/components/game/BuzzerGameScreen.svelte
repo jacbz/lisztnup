@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount, onDestroy, getContext } from 'svelte';
 	import type { GuessCategory } from '$lib/types';
-	import { BUZZER_TIME_LIMITS, CATEGORY_POINTS } from '$lib/types';
+	import { BUZZER_TIME_PERCENTAGES, CATEGORY_POINTS } from '$lib/types';
 	import { currentRound, tracklist, settings } from '$lib/stores';
 	import ScoringScreen from '../ui/ScoringScreen.svelte';
 	import Popup from '../ui/Popup.svelte';
@@ -11,6 +11,7 @@
 	import { _ } from 'svelte-i18n';
 	import { getCategoryDefinition } from '$lib/data/categories';
 	import { GAME_SCREEN_CONTEXT } from './context';
+	import { shuffle } from '$lib/utils/random';
 
 	// Get context from parent GameScreen
 	const gameContext = getContext(GAME_SCREEN_CONTEXT) as {
@@ -37,44 +38,37 @@
 	// Get numberOfTracks from settings
 	const numberOfTracks = $derived($settings.numberOfTracks);
 
-	// Build category progression based on disabled categories
-	// Logic: work -> composer -> decade/era
-	// If composer is disabled, use decade instead
-	// If both decade and era are disabled, only use work
-	const categoryProgression = $derived.by((): GuessCategory[] => {
-		const progression: GuessCategory[] = [];
+	// Get active categories from context
+	const activeCategories = $derived(gameContext.activeCategories);
 
-		// Always start with work if available
-		if (!disabledCategories.includes('work')) {
-			progression.push('work');
+	// Randomly select 3 categories from active categories and order by points (most valuable first)
+	// This is set once per round and stored in state to prevent changing mid-round
+	let categoryProgression = $state<GuessCategory[]>([]);
+
+	// Initialize category progression when round changes
+	$effect(() => {
+		// Track the current round index to detect changes
+		const roundIndex = $currentRound.currentTrackIndex;
+
+		// Generate new category progression for this round
+		if (activeCategories.length === 0) {
+			categoryProgression = [];
+		} else {
+			// Shuffle and take up to BUZZER_TIME_PERCENTAGES.length categories
+			const selectedCategories = shuffle([...activeCategories]).slice(
+				0,
+				Math.min(BUZZER_TIME_PERCENTAGES.length, activeCategories.length)
+			);
+
+			// Sort by points descending (most valuable first)
+			selectedCategories.sort((a, b) => CATEGORY_POINTS[b] - CATEGORY_POINTS[a]);
+
+			categoryProgression = selectedCategories;
 		}
-
-		// Next priority: composer (or decade if composer disabled)
-		if (!disabledCategories.includes('composer')) {
-			progression.push('composer');
-		} else if (!disabledCategories.includes('decade')) {
-			progression.push('decade');
-		}
-
-		// Final category: era or decade (whichever is available and not already used)
-		if (!disabledCategories.includes('era') && !progression.includes('era')) {
-			progression.push('era');
-		} else if (!disabledCategories.includes('decade')) {
-			progression.push('decade');
-		}
-
-		// Fallback: if progression is empty, use any available category
-		if (progression.length === 0) {
-			const available = ALL_CATEGORIES.filter((cat) => !disabledCategories.includes(cat));
-			if (available.length > 0) {
-				progression.push(available[0]);
-			}
-		}
-
-		return progression;
 	});
 
 	let playbackTime = $state(0); // Current playback time in seconds
+	let trackDuration = $state(30); // Track duration from player
 	let hasStartedPlaying = $state(false);
 	let isBuzzerPressed = $state(false);
 	let wasManuallyBuzzed = $state(false); // Track if someone actually pressed the buzzer (vs timeout)
@@ -94,6 +88,32 @@
 			: 'border-cyan-400 bg-transparent shadow-[0_0_30px_rgba(34,211,238,0.6)] hover:shadow-[0_0_40px_rgba(34,211,238,0.8)] active:shadow-[0_0_25px_rgba(34,211,238,0.5)]'
 	);
 
+	// Normalize percentages based on number of categories
+	const normalizedPercentages = $derived.by((): number[] => {
+		const numCategories = categoryProgression.length;
+		if (numCategories === 0) return [1.0];
+
+		// Take first n elements from BUZZER_TIME_PERCENTAGES
+		const percentages = BUZZER_TIME_PERCENTAGES.slice(0, numCategories);
+
+		// Normalize so they sum to 1.0
+		const sum = percentages.reduce((acc, val) => acc + val, 0);
+		return percentages.map((p) => p / sum);
+	});
+
+	// Calculate cumulative thresholds for category changes
+	const categoryThresholds = $derived.by((): number[] => {
+		const thresholds: number[] = [];
+		let cumulative = 0;
+
+		for (const percentage of normalizedPercentages) {
+			cumulative += percentage;
+			thresholds.push(cumulative * trackDuration);
+		}
+
+		return thresholds;
+	});
+
 	// Determine current category based on time and progression
 	const currentCategory = $derived.by((): GuessCategory => {
 		if (categoryProgression.length === 0) {
@@ -101,58 +121,32 @@
 			return 'work';
 		}
 
-		if (categoryProgression.length === 1) {
-			// Only one category available, use it throughout
-			return categoryProgression[0];
-		}
-
-		if (categoryProgression.length === 2) {
-			// Two categories: split time 15s / 15s
-			if (playbackTime < 15) {
-				return categoryProgression[0];
-			} else {
-				return categoryProgression[1];
+		// Find which threshold we're currently under
+		for (let i = 0; i < categoryThresholds.length; i++) {
+			if (playbackTime < categoryThresholds[i]) {
+				return categoryProgression[i];
 			}
 		}
 
-		// Three categories: use original time splits (15s / 10s / 5s)
-		if (playbackTime < BUZZER_TIME_LIMITS.work) {
-			return categoryProgression[0];
-		} else if (playbackTime < BUZZER_TIME_LIMITS.work + BUZZER_TIME_LIMITS.composer) {
-			return categoryProgression[1];
-		} else {
-			return categoryProgression[2];
-		}
+		// If we've exceeded all thresholds, return the last category
+		return categoryProgression[categoryProgression.length - 1];
 	});
 
 	// Time remaining for current category
 	const timeRemaining = $derived.by((): number => {
 		if (categoryProgression.length === 0) {
-			return 30 - playbackTime;
+			return trackDuration - playbackTime;
 		}
 
-		if (categoryProgression.length === 1) {
-			// Only one category, full 30s
-			return 30 - playbackTime;
-		}
-
-		if (categoryProgression.length === 2) {
-			// Two categories: 15s / 15s
-			if (playbackTime < 15) {
-				return 15 - playbackTime;
-			} else {
-				return 30 - playbackTime;
+		// Find which category we're in
+		for (let i = 0; i < categoryThresholds.length; i++) {
+			if (playbackTime < categoryThresholds[i]) {
+				return categoryThresholds[i] - playbackTime;
 			}
 		}
 
-		// Three categories: original splits
-		if (playbackTime < BUZZER_TIME_LIMITS.work) {
-			return BUZZER_TIME_LIMITS.work - playbackTime;
-		} else if (playbackTime < BUZZER_TIME_LIMITS.work + BUZZER_TIME_LIMITS.composer) {
-			return BUZZER_TIME_LIMITS.work + BUZZER_TIME_LIMITS.composer - playbackTime;
-		} else {
-			return 30 - playbackTime;
-		}
+		// If we've exceeded all thresholds, time remaining until end
+		return trackDuration - playbackTime;
 	});
 
 	// Categories revealed so far (all categories up to and including currentCategory)
@@ -160,7 +154,9 @@
 		const currentIndex = categoryProgression.indexOf(currentCategory);
 		if (currentIndex === -1) return [currentCategory];
 		return categoryProgression.slice(0, currentIndex + 1);
-	}); // Buzzer-specific progress tracking
+	});
+
+	// Buzzer-specific progress tracking
 	let buzzerProgressInterval: number | null = null;
 
 	function startBuzzerProgressTracking() {
@@ -170,10 +166,8 @@
 			const current = deezerPlayer.getCurrentTime();
 			playbackTime = current;
 
-			// Check if we've reached the end of buzzer time (always 30s)
-			const maxTime = 30;
-
-			if (current >= maxTime || !deezerPlayer.isPlaying()) {
+			// Check if we've reached the end of track
+			if (current >= trackDuration || !deezerPlayer.isPlaying()) {
 				// Time's up - auto-buzz and show reveal (but wasManuallyBuzzed stays false)
 				deezerPlayer.pause();
 				stopBuzzerProgressTracking();
@@ -202,6 +196,10 @@
 			try {
 				await deezerPlayer.play();
 				hasStartedPlaying = true;
+
+				// Get the track duration from the player
+				trackDuration = deezerPlayer.getDuration(true);
+
 				startBuzzerProgressTracking();
 			} catch (error) {
 				console.error('Error playing track:', error);
@@ -292,6 +290,7 @@
 		wasManuallyBuzzed = false;
 		showReveal = false;
 		playbackTime = 0;
+		trackDuration = 30; // Reset to default, will be updated when track plays
 
 		await gameContext.nextRound();
 	}
@@ -304,7 +303,6 @@
 	// Import required functions from stores
 	import { gameSession, nextRound as nextRoundFn, resetGame, toast } from '$lib/stores';
 	import { deezerPlayer } from '$lib/services';
-	import { ALL_CATEGORIES } from '$lib/types/game';
 
 	onMount(() => {
 		// Detect touch support

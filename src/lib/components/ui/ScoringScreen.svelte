@@ -87,12 +87,15 @@
 						newSet.delete(key);
 					});
 				} else {
-					// Positive score category: clear all other players' positive scores
+					// Positive score category: clear all other players' positive scores set "no guess"
 					players.forEach((p) => {
 						[...categories, ...revealedCategories].forEach((cat) => {
 							const key = `${p.name}:${cat}`;
 							if (key !== cellKey) {
 								newSet.delete(key);
+								if (!newSet.has(`${p.name}:wrong`)) {
+									newSet.add(`${p.name}:none`);
+								}
 							}
 						});
 					});

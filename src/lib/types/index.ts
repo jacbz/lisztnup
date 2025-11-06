@@ -19,7 +19,7 @@ export type {
 	RoundScore,
 	GameSession
 } from './game';
-export { PLAYER_COLORS, CATEGORY_POINTS, BUZZER_TIME_LIMITS } from './game';
+export { PLAYER_COLORS, CATEGORY_POINTS, BUZZER_TIME_PERCENTAGES } from './game';
 export {
 	DEFAULT_SETTINGS,
 	DEFAULT_CATEGORY_WEIGHTS,

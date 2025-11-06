@@ -28,12 +28,9 @@ export const CATEGORY_POINTS: Record<GuessCategory, number> = {
 	form: 2
 };
 
-// Buzzer mode time limits (in seconds)
-export const BUZZER_TIME_LIMITS = {
-	work: 15, // First 15 seconds for work
-	composer: 10, // Next 10 seconds for composer
-	era: 5 // Final 5 seconds for era
-};
+// Buzzer mode time percentages (of track duration)
+// Takes first n elements and normalizes them based on number of categories
+export const BUZZER_TIME_PERCENTAGES = [2, 1];
 
 export interface Player {
 	name: string; // name is now the unique identifier
