@@ -26,7 +26,7 @@
 	></div>
 
 	<!-- Content -->
-	<div class="pointer-events-none fixed inset-0 z-50 flex items-center justify-center p-4">
+	<div class="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
 		<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<div

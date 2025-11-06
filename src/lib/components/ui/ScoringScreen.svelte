@@ -14,6 +14,7 @@
 		currentCategory?: GuessCategory | null;
 		isSoloMode?: boolean;
 		categories?: readonly GuessCategory[];
+		revealedCategories?: GuessCategory[]; // For buzzer mode: categories shown so far
 		onScore?: (scores: Record<string, number>) => void;
 	}
 
@@ -25,6 +26,7 @@
 		currentCategory = null,
 		isSoloMode = false,
 		categories = ['work', 'composer', 'decade', 'era', 'form'] as const,
+		revealedCategories = [],
 		onScore = () => {}
 	}: Props = $props();
 
@@ -38,29 +40,80 @@
 	// Reset state when popup becomes visible
 	$effect(() => {
 		if (visible) {
-			selectedCells = new Set();
+			// In Classic mode, default all players to 'none'
+			if (mode === 'classic' && !isSoloMode) {
+				const defaultSelections = new Set<string>();
+				players.forEach((player) => {
+					defaultSelections.add(`${player.name}:none`);
+				});
+				selectedCells = defaultSelections;
+			} else if (mode === 'buzzer' && !isSoloMode) {
+				// In Buzzer mode, also default all players to 'none'
+				const defaultSelections = new Set<string>();
+				players.forEach((player) => {
+					defaultSelections.add(`${player.name}:none`);
+				});
+				selectedCells = defaultSelections;
+			} else {
+				selectedCells = new Set();
+			}
 			correctPlayer = null;
 			wrongPlayer = null;
 			selectedCategory = null; // No default for classic solo
 		}
 	});
 
-	function toggleCell(playerName: string, category: GuessCategory | 'none') {
+	function toggleCell(playerName: string, category: GuessCategory | 'none' | 'wrong') {
 		const cellKey = `${playerName}:${category}`;
 		const newSet = new Set(selectedCells);
 
 		if (newSet.has(cellKey)) {
 			newSet.delete(cellKey);
 		} else {
-			// Remove any other selections for this player
-			players.forEach((p) => {
-				['none', ...categories].forEach((cat) => {
-					const key = `${playerName}:${cat}`;
-					if (key !== cellKey) {
+			if (mode === 'buzzer' && category !== 'none') {
+				// Buzzer mode: only one player can score positive, only one can score negative (wrong)
+				if (category === 'wrong') {
+					// Clear any other player's 'wrong' selection and set this player to 'none' if they had a positive score
+					players.forEach((p) => {
+						// Clear wrong from all other players
+						const wrongKey = `${p.name}:wrong`;
+						if (wrongKey !== cellKey) {
+							newSet.delete(wrongKey);
+						}
+					});
+					// If this player had a positive score, remove it
+					[...categories, ...revealedCategories].forEach((cat) => {
+						const key = `${playerName}:${cat}`;
 						newSet.delete(key);
-					}
+					});
+				} else {
+					// Positive score category: clear all other players' positive scores
+					players.forEach((p) => {
+						[...categories, ...revealedCategories].forEach((cat) => {
+							const key = `${p.name}:${cat}`;
+							if (key !== cellKey) {
+								newSet.delete(key);
+							}
+						});
+					});
+					// If this player had 'wrong', remove it
+					const wrongKey = `${playerName}:wrong`;
+					newSet.delete(wrongKey);
+				}
+				// Remove 'none' from this player
+				const noneKey = `${playerName}:none`;
+				newSet.delete(noneKey);
+			} else {
+				// Classic mode or 'none' selection: Remove any other selections for this player only
+				players.forEach((p) => {
+					['none', 'wrong', ...categories].forEach((cat) => {
+						const key = `${playerName}:${cat}`;
+						if (key !== cellKey) {
+							newSet.delete(key);
+						}
+					});
 				});
-			});
+			}
 			newSet.add(cellKey);
 		}
 
@@ -86,58 +139,33 @@
 			// Calculate scores from selected cells (using name as identifier)
 			selectedCells.forEach((cellKey) => {
 				const [playerName, category] = cellKey.split(':');
-				if (category !== 'none') {
+				if (category !== 'none' && category !== 'wrong') {
 					scores[playerName] = CATEGORY_POINTS[category as GuessCategory];
 				}
 			});
-		} else if (mode === 'buzzer' && currentCategory) {
-			// Correct player gets points, wrong player loses points
-			if (correctPlayer) {
-				scores[correctPlayer] = CATEGORY_POINTS[currentCategory];
-			}
-			if (wrongPlayer) {
-				scores[wrongPlayer] =
-					(scores[wrongPlayer] || 0) - Math.min(10, CATEGORY_POINTS[currentCategory]);
-			}
+		} else if (mode === 'buzzer') {
+			// New buzzer mode scoring based on table selections
+			selectedCells.forEach((cellKey) => {
+				const [playerName, category] = cellKey.split(':');
+				if (category === 'wrong') {
+					// Wrong guess: penalty points (min 10, max category points)
+					const penalty = Math.min(
+						10,
+						Math.max(...revealedCategories.map((c) => CATEGORY_POINTS[c]))
+					);
+					scores[playerName] = (scores[playerName] || 0) - penalty;
+				} else if (category !== 'none') {
+					// Correct guess: award points for the category
+					scores[playerName] = CATEGORY_POINTS[category as GuessCategory];
+				}
+				// 'none' means no score change
+			});
 		}
 
 		onScore(scores);
 	}
 
-	// Auto-continue for classic mode when all players have selections
-	$effect(() => {
-		if (mode === 'classic' && visible && !isSoloMode) {
-			// Check if every player has a selection (using name as identifier)
-			const allPlayersSelected = players.every((player) => {
-				return ['none', ...categories].some((cat) => {
-					return selectedCells.has(`${player.name}:${cat}`);
-				});
-			});
-
-			if (allPlayersSelected) {
-				// Auto-continue after a short delay
-				const timer = setTimeout(() => {
-					handleContinue();
-				}, 300);
-				return () => clearTimeout(timer);
-			}
-		}
-	});
-
-	// Auto-continue for buzzer mode when both selections are made
-	$effect(() => {
-		if (mode === 'buzzer' && visible && !isSoloMode) {
-			const hasCorrect = correctPlayer !== null;
-			const hasWrong = wrongPlayer !== null;
-
-			if (hasCorrect && hasWrong) {
-				// Both selected, auto-continue immediately
-				handleContinue();
-			}
-		}
-	});
-
-	// Auto-close for solo modes
+	// Auto-close for solo modes (Classic only)
 	$effect(() => {
 		if (visible && isSoloMode) {
 			if (mode === 'classic' && selectedCategory !== null) {
@@ -249,7 +277,8 @@
 							<!-- Header Row -->
 							<div
 								class="grid gap-1"
-								style="grid-template-columns: 120px repeat({categories.length + 1}, 1fr);"
+								style="grid-template-columns: 100px repeat({categories.length +
+									1}, minmax(50px, 1fr));"
 							>
 								<div
 									class="flex items-center justify-start bg-gray-700 p-2 px-2 pl-3 text-sm font-bold text-white uppercase"
@@ -279,7 +308,8 @@
 							{#each players as player}
 								<div
 									class="grid gap-1"
-									style="grid-template-columns: 120px repeat({categories.length + 1}, 1fr);"
+									style="grid-template-columns: 100px repeat({categories.length +
+										1}, minmax(50px, 1fr));"
 								>
 									<div
 										class="flex items-center justify-start border-l-[3px] bg-gray-800 p-2 px-2 pl-3 font-semibold text-white"
@@ -319,126 +349,135 @@
 										onclick={() => toggleCell(player.name, 'none')}
 									>
 										{#if selectedCells.has(`${player.name}:none`)}
-											<span class="text-base font-bold text-white"
-												>{$_('scoring.pointsAwarded', { values: { points: 0 } })}</span
-											>
+											<span class="text-base font-bold text-white">+0</span>
 										{/if}
 									</button>
 								</div>
 							{/each}
 						</div>
 					{:else if mode === 'buzzer'}
-						<!-- Buzzer Mode: Simple Selection -->
-						<div class="flex flex-col gap-4">
-							<p class="text-center text-lg font-semibold text-white">
-								{$_('scoring.correctGuess')}
-							</p>
-							<div class="flex flex-wrap justify-center gap-3">
-								{#each players as player}
-									<button
-										type="button"
-										class="flex cursor-pointer flex-col items-center gap-1 rounded-lg border-2 px-3.5 py-2.5 text-sm font-semibold text-white transition-all duration-200"
-										class:border-white={correctPlayer === player.name}
-										class:shadow-[0_0_15px_rgba(255,255,255,0.3)]={correctPlayer === player.name}
-										class:opacity-30={wrongPlayer === player.name}
-										class:cursor-not-allowed={wrongPlayer === player.name}
-										class:hover:opacity-90={wrongPlayer !== player.name}
-										disabled={wrongPlayer === player.name}
-										style="background-color: {correctPlayer === player.name
-											? player.color
-											: 'rgb(55, 65, 81)'}; border-color: {correctPlayer === player.name
-											? 'white'
-											: player.color};"
-										onclick={() => handleCorrectPlayerClick(player.name)}
-									>
-										<div class="flex items-center gap-2">
-											<div
-												class="h-3 w-3 rounded-full"
-												class:bg-white={correctPlayer === player.name}
-												style:background-color={correctPlayer === player.name
-													? 'white'
-													: player.color}
-											></div>
-											{player.name}
-										</div>
-										{#if correctPlayer === player.name && currentCategory}
-											<span class="text-xs opacity-80">
-												{$_('scoring.pointsAwarded', {
-													values: { points: CATEGORY_POINTS[currentCategory] }
-												})}
-											</span>
-										{/if}
-									</button>
-								{/each}
-								<!-- No one option -->
-								<button
-									type="button"
-									class="flex cursor-pointer items-center gap-2 rounded-lg border-2 bg-gray-700 px-3.5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-gray-600"
-									class:border-white={correctPlayer === 'none'}
-									class:shadow-[0_0_15px_rgba(255,255,255,0.3)]={correctPlayer === 'none'}
-									class:border-gray-700={correctPlayer !== 'none'}
-									onclick={() => handleCorrectPlayerClick('none')}
+						<!-- Buzzer Mode: Table Layout (similar to Classic) -->
+						<div class="flex flex-col gap-1 overflow-hidden rounded-xl">
+							<!-- Header Row -->
+							<div
+								class="grid gap-1"
+								style="grid-template-columns: 100px repeat({revealedCategories.length +
+									2}, minmax(50px, 1fr));"
+							>
+								<div
+									class="flex items-center justify-start bg-gray-700 p-2 px-2 pl-3 text-sm font-bold text-white uppercase"
 								>
-									{$_('scoring.noOne')}
-								</button>
+									{$_('scoring.player')}
+								</div>
+								<div
+									class="flex flex-col items-center justify-center gap-0.5 bg-gray-700 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
+								>
+									{$_('scoring.noGuess')}
+								</div>
+								{#each revealedCategories as category}
+									{@const def = getCategoryDefinition(category)}
+									{#if def}
+										<div
+											class="flex flex-col items-center justify-center gap-0.5 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
+											style="background: linear-gradient(135deg, {def.color1}, {def.color2});"
+										>
+											<span class="text-sm">{$_(`game.categoriesShort.${category}`)}</span>
+											<span class="text-xs opacity-80">+{CATEGORY_POINTS[category]}</span>
+										</div>
+									{/if}
+								{/each}
+								<div
+									class="flex flex-col items-center justify-center gap-0.5 bg-red-900 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
+								>
+									<span class="text-sm">{$_('scoring.wrong')}</span>
+									<span class="text-xs opacity-80">-10</span>
+								</div>
 							</div>
 
-							<p class="mt-2 text-center text-lg font-semibold text-white">
-								{$_('scoring.wrongGuess')}
-							</p>
-							<div class="flex flex-wrap justify-center gap-3">
-								{#each players as player}
+							<!-- Player Rows -->
+							{#each players as player}
+								<div
+									class="grid gap-1"
+									style="grid-template-columns: 100px repeat({revealedCategories.length +
+										2}, minmax(50px, 1fr));"
+								>
+									<div
+										class="flex items-center justify-start border-l-[3px] bg-gray-800 p-2 px-2 pl-3 font-semibold text-white"
+										style="border-left-color: {player.color};"
+									>
+										{player.name}
+									</div>
+									<!-- No guess column -->
 									<button
 										type="button"
-										class="flex cursor-pointer flex-col items-center gap-1 rounded-lg border-2 px-3.5 py-2.5 text-sm font-semibold text-white transition-all duration-200"
-										class:border-white={wrongPlayer === player.name}
-										class:shadow-[0_0_15px_rgba(255,255,255,0.3)]={wrongPlayer === player.name}
-										class:opacity-30={correctPlayer === player.name}
-										class:cursor-not-allowed={correctPlayer === player.name}
-										class:hover:opacity-90={correctPlayer !== player.name}
-										disabled={correctPlayer === player.name}
-										style="background-color: {wrongPlayer === player.name
-											? player.color
-											: 'rgb(55, 65, 81)'}; border-color: {wrongPlayer === player.name
-											? 'white'
-											: player.color};"
-										onclick={() => handleWrongPlayerClick(player.name)}
+										class="flex cursor-pointer items-center justify-center border-2 bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
+										class:border-cyan-400={selectedCells.has(`${player.name}:none`)}
+										class:border-transparent={!selectedCells.has(`${player.name}:none`)}
+										onclick={() => toggleCell(player.name, 'none')}
 									>
-										<div class="flex items-center gap-2">
-											<div
-												class="h-3 w-3 rounded-full"
-												class:bg-white={wrongPlayer === player.name}
-												style:background-color={wrongPlayer === player.name
-													? 'white'
-													: player.color}
-											></div>
-											{player.name}
-										</div>
-										{#if wrongPlayer === player.name && currentCategory}
-											<span class="text-xs opacity-80">
-												{$_('scoring.pointsAwardedPenalty', {
-													values: { points: Math.min(10, CATEGORY_POINTS[currentCategory]) }
-												})}
-											</span>
+										{#if selectedCells.has(`${player.name}:none`)}
+											<span class="text-base font-bold text-white">+0</span>
 										{/if}
 									</button>
-								{/each}
-								<!-- No one option -->
-								<button
-									type="button"
-									class="flex cursor-pointer items-center gap-2 rounded-lg border-2 bg-gray-700 px-3.5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-gray-600"
-									class:border-white={wrongPlayer === 'none'}
-									class:shadow-[0_0_15px_rgba(255,255,255,0.3)]={wrongPlayer === 'none'}
-									class:border-gray-700={wrongPlayer !== 'none'}
-									onclick={() => handleWrongPlayerClick('none')}
-								>
-									{$_('scoring.noOne')}
-								</button>
-							</div>
+									<!-- Category columns -->
+									{#each revealedCategories as category}
+										{@const def = getCategoryDefinition(category)}
+										{@const isSelected = selectedCells.has(`${player.name}:${category}`)}
+										<button
+											type="button"
+											class="flex cursor-pointer items-center justify-center border-2 bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
+											class:border-cyan-400={isSelected}
+											class:border-transparent={!isSelected}
+											style={isSelected && def
+												? `background: linear-gradient(135deg, ${def.color1}, ${def.color2});`
+												: ''}
+											onclick={() => toggleCell(player.name, category)}
+										>
+											<span
+												class="text-base font-bold text-white transition-opacity duration-200"
+												class:opacity-0={!isSelected}
+												class:opacity-100={isSelected}
+											>
+												+{CATEGORY_POINTS[category]}
+											</span>
+										</button>
+									{/each}
+									<!-- Wrong option -->
+									<button
+										type="button"
+										class="flex cursor-pointer items-center justify-center border-2 bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
+										class:border-cyan-400={selectedCells.has(`${player.name}:wrong`)}
+										class:border-transparent={!selectedCells.has(`${player.name}:wrong`)}
+										class:bg-red-900={selectedCells.has(`${player.name}:wrong`)}
+										onclick={() => toggleCell(player.name, 'wrong')}
+									>
+										<span
+											class="text-base font-bold text-white transition-opacity duration-200"
+											class:opacity-0={!selectedCells.has(`${player.name}:wrong`)}
+											class:opacity-100={selectedCells.has(`${player.name}:wrong`)}
+										>
+											-10
+										</span>
+									</button>
+								</div>
+							{/each}
 						</div>
 					{/if}
 				</div>
 			</div>
+
+			<!-- Confirm Button (for non-solo modes) -->
+			{#if !isSoloMode}
+				<div class="mt-6 flex justify-center">
+					<button
+						type="button"
+						class="rounded-xl bg-cyan-500 px-8 py-3 text-lg font-bold text-white shadow-lg transition-all duration-200 hover:bg-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.5)]"
+						onclick={handleContinue}
+					>
+						{$_('common.confirm')}
+					</button>
+				</div>
+			{/if}
 		</div>
 	{/snippet}
 </Popup>

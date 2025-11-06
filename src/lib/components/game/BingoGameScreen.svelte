@@ -146,7 +146,7 @@
 
 		<!-- Player Control (overlaid on wheel center) -->
 		<PlayerControl
-			visible={hasSpunOnce && !$currentRound.isSpinning}
+			visible={hasSpunOnce && !$currentRound.isSpinning && $currentRound.category !== null}
 			isPlaying={$currentRound.isPlaying}
 			playbackEnded={$currentRound.playbackEnded}
 			isRevealed={$currentRound.isRevealed}

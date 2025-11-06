@@ -56,11 +56,11 @@
 			progression.push('decade');
 		}
 
-		// Final category: decade or era (whichever is available and not already used)
-		if (!disabledCategories.includes('decade') && !progression.includes('decade')) {
-			progression.push('decade');
-		} else if (!disabledCategories.includes('era')) {
+		// Final category: era or decade (whichever is available and not already used)
+		if (!disabledCategories.includes('era') && !progression.includes('era')) {
 			progression.push('era');
+		} else if (!disabledCategories.includes('decade')) {
+			progression.push('decade');
 		}
 
 		// Fallback: if progression is empty, use any available category
@@ -77,6 +77,7 @@
 	let playbackTime = $state(0); // Current playback time in seconds
 	let hasStartedPlaying = $state(false);
 	let isBuzzerPressed = $state(false);
+	let wasManuallyBuzzed = $state(false); // Track if someone actually pressed the buzzer (vs timeout)
 	let showReveal = $state(false); // Intermediate state after buzzer press
 
 	// Audio element for buzzer sound
@@ -86,7 +87,7 @@
 	let hasTouch = $state(false);
 
 	// Compute button state classes
-	const isActiveBuzz = $derived(!showReveal && hasStartedPlaying);
+	const isActiveBuzz = $derived(!showReveal && hasStartedPlaying && !$currentRound.isRevealed);
 	const buzzerButtonClasses = $derived(
 		isActiveBuzz
 			? 'border-red-700 bg-red-600 shadow-[0_10px_40px_rgba(220,38,38,0.6)] hover:shadow-[0_15px_50px_rgba(220,38,38,0.8)] active:shadow-[0_5px_30px_rgba(220,38,38,0.6)]'
@@ -131,12 +132,12 @@
 		}
 
 		if (categoryProgression.length === 1) {
-			// Only one category, show time remaining for full 30s
+			// Only one category, full 30s
 			return 30 - playbackTime;
 		}
 
 		if (categoryProgression.length === 2) {
-			// Two categories: 15s each
+			// Two categories: 15s / 15s
 			if (playbackTime < 15) {
 				return 15 - playbackTime;
 			} else {
@@ -150,12 +151,16 @@
 		} else if (playbackTime < BUZZER_TIME_LIMITS.work + BUZZER_TIME_LIMITS.composer) {
 			return BUZZER_TIME_LIMITS.work + BUZZER_TIME_LIMITS.composer - playbackTime;
 		} else {
-			const total = BUZZER_TIME_LIMITS.work + BUZZER_TIME_LIMITS.composer + BUZZER_TIME_LIMITS.era;
-			return total - playbackTime;
+			return 30 - playbackTime;
 		}
 	});
 
-	// Buzzer-specific progress tracking
+	// Categories revealed so far (all categories up to and including currentCategory)
+	const revealedCategories = $derived.by((): GuessCategory[] => {
+		const currentIndex = categoryProgression.indexOf(currentCategory);
+		if (currentIndex === -1) return [currentCategory];
+		return categoryProgression.slice(0, currentIndex + 1);
+	}); // Buzzer-specific progress tracking
 	let buzzerProgressInterval: number | null = null;
 
 	function startBuzzerProgressTracking() {
@@ -169,7 +174,7 @@
 			const maxTime = 30;
 
 			if (current >= maxTime || !deezerPlayer.isPlaying()) {
-				// Time's up - auto-buzz and show reveal
+				// Time's up - auto-buzz and show reveal (but wasManuallyBuzzed stays false)
 				deezerPlayer.pause();
 				stopBuzzerProgressTracking();
 				isBuzzerPressed = true;
@@ -215,9 +220,11 @@
 			deezerPlayer.pause();
 			stopBuzzerProgressTracking();
 			isBuzzerPressed = true;
+			wasManuallyBuzzed = true; // Mark that someone actually pressed the buzzer
 			showReveal = true;
 
-			// Set the current category in the round state
+			// Set the current category in the round state and store revealed categories
+			buzzerRevealedCategories = [...revealedCategories];
 			currentRound.update((state) => ({
 				...state,
 				category: currentCategory
@@ -248,8 +255,9 @@
 		}));
 		showReveal = false;
 
-		// Show scoring screen only if scoring is enabled
-		if (enableScoring) {
+		// Show scoring screen only if scoring is enabled AND someone manually pressed the buzzer
+		// If no one pressed the buzzer (time ran out), treat it like scoring is disabled (just show track info)
+		if (enableScoring && wasManuallyBuzzed) {
 			showScoringScreen = true;
 		}
 	}
@@ -281,6 +289,7 @@
 		// Reset state for next round
 		hasStartedPlaying = false;
 		isBuzzerPressed = false;
+		wasManuallyBuzzed = false;
 		showReveal = false;
 		playbackTime = 0;
 
@@ -290,6 +299,7 @@
 	// Buzzer-specific state
 	let showScoringScreen = $state(false);
 	let showEndGameScreen = $state(false);
+	let buzzerRevealedCategories = $state<GuessCategory[]>([]); // Categories revealed when buzzer was pressed
 
 	// Import required functions from stores
 	import { gameSession, nextRound as nextRoundFn, resetGame, toast } from '$lib/stores';
@@ -371,8 +381,11 @@
 	</div>
 {/if}
 
-<!-- Track Info Popup (when scoring is disabled) -->
-<Popup visible={$currentRound.isRevealed && !enableScoring} onClose={() => {}}>
+<!-- Track Info Popup (when scoring is disabled OR no one manually pressed the buzzer) -->
+<Popup
+	visible={$currentRound.isRevealed && (!enableScoring || !wasManuallyBuzzed)}
+	onClose={() => {}}
+>
 	{#snippet children()}
 		<div
 			class="w-[420px] max-w-[90vw] rounded-3xl border-2 border-cyan-400 bg-gray-900 p-8 shadow-[0_0_30px_rgba(34,211,238,0.3)]"
@@ -401,5 +414,6 @@
 	track={currentTrack}
 	players={$gameSession.players}
 	{currentCategory}
+	revealedCategories={buzzerRevealedCategories}
 	onScore={handleBuzzerScoreSubmit}
 />

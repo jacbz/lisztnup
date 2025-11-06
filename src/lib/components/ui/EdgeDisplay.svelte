@@ -71,7 +71,7 @@
 			<div
 				class="{position.containerClass} {position.hideOnNarrow
 					? 'hidden lg:block'
-					: ''} select-none"
+					: ''} z-100 select-none"
 				in:fly={position.flyParams}
 				out:fly={position.flyParams}
 			>

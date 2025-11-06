@@ -3,7 +3,8 @@
 		"enabled": "Enabled",
 		"disabled": "Disabled",
 		"on": "On",
-		"off": "Off"
+		"off": "Off",
+		"confirm": "Confirm"
 	},
 	"app": {
 		"title": "Liszt’n Up!",
@@ -289,6 +290,7 @@
 		"player": "Player",
 		"selectCategory": "Select the category that was guessed correctly:",
 		"wrong": "❌",
+		"noGuess": "No Guess",
 		"continue": "Continue",
 		"correctGuess": "Who guessed correctly?",
 		"wrongGuess": "Who made a wrong guess?",

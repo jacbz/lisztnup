@@ -215,8 +215,8 @@
 			isRevealed: false
 		}));
 
-		// Check if this is the last track and show end game screen
-		if ($currentRound.currentTrackIndex >= numberOfTracks - 1) {
+		// Check if this is the last track and show end game screen (skip for bingo mode)
+		if (mode !== 'bingo' && $currentRound.currentTrackIndex >= numberOfTracks - 1) {
 			showEndGameScreen = true;
 			return;
 		}
@@ -233,7 +233,8 @@
 		gameSession.recordRound($currentRound.currentTrackIndex, scores);
 		showScoringScreen = false;
 
-		if ($currentRound.currentTrackIndex >= numberOfTracks - 1) {
+		// Check if game should end (skip for bingo mode)
+		if (mode !== 'bingo' && $currentRound.currentTrackIndex >= numberOfTracks - 1) {
 			showEndGameScreen = true;
 		} else {
 			nextRound();
@@ -305,8 +306,12 @@
 		nextRound,
 		audioProgress: audioProgressStore,
 		onHome: handleHome,
-		activeCategories,
-		disabledCategories,
+		get activeCategories() {
+			return activeCategories;
+		},
+		get disabledCategories() {
+			return disabledCategories;
+		},
 		enableScoring
 	});
 </script>
@@ -375,7 +380,7 @@
 
 <!-- Stats Button (for multiplayer modes with scoring) -->
 {#if !isSoloMode && !isGameOver && !showScoringScreen && enableScoring}
-	<div class="fixed right-6 bottom-6 z-25 flex flex-col items-end gap-3">
+	<div class="fixed right-6 bottom-6 z-10 flex flex-col items-end gap-3">
 		<!-- Game Summary -->
 		<div
 			class="flex min-w-[180px] flex-col gap-2 rounded-xl border-2 border-gray-700 bg-gray-800 px-4 py-3"

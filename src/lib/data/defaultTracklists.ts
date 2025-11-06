@@ -32,7 +32,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				count: 30
 			},
 			workScoreRange: [5.2, MAX_WORK_SCORE],
-			maxTracksFromSingleWork: 1
+			maxTracksFromSingleWork: 1,
+			enablePopularityWeighting: false
 		}
 	},
 	{
@@ -47,7 +48,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				count: 50
 			},
 			workScoreRange: [4.8, MAX_WORK_SCORE],
-			maxTracksFromSingleWork: 1
+			maxTracksFromSingleWork: 1,
+			enablePopularityWeighting: false
 		}
 	},
 	{

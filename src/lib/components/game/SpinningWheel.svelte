@@ -83,7 +83,12 @@
 
 	function updateWheelSize() {
 		const minDimension = Math.min(window.innerWidth, window.innerHeight);
-		wheelSize = minDimension < 600 ? minDimension : minDimension * 0.9;
+		// Use more screen space on small screens, add extra space for glow effects
+		if (minDimension < 600) {
+			wheelSize = minDimension + 50; // Minimal margins on small screens
+		} else {
+			wheelSize = minDimension * 0.95; // Use more space
+		}
 	}
 
 	function updatePointerColor() {
@@ -107,21 +112,26 @@
 		const dpr = window.devicePixelRatio || 1;
 		const size = wheelSize;
 
-		canvas.width = size * dpr;
-		canvas.height = size * dpr;
-		canvas.style.width = `${size}px`;
-		canvas.style.height = `${size}px`;
+		// Add extra padding for glow effects (100px on each side = 200px total)
+		const glowPadding = 100;
+		const canvasSize = size + glowPadding * 2;
+
+		canvas.width = canvasSize * dpr;
+		canvas.height = canvasSize * dpr;
+		canvas.style.width = `${canvasSize}px`;
+		canvas.style.height = `${canvasSize}px`;
 
 		ctx.scale(dpr, dpr);
 
-		const centerX = size / 2;
-		const centerY = size / 2;
+		// Center everything in the padded canvas
+		const centerX = canvasSize / 2;
+		const centerY = canvasSize / 2;
 		const radius = size * 0.42;
 		const centerCircleRadius = size * 0.16;
 		const gapWidth = size * 0.01; // The desired constant pixel width for the gap
 		const halfGap = gapWidth / 2;
 
-		ctx.clearRect(0, 0, size, size);
+		ctx.clearRect(0, 0, canvasSize, canvasSize);
 
 		const segmentAngle = (Math.PI * 2) / activeCategories.length;
 
@@ -220,7 +230,7 @@
 		}
 
 		// Draw pointer
-		const pointerY = size * 0.01;
+		const pointerY = glowPadding + size * 0.01;
 		const pointerHeight = size * 0.08;
 		const pointerWidth = size * 0.06;
 
@@ -523,7 +533,7 @@
 	}
 </script>
 
-<div class="wheel-wrapper" style="width: {wheelSize}px; height: {wheelSize}px;">
+<div class="wheel-wrapper" style="width: {wheelSize + 200}px; height: {wheelSize + 200}px;">
 	<canvas
 		bind:this={canvas}
 		class="wheel-canvas"
@@ -540,7 +550,7 @@
 	<svg
 		bind:this={svgOverlay}
 		class="text-overlay select-none"
-		viewBox="0 0 {wheelSize} {wheelSize}"
+		viewBox="0 0 {wheelSize + 200} {wheelSize + 200}"
 		style="transform: rotate({currentRotation}deg);"
 	>
 		<defs>
@@ -551,8 +561,8 @@
 				{@const radius = wheelSize * 0.42}
 				{@const outerTextRadius = radius * 0.96}
 				{@const innerTextRadius = radius * 0.41}
-				{@const centerX = wheelSize / 2}
-				{@const centerY = wheelSize / 2}
+				{@const centerX = (wheelSize + 200) / 2}
+				{@const centerY = (wheelSize + 200) / 2}
 
 				<!-- Outer curved path (counter-clockwise for upside-down text) -->
 				<path
