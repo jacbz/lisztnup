@@ -2,7 +2,7 @@
 	import { getContext } from 'svelte';
 	import { currentRound, tracklist } from '$lib/stores';
 	import { getCategoryDefinition } from '$lib/data/categories';
-	import PlayerControl from '../ui/PlayerControl.svelte';
+	import PlayerControl from '../ui/gameplay/PlayerControl.svelte';
 	import { _ } from 'svelte-i18n';
 	import { GAME_SCREEN_CONTEXT } from './context';
 	import { CATEGORY_POINTS } from '$lib/types';

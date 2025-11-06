@@ -12,13 +12,13 @@
 		toast
 	} from '$lib/stores';
 	import { deezerPlayer } from '$lib/services';
-	import ScoringScreen from '../ui/ScoringScreen.svelte';
-	import StatsScreen from '../ui/StatsScreen.svelte';
-	import EndGameScreen from '../ui/EndGameScreen.svelte';
-	import InGameSettings from '../ui/InGameSettings.svelte';
-	import Dialog from '../ui/Dialog.svelte';
-	import TrackInfo from '../ui/TrackInfo.svelte';
-	import Popup from '../ui/Popup.svelte';
+	import ScoringScreen from '../ui/screens/ScoringScreen.svelte';
+	import StatsScreen from '../ui/screens/StatsScreen.svelte';
+	import EndGameScreen from '../ui/screens/EndGameScreen.svelte';
+	import InGameSettings from '../ui/gameplay/InGameSettings.svelte';
+	import Dialog from '../ui/primitives/Dialog.svelte';
+	import TrackInfo from '../ui/gameplay/TrackInfo.svelte';
+	import Popup from '../ui/primitives/Popup.svelte';
 	import SettingsIcon from 'lucide-svelte/icons/settings';
 	import BarChart from 'lucide-svelte/icons/bar-chart-3';
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';

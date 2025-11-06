@@ -4,11 +4,11 @@
 	import { _, locale } from 'svelte-i18n';
 	import { settings as settingsStore, selectedTracklist } from '$lib/stores';
 	import { locales } from '$lib/i18n';
-	import TracklistSelector from './TracklistSelector.svelte';
-	import NumberSelector from './NumberSelector.svelte';
-	import ToggleButton from './ToggleButton.svelte';
-	import ModeSelector from './ModeSelector.svelte';
-	import PlayerSetup from './PlayerSetup.svelte';
+	import TracklistSelector from '../setup/TracklistSelector.svelte';
+	import NumberSelector from '../primitives/NumberSelector.svelte';
+	import ToggleButton from '../primitives/ToggleButton.svelte';
+	import ModeSelector from '../setup/ModeSelector.svelte';
+	import PlayerSetup from '../setup/PlayerSetup.svelte';
 	import { SettingsService } from '$lib/services';
 	import type { Tracklist, GameMode, Player } from '$lib/types';
 	import Plus from 'lucide-svelte/icons/plus';

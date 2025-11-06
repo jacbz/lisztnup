@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { _ } from 'svelte-i18n';
-	import Popup from './Popup.svelte';
+	import Popup from '../primitives/Popup.svelte';
 	import type { Player, RoundScore } from '$lib/types';
 
 	interface Props {

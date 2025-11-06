@@ -3,7 +3,7 @@
 	import Square from 'lucide-svelte/icons/square';
 	import type { Track } from '$lib/types';
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';
-	import Popup from './Popup.svelte';
+	import Popup from '../primitives/Popup.svelte';
 	import TrackInfo from './TrackInfo.svelte';
 	import { _ } from 'svelte-i18n';
 	import { onMount } from 'svelte';

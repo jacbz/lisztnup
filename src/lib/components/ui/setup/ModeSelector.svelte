@@ -3,7 +3,7 @@
 	import type { GameMode } from '$lib/types';
 	import Trophy from 'lucide-svelte/icons/trophy';
 	import HelpCircle from 'lucide-svelte/icons/help-circle';
-	import Dialog from './Dialog.svelte';
+	import Dialog from '../primitives/Dialog.svelte';
 	import Grid3X3 from 'lucide-svelte/icons/grid-3x3';
 	import Crown from 'lucide-svelte/icons/crown';
 

@@ -12,10 +12,10 @@
 	import { TracklistGenerator, SettingsService } from '$lib/services';
 	import { DEFAULT_TRACKLISTS } from '$lib/data/defaultTracklists';
 	import { get } from 'svelte/store';
-	import Popup from './Popup.svelte';
-	import Slider from './Slider.svelte';
-	import RangeSlider from './RangeSlider.svelte';
-	import ToggleButton from './ToggleButton.svelte';
+	import Popup from '../primitives/Popup.svelte';
+	import Slider from '../primitives/Slider.svelte';
+	import RangeSlider from '../primitives/RangeSlider.svelte';
+	import ToggleButton from '../primitives/ToggleButton.svelte';
 	import { _ } from 'svelte-i18n';
 
 	interface Props {

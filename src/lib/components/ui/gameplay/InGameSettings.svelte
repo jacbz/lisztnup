@@ -2,8 +2,8 @@
 	import { deezerPlayer } from '$lib/services';
 	import { settings as settingsStore } from '$lib/stores';
 	import { onMount } from 'svelte';
-	import Popup from './Popup.svelte';
-	import Slider from './Slider.svelte';
+	import Popup from '../primitives/Popup.svelte';
+	import Slider from '../primitives/Slider.svelte';
 	import { _ } from 'svelte-i18n';
 
 	interface Props {

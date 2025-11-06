@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { _ } from 'svelte-i18n';
-	import Popup from './Popup.svelte';
-	import TrackInfo from './TrackInfo.svelte';
+	import Popup from '../primitives/Popup.svelte';
+	import TrackInfo from '../gameplay/TrackInfo.svelte';
 	import { CATEGORY_POINTS, type GuessCategory, type Player, type Track } from '$lib/types';
 	import { getCategoryDefinition } from '$lib/data/categories';
-	import Check from 'lucide-svelte/icons/check';
 
 	interface Props {
 		visible?: boolean;

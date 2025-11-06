@@ -2,7 +2,7 @@
 	import '../app.css';
 	import '$lib/i18n'; // Initialize i18n
 	import favicon from '$lib/assets/favicon.svg';
-	import Toast from '$lib/components/ui/Toast.svelte';
+	import Toast from '$lib/components/ui/primitives/Toast.svelte';
 
 	let { children } = $props();
 </script>

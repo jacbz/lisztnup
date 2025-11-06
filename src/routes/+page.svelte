@@ -10,8 +10,8 @@
 	} from '$lib/stores';
 	import { TracklistGenerator, deezerPlayer } from '$lib/services';
 	import type { GameMode, Player } from '$lib/types';
-	import LoadingScreen from '$lib/components/ui/LoadingScreen.svelte';
-	import HomeScreen from '$lib/components/ui/HomeScreen.svelte';
+	import LoadingScreen from '$lib/components/ui/screens/LoadingScreen.svelte';
+	import HomeScreen from '$lib/components/ui/screens/HomeScreen.svelte';
 	import ClassicGameScreen from '$lib/components/game/ClassicGameScreen.svelte';
 	import BuzzerGameScreen from '$lib/components/game/BuzzerGameScreen.svelte';
 	import BingoGameScreen from '$lib/components/game/BingoGameScreen.svelte';

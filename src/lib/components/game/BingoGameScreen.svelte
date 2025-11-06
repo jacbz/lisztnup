@@ -4,8 +4,8 @@
 	import type { GuessCategory } from '$lib/types';
 	import { tracklist, currentRound, toast } from '$lib/stores';
 	import SpinningWheel from './SpinningWheel.svelte';
-	import PlayerControl from '../ui/PlayerControl.svelte';
-	import EdgeDisplay from '../ui/EdgeDisplay.svelte';
+	import PlayerControl from '../ui/gameplay/PlayerControl.svelte';
+	import EdgeDisplay from '../ui/primitives/EdgeDisplay.svelte';
 	import { _ } from 'svelte-i18n';
 	import { getCategoryDefinition } from '$lib/data/categories';
 	import { GAME_SCREEN_CONTEXT } from './context';

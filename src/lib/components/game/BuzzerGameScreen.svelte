@@ -3,10 +3,10 @@
 	import type { GuessCategory } from '$lib/types';
 	import { BUZZER_TIME_PERCENTAGES, CATEGORY_POINTS } from '$lib/types';
 	import { currentRound, tracklist, settings } from '$lib/stores';
-	import ScoringScreen from '../ui/ScoringScreen.svelte';
-	import Popup from '../ui/Popup.svelte';
-	import TrackInfo from '../ui/TrackInfo.svelte';
-	import EdgeDisplay from '../ui/EdgeDisplay.svelte';
+	import ScoringScreen from '../ui/screens/ScoringScreen.svelte';
+	import Popup from '../ui/primitives/Popup.svelte';
+	import TrackInfo from '../ui/gameplay/TrackInfo.svelte';
+	import EdgeDisplay from '../ui/primitives/EdgeDisplay.svelte';
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';
 	import { _ } from 'svelte-i18n';
 	import { getCategoryDefinition } from '$lib/data/categories';

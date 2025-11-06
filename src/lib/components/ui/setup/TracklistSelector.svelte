@@ -5,8 +5,8 @@
 	import { SettingsService } from '$lib/services';
 	import { DEFAULT_TRACKLISTS, cloneTracklist } from '$lib/data/defaultTracklists';
 	import { get } from 'svelte/store';
-	import Popup from './Popup.svelte';
-	import Dialog from './Dialog.svelte';
+	import Popup from '../primitives/Popup.svelte';
+	import Dialog from '../primitives/Dialog.svelte';
 	import TracklistEditor from './TracklistEditor.svelte';
 	import { _ } from 'svelte-i18n';
 

@@ -422,7 +422,7 @@
 		currentRotation = dragStartRotation + (currentAngle - dragStartAngle);
 		totalDragDistance += Math.abs(angleDiff);
 
-		// Calculate velocity with mobile boost
+		// Calculate velocity
 		const timeDiff = Math.max(currentTime - lastDragTime, 1);
 		const baseVelocity = (angleDiff / timeDiff) * 16; // Scale to ~60fps
 		dragVelocity = baseVelocity * 2;
