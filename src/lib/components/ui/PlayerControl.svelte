@@ -15,7 +15,7 @@
 		isRevealed?: boolean;
 		progress?: number; // 0-1
 		track?: Track | null;
-		allowResize?: boolean; // Allow button to resize (Bingo mode only)
+		isBingoMode?: boolean;
 		onPlay?: () => void;
 		onStop?: () => void;
 		onReveal?: () => void;
@@ -30,7 +30,7 @@
 		isRevealed = false,
 		progress = 0,
 		track = null,
-		allowResize = false,
+		isBingoMode: allowResize = false,
 		onPlay = () => {},
 		onStop = () => {},
 		onReveal = () => {},
@@ -108,36 +108,15 @@
 
 	// Calculate circular progress path
 	const progressPath = $derived.by(() => {
-		if (!allowResize) {
-			// Fixed size for Classic mode
-			const buttonSize = 240;
-			const ringStrokeWidth = 6;
-			const ringRadius = buttonSize / 2 - ringStrokeWidth / 2;
-			const size = buttonSize;
-			const center = size / 2;
-			const circumference = 2 * Math.PI * ringRadius;
-			const offset = circumference * (1 - displayProgress);
+		const buttonSize = allowResize
+			? Math.min(windowSize.width || window.innerWidth, windowSize.height || window.innerHeight) *
+				0.9 *
+				0.14 *
+				2
+			: 240;
 
-			return {
-				size,
-				center,
-				radius: ringRadius,
-				circumference,
-				offset,
-				strokeWidth: ringStrokeWidth,
-				buttonSize
-			};
-		}
-
-		// Use percentage-based sizing relative to viewport (Bingo mode)
-		const minDimension = Math.min(
-			windowSize.width || window.innerWidth,
-			windowSize.height || window.innerHeight
-		);
-		const wheelSize = minDimension * 0.9; // 90% of smaller dimension (matching SpinningWheel)
-		const buttonSize = wheelSize * 0.14 * 2; // 16% radius * 2 (matching wheel center circle)
-		const ringStrokeWidth = buttonSize * 0.04; // 4% of button size (thinner for inside)
-		const ringRadius = buttonSize / 2 - ringStrokeWidth / 2; // Inside the button with padding
+		const ringStrokeWidth = buttonSize * 0.05;
+		const ringRadius = buttonSize / 2 - ringStrokeWidth / 2;
 		const size = buttonSize;
 		const center = size / 2;
 		const circumference = 2 * Math.PI * ringRadius;
@@ -150,7 +129,7 @@
 			circumference,
 			offset,
 			strokeWidth: ringStrokeWidth,
-			buttonSize // Pass button size for styling
+			buttonSize
 		};
 	});
 
@@ -183,8 +162,9 @@
 </Popup>
 
 <div
-	class="absolute top-1/2 left-1/2 z-30 mt-24 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-30 md:mt-0"
+	class="absolute top-1/2 left-1/2 z-30 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-30 md:mt-0"
 	class:visible
+	class:mt-24={!allowResize}
 	style="opacity: {visible ? 1 : 0}; pointer-events: {visible ? 'auto' : 'none'};"
 >
 	{#if !isRevealed}

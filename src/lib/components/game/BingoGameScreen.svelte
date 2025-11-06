@@ -326,7 +326,7 @@
 				isRevealed={$currentRound.isRevealed}
 				progress={audioProgress}
 				track={currentTrack}
-				allowResize={true}
+				isBingoMode={true}
 				onPlay={handlePlay}
 				onStop={handleStop}
 				onReveal={handleReveal}
