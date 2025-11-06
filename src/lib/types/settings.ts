@@ -70,8 +70,8 @@ export const DEFAULT_TRACKLIST_CONFIG: TracklistConfig = {
 };
 
 export const DEFAULT_SETTINGS: GameSettings = {
-	numberOfTracks: 20,
-	selectedTracklist: 'tracklists.veryeasy.name',
+	numberOfTracks: 10,
+	selectedTracklist: 'tracklists.beginner.name',
 	trackLength: 25,
 	volume: 100,
 	gameMode: 'classic',
