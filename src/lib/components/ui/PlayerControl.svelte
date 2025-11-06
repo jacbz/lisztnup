@@ -110,7 +110,7 @@
 	const progressPath = $derived.by(() => {
 		if (!allowResize) {
 			// Fixed size for Classic mode
-			const buttonSize = 160;
+			const buttonSize = 240;
 			const ringStrokeWidth = 6;
 			const ringRadius = buttonSize / 2 - ringStrokeWidth / 2;
 			const size = buttonSize;
@@ -183,7 +183,7 @@
 </Popup>
 
 <div
-	class="absolute top-1/2 left-1/2 z-30 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300"
+	class="absolute top-1/2 left-1/2 z-30 mt-24 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-30 md:mt-0"
 	class:visible
 	style="opacity: {visible ? 1 : 0}; pointer-events: {visible ? 'auto' : 'none'};"
 >

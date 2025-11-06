@@ -6,6 +6,7 @@
 	import { locales } from '$lib/i18n';
 	import TracklistSelector from './TracklistSelector.svelte';
 	import NumberSelector from './NumberSelector.svelte';
+	import ToggleButton from './ToggleButton.svelte';
 	import ModeSelector from './ModeSelector.svelte';
 	import PlayerSetup from './PlayerSetup.svelte';
 	import { SettingsService } from '$lib/services';
@@ -203,22 +204,16 @@
 					<div class="mb-3 flex items-center justify-between gap-2">
 						<span class="text-sm font-semibold text-gray-400">{$_('players.setup')}</span>
 						<div class="flex gap-2">
-							<button
-								type="button"
-								class="rounded-lg px-3 py-1.5 text-sm font-semibold transition-all"
-								class:bg-cyan-400={enableScoring}
-								class:text-gray-900={enableScoring}
-								class:bg-gray-700={!enableScoring}
-								class:text-gray-400={!enableScoring}
+							<ToggleButton
+								value={enableScoring}
 								disabled={selectedMode === 'bingo'}
-								onclick={() => {
+								onToggle={() => {
 									enableScoring = !enableScoring;
 									settingsStore.update((s) => ({ ...s, enableScoring }));
 								}}
-								aria-label="Toggle scoring"
-							>
-								{enableScoring ? 'Scoring ON' : 'Scoring OFF'}
-							</button>
+								enabledText={$_('home.scoringOn')}
+								disabledText={$_('home.scoringOff')}
+							/>
 							{#if currentPlayers.length < 10}
 								<button
 									type="button"
@@ -258,7 +253,7 @@
 					></div>
 					<span class="relative">{$_('home.startGame', { default: 'Start Game' })}</span>
 				</button>
-				{#if selectedMode === 'buzzer' && currentPlayers.length < 2}
+				{#if selectedMode === 'buzzer' && enableScoring && currentPlayers.length < 2}
 					<p class="mt-2 text-center text-sm text-amber-400">
 						{$_('players.minPlayers', { default: 'At least two players are required' })}
 					</p>
@@ -269,7 +264,7 @@
 		<!-- Footer -->
 		<div class="mt-16 mb-6 space-y-1 text-center text-gray-400">
 			<div class="flex items-center justify-center gap-2 text-sm">
-				<span>Made by Jacob Zhang</span>
+				<span>A Game by Jacob Zhang</span>
 				<span>|</span>
 				<a
 					href="https://github.com/jacbz/lisztnup"

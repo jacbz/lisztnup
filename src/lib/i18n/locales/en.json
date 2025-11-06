@@ -1,4 +1,10 @@
 {
+	"common": {
+		"enabled": "Enabled",
+		"disabled": "Disabled",
+		"on": "On",
+		"off": "Off"
+	},
 	"app": {
 		"title": "Liszt’n Up!",
 		"subtitle": "The Classical Music Guessing Game"
@@ -11,7 +17,9 @@
 		"start": "START",
 		"startGame": "Start Game",
 		"settings": "Settings",
-		"tracklist": "Tracklist"
+		"tracklist": "Tracklist",
+		"scoringOn": "Scoring On",
+		"scoringOff": "Scoring Off"
 	},
 	"settings": {
 		"numberOfTracks": "Number of Tracks",
@@ -157,8 +165,6 @@
 		"name": "Name",
 		"description": "Description",
 		"filters": "Filters",
-		"enabled": "Enabled",
-		"disabled": "Disabled",
 		"categoryWeights": "Categories",
 		"categoryWeightsDesc": "Adjust how much each musical category is favored. Setting to 0 excludes that category.",
 		"composerFilter": "Composers",

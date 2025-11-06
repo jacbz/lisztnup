@@ -15,6 +15,7 @@
 	import Popup from './Popup.svelte';
 	import Slider from './Slider.svelte';
 	import RangeSlider from './RangeSlider.svelte';
+	import ToggleButton from './ToggleButton.svelte';
 	import { _ } from 'svelte-i18n';
 
 	interface Props {
@@ -498,17 +499,7 @@
 							>
 							<p class="text-xs text-gray-400">{$_('tracklistEditor.workScoreRangeDesc')}</p>
 						</div>
-						<button
-							type="button"
-							onclick={toggleWorkScoreRange}
-							class="rounded-lg px-3 py-1 text-sm {workScoreRangeEnabled
-								? 'bg-cyan-500 text-white'
-								: 'bg-gray-700 text-gray-400'}"
-						>
-							{workScoreRangeEnabled
-								? $_('tracklistEditor.enabled')
-								: $_('tracklistEditor.disabled')}
-						</button>
+						<ToggleButton value={workScoreRangeEnabled} onToggle={toggleWorkScoreRange} />
 					</div>
 					{#if workScoreRangeEnabled && config.workScoreRange}
 						<RangeSlider
@@ -531,17 +522,7 @@
 							>
 							<p class="text-xs text-gray-400">{$_('tracklistEditor.categoryWeightsDesc')}</p>
 						</div>
-						<button
-							type="button"
-							onclick={toggleCategoryWeights}
-							class="rounded-lg px-3 py-1 text-sm {categoryWeightsEnabled
-								? 'bg-cyan-500 text-white'
-								: 'bg-gray-700 text-gray-400'}"
-						>
-							{categoryWeightsEnabled
-								? $_('tracklistEditor.enabled')
-								: $_('tracklistEditor.disabled')}
-						</button>
+						<ToggleButton value={categoryWeightsEnabled} onToggle={toggleCategoryWeights} />
 					</div>
 					{#if categoryWeightsEnabled && config.categoryWeights}
 						<div class="grid grid-cols-2 gap-3">
@@ -569,17 +550,7 @@
 							>
 							<p class="text-xs text-gray-400">{$_('tracklistEditor.composerFilterDesc')}</p>
 						</div>
-						<button
-							type="button"
-							onclick={toggleComposerFilter}
-							class="rounded-lg px-3 py-1 text-sm {composerFilterEnabled
-								? 'bg-cyan-500 text-white'
-								: 'bg-gray-700 text-gray-400'}"
-						>
-							{composerFilterEnabled
-								? $_('tracklistEditor.enabled')
-								: $_('tracklistEditor.disabled')}
-						</button>
+						<ToggleButton value={composerFilterEnabled} onToggle={toggleComposerFilter} />
 					</div>
 					{#if composerFilterEnabled}
 						<!-- Mode selector -->
@@ -711,15 +682,7 @@
 							<span class="font-semibold text-cyan-300">{$_('tracklistEditor.yearFilter')}</span>
 							<p class="text-xs text-gray-400">{$_('tracklistEditor.yearFilterDesc')}</p>
 						</div>
-						<button
-							type="button"
-							onclick={toggleYearFilter}
-							class="rounded-lg px-3 py-1 text-sm {yearFilterEnabled
-								? 'bg-cyan-500 text-white'
-								: 'bg-gray-700 text-gray-400'}"
-						>
-							{yearFilterEnabled ? $_('tracklistEditor.enabled') : $_('tracklistEditor.disabled')}
-						</button>
+						<ToggleButton value={yearFilterEnabled} onToggle={toggleYearFilter} />
 					</div>
 					{#if yearFilterEnabled && config.yearFilter}
 						<RangeSlider
@@ -740,15 +703,7 @@
 							<span class="font-semibold text-cyan-300">{$_('tracklistEditor.nameFilter')}</span>
 							<p class="text-xs text-gray-400">{$_('tracklistEditor.nameFilterDesc')}</p>
 						</div>
-						<button
-							type="button"
-							onclick={toggleNameFilter}
-							class="rounded-lg px-3 py-1 text-sm {nameFilterEnabled
-								? 'bg-cyan-500 text-white'
-								: 'bg-gray-700 text-gray-400'}"
-						>
-							{nameFilterEnabled ? $_('tracklistEditor.enabled') : $_('tracklistEditor.disabled')}
-						</button>
+						<ToggleButton value={nameFilterEnabled} onToggle={toggleNameFilter} />
 					</div>
 					{#if nameFilterEnabled}
 						<div class="space-y-2">
@@ -821,17 +776,10 @@
 								{$_('tracklistEditor.maxTracksFromSingleWorkDesc')}
 							</p>
 						</div>
-						<button
-							type="button"
-							onclick={toggleMaxTracksFromSingleWork}
-							class="rounded-lg px-3 py-1 text-sm {maxTracksFromSingleWorkEnabled
-								? 'bg-cyan-500 text-white'
-								: 'bg-gray-700 text-gray-400'}"
-						>
-							{maxTracksFromSingleWorkEnabled
-								? $_('tracklistEditor.enabled')
-								: $_('tracklistEditor.disabled')}
-						</button>
+						<ToggleButton
+							value={maxTracksFromSingleWorkEnabled}
+							onToggle={toggleMaxTracksFromSingleWork}
+						/>
 					</div>
 					{#if maxTracksFromSingleWorkEnabled && config.maxTracksFromSingleWork !== undefined}
 						<Slider
@@ -857,17 +805,10 @@
 								{$_('tracklistEditor.enablePopularityWeightingDesc')}
 							</p>
 						</div>
-						<button
-							type="button"
-							onclick={() => (enablePopularityWeighting = !enablePopularityWeighting)}
-							class="rounded-lg px-3 py-1 text-sm {enablePopularityWeighting
-								? 'bg-cyan-500 text-white'
-								: 'bg-gray-700 text-gray-400'}"
-						>
-							{enablePopularityWeighting
-								? $_('tracklistEditor.enabled')
-								: $_('tracklistEditor.disabled')}
-						</button>
+						<ToggleButton
+							value={enablePopularityWeighting}
+							onToggle={() => (enablePopularityWeighting = !enablePopularityWeighting)}
+						/>
 					</div>
 				</div>
 			</div>
