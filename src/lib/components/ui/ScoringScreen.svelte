@@ -200,19 +200,6 @@
 						<!-- Solo Classic Mode: Big Category Buttons -->
 						<div class="flex flex-col">
 							<div class="grid grid-cols-2 gap-3">
-								<!-- Wrong button -->
-								<button
-									type="button"
-									class="flex cursor-pointer flex-col items-center gap-2 rounded-xl border-[3px] bg-gray-500 px-4 py-6 transition-all duration-200 hover:scale-[1.02]"
-									class:border-white={selectedCategory === 'none'}
-									class:shadow-[0_0_20px_rgba(255,255,255,0.3)]={selectedCategory === 'none'}
-									class:scale-105={selectedCategory === 'none'}
-									class:border-transparent={selectedCategory !== 'none'}
-									onclick={() => (selectedCategory = 'none')}
-								>
-									<span class="text-2xl font-bold text-white uppercase">{$_('scoring.wrong')}</span>
-									<span class="text-lg font-semibold text-white/90">+0</span>
-								</button>
 								<!-- Category buttons -->
 								{#each categories as category}
 									{@const def = getCategoryDefinition(category)}
@@ -231,11 +218,28 @@
 												>{$_(`game.categories.${category}`)}</span
 											>
 											<span class="text-lg font-semibold text-white/90"
-												>+{CATEGORY_POINTS[category]}</span
+												>{$_('scoring.points', {
+													values: { points: CATEGORY_POINTS[category] }
+												})}</span
 											>
 										</button>
 									{/if}
 								{/each}
+								<!-- Wrong button -->
+								<button
+									type="button"
+									class="flex cursor-pointer flex-col items-center gap-2 rounded-xl border-[3px] bg-gray-500 px-4 py-6 transition-all duration-200 hover:scale-[1.02]"
+									class:border-white={selectedCategory === 'none'}
+									class:shadow-[0_0_20px_rgba(255,255,255,0.3)]={selectedCategory === 'none'}
+									class:scale-105={selectedCategory === 'none'}
+									class:border-transparent={selectedCategory !== 'none'}
+									onclick={() => (selectedCategory = 'none')}
+								>
+									<span class="text-2xl font-bold text-white uppercase">{$_('scoring.wrong')}</span>
+									<span class="text-lg font-semibold text-white/90"
+										>{$_('scoring.points', { values: { points: 0 } })}</span
+									>
+								</button>
 							</div>
 						</div>
 					{:else if mode === 'classic'}
@@ -308,7 +312,9 @@
 										onclick={() => toggleCell(player.name, 'none')}
 									>
 										{#if selectedCells.has(`${player.name}:none`)}
-											<span class="text-base font-bold text-white">+0</span>
+											<span class="text-base font-bold text-white"
+												>{$_('scoring.points', { values: { points: 0 } })}</span
+											>
 										{/if}
 									</button>
 								</div>

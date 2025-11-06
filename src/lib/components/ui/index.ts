@@ -5,6 +5,7 @@
 export { default as Toast } from './Toast.svelte';
 export { default as Popup } from './Popup.svelte';
 export { default as Dialog } from './Dialog.svelte';
+export { default as EdgeDisplay } from './EdgeDisplay.svelte';
 export { default as InGameSettings } from './InGameSettings.svelte';
 export { default as TracklistSelector } from './TracklistSelector.svelte';
 export { default as TracklistEditor } from './TracklistEditor.svelte';

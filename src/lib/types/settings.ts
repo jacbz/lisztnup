@@ -74,7 +74,7 @@ export const DEFAULT_SETTINGS: GameSettings = {
 	selectedTracklist: 'tracklists.veryeasy.name',
 	trackLength: 25,
 	volume: 100,
-	gameMode: 'bingo',
+	gameMode: 'classic',
 	players: [],
 	enableScoring: true
 };

@@ -193,7 +193,7 @@
 			<!-- Play button -->
 			<button
 				type="button"
-				class="relative z-2 flex cursor-pointer touch-none items-center justify-center rounded-full border-4 border-cyan-400 bg-gray-900 shadow-[0_0_30px_rgba(34,211,238,0.6)] transition-all duration-200 hover:shadow-[0_0_40px_rgba(34,211,238,0.8)] active:scale-95"
+				class="relative z-2 flex cursor-pointer touch-none items-center justify-center rounded-full border-4 border-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.6)] transition-all duration-200 hover:shadow-[0_0_40px_rgba(34,211,238,0.8)] active:scale-95"
 				style="width: {progressPath.buttonSize}px; height: {progressPath.buttonSize}px; font-size: {progressPath.buttonSize *
 					0.115}px;"
 				onclick={handleClick}

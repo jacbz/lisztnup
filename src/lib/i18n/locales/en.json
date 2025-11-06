@@ -226,6 +226,11 @@
 		"nextRound": "Next Round",
 		"gameOver": "Game Over!",
 		"playAgain": "Play Again",
+		"buzzer": {
+			"pressToStart": "Press to Start",
+			"buzz": "Buzz!",
+			"reveal": "Reveal"
+		},
 		"categories": {
 			"composer": "Composer",
 			"decade": "Decade",
@@ -277,6 +282,7 @@
 		"wrong": "❌",
 		"points": "+{points} pts",
 		"noPoints": "0 pts",
+		"pts": "{points} pts",
 		"continue": "Continue",
 		"correctGuess": "Who guessed correctly?",
 		"wrongGuess": "Who made a wrong guess?",

@@ -9,6 +9,7 @@
 	import PlayerControl from '../ui/PlayerControl.svelte';
 	import InGameSettings from '../ui/InGameSettings.svelte';
 	import Dialog from '../ui/Dialog.svelte';
+	import EdgeDisplay from '../ui/EdgeDisplay.svelte';
 	import SettingsIcon from 'lucide-svelte/icons/settings';
 	import { _ } from 'svelte-i18n';
 	import { getCategoryDefinition } from '$lib/data/categories';
@@ -39,29 +40,6 @@
 	let showInGameSettings = $state(false);
 	let showQuitDialog = $state(false);
 	let preloadedTrackIndex = $state(-1); // Index of the preloaded track
-
-	// Track when to show category displays
-	let showCategoryDisplay = $state(false);
-	let isAnimatingOut = $state(false);
-
-	// Update showCategoryDisplay based on game state
-	$effect(() => {
-		const shouldShow =
-			$currentRound.category && !$currentRound.isRevealed && !$currentRound.isSpinning;
-
-		if (shouldShow) {
-			showCategoryDisplay = true;
-			isAnimatingOut = false;
-		} else if (showCategoryDisplay) {
-			isAnimatingOut = true;
-			const timer = setTimeout(() => {
-				showCategoryDisplay = false;
-				isAnimatingOut = false;
-			}, 300); // Match the transition duration
-
-			return () => clearTimeout(timer);
-		}
-	});
 
 	onMount(() => {
 		// Sample and preload first track
@@ -358,60 +336,28 @@
 		</div>
 
 		<!-- Category Display (shown briefly when wheel stops) -->
-		{#if (showCategoryDisplay || isAnimatingOut) && $currentRound.category}
-			{@const categoryDef = getCategoryDefinition($currentRound.category)}
-			{#if categoryDef}
-				{@const positions = [
-					{
-						name: 'bottom',
-						containerClass: 'absolute bottom-4 left-1/2 -translate-x-1/2',
-						innerTransform: '',
-						hideOnNarrow: false,
-						flyParams: { y: 100, duration: 300 }
-					},
-					{
-						name: 'left',
-						containerClass: 'absolute left-4 top-1/2 -translate-y-1/2',
-						innerTransform: 'translateX(-25%) rotate(90deg)',
-						hideOnNarrow: true,
-						flyParams: { x: -100, duration: 300 }
-					},
-					{
-						name: 'right',
-						containerClass: 'absolute right-4 top-1/2 -translate-y-1/2',
-						innerTransform: 'translateX(25%) rotate(-90deg)',
-						hideOnNarrow: true,
-						flyParams: { x: 100, duration: 300 }
-					}
-				]}
-
-				{#each positions as position (position.name)}
-					{#if !isAnimatingOut}
-						<div
-							class="{position.containerClass} {position.hideOnNarrow
-								? 'hidden lg:block'
-								: ''} select-none"
-							in:fly={position.flyParams}
-							out:fly={position.flyParams}
-						>
-							<div
-								class="rounded-2xl border-4 px-10 py-2 backdrop-blur-md"
-								style="background: linear-gradient(135deg, {categoryDef.color1}, {categoryDef.color2}); 
-									   border-color: {categoryDef.color2};
-									   box-shadow: 0 0 40px {categoryDef.glowColor};
-									   transform: {position.innerTransform};"
-							>
-								<p class="text-2xl font-bold tracking-wider text-white uppercase drop-shadow-lg">
-									{$_('game.guessCategory', {
-										values: { category: $_(`game.categories.${$currentRound.category}`) }
-									})}
-								</p>
-							</div>
-						</div>
-					{/if}
-				{/each}
-			{/if}
-		{/if}
+		<EdgeDisplay
+			visible={!!($currentRound.category && !$currentRound.isRevealed && !$currentRound.isSpinning)}
+			hideTop={true}
+		>
+			{#snippet children()}
+				{@const categoryDef = getCategoryDefinition($currentRound.category!)}
+				{#if categoryDef}
+					<div
+						class="rounded-2xl border-4 px-10 py-2 backdrop-blur-md"
+						style="background: linear-gradient(135deg, {categoryDef.color1}, {categoryDef.color2}); 
+							   border-color: {categoryDef.color2};
+							   box-shadow: 0 0 40px {categoryDef.glowColor};"
+					>
+						<p class="text-2xl font-bold tracking-wider text-white uppercase drop-shadow-lg">
+							{$_('game.guessCategory', {
+								values: { category: $_(`game.categories.${$currentRound.category}`) }
+							})}
+						</p>
+					</div>
+				{/if}
+			{/snippet}
+		</EdgeDisplay>
 	{/if}
 </div>
 

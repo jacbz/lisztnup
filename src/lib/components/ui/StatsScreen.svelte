@@ -171,7 +171,9 @@
 								style="background-color: {player.color};"
 							></div>
 							<span class="flex-1 text-sm font-semibold text-white">{player.name}</span>
-							<span class="text-sm font-bold text-cyan-400">{scores[scores.length - 1]} pts</span>
+							<span class="text-sm font-bold text-cyan-400"
+								>{$_('scoring.pts', { values: { points: scores[scores.length - 1] } })}</span
+							>
 						</div>
 					{/each}
 				</div>

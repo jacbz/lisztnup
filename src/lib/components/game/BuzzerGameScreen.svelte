@@ -19,6 +19,7 @@
 	import Dialog from '../ui/Dialog.svelte';
 	import Popup from '../ui/Popup.svelte';
 	import TrackInfo from '../ui/TrackInfo.svelte';
+	import EdgeDisplay from '../ui/EdgeDisplay.svelte';
 	import SettingsIcon from 'lucide-svelte/icons/settings';
 	import BarChart from 'lucide-svelte/icons/bar-chart-3';
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';
@@ -314,12 +315,12 @@
 	{#if !isGameOver && currentTrack}
 		<div class="flex h-screen flex-col items-center justify-center">
 			<!-- Buzzer Button (always centered) with floating countdown -->
-			<div class="relative z-50 flex items-center justify-center">
-				<!-- Category & Time Display (floating above buzzer) -->
-				{#if hasStartedPlaying && !isBuzzerPressed}
+			<!-- Category & Time Display -->
+			<EdgeDisplay visible={hasStartedPlaying && !isBuzzerPressed}>
+				{#snippet children()}
 					{@const categoryDef = getCategoryDefinition(currentCategory)}
 					<div
-						class="absolute -top-24 left-1/2 flex max-w-[90vw] -translate-x-1/2 flex-col items-center gap-3 rounded-[20px] border-[3px] bg-gray-900 px-6 py-3 shadow-[0_0_40px] md:-top-28 md:flex-row md:gap-6 md:px-8"
+						class="flex max-w-[90vw] flex-col items-center gap-3 rounded-[20px] border-[3px] bg-gray-900 px-6 py-3 shadow-[0_0_40px] md:flex-row md:gap-6 md:px-8"
 						style="border-color: {categoryDef?.color2 ||
 							'#22d3ee'}; box-shadow: 0 0 40px {categoryDef?.glowColor || 'rgba(34,211,238,0.4)'};"
 					>
@@ -333,34 +334,35 @@
 							class="text-base font-semibold text-nowrap md:text-lg"
 							style="color: {categoryDef?.color2 || '#a855f7'};"
 						>
-							+{CATEGORY_POINTS[currentCategory]} pts
+							{$_('scoring.points', { values: { points: CATEGORY_POINTS[currentCategory] } })}
 						</div>
 						<div class="min-w-[60px] text-center text-4xl font-bold text-white md:text-5xl">
 							{Math.ceil(timeRemaining)}
 						</div>
 					</div>
-				{/if}
-
+				{/snippet}
+			</EdgeDisplay>
+			<div class="relative z-50 flex items-center justify-center">
 				<button
 					type="button"
-					class="relative z-100 flex h-64 w-64 max-w-[80vw] cursor-pointer items-center justify-center rounded-full border-8 border-red-700 bg-red-600 shadow-[0_10px_40px_rgba(220,38,38,0.6)] transition-all duration-200 hover:scale-105 hover:shadow-[0_15px_50px_rgba(220,38,38,0.8)] active:scale-95 active:shadow-[0_5px_30px_rgba(220,38,38,0.6)] disabled:cursor-not-allowed disabled:opacity-50 md:h-[300px] md:w-[300px]"
+					class="relative z-100 flex aspect-square w-80 max-w-[80vw] cursor-pointer items-center justify-center rounded-full border-8 border-red-700 bg-red-600 px-8 shadow-[0_10px_40px_rgba(220,38,38,0.6)] transition-all duration-200 hover:scale-105 hover:shadow-[0_15px_50px_rgba(220,38,38,0.8)] active:scale-95 active:shadow-[0_5px_30px_rgba(220,38,38,0.6)] disabled:cursor-not-allowed disabled:opacity-50 md:w-[500px]"
 					onclick={showReveal ? handleReveal : handleBuzzerPress}
 					disabled={isBuzzerPressed && !showReveal}
 				>
 					{#if showReveal}
 						<span
-							class="text-[32px] font-bold tracking-[0.15em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
-							>REVEAL</span
+							class="font-bold tracking-[0.15em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
+							style="font-size: clamp(2rem, 8vw, 4rem);">{$_('game.buzzer.reveal')}</span
 						>
 					{:else if !hasStartedPlaying}
 						<span
-							class="text-[32px] font-bold tracking-[0.15em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
-							>PRESS TO START</span
+							class="font-bold tracking-[0.15em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
+							style="font-size: clamp(1.5rem, 6vw, 3rem);">{$_('game.buzzer.pressToStart')}</span
 						>
 					{:else}
 						<span
-							class="text-[32px] font-bold tracking-[0.15em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
-							>BUZZ!</span
+							class="font-bold tracking-[0.15em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
+							style="font-size: clamp(2rem, 8vw, 4rem);">{$_('game.buzzer.buzz')}</span
 						>
 					{/if}
 				</button>
@@ -370,7 +372,7 @@
 </div>
 
 <!-- Stats Summary & Button -->
-{#if !isGameOver && !showScoringScreen}
+{#if !isGameOver && !showScoringScreen && enableScoring}
 	<div class="fixed right-6 bottom-6 z-30 flex flex-col items-end gap-3">
 		<!-- Game Summary -->
 		<div
@@ -380,7 +382,9 @@
 				<div class="flex items-center gap-2">
 					<div class="h-2.5 w-2.5 rounded-full" style="background-color: {player.color};"></div>
 					<span class="flex-1 text-sm font-medium text-gray-300">{player.name}</span>
-					<span class="text-sm font-bold text-cyan-400">{player.score}pts</span>
+					<span class="text-sm font-bold text-cyan-400"
+						>{$_('scoring.pts', { values: { points: player.score } })}</span
+					>
 				</div>
 			{/each}
 		</div>

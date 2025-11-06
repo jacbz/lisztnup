@@ -301,7 +301,7 @@
 				class="rounded-xl border-2 border-cyan-400 bg-gray-900 px-4 py-2 shadow-[0_0_20px_rgba(34,211,238,0.3)]"
 			>
 				<p class="text-sm font-semibold text-gray-400">Score</p>
-				<p class="text-3xl font-bold text-cyan-400">{$gameSession.players[0].score}</p>
+				<p class="text-right text-3xl font-bold text-cyan-400">{$gameSession.players[0].score}</p>
 			</div>
 		</div>
 	{/if}
@@ -311,7 +311,7 @@
 		<div class="flex h-screen items-center justify-center">
 			<!-- Floating Legend of Categories (above player button) -->
 			<div
-				class="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-[300px] rounded-2xl border-2 border-cyan-400 bg-gray-900 px-4 py-3 shadow-[0_0_30px_rgba(34,211,238,0.3)] md:px-6 md:py-4"
+				class="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-80 rounded-2xl border-2 border-cyan-400 bg-gray-900 px-4 py-3 shadow-[0_0_30px_rgba(34,211,238,0.3)] md:px-6 md:py-4"
 			>
 				<div class="flex flex-col items-center gap-1.5 md:flex-row md:gap-2">
 					{#each categories as category}
@@ -363,7 +363,9 @@
 				<div class="flex items-center gap-2">
 					<div class="h-2.5 w-2.5 rounded-full" style="background-color: {player.color};"></div>
 					<span class="flex-1 text-sm font-medium text-gray-300">{player.name}</span>
-					<span class="text-sm font-bold text-cyan-400">{player.score}pts</span>
+					<span class="text-sm font-bold text-cyan-400"
+						>{$_('scoring.pts', { values: { points: player.score } })}</span
+					>
 				</div>
 			{/each}
 		</div>

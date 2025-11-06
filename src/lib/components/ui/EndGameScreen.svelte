@@ -68,7 +68,7 @@
 					</h1>
 					{#if sortedPlayers.length > 0}
 						<p class="mt-4 text-3xl font-bold text-white">
-							{sortedPlayers[0].score} pts
+							{$_('scoring.pts', { values: { points: sortedPlayers[0].score } })}
 						</p>
 					{/if}
 				</div>
@@ -102,7 +102,9 @@
 								<div class="flex-1 text-lg font-semibold text-white sm:text-base">
 									{player.name}
 								</div>
-								<div class="text-xl font-bold text-cyan-400 sm:text-lg">{player.score} pts</div>
+								<div class="text-xl font-bold text-cyan-400 sm:text-lg">
+									{$_('scoring.pts', { values: { points: player.score } })}
+								</div>
 							</div>
 						{/each}
 					</div>
