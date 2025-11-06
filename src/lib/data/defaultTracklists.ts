@@ -10,6 +10,9 @@ import chamberIcon from '$lib/assets/icons/chamber.svg?raw';
 import balletIcon from '$lib/assets/icons/ballet.svg?raw';
 import operaIcon from '$lib/assets/icons/opera.svg?raw';
 import starIcon from '$lib/assets/icons/star.svg?raw';
+import violinIcon from '$lib/assets/icons/violin.svg?raw';
+import celloIcon from '$lib/assets/icons/cello.svg?raw';
+import orchestraIcon from '$lib/assets/icons/orchestra.svg?raw';
 
 /**
  * Default tracklist presets organized by categories
@@ -154,6 +157,27 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		}
 	},
 	{
+		name: 'tracklists.orchestral.name',
+		description: 'tracklists.orchestral.description',
+		isDefault: true,
+		icon: orchestraIcon,
+		category: 'categories',
+		config: {
+			categoryWeights: {
+				vocal: 0,
+				chamber: 0,
+				orchestral: 10,
+				piano: 0,
+				concerto: 0,
+				opera: 0,
+				ballet: 0,
+				other: 0
+			},
+			workScoreRange: [3.5, MAX_WORK_SCORE],
+			maxTracksFromSingleWork: 5
+		}
+	},
+	{
 		name: 'tracklists.chamber.name',
 		description: 'tracklists.chamber.description',
 		isDefault: true,
@@ -219,6 +243,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		description: 'tracklists.pianoconcerto.description',
 		isDefault: true,
 		category: 'categories',
+		icon: pianoIcon,
 		config: {
 			categoryWeights: {
 				vocal: 0,
@@ -239,6 +264,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		description: 'tracklists.violinconcerto.description',
 		isDefault: true,
 		category: 'categories',
+		icon: violinIcon,
 		config: {
 			categoryWeights: {
 				vocal: 0,
@@ -259,6 +285,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		description: 'tracklists.celloconcerto.description',
 		isDefault: true,
 		category: 'categories',
+		icon: celloIcon,
 		config: {
 			categoryWeights: {
 				vocal: 0,

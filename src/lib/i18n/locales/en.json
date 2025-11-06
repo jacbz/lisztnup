@@ -75,6 +75,10 @@
 			"name": "Concerto",
 			"description": "Concertos highlighting soloists with orchestra."
 		},
+		"orchestral": {
+			"name": "Orchestral",
+			"description": "Grand symphonic works for full orchestra."
+		},
 		"chamber": {
 			"name": "Chamber",
 			"description": "Intimate chamber ensemble works."

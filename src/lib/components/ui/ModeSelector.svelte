@@ -35,7 +35,7 @@
 		{
 			id: 'buzzer' as GameMode,
 			icon: Zap,
-			color: '#22d3ee'
+			color: '#ef4444'
 		},
 		{
 			id: 'bingo' as GameMode,
@@ -51,12 +51,11 @@
 			{@const isSelected = selectedMode === mode.id}
 			<button
 				type="button"
-				class="relative flex flex-1 cursor-pointer items-start gap-4 overflow-hidden rounded-2xl border-2 bg-gray-900/80 p-6 text-left transition-all duration-300 hover:bg-gray-800/80"
-				class:border-transparent={!isSelected}
+				class="relative flex flex-1 cursor-pointer items-start gap-4 overflow-hidden rounded-2xl border-2 p-6 text-left backdrop-blur-xl transition-all duration-300 hover:scale-[1.02]"
 				class:shadow-none={!isSelected}
 				style={isSelected
 					? `border-color: ${mode.color}; box-shadow: 0 0 30px ${mode.color}80;`
-					: ''}
+					: `border-color: ${mode.color}66;`}
 				onclick={() => handleModeClick(mode.id)}
 			>
 				<!-- Mode Icon -->
@@ -71,7 +70,7 @@
 				<div class="flex-1">
 					<!-- Mode Name -->
 					<h3
-						class="mb-1 text-lg font-bold transition-colors"
+						class="mb-1 text-xl font-bold transition-colors"
 						class:text-gray-400={!isSelected}
 						style={isSelected ? `color: ${mode.color};` : ''}
 					>
@@ -88,7 +87,7 @@
 				<div
 					role="button"
 					tabindex="0"
-					class="absolute top-2 right-2 flex cursor-pointer items-center justify-center rounded-full border border-gray-700 bg-gray-800/80 p-1.5 text-gray-400 transition-all duration-200 hover:scale-110 hover:border-gray-500 hover:bg-gray-700/80 hover:text-white"
+					class="absolute top-2 right-2 flex cursor-pointer items-center justify-center rounded-full border border-gray-600 p-1.5 text-gray-400 transition-all duration-200 hover:scale-110 hover:border-gray-500 hover:text-white"
 					onclick={(e) => showRules(e, mode.id)}
 					onkeydown={(e) => {
 						if (e.key === 'Enter' || e.key === ' ') {
