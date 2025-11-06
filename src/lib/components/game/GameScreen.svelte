@@ -26,6 +26,7 @@
 
 	// Context for sharing functions with child components
 	import { GAME_SCREEN_CONTEXT } from './context';
+	import { ALL_CATEGORIES } from '$lib/types/game';
 
 	interface GameScreenContext {
 		playTrack: () => Promise<void>;
@@ -70,9 +71,7 @@
 	);
 	const sortedPlayers = $derived([...$gameSession.players].sort((a, b) => b.score - a.score));
 	const activeCategories = $derived(
-		(['composition', 'composer', 'decade', 'era', 'form'] as const).filter(
-			(cat) => !generator.getDisabledCategories().includes(cat)
-		)
+		ALL_CATEGORIES.filter((cat) => !generator.getDisabledCategories().includes(cat))
 	);
 	const disabledCategories = $derived(generator.getDisabledCategories());
 

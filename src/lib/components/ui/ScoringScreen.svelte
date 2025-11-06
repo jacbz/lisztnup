@@ -24,7 +24,7 @@
 		track = null,
 		currentCategory = null,
 		isSoloMode = false,
-		categories = ['composition', 'composer', 'decade', 'era', 'form'] as const,
+		categories = ['work', 'composer', 'decade', 'era', 'form'] as const,
 		onScore = () => {}
 	}: Props = $props();
 

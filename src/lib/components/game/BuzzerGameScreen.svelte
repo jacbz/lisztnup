@@ -38,15 +38,15 @@
 	const numberOfTracks = $derived($settings.numberOfTracks);
 
 	// Build category progression based on disabled categories
-	// Logic: composition -> composer -> decade/era
+	// Logic: work -> composer -> decade/era
 	// If composer is disabled, use decade instead
-	// If both decade and era are disabled, only use composition
+	// If both decade and era are disabled, only use work
 	const categoryProgression = $derived.by((): GuessCategory[] => {
 		const progression: GuessCategory[] = [];
 
-		// Always start with composition if available
-		if (!disabledCategories.includes('composition')) {
-			progression.push('composition');
+		// Always start with work if available
+		if (!disabledCategories.includes('work')) {
+			progression.push('work');
 		}
 
 		// Next priority: composer (or decade if composer disabled)
@@ -65,8 +65,7 @@
 
 		// Fallback: if progression is empty, use any available category
 		if (progression.length === 0) {
-			const allCategories: GuessCategory[] = ['composition', 'composer', 'decade', 'era', 'form'];
-			const available = allCategories.filter((cat) => !disabledCategories.includes(cat));
+			const available = ALL_CATEGORIES.filter((cat) => !disabledCategories.includes(cat));
 			if (available.length > 0) {
 				progression.push(available[0]);
 			}
@@ -97,8 +96,8 @@
 	// Determine current category based on time and progression
 	const currentCategory = $derived.by((): GuessCategory => {
 		if (categoryProgression.length === 0) {
-			// Fallback to composition if somehow no categories are available
-			return 'composition';
+			// Fallback to work if somehow no categories are available
+			return 'work';
 		}
 
 		if (categoryProgression.length === 1) {
@@ -116,9 +115,9 @@
 		}
 
 		// Three categories: use original time splits (15s / 10s / 5s)
-		if (playbackTime < BUZZER_TIME_LIMITS.composition) {
+		if (playbackTime < BUZZER_TIME_LIMITS.work) {
 			return categoryProgression[0];
-		} else if (playbackTime < BUZZER_TIME_LIMITS.composition + BUZZER_TIME_LIMITS.composer) {
+		} else if (playbackTime < BUZZER_TIME_LIMITS.work + BUZZER_TIME_LIMITS.composer) {
 			return categoryProgression[1];
 		} else {
 			return categoryProgression[2];
@@ -146,13 +145,12 @@
 		}
 
 		// Three categories: original splits
-		if (playbackTime < BUZZER_TIME_LIMITS.composition) {
-			return BUZZER_TIME_LIMITS.composition - playbackTime;
-		} else if (playbackTime < BUZZER_TIME_LIMITS.composition + BUZZER_TIME_LIMITS.composer) {
-			return BUZZER_TIME_LIMITS.composition + BUZZER_TIME_LIMITS.composer - playbackTime;
+		if (playbackTime < BUZZER_TIME_LIMITS.work) {
+			return BUZZER_TIME_LIMITS.work - playbackTime;
+		} else if (playbackTime < BUZZER_TIME_LIMITS.work + BUZZER_TIME_LIMITS.composer) {
+			return BUZZER_TIME_LIMITS.work + BUZZER_TIME_LIMITS.composer - playbackTime;
 		} else {
-			const total =
-				BUZZER_TIME_LIMITS.composition + BUZZER_TIME_LIMITS.composer + BUZZER_TIME_LIMITS.era;
+			const total = BUZZER_TIME_LIMITS.work + BUZZER_TIME_LIMITS.composer + BUZZER_TIME_LIMITS.era;
 			return total - playbackTime;
 		}
 	});
@@ -296,6 +294,7 @@
 	// Import required functions from stores
 	import { gameSession, nextRound as nextRoundFn, resetGame, toast } from '$lib/stores';
 	import { deezerPlayer } from '$lib/services';
+	import { ALL_CATEGORIES } from '$lib/types/game';
 
 	onMount(() => {
 		// Detect touch support

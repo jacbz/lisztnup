@@ -1,7 +1,7 @@
 import type { GuessCategory } from '$lib/types';
 import { extractPathFromSVG } from '$lib/utils';
 import composerIcon from '$lib/assets/icons/composer.svg?raw';
-import compositionIcon from '$lib/assets/icons/composition.svg?raw';
+import workIcon from '$lib/assets/icons/work.svg?raw';
 import eraIcon from '$lib/assets/icons/era.svg?raw';
 import formIcon from '$lib/assets/icons/form.svg?raw';
 import decadeIcon from '$lib/assets/icons/decade.svg?raw';
@@ -23,11 +23,11 @@ export const categories: CategoryDefinition[] = [
 		iconPath: extractPathFromSVG(composerIcon)
 	},
 	{
-		id: 'composition',
+		id: 'work',
 		color1: '#ec4899',
 		color2: '#f472b6',
 		glowColor: 'rgba(236, 72, 153, 0.8)',
-		iconPath: extractPathFromSVG(compositionIcon)
+		iconPath: extractPathFromSVG(workIcon)
 	},
 	{
 		id: 'era',

@@ -244,14 +244,14 @@
 			"composer": "Composer",
 			"decade": "Decade",
 			"era": "Era",
-			"composition": "Composition",
+			"work": "Work",
 			"form": "Form"
 		},
 		"categoriesShort": {
 			"composer": "com",
 			"decade": "dec",
 			"era": "era",
-			"composition": "work",
+			"work": "work",
 			"form": "form"
 		}
 	},

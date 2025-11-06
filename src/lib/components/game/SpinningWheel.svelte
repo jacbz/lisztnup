@@ -583,7 +583,7 @@
 			{@const categoryText = ($_(`game.categories.${category.id}`) as string).toUpperCase()}
 
 			<!-- Outer text (upside down for readability from outside) -->
-			<text class="segment-text-outer" style="font-size: {wheelSize * 0.05}px;">
+			<text class="segment-text-outer" style="font-size: {wheelSize * 0.055}px;">
 				<textPath href="#outer-curve-{i}" startOffset="50%" text-anchor="middle">
 					{categoryText}
 				</textPath>
@@ -626,7 +626,7 @@
 	.segment-text-inner {
 		fill: white;
 		font-weight: 300;
-		letter-spacing: 0.12em;
+		letter-spacing: 0.15em;
 		pointer-events: none;
 	}
 

@@ -37,18 +37,18 @@
 	<div class="flex h-screen items-center justify-center">
 		<!-- Floating Legend of Categories (above player button) -->
 		<div
-			class="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-80 rounded-2xl border-2 border-cyan-400 bg-gray-900 px-4 py-3 shadow-[0_0_30px_rgba(34,211,238,0.3)] md:px-6 md:py-4"
+			class="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-80 rounded-2xl border-2 border-cyan-400 bg-gray-900 px-4 py-3 shadow-[0_0_30px_rgba(34,211,238,0.3)] md:px-4 md:py-4"
 		>
 			<div class="flex flex-col items-center gap-1.5 md:flex-row md:gap-2">
 				{#each activeCategories as category}
 					{@const def = getCategoryDefinition(category)}
 					{#if def}
 						<div
-							class="flex w-full items-center justify-between gap-2 rounded-lg border-2 border-transparent px-3 py-1 md:min-w-[100px] md:flex-col md:justify-center md:px-4"
+							class="flex w-full items-center justify-between rounded-lg border-2 border-transparent py-1 md:min-w-[100px] md:flex-col md:justify-center md:px-4"
 							style="background: linear-gradient(135deg, {def.color1}, {def.color2});
 							       border-color: {def.color2};"
 						>
-							<span class="text-sm font-bold text-white md:text-xl"
+							<span class="px-3 text-sm font-bold text-white md:text-xl"
 								>{$_(`game.categories.${category}`)}</span
 							>
 							<span class="text-sm font-semibold text-white/90 md:text-lg">

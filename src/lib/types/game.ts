@@ -1,4 +1,5 @@
-export type GuessCategory = 'composer' | 'decade' | 'era' | 'composition' | 'form';
+export type GuessCategory = 'composer' | 'decade' | 'era' | 'work' | 'form';
+export const ALL_CATEGORIES: GuessCategory[] = ['composer', 'decade', 'era', 'work', 'form'];
 
 export type GameMode = 'classic' | 'buzzer' | 'bingo';
 
@@ -20,7 +21,7 @@ export const PLAYER_COLORS = [
 
 // Category scoring points
 export const CATEGORY_POINTS: Record<GuessCategory, number> = {
-	composition: 15,
+	work: 15,
 	decade: 12,
 	composer: 9,
 	era: 3,
@@ -29,7 +30,7 @@ export const CATEGORY_POINTS: Record<GuessCategory, number> = {
 
 // Buzzer mode time limits (in seconds)
 export const BUZZER_TIME_LIMITS = {
-	composition: 15, // First 15 seconds for work
+	work: 15, // First 15 seconds for work
 	composer: 10, // Next 10 seconds for composer
 	era: 5 // Final 5 seconds for era
 };
