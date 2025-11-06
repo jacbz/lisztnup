@@ -10,7 +10,6 @@
 		"subtitle": "The Classical Music Guessing Game"
 	},
 	"loading": {
-		"title": "Loading",
 		"progress": "Loading music database..."
 	},
 	"home": {
@@ -233,7 +232,7 @@
 		"gameOver": "Game Over!",
 		"playAgain": "Play Again",
 		"buzzer": {
-			"pressToStart": "Press to Start",
+			"pressToStart": "Start",
 			"buzz": "Buzz!",
 			"reveal": "Reveal"
 		},
@@ -286,14 +285,14 @@
 		"player": "Player",
 		"selectCategory": "Select the category that was guessed correctly:",
 		"wrong": "❌",
-		"points": "+{points} pts",
-		"noPoints": "0 pts",
-		"pts": "{points} pts",
 		"continue": "Continue",
 		"correctGuess": "Who guessed correctly?",
 		"wrongGuess": "Who made a wrong guess?",
 		"noOne": "No one",
-		"minus": "-1 pt"
+		"noPoints": "0 pts",
+		"pts": "{points} pts",
+		"pointsAwarded": "+{points} pts",
+		"pointsPenalty": "-{points} pts"
 	},
 	"stats": {
 		"title": "Statistics",

@@ -45,6 +45,45 @@
 	const currentTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
 	const isGameOver = $derived($currentRound.currentTrackIndex >= numberOfTracks);
 	const sortedPlayers = $derived([...$gameSession.players].sort((a, b) => b.score - a.score));
+	const disabledCategories = $derived(generator.getDisabledCategories());
+
+	// Build category progression based on disabled categories
+	// Logic: composition -> composer -> decade/era
+	// If composer is disabled, use decade instead
+	// If both decade and era are disabled, only use composition
+	const categoryProgression = $derived.by((): GuessCategory[] => {
+		const progression: GuessCategory[] = [];
+
+		// Always start with composition if available
+		if (!disabledCategories.includes('composition')) {
+			progression.push('composition');
+		}
+
+		// Next priority: composer (or decade if composer disabled)
+		if (!disabledCategories.includes('composer')) {
+			progression.push('composer');
+		} else if (!disabledCategories.includes('decade')) {
+			progression.push('decade');
+		}
+
+		// Final category: decade or era (whichever is available and not already used)
+		if (!disabledCategories.includes('decade') && !progression.includes('decade')) {
+			progression.push('decade');
+		} else if (!disabledCategories.includes('era')) {
+			progression.push('era');
+		}
+
+		// Fallback: if progression is empty, use any available category
+		if (progression.length === 0) {
+			const allCategories: GuessCategory[] = ['composition', 'composer', 'decade', 'era', 'form'];
+			const available = allCategories.filter((cat) => !disabledCategories.includes(cat));
+			if (available.length > 0) {
+				progression.push(available[0]);
+			}
+		}
+
+		return progression;
+	});
 
 	let playbackTime = $state(0); // Current playback time in seconds
 	let hasStartedPlaying = $state(false);
@@ -62,19 +101,69 @@
 	let showInGameSettings = $state(false);
 	let showQuitDialog = $state(false);
 
-	// Determine current category based on time
+	// Detect if device has touch capability
+	let hasTouch = $state(false);
+
+	// Compute button state classes
+	const isActiveBuzz = $derived(!showReveal && hasStartedPlaying);
+	const buzzerButtonClasses = $derived(
+		isActiveBuzz
+			? 'border-red-700 bg-red-600 shadow-[0_10px_40px_rgba(220,38,38,0.6)] hover:shadow-[0_15px_50px_rgba(220,38,38,0.8)] active:shadow-[0_5px_30px_rgba(220,38,38,0.6)]'
+			: 'border-cyan-400 bg-transparent shadow-[0_0_30px_rgba(34,211,238,0.6)] hover:shadow-[0_0_40px_rgba(34,211,238,0.8)] active:shadow-[0_0_25px_rgba(34,211,238,0.5)]'
+	);
+
+	// Determine current category based on time and progression
 	const currentCategory = $derived.by((): GuessCategory => {
-		if (playbackTime < BUZZER_TIME_LIMITS.composition) {
+		if (categoryProgression.length === 0) {
+			// Fallback to composition if somehow no categories are available
 			return 'composition';
+		}
+
+		if (categoryProgression.length === 1) {
+			// Only one category available, use it throughout
+			return categoryProgression[0];
+		}
+
+		if (categoryProgression.length === 2) {
+			// Two categories: split time 15s / 15s
+			if (playbackTime < 15) {
+				return categoryProgression[0];
+			} else {
+				return categoryProgression[1];
+			}
+		}
+
+		// Three categories: use original time splits (15s / 10s / 5s)
+		if (playbackTime < BUZZER_TIME_LIMITS.composition) {
+			return categoryProgression[0];
 		} else if (playbackTime < BUZZER_TIME_LIMITS.composition + BUZZER_TIME_LIMITS.composer) {
-			return 'composer';
+			return categoryProgression[1];
 		} else {
-			return 'era';
+			return categoryProgression[2];
 		}
 	});
 
 	// Time remaining for current category
 	const timeRemaining = $derived.by((): number => {
+		if (categoryProgression.length === 0) {
+			return 30 - playbackTime;
+		}
+
+		if (categoryProgression.length === 1) {
+			// Only one category, show time remaining for full 30s
+			return 30 - playbackTime;
+		}
+
+		if (categoryProgression.length === 2) {
+			// Two categories: 15s each
+			if (playbackTime < 15) {
+				return 15 - playbackTime;
+			} else {
+				return 30 - playbackTime;
+			}
+		}
+
+		// Three categories: original splits
 		if (playbackTime < BUZZER_TIME_LIMITS.composition) {
 			return BUZZER_TIME_LIMITS.composition - playbackTime;
 		} else if (playbackTime < BUZZER_TIME_LIMITS.composition + BUZZER_TIME_LIMITS.composer) {
@@ -90,6 +179,9 @@
 	onMount(() => {
 		gameSession.startSession('buzzer', players, false);
 		sampleAndPreloadTrack();
+
+		// Detect touch support
+		hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
 		// Create buzzer audio element
 		buzzerAudio = new Audio('/buzzer.mp3');
@@ -138,7 +230,7 @@
 		}
 	}
 
-	async function handleBuzzerPress() {
+	async function handleBuzzerPress(event?: Event) {
 		if (!hasStartedPlaying) {
 			// Start playback on first press
 			try {
@@ -151,12 +243,7 @@
 			}
 		} else if (!isBuzzerPressed) {
 			// Buzzer pressed during playback - pause and show reveal button
-			// Play buzzer sound
-			if (buzzerAudio) {
-				buzzerAudio.currentTime = 0;
-				buzzerAudio.play().catch((err) => console.warn('Failed to play buzzer sound:', err));
-			}
-
+			playBuzzerSound();
 			deezerPlayer.pause();
 			stopProgressTracking();
 			isBuzzerPressed = true;
@@ -167,6 +254,22 @@
 				...state,
 				category: currentCategory
 			}));
+		}
+	}
+
+	function handleBuzzerDown(event: Event) {
+		if (showReveal) {
+			handleReveal();
+		} else {
+			handleBuzzerPress(event);
+		}
+	}
+
+	function playBuzzerSound() {
+		// Play buzzer sound immediately when button is pressed
+		if (buzzerAudio) {
+			buzzerAudio.currentTime = 0;
+			buzzerAudio.play().catch((err) => console.warn('Failed to play buzzer sound:', err));
 		}
 	}
 
@@ -227,9 +330,8 @@
 			const current = deezerPlayer.getCurrentTime();
 			playbackTime = current;
 
-			// Check if we've reached the end of buzzer time
-			const maxTime =
-				BUZZER_TIME_LIMITS.composition + BUZZER_TIME_LIMITS.composer + BUZZER_TIME_LIMITS.era;
+			// Check if we've reached the end of buzzer time (always 30s)
+			const maxTime = 30;
 
 			if (current >= maxTime || !deezerPlayer.isPlaying()) {
 				// Time's up - auto-buzz and show reveal
@@ -334,7 +436,9 @@
 							class="text-base font-semibold text-nowrap md:text-lg"
 							style="color: {categoryDef?.color2 || '#a855f7'};"
 						>
-							{$_('scoring.points', { values: { points: CATEGORY_POINTS[currentCategory] } })}
+							{$_('scoring.pointsAwarded', {
+								values: { points: CATEGORY_POINTS[currentCategory] }
+							})}
 						</div>
 						<div class="min-w-[60px] text-center text-4xl font-bold text-white md:text-5xl">
 							{Math.ceil(timeRemaining)}
@@ -345,8 +449,9 @@
 			<div class="relative z-50 flex items-center justify-center">
 				<button
 					type="button"
-					class="relative z-100 flex aspect-square w-80 max-w-[80vw] cursor-pointer items-center justify-center rounded-full border-8 border-red-700 bg-red-600 px-8 shadow-[0_10px_40px_rgba(220,38,38,0.6)] transition-all duration-200 hover:scale-105 hover:shadow-[0_15px_50px_rgba(220,38,38,0.8)] active:scale-95 active:shadow-[0_5px_30px_rgba(220,38,38,0.6)] disabled:cursor-not-allowed disabled:opacity-50 md:w-[500px]"
-					onclick={showReveal ? handleReveal : handleBuzzerPress}
+					class="relative z-100 flex aspect-square w-80 max-w-[80vw] cursor-pointer items-center justify-center rounded-full border-8 px-8 transition-all duration-200 hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 md:w-[500px] {buzzerButtonClasses}"
+					onmousedown={hasTouch ? undefined : handleBuzzerDown}
+					ontouchstart={hasTouch ? handleBuzzerDown : undefined}
 					disabled={isBuzzerPressed && !showReveal}
 				>
 					{#if showReveal}
@@ -357,12 +462,12 @@
 					{:else if !hasStartedPlaying}
 						<span
 							class="font-bold tracking-[0.15em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
-							style="font-size: clamp(1.5rem, 6vw, 3rem);">{$_('game.buzzer.pressToStart')}</span
+							style="font-size: clamp(2rem, 8vw, 4rem);">{$_('game.buzzer.pressToStart')}</span
 						>
 					{:else}
 						<span
 							class="font-bold tracking-[0.15em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
-							style="font-size: clamp(2rem, 8vw, 4rem);">{$_('game.buzzer.buzz')}</span
+							style="font-size: clamp(3rem, 10vw, 5rem);">{$_('game.buzzer.buzz')}</span
 						>
 					{/if}
 				</button>
@@ -462,6 +567,7 @@
 	players={$gameSession.players}
 	isSoloMode={false}
 	mode="buzzer"
+	{enableScoring}
 	onPlayAgain={handlePlayAgain}
 	onViewStats={() => (showStatsScreen = true)}
 	onHome={handleHome}

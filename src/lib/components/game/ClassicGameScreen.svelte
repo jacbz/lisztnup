@@ -46,6 +46,13 @@
 	const currentTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
 	const isGameOver = $derived($currentRound.currentTrackIndex >= numberOfTracks);
 	const sortedPlayers = $derived([...$gameSession.players].sort((a, b) => b.score - a.score));
+	const disabledCategories = $derived(generator.getDisabledCategories());
+
+	// All categories minus disabled ones
+	const allCategories = ['composition', 'decade', 'composer', 'era', 'form'] as const;
+	const activeCategories = $derived(
+		allCategories.filter((cat) => !disabledCategories.includes(cat))
+	);
 
 	let audioProgress = $state(0);
 	let progressInterval: number | null = null;
@@ -257,8 +264,6 @@
 		showQuitDialog = false;
 		handleHome();
 	}
-
-	const categories = ['composition', 'decade', 'composer', 'era', 'form'] as const;
 </script>
 
 <div class="fixed inset-0 overflow-hidden text-white">
@@ -313,7 +318,7 @@
 				class="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-80 rounded-2xl border-2 border-cyan-400 bg-gray-900 px-4 py-3 shadow-[0_0_30px_rgba(34,211,238,0.3)] md:px-6 md:py-4"
 			>
 				<div class="flex flex-col items-center gap-1.5 md:flex-row md:gap-2">
-					{#each categories as category}
+					{#each activeCategories as category}
 						{@const def = getCategoryDefinition(category)}
 						{#if def}
 							<div
@@ -325,7 +330,7 @@
 									>{$_(`game.categories.${category}`)}</span
 								>
 								<span class="text-sm font-semibold text-white/90 md:text-lg">
-									{$_('scoring.points', { values: { points: CATEGORY_POINTS[category] } })}
+									{$_('scoring.pointsAwarded', { values: { points: CATEGORY_POINTS[category] } })}
 								</span>
 							</div>
 						{/if}
@@ -402,6 +407,7 @@
 	track={currentTrack}
 	players={$gameSession.players}
 	{isSoloMode}
+	categories={activeCategories}
 	onScore={handleScoreSubmit}
 />
 
@@ -420,6 +426,7 @@
 	visible={showEndGameScreen}
 	players={$gameSession.players}
 	{isSoloMode}
+	{enableScoring}
 	mode="classic"
 	onPlayAgain={handlePlayAgain}
 	onViewStats={() => (showStatsScreen = true)}

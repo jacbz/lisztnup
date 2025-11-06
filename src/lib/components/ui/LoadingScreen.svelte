@@ -16,10 +16,6 @@
 
 <div class="flex h-screen w-full items-center justify-center">
 	<div class="text-center">
-		<h1 class="p-16 font-streamster text-9xl font-bold text-cyan-400 select-none">
-			{$_('app.title')}
-		</h1>
-
 		{#if error}
 			<div class="text-xl text-red-400">
 				<p>Error loading game data</p>

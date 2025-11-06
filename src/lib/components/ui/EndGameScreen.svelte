@@ -11,6 +11,7 @@
 		players?: Player[];
 		isSoloMode?: boolean;
 		mode?: GameMode;
+		enableScoring?: boolean;
 		onPlayAgain?: () => void;
 		onViewStats?: () => void;
 		onHome?: () => void;
@@ -21,6 +22,7 @@
 		players = [],
 		isSoloMode = false,
 		mode = 'classic',
+		enableScoring = true,
 		onPlayAgain = () => {},
 		onViewStats = () => {},
 		onHome = () => {}
@@ -43,7 +45,7 @@
 			class="w-full max-w-[600px] rounded-3xl border-2 border-cyan-400 bg-gray-900 p-10 shadow-[0_0_30px_rgba(34,211,238,0.3)]"
 		>
 			<!-- Winner Announcement -->
-			{#if !isSoloMode}
+			{#if !isSoloMode && enableScoring}
 				<div class="mb-10 text-center">
 					<Trophy
 						class="trophy-icon mx-auto mb-5 h-20 w-20 animate-trophy-glow text-amber-400 drop-shadow-[0_0_20px_rgba(251,191,36,0.6)]"
@@ -57,7 +59,7 @@
 						{/if}
 					</h1>
 				</div>
-			{:else}
+			{:else if isSoloMode && enableScoring}
 				<div class="mb-10 text-center">
 					<Trophy
 						class="trophy-icon mx-auto mb-5 h-20 w-20 animate-trophy-glow text-amber-400 drop-shadow-[0_0_20px_rgba(251,191,36,0.6)]"
@@ -72,10 +74,20 @@
 						</p>
 					{/if}
 				</div>
+			{:else}
+				<div class="mb-10 text-center">
+					<Trophy
+						class="trophy-icon mx-auto mb-5 h-20 w-20 animate-trophy-glow text-amber-400 drop-shadow-[0_0_20px_rgba(251,191,36,0.6)]"
+						size={80}
+					/>
+					<h1 class="text-[40px] font-bold text-cyan-400 sm:text-[32px]">
+						{$_('game.gameOver')}
+					</h1>
+				</div>
 			{/if}
 
 			<!-- Final Scores -->
-			{#if !isSoloMode}
+			{#if !isSoloMode && enableScoring}
 				<div class="mb-8">
 					<h2 class="mb-5 text-center text-2xl font-bold text-cyan-400 sm:text-xl">
 						{$_('endGame.finalScores')}
@@ -113,7 +125,7 @@
 
 			<!-- Action Buttons -->
 			<div class="flex flex-col gap-3">
-				{#if !isSoloMode}
+				{#if !isSoloMode && enableScoring}
 					<button
 						type="button"
 						onclick={onViewStats}
@@ -135,7 +147,7 @@
 				<button
 					type="button"
 					onclick={onHome}
-					class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-gray-600 bg-gray-800 px-6 py-3.5 text-base font-bold text-gray-400 transition-all duration-200 hover:border-gray-500 hover:bg-gray-700"
+					class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-gray-900 px-6 py-3.5 text-base font-bold text-cyan-400 transition-all duration-200 hover:border-cyan-400 hover:bg-gray-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)]"
 				>
 					<Home class="h-5 w-5" />
 					{$_('endGame.home')}

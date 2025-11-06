@@ -13,6 +13,7 @@
 		track?: Track | null;
 		currentCategory?: GuessCategory | null;
 		isSoloMode?: boolean;
+		categories?: readonly GuessCategory[];
 		onScore?: (scores: Record<string, number>) => void;
 	}
 
@@ -23,6 +24,7 @@
 		track = null,
 		currentCategory = null,
 		isSoloMode = false,
+		categories = ['composition', 'composer', 'decade', 'era', 'form'] as const,
 		onScore = () => {}
 	}: Props = $props();
 
@@ -42,8 +44,6 @@
 			selectedCategory = null; // No default for classic solo
 		}
 	});
-
-	const categories: GuessCategory[] = ['composition', 'composer', 'decade', 'era', 'form'];
 
 	function toggleCell(playerName: string, category: GuessCategory | 'none') {
 		const cellKey = `${playerName}:${category}`;
@@ -219,7 +219,7 @@
 												>{$_(`game.categories.${category}`)}</span
 											>
 											<span class="text-lg font-semibold text-white/90"
-												>{$_('scoring.points', {
+												>{$_('scoring.pointsAwarded', {
 													values: { points: CATEGORY_POINTS[category] }
 												})}</span
 											>
@@ -238,7 +238,7 @@
 								>
 									<span class="text-2xl font-bold text-white uppercase">{$_('scoring.wrong')}</span>
 									<span class="text-lg font-semibold text-white/90"
-										>{$_('scoring.points', { values: { points: 0 } })}</span
+										>{$_('scoring.pointsAwarded', { values: { points: 0 } })}</span
 									>
 								</button>
 							</div>
@@ -314,7 +314,7 @@
 									>
 										{#if selectedCells.has(`${player.name}:none`)}
 											<span class="text-base font-bold text-white"
-												>{$_('scoring.points', { values: { points: 0 } })}</span
+												>{$_('scoring.pointsAwarded', { values: { points: 0 } })}</span
 											>
 										{/if}
 									</button>
@@ -331,7 +331,7 @@
 								{#each players as player}
 									<button
 										type="button"
-										class="flex cursor-pointer items-center gap-2 rounded-lg border-2 px-3.5 py-2.5 text-sm font-semibold text-white transition-all duration-200"
+										class="flex cursor-pointer flex-col items-center gap-1 rounded-lg border-2 px-3.5 py-2.5 text-sm font-semibold text-white transition-all duration-200"
 										class:border-white={correctPlayer === player.name}
 										class:shadow-[0_0_15px_rgba(255,255,255,0.3)]={correctPlayer === player.name}
 										class:opacity-30={wrongPlayer === player.name}
@@ -345,14 +345,23 @@
 											: player.color};"
 										onclick={() => handleCorrectPlayerClick(player.name)}
 									>
-										<div
-											class="mr-2 h-3 w-3 rounded-full"
-											class:bg-white={correctPlayer === player.name}
-											style:background-color={correctPlayer === player.name
-												? 'white'
-												: player.color}
-										></div>
-										{player.name}
+										<div class="flex items-center gap-2">
+											<div
+												class="h-3 w-3 rounded-full"
+												class:bg-white={correctPlayer === player.name}
+												style:background-color={correctPlayer === player.name
+													? 'white'
+													: player.color}
+											></div>
+											{player.name}
+										</div>
+										{#if correctPlayer === player.name && currentCategory}
+											<span class="text-xs opacity-80">
+												{$_('scoring.pointsAwardedAwarded', {
+													values: { points: CATEGORY_POINTS[currentCategory] }
+												})}
+											</span>
+										{/if}
 									</button>
 								{/each}
 								<!-- No one option -->
@@ -375,7 +384,7 @@
 								{#each players as player}
 									<button
 										type="button"
-										class="flex cursor-pointer items-center gap-2 rounded-lg border-2 px-3.5 py-2.5 text-sm font-semibold text-white transition-all duration-200"
+										class="flex cursor-pointer flex-col items-center gap-1 rounded-lg border-2 px-3.5 py-2.5 text-sm font-semibold text-white transition-all duration-200"
 										class:border-white={wrongPlayer === player.name}
 										class:shadow-[0_0_15px_rgba(255,255,255,0.3)]={wrongPlayer === player.name}
 										class:opacity-30={correctPlayer === player.name}
@@ -389,12 +398,23 @@
 											: player.color};"
 										onclick={() => handleWrongPlayerClick(player.name)}
 									>
-										<div
-											class="mr-2 h-3 w-3 rounded-full"
-											class:bg-white={wrongPlayer === player.name}
-											style:background-color={wrongPlayer === player.name ? 'white' : player.color}
-										></div>
-										{player.name}
+										<div class="flex items-center gap-2">
+											<div
+												class="h-3 w-3 rounded-full"
+												class:bg-white={wrongPlayer === player.name}
+												style:background-color={wrongPlayer === player.name
+													? 'white'
+													: player.color}
+											></div>
+											{player.name}
+										</div>
+										{#if wrongPlayer === player.name && currentCategory}
+											<span class="text-xs opacity-80">
+												{$_('scoring.pointsAwardedPenalty', {
+													values: { points: Math.min(10, CATEGORY_POINTS[currentCategory]) }
+												})}
+											</span>
+										{/if}
 									</button>
 								{/each}
 								<!-- No one option -->
