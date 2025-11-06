@@ -65,9 +65,7 @@
 		const cellKey = `${playerName}:${category}`;
 		const newSet = new Set(selectedCells);
 
-		if (newSet.has(cellKey)) {
-			newSet.delete(cellKey);
-		} else {
+		if (!newSet.has(cellKey)) {
 			if (mode === 'buzzer' && category !== 'none') {
 				// Buzzer mode: only one player can score positive, only one can score negative (wrong)
 				if (category === 'wrong') {
@@ -77,6 +75,7 @@
 						const wrongKey = `${p.name}:wrong`;
 						if (wrongKey !== cellKey) {
 							newSet.delete(wrongKey);
+							newSet.add(`${p.name}:none`);
 						}
 					});
 					// If this player had a positive score, remove it

@@ -11,7 +11,7 @@
 		"subtitle": "The Classical Music Guessing Game"
 	},
 	"loading": {
-		"progress": "Loading music database..."
+		"progress": "Loading the music..."
 	},
 	"home": {
 		"start": "START",
@@ -78,7 +78,7 @@
 		},
 		"orchestral": {
 			"name": "Orchestral",
-			"description": "Grand symphonic works for full orchestra."
+			"description": "Symphonic works for orchestra."
 		},
 		"chamber": {
 			"name": "Chamber",
