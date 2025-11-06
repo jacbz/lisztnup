@@ -136,7 +136,7 @@
 	<div class="w-full max-w-5xl px-6 text-center">
 		<!-- Title / Logo -->
 		<h1
-			class="center mt-16 font-streamster text-5xl font-bold text-nowrap text-red-400 select-none sm:text-7xl md:text-8xl"
+			class="center mt-32 font-streamster text-6xl font-bold text-nowrap text-red-400 select-none sm:text-7xl md:mt-16 md:text-8xl"
 		>
 			{$_('app.title')}
 		</h1>
@@ -240,7 +240,7 @@
 
 		<!-- Start Game Button -->
 		{#if selectedMode}
-			<div class="mx-auto mt-6 max-w-2xl">
+			<div class="mx-auto mt-8 max-w-2xl">
 				<button
 					type="button"
 					onclick={handleStartGame}
