@@ -162,10 +162,12 @@
 </Popup>
 
 <div
-	class="absolute top-1/2 left-1/2 z-30 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-30 md:mt-0"
+	class="absolute z-30 transition-opacity duration-30 md:mt-0"
 	class:visible
 	class:mt-24={!allowResize}
-	style="opacity: {visible ? 1 : 0}; pointer-events: {visible ? 'auto' : 'none'};"
+	style="opacity: {visible ? 1 : 0}; pointer-events: {visible
+		? 'auto'
+		: 'none'}; top: 50%; left: 50%; transform: translate(-50%, -50%);"
 >
 	{#if !isRevealed}
 		<!-- Normal state: circular button with internal progress ring -->

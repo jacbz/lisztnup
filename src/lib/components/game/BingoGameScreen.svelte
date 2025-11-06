@@ -118,7 +118,7 @@
 
 <!-- Main Game Area -->
 {#if currentTrack}
-	<div class="flex h-screen items-center justify-center">
+	<div class="relative flex h-screen items-center justify-center">
 		<!-- Spinning Wheel (fills screen) - only in Bingo mode -->
 		<SpinningWheel
 			currentRoundIndex={$currentRound.currentTrackIndex}
