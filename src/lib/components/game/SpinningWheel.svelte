@@ -42,6 +42,8 @@
 	let animationFrameId: number | null = null;
 	let currentRotation = $state(0);
 	let currentPointerColor = $state('#ff0000'); // Track pointer color
+	let isAnimating = $state(false); // Track if animation loop is active
+	let lastCanvasSize = 0; // Track canvas size to avoid unnecessary resizing
 
 	// Drag state
 	let isDragging = $state(false);
@@ -63,9 +65,9 @@
 		}
 	});
 
-	// Redraw when rotation changes
+	// Redraw when rotation changes (but only if not animating, since animation loop handles drawing)
 	$effect(() => {
-		if (canvas) {
+		if (canvas && !isAnimating) {
 			updatePointerColor();
 			drawWheel();
 		}
@@ -113,7 +115,7 @@
 	function drawWheel() {
 		if (!canvas) return;
 
-		const ctx = canvas.getContext('2d');
+		const ctx = canvas.getContext('2d', { willReadFrequently: false, alpha: true });
 		if (!ctx) return;
 
 		const dpr = window.devicePixelRatio || 1;
@@ -123,12 +125,19 @@
 		const glowPadding = 100;
 		const canvasSize = size + glowPadding * 2;
 
-		canvas.width = canvasSize * dpr;
-		canvas.height = canvasSize * dpr;
-		canvas.style.width = `${canvasSize}px`;
-		canvas.style.height = `${canvasSize}px`;
+		// Only resize canvas if size changed (expensive operation)
+		if (canvasSize !== lastCanvasSize) {
+			canvas.width = canvasSize * dpr;
+			canvas.height = canvasSize * dpr;
+			canvas.style.width = `${canvasSize}px`;
+			canvas.style.height = `${canvasSize}px`;
+			lastCanvasSize = canvasSize;
+		}
 
+		// Reset transform and clear
+		ctx.setTransform(1, 0, 0, 1, 0, 0);
 		ctx.scale(dpr, dpr);
+		ctx.clearRect(0, 0, canvasSize, canvasSize);
 
 		// Center everything in the padded canvas
 		const centerX = canvasSize / 2;
@@ -138,9 +147,10 @@
 		const gapWidth = size * 0.01; // The desired constant pixel width for the gap
 		const halfGap = gapWidth / 2;
 
-		ctx.clearRect(0, 0, canvasSize, canvasSize);
-
 		const segmentAngle = (Math.PI * 2) / activeCategories.length;
+
+		// Reduce shadow blur during animation for better Safari performance
+		const shadowBlur = isAnimating ? 40 : 100;
 
 		activeCategories.forEach((category, i) => {
 			const baseAngle = i * segmentAngle + (currentRotation * Math.PI) / 180 - Math.PI / 2;
@@ -162,7 +172,7 @@
 			const midAngle = baseAngle + segmentAngle / 2;
 
 			ctx.shadowColor = category.glowColor;
-			ctx.shadowBlur = 100;
+			ctx.shadowBlur = shadowBlur;
 
 			const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
 			gradient.addColorStop(0.3, category.color2);
@@ -260,7 +270,7 @@
 		ctx.strokeStyle = lighterColor;
 		ctx.lineWidth = 2;
 		ctx.shadowColor = currentPointerColor;
-		ctx.shadowBlur = 15;
+		ctx.shadowBlur = isAnimating ? 8 : 15; // Reduce shadow during animation
 
 		ctx.fill();
 		ctx.stroke();
@@ -311,6 +321,7 @@
 		if (isSpinning) return;
 
 		isSpinning = true;
+		isAnimating = true;
 		showSpinText = false;
 		selectedCategory = null;
 		onSpinStart();
@@ -319,24 +330,35 @@
 		const randomFactor = 0.9 + Math.random() * 0.2;
 		const adjustedVelocity = velocity * randomFactor;
 
-		// Physics-based spin with initial velocity
-		const friction = 0.98; // Smoother friction for longer, more natural spin
-		const minVelocity = 0.05; // Much lower threshold for gradual stop
-		let currentVelocity = adjustedVelocity;
+		// Physics-based spin with frame-rate normalized friction
+		const baseFriction = 0.98;
+		const minVelocity = 0.05;
 
-		function animate() {
+		let currentVelocity = adjustedVelocity;
+		let lastTimestamp = performance.now();
+
+		function animate(timestamp: number) {
+			// Calculate elapsed time since last frame
+			const deltaTime = timestamp - lastTimestamp;
+			lastTimestamp = timestamp;
+
+			// Normalize friction to 60fps to ensure consistent behavior across frame rates
+			// friction^(deltaTime/16.67) approximates the friction applied at 60fps
+			const normalizedFriction = Math.pow(baseFriction, deltaTime / 16.67);
+
 			// Apply friction with gradual ease-out at the end
-			// When velocity is very low, apply even stronger friction for smooth stop
-			let appliedFriction = friction;
+			let appliedFriction = normalizedFriction;
 			if (Math.abs(currentVelocity) < 1) {
 				// Gradually increase friction as we slow down
-				appliedFriction = friction - (1 - Math.abs(currentVelocity)) * 0.03;
+				appliedFriction = normalizedFriction - (1 - Math.abs(currentVelocity)) * 0.03;
 			}
 			currentVelocity *= appliedFriction;
 
 			// Update rotation
 			currentRotation += currentVelocity;
 
+			// Update pointer color and draw
+			updatePointerColor();
 			drawWheel();
 
 			if (Math.abs(currentVelocity) > minVelocity) {
@@ -345,6 +367,7 @@
 				// Stop where it naturally stops
 				rotation = currentRotation;
 				isSpinning = false;
+				isAnimating = false;
 
 				// Calculate which category the pointer is pointing at
 				// Segments are drawn starting from -90° (right) + rotation
@@ -362,7 +385,7 @@
 			}
 		}
 
-		animate();
+		animationFrameId = requestAnimationFrame(animate);
 	}
 
 	function getAngleFromEvent(event: MouseEvent | TouchEvent): number {
@@ -455,18 +478,28 @@
 
 	function decelerateWithPhysics(initialVelocity: number) {
 		// Physics-based deceleration without game callbacks
-		const friction = 0.94; // Smoother friction for gentler deceleration
-		const minVelocity = 0.05; // Lower threshold for smoother stop
-		let currentVelocity = initialVelocity;
+		const baseFriction = 0.94;
+		const minVelocity = 0.05;
 
-		function animate() {
-			// Apply friction
-			currentVelocity *= friction;
+		isAnimating = true;
+		let currentVelocity = initialVelocity;
+		let lastTimestamp = performance.now();
+
+		function animate(timestamp: number) {
+			// Calculate elapsed time since last frame
+			const deltaTime = timestamp - lastTimestamp;
+			lastTimestamp = timestamp;
+
+			// Normalize friction to 60fps
+			const normalizedFriction = Math.pow(baseFriction, deltaTime / 16.67);
+			currentVelocity *= normalizedFriction;
 
 			// Update rotation
 			currentRotation += currentVelocity;
 			rotation = currentRotation;
 
+			// Update pointer color and draw
+			updatePointerColor();
 			drawWheel();
 
 			if (Math.abs(currentVelocity) > minVelocity) {
@@ -474,10 +507,11 @@
 			} else {
 				// Just stop - no snapping, no callbacks
 				rotation = currentRotation;
+				isAnimating = false;
 			}
 		}
 
-		animate();
+		animationFrameId = requestAnimationFrame(animate);
 	}
 
 	function handlePointerDown(event: MouseEvent | TouchEvent) {

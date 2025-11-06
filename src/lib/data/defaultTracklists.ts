@@ -13,6 +13,8 @@ import starIcon from '$lib/assets/icons/star.svg?raw';
 import violinIcon from '$lib/assets/icons/violin.svg?raw';
 import celloIcon from '$lib/assets/icons/cello.svg?raw';
 import orchestraIcon from '$lib/assets/icons/orchestra.svg?raw';
+import composerIcon from '$lib/assets/icons/composer.svg?raw';
+import eraIcon from '$lib/assets/icons/era.svg?raw';
 
 /**
  * Default tracklist presets organized by categories
@@ -310,7 +312,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		name: 'tracklists.liszt.name',
 		description: 'tracklists.liszt.description',
 		isDefault: true,
-		icon: starIcon,
+		icon: composerIcon,
 		category: 'composers',
 		config: {
 			composerFilter: { mode: 'include', composers: ['2cd475bb-1abd-40c4-9904-6d4b691c752c'] },
@@ -321,7 +323,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		name: 'tracklists.bach.name',
 		description: 'tracklists.bach.description',
 		isDefault: true,
-		icon: starIcon,
+		icon: composerIcon,
 		category: 'composers',
 		config: {
 			composerFilter: { mode: 'include', composers: ['24f1766e-9635-4d58-a4d4-9413f9f98a4c'] },
@@ -333,7 +335,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		name: 'tracklists.chopin.name',
 		description: 'tracklists.chopin.description',
 		isDefault: true,
-		icon: starIcon,
+		icon: composerIcon,
 		category: 'composers',
 		config: {
 			composerFilter: { mode: 'include', composers: ['09ff1fe8-d61c-4b98-bb82-18487c74d7b7'] },
@@ -344,7 +346,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		name: 'tracklists.mozart.name',
 		description: 'tracklists.mozart.description',
 		isDefault: true,
-		icon: starIcon,
+		icon: composerIcon,
 		category: 'composers',
 		config: {
 			composerFilter: { mode: 'include', composers: ['b972f589-fb0e-474e-b64a-803b0364fa75'] },
@@ -356,7 +358,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		name: 'tracklists.tchaikovsky.name',
 		description: 'tracklists.tchaikovsky.description',
 		isDefault: true,
-		icon: starIcon,
+		icon: composerIcon,
 		category: 'composers',
 		config: {
 			composerFilter: { mode: 'include', composers: ['9ddd7abc-9e1b-471d-8031-583bc6bc8be9'] },
@@ -367,7 +369,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		name: 'tracklists.vivaldi.name',
 		description: 'tracklists.vivaldi.description',
 		isDefault: true,
-		icon: starIcon,
+		icon: composerIcon,
 		category: 'composers',
 		config: {
 			composerFilter: { mode: 'include', composers: ['ad79836d-9849-44df-8789-180bbc823f3c'] },
@@ -381,6 +383,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		description: 'tracklists.renaissance.description',
 		isDefault: true,
 		category: 'eras',
+		icon: eraIcon,
 		config: {
 			yearFilter: [1400, 1600],
 			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE]
@@ -391,6 +394,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		description: 'tracklists.baroque.description',
 		isDefault: true,
 		category: 'eras',
+		icon: eraIcon,
 		config: {
 			yearFilter: [1600, 1750],
 			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE]
@@ -401,6 +405,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		description: 'tracklists.classical.description',
 		isDefault: true,
 		category: 'eras',
+		icon: eraIcon,
 		config: {
 			yearFilter: [1750, 1820],
 			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE]
@@ -411,6 +416,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		description: 'tracklists.romantic.description',
 		isDefault: true,
 		category: 'eras',
+		icon: eraIcon,
 		config: {
 			yearFilter: [1820, 1910],
 			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE]
@@ -421,6 +427,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		description: 'tracklists.20thcentury.description',
 		isDefault: true,
 		category: 'eras',
+		icon: eraIcon,
 		config: {
 			yearFilter: [1900, 1999],
 			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE]

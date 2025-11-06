@@ -108,12 +108,17 @@
 
 	// Calculate circular progress path
 	const progressPath = $derived.by(() => {
-		const buttonSize = allowResize
-			? Math.min(windowSize.width || window.innerWidth, windowSize.height || window.innerHeight) *
-				0.9 *
-				0.14 *
-				2
-			: 240;
+		const dynamicSize =
+			windowSize.width < 600
+				? Math.min(windowSize.width || window.innerWidth, windowSize.height || window.innerHeight) *
+					0.16 *
+					2
+				: Math.min(windowSize.width || window.innerWidth, windowSize.height || window.innerHeight) *
+					0.9 *
+					0.14 *
+					2;
+
+		const buttonSize = allowResize ? dynamicSize : 240;
 
 		const ringStrokeWidth = Math.max(8, buttonSize * 0.05);
 		const ringRadius = buttonSize / 2 - ringStrokeWidth / 2;
@@ -177,7 +182,7 @@
 				type="button"
 				class="relative z-2 flex cursor-pointer touch-none items-center justify-center rounded-full border-4 border-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.6)] transition-all duration-200 hover:shadow-[0_0_40px_rgba(34,211,238,0.8)] active:scale-95"
 				style="width: {progressPath.buttonSize}px; height: {progressPath.buttonSize}px; font-size: {progressPath.buttonSize *
-					0.115}px;"
+					0.15}px;"
 				onclick={handleClick}
 				onpointerdown={handlePointerDown}
 				onpointerup={handlePointerUp}
