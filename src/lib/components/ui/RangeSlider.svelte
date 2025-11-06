@@ -47,6 +47,7 @@
 	// Calculate the percentage position of each handle
 	const minPercent = $derived(((valueMin - min) / (max - min)) * 100);
 	const maxPercent = $derived(((valueMax - min) / (max - min)) * 100);
+	const percentage = $derived(maxPercent - minPercent);
 </script>
 
 <div class="space-y-2">
@@ -80,10 +81,9 @@
 
 			<!-- Active track (between handles) -->
 			<div
-				class="absolute h-full rounded-full bg-linear-to-r from-cyan-500 to-purple-600"
-				style="left: {minPercent}%; width: {maxPercent - minPercent}%"
+				class="absolute h-full rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.4)]"
+				style="width: {percentage}%"
 			></div>
-
 			<!-- Min handle -->
 			<input
 				type="range"

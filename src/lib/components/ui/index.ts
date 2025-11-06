@@ -11,3 +11,8 @@ export { default as TracklistEditor } from './TracklistEditor.svelte';
 export { default as NumberSelector } from './NumberSelector.svelte';
 export { default as Slider } from './Slider.svelte';
 export { default as RangeSlider } from './RangeSlider.svelte';
+export { default as PlayerSetup } from './PlayerSetup.svelte';
+export { default as ModeSelector } from './ModeSelector.svelte';
+export { default as ScoringScreen } from './ScoringScreen.svelte';
+export { default as StatsScreen } from './StatsScreen.svelte';
+export { default as EndGameScreen } from './EndGameScreen.svelte';

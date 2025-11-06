@@ -1,11 +1,10 @@
 <script lang="ts">
 	import Play from 'lucide-svelte/icons/play';
 	import Square from 'lucide-svelte/icons/square';
-	import { formatComposerName, formatLifespan, formatYearRange, getWorkEra } from '$lib/utils';
-	import { deezerPlayer } from '$lib/services';
 	import type { Track } from '$lib/types';
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';
 	import Popup from './Popup.svelte';
+	import TrackInfo from './TrackInfo.svelte';
 	import { _ } from 'svelte-i18n';
 	import { onMount } from 'svelte';
 
@@ -16,6 +15,7 @@
 		isRevealed?: boolean;
 		progress?: number; // 0-1
 		track?: Track | null;
+		allowResize?: boolean; // Allow button to resize (Bingo mode only)
 		onPlay?: () => void;
 		onStop?: () => void;
 		onReveal?: () => void;
@@ -30,6 +30,7 @@
 		isRevealed = false,
 		progress = 0,
 		track = null,
+		allowResize = false,
 		onPlay = () => {},
 		onStop = () => {},
 		onReveal = () => {},
@@ -40,6 +41,23 @@
 	let isHoldingReveal = $state(false);
 	let holdTimer: number | null = null;
 	let windowSize = $state({ width: 0, height: 0 });
+	let displayProgress = $state(0);
+	let lastIsPlaying = $state(false);
+
+	// Reset progress when playback starts fresh (transition from not playing to playing)
+	$effect(() => {
+		if (isPlaying && !lastIsPlaying) {
+			// Just started playing - reset to 0
+			displayProgress = 0;
+		} else if (isPlaying) {
+			// Currently playing - update progress
+			displayProgress = progress;
+		} else if (playbackEnded) {
+			// Playback ended - keep at 100%
+			displayProgress = 1;
+		}
+		lastIsPlaying = isPlaying;
+	});
 
 	onMount(() => {
 		windowSize = { width: window.innerWidth, height: window.innerHeight };
@@ -50,50 +68,6 @@
 
 		window.addEventListener('resize', handleResize);
 		return () => window.removeEventListener('resize', handleResize);
-	});
-
-	const composerName = $derived(track ? formatComposerName(track.composer.name) : '');
-	const lifespan = $derived(
-		track ? formatLifespan(track.composer.birth_year, track.composer.death_year) : ''
-	);
-	const artists = $derived.by(() => {
-		// create a dependency on `track`
-		if (!track) return [];
-		return deezerPlayer.getArtists().filter((name) => name !== composerName);
-	});
-	const shouldShowArtist = $derived(artists.length);
-	const shouldShowPart = $derived(track && track.work.name !== track.part.name);
-	const deezerTrackUrl = $derived(track ? `https://www.deezer.com/track/${track.part.deezer}` : '');
-
-	// Strip work name prefix from part name if part starts with work name
-	const displayPartName = $derived.by(() => {
-		if (!track || !shouldShowPart) return '';
-		artists;
-
-		const workName = track.work.name;
-		const partName = track.part.name;
-
-		// Check if part starts with work name followed by punctuation
-		const prefixPattern = new RegExp(
-			`^${workName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[:\\-,]\\s*`,
-			'i'
-		);
-		const strippedName = partName.replace(prefixPattern, '').trim();
-
-		// Return stripped name if it's different and not empty, otherwise return full part name
-		return strippedName && strippedName !== partName ? strippedName : partName;
-	});
-
-	const displayYear = $derived.by(() => {
-		const { begin_year, end_year } = track?.work ?? {};
-
-		return formatYearRange(begin_year, end_year);
-	});
-
-	const era = $derived.by(() => {
-		const { begin_year, end_year } = track?.work ?? {};
-		const composerName = track?.composer.name;
-		return getWorkEra(begin_year, end_year, composerName);
 	});
 
 	function handleClick() {
@@ -134,7 +108,28 @@
 
 	// Calculate circular progress path
 	const progressPath = $derived.by(() => {
-		// Use percentage-based sizing relative to viewport
+		if (!allowResize) {
+			// Fixed size for Classic mode
+			const buttonSize = 160;
+			const ringStrokeWidth = 6;
+			const ringRadius = buttonSize / 2 - ringStrokeWidth / 2;
+			const size = buttonSize;
+			const center = size / 2;
+			const circumference = 2 * Math.PI * ringRadius;
+			const offset = circumference * (1 - displayProgress);
+
+			return {
+				size,
+				center,
+				radius: ringRadius,
+				circumference,
+				offset,
+				strokeWidth: ringStrokeWidth,
+				buttonSize
+			};
+		}
+
+		// Use percentage-based sizing relative to viewport (Bingo mode)
 		const minDimension = Math.min(
 			windowSize.width || window.innerWidth,
 			windowSize.height || window.innerHeight
@@ -146,7 +141,7 @@
 		const size = buttonSize;
 		const center = size / 2;
 		const circumference = 2 * Math.PI * ringRadius;
-		const offset = circumference * (1 - progress);
+		const offset = circumference * (1 - displayProgress);
 
 		return {
 			size,
@@ -167,90 +162,38 @@
 <!-- Backdrop (using Popup component) -->
 <Popup visible={isRevealed} onClose={() => {}}>
 	{#snippet children()}
-		<div class="reveal-card">
-			<div class="reveal-content">
-				{#if track}
-					<!-- Composer -->
-					<div class="info-section">
-						<p class="text-center text-3xl font-bold text-cyan-400">
-							{composerName}
-						</p>
-						<p class="text-center text-lg text-gray-400">({lifespan})</p>
-					</div>
+		<div
+			class="w-[420px] max-w-[90vw] rounded-3xl border-2 border-cyan-400 bg-gray-900 p-8 shadow-[0_0_30px_rgba(34,211,238,0.3)]"
+		>
+			<div class="flex flex-col gap-5">
+				<TrackInfo {track} />
 
-					{#if era || displayYear}
-						<div class="info-section">
-							<p class="text-center text-xl font-semibold tracking-wide">
-								{#if era}
-									<span class="text-purple-400 uppercase">{era}</span>
-								{/if}
-
-								{#if era && displayYear}
-									<span class="mx-2 text-gray-400">·</span>
-								{/if}
-
-								{#if displayYear}
-									<span class="bg-linear-to-r bg-clip-text text-nowrap text-green-400">
-										{displayYear}
-									</span>
-								{/if}
-							</p>
-						</div>
-					{/if}
-
-					<!-- Work with Year -->
-					<div class="info-section">
-						<p class="text-center text-2xl font-semibold wrap-break-word text-pink-400">
-							{track.work.name}
-						</p>
-					</div>
-
-					<!-- Part (only if different from work, with stripped prefix) -->
-					{#if shouldShowPart}
-						<div class="info-section">
-							<p class="text-center text-xl wrap-break-word text-gray-300">
-								{displayPartName}
-							</p>
-						</div>
-					{/if}
-
-					<!-- Artist/Performer (only if not unknown) -->
-					{#if shouldShowArtist}
-						<div class="info-section">
-							<a
-								href={deezerTrackUrl}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="artist-link text-center text-sm text-gray-400"
-							>
-								{artists.join(', ')}
-							</a>
-						</div>
-					{/if}
-
-					<!-- Continue button -->
-					<button type="button" onclick={handleNext} class="continue-button">
-						{$_('game.nextRound')}
-						<ArrowRight class="h-5 w-5" />
-					</button>
-				{/if}
+				<!-- Continue button -->
+				<button
+					type="button"
+					onclick={handleNext}
+					class="mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-gray-900 px-6 py-3 font-bold text-cyan-400 transition-all duration-200 hover:bg-gray-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.6)]"
+				>
+					{$_('game.nextRound')}
+					<ArrowRight class="h-5 w-5" />
+				</button>
 			</div>
 		</div>
 	{/snippet}
 </Popup>
 
 <div
-	class="player-control-container"
+	class="absolute top-1/2 left-1/2 z-30 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300"
 	class:visible
 	style="opacity: {visible ? 1 : 0}; pointer-events: {visible ? 'auto' : 'none'};"
 >
 	{#if !isRevealed}
 		<!-- Normal state: circular button with internal progress ring -->
-		<div class="player-wrapper">
+		<div class="relative flex items-center justify-center">
 			<!-- Play button -->
 			<button
 				type="button"
-				class="player-button"
+				class="relative z-2 flex cursor-pointer touch-none items-center justify-center rounded-full border-4 border-cyan-400 bg-gray-900 shadow-[0_0_30px_rgba(34,211,238,0.6)] transition-all duration-200 hover:shadow-[0_0_40px_rgba(34,211,238,0.8)] active:scale-95"
 				style="width: {progressPath.buttonSize}px; height: {progressPath.buttonSize}px; font-size: {progressPath.buttonSize *
 					0.115}px;"
 				onclick={handleClick}
@@ -261,10 +204,14 @@
 			>
 				<!-- Progress ring (only during playback) - positioned inside button -->
 				{#if isPlaying}
-					<svg class="progress-ring" width={progressPath.size} height={progressPath.size}>
+					<svg
+						class="pointer-events-none absolute top-1/2 left-1/2 z-1 -translate-x-1/2 -translate-y-1/2 -rotate-90"
+						width={progressPath.size}
+						height={progressPath.size}
+					>
 						<circle
-							class="progress-ring-circle"
-							stroke="white"
+							class="transition-[stroke-dashoffset] duration-100"
+							stroke="#22d3ee"
 							stroke-width={progressPath.strokeWidth}
 							fill="transparent"
 							r={progressPath.radius}
@@ -276,129 +223,24 @@
 				{/if}
 
 				<!-- Button content -->
-				<div class="button-content">
+				<div class="relative z-1 flex items-center justify-center">
 					{#if playbackEnded}
-						<span class="reveal-text">REVEAL</span>
+						<span class="font-bold tracking-widest text-cyan-400 uppercase">REVEAL</span>
 					{:else if isPlaying}
-						<Square class="text-white" fill="white" size={progressPath.buttonSize * 0.41} />
+						<Square
+							class="text-cyan-400"
+							fill="currentColor"
+							size={progressPath.buttonSize * 0.41}
+						/>
 					{:else}
-						<Play class="ml-2 text-white" fill="white" size={progressPath.buttonSize * 0.41} />
+						<Play
+							class="ml-2 text-cyan-400"
+							fill="currentColor"
+							size={progressPath.buttonSize * 0.41}
+						/>
 					{/if}
 				</div>
 			</button>
 		</div>
 	{/if}
 </div>
-
-<style>
-	.player-control-container {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		z-index: 30;
-		transition: opacity 0.3s ease-out;
-	}
-
-	.player-wrapper {
-		position: relative;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.player-button {
-		position: relative;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border-radius: 50%;
-		background: linear-gradient(135deg, #22d3ee 0%, #a855f7 100%);
-		cursor: pointer;
-		transition: all 0.2s ease-out;
-		touch-action: none;
-		z-index: 2;
-	}
-
-	.player-button:active {
-		transform: scale(0.95);
-	}
-
-	.progress-ring {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%) rotate(-90deg);
-		pointer-events: none;
-		z-index: 1;
-	}
-
-	.progress-ring-circle {
-		transition: stroke-dashoffset 0.1s linear;
-	}
-
-	.button-content {
-		position: relative;
-		z-index: 1;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.reveal-text {
-		/* Font size is now set via inline style for dynamic sizing */
-		font-weight: 700;
-		color: white;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-	}
-
-	.reveal-card {
-		width: 420px;
-		max-width: 90vw;
-		padding: 32px;
-		border-radius: 24px;
-		border: 2px solid #22d3ee;
-		background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-	}
-
-	.reveal-content {
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
-	}
-
-	.info-section {
-		display: flex;
-		flex-direction: column;
-		gap: 6px;
-	}
-
-	.continue-button {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 8px;
-		width: 100%;
-		padding: 12px 24px;
-		margin-top: 8px;
-		border-radius: 12px;
-		background: linear-gradient(90deg, #22d3ee 0%, #a855f7 100%);
-		color: white;
-		font-weight: 700;
-		border: none;
-		cursor: pointer;
-		transition: all 0.2s ease-out;
-	}
-
-	.artist-link {
-		color: #22d3ee;
-		text-decoration: none;
-		transition: all 0.2s ease-out;
-		display: inline-block;
-	}
-
-	.artist-link:hover {
-		text-decoration: underline;
-	}
-</style>

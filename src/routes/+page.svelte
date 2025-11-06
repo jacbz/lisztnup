@@ -9,19 +9,36 @@
 		selectedTracklist
 	} from '$lib/stores';
 	import { TracklistGenerator, deezerPlayer } from '$lib/services';
+	import type { GameMode, Player } from '$lib/types';
 	import LoadingScreen from '$lib/components/ui/LoadingScreen.svelte';
 	import HomeScreen from '$lib/components/ui/HomeScreen.svelte';
-	import GameScreen from '$lib/components/game/GameScreen.svelte';
+	import ClassicGameScreen from '$lib/components/game/ClassicGameScreen.svelte';
+	import BuzzerGameScreen from '$lib/components/game/BuzzerGameScreen.svelte';
+	import { BingoGameScreen } from '$lib/components/game';
 
 	// Store reference to the generator for the current game
 	let generator: TracklistGenerator | null = null;
+	let currentMode: GameMode | null = null;
+	let currentPlayers: Player[] = [];
+	let isSoloMode = false;
+	let enableScoring = true;
 
 	onMount(() => {
 		// Load settings from localStorage
 		settings.load();
 	});
 
-	function handleStartGame() {
+	function handleStartGame(
+		mode: GameMode,
+		players: Player[],
+		solo: boolean,
+		scoringEnabled: boolean = true
+	) {
+		currentMode = mode;
+		currentPlayers = players;
+		isSoloMode = solo;
+		enableScoring = scoringEnabled;
+
 		// Show loading state
 		gameState.set('generating');
 
@@ -45,6 +62,10 @@
 
 	function handleBackToHome() {
 		generator = null;
+		currentMode = null;
+		currentPlayers = [];
+		isSoloMode = false;
+		enableScoring = true;
 		gameState.set('home');
 	}
 
@@ -60,6 +81,30 @@
 	<LoadingScreen />
 {:else if $gameState === 'home'}
 	<HomeScreen onStart={handleStartGame} />
-{:else if $gameState === 'game' && generator}
-	<GameScreen {generator} numberOfTracks={$settings.numberOfTracks} onHome={handleBackToHome} />
+{:else if $gameState === 'game' && generator && currentMode}
+	{#if currentMode === 'classic'}
+		<ClassicGameScreen
+			{generator}
+			numberOfTracks={$settings.numberOfTracks}
+			mode={currentMode}
+			players={currentPlayers}
+			{isSoloMode}
+			{enableScoring}
+			onHome={handleBackToHome}
+		/>
+	{:else if currentMode === 'buzzer'}
+		<BuzzerGameScreen
+			{generator}
+			numberOfTracks={$settings.numberOfTracks}
+			players={currentPlayers}
+			{enableScoring}
+			onHome={handleBackToHome}
+		/>
+	{:else}
+		<BingoGameScreen
+			{generator}
+			numberOfTracks={$settings.numberOfTracks}
+			onHome={handleBackToHome}
+		/>
+	{/if}
 {/if}

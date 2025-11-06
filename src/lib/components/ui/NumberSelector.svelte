@@ -19,7 +19,7 @@
 			onclick={() => handleSelect(option)}
 			class="flex-1 rounded-lg px-4 py-2 font-semibold transition-all
                  {value === option
-				? 'bg-linear-to-r from-cyan-500 to-purple-600 text-white shadow-[0_0_15px_rgba(34,211,238,0.4)]'
+				? 'bg-cyan-400 text-white shadow-[0_0_15px_rgba(34,211,238,0.4)]'
 				: 'text-gray-400 hover:text-gray-300'}"
 		>
 			{option}

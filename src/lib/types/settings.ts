@@ -41,6 +41,9 @@ export interface GameSettings {
 	selectedTracklist: string; // Name of the currently selected tracklist
 	trackLength: number; // Duration in seconds (5-30)
 	volume: number; // Volume level (0-100)
+	gameMode: 'classic' | 'buzzer' | 'bingo'; // Game mode
+	players: Array<{ name: string; color: string }>; // Saved player configurations
+	enableScoring: boolean; // Whether scoring is enabled
 }
 
 // Default values for tracklist configuration
@@ -70,5 +73,8 @@ export const DEFAULT_SETTINGS: GameSettings = {
 	numberOfTracks: 20,
 	selectedTracklist: 'tracklists.veryeasy.name',
 	trackLength: 25,
-	volume: 100
+	volume: 100,
+	gameMode: 'bingo',
+	players: [],
+	enableScoring: true
 };

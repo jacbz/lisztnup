@@ -17,9 +17,17 @@
 		generator: TracklistGenerator;
 		numberOfTracks: number;
 		onHome?: () => void;
+		onRevealComplete?: () => void;
+		hideSpinWheel?: boolean;
 	}
 
-	let { generator, numberOfTracks, onHome = () => {} }: Props = $props();
+	let {
+		generator,
+		numberOfTracks,
+		onHome = () => {},
+		onRevealComplete = () => {},
+		hideSpinWheel = false
+	}: Props = $props();
 
 	const currentTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
 	const isGameOver = $derived($currentRound.currentTrackIndex >= numberOfTracks);
@@ -191,6 +199,9 @@
 			...state,
 			isRevealed: true
 		}));
+
+		// Call the callback after revealing
+		onRevealComplete();
 	}
 
 	async function handleReplay() {
@@ -293,22 +304,11 @@
 		</button>
 	</div>
 
-	<!-- Round Indicator - Bottom Left -->
-	{#if !isGameOver}
-		<div class="absolute bottom-6 left-6 z-20 select-none">
-			<p class="text-3xl font-bold text-cyan-400">
-				{$currentRound.currentTrackIndex + 1}/{numberOfTracks}
-			</p>
-		</div>
-	{/if}
-
 	<!-- Game Over Screen -->
 	{#if isGameOver}
 		<div class="flex h-screen items-center justify-center">
 			<div class="text-center">
-				<h1
-					class="mb-8 bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text text-6xl font-bold text-transparent"
-				>
+				<h1 class="mb-8 text-6xl font-bold text-cyan-400">
 					{$_('game.gameOver')}
 				</h1>
 				<p class="mb-8 text-2xl text-gray-300">
@@ -317,7 +317,7 @@
 				<button
 					type="button"
 					onclick={handleConfirmQuit}
-					class="rounded-xl bg-linear-to-r from-cyan-500 to-purple-600 px-12 py-4 text-xl font-bold text-white
+					class="rounded-xl border-2 border-cyan-400 bg-gray-900 px-12 py-4 text-xl font-bold text-white
                          shadow-[0_0_30px_rgba(34,211,238,0.4)]
                          transition-all
                          hover:shadow-[0_0_40px_rgba(34,211,238,0.6)] active:scale-95"
@@ -329,14 +329,16 @@
 	{:else if currentTrack}
 		<!-- Main Game Area -->
 		<div class="flex h-screen items-center justify-center">
-			<!-- Spinning Wheel (fills screen) -->
-			<SpinningWheel
-				currentRoundIndex={$currentRound.currentTrackIndex}
-				{disabledCategories}
-				onCategorySelected={handleCategorySelected}
-				onSpinStart={handleSpinStart}
-				onSpinEnd={handleSpinEnd}
-			/>
+			<!-- Spinning Wheel (fills screen) - only in Bingo mode -->
+			{#if !hideSpinWheel}
+				<SpinningWheel
+					currentRoundIndex={$currentRound.currentTrackIndex}
+					{disabledCategories}
+					onCategorySelected={handleCategorySelected}
+					onSpinStart={handleSpinStart}
+					onSpinEnd={handleSpinEnd}
+				/>
+			{/if}
 
 			<!-- Player Control (overlaid on wheel center) -->
 			<PlayerControl
@@ -346,6 +348,7 @@
 				isRevealed={$currentRound.isRevealed}
 				progress={audioProgress}
 				track={currentTrack}
+				allowResize={true}
 				onPlay={handlePlay}
 				onStop={handleStop}
 				onReveal={handleReveal}

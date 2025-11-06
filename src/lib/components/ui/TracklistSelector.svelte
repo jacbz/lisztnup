@@ -248,7 +248,7 @@
 			tracklist,
 			selectedTracklist
 		)
-			? 'bg-linear-to-r from-cyan-500 to-purple-600 text-white shadow-[0_0_20px_rgba(34,211,238,0.4)]'
+			? 'border-2 border-cyan-400 bg-gray-900 text-white shadow-[0_0_20px_rgba(34,211,238,0.4)]'
 			: 'border-2 border-gray-700 bg-gray-800 text-gray-300 hover:border-cyan-400/50 hover:bg-gray-700'}"
 	>
 		<button

@@ -78,7 +78,7 @@
 		<button
 			type="button"
 			onclick={onClose}
-			class="mt-6 w-full rounded-xl bg-linear-to-r from-cyan-500 to-purple-600 px-6 py-3 font-semibold text-white shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-95"
+			class="mt-6 w-full rounded-xl border-2 border-cyan-400 bg-gray-900 px-6 py-3 font-semibold text-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all hover:bg-gray-800 hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-95"
 		>
 			{$_('inGameSettings.close')}
 		</button>

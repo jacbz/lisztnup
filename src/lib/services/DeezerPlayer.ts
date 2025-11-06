@@ -134,7 +134,7 @@ export class DeezerPlayer {
 	/**
 	 * Loads a track by Deezer ID
 	 */
-	async load(deezerId: number): Promise<void> {
+	async load(deezerId: number, ignoreTrackLength: boolean = false): Promise<void> {
 		this.currentTrackId = deezerId;
 
 		// Fetch track metadata
@@ -161,20 +161,22 @@ export class DeezerPlayer {
 		this.audio.volume = 0.1; // Start at 0.1 for fade in
 		this.audio.loop = false;
 
-		// Add event listener to enforce track length limit with fade out
-		this.audio.addEventListener('timeupdate', () => {
-			if (this.audio && this.audio.currentTime >= this.trackLength - this.FADE_DURATION / 1000) {
-				// Start fade out before reaching the limit
-				if (!this.audio.paused && this.fadeIntervalId === null) {
-					this.fadeVolume(0, () => {
-						if (this.audio) {
-							this.audio.pause();
-							this.audio.currentTime = this.trackLength;
-						}
-					});
+		// Add event listener to enforce track length limit with fade out (only if not ignoring)
+		if (!ignoreTrackLength) {
+			this.audio.addEventListener('timeupdate', () => {
+				if (this.audio && this.audio.currentTime >= this.trackLength - this.FADE_DURATION / 1000) {
+					// Start fade out before reaching the limit
+					if (!this.audio.paused && this.fadeIntervalId === null) {
+						this.fadeVolume(0, () => {
+							if (this.audio) {
+								this.audio.pause();
+								this.audio.currentTime = this.trackLength;
+							}
+						});
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 
 	/**

@@ -16,9 +16,7 @@
 
 <div class="flex h-screen w-full items-center justify-center">
 	<div class="text-center">
-		<h1
-			class="bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text p-16 font-streamster text-9xl font-bold text-transparent select-none"
-		>
+		<h1 class="p-16 font-streamster text-9xl font-bold text-cyan-400 select-none">
 			{$_('app.title')}
 		</h1>
 
@@ -28,9 +26,11 @@
 				<p class="mt-2 text-sm">{error}</p>
 			</div>
 		{:else}
-			<div class="mx-auto h-2 w-64 overflow-hidden rounded-full bg-gray-800">
+			<div
+				class="mx-auto h-2 w-64 overflow-hidden rounded-full border border-cyan-400/30 bg-gray-900"
+			>
 				<div
-					class="h-full bg-linear-to-r from-cyan-500 to-purple-500 transition-all duration-300"
+					class="h-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)] transition-all duration-300"
 					style="width: {$dataLoadProgress}%"
 				></div>
 			</div>

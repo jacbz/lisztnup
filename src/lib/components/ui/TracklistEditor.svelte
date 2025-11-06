@@ -985,7 +985,7 @@
 				type="button"
 				onclick={handleSave}
 				disabled={!name.trim()}
-				class="flex-1 rounded-xl bg-linear-to-r from-cyan-500 to-purple-600 px-6 py-3 font-semibold text-white shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+				class="flex-1 rounded-xl border-2 border-cyan-400 bg-gray-900 px-6 py-3 font-semibold text-white shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
 			>
 				{$_('tracklistEditor.save')}
 			</button>

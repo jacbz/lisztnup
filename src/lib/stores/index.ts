@@ -4,3 +4,4 @@ export { settings, selectedTracklist } from './settings';
 export { gameState, tracklist, currentRound, resetRound, nextRound, resetGame } from './gameState';
 export { toast } from './toast';
 export type { Toast, ToastType } from './toast';
+export { gameSession, currentLeader, sortedPlayers } from './gameSession';

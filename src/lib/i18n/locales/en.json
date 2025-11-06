@@ -9,6 +9,7 @@
 	},
 	"home": {
 		"start": "START",
+		"startGame": "Start Game",
 		"settings": "Settings",
 		"tracklist": "Tracklist"
 	},
@@ -231,6 +232,71 @@
 			"era": "Era",
 			"composition": "Composition",
 			"form": "Form"
+		},
+		"categoriesShort": {
+			"composer": "com",
+			"decade": "dec",
+			"era": "era",
+			"composition": "work",
+			"form": "form"
 		}
+	},
+	"modes": {
+		"classic": {
+			"name": "Classic",
+			"description": "Score points based on category difficulty. The harder the guess, the more points you earn!",
+			"rules": "Points are awarded based on the category:\n• Composition: +15 points\n• Composer: +10 points\n• Decade: +8 points\n• Era: +5 points\n• Form: +3 points\n\nGuess correctly to earn points!"
+		},
+		"buzzer": {
+			"name": "Buzzer",
+			"description": "Race against time and your opponents! Hit the buzzer when you know the answer.",
+			"rules": "Categories change over time:\n• 0-15s: Guess the Composition (+15 pts)\n• 15-25s: Guess the Composer (+10 pts)\n• 25-30s: Guess the Decade (+8 pts)\n\nPress the buzzer to make your guess. Wrong answers cost -1 point!"
+		},
+		"bingo": {
+			"name": "Bingo",
+			"description": "Spin the wheel to select a category, and fill your bingo card by guessing correctly!",
+			"rules": "Spin the wheel to get a random category, then listen to the track and try to guess!"
+		}
+	},
+	"players": {
+		"setup": "Players",
+		"playSolo": "Play Solo",
+		"addPlayer": "Player",
+		"playerName": "Player {number}",
+		"nameLabel": "Name",
+		"colorLabel": "Color",
+		"removePlayer": "Remove",
+		"startGame": "Start Game",
+		"cancel": "Cancel",
+		"minPlayers": "At least two players are required for this mode."
+	},
+	"scoring": {
+		"title": "Score This Round",
+		"player": "Player",
+		"selectCategory": "Select the category that was guessed correctly:",
+		"wrong": "❌",
+		"points": "+{points} pts",
+		"noPoints": "0 pts",
+		"continue": "Continue",
+		"correctGuess": "Who guessed correctly?",
+		"wrongGuess": "Who made a wrong guess?",
+		"noOne": "No one",
+		"minus": "-1 pt"
+	},
+	"stats": {
+		"title": "Statistics",
+		"close": "Close",
+		"round": "Round",
+		"score": "Score",
+		"noData": "No rounds played yet"
+	},
+	"endGame": {
+		"title": "Game Over!",
+		"winner": "{name} Wins!",
+		"tie": "It's a Tie!",
+		"finalScores": "Final Scores",
+		"viewStats": "View Statistics",
+		"playAgain": "Play Again",
+		"home": "Home"
 	}
 }

@@ -1,6 +1,44 @@
 export type GuessCategory = 'composer' | 'decade' | 'era' | 'composition' | 'form';
 
+export type GameMode = 'classic' | 'buzzer' | 'bingo';
+
 export type GameState = 'loading' | 'home' | 'settings' | 'generating' | 'game';
+
+// Player color palette
+export const PLAYER_COLORS = [
+	'#ef4444', // red-500
+	'#3b82f6', // blue-500
+	'#10b981', // green-500
+	'#f59e0b', // amber-500
+	'#8b5cf6', // violet-500
+	'#ec4899', // pink-500
+	'#06b6d4', // cyan-500
+	'#f97316', // orange-500
+	'#14b8a6', // teal-500
+	'#a855f7' // purple-500
+];
+
+// Category scoring points
+export const CATEGORY_POINTS: Record<GuessCategory, number> = {
+	composition: 15,
+	composer: 10,
+	decade: 8,
+	era: 5,
+	form: 3
+};
+
+// Buzzer mode time limits (in seconds)
+export const BUZZER_TIME_LIMITS = {
+	composition: 15, // First 15 seconds for work
+	composer: 10, // Next 10 seconds for composer
+	decade: 5 // Final 5 seconds for decade
+};
+
+export interface Player {
+	name: string; // name is now the unique identifier
+	color: string;
+	score: number;
+}
 
 export interface RoundState {
 	currentTrackIndex: number;
@@ -9,4 +47,16 @@ export interface RoundState {
 	isPlaying: boolean;
 	playbackEnded: boolean;
 	isRevealed: boolean;
+}
+
+export interface RoundScore {
+	roundIndex: number;
+	playerScores: Record<string, number>; // playerId -> score for this round
+}
+
+export interface GameSession {
+	mode: GameMode;
+	players: Player[];
+	rounds: RoundScore[];
+	isSoloMode: boolean;
 }
