@@ -11,7 +11,7 @@ export interface CategoryDefinition {
 	color1: string;
 	color2: string;
 	glowColor: string;
-	iconPath: string;
+	iconPath: string[];
 }
 
 export const categories: CategoryDefinition[] = [

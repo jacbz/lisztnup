@@ -178,17 +178,17 @@
 			ctx.shadowColor = 'transparent';
 			ctx.shadowBlur = 0;
 
-			const iconDistance = radius * 0.68;
+			const iconDistance = radius * 0.66;
 			const iconX = centerX + Math.cos(midAngle) * iconDistance;
 			const iconY = centerY + Math.sin(midAngle) * iconDistance;
 
 			if (category.iconPath) {
 				ctx.save();
 				ctx.translate(iconX, iconY);
-				ctx.rotate(midAngle + Math.PI / 2);
+				ctx.rotate(midAngle - Math.PI / 2);
 
-				const iconScale = size / 500;
-				drawSVGPath(ctx, category.iconPath, iconScale * 1.5);
+				const iconScale = size / 300;
+				drawSVGPaths(ctx, category.iconPath, iconScale * 1.5);
 
 				ctx.restore();
 			}
@@ -251,10 +251,14 @@
 		ctx.restore();
 	}
 
-	function drawSVGPath(ctx: CanvasRenderingContext2D, pathData: string, scale: number) {
-		// This is a simplified SVG path renderer for basic shapes
-		// Parse and draw the SVG path
-		const path = new Path2D(pathData);
+	function drawSVGPaths(ctx: CanvasRenderingContext2D, pathDataArray: string[], scale: number) {
+		// Parse and draw multiple SVG paths as a single combined path for unified shadow
+		const combinedPath = new Path2D();
+
+		pathDataArray.forEach((pathData) => {
+			const path = new Path2D(pathData);
+			combinedPath.addPath(path);
+		});
 
 		ctx.save();
 		ctx.scale(scale, scale);
@@ -264,7 +268,7 @@
 		ctx.globalAlpha = 0.9;
 		ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
 		ctx.shadowBlur = 4;
-		ctx.fill(path);
+		ctx.fill(combinedPath);
 		ctx.globalAlpha = 1;
 
 		ctx.restore();
