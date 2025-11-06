@@ -14,7 +14,8 @@
 	import HomeScreen from '$lib/components/ui/HomeScreen.svelte';
 	import ClassicGameScreen from '$lib/components/game/ClassicGameScreen.svelte';
 	import BuzzerGameScreen from '$lib/components/game/BuzzerGameScreen.svelte';
-	import { BingoGameScreen } from '$lib/components/game';
+	import BingoGameScreen from '$lib/components/game/BingoGameScreen.svelte';
+	import GameScreen from '$lib/components/game/GameScreen.svelte';
 
 	// Store reference to the generator for the current game
 	let generator: TracklistGenerator | null = null;
@@ -82,29 +83,24 @@
 {:else if $gameState === 'home'}
 	<HomeScreen onStart={handleStartGame} />
 {:else if $gameState === 'game' && generator && currentMode}
-	{#if currentMode === 'classic'}
-		<ClassicGameScreen
-			{generator}
-			numberOfTracks={$settings.numberOfTracks}
-			mode={currentMode}
-			players={currentPlayers}
-			{isSoloMode}
-			{enableScoring}
-			onHome={handleBackToHome}
-		/>
-	{:else if currentMode === 'buzzer'}
-		<BuzzerGameScreen
-			{generator}
-			numberOfTracks={$settings.numberOfTracks}
-			players={currentPlayers}
-			{enableScoring}
-			onHome={handleBackToHome}
-		/>
-	{:else}
-		<BingoGameScreen
-			{generator}
-			numberOfTracks={$settings.numberOfTracks}
-			onHome={handleBackToHome}
-		/>
-	{/if}
+	<GameScreen
+		generator={generator!}
+		numberOfTracks={$settings.numberOfTracks}
+		mode={currentMode}
+		players={currentPlayers}
+		{isSoloMode}
+		enableScoring={currentMode === 'bingo' ? false : $settings.enableScoring}
+		ignoreTrackLength={currentMode === 'buzzer'}
+		onHome={handleBackToHome}
+	>
+		{#snippet children()}
+			{#if currentMode === 'classic'}
+				<ClassicGameScreen />
+			{:else if currentMode === 'buzzer'}
+				<BuzzerGameScreen />
+			{:else}
+				<BingoGameScreen />
+			{/if}
+		{/snippet}
+	</GameScreen>
 {/if}

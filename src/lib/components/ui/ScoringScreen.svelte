@@ -247,7 +247,10 @@
 						<!-- Multi-player Classic Mode: Table Layout -->
 						<div class="flex flex-col gap-1 overflow-hidden rounded-xl">
 							<!-- Header Row -->
-							<div class="grid grid-cols-[120px_repeat(6,1fr)] gap-1">
+							<div
+								class="grid gap-1"
+								style="grid-template-columns: 120px repeat({categories.length + 1}, 1fr);"
+							>
 								<div
 									class="flex items-center justify-start bg-gray-700 p-2 px-2 pl-3 text-sm font-bold text-white uppercase"
 								>
@@ -274,7 +277,10 @@
 
 							<!-- Player Rows -->
 							{#each players as player}
-								<div class="grid grid-cols-[120px_repeat(6,1fr)] gap-1">
+								<div
+									class="grid gap-1"
+									style="grid-template-columns: 120px repeat({categories.length + 1}, 1fr);"
+								>
 									<div
 										class="flex items-center justify-start border-l-[3px] bg-gray-800 p-2 px-2 pl-3 font-semibold text-white"
 										style="border-left-color: {player.color};"
@@ -357,7 +363,7 @@
 										</div>
 										{#if correctPlayer === player.name && currentCategory}
 											<span class="text-xs opacity-80">
-												{$_('scoring.pointsAwardedAwarded', {
+												{$_('scoring.pointsAwarded', {
 													values: { points: CATEGORY_POINTS[currentCategory] }
 												})}
 											</span>
