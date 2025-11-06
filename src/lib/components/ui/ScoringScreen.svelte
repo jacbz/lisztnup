@@ -90,13 +90,14 @@
 					scores[playerName] = CATEGORY_POINTS[category as GuessCategory];
 				}
 			});
-		} else if (mode === 'buzzer') {
-			// Correct player gets points, wrong player loses 1
-			if (correctPlayer && currentCategory) {
+		} else if (mode === 'buzzer' && currentCategory) {
+			// Correct player gets points, wrong player loses points
+			if (correctPlayer) {
 				scores[correctPlayer] = CATEGORY_POINTS[currentCategory];
 			}
 			if (wrongPlayer) {
-				scores[wrongPlayer] = (scores[wrongPlayer] || 0) - 1;
+				scores[wrongPlayer] =
+					(scores[wrongPlayer] || 0) - Math.min(10, CATEGORY_POINTS[currentCategory]);
 			}
 		}
 

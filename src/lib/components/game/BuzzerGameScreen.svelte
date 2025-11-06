@@ -69,7 +69,7 @@
 		} else if (playbackTime < BUZZER_TIME_LIMITS.composition + BUZZER_TIME_LIMITS.composer) {
 			return 'composer';
 		} else {
-			return 'decade';
+			return 'era';
 		}
 	});
 
@@ -81,7 +81,7 @@
 			return BUZZER_TIME_LIMITS.composition + BUZZER_TIME_LIMITS.composer - playbackTime;
 		} else {
 			const total =
-				BUZZER_TIME_LIMITS.composition + BUZZER_TIME_LIMITS.composer + BUZZER_TIME_LIMITS.decade;
+				BUZZER_TIME_LIMITS.composition + BUZZER_TIME_LIMITS.composer + BUZZER_TIME_LIMITS.era;
 			return total - playbackTime;
 		}
 	});
@@ -229,7 +229,7 @@
 
 			// Check if we've reached the end of buzzer time
 			const maxTime =
-				BUZZER_TIME_LIMITS.composition + BUZZER_TIME_LIMITS.composer + BUZZER_TIME_LIMITS.decade;
+				BUZZER_TIME_LIMITS.composition + BUZZER_TIME_LIMITS.composer + BUZZER_TIME_LIMITS.era;
 
 			if (current >= maxTime || !deezerPlayer.isPlaying()) {
 				// Time's up - auto-buzz and show reveal

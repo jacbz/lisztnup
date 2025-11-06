@@ -256,12 +256,12 @@
 		"classic": {
 			"name": "Classic",
 			"description": "Score points based on category difficulty. The harder the guess, the more points you earn!",
-			"rules": "Points are awarded based on the category:\n• Composition: +15 points\n• Composer: +10 points\n• Decade: +8 points\n• Era: +5 points\n• Form: +3 points\n\nGuess correctly to earn points!"
+			"rules": "Points are awarded based on the category.\n\nGuess correctly to earn points!"
 		},
 		"buzzer": {
 			"name": "Buzzer",
 			"description": "Race against time and your opponents! Hit the buzzer when you know the answer.",
-			"rules": "Categories change over time:\n• 0-15s: Guess the Composition (+15 pts)\n• 15-25s: Guess the Composer (+10 pts)\n• 25-30s: Guess the Decade (+8 pts)\n\nPress the buzzer to make your guess. Wrong answers cost -1 point!"
+			"rules": "Categories change over time:\n• 0-15s: Guess the Composition (+15 pts)\n• 15-25s: Guess the Composer (+10 pts)\n• 25-30s: Guess the Era (+3 pts)\n\nPress the buzzer to make your guess. Wrong answers cost points!"
 		},
 		"bingo": {
 			"name": "Bingo",
@@ -279,7 +279,7 @@
 		"removePlayer": "Remove",
 		"startGame": "Start Game",
 		"cancel": "Cancel",
-		"minPlayers": "At least two players are required for this mode."
+		"minPlayers": "At least two players are required for this mode if scoring is on."
 	},
 	"scoring": {
 		"title": "Score This Round",

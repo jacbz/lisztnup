@@ -46,6 +46,10 @@
 	}
 }
 
+html {
+	overscroll-behavior: none;
+}
+
 body {
 	background-color: #221335;
 	background-image: url('/background.jpg');
@@ -53,6 +57,7 @@ body {
 	background-position: center;
 	background-attachment: fixed;
 	background-repeat: no-repeat;
+	touch-action: pan-y;
 }
 
 button {

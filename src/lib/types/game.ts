@@ -21,17 +21,17 @@ export const PLAYER_COLORS = [
 // Category scoring points
 export const CATEGORY_POINTS: Record<GuessCategory, number> = {
 	composition: 15,
-	composer: 10,
-	decade: 8,
-	era: 5,
-	form: 3
+	decade: 12,
+	composer: 9,
+	era: 3,
+	form: 2
 };
 
 // Buzzer mode time limits (in seconds)
 export const BUZZER_TIME_LIMITS = {
 	composition: 15, // First 15 seconds for work
 	composer: 10, // Next 10 seconds for composer
-	decade: 5 // Final 5 seconds for decade
+	era: 5 // Final 5 seconds for era
 };
 
 export interface Player {

@@ -18,7 +18,10 @@
 	let players = $state<Array<{ name: string; color: string }>>(
 		$settings.players.length > 0
 			? $settings.players.map((p) => ({ ...p }))
-			: [{ name: 'Player 1', color: PLAYER_COLORS[0] }]
+			: [
+					{ name: 'Player 1', color: PLAYER_COLORS[0] },
+					{ name: 'Player 2', color: PLAYER_COLORS[1] }
+				]
 	);
 
 	// Auto-detect solo mode and notify parent when players change

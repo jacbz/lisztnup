@@ -115,7 +115,7 @@
 				2
 			: 240;
 
-		const ringStrokeWidth = buttonSize * 0.05;
+		const ringStrokeWidth = Math.max(8, buttonSize * 0.05);
 		const ringRadius = buttonSize / 2 - ringStrokeWidth / 2;
 		const size = buttonSize;
 		const center = size / 2;

@@ -19,7 +19,6 @@
 	import InGameSettings from '../ui/InGameSettings.svelte';
 	import Dialog from '../ui/Dialog.svelte';
 	import PlayerControl from '../ui/PlayerControl.svelte';
-	import Play from 'lucide-svelte/icons/play';
 	import SettingsIcon from 'lucide-svelte/icons/settings';
 	import BarChart from 'lucide-svelte/icons/bar-chart-3';
 	import { _ } from 'svelte-i18n';
@@ -259,7 +258,7 @@
 		handleHome();
 	}
 
-	const categories = ['composition', 'composer', 'decade', 'era', 'form'] as const;
+	const categories = ['composition', 'decade', 'composer', 'era', 'form'] as const;
 </script>
 
 <div class="relative min-h-screen w-full overflow-hidden text-white">
