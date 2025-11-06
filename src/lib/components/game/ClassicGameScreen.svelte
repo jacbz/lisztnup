@@ -261,7 +261,7 @@
 	const categories = ['composition', 'decade', 'composer', 'era', 'form'] as const;
 </script>
 
-<div class="relative min-h-screen w-full overflow-hidden text-white">
+<div class="fixed inset-0 overflow-hidden text-white">
 	<!-- Header -->
 	<div class="absolute top-0 right-0 left-0 z-20 flex items-center justify-between p-6">
 		<button

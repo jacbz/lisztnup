@@ -48,6 +48,8 @@
 
 html {
 	overscroll-behavior: none;
+	/* Fix for iOS Safari viewport height */
+	height: 100%;
 }
 
 body {
@@ -58,6 +60,19 @@ body {
 	background-attachment: fixed;
 	background-repeat: no-repeat;
 	touch-action: pan-y;
+	/* Fix for iOS Safari viewport height */
+	min-height: 100%;
+}
+
+/* Use dvh (dynamic viewport height) for iOS support */
+@supports (height: 100dvh) {
+	html {
+		height: 100dvh;
+	}
+	
+	body {
+		min-height: 100dvh;
+	}
 }
 
 button {
