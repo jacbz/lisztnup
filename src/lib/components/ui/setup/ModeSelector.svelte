@@ -78,7 +78,11 @@
 					</h3>
 
 					<!-- Mode Description -->
-					<p class="text-sm leading-relaxed text-gray-400">
+					<p
+						class="text-sm leading-relaxed"
+						class:text-gray-400={!isSelected}
+						style={isSelected ? `color: ${mode.color};` : ''}
+					>
 						{$_(`modes.${mode.id}.description`)}
 					</p>
 				</div>

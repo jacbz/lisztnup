@@ -109,7 +109,7 @@ GET_SUBWORKS_FOR_WORK_SQL = """
 SELECT
   child_work.id AS work_id,
   child_work.gid AS work_gid,
-  COALESCE(child_work.name, wa.name) AS work_name,
+  COALESCE(wa.name, child_work.name) AS work_name,
   child_work.type AS work_type,
   l.begin_date_year AS work_begin_year,
   l.end_date_year AS work_end_year
