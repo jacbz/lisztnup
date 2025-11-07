@@ -44,9 +44,6 @@
 
 	// Initialize category progression when round changes
 	$effect(() => {
-		// Track the current round index to detect changes
-		const roundIndex = $currentRound.currentTrackIndex;
-
 		// Generate new category progression for this round
 		if (activeCategories.length === 0) {
 			categoryProgression = [];

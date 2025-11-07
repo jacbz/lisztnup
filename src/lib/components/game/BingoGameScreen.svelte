@@ -37,15 +37,6 @@
 		audioProgressValue = value;
 	});
 
-	onMount(() => {
-		// Detect touch support for wheel interaction
-		// (This is handled by GameScreen now)
-	});
-
-	onDestroy(() => {
-		// Cleanup is handled by GameScreen
-	});
-
 	async function handleCategorySelected(category: GuessCategory) {
 		// Check if category requires year data and current track has valid years
 		if ((category === 'era' || category === 'decade') && currentTrack) {
@@ -123,6 +114,7 @@
 		<SpinningWheel
 			currentRoundIndex={$currentRound.currentTrackIndex}
 			{disabledCategories}
+			{currentTrack}
 			onCategorySelected={handleCategorySelected}
 			onSpinStart={handleSpinStart}
 			onSpinEnd={handleSpinEnd}

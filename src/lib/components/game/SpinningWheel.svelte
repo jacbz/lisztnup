@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { GuessCategory } from '$lib/types';
+	import type { GuessCategory, Track } from '$lib/types';
 	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
 	import { categories } from '$lib/data/categories';
@@ -11,6 +11,7 @@
 		onSpinEnd?: () => void;
 		currentRoundIndex?: number; // Used to reset state between rounds
 		disabledCategories?: readonly GuessCategory[]; // Categories to exclude from the wheel
+		currentTrack?: Track | null; // Current track to validate year data
 	}
 
 	let {
@@ -18,7 +19,8 @@
 		onSpinStart = () => {},
 		onSpinEnd = () => {},
 		currentRoundIndex = 0,
-		disabledCategories = []
+		disabledCategories = [],
+		currentTrack = null
 	}: Props = $props();
 
 	// Filter out disabled categories and shuffle for visual variety
@@ -33,26 +35,28 @@
 	});
 
 	let canvas: HTMLCanvasElement;
-	let rotation = $state(0);
 	let isSpinning = $state(false);
 	let showSpinText = $state(true);
-	let selectedCategory = $state<GuessCategory | null>(null);
 	let wheelSize = $state(600);
 	let prevRoundIndex = $state(currentRoundIndex);
 	let animationFrameId: number | null = null;
 	let currentRotation = $state(0);
-	let currentPointerColor = $state('#ff0000'); // Track pointer color
-	let isAnimating = $state(false); // Track if animation loop is active
-	let lastCanvasSize = 0; // Track canvas size to avoid unnecessary resizing
+	let currentPointerColor = $state('#ff0000');
+	let isAnimating = $state(false);
+	let lastCanvasSize = 0;
 
 	// Drag state
 	let isDragging = $state(false);
-	let dragStartAngle = 0;
-	let dragStartRotation = 0;
 	let lastDragAngle = 0;
-	let lastDragTime = 0;
 	let dragVelocity = 0;
-	let totalDragDistance = 0;
+	let lastDragTime = 0;
+	let dragAnimationFrameId: number | null = null;
+	let pendingDragUpdate = false;
+	let pendingDragAngle = 0;
+	let pendingDragTime = 0;
+	// Velocity history for more accurate calculation (last 5 samples)
+	let velocityHistory: { angle: number; time: number }[] = [];
+	let lastAngleDelta = 0; // Track most recent angle change for quick flicks
 
 	// SVG overlay for text
 	let svgOverlay: SVGSVGElement;
@@ -80,8 +84,64 @@
 		return () => {
 			window.removeEventListener('resize', handleResize);
 			if (animationFrameId) cancelAnimationFrame(animationFrameId);
+			if (dragAnimationFrameId) cancelAnimationFrame(dragAnimationFrameId);
 		};
 	});
+
+	/**
+	 * Calculate which category the pointer is pointing at based on rotation
+	 * This is the SINGLE SOURCE OF TRUTH for category selection
+	 */
+	function getCategoryFromRotation(rotation: number): GuessCategory {
+		const segmentSize = 360 / activeCategories.length;
+		const normalizedRotation = ((rotation % 360) + 360) % 360;
+		const angleFromSegment0 = (360 - normalizedRotation + 360) % 360;
+		const categoryIndex = Math.floor(angleFromSegment0 / segmentSize) % activeCategories.length;
+		return activeCategories[categoryIndex].id;
+	}
+
+	/**
+	 * Check if a rotation would land on era/decade categories
+	 */
+	function wouldLandOnYearCategory(rotation: number): boolean {
+		const category = getCategoryFromRotation(rotation);
+		return category === 'era' || category === 'decade';
+	}
+
+	/**
+	 * Generate a valid random final rotation that avoids year categories if track has no year data
+	 */
+	function generateValidFinalRotation(): number {
+		const hasValidYears =
+			currentTrack?.work.begin_year != null || currentTrack?.work.end_year != null;
+
+		let attempts = 0;
+		const maxAttempts = 100;
+
+		while (attempts < maxAttempts) {
+			// Generate random rotation: current + 3-6 full rotations + random position
+			const fullRotations = 3 + Math.floor(Math.random() * 4); // 3-6 full spins
+			const randomAngle = Math.random() * 360;
+			const finalRotation = currentRotation + fullRotations * 360 + randomAngle;
+
+			// If track has valid years OR doesn't land on year category, we're good
+			if (hasValidYears || !wouldLandOnYearCategory(finalRotation)) {
+				console.log(
+					`✓ Valid rotation generated: ${finalRotation.toFixed(1)}° (lands on: ${getCategoryFromRotation(finalRotation)})`
+				);
+				return finalRotation;
+			}
+
+			attempts++;
+			console.log(
+				`✗ Attempt ${attempts}: rotation ${finalRotation.toFixed(1)}° would land on year category, retrying...`
+			);
+		}
+
+		// Fallback: just return a random rotation (shouldn't happen with reasonable category counts)
+		console.warn('Failed to generate valid rotation after max attempts, using fallback');
+		return currentRotation + (3 + Math.random() * 3) * 360 + Math.random() * 360;
+	}
 
 	function handleResize() {
 		updateWheelSize();
@@ -101,15 +161,13 @@
 	}
 
 	function updatePointerColor() {
-		// Calculate which category the pointer is pointing at
-		const segmentSize = 360 / activeCategories.length;
-		const normalizedRotation = ((currentRotation % 360) + 360) % 360;
-		const angleFromSegment0 = (360 - normalizedRotation + 360) % 360;
-		const categoryIndex = Math.floor(angleFromSegment0 / segmentSize) % activeCategories.length;
-
-		// Get the color from the category
-		const category = activeCategories[categoryIndex];
-		currentPointerColor = category.color1;
+		// Use helper function to get category at current rotation
+		const category = activeCategories.find(
+			(cat) => cat.id === getCategoryFromRotation(currentRotation)
+		);
+		if (category) {
+			currentPointerColor = category.color1;
+		}
 	}
 
 	function drawWheel() {
@@ -317,222 +375,68 @@
 		return `#${newR.toString(16).padStart(2, '0')}${newG.toString(16).padStart(2, '0')}${newB.toString(16).padStart(2, '0')}`;
 	}
 
-	function spinWithVelocity(velocity: number) {
+	/**
+	 * Main spin function - generates valid final rotation and animates to it
+	 */
+	function spin() {
 		if (isSpinning) return;
 
 		isSpinning = true;
 		isAnimating = true;
 		showSpinText = false;
-		selectedCategory = null;
 		onSpinStart();
 
-		// Add randomness factor (±10% variation)
-		const randomFactor = 0.9 + Math.random() * 0.2;
-		const adjustedVelocity = velocity * randomFactor;
+		// Generate a valid final rotation that avoids year categories if needed
+		const targetRotation = generateValidFinalRotation();
+		const totalDistance = targetRotation - currentRotation;
+		const startRotation = currentRotation;
 
-		// Physics-based spin with frame-rate normalized friction
-		const baseFriction = 0.98;
-		const minVelocity = 0.05;
-
-		let currentVelocity = adjustedVelocity;
-		let lastTimestamp = performance.now();
+		// Animation parameters
+		const spinDuration = 3000 + Math.random() * 1000; // 3-4 seconds for more natural feel
+		const startTime = performance.now();
 
 		function animate(timestamp: number) {
-			// Calculate elapsed time since last frame
-			const deltaTime = timestamp - lastTimestamp;
-			lastTimestamp = timestamp;
+			const elapsed = timestamp - startTime;
+			const progress = Math.min(elapsed / spinDuration, 1);
 
-			// Normalize friction to 60fps to ensure consistent behavior across frame rates
-			// friction^(deltaTime/16.67) approximates the friction applied at 60fps
-			const normalizedFriction = Math.pow(baseFriction, deltaTime / 16.67);
-
-			// Apply friction with gradual ease-out at the end
-			let appliedFriction = normalizedFriction;
-			if (Math.abs(currentVelocity) < 1) {
-				// Gradually increase friction as we slow down
-				appliedFriction = normalizedFriction - (1 - Math.abs(currentVelocity)) * 0.03;
+			// Easing function: instant acceleration, then gradual deceleration
+			// We want it to feel like a forceful spin that gradually slows down naturally
+			let eased: number;
+			if (progress < 0.1) {
+				// First 10%: instant acceleration to full speed (linear)
+				eased = progress * 10;
+			} else {
+				// Remaining 90%: gentler deceleration (quartic ease-out for smoother slowdown)
+				const decelerationProgress = (progress - 0.1) / 0.9;
+				eased = 0.1 + 0.9 * (1 - Math.pow(1 - decelerationProgress, 4));
 			}
-			currentVelocity *= appliedFriction;
 
 			// Update rotation
-			currentRotation += currentVelocity;
+			currentRotation = startRotation + totalDistance * eased;
 
 			// Update pointer color and draw
 			updatePointerColor();
 			drawWheel();
 
-			if (Math.abs(currentVelocity) > minVelocity) {
+			if (progress < 1) {
 				animationFrameId = requestAnimationFrame(animate);
 			} else {
-				// Stop where it naturally stops
-				rotation = currentRotation;
+				// Ensure we land exactly on target
+				currentRotation = targetRotation;
+				updatePointerColor();
+				drawWheel();
+
 				isSpinning = false;
 				isAnimating = false;
 
-				// Calculate which category the pointer is pointing at
-				// Segments are drawn starting from -90° (right) + rotation
-				// Pointer is at top: 270° in that coordinate system
-				const segmentSize = 360 / activeCategories.length;
-				const normalizedRotation = ((currentRotation % 360) + 360) % 360;
-
-				// Angle from segment 0's starting position to pointer (top = 270° offset from -90° start)
-				const angleFromSegment0 = (360 - normalizedRotation + 360) % 360;
-				const categoryIndex = Math.floor(angleFromSegment0 / segmentSize) % activeCategories.length;
-
-				selectedCategory = activeCategories[categoryIndex].id;
+				// Get the selected category
+				const selectedCategory = getCategoryFromRotation(currentRotation);
 				onSpinEnd();
 				onCategorySelected(selectedCategory);
 			}
 		}
 
 		animationFrameId = requestAnimationFrame(animate);
-	}
-
-	function getAngleFromEvent(event: MouseEvent | TouchEvent): number {
-		if (!canvas) return 0;
-
-		const rect = canvas.getBoundingClientRect();
-		const centerX = rect.left + rect.width / 2;
-		const centerY = rect.top + rect.height / 2;
-
-		let clientX: number, clientY: number;
-
-		if ('touches' in event && event.touches.length > 0) {
-			clientX = event.touches[0].clientX;
-			clientY = event.touches[0].clientY;
-		} else if ('clientX' in event) {
-			clientX = event.clientX;
-			clientY = event.clientY;
-		} else {
-			return 0;
-		}
-
-		const dx = clientX - centerX;
-		const dy = clientY - centerY;
-
-		return (Math.atan2(dy, dx) * 180) / Math.PI;
-	}
-
-	function handleDragStart(event: MouseEvent | TouchEvent) {
-		if (isSpinning) return;
-
-		isDragging = true;
-		totalDragDistance = 0;
-		dragStartAngle = getAngleFromEvent(event);
-		dragStartRotation = currentRotation;
-		lastDragAngle = dragStartAngle;
-		lastDragTime = Date.now();
-		dragVelocity = 0;
-
-		if (animationFrameId) {
-			cancelAnimationFrame(animationFrameId);
-			animationFrameId = null;
-		}
-	}
-
-	function handleDragMove(event: MouseEvent | TouchEvent) {
-		if (!isDragging || isSpinning) return;
-
-		const currentAngle = getAngleFromEvent(event);
-		const currentTime = Date.now();
-
-		// Calculate angle difference (handle wrap-around)
-		let angleDiff = currentAngle - lastDragAngle;
-		if (angleDiff > 180) angleDiff -= 360;
-		if (angleDiff < -180) angleDiff += 360;
-
-		// Update rotation
-		currentRotation = dragStartRotation + (currentAngle - dragStartAngle);
-		totalDragDistance += Math.abs(angleDiff);
-
-		// Calculate velocity
-		const timeDiff = Math.max(currentTime - lastDragTime, 1);
-		const baseVelocity = (angleDiff / timeDiff) * 16; // Scale to ~60fps
-		dragVelocity = baseVelocity * 2;
-
-		lastDragAngle = currentAngle;
-		lastDragTime = currentTime;
-
-		drawWheel();
-	}
-
-	function handleDragEnd(event: MouseEvent | TouchEvent) {
-		if (!isDragging) return;
-
-		isDragging = false;
-
-		// Always use physics-based deceleration
-		// Only trigger game logic if it was a forceful spin
-		const significantVelocity = 5; // Threshold for "forceful" spin that triggers game logic
-
-		rotation = currentRotation;
-
-		if (Math.abs(dragVelocity) >= significantVelocity) {
-			// Forceful spin - use physics AND trigger game callbacks
-			spinWithVelocity(dragVelocity);
-		} else {
-			// Tap or small drag - decelerate with physics but DON'T trigger game logic
-			decelerateWithPhysics(dragVelocity);
-		}
-	}
-
-	function decelerateWithPhysics(initialVelocity: number) {
-		// Physics-based deceleration without game callbacks
-		const baseFriction = 0.94;
-		const minVelocity = 0.05;
-
-		isAnimating = true;
-		let currentVelocity = initialVelocity;
-		let lastTimestamp = performance.now();
-
-		function animate(timestamp: number) {
-			// Calculate elapsed time since last frame
-			const deltaTime = timestamp - lastTimestamp;
-			lastTimestamp = timestamp;
-
-			// Normalize friction to 60fps
-			const normalizedFriction = Math.pow(baseFriction, deltaTime / 16.67);
-			currentVelocity *= normalizedFriction;
-
-			// Update rotation
-			currentRotation += currentVelocity;
-			rotation = currentRotation;
-
-			// Update pointer color and draw
-			updatePointerColor();
-			drawWheel();
-
-			if (Math.abs(currentVelocity) > minVelocity) {
-				animationFrameId = requestAnimationFrame(animate);
-			} else {
-				// Just stop - no snapping, no callbacks
-				rotation = currentRotation;
-				isAnimating = false;
-			}
-		}
-
-		animationFrameId = requestAnimationFrame(animate);
-	}
-
-	function handlePointerDown(event: MouseEvent | TouchEvent) {
-		handleDragStart(event);
-	}
-
-	function handlePointerMove(event: MouseEvent | TouchEvent) {
-		handleDragMove(event);
-	}
-
-	function handlePointerUp(event: MouseEvent | TouchEvent) {
-		handleDragEnd(event);
-	}
-
-	function handlePointerCancel(event: MouseEvent | TouchEvent) {
-		if (isDragging) {
-			isDragging = false;
-			// Reset to last stable rotation
-			currentRotation = rotation;
-			drawWheel();
-		}
 	}
 
 	function handleSpinTextClick(event: MouseEvent | TouchEvent) {
@@ -567,10 +471,241 @@
 
 		// Only trigger if clicked within the center circle
 		if (distance <= centerCircleRadius) {
-			// Trigger a random spin with velocity
-			const randomVelocity = 30 + Math.random() * 10;
-			spinWithVelocity(randomVelocity);
+			spin();
 		}
+	}
+
+	/**
+	 * Get angle from center of wheel for drag tracking
+	 */
+	function getAngleFromCenter(clientX: number, clientY: number): number {
+		if (!canvas) return 0;
+		const rect = canvas.getBoundingClientRect();
+		const centerX = rect.left + rect.width / 2;
+		const centerY = rect.top + rect.height / 2;
+		const dx = clientX - centerX;
+		const dy = clientY - centerY;
+		return (Math.atan2(dy, dx) * 180) / Math.PI;
+	}
+
+	/**
+	 * Handle drag start
+	 */
+	function handleDragStart(event: MouseEvent | TouchEvent) {
+		// Don't start drag if already spinning or animating
+		if (isSpinning || isAnimating) return;
+
+		// If clicking center circle with spin text, let handleSpinTextClick handle it
+		if (showSpinText && canvas) {
+			const rect = canvas.getBoundingClientRect();
+			const centerX = rect.left + rect.width / 2;
+			const centerY = rect.top + rect.height / 2;
+
+			let clientX: number, clientY: number;
+			if ('touches' in event && event.touches.length > 0) {
+				clientX = event.touches[0].clientX;
+				clientY = event.touches[0].clientY;
+			} else if ('clientX' in event) {
+				clientX = event.clientX;
+				clientY = event.clientY;
+			} else {
+				return;
+			}
+
+			const dx = clientX - centerX;
+			const dy = clientY - centerY;
+			const distance = Math.sqrt(dx * dx + dy * dy);
+			const centerCircleRadius = wheelSize * 0.16;
+
+			if (distance <= centerCircleRadius) {
+				return; // Let click handler manage this
+			}
+		}
+
+		isDragging = true;
+		showSpinText = false;
+		dragVelocity = 0;
+		velocityHistory = []; // Reset velocity history on new drag
+		lastAngleDelta = 0;
+
+		let clientX: number, clientY: number;
+		if ('touches' in event && event.touches.length > 0) {
+			clientX = event.touches[0].clientX;
+			clientY = event.touches[0].clientY;
+		} else if ('clientX' in event) {
+			clientX = event.clientX;
+			clientY = event.clientY;
+		} else {
+			return;
+		}
+
+		lastDragAngle = getAngleFromCenter(clientX, clientY);
+		lastDragTime = performance.now();
+
+		event.preventDefault();
+	}
+
+	/**
+	 * Handle drag move - uses requestAnimationFrame for smooth 60fps updates
+	 */
+	function handleDragMove(event: MouseEvent | TouchEvent) {
+		if (!isDragging) return;
+
+		event.preventDefault();
+
+		let clientX: number, clientY: number;
+		if ('touches' in event && event.touches.length > 0) {
+			clientX = event.touches[0].clientX;
+			clientY = event.touches[0].clientY;
+		} else if ('clientX' in event) {
+			clientX = event.clientX;
+			clientY = event.clientY;
+		} else {
+			return;
+		}
+
+		const currentAngle = getAngleFromCenter(clientX, clientY);
+		const currentTime = performance.now();
+
+		// Store pending update instead of processing immediately
+		pendingDragAngle = currentAngle;
+		pendingDragTime = currentTime;
+
+		// Schedule update via requestAnimationFrame if not already scheduled
+		if (!pendingDragUpdate) {
+			pendingDragUpdate = true;
+			requestAnimationFrame(processDragUpdate);
+		}
+	}
+
+	/**
+	 * Process drag update - called once per frame via requestAnimationFrame
+	 */
+	function processDragUpdate() {
+		if (!isDragging) {
+			pendingDragUpdate = false;
+			return;
+		}
+
+		const currentAngle = pendingDragAngle;
+		const currentTime = pendingDragTime;
+		const timeDelta = currentTime - lastDragTime;
+
+		// Handle angle wrap-around (crossing from -180 to 180 or vice versa)
+		let angleDelta = currentAngle - lastDragAngle;
+		if (angleDelta > 180) angleDelta -= 360;
+		if (angleDelta < -180) angleDelta += 360;
+
+		// Update rotation
+		currentRotation += angleDelta;
+
+		// Store the most recent angle delta for quick flick detection
+		lastAngleDelta = angleDelta;
+
+		// Store in velocity history
+		velocityHistory.push({ angle: currentAngle, time: currentTime });
+
+		// Keep only last 5 samples (approximately last 80ms of movement)
+		if (velocityHistory.length > 5) {
+			velocityHistory.shift();
+		}
+
+		// Calculate velocity using sliding window (compare current to oldest sample)
+		if (velocityHistory.length >= 2) {
+			const oldest = velocityHistory[0];
+			const newest = velocityHistory[velocityHistory.length - 1];
+			const totalTime = newest.time - oldest.time;
+
+			if (totalTime > 0) {
+				let totalAngle = newest.angle - oldest.angle;
+				// Handle wrap-around
+				if (totalAngle > 180) totalAngle -= 360;
+				if (totalAngle < -180) totalAngle += 360;
+
+				// Calculate velocity over the window
+				dragVelocity = totalAngle / totalTime;
+			}
+		} else if (timeDelta > 0 && lastAngleDelta !== 0) {
+			// Fallback for very quick flicks: use the most recent delta
+			dragVelocity = lastAngleDelta / timeDelta;
+		}
+
+		lastDragAngle = currentAngle;
+		lastDragTime = currentTime;
+
+		// Update pointer color and redraw
+		updatePointerColor();
+		drawWheel();
+
+		pendingDragUpdate = false;
+	} /**
+	 * Handle drag end - check velocity and either spin or decelerate
+	 */
+	function handleDragEnd(event: MouseEvent | TouchEvent) {
+		if (!isDragging) return;
+
+		isDragging = false;
+		event.preventDefault();
+
+		// Velocity threshold: 0.3 degrees per millisecond = 108 degrees in 360ms (moderate flick)
+		// Lowered from 0.5 to be more sensitive and consistent across browsers
+		const VELOCITY_THRESHOLD = 0.3;
+		const absVelocity = Math.abs(dragVelocity);
+
+		console.log(
+			`Drag ended with velocity: ${dragVelocity.toFixed(3)} deg/ms (${velocityHistory.length} samples)`
+		);
+
+		if (absVelocity >= VELOCITY_THRESHOLD) {
+			// Fast drag - trigger validated spin
+			console.log('Velocity threshold exceeded - triggering spin');
+			spin();
+		} else {
+			// Slow drag - apply natural deceleration
+			console.log('Below velocity threshold - applying deceleration');
+			applyDeceleration();
+		}
+	}
+
+	/**
+	 * Apply physics-based deceleration after slow drag
+	 */
+	function applyDeceleration() {
+		if (dragAnimationFrameId) {
+			cancelAnimationFrame(dragAnimationFrameId);
+		}
+
+		isAnimating = true;
+		let lastFrameTime = performance.now();
+
+		function decelerateFrame(timestamp: number) {
+			const deltaTime = timestamp - lastFrameTime;
+			lastFrameTime = timestamp;
+
+			// Apply friction: reduce velocity by 4% per frame at 60fps
+			// Normalize to frame rate for consistent behavior
+			const frictionPerFrame = 0.96;
+			const normalizedFriction = Math.pow(frictionPerFrame, deltaTime / (1000 / 60));
+			dragVelocity *= normalizedFriction;
+
+			// Apply velocity to rotation (convert from deg/ms to deg by multiplying by deltaTime)
+			currentRotation += dragVelocity * deltaTime;
+
+			// Update display
+			updatePointerColor();
+			drawWheel();
+
+			// Continue until velocity is negligible
+			if (Math.abs(dragVelocity) > 0.01) {
+				dragAnimationFrameId = requestAnimationFrame(decelerateFrame);
+			} else {
+				dragVelocity = 0;
+				isAnimating = false;
+				dragAnimationFrameId = null;
+			}
+		}
+
+		dragAnimationFrameId = requestAnimationFrame(decelerateFrame);
 	}
 </script>
 
@@ -578,12 +713,15 @@
 	<canvas
 		bind:this={canvas}
 		class="wheel-canvas"
-		onpointerdown={handlePointerDown}
-		onpointermove={handlePointerMove}
-		onpointerup={handlePointerUp}
-		onpointercancel={handlePointerCancel}
-		onpointerleave={handlePointerUp}
 		onclick={handleSpinTextClick}
+		onmousedown={handleDragStart}
+		onmousemove={handleDragMove}
+		onmouseup={handleDragEnd}
+		onmouseleave={handleDragEnd}
+		ontouchstart={handleDragStart}
+		ontouchmove={handleDragMove}
+		ontouchend={handleDragEnd}
+		ontouchcancel={handleDragEnd}
 		aria-label="Spin the wheel"
 	></canvas>
 
