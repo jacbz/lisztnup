@@ -115,7 +115,7 @@
 	}
 </script>
 
-<div class="flex w-full items-center justify-center">
+<div class="flex min-h-screen w-full items-center justify-center">
 	<!-- Locale Button (Top Right) -->
 	<div class="absolute top-8 right-8">
 		<button
