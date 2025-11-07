@@ -1,5 +1,5 @@
-export type GuessCategory = 'composer' | 'decade' | 'era' | 'work' | 'form';
-export const ALL_CATEGORIES: GuessCategory[] = ['composer', 'decade', 'era', 'work', 'form'];
+export type GuessCategory = 'composer' | 'decade' | 'era' | 'work' | 'type';
+export const ALL_CATEGORIES: GuessCategory[] = ['composer', 'decade', 'era', 'work', 'type'];
 
 export type GameMode = 'classic' | 'buzzer' | 'bingo';
 
@@ -25,7 +25,7 @@ export const CATEGORY_POINTS: Record<GuessCategory, number> = {
 	decade: 12,
 	composer: 9,
 	era: 3,
-	form: 2
+	type: 2
 };
 
 // Buzzer mode time percentages (of track duration)

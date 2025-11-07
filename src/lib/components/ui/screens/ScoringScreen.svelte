@@ -23,7 +23,7 @@
 		players = [],
 		track = null,
 		isSoloMode = false,
-		categories = ['work', 'composer', 'decade', 'era', 'form'] as const,
+		categories = ['work', 'composer', 'decade', 'era', 'type'] as const,
 		revealedCategories = [],
 		onScore = () => {}
 	}: Props = $props();

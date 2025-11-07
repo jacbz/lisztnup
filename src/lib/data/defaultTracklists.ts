@@ -66,7 +66,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				count: 75
 			},
 			workScoreRange: [4.5, MAX_WORK_SCORE],
-			maxTracksFromSingleWork: 2
+			maxTracksFromSingleWork: 2,
+			enablePopularityWeighting: false
 		}
 	},
 	{
@@ -81,7 +82,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				count: 100
 			},
 			workScoreRange: [3.5, MAX_WORK_SCORE],
-			maxTracksFromSingleWork: 3
+			maxTracksFromSingleWork: 3,
+			enablePopularityWeighting: false
 		}
 	},
 	{
@@ -259,8 +261,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				ballet: 0,
 				other: 0
 			},
-			nameFilter: ['piano', 'klavier'],
-			workScoreRange: [3, MAX_WORK_SCORE]
+			nameFilter: ['piano', 'klavier']
 		}
 	},
 	{
@@ -280,8 +281,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				ballet: 0,
 				other: 0
 			},
-			nameFilter: ['violin', 'violon'],
-			workScoreRange: [3, MAX_WORK_SCORE]
+			nameFilter: ['violin', 'violon']
 		}
 	},
 	{
@@ -302,7 +302,6 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				other: 0
 			},
 			nameFilter: ['cello'],
-			workScoreRange: [3, MAX_WORK_SCORE],
 			maxTracksFromSingleWork: 5
 		}
 	},

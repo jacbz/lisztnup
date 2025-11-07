@@ -150,7 +150,7 @@
 		const segmentAngle = (Math.PI * 2) / activeCategories.length;
 
 		// Reduce shadow blur during animation for better Safari performance
-		const shadowBlur = isAnimating ? 40 : 100;
+		const shadowBlur = 80;
 
 		activeCategories.forEach((category, i) => {
 			const baseAngle = i * segmentAngle + (currentRotation * Math.PI) / 180 - Math.PI / 2;
@@ -270,7 +270,7 @@
 		ctx.strokeStyle = lighterColor;
 		ctx.lineWidth = 2;
 		ctx.shadowColor = currentPointerColor;
-		ctx.shadowBlur = isAnimating ? 8 : 15; // Reduce shadow during animation
+		ctx.shadowBlur = 12;
 
 		ctx.fill();
 		ctx.stroke();

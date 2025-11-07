@@ -381,9 +381,9 @@ export class TracklistGenerator {
 			disabled.push('composer');
 		}
 
-		// Disable 'form' if only one work category
+		// Disable 'type' if only one work category
 		if (this.worksByCategory.size <= 1) {
-			disabled.push('form');
+			disabled.push('type');
 		}
 
 		// Calculate year range from all works

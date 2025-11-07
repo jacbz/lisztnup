@@ -3,7 +3,7 @@ import { extractPathFromSVG } from '$lib/utils';
 import composerIcon from '$lib/assets/icons/composer.svg?raw';
 import workIcon from '$lib/assets/icons/work.svg?raw';
 import eraIcon from '$lib/assets/icons/era.svg?raw';
-import formIcon from '$lib/assets/icons/form.svg?raw';
+import typeIcon from '$lib/assets/icons/type.svg?raw';
 import decadeIcon from '$lib/assets/icons/decade.svg?raw';
 
 export interface CategoryDefinition {
@@ -37,11 +37,11 @@ export const categories: CategoryDefinition[] = [
 		iconPath: extractPathFromSVG(eraIcon)
 	},
 	{
-		id: 'form',
+		id: 'type',
 		color1: '#f59e0b',
 		color2: '#fbbf24',
 		glowColor: 'rgba(245, 158, 11, 0.8)',
-		iconPath: extractPathFromSVG(formIcon)
+		iconPath: extractPathFromSVG(typeIcon)
 	},
 	{
 		id: 'decade',
