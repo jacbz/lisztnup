@@ -25,6 +25,7 @@
 		activeCategories: readonly GuessCategory[];
 		disabledCategories: readonly GuessCategory[];
 		enableScoring: boolean;
+		hasValidYears: boolean;
 	};
 
 	const currentTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
@@ -38,20 +39,29 @@
 	// Get active categories from context
 	const activeCategories = $derived(gameContext.activeCategories);
 
-	// Randomly select 3 categories from active categories and order by points (most valuable first)
+	// Get hasValidYears from context
+	const hasValidYears = $derived(gameContext.hasValidYears);
+
+	// Randomly select n categories from active categories and order by points (most valuable first)
 	// This is set once per round and stored in state to prevent changing mid-round
+	// Filter out era/decade if track has no valid year data
 	let categoryProgression = $state<GuessCategory[]>([]);
 
 	// Initialize category progression when round changes
 	$effect(() => {
+		// Filter active categories based on year data availability
+		const validCategories = hasValidYears
+			? activeCategories
+			: activeCategories.filter((cat) => cat !== 'era' && cat !== 'decade');
+
 		// Generate new category progression for this round
-		if (activeCategories.length === 0) {
+		if (validCategories.length === 0) {
 			categoryProgression = [];
 		} else {
 			// Shuffle and take up to BUZZER_TIME_PERCENTAGES.length categories
-			const selectedCategories = shuffle([...activeCategories]).slice(
+			const selectedCategories = shuffle([...validCategories]).slice(
 				0,
-				Math.min(BUZZER_TIME_PERCENTAGES.length, activeCategories.length)
+				Math.min(BUZZER_TIME_PERCENTAGES.length, validCategories.length)
 			);
 
 			// Sort by points descending (most valuable first)

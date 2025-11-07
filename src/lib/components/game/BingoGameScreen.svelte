@@ -26,6 +26,7 @@
 		activeCategories: readonly GuessCategory[];
 		disabledCategories: readonly GuessCategory[];
 		enableScoring: boolean;
+		hasValidYears: boolean;
 	};
 
 	// Get disabled categories from context
@@ -38,18 +39,6 @@
 	});
 
 	async function handleCategorySelected(category: GuessCategory) {
-		// Check if category requires year data and current track has valid years
-		if ((category === 'era' || category === 'decade') && currentTrack) {
-			const hasValidYears =
-				currentTrack.work.begin_year != null || currentTrack.work.end_year != null;
-
-			if (!hasValidYears) {
-				// Current track doesn't have year data - for now, just warn and continue
-				// GameScreen will handle track sampling issues
-				console.warn('Track missing year data for category:', category, currentTrack);
-			}
-		}
-
 		currentRound.update((state) => ({
 			...state,
 			category
@@ -114,7 +103,7 @@
 		<SpinningWheel
 			currentRoundIndex={$currentRound.currentTrackIndex}
 			{disabledCategories}
-			{currentTrack}
+			hasValidYears={gameContext.hasValidYears}
 			onCategorySelected={handleCategorySelected}
 			onSpinStart={handleSpinStart}
 			onSpinEnd={handleSpinEnd}

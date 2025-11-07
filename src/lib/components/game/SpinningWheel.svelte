@@ -11,7 +11,7 @@
 		onSpinEnd?: () => void;
 		currentRoundIndex?: number; // Used to reset state between rounds
 		disabledCategories?: readonly GuessCategory[]; // Categories to exclude from the wheel
-		currentTrack?: Track | null; // Current track to validate year data
+		hasValidYears?: boolean; // Whether current track has valid year data
 	}
 
 	let {
@@ -20,7 +20,7 @@
 		onSpinEnd = () => {},
 		currentRoundIndex = 0,
 		disabledCategories = [],
-		currentTrack = null
+		hasValidYears = true
 	}: Props = $props();
 
 	// Filter out disabled categories and shuffle for visual variety
@@ -112,9 +112,6 @@
 	 * Generate a valid random final rotation that avoids year categories if track has no year data
 	 */
 	function generateValidFinalRotation(): number {
-		const hasValidYears =
-			currentTrack?.work.begin_year != null || currentTrack?.work.end_year != null;
-
 		let attempts = 0;
 		const maxAttempts = 100;
 
@@ -126,9 +123,6 @@
 
 			// If track has valid years OR doesn't land on year category, we're good
 			if (hasValidYears || !wouldLandOnYearCategory(finalRotation)) {
-				console.log(
-					`✓ Valid rotation generated: ${finalRotation.toFixed(1)}° (lands on: ${getCategoryFromRotation(finalRotation)})`
-				);
 				return finalRotation;
 			}
 
@@ -652,17 +646,11 @@
 		const VELOCITY_THRESHOLD = 0.3;
 		const absVelocity = Math.abs(dragVelocity);
 
-		console.log(
-			`Drag ended with velocity: ${dragVelocity.toFixed(3)} deg/ms (${velocityHistory.length} samples)`
-		);
-
 		if (absVelocity >= VELOCITY_THRESHOLD) {
 			// Fast drag - trigger validated spin
-			console.log('Velocity threshold exceeded - triggering spin');
 			spin();
 		} else {
 			// Slow drag - apply natural deceleration
-			console.log('Below velocity threshold - applying deceleration');
 			applyDeceleration();
 		}
 	}

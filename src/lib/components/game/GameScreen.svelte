@@ -39,6 +39,7 @@
 		activeCategories: readonly GuessCategory[];
 		disabledCategories: readonly GuessCategory[];
 		enableScoring: boolean;
+		hasValidYears: boolean;
 	}
 
 	interface Props {
@@ -76,6 +77,12 @@
 		)
 	);
 	const disabledCategories = $derived(generator.getDisabledCategories());
+
+	// Check if current track has valid year data for era/decade categories
+	const hasValidYears = $derived(
+		currentTrack != null &&
+			(currentTrack.work.begin_year != null || currentTrack.work.end_year != null)
+	);
 
 	let audioProgress = $state(0);
 	const audioProgressStore = writable(0);
@@ -314,6 +321,9 @@
 		get disabledCategories() {
 			return disabledCategories;
 		},
+		get hasValidYears() {
+			return hasValidYears;
+		},
 		enableScoring
 	});
 </script>
@@ -342,12 +352,10 @@
 	</div>
 
 	<!-- Round Indicator -->
-	{#if !isGameOver}
+	{#if !isGameOver && mode !== 'bingo'}
 		<div class="absolute bottom-6 left-6 z-20 select-none">
 			<p class="text-3xl font-bold text-cyan-400">
-				{mode === 'bingo'
-					? $currentRound.currentTrackIndex + 1
-					: `${$currentRound.currentTrackIndex + 1}/${numberOfTracks}`}
+				{$currentRound.currentTrackIndex + 1}/{numberOfTracks}
 			</p>
 		</div>
 	{/if}
