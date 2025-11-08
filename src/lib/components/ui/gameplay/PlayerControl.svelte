@@ -33,7 +33,7 @@
 		isRevealed = false,
 		progress = 0,
 		track = null,
-		playerSize = 240,
+		playerSize = null,
 		onPlay = () => {},
 		onStop = () => {},
 		onReveal = () => {},

@@ -12,6 +12,7 @@
 	import { SettingsService } from '$lib/services';
 	import type { Tracklist, GameMode, Player } from '$lib/types';
 	import Plus from 'lucide-svelte/icons/plus';
+	import { onMount } from 'svelte';
 
 	interface Props {
 		onStart?: (
@@ -33,6 +34,7 @@
 	let playersValid = $state(true);
 	let enableScoring = $state($settingsStore.enableScoring); // Load from settings
 	let playerSetupRef: any = $state();
+	let startAudio: HTMLAudioElement | null = null;
 
 	// Load custom tracklists
 	let customTracklists = $state(SettingsService.loadCustomTracklists());
@@ -95,12 +97,23 @@
 			return;
 		}
 
+		// Play start sound to initialize audio context for Safari
+		playStartSound();
+
 		// For Bingo mode, start immediately without players
 		if (selectedMode === 'bingo') {
 			onStart(selectedMode, [], false, false);
 		} else {
 			// For Classic and Buzzer modes, use current players
 			onStart(selectedMode, currentPlayers, currentIsSoloMode, enableScoring);
+		}
+	}
+
+	function playStartSound() {
+		// Play start sound immediately when button is pressed (fixes Safari audio issue)
+		if (startAudio) {
+			startAudio.currentTime = 0;
+			startAudio.play().catch((err) => console.warn('Failed to play start sound:', err));
 		}
 	}
 
@@ -113,6 +126,11 @@
 	function handleAddPlayer() {
 		// Trigger add player in PlayerSetup via binding
 	}
+
+	onMount(() => {
+		// Create start audio element
+		startAudio = new Audio('/start.mp3');
+	});
 </script>
 
 <div class="flex min-h-screen w-full items-center justify-center">
