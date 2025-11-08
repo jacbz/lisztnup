@@ -86,6 +86,7 @@
 			onReplay={gameContext.replayTrack}
 			onNext={gameContext.nextRound}
 			onPlaybackEnd={gameContext.handlePlaybackEnd}
+			playerSize={240}
 		/>
 	</div>
 {/if}

@@ -17,6 +17,7 @@
 		isRevealed?: boolean;
 		progress?: number; // 0-1
 		track?: Track | null;
+		/// Optional fixed size for the player button. If not provided, size is dynamic based on viewport.
 		playerSize?: number;
 		onPlay?: () => void;
 		onStop?: () => void;
@@ -33,7 +34,7 @@
 		isRevealed = false,
 		progress = 0,
 		track = null,
-		playerSize = null,
+		playerSize = undefined,
 		onPlay = () => {},
 		onStop = () => {},
 		onReveal = () => {},
@@ -192,7 +193,7 @@
 				onpointerleave={handlePointerUp}
 				aria-label={isPlaying ? 'Stop' : playbackEnded ? 'Reveal' : 'Play'}
 			>
-				{#if isPlaying && playerSize > 100}
+				{#if isPlaying && (!playerSize || playerSize > 100)}
 					<Visualizer
 						analyserNode={$playerState.analyserNode}
 						width={progressPath.buttonSize}

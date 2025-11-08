@@ -20,7 +20,7 @@ export function formatYearRange(
 	if (!beginYear && !endYear) return '';
 	if (!endYear || beginYear === endYear) return String(beginYear ?? endYear);
 	if (!beginYear) return String(endYear);
-	return `${beginYear}–${endYear}`;
+	return `${beginYear}‑${endYear}`;
 }
 
 /**
@@ -48,7 +48,7 @@ export function formatLifespan(birthYear: number | null, deathYear: number | nul
 	if (!birthYear && !deathYear) return '';
 	if (!deathYear) return `* ${birthYear}`;
 	if (!birthYear) return `† ${deathYear}`;
-	return `${birthYear}–${deathYear}`;
+	return `${birthYear}‑${deathYear}`;
 }
 /**
  * Gets the decade from a year (e.g., 1805 -> "1800s")
@@ -133,11 +133,11 @@ const COMPOSER_ERA_OVERRIDES: Record<string, string> = {
 
 	// Late Romantic / National Schools
 	'Rachmaninoff, Sergei Vasilievich': 'Late Romantic',
-	'Scriabin, Alexander Nikolayevich': 'Late Romantic / Mysticism',
-	'Sibelius, Jean': 'Late Romantic / Finnish Nationalism',
-	'Nielsen, Carl': 'Late Romantic / Nordic Modernism',
-	'Elgar, Edward': 'Late Romantic / English Renaissance',
-	'Vaughan Williams, Ralph': 'English Pastoral / Folk Revival'
+	'Scriabin, Alexander Nikolayevich': 'Late Romantic',
+	'Sibelius, Jean': 'Late Romantic',
+	'Nielsen, Carl': 'Late Romantic',
+	'Elgar, Edward': 'Late Romantic',
+	'Vaughan Williams, Ralph': 'Late Romantic'
 };
 
 /**
