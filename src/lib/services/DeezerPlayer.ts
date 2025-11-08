@@ -1,3 +1,5 @@
+import { writable, type Readable } from 'svelte/store';
+
 interface DeezerTrackData {
 	id: number;
 	title: string;
@@ -28,6 +30,9 @@ export class DeezerPlayer {
 	private fadeIntervalId: number | null = null;
 	private readonly FADE_DURATION = 300; // Fade duration in milliseconds
 	private readonly FADE_STEPS = 30; // Number of steps in fade animation
+	private progressInterval: number | null = null;
+	private progressStore = writable(0);
+	private onPlaybackEndCallback: (() => void) | null = null;
 
 	/**
 	 * Sets the track length limit in seconds (5-30)
@@ -194,12 +199,18 @@ export class DeezerPlayer {
 				this.audio.currentTime = 0;
 			}
 
+			// Reset progress
+			this.progressStore.set(0);
+
 			// Set volume to 0.1 before playing
 			this.audio.volume = 0.1;
 			await this.audio.play();
 
 			// Fade in to target volume
 			this.fadeVolume(this.volume);
+
+			// Start progress tracking
+			this.startProgressTracking();
 		} catch (error) {
 			console.error('DeezerPlayer: Error playing track', error);
 		}
@@ -215,6 +226,7 @@ export class DeezerPlayer {
 		}
 
 		this.cancelFade();
+		this.stopProgressTracking();
 		this.audio.pause();
 		this.audio.volume = this.volume; // Restore volume for next play
 	}
@@ -305,10 +317,60 @@ export class DeezerPlayer {
 	}
 
 	/**
+	 * Gets the progress store (0-1) for reactive progress tracking
+	 */
+	getProgressStore(): Readable<number> {
+		return this.progressStore;
+	}
+
+	/**
+	 * Sets the callback to be called when playback ends naturally
+	 */
+	setOnPlaybackEnd(callback: (() => void) | null): void {
+		this.onPlaybackEndCallback = callback;
+	}
+
+	/**
+	 * Starts tracking playback progress
+	 */
+	private startProgressTracking(): void {
+		this.stopProgressTracking();
+
+		this.progressInterval = window.setInterval(() => {
+			const current = this.getCurrentTime();
+			const duration = this.getDuration();
+
+			if (duration > 0) {
+				const progress = current / duration;
+				this.progressStore.set(progress);
+
+				// Check if playback has ended naturally
+				if (progress >= 0.99 && !this.isPlaying()) {
+					this.stopProgressTracking();
+					if (this.onPlaybackEndCallback) {
+						this.onPlaybackEndCallback();
+					}
+				}
+			}
+		}, 100);
+	}
+
+	/**
+	 * Stops tracking playback progress
+	 */
+	private stopProgressTracking(): void {
+		if (this.progressInterval) {
+			clearInterval(this.progressInterval);
+			this.progressInterval = null;
+		}
+	}
+
+	/**
 	 * Cleanup resources
 	 */
 	destroy(): void {
 		this.cancelFade();
+		this.stopProgressTracking();
 		if (this.audio) {
 			this.audio.pause();
 			this.audio.src = '';
@@ -316,6 +378,8 @@ export class DeezerPlayer {
 		}
 		this.currentTrackData = null;
 		this.currentTrackId = null;
+		this.onPlaybackEndCallback = null;
+		this.progressStore.set(0);
 	}
 }
 

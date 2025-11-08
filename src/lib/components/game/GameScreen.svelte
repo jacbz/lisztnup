@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount, onDestroy, setContext } from 'svelte';
-	import { readable, writable } from 'svelte/store';
 	import type { TracklistGenerator } from '$lib/services';
 	import type { Player, GameMode, Track, GuessCategory } from '$lib/types';
 	import {
@@ -34,6 +33,7 @@
 		replayTrack: () => Promise<void>;
 		revealTrack: () => void;
 		nextRound: () => Promise<void>;
+		handlePlaybackEnd: () => void;
 		audioProgress: import('svelte/store').Readable<number>;
 		onHome: () => void;
 		activeCategories: readonly GuessCategory[];
@@ -84,9 +84,7 @@
 			(currentTrack.work.begin_year != null || currentTrack.work.end_year != null)
 	);
 
-	let audioProgress = $state(0);
-	const audioProgressStore = writable(0);
-	let progressInterval: number | null = null;
+	const audioProgressStore = deezerPlayer.getProgressStore();
 	let preloadedTrackIndex = $state(-1);
 
 	let showScoringScreen = $state(false);
@@ -100,6 +98,9 @@
 		gameSession.startSession(mode, players, isSoloMode);
 		sampleAndPreloadTrack();
 
+		// Set up playback end callback
+		deezerPlayer.setOnPlaybackEnd(handlePlaybackEnd);
+
 		// Add beforeunload listener
 		const handleBeforeUnload = (e: BeforeUnloadEvent) => {
 			e.preventDefault();
@@ -109,13 +110,11 @@
 
 		return () => {
 			window.removeEventListener('beforeunload', handleBeforeUnload);
-			if (progressInterval) clearInterval(progressInterval);
 			deezerPlayer.destroy();
 		};
 	});
 
 	onDestroy(() => {
-		if (progressInterval) clearInterval(progressInterval);
 		deezerPlayer.destroy();
 	});
 
@@ -149,10 +148,6 @@
 	// Shared audio control functions
 	async function playTrack(): Promise<void> {
 		try {
-			// Reset progress immediately before playing
-			audioProgress = 0;
-			audioProgressStore.set(0);
-
 			await deezerPlayer.play();
 
 			currentRound.update((state) => ({
@@ -160,8 +155,6 @@
 				isPlaying: true,
 				playbackEnded: false
 			}));
-
-			startProgressTracking();
 		} catch (error) {
 			console.error('Error playing track:', error);
 			toast.show('error', 'Failed to play track.');
@@ -175,15 +168,10 @@
 			isPlaying: false,
 			playbackEnded: true
 		}));
-		stopProgressTracking();
 	}
 
 	async function replayTrack(): Promise<void> {
 		try {
-			// Reset progress before replaying
-			audioProgress = 0;
-			audioProgressStore.set(0);
-
 			await deezerPlayer.seek(0);
 			await deezerPlayer.play();
 
@@ -193,8 +181,6 @@
 				playbackEnded: false,
 				isRevealed: false
 			}));
-
-			startProgressTracking();
 		} catch (error) {
 			console.error('Error replaying track:', error);
 			toast.show('error', 'Failed to replay track.');
@@ -215,7 +201,6 @@
 
 	async function nextRound(): Promise<void> {
 		deezerPlayer.pause();
-		stopProgressTracking();
 
 		currentRound.update((state) => ({
 			...state,
@@ -250,34 +235,12 @@
 		}
 	}
 
-	function startProgressTracking(): void {
-		stopProgressTracking();
-
-		progressInterval = window.setInterval(() => {
-			const current = deezerPlayer.getCurrentTime();
-			const duration = deezerPlayer.getDuration();
-
-			if (duration > 0) {
-				audioProgress = current / duration;
-				audioProgressStore.set(audioProgress);
-			}
-
-			if (current >= duration || !deezerPlayer.isPlaying()) {
-				currentRound.update((state) => ({
-					...state,
-					isPlaying: false,
-					playbackEnded: true
-				}));
-				stopProgressTracking();
-			}
-		}, 100);
-	}
-
-	function stopProgressTracking(): void {
-		if (progressInterval) {
-			clearInterval(progressInterval);
-			progressInterval = null;
-		}
+	function handlePlaybackEnd(): void {
+		currentRound.update((state) => ({
+			...state,
+			isPlaying: false,
+			playbackEnded: true
+		}));
 	}
 
 	function handleShowStats(): void {
@@ -313,6 +276,7 @@
 		replayTrack,
 		revealTrack,
 		nextRound,
+		handlePlaybackEnd,
 		audioProgress: audioProgressStore,
 		onHome: handleHome,
 		get activeCategories() {

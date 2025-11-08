@@ -20,6 +20,7 @@
 		replayTrack: () => Promise<void>;
 		revealTrack: () => void;
 		nextRound: () => Promise<void>;
+		handlePlaybackEnd: () => void;
 		audioProgress: import('svelte/store').Readable<number>;
 		onHome: () => void;
 		activeCategories: readonly GuessCategory[];
@@ -71,7 +72,6 @@
 		}
 	});
 
-	let playbackTime = $state(0); // Current playback time in seconds
 	let trackDuration = $state(30); // Track duration from player
 	let hasStartedPlaying = $state(false);
 	let isBuzzerPressed = $state(false);
@@ -83,6 +83,34 @@
 
 	// Detect if device has touch capability
 	let hasTouch = $state(false);
+
+	// Subscribe to audio progress from DeezerPlayer
+	let audioProgressValue = $state(0);
+	gameContext.audioProgress.subscribe((value) => {
+		audioProgressValue = value;
+	});
+
+	// Calculate playback time from progress and duration
+	const playbackTime = $derived(audioProgressValue * trackDuration);
+
+	// Monitor playback to detect when time's up (auto-buzz)
+	$effect(() => {
+		if (
+			hasStartedPlaying &&
+			!isBuzzerPressed &&
+			(playbackTime >= trackDuration || (!deezerPlayer.isPlaying() && audioProgressValue >= 0.99))
+		) {
+			// Time's up - auto-buzz and show reveal (but wasManuallyBuzzed stays false)
+			deezerPlayer.pause();
+			isBuzzerPressed = true;
+			showReveal = true;
+
+			currentRound.update((state) => ({
+				...state,
+				category: currentCategory
+			}));
+		}
+	});
 
 	// Compute button state classes
 	const isActiveBuzz = $derived(!showReveal && hasStartedPlaying && !$currentRound.isRevealed);
@@ -160,39 +188,6 @@
 		return categoryProgression.slice(0, currentIndex + 1);
 	});
 
-	// Buzzer-specific progress tracking
-	let buzzerProgressInterval: number | null = null;
-
-	function startBuzzerProgressTracking() {
-		stopBuzzerProgressTracking();
-
-		buzzerProgressInterval = window.setInterval(() => {
-			const current = deezerPlayer.getCurrentTime();
-			playbackTime = current;
-
-			// Check if we've reached the end of track
-			if (current >= trackDuration || !deezerPlayer.isPlaying()) {
-				// Time's up - auto-buzz and show reveal (but wasManuallyBuzzed stays false)
-				deezerPlayer.pause();
-				stopBuzzerProgressTracking();
-				isBuzzerPressed = true;
-				showReveal = true;
-
-				currentRound.update((state) => ({
-					...state,
-					category: currentCategory
-				}));
-			}
-		}, 100);
-	}
-
-	function stopBuzzerProgressTracking() {
-		if (buzzerProgressInterval) {
-			clearInterval(buzzerProgressInterval);
-			buzzerProgressInterval = null;
-		}
-	}
-
 	// Buzzer-specific play function
 	async function handleBuzzerPlay(): Promise<void> {
 		if (!hasStartedPlaying) {
@@ -203,8 +198,6 @@
 
 				// Get the track duration from the player
 				trackDuration = deezerPlayer.getDuration(true);
-
-				startBuzzerProgressTracking();
 			} catch (error) {
 				console.error('Error playing track:', error);
 				toast.show('error', 'Failed to play track.');
@@ -220,7 +213,6 @@
 			// Buzzer pressed during playback - pause and show reveal button
 			playBuzzerSound();
 			deezerPlayer.pause();
-			stopBuzzerProgressTracking();
 			isBuzzerPressed = true;
 			wasManuallyBuzzed = true; // Mark that someone actually pressed the buzzer
 			showReveal = true;
@@ -286,14 +278,12 @@
 
 	async function handleBuzzerNextRound() {
 		deezerPlayer.pause();
-		stopBuzzerProgressTracking();
 
 		// Reset state for next round
 		hasStartedPlaying = false;
 		isBuzzerPressed = false;
 		wasManuallyBuzzed = false;
 		showReveal = false;
-		playbackTime = 0;
 		trackDuration = 30; // Reset to default, will be updated when track plays
 
 		await gameContext.nextRound();
@@ -314,10 +304,6 @@
 
 		// Create buzzer audio element
 		buzzerAudio = new Audio('/buzzer.mp3');
-	});
-
-	onDestroy(() => {
-		if (buzzerProgressInterval) clearInterval(buzzerProgressInterval);
 	});
 </script>
 
@@ -365,7 +351,7 @@
 				{#if showReveal}
 					<span
 						class="font-bold tracking-[0.15em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
-						style="font-size: clamp(2rem, 8vw, 4rem);">{$_('game.buzzer.reveal')}</span
+						style="font-size: clamp(2rem, 8vw, 4rem);">{$_('game.reveal')}</span
 					>
 				{:else if !hasStartedPlaying}
 					<span

@@ -161,7 +161,9 @@ EXCLUDED_COMPOSERS: Set[str] = set([
     "Goldsmith, Jerry",
     "Newman, Randy",
     "Jarre, Maurice",
-    "Mills, Irving"
+    "Mills, Irving",
+    "Foster, Stephen",
+    "Willis, Wallace"
 ])
 
 EXCLUDED_DEEZER_IDS: Set[int] = set([
@@ -169,9 +171,9 @@ EXCLUDED_DEEZER_IDS: Set[int] = set([
 ])
 
 EXCLUDED_WORKS: Set[str] = set([
-    "bf57c435-6ce0-3d57-ab04-e2a9179b178c",
-    "8531b357-339e-3cc7-9ed2-0d6b928ed12e",
-    "1da416e8-761d-3125-adcb-79bcea5ef544"
+    "bf57c435-6ce0-3d57-ab04-e2a9179b178c", # O Holy Night
+    "8531b357-339e-3cc7-9ed2-0d6b928ed12e", # Joy to the World
+    "bc0cdd41-eaa3-3330-b972-8e8174b9e64d" # Hark! The Herald Angels Sing
 ])
 
 # ==============================================================================

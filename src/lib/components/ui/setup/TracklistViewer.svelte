@@ -2,10 +2,12 @@
 	import type { Tracklist, Composer } from '$lib/types';
 	import { MIN_WORK_SCORE, MAX_WORK_SCORE } from '$lib/types';
 	import { gameData } from '$lib/stores';
-	import { TracklistGenerator } from '$lib/services';
+	import { TracklistGenerator, deezerPlayer } from '$lib/services';
 	import { get } from 'svelte/store';
+	import { onMount, onDestroy } from 'svelte';
 	import Popup from '../primitives/Popup.svelte';
 	import ExternalLink from '../primitives/ExternalLink.svelte';
+	import PlayerControl from '../gameplay/PlayerControl.svelte';
 	import { formatLifespan, formatPartName, formatYearRange } from '$lib/utils';
 	import { _ } from 'svelte-i18n';
 
@@ -24,7 +26,7 @@
 		composerLifespan: string;
 		workGid: string;
 		work: string;
-		parts: { name: string; score: number }[];
+		parts: { name: string; score: number; deezerId: number }[];
 		popularity: number; // Work score
 		year: string;
 	}
@@ -33,6 +35,27 @@
 	let sortColumn = $state<'composer' | 'work' | 'popularity' | 'year'>('composer');
 	let sortDirection = $state<'asc' | 'desc'>('asc');
 	let isLoading = $state(false);
+
+	// Audio playback state
+	let currentlyPlayingDeezerId = $state<number | null>(null);
+	const audioProgressStore = deezerPlayer.getProgressStore();
+	let audioProgress = $state(0);
+
+	// Subscribe to progress store
+	$effect(() => {
+		const unsubscribe = audioProgressStore.subscribe((value) => {
+			audioProgress = value;
+		});
+		return unsubscribe;
+	});
+
+	// Track the current round state for PlayerControl
+	const playbackState = $derived({
+		isPlaying: currentlyPlayingDeezerId !== null && deezerPlayer.isPlaying(),
+		playbackEnded:
+			currentlyPlayingDeezerId !== null && !deezerPlayer.isPlaying() && audioProgress >= 1,
+		isRevealed: false // Never reveal in tracklist viewer
+	});
 
 	// Load data when tracklist or visibility changes
 	$effect(() => {
@@ -47,6 +70,26 @@
 			// Reset data and loading state when popup closes
 			rawTableData = [];
 			isLoading = false;
+			// Stop any playing audio
+			if (currentlyPlayingDeezerId !== null) {
+				deezerPlayer.pause();
+				currentlyPlayingDeezerId = null;
+			}
+		}
+	});
+
+	onMount(() => {
+		return () => {
+			// Cleanup on unmount
+			if (currentlyPlayingDeezerId !== null) {
+				deezerPlayer.destroy();
+			}
+		};
+	});
+
+	onDestroy(() => {
+		if (currentlyPlayingDeezerId !== null) {
+			deezerPlayer.destroy();
 		}
 	});
 
@@ -119,7 +162,7 @@
 					composerLifespan: formatLifespan(composer.birth_year, composer.death_year),
 					workGid: work.gid,
 					work: work.name,
-					parts: work.parts.map((p) => ({ name: p.name, score: p.score })),
+					parts: work.parts.map((p) => ({ name: p.name, score: p.score, deezerId: p.deezer })),
 					popularity: work.score,
 					year: yearStr
 				});
@@ -168,9 +211,34 @@
 	function renderPartScore(score: number): string {
 		// For parts, show a subtle gradient bar from 50 to 100 (parts are always above 50)
 		const normalizedScore = Math.max(0, Math.min(100, ((score - 50) / 50) * 100));
-		return `<div class="h-1.5 w-5 shrink-0 rounded-full bg-gray-700">
+		return `<div title="${score}" class="h-1.5 w-5 shrink-0 rounded-full bg-gray-700">
 			<div class="h-full rounded-full bg-gradient-to-r from-cyan-600 to-cyan-400" style="width: ${normalizedScore}%"></div>
 		</div>`;
+	}
+
+	// Audio playback functions
+	async function handlePlayPart(deezerId: number): Promise<void> {
+		try {
+			// If same track is playing, stop it
+			if (currentlyPlayingDeezerId === deezerId && deezerPlayer.isPlaying()) {
+				stopPlayback();
+				return;
+			}
+
+			// Load and play the track
+			await deezerPlayer.load(deezerId, false);
+			await deezerPlayer.play();
+
+			currentlyPlayingDeezerId = deezerId;
+		} catch (error) {
+			console.error('Error playing part:', error);
+			currentlyPlayingDeezerId = null;
+		}
+	}
+
+	function stopPlayback(): void {
+		deezerPlayer.pause();
+		currentlyPlayingDeezerId = null;
 	}
 </script>
 
@@ -179,14 +247,29 @@
 		class="max-h-[90vh] w-full max-w-6xl overflow-hidden rounded-2xl border-2 border-cyan-400 bg-gray-900 shadow-[0_0_40px_rgba(34,211,238,0.6)]"
 	>
 		<div class="border-b-2 border-cyan-400/30 bg-gray-800/50 p-6">
-			<h2 class="text-2xl font-bold text-cyan-400">
-				{$_('tracklistViewer.title')}
-				{#if tracklist}
-					<span class="text-xl text-gray-400">
-						- {tracklist.isDefault ? $_(tracklist.name) : tracklist.name}
-					</span>
-				{/if}
-			</h2>
+			<div class="flex items-center justify-between">
+				<h2 class="text-2xl font-bold text-cyan-400">
+					{#if tracklist}
+						{tracklist.isDefault ? $_(tracklist.name) : tracklist.name}
+					{/if}
+				</h2>
+
+				<!-- PlayerControl in header -->
+				<div class="relative" style="width: 48px; height: 48px;">
+					<PlayerControl
+						visible={currentlyPlayingDeezerId !== null && !playbackState.playbackEnded}
+						isPlaying={playbackState.isPlaying}
+						playbackEnded={playbackState.playbackEnded}
+						isRevealed={playbackState.isRevealed}
+						progress={audioProgress}
+						track={null}
+						playerSize={48}
+						onStop={stopPlayback}
+						onReveal={() => {}}
+						onNext={() => {}}
+					/>
+				</div>
+			</div>
 		</div>
 
 		<div class="overflow-y-auto p-6" style="max-height: calc(90vh - 120px);">
@@ -202,87 +285,109 @@
 			{:else if tableData.length === 0}
 				<p class="text-center text-gray-400">{$_('tracklistViewer.noData')}</p>
 			{:else}
-				<div class="overflow-x-auto">
-					<table class="w-full border-collapse">
-						<thead>
-							<tr class="border-b-2 border-cyan-400/30">
-								<th
-									class="cursor-pointer px-4 py-3 text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
-									onclick={() => handleSort('composer')}
-								>
-									{$_('tracklistViewer.columns.composer')}
-									{#if sortColumn === 'composer'}
-										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+				<table class="w-full border-collapse">
+					<thead>
+						<tr class="border-b-2 border-cyan-400/30">
+							<th
+								class="cursor-pointer px-4 py-3 text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
+								onclick={() => handleSort('composer')}
+							>
+								{$_('tracklistViewer.columns.composer')}
+								{#if sortColumn === 'composer'}
+									<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+								{/if}
+							</th>
+							<th
+								class="cursor-pointer px-4 py-3 text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
+								onclick={() => handleSort('work')}
+							>
+								{$_('tracklistViewer.columns.work')}
+								{#if sortColumn === 'work'}
+									<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+								{/if}
+							</th>
+							<th
+								class="cursor-pointer px-4 py-3 text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
+								onclick={() => handleSort('popularity')}
+							>
+								{$_('tracklistViewer.columns.popularity')}
+								{#if sortColumn === 'popularity'}
+									<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+								{/if}
+							</th>
+							<th
+								class="cursor-pointer px-4 py-3 text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
+								onclick={() => handleSort('year')}
+							>
+								{$_('tracklistViewer.columns.year')}
+								{#if sortColumn === 'year'}
+									<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+								{/if}
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{#each tableData as row}
+							<tr class="border-b border-gray-700 transition-colors hover:bg-gray-800/50">
+								<td class="px-4 py-3 text-sm">
+									<div class="text-gray-300">
+										<span>{row.composer}</span>
+										<ExternalLink href="https://musicbrainz.org/artist/{row.composerGid}" />
+									</div>
+									{#if row.composerLifespan}
+										<div class="text-xs text-gray-400">({row.composerLifespan})</div>
 									{/if}
-								</th>
-								<th
-									class="cursor-pointer px-4 py-3 text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
-									onclick={() => handleSort('work')}
-								>
-									{$_('tracklistViewer.columns.work')}
-									{#if sortColumn === 'work'}
-										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
-									{/if}
-								</th>
-								<th
-									class="cursor-pointer px-4 py-3 text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
-									onclick={() => handleSort('popularity')}
-								>
-									{$_('tracklistViewer.columns.popularity')}
-									{#if sortColumn === 'popularity'}
-										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
-									{/if}
-								</th>
-								<th
-									class="cursor-pointer px-4 py-3 text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
-									onclick={() => handleSort('year')}
-								>
-									{$_('tracklistViewer.columns.year')}
-									{#if sortColumn === 'year'}
-										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
-									{/if}
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							{#each tableData as row}
-								<tr class="border-b border-gray-700 transition-colors hover:bg-gray-800/50">
-									<td class="px-4 py-3 text-sm">
-										<div class="text-gray-300">
-											<span>{row.composer}</span>
-											<ExternalLink href="https://musicbrainz.org/artist/{row.composerGid}" />
-										</div>
-										{#if row.composerLifespan}
-											<div class="text-xs text-gray-400">({row.composerLifespan})</div>
-										{/if}
-									</td>
-									<td class="px-4 py-3 text-sm">
-										<div class="flex items-center gap-1 text-gray-300">
+								</td>
+								<td class="px-4 py-3 text-sm">
+									<div class="flex items-center gap-1 text-gray-300">
+										{#if row.parts.length === 1}
+											<!-- Single part: work name is clickable -->
+											<button
+												type="button"
+												onclick={() => handlePlayPart(row.parts[0].deezerId)}
+												class="cursor-pointer text-left transition-colors hover:text-cyan-400 {currentlyPlayingDeezerId ===
+												row.parts[0].deezerId
+													? 'font-semibold text-cyan-400'
+													: ''}"
+											>
+												{row.work}
+											</button>
+										{:else}
+											<!-- Multiple parts: work name not clickable -->
 											<span>{row.work}</span>
-											<ExternalLink href="https://musicbrainz.org/work/{row.workGid}" />
-										</div>
-										{#if row.parts.length > 1 || row.work !== row.parts[0].name}
-											<ul class="mt-1 space-y-0.5 pl-4 text-gray-400">
-												{#each row.parts as part}
-													<li class="flex items-center gap-2">
-														{#if row.parts.length > 1}
-															{@html renderPartScore(part.score)}
-														{/if}
-														<span class="flex-1">{formatPartName(part.name, row.work)}</span>
-													</li>
-												{/each}
-											</ul>
 										{/if}
-									</td>
-									<td class="px-4 py-3 text-sm text-yellow-400">
-										{@html renderPopularityStars(row.popularity)}
-									</td>
-									<td class="px-4 py-3 text-sm text-gray-400">{row.year}</td>
-								</tr>
-							{/each}
-						</tbody>
-					</table>
-				</div>
+										<ExternalLink href="https://musicbrainz.org/work/{row.workGid}" />
+									</div>
+									{#if row.parts.length > 1 || row.work !== row.parts[0].name}
+										<ul class="mt-1 space-y-0.5 pl-4 text-gray-400">
+											{#each row.parts as part}
+												<li class="flex items-center gap-2">
+													{#if row.parts.length > 1}
+														{@html renderPartScore(part.score)}
+													{/if}
+													<button
+														type="button"
+														onclick={() => handlePlayPart(part.deezerId)}
+														class="flex-1 cursor-pointer text-left transition-colors hover:text-cyan-400 {currentlyPlayingDeezerId ===
+														part.deezerId
+															? 'font-semibold text-cyan-400'
+															: ''}"
+													>
+														{formatPartName(part.name, row.work)}
+													</button>
+												</li>
+											{/each}
+										</ul>
+									{/if}
+								</td>
+								<td class="px-4 py-3 text-sm text-yellow-400" title={row.popularity + ''}>
+									{@html renderPopularityStars(row.popularity)}
+								</td>
+								<td class="px-4 py-3 text-sm text-gray-400">{row.year}</td>
+							</tr>
+						{/each}
+					</tbody>
+				</table>
 			{/if}
 		</div>
 	</div>

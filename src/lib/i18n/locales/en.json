@@ -165,7 +165,6 @@
 		}
 	},
 	"tracklistViewer": {
-		"title": "Tracklist Contents",
 		"loading": "Loading tracklist...",
 		"noData": "No works found in this tracklist.",
 		"columns": {
@@ -246,14 +245,13 @@
 		"play": "Play",
 		"pause": "Pause",
 		"guessCategory": "{category}",
-		"reveal": "Reveal Answer",
+		"reveal": "Reveal",
 		"nextRound": "Next Round",
 		"gameOver": "Game Over!",
 		"playAgain": "Play Again",
 		"buzzer": {
 			"pressToStart": "Start",
-			"buzz": "Buzz!",
-			"reveal": "Reveal"
+			"buzz": "Buzz!"
 		},
 		"categories": {
 			"composer": "Composer",

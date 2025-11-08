@@ -15,12 +15,13 @@
 		isRevealed?: boolean;
 		progress?: number; // 0-1
 		track?: Track | null;
-		isBingoMode?: boolean;
+		playerSize?: number;
 		onPlay?: () => void;
 		onStop?: () => void;
 		onReveal?: () => void;
 		onReplay?: () => void;
 		onNext?: () => void;
+		onPlaybackEnd?: () => void;
 	}
 
 	let {
@@ -30,12 +31,13 @@
 		isRevealed = false,
 		progress = 0,
 		track = null,
-		isBingoMode: allowResize = false,
+		playerSize = 240,
 		onPlay = () => {},
 		onStop = () => {},
 		onReveal = () => {},
 		onReplay = () => {},
-		onNext = () => {}
+		onNext = () => {},
+		onPlaybackEnd = () => {}
 	}: Props = $props();
 
 	let isHoldingReveal = $state(false);
@@ -43,6 +45,7 @@
 	let windowSize = $state({ width: 0, height: 0 });
 	let displayProgress = $state(0);
 	let lastIsPlaying = $state(false);
+	let lastProgress = $state(0);
 
 	// Reset progress when playback starts fresh (transition from not playing to playing)
 	$effect(() => {
@@ -57,6 +60,15 @@
 			displayProgress = 1;
 		}
 		lastIsPlaying = isPlaying;
+	});
+
+	// Detect when playback ends naturally (not stopped by user)
+	$effect(() => {
+		if (!isPlaying && lastIsPlaying && progress >= 0.99) {
+			// Playback ended naturally (reached end of track)
+			onPlaybackEnd();
+		}
+		lastProgress = progress;
 	});
 
 	onMount(() => {
@@ -118,7 +130,7 @@
 					0.14 *
 					2;
 
-		const buttonSize = allowResize ? dynamicSize : 240;
+		const buttonSize = playerSize ?? dynamicSize;
 
 		const ringStrokeWidth = Math.max(8, buttonSize * 0.05);
 		const ringRadius = buttonSize / 2 - ringStrokeWidth / 2;
@@ -169,7 +181,6 @@
 <div
 	class="absolute z-30 transition-opacity duration-30 md:mt-0"
 	class:visible
-	class:mt-24={!allowResize}
 	style="opacity: {visible ? 1 : 0}; pointer-events: {visible
 		? 'auto'
 		: 'none'}; top: 50%; left: 50%; transform: translate(-50%, -50%);"
@@ -212,7 +223,9 @@
 				<!-- Button content -->
 				<div class="relative z-1 flex items-center justify-center">
 					{#if playbackEnded}
-						<span class="font-bold tracking-widest text-cyan-400 uppercase">REVEAL</span>
+						<span class="font-bold tracking-widest text-cyan-400 uppercase"
+							>{$_('game.reveal')}</span
+						>
 					{:else if isPlaying}
 						<Square
 							class="text-cyan-400"

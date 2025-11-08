@@ -21,6 +21,7 @@
 		replayTrack: () => Promise<void>;
 		revealTrack: () => void;
 		nextRound: () => Promise<void>;
+		handlePlaybackEnd: () => void;
 		audioProgress: import('svelte/store').Readable<number>;
 		onHome: () => void;
 		activeCategories: readonly GuessCategory[];
@@ -117,12 +118,12 @@
 			isRevealed={$currentRound.isRevealed}
 			progress={audioProgressValue}
 			track={currentTrack}
-			isBingoMode={true}
 			onPlay={handlePlay}
 			onStop={handleStop}
 			onReveal={handleReveal}
 			onReplay={handleReplay}
 			onNext={handleNextRound}
+			onPlaybackEnd={gameContext.handlePlaybackEnd}
 		/>
 	</div>
 {/if}
