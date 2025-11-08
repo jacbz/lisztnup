@@ -169,7 +169,9 @@ EXCLUDED_DEEZER_IDS: Set[int] = set([
 ])
 
 EXCLUDED_WORKS: Set[str] = set([
-    "bf57c435-6ce0-3d57-ab04-e2a9179b178c"
+    "bf57c435-6ce0-3d57-ab04-e2a9179b178c",
+    "8531b357-339e-3cc7-9ed2-0d6b928ed12e",
+    "1da416e8-761d-3125-adcb-79bcea5ef544"
 ])
 
 # ==============================================================================
@@ -357,6 +359,7 @@ class MusicbrainzProcessor:
         # Stage 2: Group and filter works by their absolute significance score (WSS)
         works_by_type = self._group_works_by_type(work_candidates)
         works_after_wss = self._filter_works_by_wss(works_by_type)
+        works_after_wss = self._filter_works_with_multiple_composers(works_after_wss)
 
         # Stage 3: Finalize the composer list based on who has works remaining
         final_composers = self._filter_final_composers(
@@ -539,6 +542,29 @@ class MusicbrainzProcessor:
                 self.stats["composers_dropped_min_works"] += 1
         return sorted(final_composers, key=lambda c: c.name)
 
+    def _filter_works_with_multiple_composers(
+        self, works_after_wss: Dict[str, List[FinalWork]]
+    ) -> Dict[str, List[FinalWork]]:
+        """
+        Filters out works that appear with multiple different composers
+        (same gid, different composer gid).
+        """
+        gid_to_composers = defaultdict(set)
+        for works in works_after_wss.values():
+            for work in works:
+                gid_to_composers[work.gid].add(work.composer)
+
+        gids_to_remove = {gid for gid, composers in gid_to_composers.items() if len(composers) > 1}
+
+        filtered_works = {}
+        for work_type, works in works_after_wss.items():
+            filtered_list = [work for work in works if work.gid not in gids_to_remove]
+            if filtered_list:
+                filtered_works[work_type] = filtered_list
+
+        self.stats["works_dropped_multiple_composers"] = len(gids_to_remove)
+        return filtered_works
+
     def _calculate_recursive_counts(self, work: MBWork) -> None:
         """Recursively traverses a work tree to sum up total recordings and sub-works."""
         if not work.subworks:
@@ -674,6 +700,9 @@ class MusicbrainzProcessor:
         )
         print(
             f"{'Works dropped (all parts filtered out):':<45} {self.stats['works_dropped_became_empty']}"
+        )
+        print(
+            f"{'Works dropped (multiple composers):':<45} {self.stats['works_dropped_multiple_composers']}"
         )
         print(f"{'Total final works in output:':<45} {total_final_works}")
         print(f"{'Total final parts in output:':<45} {total_final_parts}")
