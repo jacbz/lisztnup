@@ -54,7 +54,6 @@
 
 				// Initialize player with settings
 				deezerPlayer.setTrackLength($settings.trackLength);
-				deezerPlayer.setVolume($settings.volume / 100);
 
 				gameState.set('game');
 			}

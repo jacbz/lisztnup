@@ -227,7 +227,6 @@
 	},
 	"inGameSettings": {
 		"title": "Settings",
-		"volume": "Volume",
 		"trackLength": "Track Length",
 		"trackLengthHint": "Changes will apply to the next track",
 		"close": "Close"

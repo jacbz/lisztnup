@@ -13,24 +13,15 @@
 
 	let { visible = false, onClose = () => {} }: Props = $props();
 
-	let volume = $state(100);
 	let trackLength = $state(25);
 
 	onMount(() => {
 		// Get initial values from settings store
-		volume = $settingsStore.volume;
 		trackLength = $settingsStore.trackLength;
 
 		// Apply to player
-		deezerPlayer.setVolume(volume / 100);
 		deezerPlayer.setTrackLength(trackLength);
 	});
-
-	function handleVolumeChange(value: number) {
-		volume = value;
-		deezerPlayer.setVolume(value / 100);
-		settingsStore.update((s) => ({ ...s, volume: value }));
-	}
 
 	function handleTrackLengthChange(value: number) {
 		trackLength = value;
@@ -46,18 +37,6 @@
 		<h2 class="mb-6 text-2xl font-bold text-cyan-400">{$_('inGameSettings.title')}</h2>
 
 		<div class="space-y-6">
-			<!-- Volume Control -->
-			<Slider
-				value={volume}
-				min={0}
-				max={100}
-				step={1}
-				label={$_('inGameSettings.volume')}
-				showValue={true}
-				valueSuffix="%"
-				onChange={handleVolumeChange}
-			/>
-
 			<!-- Track Length Slider -->
 			<div>
 				<Slider
