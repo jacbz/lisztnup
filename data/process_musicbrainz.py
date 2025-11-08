@@ -361,7 +361,7 @@ class MusicbrainzProcessor:
         # Stage 2: Group and filter works by their absolute significance score (WSS)
         works_by_type = self._group_works_by_type(work_candidates)
         works_after_wss = self._filter_works_by_wss(works_by_type)
-        works_after_wss = self._filter_works_with_multiple_composers(works_after_wss)
+        works_after_wss = self._filter_works_cleanup(works_after_wss)
 
         # Stage 3: Finalize the composer list based on who has works remaining
         final_composers = self._filter_final_composers(
@@ -544,27 +544,51 @@ class MusicbrainzProcessor:
                 self.stats["composers_dropped_min_works"] += 1
         return sorted(final_composers, key=lambda c: c.name)
 
-    def _filter_works_with_multiple_composers(
+    def _filter_works_cleanup(
         self, works_after_wss: Dict[str, List[FinalWork]]
     ) -> Dict[str, List[FinalWork]]:
         """
-        Filters out works that appear with multiple different composers
-        (same gid, different composer gid).
+        Cleans up the works list by:
+        1. Removing works that appear with multiple different composers (same gid, different composer gid).
+        2. Removing duplicate works with the same gid (keeping only the first occurrence).
         """
         gid_to_composers = defaultdict(set)
+        gid_to_first_work = {}
+        
         for works in works_after_wss.values():
             for work in works:
                 gid_to_composers[work.gid].add(work.composer)
+                # Track the first occurrence of each gid
+                if work.gid not in gid_to_first_work:
+                    gid_to_first_work[work.gid] = work
 
-        gids_to_remove = {gid for gid, composers in gid_to_composers.items() if len(composers) > 1}
+        # Find gids with multiple composers (to remove entirely)
+        gids_with_multiple_composers = {
+            gid for gid, composers in gid_to_composers.items() if len(composers) > 1
+        }
 
         filtered_works = {}
+        seen_gids = set()
+        duplicates_removed = 0
+        
         for work_type, works in works_after_wss.items():
-            filtered_list = [work for work in works if work.gid not in gids_to_remove]
+            filtered_list = []
+            for work in works:
+                # Skip works with multiple composers
+                if work.gid in gids_with_multiple_composers:
+                    continue
+                # Skip duplicate gids (keep only first occurrence)
+                if work.gid in seen_gids:
+                    duplicates_removed += 1
+                    continue
+                seen_gids.add(work.gid)
+                filtered_list.append(work)
+            
             if filtered_list:
                 filtered_works[work_type] = filtered_list
 
-        self.stats["works_dropped_multiple_composers"] = len(gids_to_remove)
+        self.stats["works_dropped_multiple_composers"] = len(gids_with_multiple_composers)
+        self.stats["works_dropped_duplicates"] = duplicates_removed
         return filtered_works
 
     def _calculate_recursive_counts(self, work: MBWork) -> None:
@@ -705,6 +729,9 @@ class MusicbrainzProcessor:
         )
         print(
             f"{'Works dropped (multiple composers):':<45} {self.stats['works_dropped_multiple_composers']}"
+        )
+        print(
+            f"{'Works dropped (duplicates):':<45} {self.stats['works_dropped_duplicates']}"
         )
         print(f"{'Total final works in output:':<45} {total_final_works}")
         print(f"{'Total final parts in output:':<45} {total_final_parts}")
