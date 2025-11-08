@@ -166,7 +166,59 @@ export class TracklistGenerator {
 			});
 		}
 
-		// Step 8: Filter parts within each work by maxTracksFromSingleWork
+		// Step 8: Limit works from each composer (limitWorksFromComposer)
+		if (config.limitWorksFromComposer !== undefined && config.limitWorksFromComposer > 0) {
+			const limitPercentage = config.limitWorksFromComposer;
+			const totalWorks = works.length;
+			const maxWorksPerComposer = Math.max(1, Math.ceil(totalWorks * limitPercentage));
+
+			// Count works per composer before limiting
+			const worksBeforeLimiting = new Map<string, number>();
+			works.forEach((work) => {
+				const current = worksBeforeLimiting.get(work.composer) || 0;
+				worksBeforeLimiting.set(work.composer, current + 1);
+			});
+
+			// Group works by composer and sort by popularity (score descending)
+			const worksByComposerSorted = new Map<string, Work[]>();
+			works.forEach((work) => {
+				if (!worksByComposerSorted.has(work.composer)) {
+					worksByComposerSorted.set(work.composer, []);
+				}
+				worksByComposerSorted.get(work.composer)!.push(work);
+			});
+
+			// Sort each composer's works by score (highest first) and take top N
+			const limitedWorksArray: Work[] = [];
+			worksByComposerSorted.forEach((composerWorks) => {
+				// Sort by score descending (most popular first)
+				const sortedWorks = [...composerWorks].sort((a, b) => b.score - a.score);
+
+				// Take only the top N works
+				const worksToKeep = sortedWorks.slice(0, maxWorksPerComposer);
+				limitedWorksArray.push(...worksToKeep);
+			});
+
+			works = limitedWorksArray;
+
+			// Rebuild worksByComposer map after limiting
+			this.worksByComposer.clear();
+			works.forEach((work) => {
+				if (!this.worksByComposer.has(work.composer)) {
+					this.worksByComposer.set(work.composer, []);
+				}
+				this.worksByComposer.get(work.composer)!.push(work);
+			});
+
+			// Count works per composer after limiting
+			const worksAfterLimiting = new Map<string, number>();
+			works.forEach((work) => {
+				const current = worksAfterLimiting.get(work.composer) || 0;
+				worksAfterLimiting.set(work.composer, current + 1);
+			});
+		}
+
+		// Step 9: Filter parts within each work by maxTracksFromSingleWork
 		if (config.maxTracksFromSingleWork !== undefined) {
 			works = works.map((work) => {
 				if (work.parts.length <= config.maxTracksFromSingleWork!) {
@@ -200,10 +252,10 @@ export class TracklistGenerator {
 		this.filteredWorks = works;
 		this.filteredComposers = composers;
 
-		// Precompute composer weights (slightly logarithmic based on work count)
+		// Precompute composer weights (sublinear weighting)
 		composers.map((c) => {
 			const workCount = this.worksByComposer.get(c.gid)?.length || 0;
-			const weight = Math.log(workCount + 1) / Math.log(1.1); // log base 1.1 for more spread
+			const weight = Math.pow(workCount + 1, 0.75);
 			this.composerWeightMap.set(c.gid, weight);
 			return weight;
 		});
@@ -278,7 +330,7 @@ export class TracklistGenerator {
 			return this.sample();
 		}
 
-		// Step 2: Select composer with logarithmic weighting
+		// Step 2: Select composer with weighting
 		const composerIndex = weightedRandom(
 			categoryComposers.map((_, i) => i),
 			(i) => this.composerWeightMap.get(categoryComposers[i].gid) || 1

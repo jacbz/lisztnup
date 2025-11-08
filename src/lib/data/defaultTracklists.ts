@@ -33,7 +33,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				mode: 'topN',
 				count: 30
 			},
-			workScoreRange: [5.2, MAX_WORK_SCORE],
+			workScoreRange: [5.1, MAX_WORK_SCORE],
+			limitWorksFromComposer: 0.075,
 			maxTracksFromSingleWork: 1,
 			enablePopularityWeighting: false
 		}
@@ -49,7 +50,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				mode: 'topN',
 				count: 50
 			},
-			workScoreRange: [4.8, MAX_WORK_SCORE],
+			workScoreRange: [4.7, MAX_WORK_SCORE],
+			limitWorksFromComposer: 0.075,
 			maxTracksFromSingleWork: 1,
 			enablePopularityWeighting: false
 		}
@@ -66,6 +68,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				count: 75
 			},
 			workScoreRange: [4.5, MAX_WORK_SCORE],
+			limitWorksFromComposer: 0.1,
 			maxTracksFromSingleWork: 2,
 			enablePopularityWeighting: false
 		}
@@ -82,6 +85,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				count: 100
 			},
 			workScoreRange: [3.5, MAX_WORK_SCORE],
+			limitWorksFromComposer: 0.15,
 			maxTracksFromSingleWork: 3,
 			enablePopularityWeighting: false
 		}

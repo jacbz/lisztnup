@@ -131,7 +131,7 @@
 		while (true) {
 			const track = sampleNextTrack();
 			if (!track) {
-				console.error('No more tracks available to sample');
+				toast.show('error', 'No more tracks available to sample');
 				return;
 			}
 

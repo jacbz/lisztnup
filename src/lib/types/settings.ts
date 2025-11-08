@@ -22,6 +22,7 @@ export interface TracklistConfig {
 	composerFilter?: ComposerFilter;
 	yearFilter?: [number, number]; // [startYear, endYear]
 	workScoreRange?: [number, number]; // [minScore, maxScore]
+	limitWorksFromComposer?: number; // Limit works from each composer (0-1, as percentage, e.g., 0.3 = 30%)
 	maxTracksFromSingleWork?: number; // Maximum tracks to sample from a single work
 	nameFilter?: string[]; // Filter works by name (supports regex when pattern starts and ends with /)
 	enablePopularityWeighting?: boolean; // Whether to use work/part scores for weighted sampling (default: true)

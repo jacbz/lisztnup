@@ -42,7 +42,7 @@
 	"tracklists": {
 		"beginner": {
 			"name": "Beginner",
-			"description": "A gentle overture of timeless, familiar masterpieces."
+			"description": "A gentle overture of timeless masterpieces."
 		},
 		"intermediate": {
 			"name": "Intermediate",
@@ -189,6 +189,8 @@
 		"topNComposers": "Top N Composers",
 		"workScoreRange": "Popularity Range",
 		"workScoreRangeDesc": "Filter works by popularity score (higher = more recordings of this work exist)",
+		"limitWorksFromComposer": "Limit Works per Composer",
+		"limitWorksFromComposerDesc": "Limit each composer to a percentage of total works in this tracklist.",
 		"maxTracksFromSingleWork": "Max Tracks from Single Work",
 		"maxTracksFromSingleWorkDesc": "Limit how many movements/parts to be included from large-scale works",
 		"nameFilter": "Work Name",

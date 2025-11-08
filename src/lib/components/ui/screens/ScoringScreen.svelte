@@ -73,7 +73,7 @@
 					players.forEach((p) => {
 						// Clear wrong from all other players
 						const wrongKey = `${p.name}:wrong`;
-						if (wrongKey !== cellKey) {
+						if (wrongKey !== cellKey && newSet.has(wrongKey)) {
 							newSet.delete(wrongKey);
 							newSet.add(`${p.name}:none`);
 						}
@@ -291,9 +291,7 @@
 										{@const isSelected = selectedCells.has(`${player.name}:${category}`)}
 										<button
 											type="button"
-											class="flex cursor-pointer items-center justify-center border-2 bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
-											class:border-cyan-400={isSelected}
-											class:border-transparent={!isSelected}
+											class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
 											style={isSelected && def
 												? `background: linear-gradient(135deg, ${def.color1}, ${def.color2});`
 												: ''}
@@ -311,9 +309,7 @@
 									<!-- Wrong option -->
 									<button
 										type="button"
-										class="flex cursor-pointer items-center justify-center border-2 bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
-										class:border-cyan-400={selectedCells.has(`${player.name}:none`)}
-										class:border-transparent={!selectedCells.has(`${player.name}:none`)}
+										class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
 										onclick={() => toggleCell(player.name, 'none')}
 									>
 										{#if selectedCells.has(`${player.name}:none`)}
@@ -378,9 +374,7 @@
 									<!-- No guess column -->
 									<button
 										type="button"
-										class="flex cursor-pointer items-center justify-center border-2 bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
-										class:border-cyan-400={selectedCells.has(`${player.name}:none`)}
-										class:border-transparent={!selectedCells.has(`${player.name}:none`)}
+										class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
 										onclick={() => toggleCell(player.name, 'none')}
 									>
 										{#if selectedCells.has(`${player.name}:none`)}
@@ -393,9 +387,7 @@
 										{@const isSelected = selectedCells.has(`${player.name}:${category}`)}
 										<button
 											type="button"
-											class="flex cursor-pointer items-center justify-center border-2 bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
-											class:border-cyan-400={isSelected}
-											class:border-transparent={!isSelected}
+											class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
 											style={isSelected && def
 												? `background: linear-gradient(135deg, ${def.color1}, ${def.color2});`
 												: ''}
@@ -413,10 +405,8 @@
 									<!-- Wrong option -->
 									<button
 										type="button"
-										class="flex cursor-pointer items-center justify-center border-2 bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
-										class:border-cyan-400={selectedCells.has(`${player.name}:wrong`)}
-										class:border-transparent={!selectedCells.has(`${player.name}:wrong`)}
-										class:bg-red-900={selectedCells.has(`${player.name}:wrong`)}
+										class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
+										class:bg-red-900!={selectedCells.has(`${player.name}:wrong`)}
 										onclick={() => toggleCell(player.name, 'wrong')}
 									>
 										<span

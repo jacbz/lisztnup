@@ -43,6 +43,7 @@
 	let composerFilterEnabled = $state(false);
 	let yearFilterEnabled = $state(false);
 	let workScoreRangeEnabled = $state(true);
+	let limitWorksFromComposerEnabled = $state(false);
 	let maxTracksFromSingleWorkEnabled = $state(false);
 	let nameFilterEnabled = $state(false);
 	let enablePopularityWeighting = $state(true);
@@ -89,6 +90,7 @@
 				// Set enabled flags
 				categoryWeightsEnabled = config.categoryWeights !== undefined;
 				workScoreRangeEnabled = config.workScoreRange !== undefined;
+				limitWorksFromComposerEnabled = config.limitWorksFromComposer !== undefined;
 				maxTracksFromSingleWorkEnabled = config.maxTracksFromSingleWork !== undefined;
 				yearFilterEnabled = config.yearFilter !== undefined;
 				nameFilterEnabled = config.nameFilter !== undefined && config.nameFilter.length > 0;
@@ -120,6 +122,7 @@
 				composerFilterEnabled = false;
 				yearFilterEnabled = false;
 				workScoreRangeEnabled = true;
+				limitWorksFromComposerEnabled = false;
 				maxTracksFromSingleWorkEnabled = false;
 				nameFilterEnabled = false;
 				enablePopularityWeighting = true;
@@ -142,6 +145,7 @@
 			composerFilterEnabled,
 			yearFilterEnabled,
 			workScoreRangeEnabled,
+			limitWorksFromComposerEnabled,
 			maxTracksFromSingleWorkEnabled,
 			nameFilterEnabled,
 			enablePopularityWeighting,
@@ -265,6 +269,10 @@
 			newConfig.workScoreRange = config.workScoreRange;
 		}
 
+		if (limitWorksFromComposerEnabled && config.limitWorksFromComposer !== undefined) {
+			newConfig.limitWorksFromComposer = config.limitWorksFromComposer;
+		}
+
 		if (maxTracksFromSingleWorkEnabled && config.maxTracksFromSingleWork !== undefined) {
 			newConfig.maxTracksFromSingleWork = config.maxTracksFromSingleWork;
 		}
@@ -331,6 +339,15 @@
 			];
 		} else {
 			config.workScoreRange = undefined;
+		}
+	}
+
+	function toggleLimitWorksFromComposer() {
+		limitWorksFromComposerEnabled = !limitWorksFromComposerEnabled;
+		if (limitWorksFromComposerEnabled) {
+			config.limitWorksFromComposer = config.limitWorksFromComposer ?? 0.1; // Default 10%
+		} else {
+			config.limitWorksFromComposer = undefined;
 		}
 	}
 
@@ -762,6 +779,36 @@
 								</div>
 							{/if}
 						</div>
+					{/if}
+				</div>
+
+				<!-- Limit Works from Composer -->
+				<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
+					<div class="mb-3 flex items-center justify-between">
+						<div>
+							<span class="font-semibold text-cyan-300"
+								>{$_('tracklistEditor.limitWorksFromComposer')}</span
+							>
+							<p class="text-xs text-gray-400">
+								{$_('tracklistEditor.limitWorksFromComposerDesc')}
+							</p>
+						</div>
+						<ToggleButton
+							value={limitWorksFromComposerEnabled}
+							onToggle={toggleLimitWorksFromComposer}
+						/>
+					</div>
+					{#if limitWorksFromComposerEnabled && config.limitWorksFromComposer !== undefined}
+						<Slider
+							value={Math.round(config.limitWorksFromComposer * 100 * 10) / 10}
+							min={0.1}
+							max={30}
+							step={0.1}
+							label=""
+							showValue={true}
+							valueSuffix="%"
+							onChange={(val) => (config.limitWorksFromComposer = val / 100)}
+						/>
 					{/if}
 				</div>
 
