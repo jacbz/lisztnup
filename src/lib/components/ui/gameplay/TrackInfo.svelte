@@ -1,6 +1,12 @@
 <script lang="ts">
 	import type { Track } from '$lib/types';
-	import { formatComposerName, formatLifespan, formatYearRange, getWorkEra } from '$lib/utils';
+	import {
+		formatComposerName,
+		formatLifespan,
+		formatYearRange,
+		formatPartName,
+		getWorkEra
+	} from '$lib/utils';
 	import { deezerPlayer } from '$lib/services';
 
 	interface Props {
@@ -27,18 +33,7 @@
 		if (!track || !shouldShowPart) return '';
 		artists;
 
-		const workName = track.work.name;
-		const partName = track.part.name;
-
-		// Check if part starts with work name followed by punctuation
-		const prefixPattern = new RegExp(
-			`^${workName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[:\\-,]\\s*`,
-			'i'
-		);
-		const strippedName = partName.replace(prefixPattern, '').trim();
-
-		// Return stripped name if it's different and not empty, otherwise return full part name
-		return strippedName && strippedName !== partName ? strippedName : partName;
+		return formatPartName(track.part.name, track.work.name);
 	});
 
 	const displayYear = $derived.by(() => {

@@ -152,6 +152,7 @@
 	"tracklistSelector": {
 		"title": "Select Tracklist",
 		"done": "Done",
+		"view": "View",
 		"clone": "Clone",
 		"edit": "Edit",
 		"delete": "Delete",
@@ -161,6 +162,17 @@
 			"message": "Are you sure you want to delete {name}? This cannot be undone.",
 			"confirm": "Delete",
 			"cancel": "Cancel"
+		}
+	},
+	"tracklistViewer": {
+		"title": "Tracklist Contents",
+		"loading": "Loading tracklist...",
+		"noData": "No works found in this tracklist.",
+		"columns": {
+			"composer": "Composer",
+			"work": "Work",
+			"popularity": "Popularity",
+			"year": "Year"
 		}
 	},
 	"tracklistEditor": {

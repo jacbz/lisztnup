@@ -11,12 +11,14 @@ export { default as NumberSelector } from './primitives/NumberSelector.svelte';
 export { default as ToggleButton } from './primitives/ToggleButton.svelte';
 export { default as Slider } from './primitives/Slider.svelte';
 export { default as RangeSlider } from './primitives/RangeSlider.svelte';
+export { default as ExternalLink } from './primitives/ExternalLink.svelte';
 
 // Setup - Game/player setup components
 export { default as ModeSelector } from './setup/ModeSelector.svelte';
 export { default as PlayerSetup } from './setup/PlayerSetup.svelte';
 export { default as TracklistSelector } from './setup/TracklistSelector.svelte';
 export { default as TracklistEditor } from './setup/TracklistEditor.svelte';
+export { default as TracklistViewer } from './setup/TracklistViewer.svelte';
 
 // Gameplay - In-game components
 export { default as InGameSettings } from './gameplay/InGameSettings.svelte';

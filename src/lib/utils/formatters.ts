@@ -24,6 +24,24 @@ export function formatYearRange(
 }
 
 /**
+ * Formats a part name by stripping the work name prefix if present
+ * @param partName - The full part name
+ * @param workName - The work name to potentially strip from the part
+ * @returns The formatted part name with work prefix removed if applicable
+ */
+export function formatPartName(partName: string, workName: string): string {
+	// Check if part starts with work name followed by punctuation
+	const prefixPattern = new RegExp(
+		`^${workName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[:\\-,]\\s*`,
+		'i'
+	);
+	const strippedName = partName.replace(prefixPattern, '').trim();
+
+	// Return stripped name if it's different and not empty, otherwise return full part name
+	return strippedName && strippedName !== partName ? strippedName : partName;
+}
+
+/**
  * Formats a composer's lifespan
  */
 export function formatLifespan(birthYear: number | null, deathYear: number | null): string {

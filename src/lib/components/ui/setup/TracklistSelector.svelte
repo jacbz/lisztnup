@@ -8,6 +8,7 @@
 	import Popup from '../primitives/Popup.svelte';
 	import Dialog from '../primitives/Dialog.svelte';
 	import TracklistEditor from './TracklistEditor.svelte';
+	import TracklistViewer from './TracklistViewer.svelte';
 	import { _ } from 'svelte-i18n';
 
 	interface Props {
@@ -51,6 +52,10 @@
 	// Editor state
 	let showEditor = $state(false);
 	let editingTracklist = $state<Tracklist | null>(null);
+
+	// Viewer state
+	let showViewer = $state(false);
+	let viewingTracklist = $state<Tracklist | null>(null);
 
 	// Delete confirmation dialog state
 	let showDeleteDialog = $state(false);
@@ -104,6 +109,11 @@
 		showEditor = true;
 	}
 
+	function handleView(tracklist: Tracklist) {
+		viewingTracklist = tracklist;
+		showViewer = true;
+	}
+
 	function handleCreateNew() {
 		editingTracklist = null;
 		showEditor = true;
@@ -146,13 +156,18 @@
 		editingTracklist = null;
 	}
 
+	function handleCloseViewer() {
+		showViewer = false;
+		viewingTracklist = null;
+	}
+
 	// Helper to check if two tracklists are the same
 	function isSameTracklist(a: Tracklist, b: Tracklist): boolean {
 		return a.name === b.name && a.isDefault === b.isDefault;
 	}
 </script>
 
-<Popup visible={visible && !showEditor} {onClose}>
+<Popup visible={visible && !showEditor && !showViewer} {onClose}>
 	<div
 		class="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl border-2 border-cyan-400 bg-gray-900 p-6 shadow-[0_0_40px_rgba(34,211,238,0.6)]"
 	>
@@ -243,47 +258,67 @@
 </Popup>
 
 {#snippet tracklistCard(tracklist: Tracklist)}
+	{@const selected = isSameTracklist(tracklist, selectedTracklist)}
 	<div
-		class="relative flex flex-col gap-2 rounded-xl p-4 transition-all {isSameTracklist(
-			tracklist,
-			selectedTracklist
-		)
+		class="relative flex flex-col gap-2 rounded-xl p-4 transition-all {selected
 			? 'border-2 border-cyan-400 bg-gray-900 text-white shadow-[0_0_20px_rgba(34,211,238,0.4)]'
 			: 'border-2 border-gray-700 bg-gray-800 text-gray-300 hover:border-cyan-400/50 hover:bg-gray-700'}"
 	>
-		<button
-			type="button"
-			onclick={() => handleClone(tracklist)}
-			class="absolute top-2 right-2 rounded-lg p-2 transition-all {isSameTracklist(
-				tracklist,
-				selectedTracklist
-			)
-				? 'bg-white/20 hover:bg-white/30'
-				: 'bg-gray-700 hover:bg-gray-600'}"
-			title={$_('tracklistSelector.clone')}
-		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="16"
-				height="16"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
+		<div class="absolute top-2 right-2 flex gap-2">
+			<button
+				type="button"
+				onclick={() => handleView(tracklist)}
+				class="rounded-lg p-2 transition-all {selected
+					? 'bg-white/20 hover:bg-white/30'
+					: 'bg-gray-700 hover:bg-gray-600'}"
+				title={$_('tracklistSelector.view')}
 			>
-				<rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
-				<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
-			</svg>
-		</button>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+					<circle cx="12" cy="12" r="3"></circle>
+				</svg>
+			</button>
+			<button
+				type="button"
+				onclick={() => handleClone(tracklist)}
+				class="rounded-lg p-2 transition-all {selected
+					? 'bg-white/20 hover:bg-white/30'
+					: 'bg-gray-700 hover:bg-gray-600'}"
+				title={$_('tracklistSelector.clone')}
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+					<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+				</svg>
+			</button>
+		</div>
 
 		<button
 			type="button"
 			onclick={() => handleSelect(tracklist)}
 			class="flex h-full w-full flex-col items-start gap-2 text-left"
 		>
-			<div class="flex items-center gap-1 pr-8">
+			<div class="flex items-center gap-1 pr-20">
 				<div class="tracklist-icon medium shrink-0">
 					{#if tracklist.icon}
 						{@html tracklist.icon}
@@ -293,11 +328,7 @@
 					>{tracklist.isDefault ? $_(tracklist.name) : tracklist.name}</span
 				>
 			</div>
-			<span
-				class="flex-1 text-sm leading-relaxed {isSameTracklist(tracklist, selectedTracklist)
-					? 'text-cyan-100'
-					: 'text-gray-400'}"
-			>
+			<span class="flex-1 text-sm leading-relaxed {selected ? 'text-gray-200' : 'text-gray-400'}">
 				{tracklist.isDefault ? $_(tracklist.description) : tracklist.description}
 			</span>
 			{#if tracklistInfoMap[tracklist.name]}
@@ -315,10 +346,7 @@
 				<button
 					type="button"
 					onclick={() => handleEdit(tracklist)}
-					class="flex-1 rounded-lg px-3 py-1 text-sm transition-all {isSameTracklist(
-						tracklist,
-						selectedTracklist
-					)
+					class="flex-1 rounded-lg px-3 py-1 text-sm transition-all {selected
 						? 'bg-white/20 hover:bg-white/30'
 						: 'bg-gray-700 hover:bg-gray-600'}"
 				>
@@ -327,10 +355,7 @@
 				<button
 					type="button"
 					onclick={() => handleDeleteClick(tracklist)}
-					class="flex-1 rounded-lg px-3 py-1 text-sm transition-all {isSameTracklist(
-						tracklist,
-						selectedTracklist
-					)
+					class="flex-1 rounded-lg px-3 py-1 text-sm transition-all {selected
 						? 'bg-red-300/20 hover:bg-red-500/30'
 						: 'bg-red-600/30 hover:bg-red-900/50'}"
 				>
@@ -361,3 +386,6 @@
 	onSave={handleSaveTracklist}
 	onCancel={handleCancelEdit}
 />
+
+<!-- Tracklist Viewer -->
+<TracklistViewer visible={showViewer} tracklist={viewingTracklist} onClose={handleCloseViewer} />
