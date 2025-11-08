@@ -7,6 +7,8 @@
 	import TrackInfo from './TrackInfo.svelte';
 	import { _ } from 'svelte-i18n';
 	import { onMount } from 'svelte';
+	import { deezerPlayer, playerState } from '$lib/services';
+	import Visualizer from './Visualizer.svelte';
 
 	interface Props {
 		visible?: boolean;
@@ -45,7 +47,6 @@
 	let windowSize = $state({ width: 0, height: 0 });
 	let displayProgress = $state(0);
 	let lastIsPlaying = $state(false);
-	let lastProgress = $state(0);
 
 	// Reset progress when playback starts fresh (transition from not playing to playing)
 	$effect(() => {
@@ -60,15 +61,6 @@
 			displayProgress = 1;
 		}
 		lastIsPlaying = isPlaying;
-	});
-
-	// Detect when playback ends naturally (not stopped by user)
-	$effect(() => {
-		if (!isPlaying && lastIsPlaying && progress >= 0.99) {
-			// Playback ended naturally (reached end of track)
-			onPlaybackEnd();
-		}
-		lastProgress = progress;
 	});
 
 	onMount(() => {
@@ -191,7 +183,7 @@
 			<!-- Play button -->
 			<button
 				type="button"
-				class="relative z-2 flex cursor-pointer touch-none items-center justify-center rounded-full border-4 border-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.6)] transition-all duration-200 hover:shadow-[0_0_40px_rgba(34,211,238,0.8)] active:scale-95"
+				class="relative z-2 flex cursor-pointer touch-none items-center justify-center overflow-hidden rounded-full border-4 border-cyan-400 bg-black/20 shadow-[0_0_30px_rgba(34,211,238,0.6)] transition-all duration-200 hover:shadow-[0_0_40px_rgba(34,211,238,0.8)] active:scale-95"
 				style="width: {progressPath.buttonSize}px; height: {progressPath.buttonSize}px; font-size: {progressPath.buttonSize *
 					0.15}px;"
 				onclick={handleClick}
@@ -200,6 +192,13 @@
 				onpointerleave={handlePointerUp}
 				aria-label={isPlaying ? 'Stop' : playbackEnded ? 'Reveal' : 'Play'}
 			>
+				{#if isPlaying && playerSize > 100}
+					<Visualizer
+						analyserNode={$playerState.analyserNode}
+						width={progressPath.buttonSize}
+						height={progressPath.buttonSize}
+					/>
+				{/if}
 				<!-- Progress ring (only during playback) - positioned inside button -->
 				{#if isPlaying}
 					<svg
@@ -221,7 +220,7 @@
 				{/if}
 
 				<!-- Button content -->
-				<div class="relative z-1 flex items-center justify-center">
+				<div class="relative z-10 flex items-center justify-center">
 					{#if playbackEnded}
 						<span class="font-bold tracking-widest text-cyan-400 uppercase"
 							>{$_('game.reveal')}</span

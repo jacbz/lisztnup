@@ -2,7 +2,7 @@
 	import type { Tracklist, Composer } from '$lib/types';
 	import { MIN_WORK_SCORE, MAX_WORK_SCORE } from '$lib/types';
 	import { gameData } from '$lib/stores';
-	import { TracklistGenerator, deezerPlayer } from '$lib/services';
+	import { TracklistGenerator, deezerPlayer, playerState, progress } from '$lib/services';
 	import { get } from 'svelte/store';
 	import { onMount, onDestroy } from 'svelte';
 	import Popup from '../primitives/Popup.svelte';
@@ -38,22 +38,11 @@
 
 	// Audio playback state
 	let currentlyPlayingDeezerId = $state<number | null>(null);
-	const audioProgressStore = deezerPlayer.getProgressStore();
-	let audioProgress = $state(0);
-
-	// Subscribe to progress store
-	$effect(() => {
-		const unsubscribe = audioProgressStore.subscribe((value) => {
-			audioProgress = value;
-		});
-		return unsubscribe;
-	});
 
 	// Track the current round state for PlayerControl
 	const playbackState = $derived({
-		isPlaying: currentlyPlayingDeezerId !== null && deezerPlayer.isPlaying(),
-		playbackEnded:
-			currentlyPlayingDeezerId !== null && !deezerPlayer.isPlaying() && audioProgress >= 1,
+		isPlaying: currentlyPlayingDeezerId !== null && $playerState.isPlaying,
+		playbackEnded: currentlyPlayingDeezerId !== null && !$playerState.isPlaying && $progress >= 1,
 		isRevealed: false // Never reveal in tracklist viewer
 	});
 
@@ -79,6 +68,8 @@
 	});
 
 	onMount(() => {
+		deezerPlayer.setIgnoreTrackLength(true);
+
 		return () => {
 			// Cleanup on unmount
 			if (currentlyPlayingDeezerId !== null) {
@@ -212,22 +203,22 @@
 		// For parts, show a subtle gradient bar from 50 to 100 (parts are always above 50)
 		const normalizedScore = Math.max(0, Math.min(100, ((score - 50) / 50) * 100));
 		return `<div title="${score}" class="h-1.5 w-5 shrink-0 rounded-full bg-gray-700">
-			<div class="h-full rounded-full bg-gradient-to-r from-cyan-600 to-cyan-400" style="width: ${normalizedScore}%"></div>
-		</div>`;
+				<div class="h-full rounded-full bg-gradient-to-r from-cyan-600 to-cyan-400" style="width: ${normalizedScore}%"></div>
+			</div>`;
 	}
 
 	// Audio playback functions
 	async function handlePlayPart(deezerId: number): Promise<void> {
 		try {
 			// If same track is playing, stop it
-			if (currentlyPlayingDeezerId === deezerId && deezerPlayer.isPlaying()) {
+			if (currentlyPlayingDeezerId === deezerId && $playerState.isPlaying) {
 				stopPlayback();
 				return;
 			}
 
 			// Load and play the track
-			await deezerPlayer.load(deezerId, false);
-			await deezerPlayer.play();
+			await deezerPlayer.load(deezerId);
+			deezerPlayer.play();
 
 			currentlyPlayingDeezerId = deezerId;
 		} catch (error) {
@@ -255,13 +246,13 @@
 				</h2>
 
 				<!-- PlayerControl in header -->
-				<div class="relative" style="width: 48px; height: 48px;">
+				<div class="relative flex h-12 w-12 items-center justify-center">
 					<PlayerControl
 						visible={currentlyPlayingDeezerId !== null && !playbackState.playbackEnded}
 						isPlaying={playbackState.isPlaying}
 						playbackEnded={playbackState.playbackEnded}
 						isRevealed={playbackState.isRevealed}
-						progress={audioProgress}
+						progress={$progress}
 						track={null}
 						playerSize={48}
 						onStop={stopPlayback}

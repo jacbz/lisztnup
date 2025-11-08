@@ -228,7 +228,7 @@
 	"inGameSettings": {
 		"title": "Settings",
 		"trackLength": "Track Length",
-		"trackLengthHint": "Changes will apply to the next track",
+		"trackLengthHint": "Changes will apply to the next track. Does not apply to Buzzer Mode.",
 		"close": "Close"
 	},
 	"quitDialog": {
@@ -252,6 +252,7 @@
 			"pressToStart": "Start",
 			"buzz": "Buzz!"
 		},
+		"loadingAudio": "Analyzing Audio...",
 		"categories": {
 			"composer": "Composer",
 			"decade": "Decade",

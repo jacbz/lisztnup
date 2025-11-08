@@ -22,7 +22,7 @@
 	const artists = $derived.by(() => {
 		// create a dependency on `track`
 		if (!track) return [];
-		return deezerPlayer.getArtists().filter((name) => name !== composerName);
+		return deezerPlayer.getArtists().filter((name: string) => name !== composerName);
 	});
 	const shouldShowArtist = $derived(artists.length);
 	const shouldShowPart = $derived(track && track.work.name !== track.part.name);

@@ -10,7 +10,7 @@
 		resetGame,
 		toast
 	} from '$lib/stores';
-	import { deezerPlayer } from '$lib/services';
+	import { deezerPlayer, playerState, progress } from '$lib/services';
 	import ScoringScreen from '../ui/screens/ScoringScreen.svelte';
 	import StatsScreen from '../ui/screens/StatsScreen.svelte';
 	import EndGameScreen from '../ui/screens/EndGameScreen.svelte';
@@ -26,21 +26,6 @@
 	// Context for sharing functions with child components
 	import { GAME_SCREEN_CONTEXT } from './context';
 	import { ALL_CATEGORIES, CATEGORY_POINTS } from '$lib/types/game';
-
-	interface GameScreenContext {
-		playTrack: () => Promise<void>;
-		stopTrack: () => void;
-		replayTrack: () => Promise<void>;
-		revealTrack: () => void;
-		nextRound: () => Promise<void>;
-		handlePlaybackEnd: () => void;
-		audioProgress: import('svelte/store').Readable<number>;
-		onHome: () => void;
-		activeCategories: readonly GuessCategory[];
-		disabledCategories: readonly GuessCategory[];
-		enableScoring: boolean;
-		hasValidYears: boolean;
-	}
 
 	interface Props {
 		generator: TracklistGenerator;
@@ -84,9 +69,6 @@
 			(currentTrack.work.begin_year != null || currentTrack.work.end_year != null)
 	);
 
-	const audioProgressStore = deezerPlayer.getProgressStore();
-	let preloadedTrackIndex = $state(-1);
-
 	let showScoringScreen = $state(false);
 	let showStatsScreen = $state(false);
 	let showEndGameScreen = $state(false);
@@ -96,6 +78,10 @@
 	// Start game session on mount
 	onMount(() => {
 		gameSession.startSession(mode, players, isSoloMode);
+
+		// Set track length behavior based on mode
+		deezerPlayer.setIgnoreTrackLength(ignoreTrackLength);
+
 		sampleAndPreloadTrack();
 
 		// Set up playback end callback
@@ -135,8 +121,7 @@
 			}
 
 			try {
-				await deezerPlayer.load(track.part.deezer, ignoreTrackLength);
-				preloadedTrackIndex = $currentRound.currentTrackIndex;
+				await deezerPlayer.load(track.part.deezer);
 				return;
 			} catch (error) {
 				console.warn('Track preview unavailable, sampling another:', error);
@@ -148,7 +133,7 @@
 	// Shared audio control functions
 	async function playTrack(): Promise<void> {
 		try {
-			await deezerPlayer.play();
+			deezerPlayer.play();
 
 			currentRound.update((state) => ({
 				...state,
@@ -172,8 +157,7 @@
 
 	async function replayTrack(): Promise<void> {
 		try {
-			await deezerPlayer.seek(0);
-			await deezerPlayer.play();
+			deezerPlayer.replay();
 
 			currentRound.update((state) => ({
 				...state,
@@ -277,7 +261,7 @@
 		revealTrack,
 		nextRound,
 		handlePlaybackEnd,
-		audioProgress: audioProgressStore,
+		audioProgress: progress,
 		onHome: handleHome,
 		get activeCategories() {
 			return activeCategories;

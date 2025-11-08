@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, onDestroy, getContext } from 'svelte';
+	import { onMount, getContext } from 'svelte';
 	import type { GuessCategory } from '$lib/types';
 	import { BUZZER_TIME_PERCENTAGES, CATEGORY_POINTS } from '$lib/types';
 	import { currentRound, tracklist, settings } from '$lib/stores';
@@ -12,6 +12,7 @@
 	import { getCategoryDefinition } from '$lib/data/categories';
 	import { GAME_SCREEN_CONTEXT } from './context';
 	import { shuffle } from '$lib/utils/random';
+	import { playerState } from '$lib/services';
 
 	// Get context from parent GameScreen
 	const gameContext = getContext(GAME_SCREEN_CONTEXT) as {
@@ -197,7 +198,7 @@
 				hasStartedPlaying = true;
 
 				// Get the track duration from the player
-				trackDuration = deezerPlayer.getDuration(true);
+				trackDuration = deezerPlayer.getDuration();
 			} catch (error) {
 				console.error('Error playing track:', error);
 				toast.show('error', 'Failed to play track.');
@@ -205,7 +206,7 @@
 		}
 	}
 
-	async function handleBuzzerPress(event?: Event) {
+	async function handleBuzzerPress() {
 		if (!hasStartedPlaying) {
 			// Start playback on first press
 			await handleBuzzerPlay();
@@ -230,7 +231,7 @@
 		if (showReveal) {
 			handleBuzzerReveal();
 		} else {
-			handleBuzzerPress(event);
+			handleBuzzerPress();
 		}
 	}
 
@@ -295,7 +296,7 @@
 	let buzzerRevealedCategories = $state<GuessCategory[]>([]); // Categories revealed when buzzer was pressed
 
 	// Import required functions from stores
-	import { gameSession, nextRound as nextRoundFn, resetGame, toast } from '$lib/stores';
+	import { gameSession, toast } from '$lib/stores';
 	import { deezerPlayer } from '$lib/services';
 
 	onMount(() => {
