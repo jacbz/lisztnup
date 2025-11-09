@@ -29,10 +29,6 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyVeryEasy,
 		category: 'difficulty',
 		config: {
-			composerFilter: {
-				mode: 'topN',
-				count: 30
-			},
 			workScoreRange: [5.1, MAX_WORK_SCORE],
 			limitWorksFromComposer: 0.075,
 			maxTracksFromSingleWork: 1,
@@ -46,10 +42,6 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyEasy,
 		category: 'difficulty',
 		config: {
-			composerFilter: {
-				mode: 'topN',
-				count: 50
-			},
 			workScoreRange: [4.7, MAX_WORK_SCORE],
 			limitWorksFromComposer: 0.075,
 			maxTracksFromSingleWork: 1,
@@ -63,10 +55,6 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyMedium,
 		category: 'difficulty',
 		config: {
-			composerFilter: {
-				mode: 'topN',
-				count: 75
-			},
 			workScoreRange: [4.5, MAX_WORK_SCORE],
 			limitWorksFromComposer: 0.1,
 			maxTracksFromSingleWork: 2,
@@ -80,10 +68,6 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyHard,
 		category: 'difficulty',
 		config: {
-			composerFilter: {
-				mode: 'topN',
-				count: 100
-			},
 			workScoreRange: [3.5, MAX_WORK_SCORE],
 			limitWorksFromComposer: 0.15,
 			maxTracksFromSingleWork: 3,

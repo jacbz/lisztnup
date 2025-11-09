@@ -560,6 +560,9 @@ class MusicbrainzProcessor:
         Cleans up the works list by:
         1. Removing works that appear with multiple different composers (same gid, different composer gid).
         2. Removing duplicate works with the same gid (keeping only the first occurrence).
+        3. Removing parts that have Deezer IDs assigned to other works (cross-work deduplication).
+        4. Removing duplicate parts within each work that have the same Deezer ID (keeping only the first).
+        5. Removing works that become empty after part deduplication.
         """
         gid_to_composers = defaultdict(set)
         gid_to_first_work = {}
@@ -576,6 +579,16 @@ class MusicbrainzProcessor:
             gid for gid, composers in gid_to_composers.items() if len(composers) > 1
         }
 
+        # Assign each deezer ID to the first work that contains it
+        deezer_to_work_gid = {}
+        for work_type, works in works_after_wss.items():
+            for work in works:
+                if work.gid in gids_with_multiple_composers:
+                    continue
+                for part in work.parts:
+                    if part.deezer not in deezer_to_work_gid:
+                        deezer_to_work_gid[part.deezer] = work.gid
+
         filtered_works = {}
         seen_gids = set()
         duplicates_removed = 0
@@ -591,6 +604,30 @@ class MusicbrainzProcessor:
                     duplicates_removed += 1
                     continue
                 seen_gids.add(work.gid)
+
+                # Filter parts: keep only those assigned to this work (cross-work deduplication)
+                filtered_parts = []
+                for part in work.parts:
+                    if deezer_to_work_gid.get(part.deezer) == work.gid:
+                        filtered_parts.append(part)
+                    else:
+                        self.stats["parts_dropped_cross_work_duplicate"] += 1
+
+                # Filter duplicate parts within work by deezer ID
+                seen_deezer = set()
+                final_parts = []
+                for part in filtered_parts:
+                    if part.deezer not in seen_deezer:
+                        seen_deezer.add(part.deezer)
+                        final_parts.append(part)
+                    else:
+                        self.stats["parts_dropped_duplicate_deezer"] += 1
+                work.parts = final_parts
+
+                if not work.parts:
+                    self.stats["works_dropped_empty_after_deezer_dedup"] += 1
+                    continue
+
                 filtered_list.append(work)
             
             if filtered_list:
@@ -741,6 +778,15 @@ class MusicbrainzProcessor:
         )
         print(
             f"{'Works dropped (duplicates):':<45} {self.stats['works_dropped_duplicates']}"
+        )
+        print(
+            f"{'Parts dropped (cross-work duplicate Deezer ID):':<45} {self.stats['parts_dropped_cross_work_duplicate']}"
+        )
+        print(
+            f"{'Parts dropped (duplicate Deezer ID):':<45} {self.stats['parts_dropped_duplicate_deezer']}"
+        )
+        print(
+            f"{'Works dropped (empty after Deezer dedup):':<45} {self.stats['works_dropped_empty_after_deezer_dedup']}"
         )
         print(f"{'Total final works in output:':<45} {total_final_works}")
         print(f"{'Total final parts in output:':<45} {total_final_parts}")
