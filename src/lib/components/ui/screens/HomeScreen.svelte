@@ -281,12 +281,25 @@
 					onclick={handleStartGame}
 					disabled={!playersValid ||
 						(selectedMode === 'buzzer' && enableScoring && currentPlayers.length < 2)}
-					class="group relative w-full cursor-pointer overflow-hidden rounded-2xl border-2 border-cyan-400 bg-gray-900 px-8 py-5 text-xl font-bold text-cyan-400 transition-all duration-300 hover:bg-gray-800 hover:shadow-[0_0_40px_rgba(34,211,238,0.6)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-gray-900 disabled:hover:shadow-none"
+					class="group relative w-full cursor-pointer overflow-hidden rounded-2xl border-2 border-cyan-400/50 bg-linear-to-r from-gray-900 via-cyan-950/30 to-gray-900 px-8 py-6 text-2xl font-bold text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all duration-300 hover:scale-[1.02] hover:border-cyan-400 hover:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100 disabled:hover:border-cyan-400/50 disabled:hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
 				>
+					<!-- Animated gradient overlay -->
 					<div
-						class="absolute inset-0 bg-cyan-400/0 transition-all duration-300 group-hover:bg-cyan-400/5"
+						class="absolute inset-0 bg-linear-to-r from-transparent via-cyan-400/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:animate-shimmer group-hover:opacity-100 group-disabled:animate-none"
+						style="background-size: 200% 100%;"
 					></div>
-					<span class="relative">{$_('home.startGame', { default: 'Start Game' })}</span>
+
+					<!-- Glow effect -->
+					<div
+						class="absolute inset-0 bg-linear-to-r from-cyan-400/0 via-cyan-400/10 to-cyan-400/0 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100 group-disabled:opacity-0"
+					></div>
+
+					<!-- Text with gradient -->
+					<span
+						class="relative bg-linear-to-r from-cyan-300 via-cyan-400 to-cyan-300 bg-clip-text text-transparent"
+					>
+						{$_('home.startGame', { default: 'Start Game' })}
+					</span>
 				</button>
 				{#if selectedMode === 'buzzer' && enableScoring && currentPlayers.length < 2}
 					<p class="mt-2 text-center text-sm text-amber-400">
