@@ -88,10 +88,10 @@
 	});
 </script>
 
-{#if mode && modeConfig}
-	<Popup {visible} {onClose}>
+<Popup {visible} {onClose}>
+	{#if mode && modeConfig}
 		<div
-			class="relative w-full max-w-3xl rounded-2xl border-2 bg-gray-900 p-8 shadow-2xl"
+			class="scrollable-content relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl border-2 bg-gray-900 p-8 shadow-2xl"
 			style="border-color: {modeConfig.color}; box-shadow: 0 0 40px {modeConfig.color}60;"
 		>
 			<!-- Close Button -->
@@ -172,5 +172,5 @@
 				{/each}
 			</div>
 		</div>
-	</Popup>
-{/if}
+	{/if}
+</Popup>
