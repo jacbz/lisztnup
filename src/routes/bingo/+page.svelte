@@ -16,9 +16,9 @@
 	let guessState = $state<'input' | 'hidden' | 'revealed'>('input');
 	let inputElement: HTMLTextAreaElement | undefined = $state();
 
-	// Category weights: composer 6, work 6, era 5, type 4, decade 3 (total 24)
+	// Category weights: composer 7, work 6, era 5, type 4, decade 3 (total 25)
 	const CATEGORY_WEIGHTS = {
-		composer: 6,
+		composer: 7,
 		work: 6,
 		era: 5,
 		type: 4,
@@ -31,7 +31,7 @@
 			.fill(null)
 			.map(() => Array(5).fill(null));
 
-		// Create weighted pool (24 items, center will be "free")
+		// Create weighted pool (25 items)
 		const pool: string[] = [];
 		for (const cat of categories) {
 			const weight = CATEGORY_WEIGHTS[cat.id as keyof typeof CATEGORY_WEIGHTS] || 0;
@@ -55,12 +55,6 @@
 			// Fill each cell
 			for (let row = 0; row < 5; row++) {
 				for (let col = 0; col < 5; col++) {
-					// Center is "free"
-					if (row === 2 && col === 2) {
-						grid[row][col] = { category: 'free', marked: false };
-						continue;
-					}
-
 					// Try to place a category
 					let placed = false;
 					const startIndex = poolIndex;
@@ -156,12 +150,8 @@
 
 		for (let row = 0; row < 5; row++) {
 			for (let col = 0; col < 5; col++) {
-				if (row === 2 && col === 2) {
-					grid[row][col] = { category: 'free', marked: false };
-				} else {
-					grid[row][col] = { category: shuffled[poolIndex % shuffled.length], marked: false };
-					poolIndex++;
-				}
+				grid[row][col] = { category: shuffled[poolIndex % shuffled.length], marked: false };
+				poolIndex++;
 			}
 		}
 
@@ -276,19 +266,17 @@
 				{#each grid as row, rowIndex}
 					{#each row as cell, colIndex}
 						{@const categoryDef = categories.find((c) => c.id === cell.category)}
-						{@const isFreeSpace = rowIndex === 2 && colIndex === 2}
 						<button
 							type="button"
 							onclick={() => toggleCell(rowIndex, colIndex)}
-							class="relative aspect-square cursor-pointer rounded-lg p-2 transition-all"
-							class:border-2={!isFreeSpace}
+							class="relative aspect-square cursor-pointer rounded-lg border-2 p-2 transition-all"
 							style="border-color: {categoryDef?.color1 ||
 								'#06b6d4'}; background-color: {cell.marked
 								? categoryDef?.color1 + '80'
 								: categoryDef?.color1 + '20'};"
 						>
-							<!-- Category Icon (hidden when marked or free space) -->
-							{#if !cell.marked && !isFreeSpace}
+							<!-- Category Icon (hidden when marked) -->
+							{#if !cell.marked}
 								<div class="flex h-full items-center justify-center">
 									{#if categoryDef}
 										<svg
@@ -304,26 +292,12 @@
 								</div>
 							{/if}
 
-							<!-- Free Space Text -->
-							{#if isFreeSpace}
-								<div
-									class="flex h-full items-center justify-center text-[5cqw] font-bold md:text-4xl"
-									class:opacity-0={cell.marked}
-								>
-									FREE
-								</div>
-							{/if}
-
 							<!-- X Mark when marked -->
 							{#if cell.marked}
 								<div class="absolute inset-0 flex items-center justify-center rounded-lg">
 									<X
 										class="h-16 w-16 sm:h-24 sm:w-24"
-										style="color: {isFreeSpace
-											? '#FFD700'
-											: categoryDef?.color1}; stroke-width: {isFreeSpace
-											? 6
-											: 4}; filter: {isFreeSpace ? 'drop-shadow(0 0 10px #FFD700)' : 'none'};"
+										style="color: {categoryDef?.color1}; stroke-width: 4;"
 									/>
 								</div>
 							{/if}
