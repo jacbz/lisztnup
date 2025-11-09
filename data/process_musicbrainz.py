@@ -167,7 +167,8 @@ EXCLUDED_COMPOSERS: Set[str] = set([
 ])
 
 EXCLUDED_DEEZER_IDS: Set[int] = set([
-    711024922
+    711024922,
+    3059861051
 ])
 
 EXCLUDED_WORKS: Set[str] = set([

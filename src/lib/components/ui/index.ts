@@ -17,6 +17,7 @@ export { default as Logo } from './primitives/Logo.svelte';
 
 // Setup - Game/player setup components
 export { default as ModeSelector } from './setup/ModeSelector.svelte';
+export { default as ModeRulesPopup } from './setup/ModeRulesPopup.svelte';
 export { default as PlayerSetup } from './setup/PlayerSetup.svelte';
 export { default as TracklistSelector } from './setup/TracklistSelector.svelte';
 export { default as TracklistEditor } from './setup/TracklistEditor.svelte';

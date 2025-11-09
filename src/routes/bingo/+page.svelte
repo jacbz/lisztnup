@@ -324,17 +324,15 @@
 								'#06b6d4') + '20'};"
 						>
 							<!-- Category Icon (hidden when marked) -->
-							{#if !cell.marked}
-								<div class="w-10 items-center justify-center sm:w-16">
-									{#if categoryDef}
-										<svg viewBox="0 0 24 24" class="opacity-30" style="fill: {categoryDef.color1};">
-											{#each categoryDef.iconPath as path}
-												<path d={path} />
-											{/each}
-										</svg>
-									{/if}
-								</div>
-							{/if}
+							<div class="w-10 items-center justify-center sm:w-16" class:opacity-0={cell.marked}>
+								{#if categoryDef}
+									<svg viewBox="0 0 24 24" class="opacity-30" style="fill: {categoryDef.color1};">
+										{#each categoryDef.iconPath as path}
+											<path d={path} />
+										{/each}
+									</svg>
+								{/if}
+							</div>
 
 							<!-- X Mark when marked -->
 							{#if cell.marked}

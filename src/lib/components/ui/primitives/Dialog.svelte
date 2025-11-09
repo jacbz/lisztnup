@@ -19,8 +19,8 @@
 		message = '',
 		confirmText = 'Confirm',
 		cancelText = 'Cancel',
-		onConfirm = () => {},
-		onCancel = () => {},
+		onConfirm = undefined,
+		onCancel = undefined,
 		children
 	}: Props = $props();
 </script>
@@ -42,20 +42,24 @@
 		{/if}
 
 		<div class="flex gap-3">
-			<button
-				type="button"
-				onclick={onCancel}
-				class="flex-1 rounded-xl border-2 border-gray-600 bg-gray-800 px-6 py-3 font-semibold text-gray-300 transition-all hover:border-gray-500 hover:bg-gray-700 active:scale-95"
-			>
-				{cancelText}
-			</button>
-			<button
-				type="button"
-				onclick={onConfirm}
-				class="flex-1 rounded-xl border-2 border-cyan-400 bg-gray-900 px-6 py-3 font-semibold text-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all hover:bg-gray-800 hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-95"
-			>
-				{confirmText}
-			</button>
+			{#if onCancel}
+				<button
+					type="button"
+					onclick={onCancel}
+					class="flex-1 rounded-xl border-2 border-gray-600 bg-gray-800 px-6 py-3 font-semibold text-gray-300 transition-all hover:border-gray-500 hover:bg-gray-700 active:scale-95"
+				>
+					{cancelText}
+				</button>
+			{/if}
+			{#if onConfirm}
+				<button
+					type="button"
+					onclick={onConfirm}
+					class="flex-1 rounded-xl border-2 border-cyan-400 bg-gray-900 px-6 py-3 font-semibold text-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all hover:bg-gray-800 hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-95"
+				>
+					{confirmText}
+				</button>
+			{/if}
 		</div>
 	</div>
 </Popup>

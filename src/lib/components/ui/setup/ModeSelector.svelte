@@ -3,7 +3,7 @@
 	import type { GameMode } from '$lib/types';
 	import Trophy from 'lucide-svelte/icons/trophy';
 	import HelpCircle from 'lucide-svelte/icons/help-circle';
-	import Dialog from '../primitives/Dialog.svelte';
+	import ModeRulesPopup from './ModeRulesPopup.svelte';
 	import Grid3X3 from 'lucide-svelte/icons/grid-3x3';
 	import Crown from 'lucide-svelte/icons/crown';
 
@@ -14,7 +14,7 @@
 
 	let { selectedMode = null, onModeSelect = () => {} }: Props = $props();
 
-	let showRulesDialog = $state(false);
+	let showRulesPopup = $state(false);
 	let selectedModeForRules = $state<GameMode | null>(null);
 
 	function handleModeClick(mode: GameMode) {
@@ -24,7 +24,7 @@
 	function showRules(event: Event, mode: GameMode) {
 		event.stopPropagation();
 		selectedModeForRules = mode;
-		showRulesDialog = true;
+		showRulesPopup = true;
 	}
 	const modes = [
 		{
@@ -91,7 +91,24 @@
 				<div
 					role="button"
 					tabindex="0"
-					class="absolute top-2 right-2 flex cursor-pointer items-center justify-center rounded-full border border-gray-600 p-1.5 text-gray-400 transition-all duration-200 hover:scale-110 hover:border-gray-500 hover:text-white"
+					class="absolute top-3 right-3 flex cursor-pointer items-center justify-center rounded-full p-2 backdrop-blur-sm transition-all duration-300 hover:scale-125"
+					style={isSelected
+						? `background: linear-gradient(135deg, ${mode.color}30, ${mode.color}15); border: 1.5px solid ${mode.color}60; color: ${mode.color}; box-shadow: 0 0 15px ${mode.color}40;`
+						: `background: rgba(31, 41, 55, 0.5); border: 1.5px solid rgba(75, 85, 99, 0.5); color: rgb(156, 163, 175);`}
+					onmouseenter={(e) => {
+						if (!isSelected) {
+							e.currentTarget.style.borderColor = `${mode.color}80`;
+							e.currentTarget.style.color = mode.color;
+							e.currentTarget.style.boxShadow = `0 0 12px ${mode.color}40`;
+						}
+					}}
+					onmouseleave={(e) => {
+						if (!isSelected) {
+							e.currentTarget.style.borderColor = 'rgba(75, 85, 99, 0.5)';
+							e.currentTarget.style.color = 'rgb(156, 163, 175)';
+							e.currentTarget.style.boxShadow = 'none';
+						}
+					}}
 					onclick={(e) => showRules(e, mode.id)}
 					onkeydown={(e) => {
 						if (e.key === 'Enter' || e.key === ' ') {
@@ -101,22 +118,16 @@
 					}}
 					aria-label="Show rules"
 				>
-					<HelpCircle class="h-4 w-4" />
+					<HelpCircle class="h-5 w-5" strokeWidth={2.5} />
 				</div>
 			</button>
 		{/each}
 	</div>
 </div>
 
-<!-- Rules Dialog -->
-{#if selectedModeForRules}
-	<Dialog
-		visible={showRulesDialog}
-		title={$_(`modes.${selectedModeForRules}.name`)}
-		message={$_(`modes.${selectedModeForRules}.rules`)}
-		confirmText={$_('tracklistEditor.close', { default: 'Close' })}
-		onConfirm={() => (showRulesDialog = false)}
-		onCancel={() => (showRulesDialog = false)}
-		cancelText=""
-	/>
-{/if}
+<!-- Rules Popup -->
+<ModeRulesPopup
+	visible={showRulesPopup}
+	mode={selectedModeForRules}
+	onClose={() => (showRulesPopup = false)}
+/>
