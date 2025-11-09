@@ -352,7 +352,7 @@
 
 			<!-- Guess Panel - Fills remaining space -->
 			<div
-				class="no-print flex w-full flex-1 flex-col rounded-lg border-2 border-purple-400/30 bg-gray-900/50 p-4"
+				class="no-print flex w-full flex-1 flex-col overflow-hidden rounded-lg border-2 border-purple-500"
 			>
 				{#if guessState === 'input'}
 					<div class="flex h-full flex-col gap-2">
@@ -360,16 +360,16 @@
 							id="guess-input"
 							bind:this={inputElement}
 							bind:value={guessText}
-							class="flex-1 resize-none rounded-lg border-2 border-purple-400/30 bg-gray-800/50 p-3 text-4xl text-white placeholder-gray-500 focus:border-purple-400 focus:outline-none"
-							placeholder={$_('bingo.guessPlaceholder', { default: 'Enter your guess...' })}
+							class="flex-1 resize-none rounded-lg p-3 text-center text-4xl text-white placeholder-gray-500 focus:outline-none"
+							placeholder={$_('bingo.guessPlaceholder')}
 						></textarea>
 						<button
 							type="button"
 							onclick={handleGuessClose}
 							disabled={!guessText.trim()}
-							class="shrink-0 rounded-lg bg-purple-500 px-4 py-2 font-semibold text-white transition-all hover:bg-purple-600 disabled:cursor-not-allowed disabled:opacity-50"
+							class="shrink-0 bg-purple-500 px-4 py-2 font-semibold text-white transition-all hover:bg-purple-600 disabled:cursor-not-allowed disabled:opacity-50"
 						>
-							{$_('bingo.closeGuess', { default: 'Save Guess' })}
+							{$_('bingo.closeGuess')}
 						</button>
 					</div>
 				{:else}

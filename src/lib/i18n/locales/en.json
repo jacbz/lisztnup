@@ -347,7 +347,7 @@
 		"shareText": "Join my Bingo game!",
 		"copyFailed": "Failed to copy to clipboard",
 		"guessPlaceholder": "Enter your guess...",
-		"closeGuess": "Save Guess",
+		"closeGuess": "Lock In",
 		"reveal": "Reveal"
 	},
 	"footer": {
