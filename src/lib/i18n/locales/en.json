@@ -248,6 +248,10 @@
 		"nextRound": "Next Round",
 		"gameOver": "Game Over!",
 		"playAgain": "Play Again",
+		"quitTitle": "Leave Game?",
+		"quitMessage": "Are you sure you want to leave? Your grid will be saved.",
+		"quitConfirm": "Leave",
+		"quitCancel": "Stay",
 		"buzzer": {
 			"pressToStart": "Start",
 			"buzz": "Buzz!"
@@ -327,5 +331,23 @@
 		"viewStats": "View Statistics",
 		"playAgain": "Play Again",
 		"home": "Home"
+	},
+	"bingo": {
+		"setupDescription": "Each player needs their own device with a unique 5×5 bingo grid:",
+		"openGrid": "Open Grid",
+		"reset": "Reset",
+		"resetTitle": "Reset Grid?",
+		"resetMessage": "This will generate a new random grid and clear all marks. Are you sure?",
+		"resetConfirm": "Reset",
+		"resetCancel": "Cancel",
+		"copy": "Copy",
+		"copied": "Copied!",
+		"share": "Share",
+		"shareTitle": "Share Bingo Grid",
+		"shareText": "Join my Bingo game!",
+		"copyFailed": "Failed to copy to clipboard",
+		"guessPlaceholder": "Enter your guess...",
+		"closeGuess": "Save Guess",
+		"reveal": "Reveal"
 	}
 }

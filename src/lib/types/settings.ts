@@ -37,6 +37,11 @@ export interface Tracklist {
 	config: TracklistConfig;
 }
 
+export interface BingoGridCell {
+	category: string; // GuessCategory
+	marked: boolean;
+}
+
 export interface GameSettings {
 	numberOfTracks: number;
 	selectedTracklist: string; // Name of the currently selected tracklist
@@ -45,6 +50,7 @@ export interface GameSettings {
 	gameMode: 'classic' | 'buzzer' | 'bingo'; // Game mode
 	players: Array<{ name: string; color: string }>; // Saved player configurations
 	enableScoring: boolean; // Whether scoring is enabled
+	bingoGrid?: BingoGridCell[][]; // 5x5 grid for Bingo mode
 }
 
 // Default values for tracklist configuration
@@ -77,5 +83,6 @@ export const DEFAULT_SETTINGS: GameSettings = {
 	volume: 100,
 	gameMode: 'classic',
 	players: [],
-	enableScoring: true
+	enableScoring: true,
+	bingoGrid: undefined
 };

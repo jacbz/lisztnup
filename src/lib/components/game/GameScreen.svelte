@@ -18,6 +18,7 @@
 	import Dialog from '../ui/primitives/Dialog.svelte';
 	import TrackInfo from '../ui/gameplay/TrackInfo.svelte';
 	import Popup from '../ui/primitives/Popup.svelte';
+	import Logo from '../ui/primitives/Logo.svelte';
 	import SettingsIcon from 'lucide-svelte/icons/settings';
 	import BarChart from 'lucide-svelte/icons/bar-chart-3';
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';
@@ -279,14 +280,9 @@
 <div class="fixed inset-0 overflow-hidden text-white">
 	<!-- Header -->
 	<div class="absolute top-0 right-0 left-0 z-20 flex items-center justify-between p-6">
-		<button
-			type="button"
-			onclick={handleHomeClick}
-			class="pr-4 font-streamster text-4xl text-cyan-400 transition-all select-none hover:scale-105 hover:text-cyan-300 active:scale-95"
-			style="filter: drop-shadow(0 0 10px rgba(0, 246, 255, 0.7));"
-		>
-			{$_('app.title')}
-		</button>
+		<div class="pr-4">
+			<Logo onClick={handleHomeClick} size="large" />
+		</div>
 
 		<!-- Settings Button -->
 		<button

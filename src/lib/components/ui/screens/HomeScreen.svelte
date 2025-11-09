@@ -9,10 +9,13 @@
 	import ToggleButton from '../primitives/ToggleButton.svelte';
 	import ModeSelector from '../setup/ModeSelector.svelte';
 	import PlayerSetup from '../setup/PlayerSetup.svelte';
+	import BingoSetup from '../setup/BingoSetup.svelte';
+	import ShareLinkPopup from '../setup/ShareLinkPopup.svelte';
 	import { SettingsService } from '$lib/services';
 	import type { Tracklist, GameMode, Player } from '$lib/types';
 	import Plus from 'lucide-svelte/icons/plus';
 	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
 
 	interface Props {
 		onStart?: (
@@ -26,6 +29,8 @@
 	let { onStart = () => {} }: Props = $props();
 
 	let showTracklistSelector = $state(false);
+	let showShareLinkPopup = $state(false);
+	let bingoUrl = $state('');
 	let selectedMode = $state<GameMode | null>($settingsStore.gameMode || 'classic');
 	let localSettings = $state({ ...$settingsStore });
 	let currentLocale = $state($locale || 'en');
@@ -51,6 +56,13 @@
 	// Update current locale when it changes
 	$effect(() => {
 		currentLocale = $locale || 'en';
+	});
+
+	// Set bingo URL
+	$effect(() => {
+		if (browser) {
+			bingoUrl = `${window.location.origin}/bingo`;
+		}
 	});
 
 	function handleTracklistSelect(tracklist: Tracklist) {
@@ -218,40 +230,45 @@
 
 				<!-- Right Column / Divider for Desktop -->
 				<div class="md:border-l md:border-gray-700 md:pl-6">
-					<!-- Player Setup Header with Controls -->
-					<div class="mb-3 flex items-center justify-between gap-2">
-						<span class="text-sm font-semibold text-gray-400">{$_('players.setup')}</span>
-						<div class="flex gap-2">
-							<ToggleButton
-								value={enableScoring}
-								disabled={selectedMode === 'bingo'}
-								onToggle={() => {
-									enableScoring = !enableScoring;
-									settingsStore.update((s) => ({ ...s, enableScoring }));
-								}}
-								enabledText={$_('home.scoringOn')}
-								disabledText={$_('home.scoringOff')}
-							/>
-							{#if currentPlayers.length < 10}
-								<button
-									type="button"
-									onclick={() => playerSetupRef?.addPlayer()}
-									class="rounded-lg border-2 border-cyan-400/30 bg-gray-900 px-3 py-1.5 text-sm font-semibold text-cyan-400 transition-all duration-200 hover:border-cyan-400 hover:bg-gray-800"
-								>
-									<Plus class="inline h-4 w-4" />
-									{$_('players.addPlayer')}
-								</button>
-							{/if}
+					{#if selectedMode === 'bingo'}
+						<!-- Bingo-specific setup -->
+						<BingoSetup onOpenSharePopup={() => (showShareLinkPopup = true)} />
+					{:else}
+						<!-- Player Setup Header with Controls -->
+						<div class="mb-3 flex items-center justify-between gap-2">
+							<span class="text-sm font-semibold text-gray-400">{$_('players.setup')}</span>
+							<div class="flex gap-2">
+								<ToggleButton
+									value={enableScoring}
+									disabled={false}
+									onToggle={() => {
+										enableScoring = !enableScoring;
+										settingsStore.update((s) => ({ ...s, enableScoring }));
+									}}
+									enabledText={$_('home.scoringOn')}
+									disabledText={$_('home.scoringOff')}
+								/>
+								{#if currentPlayers.length < 10}
+									<button
+										type="button"
+										onclick={() => playerSetupRef?.addPlayer()}
+										class="rounded-lg border-2 border-cyan-400/30 bg-gray-900 px-3 py-1.5 text-sm font-semibold text-cyan-400 transition-all duration-200 hover:border-cyan-400 hover:bg-gray-800"
+									>
+										<Plus class="inline h-4 w-4" />
+										{$_('players.addPlayer')}
+									</button>
+								{/if}
+							</div>
 						</div>
-					</div>
-					<!-- Player Setup -->
-					<div class:opacity-40={!enableScoring} class:pointer-events-none={!enableScoring}>
-						<PlayerSetup
-							onPlayersChange={handlePlayersChange}
-							onAddPlayer={handleAddPlayer}
-							bind:this={playerSetupRef}
-						/>
-					</div>
+						<!-- Player Setup -->
+						<div class:opacity-40={!enableScoring} class:pointer-events-none={!enableScoring}>
+							<PlayerSetup
+								onPlayersChange={handlePlayersChange}
+								onAddPlayer={handleAddPlayer}
+								bind:this={playerSetupRef}
+							/>
+						</div>
+					{/if}
 				</div>
 			</div>
 		</div>
@@ -354,6 +371,12 @@
 	selectedTracklist={$selectedTracklist}
 	onSelect={handleTracklistSelect}
 	onClose={() => (showTracklistSelector = false)}
+/>
+
+<ShareLinkPopup
+	visible={showShareLinkPopup}
+	url={bingoUrl}
+	onClose={() => (showShareLinkPopup = false)}
 />
 
 <style>

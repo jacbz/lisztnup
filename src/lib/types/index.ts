@@ -8,7 +8,8 @@ export type {
 	Tracklist,
 	CategoryWeights,
 	ComposerFilter,
-	TracklistConfig
+	TracklistConfig,
+	BingoGridCell
 } from './settings';
 export type {
 	GuessCategory,
