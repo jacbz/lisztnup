@@ -333,7 +333,7 @@
 		"home": "Home"
 	},
 	"bingo": {
-		"setupDescription": "Each player needs their own device with a unique 5×5 bingo grid:",
+		"setupDescription": "Each player needs their own device with a unique 5×5 bingo grid.",
 		"openGrid": "Open Grid",
 		"reset": "Reset",
 		"resetTitle": "Reset Grid?",
@@ -349,5 +349,9 @@
 		"guessPlaceholder": "Enter your guess...",
 		"closeGuess": "Save Guess",
 		"reveal": "Reveal"
+	},
+	"footer": {
+		"madeBy": "A Game by Jacob Zhang",
+		"poweredBy": "Powered by {first} and {second}"
 	}
 }

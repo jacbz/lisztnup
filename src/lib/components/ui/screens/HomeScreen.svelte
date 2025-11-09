@@ -228,8 +228,8 @@
 					{/if}
 				</div>
 
-				<!-- Right Column / Divider for Desktop -->
-				<div class="md:border-l md:border-gray-700 md:pl-6">
+				<!-- Right Column / Divider (top divider on mobile) -->
+				<div class="border-t border-gray-700 pt-6 md:border-t-0 md:border-l md:pt-0 md:pl-6">
 					{#if selectedMode === 'bingo'}
 						<!-- Bingo-specific setup -->
 						<BingoSetup onOpenSharePopup={() => (showShareLinkPopup = true)} />
@@ -297,9 +297,9 @@
 		{/if}
 
 		<!-- Footer -->
-		<div class="mt-16 mb-6 space-y-1 text-center text-gray-400">
+		<div class="mt-16 mb-6 text-center text-gray-400">
 			<div class="flex items-center justify-center gap-2 text-sm">
-				<span>A Game by Jacob Zhang</span>
+				<span>{$_('footer.madeBy')}</span>
 				<span>|</span>
 				<a
 					href="https://github.com/jacbz/lisztnup"
@@ -317,50 +317,24 @@
 					<span>GitHub</span>
 				</a>
 			</div>
-			<div class="flex items-center justify-center gap-2 text-xs">
-				<span>Powered by</span>
-				<a
-					href="https://musicbrainz.org"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="inline-flex items-center gap-1 text-cyan-400 transition-colors hover:text-cyan-300"
-				>
-					<svg
-						width="12"
-						height="12"
-						version="1.1"
-						viewBox="0 0 25 28"
-						fill="currentColor"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<polygon points="0 21 12 28 12 0 0 7" />
-						<polygon points="25 21 13 28 13 0 25 7" />
-					</svg>
-					<span>MusicBrainz</span>
-				</a>
-				<span>and</span>
-				<a
-					href="http://deezer.com"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="inline-flex items-center gap-1 text-cyan-400 transition-colors hover:text-cyan-300"
-				>
-					<svg
-						width="12"
-						height="12"
-						fill="currentColor"
-						version="1.1"
-						viewBox="0 0 48 48"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							d="m40.258 7.3231c0.4441-2.574 1.0957-4.1926 1.8175-4.1957h0.0016c1.346 0.00464 2.4371 5.618 2.4371 12.548 0 6.9304-1.0927 12.548-2.4402 12.548-0.5524 0-1.0621-0.9539-1.4726-2.5524-0.6486 5.8514-1.9946 9.874-3.5527 9.874-1.2056 0-2.2876-2.4163-3.014-6.2271-0.496 7.2474-1.7443 12.389-3.2033 12.389-0.9156 0-1.7504-2.0375-2.3684-5.3551-0.7432 6.8485-2.46 11.647-4.4623 11.647-2.0022 0-3.722-4.7971-4.4622-11.647-0.6135 3.3176-1.4482 5.3551-2.3685 5.3551-1.4589 0-2.7042-5.1418-3.2032-12.389-0.7264 3.8108-1.8053 6.2271-3.014 6.2271-1.5566 0-2.9041-4.021-3.5527-9.874-0.40746 1.6032-0.92022 2.5524-1.4727 2.5524-1.3475 0-2.4402-5.618-2.4402-12.548 0-6.9305 1.0927-12.548 2.4402-12.548 0.72336 0 1.3704 1.6232 1.8191 4.1957 0.71878-4.4384 1.8862-7.3231 3.2062-7.3231 1.5673 0 2.9255 4.0798 3.568 10.004 0.6287-4.3116 1.5825-7.0603 2.6508-7.0603 1.497 0 2.7698 5.4062 3.2414 12.947 0.8866-3.8665 2.17-6.292 3.5908-6.292s2.7042 2.4271 3.5893 6.292c0.4731-7.5412 1.7443-12.947 3.2414-12.947 1.0667 0 2.019 2.7487 2.6508 7.0603 0.6409-5.924 1.9991-10.004 3.5664-10.004 1.3155 0 2.4875 2.8863 3.2063 7.3231zm-40.258 7.1186c0-3.0981 0.61959-5.6103 1.3841-5.6103s1.3842 2.5122 1.3842 5.6103c0 3.098-0.61959 5.6102-1.3842 5.6102s-1.3841-2.5122-1.3841-5.6102zm45.231 0c0-3.0981 0.6195-5.6103 1.3841-5.6103s1.3842 2.5122 1.3842 5.6103c0 3.098-0.6196 5.6102-1.3842 5.6102s-1.3841-2.5122-1.3841-5.6102z"
-							clip-rule="evenodd"
-							fill-rule="evenodd"
-						/>
-					</svg>
-					<span>Deezer</span>
-				</a>
+			<div class="inline-flex gap-1 text-xs">
+				{@html $_('footer.poweredBy', {
+					values: {
+						first: `<a href="https://musicbrainz.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-cyan-400 transition-colors hover:text-cyan-300">
+							<svg width="12" height="12" version="1.1" viewBox="0 0 25 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+								<polygon points="0 21 12 28 12 0 0 7" />
+								<polygon points="25 21 13 28 13 0 25 7" />
+							</svg>
+							<span>MusicBrainz</span>
+						</a>`,
+						second: `<a href="http://deezer.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-cyan-400 transition-colors hover:text-cyan-300">
+							<svg width="12" height="12" fill="currentColor" version="1.1" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+								<path d="m40.258 7.3231c0.4441-2.574 1.0957-4.1926 1.8175-4.1957h0.0016c1.346 0.00464 2.4371 5.618 2.4371 12.548 0 6.9304-1.0927 12.548-2.4402 12.548-0.5524 0-1.0621-0.9539-1.4726-2.5524-0.6486 5.8514-1.9946 9.874-3.5527 9.874-1.2056 0-2.2876-2.4163-3.014-6.2271-0.496 7.2474-1.7443 12.389-3.2033 12.389-0.9156 0-1.7504-2.0375-2.3684-5.3551-0.7432 6.8485-2.46 11.647-4.4623 11.647-2.0022 0-3.722-4.7971-4.4622-11.647-0.6135 3.3176-1.4482 5.3551-2.3685 5.3551-1.4589 0-2.7042-5.1418-3.2032-12.389-0.7264 3.8108-1.8053 6.2271-3.014 6.2271-1.5566 0-2.9041-4.021-3.5527-9.874-0.40746 1.6032-0.92022 2.5524-1.4727 2.5524-1.3475 0-2.4402-5.618-2.4402-12.548 0-6.9305 1.0927-12.548 2.4402-12.548 0.72336 0 1.3704 1.6232 1.8191 4.1957 0.71878-4.4384 1.8862-7.3231 3.2062-7.3231 1.5673 0 2.9255 4.0798 3.568 10.004 0.6287-4.3116 1.5825-7.0603 2.6508-7.0603 1.497 0 2.7698 5.4062 3.2414 12.947 0.8866-3.8665 2.17-6.292 3.5908-6.292s2.7042 2.4271 3.5893 6.292c0.4731-7.5412 1.7443-12.947 3.2414-12.947 1.0667 0 2.019 2.7487 2.6508 7.0603 0.6409-5.924 1.9991-10.004 3.5664-10.004 1.3155 0 2.4875 2.8863 3.2063 7.3231zm-40.258 7.1186c0-3.0981 0.61959-5.6103 1.3841-5.6103s1.3842 2.5122 1.3842 5.6103c0 3.098-0.61959 5.6102-1.3842 5.6102s-1.3841-2.5122-1.3841-5.6102zm45.231 0c0-3.0981 0.6195-5.6103 1.3841-5.6103s1.3842 2.5122 1.3842 5.6103c0 3.098-0.6196 5.6102-1.3842 5.6102s-1.3841-2.5122-1.3841-5.6102z" clip-rule="evenodd" fill-rule="evenodd" />
+							</svg>
+							<span>Deezer</span>
+						</a>`
+					}
+				})}
 			</div>
 		</div>
 	</div>

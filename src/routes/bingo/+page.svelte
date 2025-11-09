@@ -6,6 +6,7 @@
 	import { _ } from 'svelte-i18n';
 	import X from 'lucide-svelte/icons/x';
 	import RefreshCw from 'lucide-svelte/icons/refresh-cw';
+	import Printer from 'lucide-svelte/icons/printer';
 	import Dialog from '$lib/components/ui/primitives/Dialog.svelte';
 	import Logo from '$lib/components/ui/primitives/Logo.svelte';
 
@@ -208,6 +209,10 @@
 		window.location.href = '/';
 	}
 
+	function handlePrint() {
+		window.print();
+	}
+
 	function handleGuessInput() {
 		guessState = 'input';
 		setTimeout(() => inputElement?.focus(), 100);
@@ -240,20 +245,62 @@
 
 <svelte:head>
 	<title>{$_('app.title')} - Bingo</title>
+	<style>
+		@media print {
+			@page {
+				margin: 0;
+				size: auto;
+			}
+
+			body {
+				margin: 0;
+				padding: 0;
+			}
+
+			/* Hide buttons and guess box */
+			.no-print {
+				display: none !important;
+			}
+
+			/* Show footer only on print */
+			.print-only {
+				display: block !important;
+			}
+
+			.grid {
+				width: 100%;
+			}
+		}
+
+		/* Hide footer on screen */
+		.print-only {
+			display: none;
+		}
+	</style>
 </svelte:head>
 
 <div class="fixed inset-0 flex flex-col text-white">
 	<!-- Header -->
 	<div class="absolute flex w-full items-center justify-between p-4 sm:p-6">
 		<Logo onClick={handleHomeClick} size="medium" />
-		<button
-			type="button"
-			onclick={handleReset}
-			class="flex items-center gap-2 rounded-lg border-2 border-purple-400/30 bg-gray-900/50 px-3 py-2 text-purple-400 transition-all hover:border-purple-400 hover:bg-gray-800/70 sm:px-4"
-		>
-			<RefreshCw class="h-5 w-5" />
-			<span class="hidden sm:inline">{$_('bingo.reset', { default: 'Reset' })}</span>
-		</button>
+		<div class="no-print flex gap-2">
+			<button
+				type="button"
+				onclick={handlePrint}
+				class="flex items-center gap-2 rounded-lg border-2 border-purple-400/30 bg-gray-900/50 px-3 py-2 text-purple-400 transition-all hover:border-purple-400 hover:bg-gray-800/70 sm:px-4"
+			>
+				<Printer class="h-5 w-5" />
+				<span class="hidden sm:inline">{$_('bingo.print', { default: 'Print' })}</span>
+			</button>
+			<button
+				type="button"
+				onclick={handleReset}
+				class="flex items-center gap-2 rounded-lg border-2 border-purple-400/30 bg-gray-900/50 px-3 py-2 text-purple-400 transition-all hover:border-purple-400 hover:bg-gray-800/70 sm:px-4"
+			>
+				<RefreshCw class="h-5 w-5" />
+				<span class="hidden sm:inline">{$_('bingo.reset', { default: 'Reset' })}</span>
+			</button>
+		</div>
 	</div>
 
 	<!-- Main Content - No scroll, flex layout -->
@@ -273,7 +320,8 @@
 							style="border-color: {categoryDef?.color1 ||
 								'#06b6d4'}; background-color: {cell.marked
 								? categoryDef?.color1 + '80'
-								: categoryDef?.color1 + '20'};"
+								: categoryDef?.color1 + '20'}; --cell-bg-unmarked: {(categoryDef?.color1 ||
+								'#06b6d4') + '20'};"
 						>
 							<!-- Category Icon (hidden when marked) -->
 							{#if !cell.marked}
@@ -308,7 +356,7 @@
 
 			<!-- Guess Panel - Fills remaining space -->
 			<div
-				class="flex w-full flex-1 flex-col rounded-lg border-2 border-purple-400/30 bg-gray-900/50 p-4"
+				class="no-print flex w-full flex-1 flex-col rounded-lg border-2 border-purple-400/30 bg-gray-900/50 p-4"
 			>
 				{#if guessState === 'input'}
 					<div class="flex h-full flex-col gap-2">
@@ -353,6 +401,11 @@
 				{/if}
 			</div>
 		</div>
+	</div>
+
+	<!-- Footer (Print Only) -->
+	<div class="print-only absolute bottom-4 w-full text-center text-gray-400">
+		<span class="text-sm">{$_('footer.madeBy')}</span>
 	</div>
 </div>
 
