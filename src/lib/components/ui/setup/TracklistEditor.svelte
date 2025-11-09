@@ -463,527 +463,519 @@
 	});
 </script>
 
-<Popup {visible} onClose={onCancel}>
-	<div
-		class="max-h-[90vh] w-full max-w-5xl min-w-0 overflow-y-auto rounded-2xl border-2 border-cyan-400 bg-gray-900 p-6 shadow-[0_0_40px_rgba(34,211,238,0.6)] lg:min-w-5xl"
-	>
-		<h2 class="mb-6 text-2xl font-bold text-cyan-400">
-			{tracklist ? $_('tracklistEditor.title') : $_('tracklistEditor.createTitle')}
-		</h2>
+<Popup {visible} onClose={onCancel} width="5xl">
+	<h2 class="mb-6 text-2xl font-bold text-cyan-400">
+		{originalTracklist ? $_('tracklistEditor.editTitle') : $_('tracklistEditor.createTitle')}
+	</h2>
 
-		<div class="grid gap-6 lg:grid-cols-3">
-			<!-- Left column: Filters (2/3 width) -->
-			<div class="space-y-4 lg:col-span-2">
-				<!-- Name and Description -->
-				<div class="space-y-3">
-					<div>
-						<label for="tracklist-name" class="mb-1 block text-sm font-semibold text-cyan-300">
-							{$_('tracklistEditor.name')}
-						</label>
-						<input
-							id="tracklist-name"
-							type="text"
-							bind:value={name}
-							oninput={() => (nameError = null)}
-							placeholder="My Custom Tracklist"
-							class="w-full rounded-lg border-2 {nameError
-								? 'border-red-500'
-								: 'border-gray-700'} bg-gray-800 px-3 py-2 text-white focus:border-cyan-400 focus:outline-none"
-						/>
-						{#if nameError}
-							<p class="mt-1 text-sm text-red-500">{nameError}</p>
-						{/if}
-					</div>
-					<div>
-						<label for="tracklist-desc" class="mb-1 block text-sm font-semibold text-cyan-300">
-							{$_('tracklistEditor.description')}
-						</label>
-						<textarea
-							id="tracklist-desc"
-							bind:value={description}
-							placeholder="Description of your tracklist..."
-							rows="2"
-							class="w-full rounded-lg border-2 border-gray-700 bg-gray-800 px-3 py-2 text-white focus:border-cyan-400 focus:outline-none"
-						></textarea>
-					</div>
-				</div>
-
-				<!-- Work Score Range (Popularity) -->
-				<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
-					<div class="mb-3 flex items-center justify-between">
-						<div>
-							<span class="font-semibold text-cyan-300">{$_('tracklistEditor.workScoreRange')}</span
-							>
-							<p class="text-xs text-gray-400">{$_('tracklistEditor.workScoreRangeDesc')}</p>
-						</div>
-						<ToggleButton value={workScoreRangeEnabled} onToggle={toggleWorkScoreRange} />
-					</div>
-					{#if workScoreRangeEnabled && config.workScoreRange}
-						<RangeSlider
-							bind:valueMin={config.workScoreRange[0]}
-							bind:valueMax={config.workScoreRange[1]}
-							min={MIN_WORK_SCORE}
-							max={MAX_WORK_SCORE}
-							step={0.1}
-							label=""
-						/>
+	<div class="grid gap-6 lg:grid-cols-3">
+		<!-- Left column: Filters (2/3 width) -->
+		<div class="space-y-4 lg:col-span-2">
+			<!-- Name and Description -->
+			<div class="space-y-3">
+				<div>
+					<label for="tracklist-name" class="mb-1 block text-sm font-semibold text-cyan-300">
+						{$_('tracklistEditor.name')}
+					</label>
+					<input
+						id="tracklist-name"
+						type="text"
+						bind:value={name}
+						oninput={() => (nameError = null)}
+						placeholder="My Custom Tracklist"
+						class="w-full rounded-lg border-2 {nameError
+							? 'border-red-500'
+							: 'border-gray-700'} bg-gray-800 px-3 py-2 text-white focus:border-cyan-400 focus:outline-none"
+					/>
+					{#if nameError}
+						<p class="mt-1 text-sm text-red-500">{nameError}</p>
 					{/if}
 				</div>
-
-				<!-- Category Weights -->
-				<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
-					<div class="mb-3 flex items-center justify-between">
-						<div>
-							<span class="font-semibold text-cyan-300"
-								>{$_('tracklistEditor.categoryWeights')}</span
-							>
-							<p class="text-xs text-gray-400">{$_('tracklistEditor.categoryWeightsDesc')}</p>
-						</div>
-						<ToggleButton value={categoryWeightsEnabled} onToggle={toggleCategoryWeights} />
-					</div>
-					{#if categoryWeightsEnabled && config.categoryWeights}
-						<div class="grid grid-cols-2 gap-3">
-							{#each Object.keys(config.categoryWeights) as category}
-								<Slider
-									value={config.categoryWeights[category as keyof CategoryWeights]}
-									min={0}
-									max={10}
-									step={0.1}
-									label={$_(`settings.categories.${category}`)}
-									showValue={false}
-									onChange={(val) =>
-										handleCategoryWeightChange(category as keyof CategoryWeights, val)}
-								/>
-							{/each}
-						</div>
-					{/if}
+				<div>
+					<label for="tracklist-desc" class="mb-1 block text-sm font-semibold text-cyan-300">
+						{$_('tracklistEditor.description')}
+					</label>
+					<textarea
+						id="tracklist-desc"
+						bind:value={description}
+						placeholder="Description of your tracklist..."
+						rows="2"
+						class="w-full rounded-lg border-2 border-gray-700 bg-gray-800 px-3 py-2 text-white focus:border-cyan-400 focus:outline-none"
+					></textarea>
 				</div>
+			</div>
 
-				<!-- Composer Filter -->
-				<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
-					<div class="mb-3 flex items-center justify-between">
-						<div>
-							<span class="font-semibold text-cyan-300">{$_('tracklistEditor.composerFilter')}</span
-							>
-							<p class="text-xs text-gray-400">{$_('tracklistEditor.composerFilterDesc')}</p>
-						</div>
-						<ToggleButton value={composerFilterEnabled} onToggle={toggleComposerFilter} />
+			<!-- Work Score Range (Popularity) -->
+			<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
+				<div class="mb-3 flex items-center justify-between">
+					<div>
+						<span class="font-semibold text-cyan-300">{$_('tracklistEditor.workScoreRange')}</span>
+						<p class="text-xs text-gray-400">{$_('tracklistEditor.workScoreRangeDesc')}</p>
 					</div>
-					{#if composerFilterEnabled}
-						<!-- Mode selector -->
-						<div class="mb-3 flex gap-2">
-							<button
-								type="button"
-								onclick={() => (composerFilterMode = 'include')}
-								class="flex-1 rounded-lg px-3 py-2 text-sm {composerFilterMode === 'include'
-									? 'bg-cyan-500 text-white'
-									: 'bg-gray-700 text-gray-300'}"
-							>
-								{$_('tracklistEditor.includeMode')}
-							</button>
-							<button
-								type="button"
-								onclick={() => (composerFilterMode = 'exclude')}
-								class="flex-1 rounded-lg px-3 py-2 text-sm {composerFilterMode === 'exclude'
-									? 'bg-cyan-500 text-white'
-									: 'bg-gray-700 text-gray-300'}"
-							>
-								{$_('tracklistEditor.excludeMode')}
-							</button>
-							<button
-								type="button"
-								onclick={() => (composerFilterMode = 'topN')}
-								class="flex-1 rounded-lg px-3 py-2 text-sm {composerFilterMode === 'topN'
-									? 'bg-cyan-500 text-white'
-									: 'bg-gray-700 text-gray-300'}"
-							>
-								{$_('tracklistEditor.topNMode')}
-							</button>
-						</div>
+					<ToggleButton value={workScoreRangeEnabled} onToggle={toggleWorkScoreRange} />
+				</div>
+				{#if workScoreRangeEnabled && config.workScoreRange}
+					<RangeSlider
+						bind:valueMin={config.workScoreRange[0]}
+						bind:valueMax={config.workScoreRange[1]}
+						min={MIN_WORK_SCORE}
+						max={MAX_WORK_SCORE}
+						step={0.1}
+						label=""
+					/>
+				{/if}
+			</div>
 
-						{#if composerFilterMode === 'topN'}
-							<!-- Top N slider -->
+			<!-- Category Weights -->
+			<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
+				<div class="mb-3 flex items-center justify-between">
+					<div>
+						<span class="font-semibold text-cyan-300">{$_('tracklistEditor.categoryWeights')}</span>
+						<p class="text-xs text-gray-400">{$_('tracklistEditor.categoryWeightsDesc')}</p>
+					</div>
+					<ToggleButton value={categoryWeightsEnabled} onToggle={toggleCategoryWeights} />
+				</div>
+				{#if categoryWeightsEnabled && config.categoryWeights}
+					<div class="grid grid-cols-2 gap-3">
+						{#each Object.keys(config.categoryWeights) as category}
 							<Slider
-								value={topNCount}
-								min={5}
-								max={200}
-								step={5}
-								label={$_('tracklistEditor.topNComposers')}
-								showValue={true}
-								onChange={(val) => (topNCount = val)}
+								value={config.categoryWeights[category as keyof CategoryWeights]}
+								min={0}
+								max={10}
+								step={0.1}
+								label={$_(`settings.categories.${category}`)}
+								showValue={false}
+								onChange={(val) =>
+									handleCategoryWeightChange(category as keyof CategoryWeights, val)}
 							/>
-						{:else}
-							<!-- Composer selection -->
-							<div class="space-y-2">
-								<div class="flex gap-2">
-									<input
-										type="text"
-										bind:value={composerSearchTerm}
-										placeholder={$_('tracklistEditor.searchComposers')}
-										class="flex-1 rounded-lg border-2 border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:border-cyan-400 focus:outline-none"
-									/>
-									<button
-										type="button"
-										onclick={selectAllComposers}
-										class="rounded-lg bg-gray-700 px-3 py-2 text-sm text-gray-300 hover:bg-gray-600"
-										title={$_('tracklistEditor.selectAll')}
-									>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											width="16"
-											height="16"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											stroke-width="2"
-											stroke-linecap="round"
-											stroke-linejoin="round"
-										>
-											<path d="M20 6 9 17l-5-5"></path>
-										</svg>
-									</button>
-									<button
-										type="button"
-										onclick={selectNoneComposers}
-										class="rounded-lg bg-gray-700 px-3 py-2 text-sm text-gray-300 hover:bg-gray-600"
-										title={$_('tracklistEditor.selectNone')}
-									>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											width="16"
-											height="16"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											stroke-width="2"
-											stroke-linecap="round"
-											stroke-linejoin="round"
-										>
-											<path d="M18 6 6 18"></path>
-											<path d="m6 6 12 12"></path>
-										</svg>
-									</button>
-								</div>
-								<div
-									class="max-h-48 overflow-y-auto rounded-lg border-2 border-gray-700 bg-gray-800 p-2"
-								>
-									<div class="grid grid-cols-2 gap-1">
-										{#each composerList as composer}
-											<label
-												class="flex items-center gap-2 rounded px-2 py-1 text-sm hover:bg-gray-700"
-											>
-												<input
-													type="checkbox"
-													checked={selectedComposers.includes(composer.gid)}
-													onchange={() => toggleComposer(composer.gid)}
-													class="rounded border-gray-600 bg-gray-700 text-cyan-500 focus:ring-cyan-500"
-												/>
-												<span class="text-gray-300">{composer.name}</span>
-											</label>
-										{/each}
-									</div>
-								</div>
-								<p class="text-xs text-gray-400">
-									{selectedComposers.length}
-									{$_('tracklistEditor.composersSelected')}
-								</p>
-							</div>
-						{/if}
-					{/if}
-				</div>
-
-				<!-- Year Filter -->
-				<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
-					<div class="mb-3 flex items-center justify-between">
-						<div>
-							<span class="font-semibold text-cyan-300">{$_('tracklistEditor.yearFilter')}</span>
-							<p class="text-xs text-gray-400">{$_('tracklistEditor.yearFilterDesc')}</p>
-						</div>
-						<ToggleButton value={yearFilterEnabled} onToggle={toggleYearFilter} />
+						{/each}
 					</div>
-					{#if yearFilterEnabled && config.yearFilter}
-						<RangeSlider
-							bind:valueMin={config.yearFilter[0]}
-							bind:valueMax={config.yearFilter[1]}
-							min={1400}
-							max={2000}
-							step={10}
-							label=""
+				{/if}
+			</div>
+
+			<!-- Composer Filter -->
+			<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
+				<div class="mb-3 flex items-center justify-between">
+					<div>
+						<span class="font-semibold text-cyan-300">{$_('tracklistEditor.composerFilter')}</span>
+						<p class="text-xs text-gray-400">{$_('tracklistEditor.composerFilterDesc')}</p>
+					</div>
+					<ToggleButton value={composerFilterEnabled} onToggle={toggleComposerFilter} />
+				</div>
+				{#if composerFilterEnabled}
+					<!-- Mode selector -->
+					<div class="mb-3 flex gap-2">
+						<button
+							type="button"
+							onclick={() => (composerFilterMode = 'include')}
+							class="flex-1 rounded-lg px-3 py-2 text-sm {composerFilterMode === 'include'
+								? 'bg-cyan-500 text-white'
+								: 'bg-gray-700 text-gray-300'}"
+						>
+							{$_('tracklistEditor.includeMode')}
+						</button>
+						<button
+							type="button"
+							onclick={() => (composerFilterMode = 'exclude')}
+							class="flex-1 rounded-lg px-3 py-2 text-sm {composerFilterMode === 'exclude'
+								? 'bg-cyan-500 text-white'
+								: 'bg-gray-700 text-gray-300'}"
+						>
+							{$_('tracklistEditor.excludeMode')}
+						</button>
+						<button
+							type="button"
+							onclick={() => (composerFilterMode = 'topN')}
+							class="flex-1 rounded-lg px-3 py-2 text-sm {composerFilterMode === 'topN'
+								? 'bg-cyan-500 text-white'
+								: 'bg-gray-700 text-gray-300'}"
+						>
+							{$_('tracklistEditor.topNMode')}
+						</button>
+					</div>
+
+					{#if composerFilterMode === 'topN'}
+						<!-- Top N slider -->
+						<Slider
+							value={topNCount}
+							min={5}
+							max={200}
+							step={5}
+							label={$_('tracklistEditor.topNComposers')}
+							showValue={true}
+							onChange={(val) => (topNCount = val)}
 						/>
-					{/if}
-				</div>
-
-				<!-- Name Filter -->
-				<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
-					<div class="mb-3 flex items-center justify-between">
-						<div>
-							<span class="font-semibold text-cyan-300">{$_('tracklistEditor.nameFilter')}</span>
-							<p class="text-xs text-gray-400">{$_('tracklistEditor.nameFilterDesc')}</p>
-						</div>
-						<ToggleButton value={nameFilterEnabled} onToggle={toggleNameFilter} />
-					</div>
-					{#if nameFilterEnabled}
+					{:else}
+						<!-- Composer selection -->
 						<div class="space-y-2">
-							<!-- Input field with add button -->
 							<div class="flex gap-2">
 								<input
 									type="text"
-									bind:value={nameFilterInput}
-									onkeydown={handleNameFilterKeydown}
-									placeholder={$_('tracklistEditor.nameFilterPlaceholder')}
+									bind:value={composerSearchTerm}
+									placeholder={$_('tracklistEditor.searchComposers')}
 									class="flex-1 rounded-lg border-2 border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:border-cyan-400 focus:outline-none"
 								/>
 								<button
 									type="button"
-									onclick={addNameFilter}
-									disabled={!nameFilterInput.trim()}
-									class="rounded-lg bg-cyan-500 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-600 disabled:cursor-not-allowed disabled:opacity-50"
+									onclick={selectAllComposers}
+									class="rounded-lg bg-gray-700 px-3 py-2 text-sm text-gray-300 hover:bg-gray-600"
+									title={$_('tracklistEditor.selectAll')}
 								>
-									{$_('tracklistEditor.nameFilterAdd')}
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path d="M20 6 9 17l-5-5"></path>
+									</svg>
+								</button>
+								<button
+									type="button"
+									onclick={selectNoneComposers}
+									class="rounded-lg bg-gray-700 px-3 py-2 text-sm text-gray-300 hover:bg-gray-600"
+									title={$_('tracklistEditor.selectNone')}
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path d="M18 6 6 18"></path>
+										<path d="m6 6 12 12"></path>
+									</svg>
 								</button>
 							</div>
-
-							<!-- Chips display -->
-							{#if nameFilters.length > 0}
-								<div class="flex flex-wrap gap-2">
-									{#each nameFilters as filter}
-										{@const isRegex = filter.startsWith('/') && filter.endsWith('/')}
-										{@const displayText = isRegex ? filter.slice(1, -1) : filter}
-										<div
-											class="flex items-center gap-2 rounded-full border-2 px-3 py-1 text-sm {isRegex
-												? 'border-purple-500 bg-purple-500/20 text-purple-300'
-												: 'border-cyan-500 bg-cyan-500/20 text-cyan-300'}"
+							<div
+								class="max-h-48 overflow-y-auto rounded-lg border-2 border-gray-700 bg-gray-800 p-2"
+							>
+								<div class="grid grid-cols-2 gap-1">
+									{#each composerList as composer}
+										<label
+											class="flex items-center gap-2 rounded px-2 py-1 text-sm hover:bg-gray-700"
 										>
-											<span class={isRegex ? 'font-mono text-xs' : ''}>{displayText}</span>
-											<button
-												type="button"
-												onclick={() => removeNameFilter(filter)}
-												class="hover:text-white"
-												aria-label="Remove filter"
+											<input
+												type="checkbox"
+												checked={selectedComposers.includes(composer.gid)}
+												onchange={() => toggleComposer(composer.gid)}
+												class="rounded border-gray-600 bg-gray-700 text-cyan-500 focus:ring-cyan-500"
+											/>
+											<span class="text-gray-300">{composer.name}</span>
+										</label>
+									{/each}
+								</div>
+							</div>
+							<p class="text-xs text-gray-400">
+								{selectedComposers.length}
+								{$_('tracklistEditor.composersSelected')}
+							</p>
+						</div>
+					{/if}
+				{/if}
+			</div>
+
+			<!-- Year Filter -->
+			<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
+				<div class="mb-3 flex items-center justify-between">
+					<div>
+						<span class="font-semibold text-cyan-300">{$_('tracklistEditor.yearFilter')}</span>
+						<p class="text-xs text-gray-400">{$_('tracklistEditor.yearFilterDesc')}</p>
+					</div>
+					<ToggleButton value={yearFilterEnabled} onToggle={toggleYearFilter} />
+				</div>
+				{#if yearFilterEnabled && config.yearFilter}
+					<RangeSlider
+						bind:valueMin={config.yearFilter[0]}
+						bind:valueMax={config.yearFilter[1]}
+						min={1400}
+						max={2000}
+						step={10}
+						label=""
+					/>
+				{/if}
+			</div>
+
+			<!-- Name Filter -->
+			<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
+				<div class="mb-3 flex items-center justify-between">
+					<div>
+						<span class="font-semibold text-cyan-300">{$_('tracklistEditor.nameFilter')}</span>
+						<p class="text-xs text-gray-400">{$_('tracklistEditor.nameFilterDesc')}</p>
+					</div>
+					<ToggleButton value={nameFilterEnabled} onToggle={toggleNameFilter} />
+				</div>
+				{#if nameFilterEnabled}
+					<div class="space-y-2">
+						<!-- Input field with add button -->
+						<div class="flex gap-2">
+							<input
+								type="text"
+								bind:value={nameFilterInput}
+								onkeydown={handleNameFilterKeydown}
+								placeholder={$_('tracklistEditor.nameFilterPlaceholder')}
+								class="flex-1 rounded-lg border-2 border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:border-cyan-400 focus:outline-none"
+							/>
+							<button
+								type="button"
+								onclick={addNameFilter}
+								disabled={!nameFilterInput.trim()}
+								class="rounded-lg bg-cyan-500 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-600 disabled:cursor-not-allowed disabled:opacity-50"
+							>
+								{$_('tracklistEditor.nameFilterAdd')}
+							</button>
+						</div>
+
+						<!-- Chips display -->
+						{#if nameFilters.length > 0}
+							<div class="flex flex-wrap gap-2">
+								{#each nameFilters as filter}
+									{@const isRegex = filter.startsWith('/') && filter.endsWith('/')}
+									{@const displayText = isRegex ? filter.slice(1, -1) : filter}
+									<div
+										class="flex items-center gap-2 rounded-full border-2 px-3 py-1 text-sm {isRegex
+											? 'border-purple-500 bg-purple-500/20 text-purple-300'
+											: 'border-cyan-500 bg-cyan-500/20 text-cyan-300'}"
+									>
+										<span class={isRegex ? 'font-mono text-xs' : ''}>{displayText}</span>
+										<button
+											type="button"
+											onclick={() => removeNameFilter(filter)}
+											class="hover:text-white"
+											aria-label="Remove filter"
+										>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												class="h-4 w-4"
+												viewBox="0 0 20 20"
+												fill="currentColor"
 											>
-												<svg
-													xmlns="http://www.w3.org/2000/svg"
-													class="h-4 w-4"
-													viewBox="0 0 20 20"
-													fill="currentColor"
+												<path
+													fill-rule="evenodd"
+													d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+													clip-rule="evenodd"
+												/>
+											</svg>
+										</button>
+									</div>
+								{/each}
+							</div>
+						{/if}
+					</div>
+				{/if}
+			</div>
+
+			<!-- Limit Works from Composer -->
+			<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
+				<div class="mb-3 flex items-center justify-between">
+					<div>
+						<span class="font-semibold text-cyan-300"
+							>{$_('tracklistEditor.limitWorksFromComposer')}</span
+						>
+						<p class="text-xs text-gray-400">
+							{$_('tracklistEditor.limitWorksFromComposerDesc')}
+						</p>
+					</div>
+					<ToggleButton
+						value={limitWorksFromComposerEnabled}
+						onToggle={toggleLimitWorksFromComposer}
+					/>
+				</div>
+				{#if limitWorksFromComposerEnabled && config.limitWorksFromComposer !== undefined}
+					<Slider
+						value={Math.round(config.limitWorksFromComposer * 100 * 10) / 10}
+						min={0.1}
+						max={30}
+						step={0.1}
+						label=""
+						showValue={true}
+						valueSuffix="%"
+						onChange={(val) => (config.limitWorksFromComposer = val / 100)}
+					/>
+				{/if}
+			</div>
+
+			<!-- Max Tracks from Single Work -->
+			<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
+				<div class="mb-3 flex items-center justify-between">
+					<div>
+						<span class="font-semibold text-cyan-300"
+							>{$_('tracklistEditor.maxTracksFromSingleWork')}</span
+						>
+						<p class="text-xs text-gray-400">
+							{$_('tracklistEditor.maxTracksFromSingleWorkDesc')}
+						</p>
+					</div>
+					<ToggleButton
+						value={maxTracksFromSingleWorkEnabled}
+						onToggle={toggleMaxTracksFromSingleWork}
+					/>
+				</div>
+				{#if maxTracksFromSingleWorkEnabled && config.maxTracksFromSingleWork !== undefined}
+					<Slider
+						value={config.maxTracksFromSingleWork}
+						min={1}
+						max={20}
+						step={1}
+						label=""
+						showValue={true}
+						onChange={(val) => (config.maxTracksFromSingleWork = val)}
+					/>
+				{/if}
+			</div>
+
+			<!-- Popularity Weighting -->
+			<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
+				<div class="flex items-center justify-between">
+					<div>
+						<span class="font-semibold text-cyan-300"
+							>{$_('tracklistEditor.enablePopularityWeighting')}</span
+						>
+						<p class="text-xs text-gray-400">
+							{$_('tracklistEditor.enablePopularityWeightingDesc')}
+						</p>
+					</div>
+					<ToggleButton
+						value={enablePopularityWeighting}
+						onToggle={() => (enablePopularityWeighting = !enablePopularityWeighting)}
+					/>
+				</div>
+			</div>
+		</div>
+
+		<!-- Right column: Preview (1/3 width) -->
+		<div class="lg:col-span-1">
+			<div class="sticky top-6 rounded-lg border-2 border-purple-500 bg-gray-800/50 p-4">
+				<h3 class="mb-3 text-lg font-bold text-purple-400">{$_('tracklistEditor.preview')}</h3>
+				{#if previewInfo}
+					<div class="space-y-3">
+						<!-- Summary stats -->
+						<div class="space-y-2 text-sm">
+							<div class="flex justify-between">
+								<span class="text-gray-400">{$_('tracklistEditor.previewComposers')}</span>
+								<span
+									class="rounded-full bg-yellow-500/20 px-2 py-0.5 font-semibold text-yellow-300"
+									>{previewInfo.composers}</span
+								>
+							</div>
+							<div class="flex justify-between">
+								<span class="text-gray-400">{$_('tracklistEditor.previewWorks')}</span>
+								<span class="rounded-full bg-cyan-500/20 px-2 py-0.5 font-semibold text-cyan-300"
+									>{previewInfo.works}</span
+								>
+							</div>
+							<div class="flex justify-between">
+								<span class="text-gray-400">{$_('tracklistEditor.previewTracks')}</span>
+								<span
+									class="rounded-full bg-purple-500/20 px-2 py-0.5 font-semibold text-purple-300"
+									>{previewInfo.tracks}</span
+								>
+							</div>
+						</div>
+
+						<!-- Categories breakdown -->
+						{#if previewCategories.length > 0}
+							<div class="border-t border-gray-700 pt-3">
+								<h4 class="mb-2 text-xs font-semibold text-gray-400 uppercase">Categories</h4>
+								<div class="space-y-1 rounded-lg border border-gray-700 bg-gray-800/30 p-2">
+									{#each previewCategories as category}
+										<div class="flex items-center justify-between rounded px-2 py-1 text-xs">
+											<span class="text-gray-300 capitalize"
+												>{$_(`settings.categories.${category.category}`)}</span
+											>
+											<div class="flex gap-1 text-xs">
+												<span
+													class="rounded-full bg-yellow-500/20 px-2 py-0.5 font-semibold text-yellow-300"
 												>
-													<path
-														fill-rule="evenodd"
-														d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-														clip-rule="evenodd"
-													/>
-												</svg>
-											</button>
+													{category.composerCount}
+												</span>
+												<span
+													class="rounded-full bg-cyan-500/20 px-2 py-0.5 font-semibold text-cyan-300"
+												>
+													{category.workCount}
+												</span>
+												<span
+													class="rounded-full bg-purple-500/20 px-2 py-0.5 font-semibold text-purple-300"
+												>
+													{category.trackCount}
+												</span>
+											</div>
 										</div>
 									{/each}
 								</div>
-							{/if}
-						</div>
-					{/if}
-				</div>
+							</div>
+						{/if}
 
-				<!-- Limit Works from Composer -->
-				<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
-					<div class="mb-3 flex items-center justify-between">
-						<div>
-							<span class="font-semibold text-cyan-300"
-								>{$_('tracklistEditor.limitWorksFromComposer')}</span
-							>
-							<p class="text-xs text-gray-400">
-								{$_('tracklistEditor.limitWorksFromComposerDesc')}
-							</p>
-						</div>
-						<ToggleButton
-							value={limitWorksFromComposerEnabled}
-							onToggle={toggleLimitWorksFromComposer}
-						/>
-					</div>
-					{#if limitWorksFromComposerEnabled && config.limitWorksFromComposer !== undefined}
-						<Slider
-							value={Math.round(config.limitWorksFromComposer * 100 * 10) / 10}
-							min={0.1}
-							max={30}
-							step={0.1}
-							label=""
-							showValue={true}
-							valueSuffix="%"
-							onChange={(val) => (config.limitWorksFromComposer = val / 100)}
-						/>
-					{/if}
-				</div>
-
-				<!-- Max Tracks from Single Work -->
-				<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
-					<div class="mb-3 flex items-center justify-between">
-						<div>
-							<span class="font-semibold text-cyan-300"
-								>{$_('tracklistEditor.maxTracksFromSingleWork')}</span
-							>
-							<p class="text-xs text-gray-400">
-								{$_('tracklistEditor.maxTracksFromSingleWorkDesc')}
-							</p>
-						</div>
-						<ToggleButton
-							value={maxTracksFromSingleWorkEnabled}
-							onToggle={toggleMaxTracksFromSingleWork}
-						/>
-					</div>
-					{#if maxTracksFromSingleWorkEnabled && config.maxTracksFromSingleWork !== undefined}
-						<Slider
-							value={config.maxTracksFromSingleWork}
-							min={1}
-							max={20}
-							step={1}
-							label=""
-							showValue={true}
-							onChange={(val) => (config.maxTracksFromSingleWork = val)}
-						/>
-					{/if}
-				</div>
-
-				<!-- Popularity Weighting -->
-				<div class="rounded-lg border-2 border-gray-700 bg-gray-800/50 p-4">
-					<div class="flex items-center justify-between">
-						<div>
-							<span class="font-semibold text-cyan-300"
-								>{$_('tracklistEditor.enablePopularityWeighting')}</span
-							>
-							<p class="text-xs text-gray-400">
-								{$_('tracklistEditor.enablePopularityWeightingDesc')}
-							</p>
-						</div>
-						<ToggleButton
-							value={enablePopularityWeighting}
-							onToggle={() => (enablePopularityWeighting = !enablePopularityWeighting)}
-						/>
-					</div>
-				</div>
-			</div>
-
-			<!-- Right column: Preview (1/3 width) -->
-			<div class="lg:col-span-1">
-				<div class="sticky top-6 rounded-lg border-2 border-purple-500 bg-gray-800/50 p-4">
-					<h3 class="mb-3 text-lg font-bold text-purple-400">{$_('tracklistEditor.preview')}</h3>
-					{#if previewInfo}
-						<div class="space-y-3">
-							<!-- Summary stats -->
-							<div class="space-y-2 text-sm">
-								<div class="flex justify-between">
-									<span class="text-gray-400">{$_('tracklistEditor.previewComposers')}</span>
-									<span
-										class="rounded-full bg-yellow-500/20 px-2 py-0.5 font-semibold text-yellow-300"
-										>{previewInfo.composers}</span
-									>
-								</div>
-								<div class="flex justify-between">
-									<span class="text-gray-400">{$_('tracklistEditor.previewWorks')}</span>
-									<span class="rounded-full bg-cyan-500/20 px-2 py-0.5 font-semibold text-cyan-300"
-										>{previewInfo.works}</span
-									>
-								</div>
-								<div class="flex justify-between">
-									<span class="text-gray-400">{$_('tracklistEditor.previewTracks')}</span>
-									<span
-										class="rounded-full bg-purple-500/20 px-2 py-0.5 font-semibold text-purple-300"
-										>{previewInfo.tracks}</span
-									>
+						<!-- Composer list -->
+						{#if previewComposers.length > 0}
+							<div class="border-t border-gray-700 pt-3">
+								<h4 class="mb-2 text-xs font-semibold text-gray-400 uppercase">Composers</h4>
+								<div
+									class="max-h-96 space-y-1 overflow-y-auto rounded-lg border border-gray-700 bg-gray-800/30 p-2"
+								>
+									{#each previewComposers as composer}
+										<div
+											class="flex items-center justify-between rounded px-2 py-1.5 text-xs hover:bg-gray-700/50"
+											title={composer.works
+												.slice(0, 20)
+												.map((w) => w.name)
+												.join('\n') +
+												(composer.works.length > 20
+													? `\n... and ${composer.works.length - 20} more`
+													: '')}
+										>
+											<span class="truncate text-gray-300">{composer.name}</span>
+											<div class="ml-2 flex shrink-0 gap-1">
+												<span
+													class="rounded-full bg-cyan-500/20 px-2 py-0.5 text-xs font-semibold text-cyan-300"
+												>
+													{composer.workCount}
+												</span>
+												<span
+													class="rounded-full bg-purple-500/20 px-2 py-0.5 text-xs font-semibold text-purple-300"
+												>
+													{composer.trackCount}
+												</span>
+											</div>
+										</div>
+									{/each}
 								</div>
 							</div>
-
-							<!-- Categories breakdown -->
-							{#if previewCategories.length > 0}
-								<div class="border-t border-gray-700 pt-3">
-									<h4 class="mb-2 text-xs font-semibold text-gray-400 uppercase">Categories</h4>
-									<div class="space-y-1 rounded-lg border border-gray-700 bg-gray-800/30 p-2">
-										{#each previewCategories as category}
-											<div class="flex items-center justify-between rounded px-2 py-1 text-xs">
-												<span class="text-gray-300 capitalize"
-													>{$_(`settings.categories.${category.category}`)}</span
-												>
-												<div class="flex gap-1 text-xs">
-													<span
-														class="rounded-full bg-yellow-500/20 px-2 py-0.5 font-semibold text-yellow-300"
-													>
-														{category.composerCount}
-													</span>
-													<span
-														class="rounded-full bg-cyan-500/20 px-2 py-0.5 font-semibold text-cyan-300"
-													>
-														{category.workCount}
-													</span>
-													<span
-														class="rounded-full bg-purple-500/20 px-2 py-0.5 font-semibold text-purple-300"
-													>
-														{category.trackCount}
-													</span>
-												</div>
-											</div>
-										{/each}
-									</div>
-								</div>
-							{/if}
-
-							<!-- Composer list -->
-							{#if previewComposers.length > 0}
-								<div class="border-t border-gray-700 pt-3">
-									<h4 class="mb-2 text-xs font-semibold text-gray-400 uppercase">Composers</h4>
-									<div
-										class="max-h-96 space-y-1 overflow-y-auto rounded-lg border border-gray-700 bg-gray-800/30 p-2"
-									>
-										{#each previewComposers as composer}
-											<div
-												class="flex items-center justify-between rounded px-2 py-1.5 text-xs hover:bg-gray-700/50"
-												title={composer.works
-													.slice(0, 20)
-													.map((w) => w.name)
-													.join('\n') +
-													(composer.works.length > 20
-														? `\n... and ${composer.works.length - 20} more`
-														: '')}
-											>
-												<span class="truncate text-gray-300">{composer.name}</span>
-												<div class="ml-2 flex shrink-0 gap-1">
-													<span
-														class="rounded-full bg-cyan-500/20 px-2 py-0.5 text-xs font-semibold text-cyan-300"
-													>
-														{composer.workCount}
-													</span>
-													<span
-														class="rounded-full bg-purple-500/20 px-2 py-0.5 text-xs font-semibold text-purple-300"
-													>
-														{composer.trackCount}
-													</span>
-												</div>
-											</div>
-										{/each}
-									</div>
-								</div>
-							{/if}
-						</div>
-					{:else}
-						<p class="text-sm text-gray-400">{$_('tracklistEditor.previewLoading')}</p>
-					{/if}
-				</div>
+						{/if}
+					</div>
+				{:else}
+					<p class="text-sm text-gray-400">{$_('tracklistEditor.previewLoading')}</p>
+				{/if}
 			</div>
 		</div>
+	</div>
 
-		<!-- Action Buttons -->
-		<div class="mt-6 flex gap-3">
-			<button
-				type="button"
-				onclick={handleSave}
-				disabled={!name.trim()}
-				class="flex-1 rounded-xl border-2 border-cyan-400 bg-gray-900 px-6 py-3 font-semibold text-white shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
-			>
-				{$_('tracklistEditor.save')}
-			</button>
-			<button
-				type="button"
-				onclick={onCancel}
-				class="flex-1 rounded-xl border-2 border-gray-700 bg-gray-800 px-6 py-3 font-semibold text-gray-300 transition-all hover:border-cyan-400/50 hover:bg-gray-700 active:scale-95"
-			>
-				{$_('tracklistEditor.cancel')}
-			</button>
-		</div>
+	<!-- Action Buttons -->
+	<div class="mt-6 flex gap-3">
+		<button
+			type="button"
+			onclick={handleSave}
+			disabled={!name.trim()}
+			class="flex-1 rounded-xl border-2 border-cyan-400 bg-gray-900 px-6 py-3 font-semibold text-white shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+		>
+			{$_('tracklistEditor.save')}
+		</button>
+		<button
+			type="button"
+			onclick={onCancel}
+			class="flex-1 rounded-xl border-2 border-gray-700 bg-gray-800 px-6 py-3 font-semibold text-gray-300 transition-all hover:border-cyan-400/50 hover:bg-gray-700 active:scale-95"
+		>
+			{$_('tracklistEditor.cancel')}
+		</button>
 	</div>
 </Popup>

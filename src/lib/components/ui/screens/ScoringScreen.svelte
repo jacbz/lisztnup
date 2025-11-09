@@ -176,266 +176,264 @@
 	});
 </script>
 
-<Popup {visible} onClose={() => {}}>
-	{#snippet children()}
-		<div
-			class="max-h-[90vh] w-[900px] max-w-[95vw] overflow-y-auto rounded-3xl border-2 border-cyan-400 bg-gray-900 p-8"
-		>
-			<h2 class="mb-6 text-center text-3xl font-bold text-cyan-400">
-				{$_('scoring.title')}
-			</h2>
+<Popup
+	{visible}
+	onClose={() => {}}
+	width="w-[900px] max-w-[95vw]"
+	padding="lg"
+	showCloseButton={false}
+>
+	<h2 class="mb-6 text-center text-3xl font-bold text-cyan-400">
+		{$_('scoring.title')}
+	</h2>
+	<div class="mb-4 grid grid-cols-1 gap-8 md:grid-cols-[1fr_1fr]">
+		<!-- Left: Track Info -->
+		<div class="flex flex-col gap-3 rounded-2xl border border-gray-700 bg-gray-900 p-5">
+			<TrackInfo {track} />
+		</div>
 
-			<div class="mb-4 grid grid-cols-1 gap-8 md:grid-cols-[1fr_1fr]">
-				<!-- Left: Track Info -->
-				<div class="flex flex-col gap-3 rounded-2xl border border-gray-700 bg-gray-900 p-5">
-					<TrackInfo {track} />
-				</div>
-
-				<!-- Right: Scoring Table -->
+		<!-- Right: Scoring Table -->
+		<div class="flex flex-col">
+			{#if isSoloMode && mode === 'classic'}
+				<!-- Solo Classic Mode: Big Category Buttons -->
 				<div class="flex flex-col">
-					{#if isSoloMode && mode === 'classic'}
-						<!-- Solo Classic Mode: Big Category Buttons -->
-						<div class="flex flex-col">
-							<div class="grid grid-cols-2 gap-3">
-								<!-- Category buttons -->
-								{#each categories as category}
-									{@const def = getCategoryDefinition(category)}
-									{#if def}
-										<button
-											type="button"
-											class="flex cursor-pointer flex-col items-center gap-2 rounded-xl border-[3px] bg-gray-700 px-4 py-6 transition-all duration-200 hover:scale-[1.02]"
-											class:border-white={selectedCategory === category}
-											class:shadow-[0_0_20px_rgba(255,255,255,0.3)]={selectedCategory === category}
-											class:scale-105={selectedCategory === category}
-											class:border-transparent={selectedCategory !== category}
-											style="background: linear-gradient(135deg, {def.color1}, {def.color2});"
-											onclick={() => (selectedCategory = category)}
-										>
-											<span class="text-2xl font-bold text-white uppercase"
-												>{$_(`game.categories.${category}`)}</span
-											>
-											<span class="text-lg font-semibold text-white/90"
-												>{$_('scoring.pointsAwarded', {
-													values: { points: CATEGORY_POINTS[category] }
-												})}</span
-											>
-										</button>
-									{/if}
-								{/each}
-								<!-- Wrong button -->
+					<div class="grid grid-cols-2 gap-3">
+						<!-- Category buttons -->
+						{#each categories as category}
+							{@const def = getCategoryDefinition(category)}
+							{#if def}
 								<button
 									type="button"
-									class="flex cursor-pointer flex-col items-center gap-2 rounded-xl border-[3px] bg-gray-500 px-4 py-6 transition-all duration-200 hover:scale-[1.02]"
-									class:border-white={selectedCategory === 'none'}
-									class:shadow-[0_0_20px_rgba(255,255,255,0.3)]={selectedCategory === 'none'}
-									class:scale-105={selectedCategory === 'none'}
-									class:border-transparent={selectedCategory !== 'none'}
-									onclick={() => (selectedCategory = 'none')}
+									class="flex cursor-pointer flex-col items-center gap-2 rounded-xl border-[3px] bg-gray-700 px-4 py-6 transition-all duration-200 hover:scale-[1.02]"
+									class:border-white={selectedCategory === category}
+									class:shadow-[0_0_20px_rgba(255,255,255,0.3)]={selectedCategory === category}
+									class:scale-105={selectedCategory === category}
+									class:border-transparent={selectedCategory !== category}
+									style="background: linear-gradient(135deg, {def.color1}, {def.color2});"
+									onclick={() => (selectedCategory = category)}
 								>
-									<span class="text-2xl font-bold text-white uppercase">{$_('scoring.wrong')}</span>
+									<span class="text-2xl font-bold text-white uppercase"
+										>{$_(`game.categories.${category}`)}</span
+									>
 									<span class="text-lg font-semibold text-white/90"
-										>{$_('scoring.pointsAwarded', { values: { points: 0 } })}</span
+										>{$_('scoring.pointsAwarded', {
+											values: { points: CATEGORY_POINTS[category] }
+										})}</span
 									>
 								</button>
-							</div>
-						</div>
-					{:else if mode === 'classic'}
-						<!-- Multi-player Classic Mode: Table Layout -->
-						<div class="flex flex-col gap-1 overflow-hidden rounded-xl">
-							<!-- Header Row -->
-							<div
-								class="grid gap-1"
-								style="grid-template-columns: 100px repeat({categories.length +
-									1}, minmax(50px, 1fr));"
+							{/if}
+						{/each}
+						<!-- Wrong button -->
+						<button
+							type="button"
+							class="flex cursor-pointer flex-col items-center gap-2 rounded-xl border-[3px] bg-gray-500 px-4 py-6 transition-all duration-200 hover:scale-[1.02]"
+							class:border-white={selectedCategory === 'none'}
+							class:shadow-[0_0_20px_rgba(255,255,255,0.3)]={selectedCategory === 'none'}
+							class:scale-105={selectedCategory === 'none'}
+							class:border-transparent={selectedCategory !== 'none'}
+							onclick={() => (selectedCategory = 'none')}
+						>
+							<span class="text-2xl font-bold text-white uppercase">{$_('scoring.wrong')}</span>
+							<span class="text-lg font-semibold text-white/90"
+								>{$_('scoring.pointsAwarded', { values: { points: 0 } })}</span
 							>
-								<div
-									class="flex items-center justify-start bg-gray-700 p-2 px-2 pl-3 text-sm font-bold text-white uppercase"
-								>
-									{$_('scoring.player')}
-								</div>
-								{#each categories as category}
-									{@const def = getCategoryDefinition(category)}
-									{#if def}
-										<div
-											class="flex flex-col items-center justify-center gap-0.5 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
-											style="background: linear-gradient(135deg, {def.color1}, {def.color2});"
-										>
-											<span class="text-sm">{$_(`game.categoriesShort.${category}`)}</span>
-											<span class="text-xs opacity-80">+{CATEGORY_POINTS[category]}</span>
-										</div>
-									{/if}
-								{/each}
-								<div
-									class="flex flex-col items-center justify-center gap-0.5 bg-gray-700 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
-								>
-									{$_('scoring.wrong')}
-								</div>
-							</div>
-
-							<!-- Player Rows -->
-							{#each players as player}
-								<div
-									class="grid gap-1"
-									style="grid-template-columns: 100px repeat({categories.length +
-										1}, minmax(50px, 1fr));"
-								>
-									<div
-										class="flex items-center justify-start border-l-[3px] bg-gray-800 p-2 px-2 pl-3 font-semibold text-white"
-										style="border-left-color: {player.color};"
-									>
-										{player.name}
-									</div>
-									<!-- Category columns -->
-									{#each categories as category}
-										{@const def = getCategoryDefinition(category)}
-										{@const isSelected = selectedCells.has(`${player.name}:${category}`)}
-										<button
-											type="button"
-											class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
-											style={isSelected && def
-												? `background: linear-gradient(135deg, ${def.color1}, ${def.color2});`
-												: ''}
-											onclick={() => toggleCell(player.name, category)}
-										>
-											<span
-												class="text-base font-bold text-white transition-opacity duration-200"
-												class:opacity-0={!isSelected}
-												class:opacity-100={isSelected}
-											>
-												+{CATEGORY_POINTS[category]}
-											</span>
-										</button>
-									{/each}
-									<!-- Wrong option -->
-									<button
-										type="button"
-										class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
-										onclick={() => toggleCell(player.name, 'none')}
-									>
-										{#if selectedCells.has(`${player.name}:none`)}
-											<span class="text-base font-bold text-white">+0</span>
-										{/if}
-									</button>
-								</div>
-							{/each}
-						</div>
-					{:else if mode === 'buzzer'}
-						<!-- Buzzer Mode: Table Layout (similar to Classic) -->
-						<div class="flex flex-col gap-1 overflow-hidden rounded-xl">
-							<!-- Header Row -->
-							<div
-								class="grid gap-1"
-								style="grid-template-columns: 100px repeat({revealedCategories.length +
-									2}, minmax(50px, 1fr));"
-							>
-								<div
-									class="flex items-center justify-start bg-gray-700 p-2 px-2 pl-3 text-sm font-bold text-white uppercase"
-								>
-									{$_('scoring.player')}
-								</div>
-								<div
-									class="flex flex-col items-center justify-center gap-0.5 bg-gray-700 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
-								>
-									{$_('scoring.noGuess')}
-								</div>
-								{#each revealedCategories as category}
-									{@const def = getCategoryDefinition(category)}
-									{#if def}
-										<div
-											class="flex flex-col items-center justify-center gap-0.5 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
-											style="background: linear-gradient(135deg, {def.color1}, {def.color2});"
-										>
-											<span class="text-sm">{$_(`game.categoriesShort.${category}`)}</span>
-											<span class="text-xs opacity-80">+{CATEGORY_POINTS[category]}</span>
-										</div>
-									{/if}
-								{/each}
-								<div
-									class="flex flex-col items-center justify-center gap-0.5 bg-red-900 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
-								>
-									<span class="text-sm">{$_('scoring.wrong')}</span>
-									<span class="text-xs opacity-80">-10</span>
-								</div>
-							</div>
-
-							<!-- Player Rows -->
-							{#each players as player}
-								<div
-									class="grid gap-1"
-									style="grid-template-columns: 100px repeat({revealedCategories.length +
-										2}, minmax(50px, 1fr));"
-								>
-									<div
-										class="flex items-center justify-start border-l-[3px] bg-gray-800 p-2 px-2 pl-3 font-semibold text-white"
-										style="border-left-color: {player.color};"
-									>
-										{player.name}
-									</div>
-									<!-- No guess column -->
-									<button
-										type="button"
-										class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
-										onclick={() => toggleCell(player.name, 'none')}
-									>
-										{#if selectedCells.has(`${player.name}:none`)}
-											<span class="text-base font-bold text-white">+0</span>
-										{/if}
-									</button>
-									<!-- Category columns -->
-									{#each revealedCategories as category}
-										{@const def = getCategoryDefinition(category)}
-										{@const isSelected = selectedCells.has(`${player.name}:${category}`)}
-										<button
-											type="button"
-											class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
-											style={isSelected && def
-												? `background: linear-gradient(135deg, ${def.color1}, ${def.color2});`
-												: ''}
-											onclick={() => toggleCell(player.name, category)}
-										>
-											<span
-												class="text-base font-bold text-white transition-opacity duration-200"
-												class:opacity-0={!isSelected}
-												class:opacity-100={isSelected}
-											>
-												+{CATEGORY_POINTS[category]}
-											</span>
-										</button>
-									{/each}
-									<!-- Wrong option -->
-									<button
-										type="button"
-										class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
-										class:bg-red-900!={selectedCells.has(`${player.name}:wrong`)}
-										onclick={() => toggleCell(player.name, 'wrong')}
-									>
-										<span
-											class="text-base font-bold text-white transition-opacity duration-200"
-											class:opacity-0={!selectedCells.has(`${player.name}:wrong`)}
-											class:opacity-100={selectedCells.has(`${player.name}:wrong`)}
-										>
-											-10
-										</span>
-									</button>
-								</div>
-							{/each}
-						</div>
-					{/if}
+						</button>
+					</div>
 				</div>
-			</div>
-
-			<!-- Confirm Button (for non-solo modes) -->
-			{#if !isSoloMode}
-				<div class="mt-6 flex justify-center">
-					<button
-						type="button"
-						class="rounded-xl bg-cyan-500 px-8 py-3 text-lg font-bold text-white shadow-lg transition-all duration-200 hover:bg-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.5)]"
-						onclick={handleContinue}
+			{:else if mode === 'classic'}
+				<!-- Multi-player Classic Mode: Table Layout -->
+				<div class="flex flex-col gap-1 overflow-hidden rounded-xl">
+					<!-- Header Row -->
+					<div
+						class="grid gap-1"
+						style="grid-template-columns: 100px repeat({categories.length + 1}, minmax(50px, 1fr));"
 					>
-						{$_('common.confirm')}
-					</button>
+						<div
+							class="flex items-center justify-start bg-gray-700 p-2 px-2 pl-3 text-sm font-bold text-white uppercase"
+						>
+							{$_('scoring.player')}
+						</div>
+						{#each categories as category}
+							{@const def = getCategoryDefinition(category)}
+							{#if def}
+								<div
+									class="flex flex-col items-center justify-center gap-0.5 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
+									style="background: linear-gradient(135deg, {def.color1}, {def.color2});"
+								>
+									<span class="text-sm">{$_(`game.categoriesShort.${category}`)}</span>
+									<span class="text-xs opacity-80">+{CATEGORY_POINTS[category]}</span>
+								</div>
+							{/if}
+						{/each}
+						<div
+							class="flex flex-col items-center justify-center gap-0.5 bg-gray-700 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
+						>
+							{$_('scoring.wrong')}
+						</div>
+					</div>
+
+					<!-- Player Rows -->
+					{#each players as player}
+						<div
+							class="grid gap-1"
+							style="grid-template-columns: 100px repeat({categories.length +
+								1}, minmax(50px, 1fr));"
+						>
+							<div
+								class="flex items-center justify-start border-l-[3px] bg-gray-800 p-2 px-2 pl-3 font-semibold text-white"
+								style="border-left-color: {player.color};"
+							>
+								{player.name}
+							</div>
+							<!-- Category columns -->
+							{#each categories as category}
+								{@const def = getCategoryDefinition(category)}
+								{@const isSelected = selectedCells.has(`${player.name}:${category}`)}
+								<button
+									type="button"
+									class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
+									style={isSelected && def
+										? `background: linear-gradient(135deg, ${def.color1}, ${def.color2});`
+										: ''}
+									onclick={() => toggleCell(player.name, category)}
+								>
+									<span
+										class="text-base font-bold text-white transition-opacity duration-200"
+										class:opacity-0={!isSelected}
+										class:opacity-100={isSelected}
+									>
+										+{CATEGORY_POINTS[category]}
+									</span>
+								</button>
+							{/each}
+							<!-- Wrong option -->
+							<button
+								type="button"
+								class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
+								onclick={() => toggleCell(player.name, 'none')}
+							>
+								{#if selectedCells.has(`${player.name}:none`)}
+									<span class="text-base font-bold text-white">+0</span>
+								{/if}
+							</button>
+						</div>
+					{/each}
+				</div>
+			{:else if mode === 'buzzer'}
+				<!-- Buzzer Mode: Table Layout (similar to Classic) -->
+				<div class="flex flex-col gap-1 overflow-hidden rounded-xl">
+					<!-- Header Row -->
+					<div
+						class="grid gap-1"
+						style="grid-template-columns: 100px repeat({revealedCategories.length +
+							2}, minmax(50px, 1fr));"
+					>
+						<div
+							class="flex items-center justify-start bg-gray-700 p-2 px-2 pl-3 text-sm font-bold text-white uppercase"
+						>
+							{$_('scoring.player')}
+						</div>
+						<div
+							class="flex flex-col items-center justify-center gap-0.5 bg-gray-700 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
+						>
+							{$_('scoring.noGuess')}
+						</div>
+						{#each revealedCategories as category}
+							{@const def = getCategoryDefinition(category)}
+							{#if def}
+								<div
+									class="flex flex-col items-center justify-center gap-0.5 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
+									style="background: linear-gradient(135deg, {def.color1}, {def.color2});"
+								>
+									<span class="text-sm">{$_(`game.categoriesShort.${category}`)}</span>
+									<span class="text-xs opacity-80">+{CATEGORY_POINTS[category]}</span>
+								</div>
+							{/if}
+						{/each}
+						<div
+							class="flex flex-col items-center justify-center gap-0.5 bg-red-900 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
+						>
+							<span class="text-sm">{$_('scoring.wrong')}</span>
+							<span class="text-xs opacity-80">-10</span>
+						</div>
+					</div>
+
+					<!-- Player Rows -->
+					{#each players as player}
+						<div
+							class="grid gap-1"
+							style="grid-template-columns: 100px repeat({revealedCategories.length +
+								2}, minmax(50px, 1fr));"
+						>
+							<div
+								class="flex items-center justify-start border-l-[3px] bg-gray-800 p-2 px-2 pl-3 font-semibold text-white"
+								style="border-left-color: {player.color};"
+							>
+								{player.name}
+							</div>
+							<!-- No guess column -->
+							<button
+								type="button"
+								class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
+								onclick={() => toggleCell(player.name, 'none')}
+							>
+								{#if selectedCells.has(`${player.name}:none`)}
+									<span class="text-base font-bold text-white">+0</span>
+								{/if}
+							</button>
+							<!-- Category columns -->
+							{#each revealedCategories as category}
+								{@const def = getCategoryDefinition(category)}
+								{@const isSelected = selectedCells.has(`${player.name}:${category}`)}
+								<button
+									type="button"
+									class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
+									style={isSelected && def
+										? `background: linear-gradient(135deg, ${def.color1}, ${def.color2});`
+										: ''}
+									onclick={() => toggleCell(player.name, category)}
+								>
+									<span
+										class="text-base font-bold text-white transition-opacity duration-200"
+										class:opacity-0={!isSelected}
+										class:opacity-100={isSelected}
+									>
+										+{CATEGORY_POINTS[category]}
+									</span>
+								</button>
+							{/each}
+							<!-- Wrong option -->
+							<button
+								type="button"
+								class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
+								class:bg-red-900!={selectedCells.has(`${player.name}:wrong`)}
+								onclick={() => toggleCell(player.name, 'wrong')}
+							>
+								<span
+									class="text-base font-bold text-white transition-opacity duration-200"
+									class:opacity-0={!selectedCells.has(`${player.name}:wrong`)}
+									class:opacity-100={selectedCells.has(`${player.name}:wrong`)}
+								>
+									-10
+								</span>
+							</button>
+						</div>
+					{/each}
 				</div>
 			{/if}
 		</div>
-	{/snippet}
+	</div>
+
+	<!-- Confirm Button (for non-solo modes) -->
+	{#if !isSoloMode}
+		<div class="mt-6 flex justify-center">
+			<button
+				type="button"
+				class="rounded-xl bg-cyan-500 px-8 py-3 text-lg font-bold text-white shadow-lg transition-all duration-200 hover:bg-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.5)]"
+				onclick={handleContinue}
+			>
+				{$_('common.confirm')}
+			</button>
+		</div>
+	{/if}
 </Popup>

@@ -228,8 +228,7 @@
 	"inGameSettings": {
 		"title": "Settings",
 		"trackLength": "Track Length",
-		"trackLengthHint": "Changes will apply to the next track. Does not apply to Buzzer Mode.",
-		"close": "Close"
+		"trackLengthHint": "Changes will apply to the next track. Does not apply to Buzzer Mode."
 	},
 	"quitDialog": {
 		"title": "Quit Game?",
@@ -351,7 +350,6 @@
 	},
 	"stats": {
 		"title": "Statistics",
-		"close": "Close",
 		"round": "Round",
 		"score": "Score",
 		"noData": "No rounds played yet"

@@ -149,26 +149,26 @@
 </script>
 
 <!-- Backdrop (using Popup component) -->
-<Popup visible={isRevealed} onClose={() => {}}>
-	{#snippet children()}
-		<div
-			class="w-[420px] max-w-[90vw] rounded-3xl border-2 border-cyan-400 bg-gray-900 p-8 shadow-[0_0_30px_rgba(34,211,238,0.3)]"
-		>
-			<div class="flex flex-col gap-5">
-				<TrackInfo {track} />
+<Popup
+	visible={isRevealed}
+	onClose={() => {}}
+	width="w-[420px] max-w-[90vw]"
+	padding="lg"
+	showCloseButton={false}
+>
+	<div class="flex flex-col gap-5">
+		<TrackInfo {track} />
 
-				<!-- Continue button -->
-				<button
-					type="button"
-					onclick={handleNext}
-					class="mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-gray-900 px-6 py-3 font-bold text-cyan-400 transition-all duration-200 hover:bg-gray-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.6)]"
-				>
-					{$_('game.nextRound')}
-					<ArrowRight class="h-5 w-5" />
-				</button>
-			</div>
-		</div>
-	{/snippet}
+		<!-- Continue button -->
+		<button
+			type="button"
+			onclick={handleNext}
+			class="mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-gray-900 px-6 py-3 font-bold text-cyan-400 transition-all duration-200 hover:bg-gray-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.6)]"
+		>
+			{$_('game.nextRound')}
+			<ArrowRight class="h-5 w-5" />
+		</button>
+	</div>
 </Popup>
 
 <div

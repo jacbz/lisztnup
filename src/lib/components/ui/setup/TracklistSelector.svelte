@@ -167,96 +167,93 @@
 	}
 </script>
 
-<Popup visible={visible && !showEditor && !showViewer} {onClose}>
-	<div
-		class="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl border-2 border-cyan-400 bg-gray-900 p-6 shadow-[0_0_40px_rgba(34,211,238,0.6)]"
-	>
-		<h2 class="mb-6 text-2xl font-bold text-cyan-400">{$_('tracklistSelector.title')}</h2>
+<Popup visible={visible && !showEditor && !showViewer} {onClose} width="3xl">
+	<h2 class="mb-5 text-center text-3xl font-bold text-cyan-400">
+		{$_('tracklistSelector.title')}
+	</h2>
 
-		<!-- Tracklist Selection by Category -->
-		<div class="space-y-6">
-			<!-- Difficulty -->
-			{#if groupedTracklists.difficulty.length > 0}
-				<div>
-					<h3 class="mb-3 text-lg font-semibold text-purple-400">
-						{$_('tracklistEditor.categoryDifficulty')}
-					</h3>
-					<div class="grid gap-3 md:grid-cols-2">
-						{#each groupedTracklists.difficulty as tracklist}
-							{@render tracklistCard(tracklist)}
-						{/each}
-					</div>
+	<!-- Tracklist Selection by Category -->
+	<div class="space-y-6">
+		<!-- Difficulty -->
+		{#if groupedTracklists.difficulty.length > 0}
+			<div>
+				<h3 class="mb-3 text-lg font-semibold text-purple-400">
+					{$_('tracklistEditor.categoryDifficulty')}
+				</h3>
+				<div class="grid gap-3 md:grid-cols-2">
+					{#each groupedTracklists.difficulty as tracklist}
+						{@render tracklistCard(tracklist)}
+					{/each}
 				</div>
-			{/if}
+			</div>
+		{/if}
 
-			<!-- Musical Categories -->
-			{#if groupedTracklists.categories.length > 0}
-				<div>
-					<h3 class="mb-3 text-lg font-semibold text-purple-400">
-						{$_('tracklistEditor.categoryCategories')}
-					</h3>
-					<div class="grid gap-3 md:grid-cols-2">
-						{#each groupedTracklists.categories as tracklist}
-							{@render tracklistCard(tracklist)}
-						{/each}
-					</div>
+		<!-- Musical Categories -->
+		{#if groupedTracklists.categories.length > 0}
+			<div>
+				<h3 class="mb-3 text-lg font-semibold text-purple-400">
+					{$_('tracklistEditor.categoryCategories')}
+				</h3>
+				<div class="grid gap-3 md:grid-cols-2">
+					{#each groupedTracklists.categories as tracklist}
+						{@render tracklistCard(tracklist)}
+					{/each}
 				</div>
-			{/if}
+			</div>
+		{/if}
 
-			<!-- Composers -->
-			{#if groupedTracklists.composers.length > 0}
-				<div>
-					<h3 class="mb-3 text-lg font-semibold text-purple-400">
-						{$_('tracklistEditor.categoryComposers')}
-					</h3>
-					<div class="grid gap-3 md:grid-cols-2">
-						{#each groupedTracklists.composers as tracklist}
-							{@render tracklistCard(tracklist)}
-						{/each}
-					</div>
+		<!-- Composers -->
+		{#if groupedTracklists.composers.length > 0}
+			<div>
+				<h3 class="mb-3 text-lg font-semibold text-purple-400">
+					{$_('tracklistEditor.categoryComposers')}
+				</h3>
+				<div class="grid gap-3 md:grid-cols-2">
+					{#each groupedTracklists.composers as tracklist}
+						{@render tracklistCard(tracklist)}
+					{/each}
 				</div>
-			{/if}
+			</div>
+		{/if}
 
-			<!-- Eras -->
-			{#if groupedTracklists.eras.length > 0}
-				<div>
-					<h3 class="mb-3 text-lg font-semibold text-purple-400">
-						{$_('tracklistEditor.categoryEras')}
-					</h3>
-					<div class="grid gap-3 md:grid-cols-2">
-						{#each groupedTracklists.eras as tracklist}
-							{@render tracklistCard(tracklist)}
-						{/each}
-					</div>
+		<!-- Eras -->
+		{#if groupedTracklists.eras.length > 0}
+			<div>
+				<h3 class="mb-3 text-lg font-semibold text-purple-400">
+					{$_('tracklistEditor.categoryEras')}
+				</h3>
+				<div class="grid gap-3 md:grid-cols-2">
+					{#each groupedTracklists.eras as tracklist}
+						{@render tracklistCard(tracklist)}
+					{/each}
 				</div>
-			{/if}
+			</div>
+		{/if}
 
-			<!-- Custom Tracklists -->
-			{#if groupedTracklists.custom.length > 0}
-				<div>
-					<h3 class="mb-3 text-lg font-semibold text-purple-400">
-						{$_('tracklistEditor.categoryCustom')}
-					</h3>
-					<div class="grid gap-3 md:grid-cols-2">
-						{#each groupedTracklists.custom as tracklist}
-							{@render tracklistCard(tracklist)}
-						{/each}
-					</div>
+		<!-- Custom Tracklists -->
+		{#if groupedTracklists.custom.length > 0}
+			<div>
+				<h3 class="mb-3 text-lg font-semibold text-purple-400">
+					{$_('tracklistEditor.categoryCustom')}
+				</h3>
+				<div class="grid gap-3 md:grid-cols-2">
+					{#each groupedTracklists.custom as tracklist}
+						{@render tracklistCard(tracklist)}
+					{/each}
 				</div>
-			{/if}
-		</div>
-
-		<!-- Create New Button -->
-		<button
-			type="button"
-			onclick={handleCreateNew}
-			class="mt-4 w-full rounded-xl border-2 border-dashed border-cyan-400/50 bg-gray-800/50 px-4 py-3 text-cyan-400 transition-all hover:border-cyan-400 hover:bg-gray-800"
-		>
-			+ {$_('tracklistSelector.createNew')}
-		</button>
+			</div>
+		{/if}
 	</div>
-</Popup>
 
+	<!-- Create New Button -->
+	<button
+		type="button"
+		onclick={handleCreateNew}
+		class="mt-4 w-full rounded-xl border-2 border-dashed border-cyan-400/50 bg-gray-800/50 px-4 py-3 text-cyan-400 transition-all hover:border-cyan-400 hover:bg-gray-800"
+	>
+		+ {$_('tracklistSelector.createNew')}
+	</button>
+</Popup>
 {#snippet tracklistCard(tracklist: Tracklist)}
 	{@const selected = isSameTracklist(tracklist, selectedTracklist)}
 	<div
