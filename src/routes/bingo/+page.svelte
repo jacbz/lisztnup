@@ -309,14 +309,14 @@
 			class="flex h-full w-full max-w-2xl flex-col items-center justify-center gap-12 pt-16 md:p-4 xl:p-4"
 		>
 			<!-- Grid - Responsive size -->
-			<div class="grid aspect-square grid-cols-5 gap-2">
+			<div class="grid grid-cols-5 gap-2">
 				{#each grid as row, rowIndex}
 					{#each row as cell, colIndex}
 						{@const categoryDef = categories.find((c) => c.id === cell.category)}
 						<button
 							type="button"
 							onclick={() => toggleCell(rowIndex, colIndex)}
-							class="relative aspect-square cursor-pointer rounded-lg border-2 p-2 transition-all"
+							class="relative flex cursor-pointer rounded-lg border-2 p-2 transition-all"
 							style="border-color: {categoryDef?.color1 ||
 								'#06b6d4'}; background-color: {cell.marked
 								? categoryDef?.color1 + '80'
@@ -325,13 +325,9 @@
 						>
 							<!-- Category Icon (hidden when marked) -->
 							{#if !cell.marked}
-								<div class="flex h-full items-center justify-center">
+								<div class="w-10 items-center justify-center sm:w-16">
 									{#if categoryDef}
-										<svg
-											viewBox="0 0 24 24"
-											class="h-10 w-10 opacity-20 sm:h-16 sm:w-16"
-											style="fill: {categoryDef.color1};"
-										>
+										<svg viewBox="0 0 24 24" class="opacity-30" style="fill: {categoryDef.color1};">
 											{#each categoryDef.iconPath as path}
 												<path d={path} />
 											{/each}
