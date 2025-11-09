@@ -235,11 +235,17 @@ export class TracklistGenerator {
 					}
 				}
 
-				// Sort parts by score (highest first)
-				const sortedParts = [...work.parts].sort((a, b) => b.score - a.score);
+				// Sort parts by score (highest first), keeping original indices
+				const partsWithIndex = work.parts.map((part, index) => ({ part, index }));
+				const sortedPartsWithIndex = partsWithIndex.sort((a, b) => b.part.score - a.part.score);
 
 				// Take top N parts
-				const topParts = sortedParts.slice(0, config.maxTracksFromSingleWork!);
+				const topPartsWithIndex = sortedPartsWithIndex.slice(0, config.maxTracksFromSingleWork!);
+
+				// Restore original order
+				const topParts = topPartsWithIndex
+					.sort((a, b) => a.index - b.index)
+					.map((item) => item.part);
 
 				return {
 					...work,
