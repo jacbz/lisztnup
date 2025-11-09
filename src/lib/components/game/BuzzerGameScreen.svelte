@@ -99,16 +99,20 @@
 		if (
 			hasStartedPlaying &&
 			!isBuzzerPressed &&
-			(playbackTime >= trackDuration || (!deezerPlayer.isPlaying() && audioProgressValue >= 0.99))
+			(playbackTime >= trackDuration || (!$playerState.isPlaying && audioProgressValue >= 0.99))
 		) {
-			// Time's up - auto-buzz and show reveal (but wasManuallyBuzzed stays false)
+			// Time's up - auto-buzz and reveal immediately (but wasManuallyBuzzed stays false)
 			deezerPlayer.pause();
 			isBuzzerPressed = true;
-			showReveal = true;
+			wasManuallyBuzzed = false; // Explicitly set to false for timeout
+
+			// Set revealed categories to all categories that were shown
+			buzzerRevealedCategories = [...revealedCategories];
 
 			currentRound.update((state) => ({
 				...state,
-				category: currentCategory
+				category: currentCategory,
+				isRevealed: true
 			}));
 		}
 	});
@@ -258,23 +262,16 @@
 	}
 
 	function handleBuzzerNext() {
-		// Check if this is the last track
-		if ($currentRound.currentTrackIndex >= numberOfTracks - 1) {
-			showEndGameScreen = true;
-		} else {
-			handleBuzzerNextRound();
-		}
+		// Just proceed to next round; GameScreen will handle end game detection
+		handleBuzzerNextRound();
 	}
 
 	function handleBuzzerScoreSubmit(scores: Record<string, number>) {
 		gameSession.recordRound($currentRound.currentTrackIndex, scores);
 		showScoringScreen = false;
 
-		if ($currentRound.currentTrackIndex >= numberOfTracks - 1) {
-			showEndGameScreen = true;
-		} else {
-			handleBuzzerNextRound();
-		}
+		// GameScreen will handle end game detection
+		handleBuzzerNextRound();
 	}
 
 	async function handleBuzzerNextRound() {
@@ -292,7 +289,6 @@
 
 	// Buzzer-specific state
 	let showScoringScreen = $state(false);
-	let showEndGameScreen = $state(false);
 	let buzzerRevealedCategories = $state<GuessCategory[]>([]); // Categories revealed when buzzer was pressed
 
 	// Import required functions from stores

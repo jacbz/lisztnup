@@ -135,15 +135,6 @@
 						{$_('endGame.viewStats')}
 					</button>
 				{/if}
-				{#if mode !== 'buzzer'}
-					<button
-						type="button"
-						onclick={onPlayAgain}
-						class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-gray-900 px-6 py-3.5 text-base font-bold text-cyan-400 transition-all duration-200 hover:bg-gray-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)]"
-					>
-						{$_('endGame.playAgain')}
-					</button>
-				{/if}
 				<button
 					type="button"
 					onclick={onHome}

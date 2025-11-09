@@ -310,7 +310,7 @@
 			"description": "Spin the wheel to select a category, and fill your bingo card by guessing correctly!",
 			"step1": {
 				"title": "Open Your Bingo Grid",
-				"desc": "Each player needs their own device with a unique 5×5 bingo grid. Open the grid, print it out, or display it on your device."
+				"desc": "Each player needs their own unique bingo grid. Open the grid, print it out, or display it on your device."
 			},
 			"step2": {
 				"title": "Spin and Guess",
@@ -366,7 +366,7 @@
 		"home": "Home"
 	},
 	"bingo": {
-		"setupDescription": "Each player needs their own device with a unique 5×5 bingo grid.",
+		"setupDescription": "Each player needs their own unique bingo grid.",
 		"openGrid": "Open Grid",
 		"reset": "Reset",
 		"resetTitle": "Reset Grid?",

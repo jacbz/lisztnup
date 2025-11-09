@@ -117,8 +117,20 @@
 		while (true) {
 			const track = sampleNextTrack();
 			if (!track) {
+				// No more tracks available - end the game
 				toast.show('error', 'No more tracks available to sample');
+				showEndGameScreen = true;
 				return;
+			}
+
+			// In Classic mode, skip tracks without valid year data
+			if (mode === 'classic') {
+				const hasValidYear = track.work.begin_year != null || track.work.end_year != null;
+				if (!hasValidYear) {
+					console.warn('Track has no valid year data, sampling another:', track.work.name);
+					tracklist.update((t) => t.slice(0, -1));
+					continue;
+				}
 			}
 
 			try {
@@ -232,6 +244,11 @@
 		showStatsScreen = true;
 	}
 
+	function handleViewStatsFromEndGame(): void {
+		showEndGameScreen = false;
+		showStatsScreen = true;
+	}
+
 	function handlePlayAgain(): void {
 		showEndGameScreen = false;
 		resetGame();
@@ -333,30 +350,39 @@
 
 	<!-- Stats Button (for multiplayer modes with scoring) -->
 	{#if !isSoloMode && !isGameOver && !showScoringScreen && enableScoring}
-		<div class="fixed right-6 bottom-6 z-10 flex flex-col items-end gap-3">
-			<!-- Game Summary -->
+		<!-- Game Summary (bottom-center on mobile, bottom-right on desktop) -->
+		<div
+			class="fixed bottom-4 left-1/2 z-10 -translate-x-1/2 md:right-6 md:left-auto md:translate-x-0"
+		>
 			<div
-				class="flex min-w-[180px] flex-col gap-2 rounded-xl border-2 border-gray-700 bg-gray-800 px-4 py-3"
+				class="flex min-w-[140px] flex-col gap-1.5 rounded-xl border-2 border-gray-700 bg-gray-800 px-3 py-2 md:mr-20 md:min-w-[180px] md:gap-2 md:px-4 md:py-3"
 			>
 				{#each sortedPlayers as player}
-					<div class="flex items-center gap-2">
-						<div class="h-2.5 w-2.5 rounded-full" style="background-color: {player.color};"></div>
-						<span class="flex-1 text-sm font-medium text-gray-300">{player.name}</span>
-						<span class="text-sm font-bold text-cyan-400"
+					<div class="flex items-center gap-1.5 md:gap-2">
+						<div
+							class="h-2 w-2 shrink-0 rounded-full md:h-2.5 md:w-2.5"
+							style="background-color: {player.color};"
+						></div>
+						<span class="flex-1 truncate text-xs font-medium text-gray-300 md:text-sm"
+							>{player.name}</span
+						>
+						<span class="text-xs font-bold text-cyan-400 md:text-sm"
 							>{$_('scoring.pts', { values: { points: player.score } })}</span
 						>
 					</div>
 				{/each}
 			</div>
+		</div>
 
-			<!-- Stats Button -->
+		<!-- Stats Button (always bottom-right) -->
+		<div class="fixed right-6 bottom-6 z-10">
 			<button
 				type="button"
 				onclick={handleShowStats}
-				class="flex cursor-pointer items-center justify-center rounded-full border-2 border-cyan-400 bg-gray-900 p-3.5 text-cyan-400 shadow-[0_4px_20px_rgba(34,211,238,0.4)] transition-all duration-200 hover:scale-110 hover:shadow-[0_6px_30px_rgba(34,211,238,0.6)] active:scale-95"
+				class="flex cursor-pointer items-center justify-center rounded-full border-2 border-cyan-400 bg-gray-900 p-3 text-cyan-400 shadow-[0_4px_20px_rgba(34,211,238,0.4)] transition-all duration-200 hover:scale-110 hover:shadow-[0_6px_30px_rgba(34,211,238,0.6)] active:scale-95 md:p-3.5"
 				aria-label="View statistics"
 			>
-				<BarChart class="h-6 w-6" />
+				<BarChart class="h-5 w-5 md:h-6 md:w-6" />
 			</button>
 		</div>
 	{/if}
@@ -440,6 +466,6 @@
 	{mode}
 	{enableScoring}
 	onPlayAgain={handlePlayAgain}
-	onViewStats={() => (showStatsScreen = true)}
+	onViewStats={handleViewStatsFromEndGame}
 	onHome={handleHome}
 />

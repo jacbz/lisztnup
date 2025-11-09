@@ -33,7 +33,7 @@
 		return playerCumulativeScores;
 	});
 
-	// Calculate chart dimensions
+	// Calculate chart dimensions (responsive)
 	const maxScore = $derived.by(() => {
 		if (!chartData) return 100;
 		return Math.max(...chartData.flatMap((d) => d.scores), 50);
@@ -46,8 +46,16 @@
 
 	const scoreRange = $derived(maxScore - minScore);
 	const chartHeight = 300;
-	const chartWidth = 600;
-	const padding = { top: 20, right: 40, bottom: 40, left: 50 };
+	// Make chart width responsive - use a large value that will be constrained by container
+	const chartWidth = $derived(
+		typeof window !== 'undefined' ? Math.min(window.innerWidth - 100, 600) : 600
+	);
+	const padding = $derived({
+		top: 20,
+		right: 40,
+		bottom: 40,
+		left: typeof window !== 'undefined' && window.innerWidth < 768 ? 30 : 50
+	});
 
 	function getX(index: number, totalPoints: number): number {
 		const chartW = chartWidth - padding.left - padding.right;
@@ -76,16 +84,16 @@
 <Popup {visible} {onClose}>
 	{#snippet children()}
 		<div
-			class="max-h-[85vh] w-[700px] max-w-[90vw] overflow-y-auto rounded-3xl border-2 border-cyan-400 bg-gray-900 p-8 shadow-[0_0_30px_rgba(34,211,238,0.3)]"
+			class="max-h-[85vh] w-[700px] max-w-[90vw] overflow-y-auto rounded-3xl border-2 border-cyan-400 bg-gray-900 p-4 shadow-[0_0_30px_rgba(34,211,238,0.3)] md:p-8"
 		>
-			<h2 class="mb-6 text-center text-3xl font-bold text-cyan-400">
+			<h2 class="mb-4 text-center text-2xl font-bold text-cyan-400 md:mb-6 md:text-3xl">
 				{$_('stats.title')}
 			</h2>
 
 			{#if chartData && chartData.length > 0}
 				<!-- Chart -->
-				<div class="mb-6 overflow-x-auto rounded-xl bg-gray-800 p-5">
-					<svg width={chartWidth} height={chartHeight} class="mx-auto block">
+				<div class="mb-6 overflow-visible rounded-xl bg-gray-800 p-2 md:p-5">
+					<svg width={chartWidth} height={chartHeight} class="mx-auto block w-full">
 						<!-- Grid lines -->
 						<g class="grid-lines">
 							{#each Array(5) as _, i}

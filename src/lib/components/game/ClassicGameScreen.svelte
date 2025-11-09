@@ -32,16 +32,6 @@
 
 	// Get active categories from context
 	const activeCategories = $derived(gameContext.activeCategories);
-
-	// Get hasValidYears from context
-	const hasValidYears = $derived(gameContext.hasValidYears);
-
-	// Filter categories to display based on year data availability
-	const displayCategories = $derived(
-		hasValidYears
-			? activeCategories
-			: activeCategories.filter((cat) => cat !== 'era' && cat !== 'decade')
-	);
 </script>
 
 <!-- Main Game Area -->
@@ -52,7 +42,7 @@
 			class="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-80 rounded-2xl border-2 border-cyan-400 bg-gray-900 px-4 py-3 shadow-[0_0_30px_rgba(34,211,238,0.3)] md:px-4 md:py-4"
 		>
 			<div class="flex flex-col items-center gap-1.5 md:flex-row md:gap-2">
-				{#each displayCategories as category}
+				{#each activeCategories as category}
 					{@const def = getCategoryDefinition(category)}
 					{#if def}
 						<div

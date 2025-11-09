@@ -20,7 +20,7 @@
 	onclick={onClick}
 	class="font-streamster text-cyan-400 transition-all select-none hover:scale-105 hover:text-cyan-300 active:scale-95 {sizeClasses[
 		size
-	]}"
+	]} pr-4"
 	style="filter: drop-shadow(0 0 10px rgba(0, 246, 255, 0.7));"
 >
 	{$_('app.title')}

@@ -324,7 +324,10 @@
 									<td class="cell text-sm">
 										<div class="text-gray-300">
 											<span>{row.composer}</span>
-											<ExternalLink href="https://musicbrainz.org/artist/{row.composerGid}" />
+											<ExternalLink
+												href="https://musicbrainz.org/artist/{row.composerGid}"
+												hideOnMobile={true}
+											/>
 										</div>
 										{#if row.composerLifespan}
 											<div class="text-xs text-gray-400">({row.composerLifespan})</div>
@@ -346,6 +349,10 @@
 													{#if row.year}
 														<span class="text-xs opacity-80 md:hidden"> ({row.year})</span>
 													{/if}
+													<ExternalLink
+														href="https://musicbrainz.org/work/{row.workGid}"
+														hideOnMobile={true}
+													/>
 												</button>
 											{:else}
 												<!-- Multiple parts: work name not clickable -->
@@ -353,8 +360,11 @@
 												{#if row.year}
 													<span class="text-xs opacity-80 md:hidden"> ({row.year})</span>
 												{/if}
+												<ExternalLink
+													href="https://musicbrainz.org/work/{row.workGid}"
+													hideOnMobile={true}
+												/>
 											{/if}
-											<ExternalLink href="https://musicbrainz.org/work/{row.workGid}" />
 										</div>
 										{#if row.parts.length > 1 || row.work !== row.parts[0].name}
 											<ul class="mt-1 space-y-0.5 pl-2 text-gray-400 md:pl-4">

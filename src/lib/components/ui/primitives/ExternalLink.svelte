@@ -2,16 +2,19 @@
 	interface Props {
 		href: string;
 		class?: string;
+		hideOnMobile?: boolean;
 	}
 
-	let { href, class: className = '' }: Props = $props();
+	let { href, class: className = '', hideOnMobile = false }: Props = $props();
 </script>
 
 <a
 	{href}
 	target="_blank"
 	rel="noopener noreferrer"
-	class="inline-flex items-center align-middle opacity-70 transition-opacity hover:opacity-100 {className} pb-0.5"
+	class="items-center align-middle opacity-70 transition-opacity hover:opacity-100 {className} pb-0.5 {hideOnMobile
+		? 'hidden md:inline-flex'
+		: ''}"
 	title="Open in MusicBrainz"
 >
 	<svg
