@@ -52,6 +52,37 @@ WITH classical_composers AS (
   SELECT id, gid, sort_name, begin_date_year, end_date_year
   FROM musicbrainz.artist
   WHERE begin_date_year IS NOT NULL AND begin_date_year <= 1949
+),
+work_composer_counts AS (
+  -- Count distinct composers per work using only work-level filters
+  -- This ensures multi-composer works are excluded even if some composers
+  -- would be filtered out by composer-specific criteria later
+  SELECT
+    w.id AS work_id,
+    COUNT(DISTINCT law.entity0) AS composer_count
+  FROM
+    musicbrainz.work AS w
+    JOIN musicbrainz.l_artist_work AS law ON w.id = law.entity1
+    JOIN musicbrainz.link AS l ON law.link = l.id
+    JOIN classical_composers AS c ON law.entity0 = c.id
+    LEFT JOIN musicbrainz.work_alias AS wa ON w.id = wa.work AND wa.locale = 'en' AND wa.type = 1
+  WHERE
+    l.link_type = 168 -- 'composer' relationship
+    -- Work-level filters (apply uniformly, don't affect composer count)
+    AND COALESCE(wa.name, w.name) ~* '^[A-Za-zÀ-ÿŒ0-9"“„‘'']'  -- Work name must start with letter, number, or quote
+    AND COALESCE(w.type, 17) NOT IN(19, 20, 21, 22, 23, 25, 26, 28, 29) -- Exclude non-classical work types
+    AND NOT EXISTS (
+      -- Exclude works that are parts or arrangements of other works
+      SELECT 1 FROM musicbrainz.l_work_work lww 
+      JOIN musicbrainz.link lww_link ON lww.link = lww_link.id
+      WHERE lww.entity1 = w.id AND lww_link.link_type IN (
+        281,  -- parts
+        350   -- arrangement
+      )
+    )
+    AND w.name NOT LIKE '[%'  -- Exclude works with names starting with '['
+  GROUP BY w.id
+  HAVING COUNT(DISTINCT law.entity0) = 1  -- Only works with exactly one composer
 )
 SELECT
   c.id AS composer_id, 
@@ -66,30 +97,21 @@ SELECT
   l.begin_date_year AS work_begin_year, 
   l.end_date_year AS work_end_year
 FROM
-  musicbrainz.work AS w
+  work_composer_counts AS wcc
+  JOIN musicbrainz.work AS w ON wcc.work_id = w.id
   JOIN musicbrainz.l_artist_work AS law ON w.id = law.entity1
   JOIN musicbrainz.link AS l ON law.link = l.id
   JOIN classical_composers AS c ON law.entity0 = c.id
   LEFT JOIN musicbrainz.work_alias AS wa ON w.id = wa.work AND wa.locale = 'en' AND wa.type = 1
 WHERE
-  l.link_type = 168 -- 'composer'
-  AND c.sort_name ~ '^[A-Za-z]'
-  AND COALESCE(wa.name, w.name) ~* '^[A-Za-zÀ-ÿŒ0-9"“„‘]'
-  AND COALESCE(w.type, 17) NOT IN(19, 20, 21, 22, 23, 25, 26, 28, 29) -- Non-classical filter
+  l.link_type = 168 -- 'composer' relationship
+  -- Composer-specific filters (can vary by composer for the same work)
+  AND c.sort_name ~ '^[A-Za-z]'  -- Composer name must start with ASCII letter
   AND (
-    -- Include if not a song, or if a song but composed before 1900
+    -- Include if not a song (type 17), or if a song but composer died before 1900
     w.type IS DISTINCT FROM 17 OR c.end_date_year < 1900
   )
-  AND NOT EXISTS (
-    SELECT 1 FROM musicbrainz.l_work_work lww JOIN musicbrainz.link lww_link ON lww.link = lww_link.id
-    WHERE lww.entity1 = w.id AND lww_link.link_type IN (
-      281,  -- parts
-      350   -- arrangement
-    )
-  )
-  AND w.name NOT LIKE '[%'
-ORDER BY c.sort_name, w.name;
-"""
+ORDER BY c.sort_name, COALESCE(wa.name, w.name);"""
 
 GET_RECORDINGS_FOR_WORK_SQL = """
 SELECT r.gid AS recording_gid, r.name AS recording_name, i.isrc,

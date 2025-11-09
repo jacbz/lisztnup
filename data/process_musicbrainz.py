@@ -176,6 +176,11 @@ EXCLUDED_WORKS: Set[str] = set([
     "bc0cdd41-eaa3-3330-b972-8e8174b9e64d" # Hark! The Herald Angels Sing
 ])
 
+WSS_OVERRIDES: Dict[str, float] = {
+    "11f48c5e-5ee9-4646-9826-fb7c2fccce7f": 5.4,  # Swan Lake
+    "bcc558d9-b9d5-39cd-b599-df5a988b9eee": 2.5, # Memories of the Alhambra
+}
+
 # ==============================================================================
 # --- Data Class Definitions ---
 # ==============================================================================
@@ -477,6 +482,9 @@ class MusicbrainzProcessor:
                     if potential_parts:
                         self.stats["works_dropped_became_empty"] += 1
                     continue
+
+                if root_work.gid in WSS_OVERRIDES:
+                    wss = WSS_OVERRIDES[root_work.gid]
 
                 all_works.append(
                     FinalWork(

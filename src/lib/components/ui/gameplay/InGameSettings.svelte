@@ -13,7 +13,7 @@
 
 	let { visible = false, onClose = () => {} }: Props = $props();
 
-	let trackLength = $state(25);
+	let trackLength = $state(30);
 
 	onMount(() => {
 		// Get initial values from settings store

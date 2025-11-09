@@ -73,7 +73,7 @@ export const DEFAULT_TRACKLIST_CONFIG: TracklistConfig = {
 export const DEFAULT_SETTINGS: GameSettings = {
 	numberOfTracks: 10,
 	selectedTracklist: 'tracklists.beginner.name',
-	trackLength: 25,
+	trackLength: 30,
 	volume: 100,
 	gameMode: 'classic',
 	players: [],

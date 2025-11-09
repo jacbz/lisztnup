@@ -281,7 +281,7 @@
 						<thead>
 							<tr class="border-b-2 border-cyan-400/30">
 								<th
-									class="cell-padding cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
+									class="cell cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
 									onclick={() => handleSort('composer')}
 								>
 									{$_('tracklistViewer.columns.composer')}
@@ -290,7 +290,7 @@
 									{/if}
 								</th>
 								<th
-									class="cell-padding cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
+									class="cell cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
 									onclick={() => handleSort('work')}
 								>
 									{$_('tracklistViewer.columns.work')}
@@ -299,7 +299,7 @@
 									{/if}
 								</th>
 								<th
-									class="cell-padding cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
+									class="cell cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
 									onclick={() => handleSort('popularity')}
 								>
 									{$_('tracklistViewer.columns.popularity')}
@@ -308,7 +308,7 @@
 									{/if}
 								</th>
 								<th
-									class="cell-padding hidden cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300 md:table-cell"
+									class="cell hidden cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300 md:table-cell"
 									onclick={() => handleSort('year')}
 								>
 									{$_('tracklistViewer.columns.year')}
@@ -321,7 +321,7 @@
 						<tbody>
 							{#each tableData as row}
 								<tr class="border-b border-gray-700 transition-colors hover:bg-gray-800/50">
-									<td class="cell-padding text-sm">
+									<td class="cell text-sm">
 										<div class="text-gray-300">
 											<span>{row.composer}</span>
 											<ExternalLink href="https://musicbrainz.org/artist/{row.composerGid}" />
@@ -330,7 +330,7 @@
 											<div class="text-xs text-gray-400">({row.composerLifespan})</div>
 										{/if}
 									</td>
-									<td class="cell-padding text-sm">
+									<td class="cell text-sm">
 										<div class="text-gray-300">
 											{#if row.parts.length === 1}
 												<!-- Single part: work name is clickable -->
@@ -378,11 +378,10 @@
 											</ul>
 										{/if}
 									</td>
-									<td class="cell-padding text-sm text-yellow-400" title={row.popularity + ''}>
+									<td class="cell text-sm text-yellow-400" title={row.popularity + ''}>
 										{@html renderPopularityStars(row.popularity)}
 									</td>
-									<td class="cell-padding hidden text-sm text-gray-400 md:table-cell">{row.year}</td
-									>
+									<td class="cell hidden text-sm text-gray-400 md:table-cell">{row.year}</td>
 								</tr>
 							{/each}
 						</tbody>
@@ -395,7 +394,7 @@
 
 <style>
 	@reference "../../../../app.css";
-	.cell-padding {
-		@apply px-2 py-2 md:px-4 md:py-3;
+	.cell {
+		@apply px-2 py-2 align-top md:px-4 md:py-3;
 	}
 </style>
