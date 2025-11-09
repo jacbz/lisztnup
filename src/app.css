@@ -50,6 +50,7 @@ html {
 	overscroll-behavior: none;
 	/* Fix for iOS Safari viewport height */
 	height: 100%;
+	color-scheme: dark;
 }
 
 body {
@@ -77,6 +78,37 @@ body {
 
 button {
 	cursor: pointer;
+}
+
+/* Custom scrollbar styling for Chrome, Safari, and other webkit browsers */
+::-webkit-scrollbar {
+	width: 12px;
+	height: 12px;
+}
+
+::-webkit-scrollbar-track {
+	background: rgba(34, 19, 53, 0.5);
+	border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: rgba(6, 182, 212, 0.6);
+	border-radius: 6px;
+	border: 2px solid rgba(34, 19, 53, 0.5);
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: rgba(6, 182, 212, 0.8);
+}
+
+::-webkit-scrollbar-thumb:active {
+	background: rgba(6, 182, 212, 1);
+}
+
+/* Standard scrollbar properties for Firefox */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: rgba(6, 182, 212, 0.6) rgba(34, 19, 53, 0.5);
 }
 
 @keyframes trophy-glow {
