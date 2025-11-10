@@ -151,7 +151,7 @@
 						index
 					)
 						? 'border-red-500!'
-						: 'border-gray-700'}"
+						: 'border-slate-700'}"
 					maxlength="20"
 				/>
 
@@ -189,7 +189,7 @@
 		<button
 			type="button"
 			onclick={addPlayer}
-			class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-gray-700 bg-transparent p-2 text-sm text-gray-500 transition-all duration-200 hover:border-cyan-400 hover:text-cyan-400"
+			class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-slate-700 bg-transparent p-2 text-sm text-slate-500 transition-all duration-200 hover:border-cyan-400 hover:text-cyan-400"
 		>
 			<Plus class="h-4 w-4" />
 			{$_('players.addPlayer')}

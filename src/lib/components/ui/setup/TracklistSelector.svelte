@@ -249,7 +249,7 @@
 	<button
 		type="button"
 		onclick={handleCreateNew}
-		class="mt-4 w-full rounded-xl border-2 border-dashed border-cyan-400/50 bg-gray-800/50 px-4 py-3 text-cyan-400 transition-all hover:border-cyan-400 hover:bg-gray-800"
+		class="mt-4 w-full rounded-xl border-2 border-dashed border-cyan-400/50 bg-slate-800/50 px-4 py-3 text-cyan-400 transition-all hover:border-cyan-400 hover:bg-slate-800"
 	>
 		+ {$_('tracklistSelector.createNew')}
 	</button>
@@ -258,8 +258,8 @@
 	{@const selected = isSameTracklist(tracklist, selectedTracklist)}
 	<div
 		class="relative flex flex-col gap-2 rounded-xl p-4 transition-all {selected
-			? 'border-2 border-cyan-400 bg-gray-900 text-white shadow-[0_0_20px_rgba(34,211,238,0.4)]'
-			: 'border-2 border-gray-700 bg-gray-800 text-gray-300 hover:border-cyan-400/50 hover:bg-gray-700'}"
+			? 'border-2 border-cyan-400 bg-slate-900 text-white shadow-[0_0_20px_rgba(34,211,238,0.4)]'
+			: 'border-2 border-slate-700 bg-slate-800 text-slate-300 hover:border-cyan-400/50 hover:bg-slate-700'}"
 	>
 		<div class="absolute top-2 right-2 flex gap-2">
 			<button
@@ -267,7 +267,7 @@
 				onclick={() => handleView(tracklist)}
 				class="rounded-lg p-2 transition-all {selected
 					? 'bg-white/20 hover:bg-white/30'
-					: 'bg-gray-700 hover:bg-gray-600'}"
+					: 'bg-slate-700 hover:bg-slate-600'}"
 				title={$_('tracklistSelector.view')}
 			>
 				<svg
@@ -290,7 +290,7 @@
 				onclick={() => handleClone(tracklist)}
 				class="rounded-lg p-2 transition-all {selected
 					? 'bg-white/20 hover:bg-white/30'
-					: 'bg-gray-700 hover:bg-gray-600'}"
+					: 'bg-slate-700 hover:bg-slate-600'}"
 				title={$_('tracklistSelector.clone')}
 			>
 				<svg
@@ -325,7 +325,7 @@
 					>{tracklist.isDefault ? $_(tracklist.name) : tracklist.name}</span
 				>
 			</div>
-			<span class="flex-1 text-sm leading-relaxed {selected ? 'text-gray-200' : 'text-gray-400'}">
+			<span class="flex-1 text-sm leading-relaxed {selected ? 'text-slate-200' : 'text-slate-400'}">
 				{tracklist.isDefault ? $_(tracklist.description) : tracklist.description}
 			</span>
 			{#if tracklistInfoMap[tracklist.name]}
@@ -345,7 +345,7 @@
 					onclick={() => handleEdit(tracklist)}
 					class="flex-1 rounded-lg px-3 py-1 text-sm transition-all {selected
 						? 'bg-white/20 hover:bg-white/30'
-						: 'bg-gray-700 hover:bg-gray-600'}"
+						: 'bg-slate-700 hover:bg-slate-600'}"
 				>
 					{$_('tracklistSelector.edit')}
 				</button>

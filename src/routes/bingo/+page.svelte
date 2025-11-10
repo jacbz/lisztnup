@@ -288,7 +288,7 @@
 			<button
 				type="button"
 				onclick={handlePrint}
-				class="flex items-center gap-2 rounded-lg border-2 border-purple-400/30 bg-gray-900/50 px-3 py-2 text-purple-400 transition-all hover:border-purple-400 hover:bg-gray-800/70 sm:px-4"
+				class="flex items-center gap-2 rounded-lg border-2 border-purple-400/30 bg-slate-900/50 px-3 py-2 text-purple-400 transition-all hover:border-purple-400 hover:bg-slate-800/70 sm:px-4"
 			>
 				<Printer class="h-5 w-5" />
 				<span class="hidden sm:inline">{$_('bingo.print', { default: 'Print' })}</span>
@@ -296,7 +296,7 @@
 			<button
 				type="button"
 				onclick={handleReset}
-				class="flex items-center gap-2 rounded-lg border-2 border-purple-400/30 bg-gray-900/50 px-3 py-2 text-purple-400 transition-all hover:border-purple-400 hover:bg-gray-800/70 sm:px-4"
+				class="flex items-center gap-2 rounded-lg border-2 border-purple-400/30 bg-slate-900/50 px-3 py-2 text-purple-400 transition-all hover:border-purple-400 hover:bg-slate-800/70 sm:px-4"
 			>
 				<RefreshCw class="h-5 w-5" />
 				<span class="hidden sm:inline">{$_('bingo.reset', { default: 'Reset' })}</span>
@@ -362,7 +362,7 @@
 							id="guess-input"
 							bind:this={inputElement}
 							bind:value={guessText}
-							class="flex-1 resize-none rounded-lg p-3 text-center text-4xl text-white placeholder-gray-500 focus:outline-none"
+							class="flex-1 resize-none rounded-lg p-3 text-center text-4xl text-white placeholder-slate-500 focus:outline-none"
 							placeholder={$_('bingo.guessPlaceholder')}
 						></textarea>
 						<button
@@ -407,7 +407,7 @@
 	</div>
 
 	<!-- Footer (Print Only) -->
-	<div class="print-only absolute bottom-4 w-full text-center text-gray-400">
+	<div class="print-only absolute bottom-4 w-full text-center text-slate-400">
 		<span class="text-sm">{$_('footer.madeBy')}</span>
 	</div>
 </div>

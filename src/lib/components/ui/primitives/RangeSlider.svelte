@@ -52,7 +52,7 @@
 <div class="space-y-2">
 	{#if label}
 		<div class="flex items-center justify-between">
-			<span class="text-sm text-gray-400">{label}</span>
+			<span class="text-sm text-slate-400">{label}</span>
 		</div>
 	{/if}
 
@@ -76,7 +76,7 @@
 		<!-- Track container -->
 		<div class="relative h-2">
 			<!-- Background track -->
-			<div class="absolute h-full w-full rounded-full bg-gray-700"></div>
+			<div class="absolute h-full w-full rounded-full bg-slate-700"></div>
 
 			<!-- Active track (between handles) -->
 			<div

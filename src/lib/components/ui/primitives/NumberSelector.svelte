@@ -12,15 +12,15 @@
 	}
 </script>
 
-<div class="flex rounded-xl bg-gray-800 p-1 select-none">
+<div class="flex rounded-xl bg-slate-800 p-1 select-none">
 	{#each options as option}
 		<button
 			type="button"
 			onclick={() => handleSelect(option)}
 			class="flex-1 rounded-lg px-4 py-1.5 font-semibold transition-all
                  {value === option
-				? 'bg-cyan-400 text-gray-900 shadow-[0_0_15px_rgba(34,211,238,0.4)]'
-				: 'text-gray-400 hover:text-gray-300'}"
+				? 'bg-cyan-400 text-slate-900 shadow-[0_0_15px_rgba(34,211,238,0.4)]'
+				: 'text-slate-400 hover:text-slate-300'}"
 		>
 			{option}
 		</button>

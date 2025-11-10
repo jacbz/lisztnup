@@ -202,7 +202,7 @@
 	function renderPartScore(score: number): string {
 		// For parts, show a subtle gradient bar from 50 to 100 (parts are always above 50)
 		const normalizedScore = Math.max(0, Math.min(100, ((score - 50) / 50) * 100));
-		return `<div title="${score}" class="h-1.5 w-5 shrink-0 rounded-full bg-gray-700">
+		return `<div title="${score}" class="h-1.5 w-5 shrink-0 rounded-full bg-slate-700">
 				<div class="h-full rounded-full bg-gradient-to-r from-cyan-600 to-cyan-400" style="width: ${normalizedScore}%"></div>
 			</div>`;
 	}
@@ -234,7 +234,7 @@
 </script>
 
 <Popup {visible} {onClose} width="6xl" overflow="hidden" padding="none">
-	<div class="border-b-2 border-cyan-400/30 bg-gray-800/50 p-6">
+	<div class="border-b-2 border-cyan-400/30 bg-slate-800/50 p-6">
 		<div class="flex items-center justify-between">
 			<h2 class="text-2xl font-bold text-cyan-400">
 				{#if tracklist}
@@ -267,11 +267,11 @@
 					<div
 						class="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-cyan-400 border-t-transparent"
 					></div>
-					<p class="mt-4 text-gray-400">{$_('tracklistViewer.loading')}</p>
+					<p class="mt-4 text-slate-400">{$_('tracklistViewer.loading')}</p>
 				</div>
 			</div>
 		{:else if tableData.length === 0}
-			<p class="text-center text-gray-400">{$_('tracklistViewer.noData')}</p>
+			<p class="text-center text-slate-400">{$_('tracklistViewer.noData')}</p>
 		{:else}
 			<div class="overflow-y-auto">
 				<table class="w-full border-collapse">
@@ -317,9 +317,9 @@
 					</thead>
 					<tbody>
 						{#each tableData as row}
-							<tr class="border-b border-gray-700 transition-colors hover:bg-gray-800/50">
+							<tr class="border-b border-slate-700 transition-colors hover:bg-slate-800/50">
 								<td class="cell text-sm">
-									<div class="text-gray-300">
+									<div class="text-slate-300">
 										<span>{row.composer}</span>
 										<ExternalLink
 											href="https://musicbrainz.org/artist/{row.composerGid}"
@@ -327,11 +327,11 @@
 										/>
 									</div>
 									{#if row.composerLifespan}
-										<div class="text-xs text-gray-400">({row.composerLifespan})</div>
+										<div class="text-xs text-slate-400">({row.composerLifespan})</div>
 									{/if}
 								</td>
 								<td class="cell text-sm">
-									<div class="text-gray-300">
+									<div class="text-slate-300">
 										{#if row.parts.length === 1}
 											<!-- Single part: work name is clickable -->
 											<button
@@ -364,7 +364,7 @@
 										{/if}
 									</div>
 									{#if row.parts.length > 1 || row.work !== row.parts[0].name}
-										<ul class="mt-1 space-y-0.5 pl-2 text-gray-400 md:pl-4">
+										<ul class="mt-1 space-y-0.5 pl-2 text-slate-400 md:pl-4">
 											{#each row.parts as part}
 												<li class="flex items-center gap-2">
 													{#if row.parts.length > 1}
@@ -388,7 +388,7 @@
 								<td class="cell text-sm text-yellow-400" title={row.popularity + ''}>
 									{@html renderPopularityStars(row.popularity)}
 								</td>
-								<td class="cell hidden text-sm text-gray-400 md:table-cell">{row.year}</td>
+								<td class="cell hidden text-sm text-slate-400 md:table-cell">{row.year}</td>
 							</tr>
 						{/each}
 					</tbody>

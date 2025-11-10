@@ -91,7 +91,7 @@
 
 	// Combine all classes
 	const containerClasses = $derived(
-		`relative ${widthClass} max-h-[90vh] ${overflowClass} rounded-2xl ${borderClass} bg-gray-900 ${paddingClass}`.trim()
+		`relative ${widthClass} max-h-[90vh] ${overflowClass} rounded-2xl ${borderClass} bg-slate-900 ${paddingClass}`.trim()
 	);
 
 	// Build combined style
@@ -128,7 +128,7 @@
 				{#if showCloseButton}
 					<button
 						type="button"
-						class="absolute top-4 right-4 z-10 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-800 hover:text-white"
+						class="absolute top-4 right-4 z-10 rounded-full p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
 						onclick={handleCloseClick}
 						aria-label="Close"
 					>

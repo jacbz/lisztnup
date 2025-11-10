@@ -31,11 +31,11 @@
 	{/if}
 
 	{#if children}
-		<div class="mb-6 text-gray-300">
+		<div class="mb-6 text-slate-300">
 			{@render children()}
 		</div>
 	{:else if message}
-		<p class="mb-6 text-gray-300">{message}</p>
+		<p class="mb-6 text-slate-300">{message}</p>
 	{/if}
 
 	<div class="flex gap-3">
@@ -43,7 +43,7 @@
 			<button
 				type="button"
 				onclick={onCancel}
-				class="flex-1 rounded-xl border-2 border-gray-600 bg-gray-800 px-6 py-3 font-semibold text-gray-300 transition-all hover:border-gray-500 hover:bg-gray-700 active:scale-95"
+				class="flex-1 rounded-xl border-2 border-slate-600 bg-slate-800 px-6 py-3 font-semibold text-slate-300 transition-all hover:border-slate-500 hover:bg-slate-700 active:scale-95"
 			>
 				{cancelText}
 			</button>
@@ -52,7 +52,7 @@
 			<button
 				type="button"
 				onclick={onConfirm}
-				class="flex-1 rounded-xl border-2 border-cyan-400 bg-gray-900 px-6 py-3 font-semibold text-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all hover:bg-gray-800 hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-95"
+				class="flex-1 rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3 font-semibold text-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all hover:bg-slate-800 hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-95"
 			>
 				{confirmText}
 			</button>

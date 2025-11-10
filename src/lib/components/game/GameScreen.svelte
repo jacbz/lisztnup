@@ -305,8 +305,8 @@
 		<button
 			type="button"
 			onclick={() => (showInGameSettings = true)}
-			class="flex items-center gap-2 rounded-lg bg-gray-800/80 px-4 py-2 text-cyan-400 backdrop-blur-sm
-                 transition-colors hover:bg-gray-700/80"
+			class="flex items-center gap-2 rounded-lg bg-slate-800/80 px-4 py-2 text-cyan-400 backdrop-blur-sm
+                 transition-colors hover:bg-slate-700/80"
 		>
 			<SettingsIcon class="h-5 w-5" />
 		</button>
@@ -331,13 +331,13 @@
 				<h1 class="mb-8 text-6xl font-bold text-cyan-400">
 					{$_('game.gameOver')}
 				</h1>
-				<p class="mb-8 text-2xl text-gray-300">
+				<p class="mb-8 text-2xl text-slate-300">
 					You completed all {numberOfTracks} rounds!
 				</p>
 				<button
 					type="button"
 					onclick={handleConfirmQuit}
-					class="rounded-xl border-2 border-cyan-400 bg-gray-900 px-12 py-4 text-xl font-bold text-white
+					class="rounded-xl border-2 border-cyan-400 bg-slate-900 px-12 py-4 text-xl font-bold text-white
                          shadow-[0_0_30px_rgba(34,211,238,0.4)]
                          transition-all
                          hover:shadow-[0_0_40px_rgba(34,211,238,0.6)] active:scale-95"
@@ -355,7 +355,7 @@
 			class="fixed bottom-4 left-1/2 z-10 -translate-x-1/2 md:right-6 md:left-auto md:translate-x-0"
 		>
 			<div
-				class="flex min-w-[140px] flex-col gap-1.5 rounded-xl border-2 border-gray-700 bg-gray-800 px-3 py-2 md:mr-20 md:min-w-[180px] md:gap-2 md:px-4 md:py-3"
+				class="flex min-w-[140px] flex-col gap-1.5 rounded-xl border-2 border-slate-700 bg-slate-800 px-3 py-2 md:mr-20 md:min-w-[180px] md:gap-2 md:px-4 md:py-3"
 			>
 				{#each sortedPlayers as player}
 					<div class="flex items-center gap-1.5 md:gap-2">
@@ -363,7 +363,7 @@
 							class="h-2 w-2 shrink-0 rounded-full md:h-2.5 md:w-2.5"
 							style="background-color: {player.color};"
 						></div>
-						<span class="flex-1 truncate text-xs font-medium text-gray-300 md:text-sm"
+						<span class="flex-1 truncate text-xs font-medium text-slate-300 md:text-sm"
 							>{player.name}</span
 						>
 						<span class="text-xs font-bold text-cyan-400 md:text-sm"
@@ -379,7 +379,7 @@
 			<button
 				type="button"
 				onclick={handleShowStats}
-				class="flex cursor-pointer items-center justify-center rounded-full border-2 border-cyan-400 bg-gray-900 p-3 text-cyan-400 shadow-[0_4px_20px_rgba(34,211,238,0.4)] transition-all duration-200 hover:scale-110 hover:shadow-[0_6px_30px_rgba(34,211,238,0.6)] active:scale-95 md:p-3.5"
+				class="flex cursor-pointer items-center justify-center rounded-full border-2 border-cyan-400 bg-slate-900 p-3 text-cyan-400 shadow-[0_4px_20px_rgba(34,211,238,0.4)] transition-all duration-200 hover:scale-110 hover:shadow-[0_6px_30px_rgba(34,211,238,0.6)] active:scale-95 md:p-3.5"
 				aria-label="View statistics"
 			>
 				<BarChart class="h-5 w-5 md:h-6 md:w-6" />
@@ -391,9 +391,9 @@
 	{#if isSoloMode && !isGameOver && enableScoring && $gameSession.players.length > 0}
 		<div class="absolute right-6 bottom-6 z-20 select-none">
 			<div
-				class="rounded-xl border-2 border-cyan-400 bg-gray-900 px-4 py-2 shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+				class="rounded-xl border-2 border-cyan-400 bg-slate-900 px-4 py-2 shadow-[0_0_20px_rgba(34,211,238,0.3)]"
 			>
-				<p class="text-sm font-semibold text-gray-400">Score</p>
+				<p class="text-sm font-semibold text-slate-400">Score</p>
 				<p class="text-right text-3xl font-bold text-cyan-400">{$gameSession.players[0].score}</p>
 			</div>
 		</div>
@@ -440,7 +440,7 @@
 		<button
 			type="button"
 			onclick={() => nextRound()}
-			class="mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-gray-900 px-6 py-3 font-bold text-cyan-400 transition-all duration-200 hover:bg-gray-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.6)]"
+			class="mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3 font-bold text-cyan-400 transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.6)]"
 		>
 			{$_('game.nextRound')}
 			<ArrowRight class="h-5 w-5" />

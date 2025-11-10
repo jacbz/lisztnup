@@ -188,7 +188,7 @@
 	</h2>
 	<div class="mb-4 grid grid-cols-1 gap-8 md:grid-cols-[1fr_1fr]">
 		<!-- Left: Track Info -->
-		<div class="flex flex-col gap-3 rounded-2xl border border-gray-700 bg-gray-900 p-5">
+		<div class="flex flex-col gap-3 rounded-2xl border border-slate-700 bg-slate-900 p-5">
 			<TrackInfo {track} />
 		</div>
 
@@ -204,7 +204,7 @@
 							{#if def}
 								<button
 									type="button"
-									class="flex cursor-pointer flex-col items-center gap-2 rounded-xl border-[3px] bg-gray-700 px-4 py-6 transition-all duration-200 hover:scale-[1.02]"
+									class="flex cursor-pointer flex-col items-center gap-2 rounded-xl border-[3px] bg-slate-700 px-4 py-6 transition-all duration-200 hover:scale-[1.02]"
 									class:border-white={selectedCategory === category}
 									class:shadow-[0_0_20px_rgba(255,255,255,0.3)]={selectedCategory === category}
 									class:scale-105={selectedCategory === category}
@@ -226,7 +226,7 @@
 						<!-- Wrong button -->
 						<button
 							type="button"
-							class="flex cursor-pointer flex-col items-center gap-2 rounded-xl border-[3px] bg-gray-500 px-4 py-6 transition-all duration-200 hover:scale-[1.02]"
+							class="flex cursor-pointer flex-col items-center gap-2 rounded-xl border-[3px] bg-slate-500 px-4 py-6 transition-all duration-200 hover:scale-[1.02]"
 							class:border-white={selectedCategory === 'none'}
 							class:shadow-[0_0_20px_rgba(255,255,255,0.3)]={selectedCategory === 'none'}
 							class:scale-105={selectedCategory === 'none'}
@@ -249,7 +249,7 @@
 						style="grid-template-columns: 100px repeat({categories.length + 1}, minmax(50px, 1fr));"
 					>
 						<div
-							class="flex items-center justify-start bg-gray-700 p-2 px-2 pl-3 text-sm font-bold text-white uppercase"
+							class="flex items-center justify-start bg-slate-700 p-2 px-2 pl-3 text-sm font-bold text-white uppercase"
 						>
 							{$_('scoring.player')}
 						</div>
@@ -266,7 +266,7 @@
 							{/if}
 						{/each}
 						<div
-							class="flex flex-col items-center justify-center gap-0.5 bg-gray-700 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
+							class="flex flex-col items-center justify-center gap-0.5 bg-slate-700 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
 						>
 							{$_('scoring.wrong')}
 						</div>
@@ -280,7 +280,7 @@
 								1}, minmax(50px, 1fr));"
 						>
 							<div
-								class="flex items-center justify-start border-l-[3px] bg-gray-800 p-2 px-2 pl-3 font-semibold text-white"
+								class="flex items-center justify-start border-l-[3px] bg-slate-800 p-2 px-2 pl-3 font-semibold text-white"
 								style="border-left-color: {player.color};"
 							>
 								{player.name}
@@ -291,7 +291,7 @@
 								{@const isSelected = selectedCells.has(`${player.name}:${category}`)}
 								<button
 									type="button"
-									class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
+									class="flex cursor-pointer items-center justify-center bg-slate-700 p-2 px-2 transition-all duration-200 hover:bg-slate-600"
 									style={isSelected && def
 										? `background: linear-gradient(135deg, ${def.color1}, ${def.color2});`
 										: ''}
@@ -309,7 +309,7 @@
 							<!-- Wrong option -->
 							<button
 								type="button"
-								class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
+								class="flex cursor-pointer items-center justify-center bg-slate-700 p-2 px-2 transition-all duration-200 hover:bg-slate-600"
 								onclick={() => toggleCell(player.name, 'none')}
 							>
 								{#if selectedCells.has(`${player.name}:none`)}
@@ -329,12 +329,12 @@
 							2}, minmax(50px, 1fr));"
 					>
 						<div
-							class="flex items-center justify-start bg-gray-700 p-2 px-2 pl-3 text-sm font-bold text-white uppercase"
+							class="flex items-center justify-start bg-slate-700 p-2 px-2 pl-3 text-sm font-bold text-white uppercase"
 						>
 							{$_('scoring.player')}
 						</div>
 						<div
-							class="flex flex-col items-center justify-center gap-0.5 bg-gray-700 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
+							class="flex flex-col items-center justify-center gap-0.5 bg-slate-700 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
 						>
 							{$_('scoring.noGuess')}
 						</div>
@@ -366,7 +366,7 @@
 								2}, minmax(50px, 1fr));"
 						>
 							<div
-								class="flex items-center justify-start border-l-[3px] bg-gray-800 p-2 px-2 pl-3 font-semibold text-white"
+								class="flex items-center justify-start border-l-[3px] bg-slate-800 p-2 px-2 pl-3 font-semibold text-white"
 								style="border-left-color: {player.color};"
 							>
 								{player.name}
@@ -374,7 +374,7 @@
 							<!-- No guess column -->
 							<button
 								type="button"
-								class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
+								class="flex cursor-pointer items-center justify-center bg-slate-700 p-2 px-2 transition-all duration-200 hover:bg-slate-600"
 								onclick={() => toggleCell(player.name, 'none')}
 							>
 								{#if selectedCells.has(`${player.name}:none`)}
@@ -387,7 +387,7 @@
 								{@const isSelected = selectedCells.has(`${player.name}:${category}`)}
 								<button
 									type="button"
-									class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
+									class="flex cursor-pointer items-center justify-center bg-slate-700 p-2 px-2 transition-all duration-200 hover:bg-slate-600"
 									style={isSelected && def
 										? `background: linear-gradient(135deg, ${def.color1}, ${def.color2});`
 										: ''}
@@ -405,7 +405,7 @@
 							<!-- Wrong option -->
 							<button
 								type="button"
-								class="flex cursor-pointer items-center justify-center bg-gray-700 p-2 px-2 transition-all duration-200 hover:bg-gray-600"
+								class="flex cursor-pointer items-center justify-center bg-slate-700 p-2 px-2 transition-all duration-200 hover:bg-slate-600"
 								class:bg-red-900!={selectedCells.has(`${player.name}:wrong`)}
 								onclick={() => toggleCell(player.name, 'wrong')}
 							>

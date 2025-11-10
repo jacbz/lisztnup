@@ -46,7 +46,7 @@
 				valueSuffix="s"
 				onChange={handleTrackLengthChange}
 			/>
-			<p class="mt-2 text-sm text-gray-400">{$_('inGameSettings.trackLengthHint')}</p>
+			<p class="mt-2 text-sm text-slate-400">{$_('inGameSettings.trackLengthHint')}</p>
 		</div>
 	</div>
 </Popup>

@@ -155,7 +155,7 @@
 				const nextIndex = (currentIndex + 1) % locales.length;
 				handleLocaleChange(locales[nextIndex].code);
 			}}
-			class="flex items-center gap-2 rounded-lg border-2 border-cyan-400/30 bg-gray-900/50 px-4 py-2 text-cyan-400 backdrop-blur-sm transition-all hover:border-cyan-400/60 hover:bg-gray-800/70 active:scale-95"
+			class="flex items-center gap-2 rounded-lg border-2 border-cyan-400/30 bg-slate-900/50 px-4 py-2 text-cyan-400 backdrop-blur-sm transition-all hover:border-cyan-400/60 hover:bg-slate-800/70 active:scale-95"
 			title="Change Language"
 		>
 			<Languages class="h-5 w-5" />
@@ -179,7 +179,7 @@
 
 		<!-- Game Parameters Container -->
 		<div
-			class="mx-auto mt-10 max-w-2xl rounded-2xl border-2 border-cyan-400/30 bg-gray-900/50 p-6 backdrop-blur-sm"
+			class="mx-auto mt-10 max-w-2xl rounded-2xl border-2 border-cyan-400/30 bg-slate-900/50 p-6 backdrop-blur-sm"
 		>
 			<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
 				<!-- Left Column -->
@@ -187,7 +187,7 @@
 					<!-- Tracklist Selection -->
 					<div>
 						<div class="mb-2 flex items-center justify-between">
-							<span class="text-sm font-semibold text-gray-400">{$_('home.tracklist')}</span>
+							<span class="text-sm font-semibold text-slate-400">{$_('home.tracklist')}</span>
 							<button
 								type="button"
 								onclick={() => (showTracklistSelector = true)}
@@ -206,7 +206,7 @@
 								<ChevronRight class="h-4 w-4" />
 							</button>
 						</div>
-						<p class="text-sm text-gray-500">
+						<p class="text-sm text-slate-500">
 							{$selectedTracklist.isDefault
 								? $_($selectedTracklist.description)
 								: $selectedTracklist.description}
@@ -216,7 +216,7 @@
 					<!-- Number of Tracks (not shown for Bingo mode) -->
 					{#if selectedMode !== 'bingo'}
 						<div class="flex items-center justify-between">
-							<span class="text-sm font-semibold text-gray-400"
+							<span class="text-sm font-semibold text-slate-400"
 								>{$_('settings.numberOfTracks')}</span
 							>
 							<NumberSelector
@@ -229,14 +229,14 @@
 				</div>
 
 				<!-- Right Column / Divider (top divider on mobile) -->
-				<div class="border-t border-gray-700 pt-6 md:border-t-0 md:border-l md:pt-0 md:pl-6">
+				<div class="border-t border-slate-700 pt-6 md:border-t-0 md:border-l md:pt-0 md:pl-6">
 					{#if selectedMode === 'bingo'}
 						<!-- Bingo-specific setup -->
 						<BingoSetup onOpenSharePopup={() => (showShareLinkPopup = true)} />
 					{:else}
 						<!-- Player Setup Header with Controls -->
 						<div class="mb-3 flex items-center justify-between gap-2">
-							<span class="text-sm font-semibold text-gray-400">{$_('players.setup')}</span>
+							<span class="text-sm font-semibold text-slate-400">{$_('players.setup')}</span>
 							<div class="flex gap-2">
 								<ToggleButton
 									value={enableScoring}
@@ -252,7 +252,7 @@
 									<button
 										type="button"
 										onclick={() => playerSetupRef?.addPlayer()}
-										class="rounded-lg border-2 border-cyan-400/30 bg-gray-900 px-3 py-1.5 text-sm font-semibold text-cyan-400 transition-all duration-200 hover:border-cyan-400 hover:bg-gray-800"
+										class="rounded-lg border-2 border-cyan-400/30 bg-slate-900 px-3 py-1.5 text-sm font-semibold text-cyan-400 transition-all duration-200 hover:border-cyan-400 hover:bg-slate-800"
 									>
 										<Plus class="inline h-4 w-4" />
 										{$_('players.addPlayer')}
@@ -281,7 +281,7 @@
 					onclick={handleStartGame}
 					disabled={!playersValid ||
 						(selectedMode === 'buzzer' && enableScoring && currentPlayers.length < 2)}
-					class="group relative w-full cursor-pointer overflow-hidden rounded-2xl border-2 border-cyan-400/50 bg-linear-to-r from-gray-900 via-cyan-950/30 to-gray-900 px-8 py-6 text-2xl font-bold text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-cyan-400 hover:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100 disabled:hover:border-cyan-400/50 disabled:hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+					class="group relative w-full cursor-pointer overflow-hidden rounded-2xl border-2 border-cyan-400/50 bg-linear-to-r from-slate-900 via-cyan-950/30 to-slate-900 px-8 py-6 text-2xl font-bold text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-cyan-400 hover:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100 disabled:hover:border-cyan-400/50 disabled:hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
 				>
 					<!-- Animated gradient overlay -->
 					<div
@@ -310,7 +310,7 @@
 		{/if}
 
 		<!-- Footer -->
-		<div class="mt-16 mb-6 text-center text-gray-400">
+		<div class="mt-16 mb-6 text-center text-slate-400">
 			<div class="flex items-center justify-center gap-2 text-sm">
 				<span>{$_('footer.madeBy')}</span>
 				<span>|</span>

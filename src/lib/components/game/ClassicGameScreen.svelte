@@ -39,7 +39,7 @@
 	<div class="flex h-screen items-center justify-center">
 		<!-- Floating Legend of Categories (above player button) -->
 		<div
-			class="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-80 rounded-2xl border-2 border-cyan-400 bg-gray-900 px-4 py-3 shadow-[0_0_30px_rgba(34,211,238,0.3)] md:px-4 md:py-4"
+			class="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-80 rounded-2xl border-2 border-cyan-400 bg-slate-900 px-4 py-3 shadow-[0_0_30px_rgba(34,211,238,0.3)] md:px-4 md:py-4"
 		>
 			<div class="flex flex-col items-center gap-1.5 md:flex-row md:gap-2">
 				{#each activeCategories as category}

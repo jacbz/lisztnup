@@ -2,9 +2,9 @@
 	import { _ } from 'svelte-i18n';
 	import type { GameMode } from '$lib/types';
 	import Trophy from 'lucide-svelte/icons/trophy';
-	import HelpCircle from 'lucide-svelte/icons/help-circle';
+	import BadgeQuestionMark from 'lucide-svelte/icons/badge-question-mark';
 	import ModeRulesPopup from './ModeRulesPopup.svelte';
-	import Grid3X3 from 'lucide-svelte/icons/grid-3x3';
+	import LifeBuoy from 'lucide-svelte/icons/life-buoy';
 	import Crown from 'lucide-svelte/icons/crown';
 
 	interface Props {
@@ -39,7 +39,7 @@
 		},
 		{
 			id: 'bingo' as GameMode,
-			icon: Grid3X3,
+			icon: LifeBuoy,
 			color: '#a855f7'
 		}
 	];
@@ -61,7 +61,7 @@
 				<!-- Mode Icon -->
 				<div
 					class="shrink-0 transition-colors"
-					class:text-gray-400={!isSelected}
+					class:text-slate-400={!isSelected}
 					style={isSelected ? `color: ${mode.color};` : ''}
 				>
 					<mode.icon class="h-12 w-12" strokeWidth={2} />
@@ -71,7 +71,7 @@
 					<!-- Mode Name -->
 					<h3
 						class="mb-1 text-xl font-bold transition-colors"
-						class:text-gray-400={!isSelected}
+						class:text-slate-400={!isSelected}
 						style={isSelected ? `color: ${mode.color};` : ''}
 					>
 						{$_(`modes.${mode.id}.name`)}
@@ -80,7 +80,7 @@
 					<!-- Mode Description -->
 					<p
 						class="text-sm leading-relaxed"
-						class:text-gray-400={!isSelected}
+						class:text-slate-400={!isSelected}
 						style={isSelected ? `color: ${mode.color};` : ''}
 					>
 						{$_(`modes.${mode.id}.description`)}
@@ -91,10 +91,10 @@
 				<div
 					role="button"
 					tabindex="0"
-					class="absolute top-3 right-3 flex cursor-pointer items-center justify-center rounded-full p-2 backdrop-blur-sm transition-all duration-300 hover:scale-125"
+					class="absolute top-3 right-3 flex cursor-pointer items-center justify-center rounded-full border border-slate-600 p-2 text-slate-400 backdrop-blur-sm transition-all duration-300 hover:scale-125"
 					style={isSelected
-						? `background: linear-gradient(135deg, ${mode.color}30, ${mode.color}15); border: 1.5px solid ${mode.color}60; color: ${mode.color}; box-shadow: 0 0 15px ${mode.color}40;`
-						: `background: rgba(31, 41, 55, 0.5); border: 1.5px solid rgba(75, 85, 99, 0.5); color: rgb(156, 163, 175);`}
+						? `background: linear-gradient(135deg, ${mode.color}30, ${mode.color}15); border-color: ${mode.color}60; color: ${mode.color}; box-shadow: 0 0 15px ${mode.color}40;`
+						: ``}
 					onmouseenter={(e) => {
 						if (!isSelected) {
 							e.currentTarget.style.borderColor = `${mode.color}80`;
@@ -118,7 +118,7 @@
 					}}
 					aria-label="Show rules"
 				>
-					<HelpCircle class="h-5 w-5" strokeWidth={2.5} />
+					<BadgeQuestionMark class="h-5 w-5" strokeWidth={2.5} />
 				</div>
 			</button>
 		{/each}

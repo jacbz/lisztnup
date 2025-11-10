@@ -66,7 +66,7 @@
 		<button
 			type="button"
 			onclick={openUrl}
-			class="cursor-pointer rounded-lg border-2 border-cyan-400/30 bg-gray-900/50 p-4 transition-all hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)]"
+			class="cursor-pointer rounded-lg border-2 border-cyan-400/30 bg-slate-900/50 p-4 transition-all hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)]"
 		>
 			<QRCode text={url} width={256} height={256} class="block" />
 		</button>
@@ -75,7 +75,7 @@
 			<button
 				type="button"
 				onclick={copyToClipboard}
-				class="flex items-center gap-2 rounded-lg border-2 border-cyan-400/30 bg-gray-900/50 px-4 py-2 text-cyan-400 transition-all hover:border-cyan-400 hover:bg-gray-800/70"
+				class="flex items-center gap-2 rounded-lg border-2 border-cyan-400/30 bg-slate-900/50 px-4 py-2 text-cyan-400 transition-all hover:border-cyan-400 hover:bg-slate-800/70"
 			>
 				{#if copied}
 					<Check class="h-5 w-5" />
@@ -90,7 +90,7 @@
 				<button
 					type="button"
 					onclick={share}
-					class="flex items-center gap-2 rounded-lg border-2 border-cyan-400/30 bg-gray-900/50 px-4 py-2 text-cyan-400 transition-all hover:border-cyan-400 hover:bg-gray-800/70"
+					class="flex items-center gap-2 rounded-lg border-2 border-cyan-400/30 bg-slate-900/50 px-4 py-2 text-cyan-400 transition-all hover:border-cyan-400 hover:bg-slate-800/70"
 				>
 					<Share class="h-5 w-5" />
 					<span>{$_('bingo.share', { default: 'Share' })}</span>
@@ -100,7 +100,7 @@
 			<button
 				type="button"
 				onclick={openUrl}
-				class="flex items-center gap-2 rounded-lg border-2 border-purple-400/30 bg-gray-900/50 px-4 py-2 text-purple-400 transition-all hover:border-purple-400 hover:bg-gray-800/70"
+				class="flex items-center gap-2 rounded-lg border-2 border-purple-400/30 bg-slate-900/50 px-4 py-2 text-purple-400 transition-all hover:border-purple-400 hover:bg-slate-800/70"
 			>
 				<ExternalLink class="h-5 w-5" />
 				<span>{$_('bingo.openGrid', { default: 'Open Grid' })}</span>

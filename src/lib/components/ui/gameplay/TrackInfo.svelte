@@ -56,7 +56,7 @@
 			<p class="text-center text-3xl font-bold text-cyan-400">
 				{composerName}
 			</p>
-			<p class="text-center text-lg text-gray-400">({lifespan})</p>
+			<p class="text-center text-lg text-slate-400">({lifespan})</p>
 		</div>
 
 		{#if era || displayYear}
@@ -67,7 +67,7 @@
 					{/if}
 
 					{#if era && displayYear}
-						<span class="mx-2 text-gray-400">·</span>
+						<span class="mx-2 text-slate-400">·</span>
 					{/if}
 
 					{#if displayYear}
@@ -89,7 +89,7 @@
 		<!-- Part (only if different from work, with stripped prefix) -->
 		{#if shouldShowPart}
 			<div class="flex flex-col gap-1.5">
-				<p class="text-center text-xl wrap-break-word text-gray-300">
+				<p class="text-center text-xl wrap-break-word text-slate-300">
 					{displayPartName}
 				</p>
 			</div>

@@ -313,7 +313,7 @@
 			{#snippet children()}
 				{@const categoryDef = getCategoryDefinition(currentCategory)}
 				<div
-					class="flex max-w-[90vw] flex-col items-center gap-3 rounded-[20px] border-[3px] bg-gray-900 px-6 py-3 shadow-[0_0_40px] md:flex-row md:gap-6 md:px-8"
+					class="flex max-w-[90vw] flex-col items-center gap-3 rounded-[20px] border-[3px] bg-slate-900 px-6 py-3 shadow-[0_0_40px] md:flex-row md:gap-6 md:px-8"
 					style="border-color: {categoryDef?.color2 ||
 						'#22d3ee'}; box-shadow: 0 0 40px {categoryDef?.glowColor || 'rgba(34,211,238,0.4)'};"
 				>
@@ -382,7 +382,7 @@
 		<button
 			type="button"
 			onclick={handleBuzzerNext}
-			class="mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-gray-900 px-6 py-3 font-bold text-cyan-400 transition-all duration-200 hover:bg-gray-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.6)]"
+			class="mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3 font-bold text-cyan-400 transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.6)]"
 		>
 			{$_('game.nextRound')}
 			<ArrowRight class="h-5 w-5" />

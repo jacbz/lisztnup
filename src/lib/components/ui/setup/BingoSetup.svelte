@@ -20,7 +20,7 @@
 
 <div class="flex flex-row items-center gap-4">
 	<div class="flex-1 md:text-left">
-		<p class="text-sm text-gray-400">
+		<p class="text-sm text-slate-400">
 			{$_('bingo.setupDescription')}
 		</p>
 	</div>

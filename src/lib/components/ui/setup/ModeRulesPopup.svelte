@@ -4,8 +4,7 @@
 	import Popup from '../primitives/Popup.svelte';
 	import Trophy from 'lucide-svelte/icons/trophy';
 	import Crown from 'lucide-svelte/icons/crown';
-	import Grid3X3 from 'lucide-svelte/icons/grid-3x3';
-	import X from 'lucide-svelte/icons/x';
+	import LifeBuoy from 'lucide-svelte/icons/life-buoy';
 
 	interface Props {
 		visible?: boolean;
@@ -62,7 +61,7 @@
 				]
 			},
 			bingo: {
-				icon: Grid3X3,
+				icon: LifeBuoy,
 				color: '#a855f7',
 				steps: [
 					{
@@ -109,7 +108,7 @@
 				<h2 class="text-3xl font-bold" style="color: {modeConfig.color};">
 					{$_(`modes.${mode}.name`)}
 				</h2>
-				<p class="mt-1 text-lg text-gray-400">
+				<p class="mt-1 text-lg text-slate-400">
 					{$_(`modes.${mode}.description`)}
 				</p>
 			</div>
@@ -137,7 +136,7 @@
 						<h3 class="mb-2 hidden text-xl font-bold text-white md:block">
 							{$_(step.titleKey)}
 						</h3>
-						<p class="text-gray-400">
+						<p class="text-slate-400">
 							{$_(step.descKey)}
 						</p>
 					</div>
@@ -145,7 +144,7 @@
 					<!-- Screenshot -->
 					<div class="w-full shrink-0 md:w-64">
 						<div
-							class="overflow-hidden rounded-lg border-2 bg-gray-800"
+							class="overflow-hidden rounded-lg border-2 bg-slate-800"
 							style="border-color: {modeConfig.color}40;"
 						>
 							<img

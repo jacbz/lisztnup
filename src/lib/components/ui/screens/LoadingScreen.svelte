@@ -23,7 +23,7 @@
 			</div>
 		{:else}
 			<div
-				class="mx-auto h-2 w-64 overflow-hidden rounded-full border border-cyan-400/30 bg-gray-900"
+				class="mx-auto h-2 w-64 overflow-hidden rounded-full border border-cyan-400/30 bg-slate-900"
 			>
 				<div
 					class="h-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)] transition-all duration-300"

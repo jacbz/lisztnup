@@ -42,7 +42,7 @@
 		transition:fly={{ y: 50, duration: 500 }}
 	>
 		<div
-			class="w-full max-w-[600px] rounded-3xl border-2 border-cyan-400 bg-gray-900 p-10 shadow-[0_0_30px_rgba(34,211,238,0.3)]"
+			class="w-full max-w-[600px] rounded-3xl border-2 border-cyan-400 bg-slate-900 p-10 shadow-[0_0_30px_rgba(34,211,238,0.3)]"
 		>
 			<!-- Winner Announcement -->
 			{#if !isSoloMode && enableScoring}
@@ -96,14 +96,14 @@
 						{#each sortedPlayers as player, index}
 							<div
 								class={index === 0
-									? 'flex items-center gap-4 rounded-xl border-2 border-amber-400 bg-gray-800 p-4 shadow-[0_0_20px_rgba(251,191,36,0.3)] transition-all duration-200 sm:gap-3 sm:p-3'
-									: 'flex items-center gap-4 rounded-xl border-2 border-transparent bg-gray-700 p-4 transition-all duration-200 sm:gap-3 sm:p-3'}
+									? 'flex items-center gap-4 rounded-xl border-2 border-amber-400 bg-slate-800 p-4 shadow-[0_0_20px_rgba(251,191,36,0.3)] transition-all duration-200 sm:gap-3 sm:p-3'
+									: 'flex items-center gap-4 rounded-xl border-2 border-transparent bg-slate-700 p-4 transition-all duration-200 sm:gap-3 sm:p-3'}
 								style="border-color: {index === 0 ? '#fbbf24' : player.color};"
 							>
 								<div
 									class="w-10 text-xl font-bold sm:w-[30px] sm:text-base {index === 0
 										? 'text-amber-400'
-										: 'text-gray-400'}"
+										: 'text-slate-400'}"
 								>
 									#{index + 1}
 								</div>
@@ -129,7 +129,7 @@
 					<button
 						type="button"
 						onclick={onViewStats}
-						class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400/50 bg-gray-800 px-6 py-3.5 text-base font-bold text-cyan-400 transition-all duration-200 hover:border-cyan-400 hover:bg-gray-700 hover:shadow-[0_0_15px_rgba(34,211,238,0.3)]"
+						class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400/50 bg-slate-800 px-6 py-3.5 text-base font-bold text-cyan-400 transition-all duration-200 hover:border-cyan-400 hover:bg-slate-700 hover:shadow-[0_0_15px_rgba(34,211,238,0.3)]"
 					>
 						<BarChart class="h-5 w-5" />
 						{$_('endGame.viewStats')}
@@ -138,7 +138,7 @@
 				<button
 					type="button"
 					onclick={onHome}
-					class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-gray-900 px-6 py-3.5 text-base font-bold text-cyan-400 transition-all duration-200 hover:border-cyan-400 hover:bg-gray-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)]"
+					class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3.5 text-base font-bold text-cyan-400 transition-all duration-200 hover:border-cyan-400 hover:bg-slate-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)]"
 				>
 					<Home class="h-5 w-5" />
 					{$_('endGame.home')}

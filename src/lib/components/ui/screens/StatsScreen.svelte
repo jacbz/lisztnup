@@ -88,7 +88,7 @@
 
 	{#if chartData && chartData.length > 0}
 		<!-- Chart -->
-		<div class="mb-6 overflow-visible rounded-xl bg-gray-800 p-2 md:p-5">
+		<div class="mb-6 overflow-visible rounded-xl bg-slate-800 p-2 md:p-5">
 			<svg width={chartWidth} height={chartHeight} class="mx-auto block w-full">
 				<!-- Grid lines -->
 				<g class="grid-lines">
@@ -104,7 +104,7 @@
 							stroke-width="1"
 							stroke-dasharray="4 4"
 						/>
-						<text x={padding.left - 10} y={y + 5} class="fill-gray-400 text-xs" text-anchor="end">
+						<text x={padding.left - 10} y={y + 5} class="fill-slate-400 text-xs" text-anchor="end">
 							{Math.round(score)}
 						</text>
 					{/each}
@@ -117,7 +117,7 @@
 						<text
 							{x}
 							y={chartHeight - padding.bottom + 20}
-							class="fill-gray-400 text-xs"
+							class="fill-slate-400 text-xs"
 							text-anchor="middle"
 						>
 							{i}
@@ -126,7 +126,7 @@
 					<text
 						x={chartWidth / 2}
 						y={chartHeight - 5}
-						class="fill-gray-300 text-sm font-semibold"
+						class="fill-slate-300 text-sm font-semibold"
 						text-anchor="middle"
 					>
 						{$_('stats.round')}
@@ -164,7 +164,7 @@
 		<!-- Legend -->
 		<div class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3">
 			{#each chartData as { player, scores }}
-				<div class="flex items-center gap-2 rounded-lg bg-gray-700 p-2">
+				<div class="flex items-center gap-2 rounded-lg bg-slate-700 p-2">
 					<div
 						class="h-5 w-5 shrink-0 rounded-full"
 						style="background-color: {player.color};"
@@ -177,7 +177,7 @@
 			{/each}
 		</div>
 	{:else}
-		<p class="py-12 text-center text-lg text-gray-400">
+		<p class="py-12 text-center text-lg text-slate-400">
 			{$_('stats.noData')}
 		</p>
 	{/if}
