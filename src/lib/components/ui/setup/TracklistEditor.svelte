@@ -505,6 +505,9 @@
 				</div>
 			</div>
 
+			<h3 class="mb-1 text-lg font-semibold text-purple-400">{$_('tracklistEditor.filters')}</h3>
+			<p class="text-sm text-slate-400">{$_('tracklistEditor.filtersDescription')}</p>
+
 			<!-- Work Score Range (Popularity) -->
 			<div class="rounded-lg border-2 border-slate-700 bg-slate-800/50 p-4">
 				<div class="mb-3 flex items-center justify-between">

@@ -218,6 +218,12 @@ class DeezerPlayer {
 			}
 
 			const audioContext = this.getAudioContext();
+
+			// Resume AudioContext if it's suspended
+			if (audioContext.state === 'suspended') {
+				await audioContext.resume();
+			}
+
 			this.sourceNode = audioContext.createBufferSource();
 			this.sourceNode.buffer = this.audioBuffer;
 

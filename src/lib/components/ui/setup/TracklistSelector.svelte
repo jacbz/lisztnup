@@ -257,28 +257,25 @@
 		{/if}
 
 		<!-- Custom Tracklists -->
-		{#if groupedTracklists.custom.length > 0}
-			<div>
-				<h3 class="mb-3 text-lg font-semibold text-purple-400">
-					{$_('tracklistEditor.categoryCustom')}
-				</h3>
-				<div class="grid gap-3 md:grid-cols-2">
-					{#each groupedTracklists.custom as tracklist}
-						{@render tracklistCard(tracklist)}
-					{/each}
-				</div>
+		<div>
+			<h3 class="mb-3 text-lg font-semibold text-purple-400">
+				{$_('tracklistEditor.categoryCustom')}
+			</h3>
+			<div class="grid gap-3 md:grid-cols-2">
+				{#each groupedTracklists.custom as tracklist}
+					{@render tracklistCard(tracklist)}
+				{/each}
+				<!-- Create New Button -->
+				<button
+					type="button"
+					onclick={handleCreateNew}
+					class="min-h-32 w-full rounded-xl border-2 border-dashed border-cyan-400/50 bg-slate-800/50 px-4 py-3 text-cyan-400 transition-all hover:border-cyan-400 hover:bg-slate-800"
+				>
+					+ {$_('tracklistSelector.createNew')}
+				</button>
 			</div>
-		{/if}
+		</div>
 	</div>
-
-	<!-- Create New Button -->
-	<button
-		type="button"
-		onclick={handleCreateNew}
-		class="mt-4 w-full rounded-xl border-2 border-dashed border-cyan-400/50 bg-slate-800/50 px-4 py-3 text-cyan-400 transition-all hover:border-cyan-400 hover:bg-slate-800"
-	>
-		+ {$_('tracklistSelector.createNew')}
-	</button>
 </Popup>
 {#snippet tracklistCard(tracklist: Tracklist)}
 	{@const selected = isSameTracklist(tracklist, selectedTracklist)}
@@ -291,9 +288,9 @@
 			<button
 				type="button"
 				onclick={() => handleView(tracklist)}
-				class="rounded-lg p-2 transition-all {selected
+				class="rounded-lg p-2 transition-all focus:ring-2 focus:ring-cyan-400 focus:outline-none {selected
 					? 'bg-white/20 hover:bg-white/30'
-					: 'bg-slate-700 hover:bg-slate-600'}"
+					: 'bg-slate-600/80 hover:bg-slate-500'}"
 				title={$_('tracklistSelector.view')}
 			>
 				<svg
@@ -314,9 +311,9 @@
 			<button
 				type="button"
 				onclick={() => handleClone(tracklist)}
-				class="rounded-lg p-2 transition-all {selected
+				class="rounded-lg p-2 transition-all focus:ring-2 focus:ring-cyan-400 focus:outline-none {selected
 					? 'bg-white/20 hover:bg-white/30'
-					: 'bg-slate-700 hover:bg-slate-600'}"
+					: 'bg-slate-600/80 hover:bg-slate-500'}"
 				title={$_('tracklistSelector.clone')}
 			>
 				<svg
@@ -369,9 +366,9 @@
 				<button
 					type="button"
 					onclick={() => handleEdit(tracklist)}
-					class="flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm transition-all {selected
+					class="flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm transition-all focus:ring-2 focus:ring-cyan-400 focus:outline-none {selected
 						? 'bg-white/20 hover:bg-white/30'
-						: 'bg-slate-700 hover:bg-slate-600'}"
+						: 'bg-slate-600/80 hover:bg-slate-500'}"
 				>
 					<Edit class="h-4 w-4" />
 					<span>{$_('tracklistSelector.edit')}</span>
@@ -379,9 +376,9 @@
 				<button
 					type="button"
 					onclick={() => handleShare(tracklist)}
-					class="flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm transition-all {selected
+					class="flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm transition-all focus:ring-2 focus:ring-cyan-400 focus:outline-none {selected
 						? 'bg-white/20 hover:bg-white/30'
-						: 'bg-slate-700 hover:bg-slate-600'}"
+						: 'bg-slate-600/80 hover:bg-slate-500'}"
 				>
 					<ShareIcon class="h-4 w-4" />
 					<span>{$_('tracklistSelector.share')}</span>

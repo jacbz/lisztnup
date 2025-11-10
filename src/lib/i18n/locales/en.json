@@ -176,11 +176,12 @@
 		}
 	},
 	"tracklistEditor": {
-		"title": "Edit Tracklist",
+		"editTitle": "Edit Tracklist",
 		"createTitle": "Create Tracklist",
 		"name": "Name",
 		"description": "Description",
 		"filters": "Filters",
+		"filtersDescription": "Tracklists are constructed by applying filters on the entire collection.",
 		"categoryWeights": "Categories",
 		"categoryWeightsDesc": "Adjust how much each musical category is favored. Setting to 0 excludes that category.",
 		"composerFilter": "Composers",
@@ -240,7 +241,7 @@
 		"trackLength": "Track Length",
 		"trackLengthHint": "How long each track plays during the game. Changes will apply to the next track. Does not apply to Buzzer Mode.",
 		"audioNormalization": "Audio Normalization",
-		"audioNormalizationHint": "Uses advanced audio processing to balance volume across tracks. May cause playback issues on browsers on Apple devices; deactivate if you experience problems. Changes will apply to the next track."
+		"audioNormalizationHint": "Uses advanced audio processing to balance volume across tracks. Also powers the visualizer. May cause playback issues on browsers on Apple devices; deactivate if you experience problems. Changes will apply to the next track."
 	},
 	"quitDialog": {
 		"title": "Quit Game?",

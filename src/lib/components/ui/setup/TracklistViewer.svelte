@@ -251,7 +251,7 @@
 			</h2>
 
 			<!-- PlayerControl in header -->
-			<div class="relative flex h-12 w-12 items-center justify-center">
+			<div class="relative mr-8 flex h-12 w-12 items-center justify-center">
 				<PlayerControl
 					visible={currentlyPlayingDeezerId !== null && !playbackState.playbackEnded}
 					isPlaying={playbackState.isPlaying}
