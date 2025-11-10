@@ -18,7 +18,7 @@ function createToastStore() {
 
 	let idCounter = 0;
 
-	return {
+	const store = {
 		subscribe,
 		show: (type: ToastType, message: string, duration: number = 3000) => {
 			const id = `toast-${++idCounter}`;
@@ -49,18 +49,20 @@ function createToastStore() {
 		},
 		// Convenience methods
 		success: (message: string, duration?: number) => {
-			return createToastStore().show('success', message, duration);
+			return store.show('success', message, duration);
 		},
 		error: (message: string, duration?: number) => {
-			return createToastStore().show('error', message, duration);
+			return store.show('error', message, duration);
 		},
 		warning: (message: string, duration?: number) => {
-			return createToastStore().show('warning', message, duration);
+			return store.show('warning', message, duration);
 		},
 		info: (message: string, duration?: number) => {
-			return createToastStore().show('info', message, duration);
+			return store.show('info', message, duration);
 		}
 	};
+
+	return store;
 }
 
 export const toast = createToastStore();

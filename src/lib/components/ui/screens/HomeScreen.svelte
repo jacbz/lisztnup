@@ -364,6 +364,8 @@
 	visible={showShareLinkPopup}
 	url={bingoUrl}
 	onClose={() => (showShareLinkPopup = false)}
+	shareTitle={$_('bingo.shareTitle')}
+	shareText={$_('bingo.shareText')}
 />
 
 <style>

@@ -8,7 +8,7 @@
 		tracklist,
 		selectedTracklist
 	} from '$lib/stores';
-	import { TracklistGenerator, deezerPlayer } from '$lib/services';
+	import { TracklistGenerator, deezerPlayer, SettingsService } from '$lib/services';
 	import type { GameMode, Player } from '$lib/types';
 	import LoadingScreen from '$lib/components/ui/screens/LoadingScreen.svelte';
 	import HomeScreen from '$lib/components/ui/screens/HomeScreen.svelte';
@@ -16,6 +16,8 @@
 	import BuzzerGameScreen from '$lib/components/game/BuzzerGameScreen.svelte';
 	import BingoGameScreen from '$lib/components/game/BingoGameScreen.svelte';
 	import GameScreen from '$lib/components/game/GameScreen.svelte';
+	import { decompress } from '$lib/utils';
+	import { toast } from '$lib/stores';
 
 	// Store reference to the generator for the current game
 	let generator: TracklistGenerator | null = null;
@@ -24,9 +26,43 @@
 	let isSoloMode = false;
 	let enableScoring = true;
 
-	onMount(() => {
+	onMount(async () => {
 		// Load settings from localStorage
 		settings.load();
+
+		// Handle addTracklist URL parameter
+		const urlParams = new URLSearchParams(window.location.search);
+		const addTracklistParam = urlParams.get('addTracklist');
+		if (addTracklistParam) {
+			try {
+				const decompressed = await decompress(decodeURIComponent(addTracklistParam));
+				const tracklist = JSON.parse(decompressed);
+
+				// Validate tracklist structure
+				if (!tracklist.name || !tracklist.config) {
+					throw new Error('Invalid tracklist format');
+				}
+
+				// Check if tracklist with this name already exists
+				const existingTracklists = SettingsService.loadCustomTracklists();
+				const exists = existingTracklists.some((t) => t.name === tracklist.name);
+
+				if (exists) {
+					toast.error('A tracklist with this name already exists');
+				} else {
+					// Add the tracklist
+					SettingsService.saveCustomTracklist(tracklist);
+					toast.success(`Tracklist "${tracklist.name}" added successfully!`);
+				}
+			} catch (error) {
+				console.error('Error processing shared tracklist:', error);
+				toast.error('Failed to import shared tracklist');
+			}
+
+			// Clear the URL parameter
+			const newUrl = window.location.pathname + window.location.hash;
+			window.history.replaceState({}, document.title, newUrl);
+		}
 	});
 
 	function handleStartGame(

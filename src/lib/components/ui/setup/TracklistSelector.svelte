@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Tracklist } from '$lib/types';
-	import { gameData } from '$lib/stores';
+	import { gameData, toast } from '$lib/stores';
 	import { TracklistGenerator } from '$lib/services';
 	import { SettingsService } from '$lib/services';
 	import { DEFAULT_TRACKLISTS, cloneTracklist } from '$lib/data/defaultTracklists';
@@ -9,7 +9,12 @@
 	import Dialog from '../primitives/Dialog.svelte';
 	import TracklistEditor from './TracklistEditor.svelte';
 	import TracklistViewer from './TracklistViewer.svelte';
+	import ShareLinkPopup from './ShareLinkPopup.svelte';
 	import { _ } from 'svelte-i18n';
+	import { compress } from '$lib/utils';
+	import Edit from 'lucide-svelte/icons/edit';
+	import ShareIcon from 'lucide-svelte/icons/share';
+	import Trash from 'lucide-svelte/icons/trash';
 
 	interface Props {
 		visible?: boolean;
@@ -60,6 +65,10 @@
 	// Delete confirmation dialog state
 	let showDeleteDialog = $state(false);
 	let tracklistToDelete = $state<Tracklist | null>(null);
+
+	// Share popup state
+	let showSharePopup = $state(false);
+	let shareUrl = $state('');
 
 	// Compute tracklist info for each tracklist
 	const tracklistInfoMap = $derived.by(() => {
@@ -114,6 +123,18 @@
 		showViewer = true;
 	}
 
+	async function handleShare(tracklist: Tracklist) {
+		try {
+			const json = JSON.stringify(tracklist);
+			const compressed = await compress(json);
+			const baseUrl = window.location.origin + window.location.pathname;
+			shareUrl = `${baseUrl}?addTracklist=${encodeURIComponent(compressed)}`;
+			showSharePopup = true;
+		} catch (error) {
+			toast.error('Failed to create share link');
+		}
+	}
+
 	function handleCreateNew() {
 		editingTracklist = null;
 		showEditor = true;
@@ -159,6 +180,11 @@
 	function handleCloseViewer() {
 		showViewer = false;
 		viewingTracklist = null;
+	}
+
+	function handleCloseSharePopup() {
+		showSharePopup = false;
+		shareUrl = '';
 	}
 
 	// Helper to check if two tracklists are the same
@@ -343,20 +369,32 @@
 				<button
 					type="button"
 					onclick={() => handleEdit(tracklist)}
-					class="flex-1 rounded-lg px-3 py-1 text-sm transition-all {selected
+					class="flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm transition-all {selected
 						? 'bg-white/20 hover:bg-white/30'
 						: 'bg-slate-700 hover:bg-slate-600'}"
 				>
-					{$_('tracklistSelector.edit')}
+					<Edit class="h-4 w-4" />
+					<span>{$_('tracklistSelector.edit')}</span>
+				</button>
+				<button
+					type="button"
+					onclick={() => handleShare(tracklist)}
+					class="flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm transition-all {selected
+						? 'bg-white/20 hover:bg-white/30'
+						: 'bg-slate-700 hover:bg-slate-600'}"
+				>
+					<ShareIcon class="h-4 w-4" />
+					<span>{$_('tracklistSelector.share')}</span>
 				</button>
 				<button
 					type="button"
 					onclick={() => handleDeleteClick(tracklist)}
-					class="flex-1 rounded-lg px-3 py-1 text-sm transition-all {selected
-						? 'bg-red-300/20 hover:bg-red-500/30'
-						: 'bg-red-600/30 hover:bg-red-900/50'}"
+					class="flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm transition-all {selected
+						? 'bg-rose-300/20 hover:bg-rose-500/30'
+						: 'hover:bg-rose-1000 bg-rose-900'}"
 				>
-					{$_('tracklistSelector.delete')}
+					<Trash class="h-4 w-4" />
+					<span>{$_('tracklistSelector.delete')}</span>
 				</button>
 			</div>
 		{/if}
@@ -386,3 +424,13 @@
 
 <!-- Tracklist Viewer -->
 <TracklistViewer visible={showViewer} tracklist={viewingTracklist} onClose={handleCloseViewer} />
+
+<!-- Share Link Popup -->
+<ShareLinkPopup
+	visible={showSharePopup}
+	url={shareUrl}
+	onClose={handleCloseSharePopup}
+	shareTitle={$_('shareLink.tracklistTitle')}
+	shareText={$_('shareLink.tracklistText')}
+	showOpenButton={false}
+/>

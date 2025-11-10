@@ -12,9 +12,12 @@
 		visible: boolean;
 		url: string;
 		onClose: () => void;
+		shareTitle?: string;
+		shareText?: string;
+		showOpenButton?: boolean;
 	}
 
-	let { visible, url, onClose }: Props = $props();
+	let { visible, url, onClose, shareTitle, shareText, showOpenButton = true }: Props = $props();
 
 	let copied = $state(false);
 	let hasShareSupport = $state(false);
@@ -31,7 +34,7 @@
 				copied = false;
 			}, 2000);
 		} catch (error) {
-			toast.error($_('bingo.copyFailed', { default: 'Failed to copy to clipboard' }));
+			toast.error($_('shareLink.copyFailed'));
 		}
 	}
 
@@ -39,8 +42,8 @@
 		try {
 			if (navigator.share) {
 				await navigator.share({
-					title: $_('app.title'),
-					text: $_('bingo.shareText', { default: 'Join my Bingo game!' }),
+					title: shareTitle || $_('app.title'),
+					text: shareText,
 					url
 				});
 			} else {
@@ -59,16 +62,16 @@
 
 <Popup {visible} {onClose} width="3xl">
 	<h2 class="mb-6 text-center text-2xl font-bold text-purple-400">
-		{$_('bingo.shareTitle', { default: 'Share Bingo Grid' })}
+		{shareTitle || $_('shareLink.share')}
 	</h2>
 
-	<div class="flex flex-col items-center gap-4">
+	<div class="flex min-w-[280px] flex-col items-center gap-4">
 		<button
 			type="button"
 			onclick={openUrl}
 			class="cursor-pointer rounded-lg border-2 border-cyan-400/30 bg-slate-900/50 p-4 transition-all hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)]"
 		>
-			<QRCode text={url} width={256} height={256} class="block" />
+			<QRCode text={url} minWidth={256} class="block" />
 		</button>
 
 		<div class="flex gap-2">
@@ -79,10 +82,10 @@
 			>
 				{#if copied}
 					<Check class="h-5 w-5" />
-					<span>{$_('bingo.copied', { default: 'Copied!' })}</span>
+					<span>{$_('shareLink.copied')}</span>
 				{:else}
 					<Copy class="h-5 w-5" />
-					<span>{$_('bingo.copy', { default: 'Copy' })}</span>
+					<span>{$_('shareLink.copy')}</span>
 				{/if}
 			</button>
 
@@ -93,18 +96,20 @@
 					class="flex items-center gap-2 rounded-lg border-2 border-cyan-400/30 bg-slate-900/50 px-4 py-2 text-cyan-400 transition-all hover:border-cyan-400 hover:bg-slate-800/70"
 				>
 					<Share class="h-5 w-5" />
-					<span>{$_('bingo.share', { default: 'Share' })}</span>
+					<span>{$_('shareLink.share')}</span>
 				</button>
 			{/if}
 
-			<button
-				type="button"
-				onclick={openUrl}
-				class="flex items-center gap-2 rounded-lg border-2 border-purple-400/30 bg-slate-900/50 px-4 py-2 text-purple-400 transition-all hover:border-purple-400 hover:bg-slate-800/70"
-			>
-				<ExternalLink class="h-5 w-5" />
-				<span>{$_('bingo.openGrid', { default: 'Open Grid' })}</span>
-			</button>
+			{#if showOpenButton}
+				<button
+					type="button"
+					onclick={openUrl}
+					class="flex items-center gap-2 rounded-lg border-2 border-purple-400/30 bg-slate-900/50 px-4 py-2 text-purple-400 transition-all hover:border-purple-400 hover:bg-slate-800/70"
+				>
+					<ExternalLink class="h-5 w-5" />
+					<span>{$_('shareLink.openLink')}</span>
+				</button>
+			{/if}
 		</div>
 	</div>
 </Popup>

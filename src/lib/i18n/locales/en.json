@@ -155,6 +155,7 @@
 		"view": "View",
 		"clone": "Clone",
 		"edit": "Edit",
+		"share": "Share",
 		"delete": "Delete",
 		"createNew": "Create New Tracklist",
 		"deleteDialog": {
@@ -224,6 +225,15 @@
 		"categoryComposers": "Composers",
 		"categoryEras": "Eras",
 		"categoryCustom": "Custom"
+	},
+	"shareLink": {
+		"openLink": "Open",
+		"copyFailed": "Failed to copy to clipboard",
+		"copy": "Copy",
+		"copied": "Copied!",
+		"share": "Share",
+		"tracklistTitle": "Share Tracklist",
+		"tracklistText": "Check out this Liszt’n Up Tracklist!"
 	},
 	"inGameSettings": {
 		"title": "Settings",
@@ -367,18 +377,13 @@
 	},
 	"bingo": {
 		"setupDescription": "Each player needs their own unique bingo grid.",
-		"openGrid": "Open Grid",
 		"reset": "Reset",
 		"resetTitle": "Reset Grid?",
 		"resetMessage": "This will generate a new random grid and clear all marks. Are you sure?",
 		"resetConfirm": "Reset",
 		"resetCancel": "Cancel",
-		"copy": "Copy",
-		"copied": "Copied!",
-		"share": "Share",
 		"shareTitle": "Share Bingo Grid",
 		"shareText": "Join my Bingo game!",
-		"copyFailed": "Failed to copy to clipboard",
 		"guessPlaceholder": "Enter your guess...",
 		"closeGuess": "Lock In",
 		"reveal": "Reveal"

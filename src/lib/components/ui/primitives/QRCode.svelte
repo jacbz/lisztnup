@@ -5,12 +5,23 @@
 	interface Props {
 		text: string;
 		width?: number;
-		height?: number;
+		minWidth?: number;
 		class?: string;
 	}
 
-	let { text, width = 256, height = 256, class: className = '' }: Props = $props();
+	let { text, width, minWidth, class: className = '' }: Props = $props();
 
+	let viewportWidth = $state(0);
+	let viewportHeight = $state(0);
+
+	function updateViewport() {
+		viewportWidth = window.innerWidth;
+		viewportHeight = window.innerHeight;
+	}
+
+	let computedWidth = $derived(
+		width ?? Math.min(Math.max(viewportWidth * 0.6, minWidth ?? 0), viewportHeight * 0.6)
+	);
 	let canvas: HTMLCanvasElement | undefined = $state();
 
 	async function generateQRCode() {
@@ -18,7 +29,7 @@
 
 		try {
 			await QRCodeLib.toCanvas(canvas, text, {
-				width,
+				width: computedWidth,
 				margin: 1,
 				color: {
 					dark: '#06b6d4', // cyan-500
@@ -31,14 +42,17 @@
 	}
 
 	$effect(() => {
-		if (canvas && text) {
+		if (canvas && text && computedWidth) {
 			generateQRCode();
 		}
 	});
 
 	onMount(() => {
+		updateViewport();
+		window.addEventListener('resize', updateViewport);
 		generateQRCode();
+		return () => window.removeEventListener('resize', updateViewport);
 	});
 </script>
 
-<canvas bind:this={canvas} {width} {height} class={className}></canvas>
+<canvas bind:this={canvas} width={computedWidth} class={className}></canvas>
