@@ -243,6 +243,7 @@
 		// Play buzzer sound immediately when button is pressed
 		if (buzzerAudio) {
 			buzzerAudio.currentTime = 0;
+			buzzerAudio.volume = 0.75;
 			buzzerAudio.play().catch((err) => console.warn('Failed to play buzzer sound:', err));
 		}
 	}

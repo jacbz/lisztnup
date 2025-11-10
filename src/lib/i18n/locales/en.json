@@ -228,7 +228,9 @@
 	"inGameSettings": {
 		"title": "Settings",
 		"trackLength": "Track Length",
-		"trackLengthHint": "Changes will apply to the next track. Does not apply to Buzzer Mode."
+		"trackLengthHint": "How long each track plays during the game. Changes will apply to the next track. Does not apply to Buzzer Mode.",
+		"audioNormalization": "Audio Normalization",
+		"audioNormalizationHint": "Uses advanced audio processing to balance volume across tracks. May cause playback issues on browsers on Apple devices; deactivate if you experience problems. Changes will apply to the next track."
 	},
 	"quitDialog": {
 		"title": "Quit Game?",
@@ -277,7 +279,7 @@
 			"description": "Score points based on category difficulty. The harder the guess, the more points you earn!",
 			"step1": {
 				"title": "Listen to the Track",
-				"desc": "Listen to the music excerpt and try to identify details about the composition."
+				"desc": "Listen to the music excerpt and try to identify details about the composition. Write down your guess."
 			},
 			"step2": {
 				"title": "Guess the Category",
@@ -313,7 +315,7 @@
 			},
 			"step2": {
 				"title": "Spin and Guess",
-				"desc": "Spin the wheel to randomly select a category for each round. Listen to the track and guess correctly to mark squares on your bingo card."
+				"desc": "Spin the wheel to randomly select a category for each round. Listen to the track and write down your guess. If correct, mark any corresponding square on your bingo card."
 			},
 			"step3": {
 				"title": "Get Five in a Row",

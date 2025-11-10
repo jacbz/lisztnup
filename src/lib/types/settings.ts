@@ -51,6 +51,7 @@ export interface GameSettings {
 	players: Array<{ name: string; color: string }>; // Saved player configurations
 	enableScoring: boolean; // Whether scoring is enabled
 	bingoGrid?: BingoGridCell[][]; // 5x5 grid for Bingo mode
+	enableAudioNormalization: boolean; // Whether to use Web Audio API with LUFS normalization (defaults to false on WebKit)
 }
 
 // Default values for tracklist configuration
@@ -76,6 +77,12 @@ export const DEFAULT_TRACKLIST_CONFIG: TracklistConfig = {
 	enablePopularityWeighting: true
 };
 
+// Detect WebKit-based browsers (Safari, iOS Safari, etc.)
+const isWebKit =
+	typeof window !== 'undefined' &&
+	/AppleWebKit/.test(navigator.userAgent) &&
+	!/Chrome|Chromium/.test(navigator.userAgent);
+
 export const DEFAULT_SETTINGS: GameSettings = {
 	numberOfTracks: 10,
 	selectedTracklist: 'tracklists.beginner.name',
@@ -84,5 +91,6 @@ export const DEFAULT_SETTINGS: GameSettings = {
 	gameMode: 'classic',
 	players: [],
 	enableScoring: true,
-	bingoGrid: undefined
+	bingoGrid: undefined,
+	enableAudioNormalization: !isWebKit // Default to true, but false on WebKit browsers
 };

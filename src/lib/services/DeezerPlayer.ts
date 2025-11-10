@@ -26,12 +26,17 @@ export const playerState = writable({
 });
 
 class DeezerPlayer {
+	// Web Audio API properties (used when normalization is enabled)
 	private audioContext: AudioContext | null = null;
 	private audioBuffer: AudioBuffer | null = null;
 	private sourceNode: AudioBufferSourceNode | null = null;
 	private gainNode: GainNode | null = null;
 	private analyserNode: AnalyserNode | null = null;
 
+	// HTML Audio Element properties (used when normalization is disabled)
+	private audioElement: HTMLAudioElement | null = null;
+
+	// Common properties
 	private currentTrackData: DeezerTrackData | null = null;
 	private onPlaybackEndCallback: (() => void) | null = null;
 
@@ -42,6 +47,8 @@ class DeezerPlayer {
 	private trackLength: number = 30; // 30s previews from Deezer
 	private ignoreTrackLength: boolean = false; // If true, always use full 30s duration
 	private loadPromise: Promise<void> | null = null;
+
+	private enableAudioNormalization: boolean = true; // Default to true, controlled by settings
 
 	/**
 	 * Sets the track length limit in seconds (5-30)
@@ -62,6 +69,13 @@ class DeezerPlayer {
 	 */
 	setIgnoreTrackLength(ignore: boolean): void {
 		this.ignoreTrackLength = ignore;
+	}
+
+	/**
+	 * Sets whether to use Web Audio API with LUFS normalization
+	 */
+	setEnableAudioNormalization(enable: boolean): void {
+		this.enableAudioNormalization = enable;
 	}
 
 	private getAudioContext(): AudioContext {
@@ -125,27 +139,60 @@ class DeezerPlayer {
 
 			playerState.update((s) => ({ ...s, track: this.currentTrackData }));
 
-			const audioContext = this.getAudioContext();
+			// Always fetch and analyze audio for LUFS
 			const response = await fetch(this.currentTrackData.preview);
 			const arrayBuffer = await response.arrayBuffer();
-			this.audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
 
-			const lufs = await this.calculateLUFS(this.audioBuffer);
+			// Decode audio data for analysis (and for Web Audio API playback if enabled)
+			const audioContext = this.getAudioContext();
+			const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+			// Calculate LUFS for normalization
+			const lufs = await this.calculateLUFS(audioBuffer);
 			console.log(
 				`[DeezerPlayer] Calculated LUFS for track ${this.currentTrackData.id}: ${lufs.toFixed(2)}`
 			);
 
 			let gain = 10 ** ((TARGET_LUFS - lufs) / 20);
-			if (gain > 8) {
-				gain = 8; // Limit max gain to prevent excessive amplification
+			if (gain > 5) {
+				gain = 5; // Limit max gain to prevent excessive amplification
 				console.warn(`[DeezerPlayer] Max gain exceeded. Clamping gain to ${gain.toFixed(2)}.`);
 			}
 			console.log(
-				`[DeezerPlayer] Applying gain of ${gain.toFixed(2)} to reach ${TARGET_LUFS} LUFS.`
+				`[DeezerPlayer] Calculated gain of ${gain.toFixed(2)} to reach ${TARGET_LUFS} LUFS.`
 			);
 
-			this.gainNode = audioContext.createGain();
-			this.gainNode.gain.value = gain;
+			if (this.enableAudioNormalization) {
+				// Web Audio API mode - use GainNode
+				this.audioBuffer = audioBuffer;
+				this.gainNode = audioContext.createGain();
+				this.gainNode.gain.value = gain;
+				console.log(`[DeezerPlayer] Web Audio API mode: applying gain via GainNode`);
+			} else {
+				// HTML Audio Element mode - translate gain to volume
+				this.audioElement = new Audio(this.currentTrackData.preview);
+				this.audioElement.crossOrigin = 'anonymous';
+
+				// Preload the audio
+				await new Promise<void>((resolve, reject) => {
+					if (!this.audioElement) {
+						reject(new Error('Audio element not initialized'));
+						return;
+					}
+
+					this.audioElement.addEventListener('canplaythrough', () => resolve(), { once: true });
+					this.audioElement.addEventListener('error', (e) => reject(e), { once: true });
+					this.audioElement.load();
+				});
+
+				// Translate gain to volume: gain of 2 = volume 1.0, gain of 1 = volume 0.5
+				// Volume = min(1, gain / 2)
+				const volume = Math.min(1, gain / 2);
+				this.audioElement.volume = volume;
+				console.log(
+					`[DeezerPlayer] HTML Audio mode: translated gain ${gain.toFixed(2)} to volume ${volume.toFixed(2)}`
+				);
+			}
 		} catch (error) {
 			console.error('DeezerPlayer: Error loading track', error);
 			this.destroy();
@@ -158,73 +205,136 @@ class DeezerPlayer {
 			await this.loadPromise;
 		}
 
-		if (!this.audioBuffer || !this.gainNode) {
-			console.warn('DeezerPlayer: No track loaded or ready.');
-			return;
+		if (this.enableAudioNormalization) {
+			// Web Audio API mode
+			if (!this.audioBuffer || !this.gainNode) {
+				console.warn('DeezerPlayer: No track loaded or ready.');
+				return;
+			}
+
+			if (this.sourceNode) {
+				// Already playing
+				return;
+			}
+
+			const audioContext = this.getAudioContext();
+			this.sourceNode = audioContext.createBufferSource();
+			this.sourceNode.buffer = this.audioBuffer;
+
+			this.analyserNode = audioContext.createAnalyser();
+			this.analyserNode.fftSize = 2048;
+
+			this.sourceNode.connect(this.analyserNode);
+			this.analyserNode.connect(this.gainNode);
+			this.gainNode.connect(audioContext.destination);
+
+			// Fade in
+			const initialGain = this.gainNode.gain.value;
+			this.gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+			this.gainNode.gain.linearRampToValueAtTime(
+				initialGain,
+				audioContext.currentTime + FADE_DURATION
+			);
+
+			const offset = this.playbackPausedTime;
+			const effectiveTrackLength = this.ignoreTrackLength ? 30 : this.trackLength;
+			const duration = effectiveTrackLength > offset ? effectiveTrackLength - offset : 0;
+
+			this.sourceNode.start(0, offset, duration);
+
+			this.playbackStartTime = audioContext.currentTime - offset;
+			this.playbackPausedTime = 0;
+
+			playerState.update((s) => ({ ...s, isPlaying: true, analyserNode: this.analyserNode }));
+			this.startProgressTracking();
+
+			this.sourceNode.onended = () => {
+				this.stop(false); // Stop without destroying if it ended naturally
+				this.onPlaybackEndCallback?.();
+			};
+		} else {
+			// HTML Audio Element mode
+			if (!this.audioElement) {
+				console.warn('DeezerPlayer: No track loaded or ready.');
+				return;
+			}
+
+			if (!this.audioElement.paused) {
+				// Already playing
+				return;
+			}
+
+			const offset = this.playbackPausedTime;
+			this.audioElement.currentTime = offset;
+
+			const effectiveTrackLength = this.ignoreTrackLength ? 30 : this.trackLength;
+
+			await this.audioElement.play();
+
+			this.playbackStartTime = performance.now() / 1000 - offset;
+			this.playbackPausedTime = 0;
+
+			playerState.update((s) => ({ ...s, isPlaying: true, analyserNode: null }));
+			this.startProgressTracking();
+
+			// Set up event listeners for playback end
+			const handleEnded = () => {
+				this.stop(false);
+				this.onPlaybackEndCallback?.();
+			};
+
+			const handleTimeUpdate = () => {
+				if (this.audioElement && this.audioElement.currentTime >= effectiveTrackLength) {
+					this.audioElement.pause();
+					this.audioElement.removeEventListener('ended', handleEnded);
+					this.audioElement.removeEventListener('timeupdate', handleTimeUpdate);
+					this.stop(false);
+					this.onPlaybackEndCallback?.();
+				}
+			};
+
+			this.audioElement.addEventListener('ended', handleEnded, { once: true });
+			this.audioElement.addEventListener('timeupdate', handleTimeUpdate);
 		}
-
-		if (this.sourceNode) {
-			// Already playing
-			return;
-		}
-
-		const audioContext = this.getAudioContext();
-		this.sourceNode = audioContext.createBufferSource();
-		this.sourceNode.buffer = this.audioBuffer;
-
-		this.analyserNode = audioContext.createAnalyser();
-		this.analyserNode.fftSize = 2048;
-
-		this.sourceNode.connect(this.analyserNode);
-		this.analyserNode.connect(this.gainNode);
-		this.gainNode.connect(audioContext.destination);
-
-		// Fade in
-		const initialGain = this.gainNode.gain.value;
-		this.gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-		this.gainNode.gain.linearRampToValueAtTime(
-			initialGain,
-			audioContext.currentTime + FADE_DURATION
-		);
-
-		const offset = this.playbackPausedTime;
-		const effectiveTrackLength = this.ignoreTrackLength ? 30 : this.trackLength;
-		const duration = effectiveTrackLength > offset ? effectiveTrackLength - offset : 0;
-
-		this.sourceNode.start(0, offset, duration);
-
-		this.playbackStartTime = audioContext.currentTime - offset;
-		this.playbackPausedTime = 0;
-
-		playerState.update((s) => ({ ...s, isPlaying: true, analyserNode: this.analyserNode }));
-		this.startProgressTracking();
-
-		this.sourceNode.onended = () => {
-			this.stop(false); // Stop without destroying if it ended naturally
-			this.onPlaybackEndCallback?.();
-		};
 	}
 
 	pause(): void {
-		if (!this.sourceNode) return;
-
-		this.playbackPausedTime = this.getAudioContext().currentTime - this.playbackStartTime;
+		if (this.enableAudioNormalization) {
+			if (!this.sourceNode) return;
+			this.playbackPausedTime = this.getAudioContext().currentTime - this.playbackStartTime;
+		} else {
+			if (!this.audioElement || this.audioElement.paused) return;
+			this.playbackPausedTime = this.audioElement.currentTime;
+		}
 		this.stop(true); // Stop and preserve state for resume
 	}
 
 	private stop(isPausing: boolean): void {
-		if (!this.sourceNode) return;
+		if (this.enableAudioNormalization) {
+			// Web Audio API mode
+			if (!this.sourceNode) return;
 
-		this.sourceNode.onended = null; // Prevent double-firing onended
-		this.sourceNode.stop();
-		this.sourceNode.disconnect();
-		this.analyserNode?.disconnect();
-		this.gainNode?.disconnect();
+			this.sourceNode.onended = null; // Prevent double-firing onended
+			this.sourceNode.stop();
+			this.sourceNode.disconnect();
+			this.analyserNode?.disconnect();
+			this.gainNode?.disconnect();
 
-		this.sourceNode = null;
+			this.sourceNode = null;
 
-		if (!isPausing) {
-			this.playbackPausedTime = 0;
+			if (!isPausing) {
+				this.playbackPausedTime = 0;
+			}
+		} else {
+			// HTML Audio Element mode
+			if (!this.audioElement) return;
+
+			this.audioElement.pause();
+
+			if (!isPausing) {
+				this.audioElement.currentTime = 0;
+				this.playbackPausedTime = 0;
+			}
 		}
 
 		this.stopProgressTracking();
@@ -234,6 +344,7 @@ class DeezerPlayer {
 	destroy(): void {
 		this.stop(false);
 		this.audioBuffer = null;
+		this.audioElement = null;
 		this.currentTrackData = null;
 		this.playbackPausedTime = 0;
 		playerState.set({
@@ -263,14 +374,22 @@ class DeezerPlayer {
 	}
 
 	getCurrentTime(): number {
-		if (this.isPlaying() && this.audioContext) {
-			return this.audioContext.currentTime - this.playbackStartTime;
+		if (this.isPlaying()) {
+			if (this.enableAudioNormalization && this.audioContext) {
+				return this.audioContext.currentTime - this.playbackStartTime;
+			} else if (!this.enableAudioNormalization && this.audioElement) {
+				return this.audioElement.currentTime;
+			}
 		}
 		return this.playbackPausedTime;
 	}
 
 	getDuration(): number {
-		return this.audioBuffer?.duration ?? 0;
+		if (this.enableAudioNormalization) {
+			return this.audioBuffer?.duration ?? 0;
+		} else {
+			return this.audioElement?.duration ?? 0;
+		}
 	}
 
 	getAnalyserNode(): AnalyserNode | null {
@@ -302,18 +421,28 @@ class DeezerPlayer {
 	}
 
 	replay(): void {
-		if (!this.audioBuffer || !this.gainNode) {
-			console.warn('DeezerPlayer: No track loaded or ready.');
-			return;
-		}
+		if (this.enableAudioNormalization) {
+			if (!this.audioBuffer || !this.gainNode) {
+				console.warn('DeezerPlayer: No track loaded or ready.');
+				return;
+			}
 
-		if (this.sourceNode) {
-			this.sourceNode.onended = null;
-			this.sourceNode.stop();
-			this.sourceNode.disconnect();
-			this.analyserNode?.disconnect();
-			this.gainNode?.disconnect();
-			this.sourceNode = null;
+			if (this.sourceNode) {
+				this.sourceNode.onended = null;
+				this.sourceNode.stop();
+				this.sourceNode.disconnect();
+				this.analyserNode?.disconnect();
+				this.gainNode?.disconnect();
+				this.sourceNode = null;
+			}
+		} else {
+			if (!this.audioElement) {
+				console.warn('DeezerPlayer: No track loaded or ready.');
+				return;
+			}
+
+			this.audioElement.pause();
+			this.audioElement.currentTime = 0;
 		}
 
 		this.stopProgressTracking();
@@ -324,27 +453,43 @@ class DeezerPlayer {
 	}
 
 	seek(time: number): void {
-		if (!this.audioBuffer) return;
+		if (this.enableAudioNormalization) {
+			if (!this.audioBuffer) return;
 
-		const wasPlaying = this.isPlaying();
-		if (this.sourceNode) {
-			this.sourceNode.onended = null;
-			this.sourceNode.stop();
-			this.sourceNode.disconnect();
-			this.analyserNode?.disconnect();
-			this.gainNode?.disconnect();
-			this.sourceNode = null;
-		}
-		this.stopProgressTracking();
+			const wasPlaying = this.isPlaying();
+			if (this.sourceNode) {
+				this.sourceNode.onended = null;
+				this.sourceNode.stop();
+				this.sourceNode.disconnect();
+				this.analyserNode?.disconnect();
+				this.gainNode?.disconnect();
+				this.sourceNode = null;
+			}
+			this.stopProgressTracking();
 
-		this.playbackPausedTime = time;
+			this.playbackPausedTime = time;
 
-		if (wasPlaying) {
-			this.play();
+			if (wasPlaying) {
+				this.play();
+			} else {
+				const duration = this.audioBuffer?.duration ?? this.trackLength;
+				const progress = duration > 0 ? time / duration : 0;
+				playerState.update((s) => ({ ...s, progress }));
+			}
 		} else {
-			const duration = this.audioBuffer?.duration ?? this.trackLength;
-			const progress = duration > 0 ? time / duration : 0;
-			playerState.update((s) => ({ ...s, progress }));
+			if (!this.audioElement) return;
+
+			const wasPlaying = this.isPlaying();
+			this.audioElement.currentTime = time;
+			this.playbackPausedTime = time;
+
+			if (wasPlaying) {
+				// Will resume from new position
+			} else {
+				const duration = this.audioElement.duration ?? this.trackLength;
+				const progress = duration > 0 ? time / duration : 0;
+				playerState.update((s) => ({ ...s, progress }));
+			}
 		}
 	}
 

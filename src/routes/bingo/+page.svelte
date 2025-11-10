@@ -378,7 +378,7 @@
 			class="flex h-full w-full max-w-2xl flex-col items-center justify-center gap-12 pt-16 md:p-4 xl:p-4"
 		>
 			<!-- Grid - Responsive size -->
-			<div class="grid grid-cols-5 gap-2">
+			<div class="grid grid-cols-5 gap-1 md:gap-2">
 				{#each grid as row, rowIndex}
 					{#each row as cell, colIndex}
 						{@const categoryDef = categories.find((c) => c.id === cell.category)}

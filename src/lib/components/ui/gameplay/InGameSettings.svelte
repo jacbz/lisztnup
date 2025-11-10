@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import Popup from '../primitives/Popup.svelte';
 	import Slider from '../primitives/Slider.svelte';
+	import ToggleButton from '../primitives/ToggleButton.svelte';
 	import { _ } from 'svelte-i18n';
 
 	interface Props {
@@ -14,19 +15,29 @@
 	let { visible = false, onClose = () => {} }: Props = $props();
 
 	let trackLength = $state(30);
+	let enableAudioNormalization = $state(true);
 
 	onMount(() => {
 		// Get initial values from settings store
 		trackLength = $settingsStore.trackLength;
+		enableAudioNormalization = $settingsStore.enableAudioNormalization;
 
 		// Apply to player
 		deezerPlayer.setTrackLength(trackLength);
+		deezerPlayer.setEnableAudioNormalization(enableAudioNormalization);
 	});
 
 	function handleTrackLengthChange(value: number) {
 		trackLength = value;
 		deezerPlayer.setTrackLength(value);
 		settingsStore.update((s) => ({ ...s, trackLength: value }));
+	}
+
+	function handleAudioNormalizationToggle() {
+		enableAudioNormalization = !enableAudioNormalization;
+		deezerPlayer.pause();
+		deezerPlayer.setEnableAudioNormalization(enableAudioNormalization);
+		settingsStore.update((s) => ({ ...s, enableAudioNormalization }));
 	}
 </script>
 
@@ -47,6 +58,17 @@
 				onChange={handleTrackLengthChange}
 			/>
 			<p class="mt-2 text-sm text-slate-400">{$_('inGameSettings.trackLengthHint')}</p>
+		</div>
+
+		<!-- Audio Normalization Toggle -->
+		<div>
+			<div class="mb-2 flex items-center justify-between">
+				<span class="font-semibold text-cyan-400">
+					{$_('inGameSettings.audioNormalization')}
+				</span>
+				<ToggleButton value={enableAudioNormalization} onToggle={handleAudioNormalizationToggle} />
+			</div>
+			<p class="mt-2 text-sm text-slate-400">{$_('inGameSettings.audioNormalizationHint')}</p>
 		</div>
 	</div>
 </Popup>
