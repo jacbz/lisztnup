@@ -32,6 +32,7 @@ import math
 import re
 from collections import Counter, defaultdict
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Dict, List, Optional, Set, Any
 
 # ==============================================================================
@@ -166,12 +167,8 @@ EXCLUDED_COMPOSERS: Set[str] = set([
     "Willis, Wallace"
 ])
 
-# Deezer IDs without preview mp3s
-EXCLUDED_DEEZER_IDS: Set[int] = set([
-    711024922,
-    3059861051,
-    1430175362
-])
+# Deezer IDs without preview mp3s, loaded from 'excluded_deezer_ids' file
+EXCLUDED_DEEZER_IDS: Set[int] = set([])
 
 EXCLUDED_WORKS: Set[str] = set([
     "bf57c435-6ce0-3d57-ab04-e2a9179b178c", # O Holy Night
@@ -958,6 +955,14 @@ def compact_json_dumps(data, indent=2):
     
     return result
 
+def load_excluded_deezer_ids() -> set[int]:
+    """Load excluded Deezer IDs from file."""
+    path = Path("excluded_deezer_ids")
+    if path.exists():
+        return set(int(line.strip()) for line in path.read_text().splitlines() if line.strip())
+    return set()
+
+
 def main() -> None:
     """
     Main execution function: loads data, runs the processor, saves the results,
@@ -971,6 +976,11 @@ def main() -> None:
             "Error: 'musicbrainz.json' not found. Please run the data extraction script first."
         )
         return
+
+    # Load excluded Deezer IDs from file
+    global EXCLUDED_DEEZER_IDS
+    EXCLUDED_DEEZER_IDS = load_excluded_deezer_ids()
+    print(f"Loaded {len(EXCLUDED_DEEZER_IDS)} excluded Deezer IDs.")
 
     print(
         f"Loaded {len(composers_data)} composers from 'musicbrainz.json'. Starting processing..."

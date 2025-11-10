@@ -25,6 +25,8 @@ Open http://localhost:5173 in your browser.
 
 SvelteKit 2 • TypeScript • Tailwind CSS 4 • Svelte i18n • Deezer API
 
+Important: Deezer API usage is subject to their terms of service. Commercial use is prohibited without permission.
+
 ## License
 
 See LICENSE file for details.
