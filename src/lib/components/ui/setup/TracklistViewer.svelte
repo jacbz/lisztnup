@@ -26,7 +26,7 @@
 		composerLifespan: string;
 		workGid: string;
 		work: string;
-		parts: { name: string; score: number; deezerId: number }[];
+		parts: { name: string; score: number; deezerIds: number[] }[];
 		popularity: number; // Work score
 		year: string;
 	}
@@ -153,7 +153,11 @@
 					composerLifespan: formatLifespan(composer.birth_year, composer.death_year),
 					workGid: work.gid,
 					work: work.name,
-					parts: work.parts.map((p) => ({ name: p.name, score: p.score, deezerId: p.deezer })),
+					parts: work.parts.map((p) => ({
+						name: p.name,
+						score: p.score,
+						deezerIds: p.deezer
+					})),
 					popularity: work.score,
 					year: yearStr
 				});
@@ -208,8 +212,12 @@
 	}
 
 	// Audio playback functions
-	async function handlePlayPart(deezerId: number): Promise<void> {
+	async function handlePlayPart(deezerIds: number[]): Promise<void> {
 		try {
+			// Get random deezer ID from available IDs
+			const randomIndex = Math.floor(Math.random() * deezerIds.length);
+			const deezerId = deezerIds[randomIndex];
+
 			// If same track is playing, stop it
 			if (currentlyPlayingDeezerId === deezerId && $playerState.isPlaying) {
 				stopPlayback();
@@ -336,9 +344,9 @@
 											<!-- Single part: work name is clickable -->
 											<button
 												type="button"
-												onclick={() => handlePlayPart(row.parts[0].deezerId)}
-												class="cursor-pointer text-left transition-colors hover:text-cyan-400 {currentlyPlayingDeezerId ===
-												row.parts[0].deezerId
+												onclick={() => handlePlayPart(row.parts[0].deezerIds)}
+												class="cursor-pointer text-left transition-colors hover:text-cyan-400 {currentlyPlayingDeezerId &&
+												row.parts[0].deezerIds.includes(currentlyPlayingDeezerId)
 													? 'font-semibold text-cyan-400'
 													: ''}"
 											>
@@ -372,9 +380,9 @@
 													{/if}
 													<button
 														type="button"
-														onclick={() => handlePlayPart(part.deezerId)}
-														class="flex-1 cursor-pointer text-left transition-colors hover:text-cyan-400 {currentlyPlayingDeezerId ===
-														part.deezerId
+														onclick={() => handlePlayPart(part.deezerIds)}
+														class="flex-1 cursor-pointer text-left transition-colors hover:text-cyan-400 {currentlyPlayingDeezerId &&
+														part.deezerIds.includes(currentlyPlayingDeezerId)
 															? 'font-semibold text-cyan-400'
 															: ''}"
 													>

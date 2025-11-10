@@ -127,17 +127,47 @@
 			if (mode === 'classic') {
 				const hasValidYear = track.work.begin_year != null || track.work.end_year != null;
 				if (!hasValidYear) {
-					console.warn('Track has no valid year data, sampling another:', track.work.name);
+					console.warn(
+						'Track has no valid year data, sampling another:',
+						track.work.name,
+						track.part.deezer
+					);
 					tracklist.update((t) => t.slice(0, -1));
 					continue;
 				}
 			}
 
-			try {
-				await deezerPlayer.load(track.part.deezer);
+			// Try each available deezer ID for this track
+			const availableDeezerIds = [...track.part.deezer]; // Create a copy to modify
+			let trackLoaded = false;
+
+			while (availableDeezerIds.length > 0) {
+				// Pick a random deezer ID from the available ones
+				const randomIndex = Math.floor(Math.random() * availableDeezerIds.length);
+				const deezerId = availableDeezerIds[randomIndex];
+
+				console.log(`Picked deezer ID ${deezerId} out of candidates ${availableDeezerIds}`);
+
+				try {
+					await deezerPlayer.load(deezerId);
+					trackLoaded = true;
+					break; // Successfully loaded, exit the inner loop
+				} catch (error) {
+					console.warn(
+						`Track preview unavailable for deezer ID ${deezerId}, trying another:`,
+						error
+					);
+					// Remove this deezer ID from the available list
+					availableDeezerIds.splice(randomIndex, 1);
+				}
+			}
+
+			if (trackLoaded) {
+				// Successfully loaded a deezer ID for this track
 				return;
-			} catch (error) {
-				console.warn('Track preview unavailable, sampling another:', error);
+			} else {
+				// All deezer IDs failed, remove this track and sample another
+				console.warn('All deezer IDs failed for track, sampling another:', track.work.name);
 				tracklist.update((t) => t.slice(0, -1));
 			}
 		}

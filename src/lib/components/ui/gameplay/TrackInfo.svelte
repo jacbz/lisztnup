@@ -7,7 +7,7 @@
 		formatPartName,
 		getWorkEra
 	} from '$lib/utils';
-	import { deezerPlayer } from '$lib/services';
+	import { deezerPlayer, playerState } from '$lib/services';
 
 	interface Props {
 		track: Track | null;
@@ -26,7 +26,13 @@
 	});
 	const shouldShowArtist = $derived(artists.length);
 	const shouldShowPart = $derived(track && track.work.name !== track.part.name);
-	const deezerTrackUrl = $derived(track ? `https://www.deezer.com/track/${track.part.deezer}` : '');
+	// Use the currently loaded deezer ID from playerState, or fall back to first ID in array
+	const deezerTrackUrl = $derived.by(() => {
+		if (!track) return '';
+		const loadedId = $playerState.track?.id;
+		const deezerId = loadedId ?? track.part.deezer[0];
+		return `https://www.deezer.com/track/${deezerId}`;
+	});
 
 	// Strip work name prefix from part name if part starts with work name
 	const displayPartName = $derived.by(() => {

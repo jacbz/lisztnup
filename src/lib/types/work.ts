@@ -1,6 +1,6 @@
 export interface Part {
 	name: string;
-	deezer: number;
+	deezer: number[]; // Array of Deezer IDs
 	score: number; // Weight for the part
 }
 

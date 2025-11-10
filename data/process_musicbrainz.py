@@ -166,15 +166,18 @@ EXCLUDED_COMPOSERS: Set[str] = set([
     "Willis, Wallace"
 ])
 
+# Deezer IDs without preview mp3s
 EXCLUDED_DEEZER_IDS: Set[int] = set([
     711024922,
-    3059861051
+    3059861051,
+    1430175362
 ])
 
 EXCLUDED_WORKS: Set[str] = set([
     "bf57c435-6ce0-3d57-ab04-e2a9179b178c", # O Holy Night
     "8531b357-339e-3cc7-9ed2-0d6b928ed12e", # Joy to the World
-    "bc0cdd41-eaa3-3330-b972-8e8174b9e64d" # Hark! The Herald Angels Sing
+    "bc0cdd41-eaa3-3330-b972-8e8174b9e64d", # Hark! The Herald Angels Sing
+    "7ff8ec8a-8bc3-400a-a6ae-3263bfa39198", # 4'33
 ])
 
 WSS_OVERRIDES: Dict[str, float] = {
@@ -231,7 +234,7 @@ class FinalPart:
     """Represents a single, curated part of a work in the final dataset."""
 
     name: str
-    deezer: int
+    deezer: List[int]  # List of Deezer IDs (up to 5, but no more than ceil(n/2) of available)
     score: float  # Relative score (0-100) compared to the work's most popular part.
 
     def to_dict(self) -> Dict[str, Any]:
@@ -458,13 +461,13 @@ class MusicbrainzProcessor:
 
                 potential_parts = []
                 for part, pss in parts_with_pss:
-                    deezer_id = self._select_deezer_id(part.recordings)
-                    if deezer_id:
+                    deezer_ids = self._select_deezer_ids(part.recordings)
+                    if deezer_ids:
                         part_score = (pss / max_pss) * 100 if max_pss > 0 else 0
                         potential_parts.append(
                             FinalPart(
                                 name=part.name,
-                                deezer=deezer_id,
+                                deezer=deezer_ids,
                                 score=round(part_score, 2),
                             )
                         )
@@ -586,8 +589,9 @@ class MusicbrainzProcessor:
                 if work.gid in gids_with_multiple_composers:
                     continue
                 for part in work.parts:
-                    if part.deezer not in deezer_to_work_gid:
-                        deezer_to_work_gid[part.deezer] = work.gid
+                    for deezer_id in part.deezer:
+                        if deezer_id not in deezer_to_work_gid:
+                            deezer_to_work_gid[deezer_id] = work.gid
 
         filtered_works = {}
         seen_gids = set()
@@ -605,20 +609,28 @@ class MusicbrainzProcessor:
                     continue
                 seen_gids.add(work.gid)
 
-                # Filter parts: keep only those assigned to this work (cross-work deduplication)
+                # Filter parts: keep only those where at least one deezer ID is assigned to this work
                 filtered_parts = []
                 for part in work.parts:
-                    if deezer_to_work_gid.get(part.deezer) == work.gid:
+                    # Check if any deezer ID in this part belongs to this work
+                    if any(deezer_to_work_gid.get(deezer_id) == work.gid for deezer_id in part.deezer):
+                        # Filter the deezer IDs to only keep those assigned to this work
+                        part.deezer = [
+                            deezer_id for deezer_id in part.deezer
+                            if deezer_to_work_gid.get(deezer_id) == work.gid
+                        ]
                         filtered_parts.append(part)
                     else:
                         self.stats["parts_dropped_cross_work_duplicate"] += 1
 
-                # Filter duplicate parts within work by deezer ID
+                # Filter duplicate parts within work by checking for overlapping deezer IDs
                 seen_deezer = set()
                 final_parts = []
                 for part in filtered_parts:
-                    if part.deezer not in seen_deezer:
-                        seen_deezer.add(part.deezer)
+                    # Check if any deezer ID in this part has been seen
+                    if not any(deezer_id in seen_deezer for deezer_id in part.deezer):
+                        # Add all deezer IDs from this part to seen set
+                        seen_deezer.update(part.deezer)
                         final_parts.append(part)
                     else:
                         self.stats["parts_dropped_duplicate_deezer"] += 1
@@ -695,25 +707,57 @@ class MusicbrainzProcessor:
         )
         return "other"
 
-    def _select_deezer_id(self, recordings: List[MBRecording]) -> Optional[int]:
+    def _select_deezer_ids(self, recordings: List[MBRecording], max_ids: int = 5) -> List[int]:
         """
-        Selects a single representative Deezer ID from a list of recordings
-        based on preferred record labels.
+        Selects up to max_ids Deezer IDs from a list of recordings based on 
+        preferred record labels. Returns up to 5 IDs but no more than ceil(n/2) 
+        of the available recordings.
+        
+        :param recordings: List of recordings to select from
+        :param max_ids: Maximum number of IDs to return (default: 5)
+        :return: List of selected Deezer IDs
         """
         if not recordings:
-            return None
+            return []
+        
+        # Filter out excluded IDs
         recordings = [r for r in recordings if r.deezerId is not None and r.deezerId not in EXCLUDED_DEEZER_IDS]
-        # sort recordings by length of title (longest first) - often better match
+        if not recordings:
+            return []
+        
+        # Calculate max number to select: min of max_ids and ceil(n/2)
+        import math
+        max_to_select = min(max_ids, math.ceil(len(recordings) / 2))
+        
+        # Sort recordings by length of title (longest first) - often better match
         recordings.sort(key=lambda r: len(r.name), reverse=True)
 
+        selected_ids = []
         with_labels = [r for r in recordings if r.label]
+        
+        # First, try to select from preferred labels
         for pref in LABEL_PREFERENCE:
             for rec in with_labels:
-                if rec.label and pref.lower() in rec.label.lower():
-                    return rec.deezerId
-        if with_labels:
-            return with_labels[0].deezerId
-        return recordings[0].deezerId if recordings else None
+                if rec.label and pref.lower() in rec.label.lower() and rec.deezerId not in selected_ids:
+                    selected_ids.append(rec.deezerId)
+                    if len(selected_ids) >= max_to_select:
+                        return selected_ids
+        
+        # Then fill with remaining recordings with labels
+        for rec in with_labels:
+            if rec.deezerId not in selected_ids:
+                selected_ids.append(rec.deezerId)
+                if len(selected_ids) >= max_to_select:
+                    return selected_ids
+        
+        # Finally, fill with any remaining recordings
+        for rec in recordings:
+            if rec.deezerId not in selected_ids:
+                selected_ids.append(rec.deezerId)
+                if len(selected_ids) >= max_to_select:
+                    return selected_ids
+        
+        return selected_ids
 
     def _write_unresolved_log(self, final_works: Dict[str, List[FinalWork]]) -> None:
         """Writes a log of works in the final output whose types remain 'other'."""
@@ -892,6 +936,27 @@ def generate_markdown_report(final_output: FinalOutput) -> None:
 # --- Main Execution Block ---
 # ==============================================================================
 
+def compact_json_dumps(data, indent=2):
+    """Pretty print JSON with indent, but keep number arrays on one line."""
+    # First, do normal pretty printing
+    pretty = json.dumps(data, indent=indent)
+    
+    # Regex pattern to match arrays containing only numbers
+    # Matches arrays like [ 1, 2, 3 ] or [ 1.5, 2.3 ] across multiple lines
+    pattern = r'\[\s*(-?\d+\.?\d*\s*,\s*)*-?\d+\.?\d*\s*\]'
+    
+    # Find all number arrays that span multiple lines
+    def compress_array(match):
+        # Extract the array string and parse it
+        array_str = match.group(0)
+        # Remove all whitespace and newlines
+        return re.sub(r'\s+', ' ', array_str).replace('[ ', '[').replace(' ]', ']')
+    
+    # Replace multi-line number arrays with single-line versions
+    pattern_multiline = r'\[\s*\n\s*(-?\d+\.?\d*\s*,?\s*\n?\s*)+\]'
+    result = re.sub(pattern_multiline, compress_array, pretty)
+    
+    return result
 
 def main() -> None:
     """
@@ -915,7 +980,8 @@ def main() -> None:
     final_output = processor.process()
 
     with open("../static/lisztnup.json", "w", encoding="utf-8") as f:
-        json.dump(final_output.to_dict(), f, indent=2, ensure_ascii=False)
+        json_output = final_output.to_dict()
+        f.write(compact_json_dumps(json_output, indent=2))
     print(f"\nSuccessfully processed data and saved to 'lisztnup.json'.")
 
     generate_markdown_report(final_output)
