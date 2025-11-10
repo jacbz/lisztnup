@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, getContext } from 'svelte';
+	import { onMount, onDestroy, getContext } from 'svelte';
 	import type { GuessCategory } from '$lib/types';
 	import { BUZZER_TIME_PERCENTAGES, CATEGORY_POINTS } from '$lib/types';
 	import { currentRound, tracklist, settings } from '$lib/stores';
@@ -239,6 +239,14 @@
 		}
 	}
 
+	function handleKeyDown(event: KeyboardEvent) {
+		// Only trigger buzzer if button is not disabled
+		if (!isBuzzerPressed || showReveal) {
+			event.preventDefault();
+			handleBuzzerDown(event);
+		}
+	}
+
 	function playBuzzerSound() {
 		// Play buzzer sound immediately when button is pressed
 		if (buzzerAudio) {
@@ -302,6 +310,13 @@
 
 		// Create buzzer audio element
 		buzzerAudio = new Audio('/buzzer.mp3');
+
+		// Add keyboard event listener for buzzer
+		window.addEventListener('keydown', handleKeyDown);
+	});
+
+	onDestroy(() => {
+		window.removeEventListener('keydown', handleKeyDown);
 	});
 </script>
 

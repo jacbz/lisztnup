@@ -1,7 +1,7 @@
 import { writable, type Readable, get } from 'svelte/store';
 
 // Target LUFS for normalization.
-const TARGET_LUFS = -22;
+const TARGET_LUFS = -23;
 const FADE_DURATION = 0.3;
 
 interface DeezerTrackData {
