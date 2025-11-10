@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
 	import { settings } from '$lib/stores';
 	import type { BingoGridCell } from '$lib/types';
 	import { categories } from '$lib/data/categories';
@@ -324,7 +325,10 @@
 								'#06b6d4') + '20'};"
 						>
 							<!-- Category Icon (hidden when marked) -->
-							<div class="w-10 items-center justify-center sm:w-16" class:opacity-0={cell.marked}>
+							<div
+								class="w-14 items-center justify-center sm:w-16 lg:w-20"
+								class:opacity-0={cell.marked}
+							>
 								{#if categoryDef}
 									<svg viewBox="0 0 24 24" class="opacity-30" style="fill: {categoryDef.color1};">
 										{#each categoryDef.iconPath as path}
@@ -374,23 +378,28 @@
 					<button
 						type="button"
 						onclick={handleGuessClick}
-						class="flex h-full w-full flex-col items-center justify-center gap-2 text-5xl transition-all"
+						class="relative flex h-full w-full flex-col items-center justify-center gap-2 overflow-hidden rounded-lg text-5xl transition-all"
 					>
 						{#if guessState === 'hidden'}
-							<div class="absolute text-purple-400">
+							<div
+								class="pointer-events-none absolute inset-0 z-10 bg-black/30 backdrop-blur-2xl"
+								in:fade={{ duration: 220 }}
+								out:fade={{ duration: 220 }}
+							></div>
+							<div
+								class="absolute inset-0 z-20 flex items-center justify-center text-4xl font-light text-purple-400"
+								in:fade={{ duration: 200 }}
+								out:fade={{ duration: 160 }}
+							>
 								{$_('bingo.reveal')}
 							</div>
-							<div
-								class="text-center font-bold text-white"
-								style="filter: blur(10px); user-select: none;"
-							>
-								{guessText}
-							</div>
-						{:else}
-							<div class="text-center font-bold text-white">
-								{guessText}
-							</div>
 						{/if}
+						<div
+							class="relative z-0 text-center font-bold text-white"
+							class:select-none={guessState === 'hidden'}
+						>
+							{guessText}
+						</div>
 					</button>
 				{/if}
 			</div>
