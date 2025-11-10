@@ -22,7 +22,7 @@
 				margin: 1,
 				color: {
 					dark: '#06b6d4', // cyan-500
-					light: '#111827' // gray-900
+					light: '#ffffff00' // transparent
 				}
 			});
 		} catch (error) {

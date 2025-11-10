@@ -166,7 +166,7 @@
 	<div class="w-full max-w-5xl px-6 text-center">
 		<!-- Title / Logo -->
 		<h1
-			class="center mt-32 font-streamster text-6xl font-bold text-nowrap text-red-400 select-none sm:text-7xl md:mt-16 md:text-8xl"
+			class="center mt-32 font-streamster text-6xl font-bold text-nowrap text-cyan-400 select-none sm:text-7xl md:mt-16 md:text-8xl"
 		>
 			{$_('app.title')}
 		</h1>
@@ -281,7 +281,7 @@
 					onclick={handleStartGame}
 					disabled={!playersValid ||
 						(selectedMode === 'buzzer' && enableScoring && currentPlayers.length < 2)}
-					class="group relative w-full cursor-pointer overflow-hidden rounded-2xl border-2 border-cyan-400/50 bg-linear-to-r from-gray-900 via-cyan-950/30 to-gray-900 px-8 py-6 text-2xl font-bold text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all duration-300 hover:scale-[1.02] hover:border-cyan-400 hover:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100 disabled:hover:border-cyan-400/50 disabled:hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+					class="group relative w-full cursor-pointer overflow-hidden rounded-2xl border-2 border-cyan-400/50 bg-linear-to-r from-gray-900 via-cyan-950/30 to-gray-900 px-8 py-6 text-2xl font-bold text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-cyan-400 hover:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100 disabled:hover:border-cyan-400/50 disabled:hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
 				>
 					<!-- Animated gradient overlay -->
 					<div

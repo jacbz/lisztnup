@@ -30,7 +30,7 @@
 			<button
 				type="button"
 				onclick={onOpenSharePopup}
-				class="cursor-pointer rounded-lg border-2 border-purple-400/30 bg-gray-900/50 p-1 transition-all hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]"
+				class="cursor-pointer rounded-lg border-2 border-cyan-400/30 p-1 transition-all hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]"
 			>
 				<QRCode text={bingoUrl} width={64} height={64} class="block" />
 			</button>
