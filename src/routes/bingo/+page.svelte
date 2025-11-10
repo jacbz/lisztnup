@@ -256,8 +256,8 @@
 	}
 
 	function handleGuessInput() {
+		guessText = '';
 		guessState = 'input';
-		setTimeout(() => inputElement?.focus(), 100);
 	}
 
 	function handleGuessClose() {
@@ -431,10 +431,12 @@
 			>
 				{#if guessState === 'input'}
 					<div class="flex h-full flex-col gap-2">
+						<!-- svelte-ignore a11y_autofocus -->
 						<textarea
 							id="guess-input"
 							bind:this={inputElement}
 							bind:value={guessText}
+							autofocus
 							class="flex-1 resize-none rounded-lg p-3 text-center text-4xl text-white placeholder-slate-500 focus:outline-none"
 							placeholder={$_('bingo.guessPlaceholder')}
 						></textarea>

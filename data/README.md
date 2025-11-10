@@ -16,8 +16,6 @@ You will need the following primary data dumps:
 
 Make sure you have sufficient disk space.
 
----
-
 ### Generation Steps
 
 The process is executed by three Python scripts in the following order:
@@ -30,8 +28,6 @@ The process is executed by three Python scripts in the following order:
 
 3.  **Filter and Finalize (`process_musicbrainz.py`)**
     - Takes `musicbrainz.json` as input and applies several filtering metrics (e.g., composer relevance, work popularity) to produce the final, optimized `lisztnup.json` for the game.
-
----
 
 ```mermaid
 flowchart TD
@@ -46,7 +42,7 @@ flowchart TD
     FINAL["lisztnup.json<br/>(Final Game Data)"]
 
     MB --> DB
-    DZ --> DB
+    DZ --> LINK
     DB --> LINK --> DB2
     DB2 --> QUERY --> RAW --> PROCESS --> FINAL
 ```
