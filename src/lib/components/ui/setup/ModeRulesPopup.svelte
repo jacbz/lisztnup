@@ -97,7 +97,7 @@
 >
 	{#if mode && modeConfig}
 		<!-- Header -->
-		<div class="mb-8 flex items-center gap-4">
+		<div class="mb-8 flex flex-col items-center gap-4 md:flex-row">
 			{#if modeConfig.icon}
 				{@const Icon = modeConfig.icon}
 				<div style="color: {modeConfig.color};">
@@ -112,6 +112,12 @@
 					{$_(`modes.${mode}.description`)}
 				</p>
 			</div>
+			{#if modeConfig.icon}
+				{@const Icon = modeConfig.icon}
+				<div class="hidden md:block" style="color: {modeConfig.color};">
+					<Icon class="h-12 w-12" strokeWidth={2} />
+				</div>
+			{/if}
 		</div>
 
 		<!-- Steps -->

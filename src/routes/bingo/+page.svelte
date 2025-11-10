@@ -17,6 +17,7 @@
 	let guessText = $state('');
 	let guessState = $state<'input' | 'hidden' | 'revealed'>('input');
 	let inputElement: HTMLTextAreaElement | undefined = $state();
+	let winningCells = $state<Set<string>>(new Set());
 
 	// Category weights: composer 7, work 6, era 5, type 4, decade 3 (total 25)
 	const CATEGORY_WEIGHTS = {
@@ -187,9 +188,48 @@
 		}
 	}
 
+	function checkVictory() {
+		const newWinningCells = new Set<string>();
+
+		// Check rows
+		for (let row = 0; row < 5; row++) {
+			if (grid[row].every((cell) => cell.marked)) {
+				for (let col = 0; col < 5; col++) {
+					newWinningCells.add(`${row}-${col}`);
+				}
+			}
+		}
+
+		// Check columns
+		for (let col = 0; col < 5; col++) {
+			if (grid.every((row) => row[col].marked)) {
+				for (let row = 0; row < 5; row++) {
+					newWinningCells.add(`${row}-${col}`);
+				}
+			}
+		}
+
+		// Check diagonal (top-left to bottom-right)
+		if (grid.every((row, i) => row[i].marked)) {
+			for (let i = 0; i < 5; i++) {
+				newWinningCells.add(`${i}-${i}`);
+			}
+		}
+
+		// Check diagonal (top-right to bottom-left)
+		if (grid.every((row, i) => row[4 - i].marked)) {
+			for (let i = 0; i < 5; i++) {
+				newWinningCells.add(`${i}-${4 - i}`);
+			}
+		}
+
+		winningCells = newWinningCells;
+	}
+
 	function toggleCell(rowIndex: number, colIndex: number) {
 		grid[rowIndex][colIndex].marked = !grid[rowIndex][colIndex].marked;
 		saveGrid();
+		checkVictory();
 	}
 
 	function handleReset() {
@@ -199,6 +239,7 @@
 	function confirmReset() {
 		grid = generateGrid();
 		saveGrid();
+		winningCells = new Set();
 		showResetDialog = false;
 	}
 
@@ -241,12 +282,34 @@
 		// Load settings from localStorage
 		settings.load();
 		loadGrid();
+		checkVictory();
 	});
 </script>
 
 <svelte:head>
 	<title>{$_('app.title')} - Bingo</title>
 	<style>
+		@keyframes winningGlow {
+			0%,
+			100% {
+				box-shadow:
+					0 0 20px rgba(255, 255, 255, 0.4),
+					0 0 10px rgba(255, 255, 255, 0.3);
+				border-color: rgba(255, 255, 255, 0.8);
+			}
+			50% {
+				box-shadow:
+					0 0 40px rgba(255, 255, 255, 0.8),
+					0 0 20px rgba(255, 255, 255, 0.6),
+					0 0 10px rgba(255, 255, 255, 0.4);
+				border-color: rgba(255, 255, 255, 1);
+			}
+		}
+
+		.winning-cell {
+			animation: winningGlow 2s ease-in-out infinite;
+		}
+
 		@media print {
 			@page {
 				margin: 0;
@@ -270,6 +333,11 @@
 
 			.grid {
 				width: 100%;
+			}
+
+			/* Disable animations on print */
+			.winning-cell {
+				animation: none !important;
 			}
 		}
 
@@ -314,14 +382,19 @@
 				{#each grid as row, rowIndex}
 					{#each row as cell, colIndex}
 						{@const categoryDef = categories.find((c) => c.id === cell.category)}
+						{@const isWinning = winningCells.has(`${rowIndex}-${colIndex}`)}
 						<button
 							type="button"
 							onclick={() => toggleCell(rowIndex, colIndex)}
-							class="relative flex cursor-pointer rounded-lg border-2 p-2 transition-all"
-							style="border-color: {categoryDef?.color1 ||
-								'#06b6d4'}; background-color: {cell.marked
-								? categoryDef?.color1 + '80'
-								: categoryDef?.color1 + '20'}; --cell-bg-unmarked: {(categoryDef?.color1 ||
+							class="relative flex aspect-square cursor-pointer items-center justify-center rounded-lg border-2 p-2 transition-all"
+							class:winning-cell={isWinning}
+							style="border-color: {isWinning
+								? '#ffffff'
+								: categoryDef?.color1 || '#06b6d4'}; background-color: {isWinning
+								? '#ffffff40'
+								: cell.marked
+									? categoryDef?.color1 + '80'
+									: categoryDef?.color1 + '20'}; --cell-bg-unmarked: {(categoryDef?.color1 ||
 								'#06b6d4') + '20'};"
 						>
 							<!-- Category Icon (hidden when marked) -->
