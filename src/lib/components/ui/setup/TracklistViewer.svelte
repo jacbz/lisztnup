@@ -8,6 +8,7 @@
 	import Popup from '../primitives/Popup.svelte';
 	import ExternalLink from '../primitives/ExternalLink.svelte';
 	import PlayerControl from '../gameplay/PlayerControl.svelte';
+	import { filterWorks } from '$lib/utils/search';
 	import { formatLifespan, formatPartName, formatYearRange } from '$lib/utils';
 	import { _ } from 'svelte-i18n';
 
@@ -32,9 +33,17 @@
 	}
 
 	let rawTableData = $state<TableRow[]>([]);
+	let searchQuery = $state('');
 	let sortColumn = $state<'composer' | 'work' | 'popularity' | 'year'>('composer');
 	let sortDirection = $state<'asc' | 'desc'>('asc');
 	let isLoading = $state(false);
+
+	// Pagination
+	const PAGE_SIZE = 200;
+	let page = $state(1);
+
+	// Scroll container reference to scroll to top on page change
+	let contentScrollEl: HTMLElement | null = null;
 
 	// Audio playback state
 	let currentlyPlayingDeezerId = $state<number | null>(null);
@@ -59,6 +68,9 @@
 			// Reset data and loading state when popup closes
 			rawTableData = [];
 			isLoading = false;
+			// Clear search and pagination when closing
+			searchQuery = '';
+			page = 1;
 			// Stop any playing audio
 			if (currentlyPlayingDeezerId !== null) {
 				deezerPlayer.pause();
@@ -84,29 +96,45 @@
 		}
 	});
 
+	const normalizeWorkName = (name: string): string => {
+		// Normalize work name for comparison, replace all punctuation
+		return name
+			.trim()
+			.toLowerCase()
+			.replaceAll(/\p{P}+/gu, '');
+	};
+
 	// Computed sorted data
 	const tableData = $derived.by(() => {
-		const sorted = [...rawTableData].sort((a, b) => {
+		// If a search is active, preserve the filtered order (Fuse ranking or original order)
+		if (searchQuery && searchQuery.trim()) {
+			const start = (page - 1) * PAGE_SIZE;
+			const end = start + PAGE_SIZE;
+			return filteredRawData.slice(start, end);
+		}
+		const sorted = [...filteredRawData].sort((a, b) => {
 			let aVal: string | number;
 			let bVal: string | number;
 
 			switch (sortColumn) {
-				case 'composer':
-					aVal = a.composer + a.work;
-					bVal = b.composer + b.work;
-					break;
 				case 'work':
-					aVal = a.work;
-					bVal = b.work;
+					aVal = normalizeWorkName(a.work);
+					bVal = normalizeWorkName(b.work);
 					break;
 				case 'popularity':
 					aVal = a.popularity;
 					bVal = b.popularity;
 					break;
 				case 'year':
-					// Extract first year for sorting
-					aVal = a.year === '-' ? 0 : parseInt(a.year.split('-')[0]);
-					bVal = b.year === '-' ? 0 : parseInt(b.year.split('-')[0]);
+					// Extract first year for sorting, be defensive in case year is missing
+					const ay = a.year ?? '-';
+					const by = b.year ?? '-';
+					aVal = ay === '-' ? 0 : parseInt(ay.split('-')[0]);
+					bVal = by === '-' ? 0 : parseInt(by.split('-')[0]);
+					break;
+				default:
+					aVal = a.composer + normalizeWorkName(a.work);
+					bVal = b.composer + normalizeWorkName(b.work);
 					break;
 			}
 
@@ -119,8 +147,20 @@
 			}
 		});
 
-		return sorted;
+		// Paginate sorted data to avoid rendering huge lists at once
+		const start = (page - 1) * PAGE_SIZE;
+		const end = start + PAGE_SIZE;
+
+		return sorted.slice(start, end);
 	});
+
+	// Filtered raw data (apply search) and total pages for UI
+	const filteredRawData = $derived.by(() => {
+		if (!searchQuery) return rawTableData;
+		return filterWorks<TableRow>(rawTableData, searchQuery);
+	});
+
+	const totalPages = $derived.by(() => Math.max(1, Math.ceil(filteredRawData.length / PAGE_SIZE)));
 
 	function loadTracklistData() {
 		if (!tracklist) return;
@@ -164,6 +204,8 @@
 			});
 
 			rawTableData = rows;
+			// Reset to first page whenever we load new data
+			page = 1;
 		} catch (error) {
 			console.error('Error loading tracklist data:', error);
 			rawTableData = [];
@@ -172,19 +214,44 @@
 
 	function handleSort(column: typeof sortColumn) {
 		if (sortColumn === column) {
-			// Toggle direction if clicking the same column
+			// Toggle direction if clicking the same column (keep current page)
 			sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
 		} else {
-			// New column, default to ascending
+			// New column: set sort column and reset to first page
 			sortColumn = column;
 			sortDirection = 'asc';
+			page = 1;
 		}
 	}
 
+	function gotoPage(n: number) {
+		if (n < 1) n = 1;
+		if (n > totalPages) n = totalPages;
+		page = n;
+
+		// Scroll content container to top so the user sees the beginning of the page
+		try {
+			if (contentScrollEl && typeof contentScrollEl.scrollTo === 'function') {
+				contentScrollEl.scrollTo({ top: 0 });
+			}
+		} catch (e) {
+			// ignore if scroll behavior not supported
+		}
+	}
+
+	function prevPage() {
+		gotoPage(page - 1);
+	}
+
+	function nextPage() {
+		gotoPage(page + 1);
+	}
+
 	function renderPopularityStars(score: number): string {
-		// Map work score from [MIN_WORK_SCORE, MAX_WORK_SCORE] to [1, 5] stars
-		const normalizedScore = ((score - MIN_WORK_SCORE) / (MAX_WORK_SCORE - MIN_WORK_SCORE)) * 4 + 1;
-		const clampedScore = Math.max(1, Math.min(5, normalizedScore));
+		// Map work score from [MIN_WORK_SCORE, MAX_WORK_SCORE] to [0.5, 5] stars
+		const normalizedScore =
+			((score - MIN_WORK_SCORE) / (MAX_WORK_SCORE - MIN_WORK_SCORE)) * 4.5 + 0.5;
+		const clampedScore = Math.max(0.5, Math.min(5, normalizedScore));
 
 		// Create 5 stars with continuous gradient
 		const fullStars = Math.floor(clampedScore);
@@ -241,7 +308,7 @@
 	}
 </script>
 
-<Popup {visible} {onClose} width="6xl" overflow="hidden" padding="none">
+<Popup {visible} {onClose} width="screen" overflow="hidden" padding="none">
 	<div class="border-b-2 border-cyan-400/30 bg-slate-800/50 p-6">
 		<div class="flex items-center justify-between">
 			<h2 class="text-2xl font-bold text-cyan-400">
@@ -268,7 +335,7 @@
 		</div>
 	</div>
 
-	<div class="overflow-y-auto" style="max-height: calc(90vh - 120px);">
+	<div class="overflow-y-auto" style="max-height: calc(90vh - 120px);" bind:this={contentScrollEl}>
 		{#if isLoading}
 			<div class="flex items-center justify-center py-12">
 				<div class="text-center">
@@ -278,79 +345,144 @@
 					<p class="mt-4 text-slate-400">{$_('tracklistViewer.loading')}</p>
 				</div>
 			</div>
-		{:else if tableData.length === 0}
-			<p class="text-center text-slate-400">{$_('tracklistViewer.noData')}</p>
 		{:else}
-			<div class="overflow-y-auto">
-				<table class="w-full border-collapse">
-					<thead>
-						<tr class="border-b-2 border-cyan-400/30">
-							<th
-								class="cell cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
-								onclick={() => handleSort('composer')}
-							>
-								{$_('tracklistViewer.columns.composer')}
-								{#if sortColumn === 'composer'}
-									<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
-								{/if}
-							</th>
-							<th
-								class="cell cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
-								onclick={() => handleSort('work')}
-							>
-								{$_('tracklistViewer.columns.work')}
-								{#if sortColumn === 'work'}
-									<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
-								{/if}
-							</th>
-							<th
-								class="cell cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
-								onclick={() => handleSort('popularity')}
-							>
-								{$_('tracklistViewer.columns.popularity')}
-								{#if sortColumn === 'popularity'}
-									<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
-								{/if}
-							</th>
-							<th
-								class="cell hidden cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300 md:table-cell"
-								onclick={() => handleSort('year')}
-							>
-								{$_('tracklistViewer.columns.year')}
-								{#if sortColumn === 'year'}
-									<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
-								{/if}
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						{#each tableData as row}
-							<tr class="border-b border-slate-700 transition-colors hover:bg-slate-800/50">
-								<td class="cell text-sm">
-									<div class="text-slate-300">
-										<span>{row.composer}</span>
-										<ExternalLink
-											href="https://musicbrainz.org/artist/{row.composerGid}"
-											hideOnMobile={true}
-										/>
-									</div>
-									{#if row.composerLifespan}
-										<div class="text-xs text-slate-400">({row.composerLifespan})</div>
+			<div class="px-4 py-3">
+				<input
+					type="search"
+					bind:value={searchQuery}
+					oninput={() => (page = 1)}
+					placeholder={$_('tracklistViewer.searchPlaceholder') || 'Search composer, title or works'}
+					class="w-full rounded border border-slate-700 bg-slate-800/60 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-500 focus:ring-2 focus:ring-cyan-400 focus:outline-none"
+				/>
+			</div>
+
+			<!-- Top pagination controls -->
+			{#if filteredRawData.length > PAGE_SIZE}
+				<div class="flex items-center justify-center px-4 py-1">
+					<div class="flex items-center space-x-2">
+						<button
+							type="button"
+							onclick={() => gotoPage(1)}
+							class="rounded bg-slate-700 px-3 py-1 text-sm text-slate-200 disabled:opacity-50"
+							disabled={page <= 1}
+						>
+							«
+						</button>
+						<button
+							type="button"
+							onclick={() => prevPage()}
+							class="rounded bg-slate-700 px-3 py-1 text-sm text-slate-200 disabled:opacity-50"
+							disabled={page <= 1}
+							title="Previous page"
+						>
+							‹
+						</button>
+						<div class="text-sm text-slate-300">{page} / {totalPages}</div>
+						<button
+							type="button"
+							onclick={() => nextPage()}
+							class="rounded bg-slate-700 px-3 py-1 text-sm text-slate-200 disabled:opacity-50"
+							disabled={page >= totalPages}
+							title="Next page"
+						>
+							›
+						</button>
+						<button
+							type="button"
+							onclick={() => gotoPage(totalPages)}
+							class="rounded bg-slate-700 px-3 py-1 text-sm text-slate-200 disabled:opacity-50"
+							disabled={page >= totalPages}
+						>
+							»
+						</button>
+					</div>
+				</div>
+			{/if}
+
+			{#if tableData.length === 0}
+				<p class="text-center text-slate-400">{$_('tracklistViewer.noData')}</p>
+			{:else}
+				<div class="overflow-y-auto">
+					<table class="w-full border-collapse">
+						<thead>
+							<tr class="border-b-2 border-cyan-400/30">
+								<th
+									class="cell cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
+									onclick={() => handleSort('composer')}
+								>
+									{$_('tracklistViewer.columns.composer')}
+									{#if sortColumn === 'composer'}
+										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
 									{/if}
-								</td>
-								<td class="cell text-sm">
-									<div class="text-slate-300">
-										{#if row.parts.length === 1}
-											<!-- Single part: work name is clickable -->
-											<button
-												type="button"
-												onclick={() => handlePlayPart(row.parts[0].deezerIds)}
-												class="cursor-pointer text-left transition-colors hover:text-cyan-400 {currentlyPlayingDeezerId &&
-												row.parts[0].deezerIds.includes(currentlyPlayingDeezerId)
-													? 'font-semibold text-cyan-400'
-													: ''}"
-											>
-												{row.work}
+								</th>
+								<th
+									class="cell cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
+									onclick={() => handleSort('work')}
+								>
+									{$_('tracklistViewer.columns.work')}
+									{#if sortColumn === 'work'}
+										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+									{/if}
+								</th>
+								<th
+									class="cell cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
+									onclick={() => handleSort('popularity')}
+								>
+									{$_('tracklistViewer.columns.popularity')}
+									{#if sortColumn === 'popularity'}
+										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+									{/if}
+								</th>
+								<th
+									class="cell hidden cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300 md:table-cell"
+									onclick={() => handleSort('year')}
+								>
+									{$_('tracklistViewer.columns.year')}
+									{#if sortColumn === 'year'}
+										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+									{/if}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{#each tableData as row}
+								<tr class="border-b border-slate-700 transition-colors hover:bg-slate-800/50">
+									<td class="cell text-sm">
+										<div class="text-slate-300">
+											<span>{row.composer}</span>
+											<ExternalLink
+												href="https://musicbrainz.org/artist/{row.composerGid}"
+												hideOnMobile={true}
+											/>
+										</div>
+										{#if row.composerLifespan}
+											<div class="text-xs text-slate-400">({row.composerLifespan})</div>
+										{/if}
+									</td>
+									<td class="cell text-sm">
+										<div class="text-slate-300">
+											{#if row.parts.length === 1}
+												<!-- Single part: work name is clickable -->
+												<button
+													type="button"
+													onclick={() => handlePlayPart(row.parts[0].deezerIds)}
+													class="cursor-pointer text-left transition-colors hover:text-cyan-400 {currentlyPlayingDeezerId &&
+													row.parts[0].deezerIds.includes(currentlyPlayingDeezerId)
+														? 'font-semibold text-cyan-400'
+														: ''}"
+												>
+													{row.work}
+													{#if row.year}
+														<span class="text-xs opacity-80 md:hidden"> ({row.year})</span>
+													{/if}
+													<ExternalLink
+														href="https://musicbrainz.org/work/{row.workGid}"
+														hideOnMobile={true}
+													/>
+												</button>
+											{:else}
+												<!-- Multiple parts: work name not clickable -->
+												<span>{row.work}</span>
 												{#if row.year}
 													<span class="text-xs opacity-80 md:hidden"> ({row.year})</span>
 												{/if}
@@ -358,50 +490,83 @@
 													href="https://musicbrainz.org/work/{row.workGid}"
 													hideOnMobile={true}
 												/>
-											</button>
-										{:else}
-											<!-- Multiple parts: work name not clickable -->
-											<span>{row.work}</span>
-											{#if row.year}
-												<span class="text-xs opacity-80 md:hidden"> ({row.year})</span>
 											{/if}
-											<ExternalLink
-												href="https://musicbrainz.org/work/{row.workGid}"
-												hideOnMobile={true}
-											/>
+										</div>
+										{#if row.parts.length > 1 || row.work !== row.parts[0].name}
+											<ul class="mt-1 space-y-0.5 pl-2 text-slate-400 md:pl-4">
+												{#each row.parts as part}
+													<li class="flex items-center gap-2">
+														{#if row.parts.length > 1}
+															{@html renderPartScore(part.score)}
+														{/if}
+														<button
+															type="button"
+															onclick={() => handlePlayPart(part.deezerIds)}
+															class="flex-1 cursor-pointer text-left transition-colors hover:text-cyan-400 {currentlyPlayingDeezerId &&
+															part.deezerIds.includes(currentlyPlayingDeezerId)
+																? 'font-semibold text-cyan-400'
+																: ''}"
+														>
+															{formatPartName(part.name, row.work)}
+														</button>
+													</li>
+												{/each}
+											</ul>
 										{/if}
-									</div>
-									{#if row.parts.length > 1 || row.work !== row.parts[0].name}
-										<ul class="mt-1 space-y-0.5 pl-2 text-slate-400 md:pl-4">
-											{#each row.parts as part}
-												<li class="flex items-center gap-2">
-													{#if row.parts.length > 1}
-														{@html renderPartScore(part.score)}
-													{/if}
-													<button
-														type="button"
-														onclick={() => handlePlayPart(part.deezerIds)}
-														class="flex-1 cursor-pointer text-left transition-colors hover:text-cyan-400 {currentlyPlayingDeezerId &&
-														part.deezerIds.includes(currentlyPlayingDeezerId)
-															? 'font-semibold text-cyan-400'
-															: ''}"
-													>
-														{formatPartName(part.name, row.work)}
-													</button>
-												</li>
-											{/each}
-										</ul>
-									{/if}
-								</td>
-								<td class="cell text-sm text-yellow-400" title={row.popularity + ''}>
-									{@html renderPopularityStars(row.popularity)}
-								</td>
-								<td class="cell hidden text-sm text-slate-400 md:table-cell">{row.year}</td>
-							</tr>
-						{/each}
-					</tbody>
-				</table>
-			</div>
+									</td>
+									<td class="cell text-sm text-yellow-400" title={row.popularity + ''}>
+										{@html renderPopularityStars(row.popularity)}
+									</td>
+									<td class="cell hidden text-sm text-slate-400 md:table-cell">{row.year}</td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</div>
+			{/if}
+
+			<!-- Pagination controls -->
+			{#if filteredRawData.length > PAGE_SIZE}
+				<div class="flex items-center justify-center px-4 py-3">
+					<div class="flex items-center space-x-2">
+						<button
+							type="button"
+							onclick={() => gotoPage(1)}
+							class="rounded bg-slate-700 px-3 py-1 text-sm text-slate-200 disabled:opacity-50"
+							disabled={page <= 1}
+						>
+							«
+						</button>
+						<button
+							type="button"
+							onclick={() => prevPage()}
+							class="rounded bg-slate-700 px-3 py-1 text-sm text-slate-200 disabled:opacity-50"
+							disabled={page <= 1}
+							title="Previous page"
+						>
+							‹
+						</button>
+						<div class="text-sm text-slate-300">{page} / {totalPages}</div>
+						<button
+							type="button"
+							onclick={() => nextPage()}
+							class="rounded bg-slate-700 px-3 py-1 text-sm text-slate-200 disabled:opacity-50"
+							disabled={page >= totalPages}
+							title="Next page"
+						>
+							›
+						</button>
+						<button
+							type="button"
+							onclick={() => gotoPage(totalPages)}
+							class="rounded bg-slate-700 px-3 py-1 text-sm text-slate-200 disabled:opacity-50"
+							disabled={page >= totalPages}
+						>
+							»
+						</button>
+					</div>
+				</div>
+			{/if}
 		{/if}
 	</div>
 </Popup>

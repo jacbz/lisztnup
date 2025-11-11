@@ -68,12 +68,14 @@ export const DEFAULT_CATEGORY_WEIGHTS: CategoryWeights = {
 
 // Work score range constants
 export const MIN_WORK_SCORE = 2.3;
-export const MAX_WORK_SCORE = 6.7;
-export const DEFAULT_MIN_WORK_SCORE = 2.3;
-export const DEFAULT_MAX_WORK_SCORE = 6.7;
+/// The maximum work score outputed by process_musicbrainz.py
+export const MAX_WORK_SCORE = 6.62;
+
+export const MIN_WORK_SCORE_ROUNDED = Math.floor(MIN_WORK_SCORE * 10) / 10;
+export const MAX_WORK_SCORE_ROUNDED = Math.ceil(MAX_WORK_SCORE * 10) / 10;
 
 export const DEFAULT_TRACKLIST_CONFIG: TracklistConfig = {
-	workScoreRange: [DEFAULT_MIN_WORK_SCORE, DEFAULT_MAX_WORK_SCORE],
+	workScoreRange: [MIN_WORK_SCORE_ROUNDED, MAX_WORK_SCORE_ROUNDED],
 	enablePopularityWeighting: true
 };
 

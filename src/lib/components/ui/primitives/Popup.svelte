@@ -9,7 +9,9 @@
 		onClose?: () => void;
 		children?: Snippet;
 		/** Width preset or custom width class. Default: 'md' (max-w-md). Options: 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '5xl', '6xl', or custom like 'w-[420px]' */
-		width?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '5xl' | '6xl' | string;
+		width?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '5xl' | '6xl' | 'screen' | string;
+		/** When using width 'screen', subtract this margin from the viewport width. Can be a CSS size string like '48px' or a number (px). Default: '48px' */
+		screenMargin?: string | number;
 		/** Padding. Default: 'md' (p-6). Options: 'sm' (p-4), 'md' (p-6), 'lg' (p-8), 'responsive' (p-4 md:p-8), or 'none' */
 		padding?: 'none' | 'sm' | 'md' | 'lg' | 'responsive';
 		/** Overflow behavior. Default: 'auto' */
@@ -44,8 +46,16 @@
 
 	// Build width classes
 	const widthClass = $derived.by(() => {
-		if (width.startsWith('w-') || width.startsWith('max-w-') || width.startsWith('min-w-')) {
+		if (
+			typeof width === 'string' &&
+			(width.startsWith('w-') || width.startsWith('max-w-') || width.startsWith('min-w-'))
+		) {
 			return width;
+		}
+
+		if (width === 'screen') {
+			// let inline style control the exact width; keep classes permissive
+			return 'w-dvw max-w-[95vw] h-dvh max-h-[95vh]';
 		}
 		const widthMap: Record<string, string> = {
 			sm: 'w-full max-w-sm',

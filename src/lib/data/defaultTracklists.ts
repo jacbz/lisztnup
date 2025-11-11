@@ -1,4 +1,4 @@
-import { MAX_WORK_SCORE, MIN_WORK_SCORE, type Tracklist } from '$lib/types';
+import { MAX_WORK_SCORE_ROUNDED, MIN_WORK_SCORE, type Tracklist } from '$lib/types';
 import difficultyVeryEasy from '$lib/assets/icons/difficulty-veryeasy.svg?raw';
 import difficultyEasy from '$lib/assets/icons/difficulty-easy.svg?raw';
 import difficultyMedium from '$lib/assets/icons/difficulty-medium.svg?raw';
@@ -29,7 +29,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyVeryEasy,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [5.1, MAX_WORK_SCORE],
+			workScoreRange: [5.1, MAX_WORK_SCORE_ROUNDED],
 			limitWorksFromComposer: 0.075,
 			maxTracksFromSingleWork: 1,
 			enablePopularityWeighting: false
@@ -42,7 +42,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyEasy,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [4.7, MAX_WORK_SCORE],
+			workScoreRange: [4.7, MAX_WORK_SCORE_ROUNDED],
 			limitWorksFromComposer: 0.075,
 			maxTracksFromSingleWork: 1,
 			enablePopularityWeighting: false
@@ -55,7 +55,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyMedium,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [4.5, MAX_WORK_SCORE],
+			workScoreRange: [4.5, MAX_WORK_SCORE_ROUNDED],
 			limitWorksFromComposer: 0.1,
 			maxTracksFromSingleWork: 2,
 			enablePopularityWeighting: false
@@ -68,7 +68,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyHard,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [3.5, MAX_WORK_SCORE],
+			workScoreRange: [3.5, MAX_WORK_SCORE_ROUNDED],
 			limitWorksFromComposer: 0.15,
 			maxTracksFromSingleWork: 3,
 			enablePopularityWeighting: false
@@ -81,7 +81,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyExtreme,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [3, MAX_WORK_SCORE],
+			workScoreRange: [3, MAX_WORK_SCORE_ROUNDED],
 			enablePopularityWeighting: false
 		}
 	},
@@ -125,7 +125,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				other: 0
 			},
 			yearFilter: [1800, 2000],
-			workScoreRange: [3, MAX_WORK_SCORE],
+			workScoreRange: [3, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
 		}
 	},
@@ -146,7 +146,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				ballet: 0,
 				other: 0
 			},
-			workScoreRange: [3.5, MAX_WORK_SCORE],
+			workScoreRange: [3.5, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
 		}
 	},
@@ -167,7 +167,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				ballet: 0,
 				other: 0
 			},
-			workScoreRange: [3.5, MAX_WORK_SCORE],
+			workScoreRange: [3.5, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
 		}
 	},
@@ -188,7 +188,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				ballet: 0,
 				other: 0
 			},
-			workScoreRange: [3.5, MAX_WORK_SCORE],
+			workScoreRange: [3.5, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
 		}
 	},
@@ -209,7 +209,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				ballet: 10,
 				other: 0
 			},
-			workScoreRange: [2.3, MAX_WORK_SCORE]
+			workScoreRange: [2.3, MAX_WORK_SCORE_ROUNDED]
 		}
 	},
 	{
@@ -229,7 +229,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				ballet: 0,
 				other: 0
 			},
-			workScoreRange: [3.8, MAX_WORK_SCORE]
+			workScoreRange: [3.8, MAX_WORK_SCORE_ROUNDED]
 		}
 	},
 	{
@@ -303,7 +303,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'composers',
 		config: {
 			composerFilter: { mode: 'include', composers: ['2cd475bb-1abd-40c4-9904-6d4b691c752c'] },
-			workScoreRange: [2.3, MAX_WORK_SCORE]
+			workScoreRange: [2.3, MAX_WORK_SCORE_ROUNDED]
 		}
 	},
 	{
@@ -314,7 +314,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'composers',
 		config: {
 			composerFilter: { mode: 'include', composers: ['24f1766e-9635-4d58-a4d4-9413f9f98a4c'] },
-			workScoreRange: [3.4, MAX_WORK_SCORE],
+			workScoreRange: [3.4, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
 		}
 	},
@@ -326,7 +326,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'composers',
 		config: {
 			composerFilter: { mode: 'include', composers: ['09ff1fe8-d61c-4b98-bb82-18487c74d7b7'] },
-			workScoreRange: [2.3, MAX_WORK_SCORE]
+			workScoreRange: [2.3, MAX_WORK_SCORE_ROUNDED]
 		}
 	},
 	{
@@ -337,7 +337,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'composers',
 		config: {
 			composerFilter: { mode: 'include', composers: ['b972f589-fb0e-474e-b64a-803b0364fa75'] },
-			workScoreRange: [3, MAX_WORK_SCORE],
+			workScoreRange: [3, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
 		}
 	},
@@ -349,7 +349,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'composers',
 		config: {
 			composerFilter: { mode: 'include', composers: ['9ddd7abc-9e1b-471d-8031-583bc6bc8be9'] },
-			workScoreRange: [2.3, MAX_WORK_SCORE]
+			workScoreRange: [2.3, MAX_WORK_SCORE_ROUNDED]
 		}
 	},
 	{
@@ -360,7 +360,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'composers',
 		config: {
 			composerFilter: { mode: 'include', composers: ['ad79836d-9849-44df-8789-180bbc823f3c'] },
-			workScoreRange: [3, MAX_WORK_SCORE]
+			workScoreRange: [3, MAX_WORK_SCORE_ROUNDED]
 		}
 	},
 
@@ -373,7 +373,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: eraIcon,
 		config: {
 			yearFilter: [1400, 1600],
-			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE]
+			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE_ROUNDED]
 		}
 	},
 	{
@@ -384,7 +384,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: eraIcon,
 		config: {
 			yearFilter: [1600, 1750],
-			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE]
+			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE_ROUNDED]
 		}
 	},
 	{
@@ -395,7 +395,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: eraIcon,
 		config: {
 			yearFilter: [1750, 1820],
-			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE]
+			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE_ROUNDED]
 		}
 	},
 	{
@@ -406,7 +406,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: eraIcon,
 		config: {
 			yearFilter: [1820, 1910],
-			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE]
+			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE_ROUNDED]
 		}
 	},
 	{
@@ -417,7 +417,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: eraIcon,
 		config: {
 			yearFilter: [1900, 1999],
-			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE]
+			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE_ROUNDED]
 		}
 	}
 ];

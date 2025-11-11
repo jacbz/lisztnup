@@ -40,6 +40,7 @@
 		"vite": "^7.1.7"
 	},
 	"dependencies": {
+		"fuse.js": "^7.1.0",
 		"lucide-svelte": "^0.548.0",
 		"pako": "^2.1.0",
 		"qrcode": "^1.5.4",

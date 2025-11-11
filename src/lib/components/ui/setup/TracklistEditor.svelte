@@ -3,10 +3,8 @@
 	import {
 		DEFAULT_CATEGORY_WEIGHTS,
 		DEFAULT_TRACKLIST_CONFIG,
-		MIN_WORK_SCORE,
-		MAX_WORK_SCORE,
-		DEFAULT_MIN_WORK_SCORE,
-		DEFAULT_MAX_WORK_SCORE
+		MIN_WORK_SCORE_ROUNDED,
+		MAX_WORK_SCORE_ROUNDED
 	} from '$lib/types';
 	import { gameData } from '$lib/stores';
 	import { TracklistGenerator, SettingsService } from '$lib/services';
@@ -334,8 +332,8 @@
 		workScoreRangeEnabled = !workScoreRangeEnabled;
 		if (workScoreRangeEnabled) {
 			config.workScoreRange = config.workScoreRange || [
-				DEFAULT_MIN_WORK_SCORE,
-				DEFAULT_MAX_WORK_SCORE
+				MIN_WORK_SCORE_ROUNDED,
+				MAX_WORK_SCORE_ROUNDED
 			];
 		} else {
 			config.workScoreRange = undefined;
@@ -521,8 +519,8 @@
 					<RangeSlider
 						bind:valueMin={config.workScoreRange[0]}
 						bind:valueMax={config.workScoreRange[1]}
-						min={MIN_WORK_SCORE}
-						max={MAX_WORK_SCORE}
+						min={MIN_WORK_SCORE_ROUNDED}
+						max={MAX_WORK_SCORE_ROUNDED}
 						step={0.1}
 						label=""
 					/>

@@ -167,7 +167,8 @@
 	},
 	"tracklistViewer": {
 		"loading": "Loading tracklist...",
-		"noData": "No works found in this tracklist.",
+		"noData": "No works found.",
+		"searchPlaceholder": "Search for a work or composer...",
 		"columns": {
 			"composer": "Composer",
 			"work": "Work",
