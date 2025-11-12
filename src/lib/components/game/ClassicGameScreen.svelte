@@ -39,33 +39,27 @@
 {#if currentTrack}
 	<div class="flex h-screen items-center justify-center">
 		<!-- Floating Legend of Categories -->
-		<EdgeDisplay>
+		<EdgeDisplay margin="42px" visible={$currentRound.isPlaying}>
 			{#snippet children()}
 				<div
-					class="rounded-2xl border-2 border-cyan-400 px-4 py-3 shadow-[0_0_30px_rgba(34,211,238,0.3)] backdrop-blur-xs md:px-4 md:py-4"
+					class="flex w-[80vw] flex-wrap justify-center gap-1.5 md:max-w-[60vmin] md:min-w-[60vmin]"
 				>
-					<div class="flex flex-wrap justify-center gap-1.5 md:flex-nowrap md:gap-2">
-						{#each activeCategories as category, index}
-							{@const def = getCategoryDefinition(category)}
-							{#if def}
-								<div
-									class="flex w-{[
-										activeCategories.length % 2 === 1 && index == 0
-											? 'full'
-											: '[calc(50%-0.1875rem)]'
-									]} flex-col items-center justify-center rounded-lg border-2 border-transparent py-1 md:w-auto md:min-w-[120px]"
-									style="background: {def.color1};"
-								>
-									<span class="px-3 text-sm font-bold text-white md:text-xl"
-										>{$_(`game.categories.${category}`)}</span
-									>
-									<span class="text-sm font-semibold text-nowrap text-white/90 md:text-lg">
-										{$_('scoring.pointsAwarded', { values: { points: CATEGORY_POINTS[category] } })}
-									</span>
-								</div>
-							{/if}
-						{/each}
-					</div>
+					{#each activeCategories as category, index}
+						{@const categoryDef = getCategoryDefinition(category)}
+						<div
+							class="flex w-{[
+								activeCategories.length % 2 === 1 && index == 0 ? 'full' : '[calc(50%-0.1875rem)]'
+							]} flex-col items-center justify-center rounded-2xl border-3 border-transparent py-1 backdrop-blur-md md:w-[calc(33%-0.1875rem)] md:py-2"
+							style="border-color: {categoryDef.color2}; box-shadow: 0 0 40px {categoryDef.glowColor}; color: {categoryDef.color1};"
+						>
+							<span class="px-3 text-xl font-bold tracking-wider uppercase md:text-2xl"
+								>{$_(`game.categories.${category}`)}</span
+							>
+							<span class="text-sm font-semibold text-nowrap md:text-base">
+								{$_('scoring.pointsAwarded', { values: { points: CATEGORY_POINTS[category] } })}
+							</span>
+						</div>
+					{/each}
 				</div>
 			{/snippet}
 		</EdgeDisplay>

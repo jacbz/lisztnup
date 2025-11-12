@@ -327,19 +327,18 @@
 			{#snippet children()}
 				{@const categoryDef = getCategoryDefinition(currentCategory)}
 				<div
-					class="flex max-w-[90vw] flex-col items-center gap-3 rounded-[20px] border-[3px] bg-slate-900 px-6 py-3 shadow-[0_0_40px] md:flex-row md:gap-6 md:px-8"
-					style="border-color: {categoryDef?.color2 ||
-						'#22d3ee'}; box-shadow: 0 0 40px {categoryDef?.glowColor || 'rgba(34,211,238,0.4)'};"
+					class="flex max-w-[90vw] flex-col items-center gap-3 rounded-[20px] border-[3px] px-6 py-3 shadow-[0_0_40px] backdrop-blur-xs md:flex-row md:gap-6 md:px-8"
+					style="border-color: {categoryDef.color2}; box-shadow: 0 0 40px {categoryDef.glowColor};"
 				>
 					<div
 						class="text-xl font-bold tracking-wider uppercase md:text-2xl"
-						style="color: {categoryDef?.color1 || '#22d3ee'};"
+						style="color: {categoryDef.color1};"
 					>
 						{$_(`game.categories.${currentCategory}`)}
 					</div>
 					<div
 						class="text-base font-semibold text-nowrap md:text-lg"
-						style="color: {categoryDef?.color2 || '#a855f7'};"
+						style="color: {categoryDef.color2};"
 					>
 						{$_('scoring.pointsAwarded', {
 							values: { points: CATEGORY_POINTS[currentCategory] }

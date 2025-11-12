@@ -201,27 +201,25 @@
 						<!-- Category buttons -->
 						{#each categories as category}
 							{@const def = getCategoryDefinition(category)}
-							{#if def}
-								<button
-									type="button"
-									class="flex cursor-pointer flex-col items-center gap-2 rounded-xl border-[3px] bg-slate-700 px-4 py-6 transition-all duration-200 hover:scale-[1.02]"
-									class:border-white={selectedCategory === category}
-									class:shadow-[0_0_20px_rgba(255,255,255,0.3)]={selectedCategory === category}
-									class:scale-105={selectedCategory === category}
-									class:border-transparent={selectedCategory !== category}
-									style="background: linear-gradient(135deg, {def.color1}, {def.color2});"
-									onclick={() => (selectedCategory = category)}
+							<button
+								type="button"
+								class="flex cursor-pointer flex-col items-center gap-2 rounded-xl border-[3px] bg-slate-700 px-4 py-6 transition-all duration-200 hover:scale-[1.02]"
+								class:border-white={selectedCategory === category}
+								class:shadow-[0_0_20px_rgba(255,255,255,0.3)]={selectedCategory === category}
+								class:scale-105={selectedCategory === category}
+								class:border-transparent={selectedCategory !== category}
+								style="background: linear-gradient(135deg, {def.color1}, {def.color2});"
+								onclick={() => (selectedCategory = category)}
+							>
+								<span class="text-2xl font-bold text-white uppercase"
+									>{$_(`game.categories.${category}`)}</span
 								>
-									<span class="text-2xl font-bold text-white uppercase"
-										>{$_(`game.categories.${category}`)}</span
-									>
-									<span class="text-lg font-semibold text-white/90"
-										>{$_('scoring.pointsAwarded', {
-											values: { points: CATEGORY_POINTS[category] }
-										})}</span
-									>
-								</button>
-							{/if}
+								<span class="text-lg font-semibold text-white/90"
+									>{$_('scoring.pointsAwarded', {
+										values: { points: CATEGORY_POINTS[category] }
+									})}</span
+								>
+							</button>
 						{/each}
 						<!-- Wrong button -->
 						<button
@@ -255,15 +253,13 @@
 						</div>
 						{#each categories as category}
 							{@const def = getCategoryDefinition(category)}
-							{#if def}
-								<div
-									class="flex flex-col items-center justify-center gap-0.5 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
-									style="background: linear-gradient(135deg, {def.color1}, {def.color2});"
-								>
-									<span class="text-sm">{$_(`game.categoriesShort.${category}`)}</span>
-									<span class="text-xs opacity-80">+{CATEGORY_POINTS[category]}</span>
-								</div>
-							{/if}
+							<div
+								class="flex flex-col items-center justify-center gap-0.5 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
+								style="background: linear-gradient(135deg, {def.color1}, {def.color2});"
+							>
+								<span class="text-sm">{$_(`game.categoriesShort.${category}`)}</span>
+								<span class="text-xs opacity-80">+{CATEGORY_POINTS[category]}</span>
+							</div>
 						{/each}
 						<div
 							class="flex flex-col items-center justify-center gap-0.5 bg-slate-700 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
@@ -292,7 +288,7 @@
 								<button
 									type="button"
 									class="flex cursor-pointer items-center justify-center bg-slate-700 p-2 px-2 transition-all duration-200 hover:bg-slate-600"
-									style={isSelected && def
+									style={isSelected
 										? `background: linear-gradient(135deg, ${def.color1}, ${def.color2});`
 										: ''}
 									onclick={() => toggleCell(player.name, category)}
@@ -340,15 +336,13 @@
 						</div>
 						{#each revealedCategories as category}
 							{@const def = getCategoryDefinition(category)}
-							{#if def}
-								<div
-									class="flex flex-col items-center justify-center gap-0.5 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
-									style="background: linear-gradient(135deg, {def.color1}, {def.color2});"
-								>
-									<span class="text-sm">{$_(`game.categoriesShort.${category}`)}</span>
-									<span class="text-xs opacity-80">+{CATEGORY_POINTS[category]}</span>
-								</div>
-							{/if}
+							<div
+								class="flex flex-col items-center justify-center gap-0.5 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
+								style="background: linear-gradient(135deg, {def.color1}, {def.color2});"
+							>
+								<span class="text-sm">{$_(`game.categoriesShort.${category}`)}</span>
+								<span class="text-xs opacity-80">+{CATEGORY_POINTS[category]}</span>
+							</div>
 						{/each}
 						<div
 							class="flex flex-col items-center justify-center gap-0.5 bg-red-900 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
@@ -388,7 +382,7 @@
 								<button
 									type="button"
 									class="flex cursor-pointer items-center justify-center bg-slate-700 p-2 px-2 transition-all duration-200 hover:bg-slate-600"
-									style={isSelected && def
+									style={isSelected
 										? `background: linear-gradient(135deg, ${def.color1}, ${def.color2});`
 										: ''}
 									onclick={() => toggleCell(player.name, category)}

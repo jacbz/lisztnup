@@ -9,7 +9,7 @@
 		margin?: string;
 	}
 
-	let { visible = true, children, hideTop = false, margin = '16px' }: Props = $props();
+	let { visible = true, children, hideTop = false, margin = '20px' }: Props = $props();
 
 	let isAnimatingOut = $state(false);
 	let showDisplay = $state(false);
