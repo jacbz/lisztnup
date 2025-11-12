@@ -75,10 +75,12 @@ work_composer_counts AS (
       -- Exclude works that are parts or arrangements of other works
       SELECT 1 FROM musicbrainz.l_work_work lww 
       JOIN musicbrainz.link lww_link ON lww.link = lww_link.id
-      WHERE lww.entity1 = w.id AND lww_link.link_type IN (
-        281,  -- parts
-        350   -- arrangement
-      )
+      WHERE lww.entity1 = w.id 
+        AND lww_link.link_type IN (
+          281,  -- parts
+          350   -- arrangement
+        )
+        AND lww.entity0 != 13641795  -- Exclude "Fantasia" as an exception, which erroneously has Beethoven 6 etc. as parts
     )
     AND w.name NOT LIKE '[%'  -- Exclude works with names starting with '['
   GROUP BY w.id
