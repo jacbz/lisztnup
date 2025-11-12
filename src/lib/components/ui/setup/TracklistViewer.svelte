@@ -63,11 +63,11 @@
 			// Use setTimeout to defer heavy computation and prevent UI freeze
 			setTimeout(() => {
 				loadTracklistData();
-				isLoading = false;
 			}, 0);
 		} else if (!visible) {
 			// Reset data and loading state when popup closes
 			rawTableData = [];
+			filteredRawData = [];
 			isLoading = false;
 			// Clear search and pagination when closing
 			searchQuery = '';
@@ -156,9 +156,52 @@
 	});
 
 	// Filtered raw data (apply search) and total pages for UI
-	const filteredRawData = $derived.by(() => {
-		if (!searchQuery) return rawTableData;
-		return filterWorks<TableRow>(rawTableData, searchQuery);
+	// Perform filtering asynchronously (debounced) to avoid freezing the UI during large searches.
+	let filteredRawData = $state<TableRow[]>([]);
+	let _searchTimeout: number | null = null;
+
+	// Recalculate filteredRawData whenever rawTableData or searchQuery changes, but do it
+	// asynchronously so the main thread can remain responsive. Show the loading spinner
+	// while filtering is in progress.
+	$effect(() => {
+		// Clear any pending work
+		if (_searchTimeout) {
+			clearTimeout(_searchTimeout as unknown as number);
+			_searchTimeout = null;
+		}
+
+		// If there is no query, set immediately (but still defer briefly to avoid layout thrash)
+		if (!searchQuery || !searchQuery.trim()) {
+			// No search query: populate immediately to avoid showing an empty table on open
+			// Do NOT toggle `isLoading` here — keep the loading indicator controlled by
+			// the data loader so the spinner remains visible until `loadTracklistData`
+			// finishes and clears `isLoading`.
+			filteredRawData = rawTableData;
+			page = 1;
+			return;
+		}
+
+		// Debounce and perform heavy filtering off the immediate event (keeps UI responsive)
+		isLoading = true;
+		const DEBOUNCE_MS = 120;
+		_searchTimeout = setTimeout(() => {
+			try {
+				filteredRawData = filterWorks<TableRow>(rawTableData, searchQuery);
+			} catch (err) {
+				console.error('Error filtering works:', err);
+				filteredRawData = [];
+			}
+			isLoading = false;
+			page = 1;
+		}, DEBOUNCE_MS) as unknown as number;
+
+		// Cleanup when dependencies change
+		return () => {
+			if (_searchTimeout) {
+				clearTimeout(_searchTimeout as unknown as number);
+				_searchTimeout = null;
+			}
+		};
 	});
 
 	const totalPages = $derived.by(() => Math.max(1, Math.ceil(filteredRawData.length / PAGE_SIZE)));
@@ -208,6 +251,8 @@
 			rawTableData = rows;
 			// Reset to first page whenever we load new data
 			page = 1;
+			// Loading complete for the loader that triggered this
+			isLoading = false;
 		} catch (error) {
 			console.error('Error loading tracklist data:', error);
 			rawTableData = [];
@@ -337,9 +382,24 @@
 		</div>
 	</div>
 
-	<div class="overflow-y-auto" style="max-height: calc(90vh - 120px);" bind:this={contentScrollEl}>
+	<div
+		class="h-full overflow-y-auto"
+		style="max-height: calc(90vh - 120px);"
+		bind:this={contentScrollEl}
+	>
+		<div class="px-4 py-3">
+			<input
+				type="search"
+				bind:value={searchQuery}
+				oninput={() => (page = 1)}
+				placeholder={$_('tracklistViewer.searchPlaceholder') || 'Search composer, title or works'}
+				class="w-full rounded border border-slate-700 bg-slate-800/60 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-500 focus:ring-2 focus:ring-cyan-400 focus:outline-none"
+			/>
+		</div>
+
 		{#if isLoading}
-			<div class="flex items-center justify-center py-12">
+			<!-- Center spinner vertically within visible area -->
+			<div class="flex h-full items-center justify-center">
 				<div class="text-center">
 					<div
 						class="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-cyan-400 border-t-transparent"
@@ -348,16 +408,6 @@
 				</div>
 			</div>
 		{:else}
-			<div class="px-4 py-3">
-				<input
-					type="search"
-					bind:value={searchQuery}
-					oninput={() => (page = 1)}
-					placeholder={$_('tracklistViewer.searchPlaceholder') || 'Search composer, title or works'}
-					class="w-full rounded border border-slate-700 bg-slate-800/60 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-500 focus:ring-2 focus:ring-cyan-400 focus:outline-none"
-				/>
-			</div>
-
 			<!-- Top pagination controls -->
 			{#if filteredRawData.length > PAGE_SIZE}
 				<div class="flex items-center justify-center px-4 py-1">
