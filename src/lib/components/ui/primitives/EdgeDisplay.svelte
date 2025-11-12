@@ -3,12 +3,13 @@
 	import type { Snippet } from 'svelte';
 
 	interface Props {
-		visible: boolean;
+		visible?: boolean;
 		children: Snippet;
 		hideTop?: boolean;
+		margin?: string;
 	}
 
-	let { visible = false, children, hideTop = false }: Props = $props();
+	let { visible = true, children, hideTop = false, margin = '16px' }: Props = $props();
 
 	let isAnimatingOut = $state(false);
 	let showDisplay = $state(false);
@@ -32,29 +33,25 @@
 	const positions = [
 		{
 			name: 'top',
-			containerClass: 'fixed top-4 left-1/2 -translate-x-1/2 z-50',
-			innerTransform: 'rotate(180deg)',
+			innerTransform: `translate(-50%, -50%) rotate(180deg) translateY(calc(50vh - 50% - ${margin}))`,
 			hideOnNarrow: false,
 			flyParams: { y: -100, duration: 300 }
 		},
 		{
 			name: 'bottom',
-			containerClass: 'fixed bottom-4 left-1/2 -translate-x-1/2 z-50',
-			innerTransform: '',
+			innerTransform: `translate(-50%, -50%) translateY(calc(50vh - 50% - ${margin}))`,
 			hideOnNarrow: false,
 			flyParams: { y: 100, duration: 300 }
 		},
 		{
 			name: 'left',
-			containerClass: 'fixed left-4 top-1/2 -translate-y-1/2 z-50',
-			innerTransform: 'translateX(-25%) rotate(90deg)',
+			innerTransform: `translate(-50%, -50%) rotate(90deg) translateY(calc(50vw - 50% - ${margin}))`,
 			hideOnNarrow: true,
 			flyParams: { x: -100, duration: 300 }
 		},
 		{
 			name: 'right',
-			containerClass: 'fixed right-4 top-1/2 -translate-y-1/2 z-50',
-			innerTransform: 'translateX(25%) rotate(-90deg)',
+			innerTransform: `translate(-50%, -50%) rotate(-90deg) translateY(calc(50vw - 50% - ${margin}))`,
 			hideOnNarrow: true,
 			flyParams: { x: 100, duration: 300 }
 		}
@@ -69,7 +66,7 @@
 	{#each filteredPositions as position (position.name)}
 		{#if !isAnimatingOut}
 			<div
-				class="{position.containerClass} {position.hideOnNarrow
+				class="fixed top-1/2 left-1/2 z-5 {position.hideOnNarrow
 					? 'hidden lg:block'
 					: ''} z-100 select-none"
 				in:fly={position.flyParams}

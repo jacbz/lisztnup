@@ -6,6 +6,7 @@
 	import { _ } from 'svelte-i18n';
 	import { GAME_SCREEN_CONTEXT } from './context';
 	import { CATEGORY_POINTS } from '$lib/types';
+	import EdgeDisplay from '../ui/primitives/EdgeDisplay.svelte';
 
 	const currentTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
 
@@ -37,30 +38,37 @@
 <!-- Main Game Area -->
 {#if currentTrack}
 	<div class="flex h-screen items-center justify-center">
-		<!-- Floating Legend of Categories (above player button) -->
-		<div
-			class="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-80 rounded-2xl border-2 border-cyan-400 bg-slate-900 px-4 py-3 shadow-[0_0_30px_rgba(34,211,238,0.3)] md:px-4 md:py-4"
-		>
-			<div class="flex flex-col items-center gap-1.5 md:flex-row md:gap-2">
-				{#each activeCategories as category}
-					{@const def = getCategoryDefinition(category)}
-					{#if def}
-						<div
-							class="flex w-full items-center justify-between rounded-lg border-2 border-transparent py-1 md:min-w-[100px] md:flex-col md:justify-center md:px-4"
-							style="background: linear-gradient(135deg, {def.color1}, {def.color2});
-							       border-color: {def.color2};"
-						>
-							<span class="px-3 text-sm font-bold text-white md:text-xl"
-								>{$_(`game.categories.${category}`)}</span
-							>
-							<span class="text-sm font-semibold text-white/90 md:text-lg">
-								{$_('scoring.pointsAwarded', { values: { points: CATEGORY_POINTS[category] } })}
-							</span>
-						</div>
-					{/if}
-				{/each}
-			</div>
-		</div>
+		<!-- Floating Legend of Categories -->
+		<EdgeDisplay>
+			{#snippet children()}
+				<div
+					class="rounded-2xl border-2 border-cyan-400 px-4 py-3 shadow-[0_0_30px_rgba(34,211,238,0.3)] backdrop-blur-xs md:px-4 md:py-4"
+				>
+					<div class="flex flex-wrap justify-center gap-1.5 md:flex-nowrap md:gap-2">
+						{#each activeCategories as category, index}
+							{@const def = getCategoryDefinition(category)}
+							{#if def}
+								<div
+									class="flex w-{[
+										activeCategories.length % 2 === 1 && index == 0
+											? 'full'
+											: '[calc(50%-0.1875rem)]'
+									]} flex-col items-center justify-center rounded-lg border-2 border-transparent py-1 md:w-auto md:min-w-[120px]"
+									style="background: {def.color1};"
+								>
+									<span class="px-3 text-sm font-bold text-white md:text-xl"
+										>{$_(`game.categories.${category}`)}</span
+									>
+									<span class="text-sm font-semibold text-nowrap text-white/90 md:text-lg">
+										{$_('scoring.pointsAwarded', { values: { points: CATEGORY_POINTS[category] } })}
+									</span>
+								</div>
+							{/if}
+						{/each}
+					</div>
+				</div>
+			{/snippet}
+		</EdgeDisplay>
 
 		<!-- Player Control Button (Fixed Center) -->
 		<PlayerControl
