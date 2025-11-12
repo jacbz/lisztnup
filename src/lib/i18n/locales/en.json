@@ -244,7 +244,7 @@
 		"audioNormalization": "Audio Normalization",
 		"audioNormalizationHint": "Uses advanced audio processing to balance volume across tracks. Also powers the visualizer. May cause playback issues on browsers on Apple devices; deactivate if you experience problems. Changes will apply to the next track.",
 		"buzzerVolume": "Buzzer Volume",
-		"buzzerVolumeHint": "Volume for the buzzer in Buzzer Mode."
+		"buzzerVolumeHint": "Volume for the buzzer."
 	},
 	"quitDialog": {
 		"title": "Quit Game?",

@@ -431,7 +431,7 @@
 </div>
 
 <!-- In-Game Settings -->
-<InGameSettings visible={showInGameSettings} onClose={() => (showInGameSettings = false)} />
+<InGameSettings visible={showInGameSettings} onClose={() => (showInGameSettings = false)} {mode} />
 
 <!-- Quit Dialog -->
 <Dialog

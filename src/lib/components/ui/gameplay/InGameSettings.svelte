@@ -6,13 +6,15 @@
 	import Slider from '../primitives/Slider.svelte';
 	import ToggleButton from '../primitives/ToggleButton.svelte';
 	import { _ } from 'svelte-i18n';
+	import type { GameMode } from '$lib/types';
 
 	interface Props {
 		visible?: boolean;
 		onClose?: () => void;
+		mode: GameMode;
 	}
 
-	let { visible = false, onClose = () => {} }: Props = $props();
+	let { visible = false, onClose = () => {}, mode }: Props = $props();
 
 	let trackLength = $state(30);
 	let enableAudioNormalization = $state(true);
@@ -53,19 +55,39 @@
 
 	<div class="space-y-6">
 		<!-- Track Length Slider -->
-		<div>
-			<Slider
-				value={trackLength}
-				min={5}
-				max={30}
-				step={1}
-				label={$_('inGameSettings.trackLength')}
-				showValue={true}
-				valueSuffix="s"
-				onChange={handleTrackLengthChange}
-			/>
-			<p class="mt-2 text-sm text-slate-400">{$_('inGameSettings.trackLengthHint')}</p>
-		</div>
+		{#if mode !== 'buzzer'}
+			<div>
+				<Slider
+					value={trackLength}
+					min={5}
+					max={30}
+					step={1}
+					label={$_('inGameSettings.trackLength')}
+					showValue={true}
+					valueSuffix="s"
+					onChange={handleTrackLengthChange}
+				/>
+				<p class="mt-2 text-sm text-slate-400">{$_('inGameSettings.trackLengthHint')}</p>
+			</div>
+		{/if}
+
+		<!-- Buzzer Volume Slider -->
+		{#if mode === 'buzzer'}
+			<div>
+				<Slider
+					value={buzzerVolume}
+					min={0}
+					max={1}
+					step={0.01}
+					label={$_('inGameSettings.buzzerVolume')}
+					showValue={true}
+					valueSuffix=""
+					valueFormatter={(value) => `${Math.round(value * 100)}%`}
+					onChange={handleBuzzerVolumeChange}
+				/>
+				<p class="mt-2 text-sm text-slate-400">{$_('inGameSettings.buzzerVolumeHint')}</p>
+			</div>
+		{/if}
 
 		<!-- Audio Normalization Toggle -->
 		<div>
@@ -76,22 +98,6 @@
 				<ToggleButton value={enableAudioNormalization} onToggle={handleAudioNormalizationToggle} />
 			</div>
 			<p class="mt-2 text-sm text-slate-400">{$_('inGameSettings.audioNormalizationHint')}</p>
-		</div>
-
-		<!-- Buzzer Volume Slider -->
-		<div>
-			<Slider
-				value={buzzerVolume}
-				min={0}
-				max={1}
-				step={0.01}
-				label={$_('inGameSettings.buzzerVolume')}
-				showValue={true}
-				valueSuffix=""
-				valueFormatter={(value) => `${Math.round(value * 100)}%`}
-				onChange={handleBuzzerVolumeChange}
-			/>
-			<p class="mt-2 text-sm text-slate-400">{$_('inGameSettings.buzzerVolumeHint')}</p>
 		</div>
 	</div>
 </Popup>
