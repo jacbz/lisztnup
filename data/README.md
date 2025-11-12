@@ -16,6 +16,15 @@ You will need the following primary data dumps:
 
 Make sure you have sufficient disk space.
 
+#### Setting Up PostgreSQL
+
+You can use the MusicBrainz Docker setup or setup PostgreSQL manually. Here's how to do it manually:
+
+1. Clone [MusicBrainz Server](https://github.com/metabrainz/musicbrainz-server) and setup PostgreSQL.
+2. Install Perl and the dependencies inside `musicbrainz-server` (`cpanm --installdeps .`)
+3. Download `mbdump.tar.bz2` and `mbdump-derived.tar.bz2` and extract them. The extracted dumps are around 25GB in size.
+4. Run `./admin/InitDb.pl --createdb --import {path_to_extracted_dumps}` to set up the database. There may be errors but they can be ignored for our purposes.
+
 ### Generation Steps
 
 The process is executed by three Python scripts in the following order:

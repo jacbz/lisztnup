@@ -63,12 +63,13 @@ DYNAMIC_PART_SCORE_FILTER = {
 # --- Work Type Transformation Rules ---
 TYPE_MAPPING = {
     "Aria": "vocal", "Song": "vocal", "Song-cycle": "vocal", "Madrigal": "vocal",
-    "Mass": "vocal", "Cantata": "vocal", "Oratorio": "vocal", "Motet": "vocal",
+    "Mass": "vocal", "Cantata": "vocal", "Oratorio": "vocal", "Motet": "vocal", "Vocal": "vocal",
     "Opera": "opera", "Operetta": "opera", "Zarzuela": "opera",
     "Ballet": "ballet",
     "Incidental music": "orchestral", "Symphony": "orchestral", "Symphonic poem": "orchestral",
-    "Overture": "orchestral", "Suite": "orchestral",
+    "Overture": "orchestral", "Suite": "orchestral", "Orchestral": "orchestral",
     "Concerto": "concerto",
+    "Chamber": "chamber",
     "Quartet": "chamber",
     "Sonata": "other", "Partita": "other"
 }
@@ -174,7 +175,6 @@ EXCLUDED_WORKS: Set[str] = set([
     "bf57c435-6ce0-3d57-ab04-e2a9179b178c", # O Holy Night
     "8531b357-339e-3cc7-9ed2-0d6b928ed12e", # Joy to the World
     "bc0cdd41-eaa3-3330-b972-8e8174b9e64d", # Hark! The Herald Angels Sing
-    "7ff8ec8a-8bc3-400a-a6ae-3263bfa39198", # 4'33
     "718b96fa-75eb-436e-8c30-0c647aa99696", # Ave Maria (duplicate)
 ])
 
@@ -726,7 +726,6 @@ class MusicbrainzProcessor:
             return []
         
         # Calculate max number to select: min of max_ids and ceil(n/2)
-        import math
         max_to_select = min(max_ids, math.ceil(len(recordings) / 2))
         
         # Sort recordings by length of title (longest first) - often better match

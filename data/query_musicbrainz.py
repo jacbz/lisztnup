@@ -37,6 +37,44 @@ WORK_TYPES = {
     30: "Incidental music",
 }
 
+# Map selected MusicBrainz tags to higher-level work type categories.
+TAG_TO_WORK_TYPE = {
+    'ballet': 'Ballet',
+    'cantata': 'Vocal',
+    'chamber music': 'Chamber',
+    'choir': 'Vocal',
+    'choral': 'Vocal',
+    'choral music': 'Vocal',
+    'church cantata': 'Vocal',
+    'concerto': 'Concerto',
+    'concerto grosso': 'Concerto',
+    'divertimento': 'Chamber',
+    'french opera': 'Opera',
+    'incidental music': 'Orchestral',
+    'opera': 'Opera',
+    'opéra comique': 'Opera',
+    'operatta': 'Opera',
+    'operetta': 'Opera',
+    'orchestral': 'Orchestral',
+    'piano': 'Piano',
+    'piano 4 hands': 'Chamber',
+    'piano concerto': 'Concerto',
+    'piano solo': 'Piano',
+    'piano sonata': 'Piano',
+    'piano suite': 'Piano',
+    'piano trio': 'Chamber',
+    'piano variations': 'Piano',
+    'requiem': 'Vocal',
+    'singspiel': 'Opera',
+    'song cycle': 'Vocal',
+    'suite': 'Orchestral',
+    'symphony': 'Orchestral',
+    'two pianos': 'Piano',
+    'violin concerto': 'Concerto',
+    'vocal': 'Vocal',
+    'vocal music': 'Vocal',
+}
+
 
 # --- Helper Function ---
 def normalize_name(name):
@@ -85,6 +123,24 @@ work_composer_counts AS (
     AND w.name NOT LIKE '[%'  -- Exclude works with names starting with '['
   GROUP BY w.id
   HAVING COUNT(DISTINCT law.entity0) = 1  -- Only works with exactly one composer
+),
+allowed_tags AS (
+  SELECT id FROM musicbrainz.tag
+  WHERE name IN (
+    'ballet', 'baroque', 'baroque era', 'bbc proms', 'cantata', 'catalog:primary', 
+    'chamber music', 'choir', 'choral', 'choral music', 'choral partitia', 
+    'choral symphony', 'choralbearbeitung', 'chorale partita', 'chorale prelude', 
+    'chorale variations', 'church cantata', 'classical', 'classical music', 
+    'classical period', 'concerto', 'concerto grosso', 'divertimento', 'french opera', 
+    'fugue', 'incidental music', 'keyboard', 'opera', 'opéra comique', 'operatta', 
+    'operetta', 'orchestral', 'organ', 'piano', 'piano 4 hands', 'piano concerto', 
+    'piano solo', 'piano sonata', 'piano suite', 'piano trio', 'piano variations', 
+    'ragtime', 'renaissance', 'requiem', 'romantic', 'romantic classical', 'score', 'singspiel', 
+    'sixth-tone', 'solo', 'solo collection', 'solo harpsichord', 'solo keyboard', 
+    'solo organ', 'sonata', 'song cycle', 'suite', 'symphony', 'theme and variations', 
+    'twelve-tone', 'two pianos', 'violin', 'violin concerto', 'vocal', 'vocal music', 
+    'waltz', 'western classical', 'work', 'young classicism'
+  )
 )
 SELECT
   c.id AS composer_id, 
@@ -97,7 +153,8 @@ SELECT
   COALESCE(wa.name, w.name) AS work_name,
   w.type AS work_type, 
   l.begin_date_year AS work_begin_year, 
-  l.end_date_year AS work_end_year
+  l.end_date_year AS work_end_year,
+  STRING_AGG(t.name, ',' ORDER BY t.name) AS tag_names
 FROM
   work_composer_counts AS wcc
   JOIN musicbrainz.work AS w ON wcc.work_id = w.id
@@ -105,6 +162,8 @@ FROM
   JOIN musicbrainz.link AS l ON law.link = l.id
   JOIN classical_composers AS c ON law.entity0 = c.id
   LEFT JOIN musicbrainz.work_alias AS wa ON w.id = wa.work AND wa.locale = 'en' AND wa.type = 1
+  LEFT JOIN musicbrainz.work_tag AS wt ON w.id = wt.work
+  LEFT JOIN musicbrainz.tag AS t ON wt.tag = t.id
 WHERE
   l.link_type = 168 -- 'composer' relationship
   -- Composer-specific filters (can vary by composer for the same work)
@@ -113,18 +172,40 @@ WHERE
     -- Include if not a song (type 17), or if a song but composer died before 1900
     w.type IS DISTINCT FROM 17 OR c.end_date_year < 1900
   )
-ORDER BY c.sort_name, COALESCE(wa.name, w.name);"""
+  -- Tag filter: either no tags OR at least one allowed tag
+  AND (
+    NOT EXISTS (SELECT 1 FROM musicbrainz.work_tag WHERE work = w.id)
+    OR EXISTS (
+      SELECT 1 FROM musicbrainz.work_tag wt2
+      JOIN allowed_tags at ON wt2.tag = at.id
+      WHERE wt2.work = w.id
+    )
+  )
+GROUP BY 
+  c.id, c.gid, c.sort_name, c.begin_date_year, c.end_date_year,
+  w.id, w.gid, w.name, w.type, l.begin_date_year, l.end_date_year, wa.name
+ORDER BY c.sort_name, COALESCE(wa.name, w.name);
+"""
 
 GET_RECORDINGS_FOR_WORK_SQL = """
 SELECT r.gid AS recording_gid, r.name AS recording_name, i.isrc,
-       label.name AS recording_label, d.track_id AS deezer_id
+       STRING_AGG(DISTINCT label.name, ', ') AS recording_labels, 
+       d.track_id AS deezer_id,
+       STRING_AGG(DISTINCT at.name, ', ') AS attributes
 FROM musicbrainz.recording AS r
 JOIN musicbrainz.l_recording_work AS lrw ON r.id = lrw.entity0
+JOIN musicbrainz.link AS l ON lrw.link = l.id
+LEFT JOIN musicbrainz.link_attribute AS la ON l.id = la.link
+LEFT JOIN musicbrainz.link_attribute_type AS at ON la.attribute_type = at.id
 LEFT JOIN musicbrainz.isrc AS i ON r.id = i.recording
 LEFT JOIN musicbrainz.deezer AS d ON i.isrc = d.isrc
 LEFT JOIN musicbrainz.l_label_recording AS llr ON r.id = llr.entity1
 LEFT JOIN musicbrainz.label AS label ON llr.entity0 = label.id
-WHERE lrw.entity1 = %(work_id)s 
+WHERE lrw.entity1 = %(work_id)s
+GROUP BY r.gid, r.name, i.isrc, d.track_id
+-- Exclude partial recordings
+HAVING STRING_AGG(DISTINCT at.name, ', ') IS NULL 
+    OR STRING_AGG(DISTINCT at.name, ', ') NOT ILIKE '%%partial%%'
 ORDER BY r.name;
 """
 
@@ -149,16 +230,28 @@ def get_work_details_recursive(cursor, work_id, label_counter):
     # Returns: subworks, recordings, total_recordings, descendant_types
     cursor.execute(GET_RECORDINGS_FOR_WORK_SQL, {"work_id": work_id})
     recordings_data = cursor.fetchall()
-    recordings = [
-        {
-            "gid": rec["recording_gid"],
-            "name": rec["recording_name"],
-            "isrc": rec["isrc"],
-            "label": rec["recording_label"],
-            "deezerId": rec["deezer_id"],
-        }
-        for rec in recordings_data
-    ]
+    recordings = []
+    for rec in recordings_data:
+        # The SQL returns an `attributes` column which is a
+        # comma-separated string (e.g. 'live, partial'). When any of the
+        # excluded attributes are present we will not include the
+        # Deezer ID for that recording.
+        attrs = rec.get("attributes") or ""
+        attr_list = [a.strip().lower() for a in attrs.split(",") if a and a.strip()]
+        if any(a in ("medley", "cover", "karaoke") for a in attr_list):
+            deezer_id = None
+        else:
+            deezer_id = rec.get("deezer_id")
+
+        recordings.append(
+            {
+                "gid": rec["recording_gid"],
+                "name": rec["recording_name"],
+                "isrc": rec["isrc"],
+                "label": rec["recording_labels"],
+                "deezerId": deezer_id
+            }
+        )
     # if not a single recording has a deezerId, skip this work
     if all(rec["deezerId"] is None for rec in recordings):
         recordings = []
@@ -371,12 +464,26 @@ def main():
                 )
                 work_type_str = WORK_TYPES.get(winner_row["work_type"], "Unknown")
 
-                # Infer work type from children if it's NULL/Unknown
+                # Infer work type from tags first if the work's own type is NULL.
+                # If no useful tag mapping exists, fall back to inferring from child types.
                 if winner_row["work_type"] is None:
-                    non_null_types = [t for t in descendant_types if t is not None]
-                    if non_null_types:
-                        majority_type_int = Counter(non_null_types).most_common(1)[0][0]
-                        work_type_str = WORK_TYPES.get(majority_type_int, "Unknown")
+                    mapped_from_tag = None
+                    tag_names = winner_row.get("tag_names")
+                    if tag_names:
+                        # tag_names is a comma-separated string from the SQL query
+                        tag_list = [t.strip().lower() for t in tag_names.split(",") if t and t.strip()]
+                        mapped_types = [TAG_TO_WORK_TYPE[t] for t in tag_list if t in TAG_TO_WORK_TYPE]
+                        if mapped_types:
+                            # pick the most common mapped high-level type among tags
+                            mapped_from_tag = Counter(mapped_types).most_common(1)[0][0]
+                            work_type_str = mapped_from_tag
+
+                    # If tags didn't yield a mapping, fall back to child-type majority
+                    if mapped_from_tag is None:
+                        non_null_types = [t for t in descendant_types if t is not None]
+                        if non_null_types:
+                            majority_type_int = Counter(non_null_types).most_common(1)[0][0]
+                            work_type_str = WORK_TYPES.get(majority_type_int, "Unknown")
 
                 if composer_id not in composers:
                     composers[composer_id] = {
@@ -435,7 +542,7 @@ def main():
             f"\nWriting {len(final_data)} composers with valid works to {output_filename}..."
         )
         with open(output_filename, "w", encoding="utf-8") as f:
-            json.dump(final_data, f, ensure_ascii=False)
+            json.dump(final_data, f, ensure_ascii=False, indent=2)
 
         print("Done.")
         print_statistics(final_data, stats)

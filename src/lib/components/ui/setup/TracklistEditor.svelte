@@ -15,6 +15,7 @@
 	import RangeSlider from '../primitives/RangeSlider.svelte';
 	import ToggleButton from '../primitives/ToggleButton.svelte';
 	import { _ } from 'svelte-i18n';
+	import { formatComposerName } from '$lib/utils';
 
 	interface Props {
 		visible?: boolean;
@@ -935,7 +936,9 @@
 													? `\n... and ${composer.works.length - 20} more`
 													: '')}
 										>
-											<span class="truncate text-slate-300">{composer.name}</span>
+											<span class="truncate text-slate-300"
+												>{formatComposerName(composer.name)}</span
+											>
 											<div class="ml-2 flex shrink-0 gap-1">
 												<span
 													class="rounded-full bg-cyan-500/20 px-2 py-0.5 text-xs font-semibold text-cyan-300"
