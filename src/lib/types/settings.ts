@@ -52,6 +52,7 @@ export interface GameSettings {
 	enableScoring: boolean; // Whether scoring is enabled
 	bingoGrid?: BingoGridCell[][]; // 5x5 grid for Bingo mode
 	enableAudioNormalization: boolean; // Whether to use Web Audio API with LUFS normalization (defaults to false on WebKit)
+	buzzerVolume: number; // Buzzer volume level (0-1)
 }
 
 // Default values for tracklist configuration
@@ -94,5 +95,6 @@ export const DEFAULT_SETTINGS: GameSettings = {
 	players: [],
 	enableScoring: true,
 	bingoGrid: undefined,
-	enableAudioNormalization: !isWebKit // Default to true, but false on WebKit browsers
+	enableAudioNormalization: !isWebKit, // Default to true, but false on WebKit browsers
+	buzzerVolume: 0.75
 };

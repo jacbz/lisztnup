@@ -7,6 +7,7 @@
 		label?: string;
 		showValue?: boolean;
 		valueSuffix?: string;
+		valueFormatter?: (value: number) => string;
 		onChange?: (value: number) => void;
 	}
 
@@ -18,6 +19,7 @@
 		label = '',
 		showValue = true,
 		valueSuffix = '',
+		valueFormatter,
 		onChange = () => {}
 	}: Props = $props();
 
@@ -38,7 +40,7 @@
 			{/if}
 			{#if showValue}
 				<span class="text-xl font-bold text-white {!label ? 'mx-auto' : ''}"
-					>{value}{valueSuffix}</span
+					>{valueFormatter ? valueFormatter(value) : `${value}${valueSuffix}`}</span
 				>
 			{/if}
 		</div>

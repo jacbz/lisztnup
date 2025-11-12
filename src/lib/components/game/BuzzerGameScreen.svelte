@@ -13,6 +13,8 @@
 	import { GAME_SCREEN_CONTEXT } from './context';
 	import { shuffle } from '$lib/utils/random';
 	import { playerState } from '$lib/services';
+	import { gameSession, toast } from '$lib/stores';
+	import { deezerPlayer } from '$lib/services';
 
 	// Get context from parent GameScreen
 	const gameContext = getContext(GAME_SCREEN_CONTEXT) as {
@@ -251,7 +253,7 @@
 		// Play buzzer sound immediately when button is pressed
 		if (buzzerAudio) {
 			buzzerAudio.currentTime = 0;
-			buzzerAudio.volume = 0.75;
+			buzzerAudio.volume = $settings.buzzerVolume;
 			buzzerAudio.play().catch((err) => console.warn('Failed to play buzzer sound:', err));
 		}
 	}
@@ -299,10 +301,6 @@
 	// Buzzer-specific state
 	let showScoringScreen = $state(false);
 	let buzzerRevealedCategories = $state<GuessCategory[]>([]); // Categories revealed when buzzer was pressed
-
-	// Import required functions from stores
-	import { gameSession, toast } from '$lib/stores';
-	import { deezerPlayer } from '$lib/services';
 
 	onMount(() => {
 		// Detect touch support

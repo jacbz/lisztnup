@@ -242,7 +242,9 @@
 		"trackLength": "Track Length",
 		"trackLengthHint": "How long each track plays during the game. Changes will apply to the next track. Does not apply to Buzzer Mode.",
 		"audioNormalization": "Audio Normalization",
-		"audioNormalizationHint": "Uses advanced audio processing to balance volume across tracks. Also powers the visualizer. May cause playback issues on browsers on Apple devices; deactivate if you experience problems. Changes will apply to the next track."
+		"audioNormalizationHint": "Uses advanced audio processing to balance volume across tracks. Also powers the visualizer. May cause playback issues on browsers on Apple devices; deactivate if you experience problems. Changes will apply to the next track.",
+		"buzzerVolume": "Buzzer Volume",
+		"buzzerVolumeHint": "Volume for the buzzer in Buzzer Mode."
 	},
 	"quitDialog": {
 		"title": "Quit Game?",

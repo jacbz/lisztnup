@@ -16,11 +16,13 @@
 
 	let trackLength = $state(30);
 	let enableAudioNormalization = $state(true);
+	let buzzerVolume = $state(0.75);
 
 	onMount(() => {
 		// Get initial values from settings store
 		trackLength = $settingsStore.trackLength;
 		enableAudioNormalization = $settingsStore.enableAudioNormalization;
+		buzzerVolume = $settingsStore.buzzerVolume;
 
 		// Apply to player
 		deezerPlayer.setTrackLength(trackLength);
@@ -38,6 +40,11 @@
 		deezerPlayer.pause();
 		deezerPlayer.setEnableAudioNormalization(enableAudioNormalization);
 		settingsStore.update((s) => ({ ...s, enableAudioNormalization }));
+	}
+
+	function handleBuzzerVolumeChange(value: number) {
+		buzzerVolume = value;
+		settingsStore.update((s) => ({ ...s, buzzerVolume: value }));
 	}
 </script>
 
@@ -69,6 +76,22 @@
 				<ToggleButton value={enableAudioNormalization} onToggle={handleAudioNormalizationToggle} />
 			</div>
 			<p class="mt-2 text-sm text-slate-400">{$_('inGameSettings.audioNormalizationHint')}</p>
+		</div>
+
+		<!-- Buzzer Volume Slider -->
+		<div>
+			<Slider
+				value={buzzerVolume}
+				min={0}
+				max={1}
+				step={0.01}
+				label={$_('inGameSettings.buzzerVolume')}
+				showValue={true}
+				valueSuffix=""
+				valueFormatter={(value) => `${Math.round(value * 100)}%`}
+				onChange={handleBuzzerVolumeChange}
+			/>
+			<p class="mt-2 text-sm text-slate-400">{$_('inGameSettings.buzzerVolumeHint')}</p>
 		</div>
 	</div>
 </Popup>
