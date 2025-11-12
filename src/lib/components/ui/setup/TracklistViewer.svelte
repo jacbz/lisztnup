@@ -134,8 +134,8 @@
 					bVal = by === '-' ? 0 : parseInt(by.split('-')[0]);
 					break;
 				default:
-					aVal = a.composerSortName + normalizeWorkName(a.work);
-					bVal = b.composerSortName + normalizeWorkName(b.work);
+					aVal = a.composerSortName + ' ' + normalizeWorkName(a.work);
+					bVal = b.composerSortName + ' ' + normalizeWorkName(b.work);
 					break;
 			}
 

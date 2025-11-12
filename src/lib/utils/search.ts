@@ -1,6 +1,4 @@
 // Fuse.js based flexible fuzzy search utility
-// Uses fuse.js (added as a dependency) to provide tolerant matching across
-// composer, work, and year fields. The API is generic and preserves item types.
 
 import Fuse from 'fuse.js';
 import type { IFuseOptions } from 'fuse.js';
@@ -12,14 +10,9 @@ export interface SearchItem {
 }
 
 const defaultFuseOptions: IFuseOptions<SearchItem> = {
-	// Keys to search, with weights to prioritize title (work) over composer
-	keys: [
-		{ name: 'work', weight: 0.5 },
-		{ name: 'composer', weight: 0.8 },
-		{ name: 'year', weight: 0.1 }
-	],
-	// A more permissive threshold to match plurals/misspellings
-	threshold: 0.5,
+	// 0.35 allows for some misspellings
+	// but prevents wildly different words from matching. 0.0 is perfect match.
+	threshold: 0.35,
 	// Don't bias by location of match in the string
 	ignoreLocation: true,
 	// Allow matching across longer distances in the string
@@ -33,21 +26,60 @@ const defaultFuseOptions: IFuseOptions<SearchItem> = {
 	includeMatches: true
 };
 
-// Normalize a string by removing diacritics and lowercasing. Reused by
-// the query normalization so searches are accent-insensitive.
-export const normalizeString = (s?: string) =>
+/**
+ * Normalizes a string for searching.
+ * - Removes accents (diacritics).
+ * - Converts to lowercase.
+ * - Removes all characters that are not letters, numbers, or spaces.
+ * - Collapses multiple spaces into a single space.
+ */
+export const normalizeString = (s?: string): string =>
 	s
 		? s
-				.normalize('NFD')
-				.replace(/\p{Diacritic}/gu, '')
-				.toLowerCase()
+				.normalize('NFD') // Separate accents from letters
+				.replace(/\p{Diacritic}/gu, '') // Remove the accents
+				.toLowerCase() // Convert to lowercase
+				.replace(/[^\p{L}\p{N}\s]/gu, '') // Remove all non-letter, non-number, non-space characters
+				.replace(/\s+/g, ' ') // Collapse multiple spaces into one
+				.trim() // Remove leading/trailing spaces
 		: '';
 
+/**
+ * Creates a Fuse instance with a pre-processed and combined search field.
+ * This is the core of making multi-field search work correctly.
+ */
 export function createFuse<T extends SearchItem>(items: T[], options?: IFuseOptions<T>) {
-	return new Fuse(
-		items as unknown as T[],
-		(options ?? (defaultFuseOptions as unknown)) as IFuseOptions<T>
-	);
+	// Create a derived list where each item has a new `searchText` property.
+	// This property combines the normalized content of composer, work, and year,
+	// allowing Fuse to find terms across these original fields.
+	const itemsWithSearchText = items.map((item) => ({
+		...item,
+		searchText: `${normalizeString(item.composer)} ${normalizeString(item.work)} ${normalizeString(item.year)}`
+	}));
+
+	// Create the final Fuse options, overriding the 'keys' to search our new field.
+	const fuseOptions: IFuseOptions<T> = {
+		...defaultFuseOptions,
+		...options, // Allow user-provided options to override defaults
+		keys: ['searchText'] // IMPORTANT: We now search ONLY on the combined field
+	};
+
+	// Initialize Fuse with the enhanced items and new options.
+	return new Fuse(itemsWithSearchText as T[], fuseOptions as IFuseOptions<T>);
+}
+
+/**
+ * Creates the search query pattern for Fuse.js.
+ * It ensures that every word in the user's query must be found.
+ * Example: "chopin 9" -> "'chopin '9"
+ */
+function createSearchPattern(query: string): string {
+	const normalizedQuery = normalizeString(query);
+	const searchTerms = normalizedQuery.split(' ').filter(Boolean);
+
+	// Prefix each term with a single quote to enforce "include" matching.
+	// This tells Fuse that all terms must be present in the result.
+	return searchTerms.map((term) => `'${term}`).join(' ');
 }
 
 /**
@@ -62,8 +94,9 @@ export function filterWorks<T extends SearchItem>(
 	if (!query || !query.trim()) return items;
 
 	const fuse = createFuse(items, options);
-	// Use fuse.search to get scored results; map back to original items
-	const results = fuse.search(normalizeString(query));
+	const searchPattern = createSearchPattern(query);
+	const results = fuse.search(searchPattern);
+
 	return results.map((r) => r.item as T);
 }
 
@@ -76,9 +109,17 @@ export function searchWithScore<T extends SearchItem>(
 	query: string,
 	options?: IFuseOptions<T>
 ) {
-	if (!query || !query.trim()) return items.map((i) => ({ item: i, score: 0 }));
+	if (!query || !query.trim()) {
+		return items.map((i) => ({ item: i, score: 0, matches: [] }));
+	}
+
 	const fuse = createFuse(items, options);
-	return fuse
-		.search(normalizeString(query))
-		.map((r) => ({ item: r.item as T, score: r.score ?? 0 }));
+	const searchPattern = createSearchPattern(query);
+	const results = fuse.search(searchPattern);
+
+	return results.map((r) => ({
+		item: r.item as T,
+		score: r.score ?? 0,
+		matches: r.matches ?? []
+	}));
 }
