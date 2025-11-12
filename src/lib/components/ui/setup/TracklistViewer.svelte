@@ -9,7 +9,7 @@
 	import ExternalLink from '../primitives/ExternalLink.svelte';
 	import PlayerControl from '../gameplay/PlayerControl.svelte';
 	import { filterWorks } from '$lib/utils/search';
-	import { formatLifespan, formatPartName, formatYearRange } from '$lib/utils';
+	import { formatComposerName, formatLifespan, formatPartName, formatYearRange } from '$lib/utils';
 	import { _ } from 'svelte-i18n';
 
 	interface Props {
@@ -23,6 +23,7 @@
 	// Table data
 	interface TableRow {
 		composerGid: string;
+		composerSortName: string;
 		composer: string;
 		composerLifespan: string;
 		workGid: string;
@@ -133,8 +134,8 @@
 					bVal = by === '-' ? 0 : parseInt(by.split('-')[0]);
 					break;
 				default:
-					aVal = a.composer + normalizeWorkName(a.work);
-					bVal = b.composer + normalizeWorkName(b.work);
+					aVal = a.composerSortName + normalizeWorkName(a.work);
+					bVal = b.composerSortName + normalizeWorkName(b.work);
 					break;
 			}
 
@@ -189,7 +190,8 @@
 				// Create work row
 				rows.push({
 					composerGid: composer.gid,
-					composer: composer.name,
+					composer: formatComposerName(composer.name),
+					composerSortName: composer.name,
 					composerLifespan: formatLifespan(composer.birth_year, composer.death_year),
 					workGid: work.gid,
 					work: work.name,

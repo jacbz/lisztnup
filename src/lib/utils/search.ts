@@ -33,6 +33,16 @@ const defaultFuseOptions: IFuseOptions<SearchItem> = {
 	includeMatches: true
 };
 
+// Normalize a string by removing diacritics and lowercasing. Reused by
+// the query normalization so searches are accent-insensitive.
+export const normalizeString = (s?: string) =>
+	s
+		? s
+				.normalize('NFD')
+				.replace(/\p{Diacritic}/gu, '')
+				.toLowerCase()
+		: '';
+
 export function createFuse<T extends SearchItem>(items: T[], options?: IFuseOptions<T>) {
 	return new Fuse(
 		items as unknown as T[],
@@ -53,7 +63,7 @@ export function filterWorks<T extends SearchItem>(
 
 	const fuse = createFuse(items, options);
 	// Use fuse.search to get scored results; map back to original items
-	const results = fuse.search(query);
+	const results = fuse.search(normalizeString(query));
 	return results.map((r) => r.item as T);
 }
 
@@ -68,5 +78,7 @@ export function searchWithScore<T extends SearchItem>(
 ) {
 	if (!query || !query.trim()) return items.map((i) => ({ item: i, score: 0 }));
 	const fuse = createFuse(items, options);
-	return fuse.search(query).map((r) => ({ item: r.item as T, score: r.score ?? 0 }));
+	return fuse
+		.search(normalizeString(query))
+		.map((r) => ({ item: r.item as T, score: r.score ?? 0 }));
 }
