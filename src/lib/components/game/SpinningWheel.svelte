@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { GuessCategory, Track } from '$lib/types';
+	import type { GuessCategory } from '$lib/types';
 	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
-	import { categories } from '$lib/data/categories';
+	import { allCategories } from '$lib/data/categories';
 	import { shuffle } from '$lib/utils/random';
 
 	interface Props {
@@ -26,12 +26,12 @@
 	// Filter out disabled categories and shuffle for visual variety
 	// Store as state to maintain consistency across re-renders
 	let activeCategories = $state(
-		shuffle(categories.filter((cat) => !disabledCategories.includes(cat.id)))
+		shuffle(allCategories.filter((cat) => !disabledCategories.includes(cat.id)))
 	);
 
 	// Update activeCategories when disabledCategories changes
 	$effect(() => {
-		activeCategories = shuffle(categories.filter((cat) => !disabledCategories.includes(cat.id)));
+		activeCategories = shuffle(allCategories.filter((cat) => !disabledCategories.includes(cat.id)));
 	});
 
 	let canvas: HTMLCanvasElement;

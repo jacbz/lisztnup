@@ -11,25 +11,6 @@
 
 	let { visible = true, children, hideTop = false, margin = '20px' }: Props = $props();
 
-	let isAnimatingOut = $state(false);
-	let showDisplay = $state(false);
-
-	// Update showDisplay based on visible prop
-	$effect(() => {
-		if (visible) {
-			showDisplay = true;
-			isAnimatingOut = false;
-		} else if (showDisplay) {
-			isAnimatingOut = true;
-			const timer = setTimeout(() => {
-				showDisplay = false;
-				isAnimatingOut = false;
-			}, 300); // Match the transition duration
-
-			return () => clearTimeout(timer);
-		}
-	});
-
 	const positions = [
 		{
 			name: 'top',
@@ -62,20 +43,18 @@
 	);
 </script>
 
-{#if showDisplay || isAnimatingOut}
-	{#each filteredPositions as position (position.name)}
-		{#if !isAnimatingOut}
-			<div
-				class="fixed top-1/2 left-1/2 z-5 {position.hideOnNarrow
-					? 'hidden lg:block'
-					: ''} z-100 select-none"
-				in:fly={position.flyParams}
-				out:fly={position.flyParams}
-			>
-				<div style="transform: {position.innerTransform};">
-					{@render children()}
-				</div>
+{#each filteredPositions as position (position.name)}
+	{#if visible}
+		<div
+			class="fixed top-1/2 left-1/2 {position.hideOnNarrow
+				? 'hidden lg:block'
+				: ''} z-100 select-none"
+			in:fly={position.flyParams}
+			out:fly={position.flyParams}
+		>
+			<div style="transform: {position.innerTransform};">
+				{@render children()}
 			</div>
-		{/if}
-	{/each}
-{/if}
+		</div>
+	{/if}
+{/each}
