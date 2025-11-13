@@ -116,8 +116,8 @@
 		const maxAttempts = 100;
 
 		while (attempts < maxAttempts) {
-			// Generate random rotation: current + 3-6 full rotations + random position
-			const fullRotations = 3 + Math.floor(Math.random() * 4); // 3-6 full spins
+			// Generate random rotation: current + 3-5 full rotations + random position
+			const fullRotations = 3 + Math.floor(Math.random() * 2); // 3-5 full spins
 			const randomAngle = Math.random() * 360;
 			const finalRotation = currentRotation + fullRotations * 360 + randomAngle;
 

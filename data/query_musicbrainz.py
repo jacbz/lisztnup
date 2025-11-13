@@ -120,6 +120,15 @@ work_composer_counts AS (
         )
         AND lww.entity0 != 13641795  -- Exclude "Fantasia" as an exception, which erroneously has Beethoven 6 etc. as parts
     )
+    AND NOT EXISTS (
+      -- Exclude works that have an arranger relationship
+      SELECT 1 FROM musicbrainz.l_artist_work law_arr
+      JOIN musicbrainz.link l_arr ON law_arr.link = l_arr.id
+      WHERE law_arr.entity1 = w.id
+        AND l_arr.link_type = 293  -- 'arranger' relationship
+        AND law_arr.entity0 NOT IN (SELECT id FROM classical_composers)
+        AND law_arr.entity0 != 422300  -- Exception for Ralph Greaves (Fantasia on Greensleeves)
+    )
     AND w.name NOT LIKE '[%'  -- Exclude works with names starting with '['
   GROUP BY w.id
   HAVING COUNT(DISTINCT law.entity0) = 1  -- Only works with exactly one composer
