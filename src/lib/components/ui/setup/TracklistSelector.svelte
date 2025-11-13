@@ -12,6 +12,8 @@
 	import ShareLinkPopup from './ShareLinkPopup.svelte';
 	import { _ } from 'svelte-i18n';
 	import { compress } from '$lib/utils';
+	import ListMusic from 'lucide-svelte/icons/list-music';
+	import Copy from 'lucide-svelte/icons/copy';
 	import Edit from 'lucide-svelte/icons/edit';
 	import ShareIcon from 'lucide-svelte/icons/share';
 	import Trash from 'lucide-svelte/icons/trash';
@@ -293,20 +295,7 @@
 					: 'bg-slate-600/80 hover:bg-slate-500'}"
 				title={$_('tracklistSelector.view')}
 			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="16"
-					height="16"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				>
-					<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-					<circle cx="12" cy="12" r="3"></circle>
-				</svg>
+				<ListMusic class="h-4 w-4" />
 			</button>
 			<button
 				type="button"
@@ -316,20 +305,7 @@
 					: 'bg-slate-600/80 hover:bg-slate-500'}"
 				title={$_('tracklistSelector.clone')}
 			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="16"
-					height="16"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				>
-					<rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
-					<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
-				</svg>
+				<Copy class="h-4 w-4" />
 			</button>
 		</div>
 

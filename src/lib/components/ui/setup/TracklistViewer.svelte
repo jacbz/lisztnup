@@ -11,6 +11,10 @@
 	import { filterWorks } from '$lib/utils/search';
 	import { formatComposerName, formatLifespan, formatPartName, formatYearRange } from '$lib/utils';
 	import { _ } from 'svelte-i18n';
+	import ChevronRight from 'lucide-svelte/icons/chevron-right';
+	import ChevronLeft from 'lucide-svelte/icons/chevron-left';
+	import ChevronsRight from 'lucide-svelte/icons/chevrons-right';
+	import ChevronsLeft from 'lucide-svelte/icons/chevrons-left';
 
 	interface Props {
 		visible?: boolean;
@@ -415,37 +419,37 @@
 						<button
 							type="button"
 							onclick={() => gotoPage(1)}
-							class="rounded bg-slate-700 px-3 py-1 text-sm text-slate-200 disabled:opacity-50"
+							class="rounded bg-slate-700 px-2 py-1 text-slate-200 disabled:opacity-50"
 							disabled={page <= 1}
 						>
-							«
+							<ChevronsLeft class="h-5" />
 						</button>
 						<button
 							type="button"
 							onclick={() => prevPage()}
-							class="rounded bg-slate-700 px-3 py-1 text-sm text-slate-200 disabled:opacity-50"
+							class="rounded bg-slate-700 px-2 py-1 text-slate-200 disabled:opacity-50"
 							disabled={page <= 1}
 							title="Previous page"
 						>
-							‹
+							<ChevronLeft class="h-5" />
 						</button>
-						<div class="text-sm text-slate-300">{page} / {totalPages}</div>
+						<div class="px-2 text-slate-300">{page} / {totalPages}</div>
 						<button
 							type="button"
 							onclick={() => nextPage()}
-							class="rounded bg-slate-700 px-3 py-1 text-sm text-slate-200 disabled:opacity-50"
+							class="rounded bg-slate-700 px-2 py-1 text-slate-200 disabled:opacity-50"
 							disabled={page >= totalPages}
 							title="Next page"
 						>
-							›
+							<ChevronRight class="h-5" />
 						</button>
 						<button
 							type="button"
 							onclick={() => gotoPage(totalPages)}
-							class="rounded bg-slate-700 px-3 py-1 text-sm text-slate-200 disabled:opacity-50"
+							class="rounded bg-slate-700 px-2 py-1 text-slate-200 disabled:opacity-50"
 							disabled={page >= totalPages}
 						>
-							»
+							<ChevronsRight class="h-5" />
 						</button>
 					</div>
 				</div>
@@ -584,37 +588,37 @@
 						<button
 							type="button"
 							onclick={() => gotoPage(1)}
-							class="rounded bg-slate-700 px-3 py-1 text-sm text-slate-200 disabled:opacity-50"
+							class="rounded bg-slate-700 px-2 py-1 text-slate-200 disabled:opacity-50"
 							disabled={page <= 1}
 						>
-							«
+							<ChevronsLeft class="h-5" />
 						</button>
 						<button
 							type="button"
 							onclick={() => prevPage()}
-							class="rounded bg-slate-700 px-3 py-1 text-sm text-slate-200 disabled:opacity-50"
+							class="rounded bg-slate-700 px-2 py-1 text-slate-200 disabled:opacity-50"
 							disabled={page <= 1}
 							title="Previous page"
 						>
-							‹
+							<ChevronLeft class="h-5" />
 						</button>
-						<div class="text-sm text-slate-300">{page} / {totalPages}</div>
+						<div class="px-2 text-slate-300">{page} / {totalPages}</div>
 						<button
 							type="button"
 							onclick={() => nextPage()}
-							class="rounded bg-slate-700 px-3 py-1 text-sm text-slate-200 disabled:opacity-50"
+							class="rounded bg-slate-700 px-2 py-1 text-slate-200 disabled:opacity-50"
 							disabled={page >= totalPages}
 							title="Next page"
 						>
-							›
+							<ChevronRight class="h-5" />
 						</button>
 						<button
 							type="button"
 							onclick={() => gotoPage(totalPages)}
-							class="rounded bg-slate-700 px-3 py-1 text-sm text-slate-200 disabled:opacity-50"
+							class="rounded bg-slate-700 px-2 py-1 text-slate-200 disabled:opacity-50"
 							disabled={page >= totalPages}
 						>
-							»
+							<ChevronsRight class="h-5" />
 						</button>
 					</div>
 				</div>
