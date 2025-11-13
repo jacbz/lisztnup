@@ -296,8 +296,8 @@
 
 	function renderPopularityStars(score: number): string {
 		// Map work score from [MIN_WORK_SCORE, MAX_WORK_SCORE] to [0.5, 5] stars
-		const normalizedScore =
-			((score - MIN_WORK_SCORE) / (MAX_WORK_SCORE - MIN_WORK_SCORE)) * 4.5 + 0.5;
+		const maxScore = MAX_WORK_SCORE - 1; // Avoid maxing out at exact max
+		const normalizedScore = ((score - MIN_WORK_SCORE) / (maxScore - MIN_WORK_SCORE)) * 4.5 + 0.5;
 		const clampedScore = Math.max(0.5, Math.min(5, normalizedScore));
 
 		// Create 5 stars with continuous gradient

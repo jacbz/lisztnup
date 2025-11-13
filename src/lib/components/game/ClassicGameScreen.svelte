@@ -47,9 +47,7 @@
 					{#each activeCategories as category, index}
 						{@const categoryDef = getCategoryDefinition(category)}
 						<div
-							class="flex w-{[
-								activeCategories.length % 2 === 1 && index == 0 ? 'full' : '[calc(50%-0.1875rem)]'
-							]} flex-col items-center justify-center rounded-2xl border-3 border-transparent py-1 backdrop-blur-md md:w-[calc(33%-0.1875rem)] md:py-2"
+							class="flex w-[calc(50%-0.1875rem)] flex-col items-center justify-center rounded-2xl border-3 border-transparent py-1 backdrop-blur-md md:w-[calc(33%-0.1875rem)] md:py-2"
 							style="border-color: {categoryDef.color2}; box-shadow: 0 0 40px {categoryDef.glowColor}; color: {categoryDef.color1};"
 						>
 							<span class="px-3 text-xl font-bold tracking-wider uppercase md:text-2xl"
