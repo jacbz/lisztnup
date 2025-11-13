@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { currentRound, tracklist } from '$lib/stores';
+	import { currentRound, tracklist, gameSession } from '$lib/stores';
 	import { getCategoryDefinition } from '$lib/data/categories';
 	import PlayerControl from '../ui/gameplay/PlayerControl.svelte';
 	import { _ } from 'svelte-i18n';
@@ -39,7 +39,11 @@
 {#if currentTrack}
 	<div class="flex h-screen items-center justify-center">
 		<!-- Floating Legend of Categories -->
-		<EdgeDisplay margin="42px" visible={$currentRound.isPlaying}>
+		<EdgeDisplay
+			margin="42px"
+			visible={$currentRound.isPlaying}
+			hideLeftRight={$gameSession.players.length < 3}
+		>
 			{#snippet children()}
 				<div
 					class="flex w-[80vw] flex-wrap justify-center gap-1.5 md:max-w-[60vmin] md:min-w-[60vmin]"

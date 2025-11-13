@@ -101,7 +101,7 @@ KEYWORD_RULES = [
     # 4. Orchestral Works
     # Music for a large ensemble, including symphonies, overtures, and dances.
     # ========================================================================
-    (r'(?i)Symphony|Symphonie|Symphonische|Sinfonia(?! (BWV 7|BWV 8))', 'orchestral'), # Excludes Bach's keyboard Sinfonias
+    (r'(?i)Symphony|Symphonie|Symphonische', 'orchestral'),
     (r'(?i)Overture|Ouverture|Poème symphonique|Symphonic|Serenade for Orchestra|Divertimento for Orchestra|Cassation|American in Paris', 'orchestral'),
     (r'(?i)Orchestersuite|for Orchestra|for Orchestra|for strings|for Wind Ensemble|for Military Band', 'orchestral'),
 
@@ -117,16 +117,15 @@ KEYWORD_RULES = [
     (r'(?i)for (.+) and (.+)|pour (.+) et (.+)|für (.+) und (.+)|for Clarinet and Viola|for .+ Violins|Viol.* Solo|Divertiment|for \d', 'chamber'),
 
     # ========================================================================
-    # 6. Keyboard Works (Piano, Harpsichord, Organetc.)
+    # 6. Keyboard Works (Piano, Harpsichord, Organ etc.)
     # This is a broad category for solo keyboard music, with many specific forms.
     # ========================================================================
     (r'(?i)Piano Sonata|Sonata .* K .* |Klaviersonate|Keyboard Sonata|Harpsichord Sonata|Orgel', 'piano'),
     (r'(?i)(for|pour) Piano|für Klavier|Klavierstück|for Harpsichord|pour le Clavecin|Pièces de Clavecin|for Keyboard', 'piano'),
-    # --- Specific Keyboard Forms ---
     (r'(?i)Album für die Jugend|Fantasiestück', 'piano'),
     (r'(?i)\bVariations? for Piano|\bVariationen für Klavier|Goldberg Variations|Diabelli Variations', 'piano'),
     (r'(?i)Kinderszenen|Albumblatt|Albumblätter|Papillons|Carnaval|Kreisleriana|Davidsbündlertänze|Waldszenen', 'piano'),
-    (r'(?i)Well-Tempered Clavier|Wohltemperiert|Inventio|Präludium und Fuge', 'piano'), # Catches Bach's major keyboard cycles
+    (r'(?i)Well-Tempered Clavier|Wohltemperiert|Inventio|Sinfonia.*BWV (7|8)|Präludium und Fuge', 'piano'), # Catches Bach's major keyboard cycles
 ]
 
 # --- Recording Selection Preferences ---
@@ -165,7 +164,8 @@ EXCLUDED_COMPOSERS: Set[str] = set([
     "Jarre, Maurice",
     "Mills, Irving",
     "Foster, Stephen",
-    "Willis, Wallace"
+    "Willis, Wallace",
+    "Barry, John",
 ])
 
 # Deezer IDs without preview mp3s, loaded from 'excluded_deezer_ids' file
@@ -319,7 +319,7 @@ class MusicbrainzProcessor:
         return [
             MBComposer(
                 gid=c["gid"],
-                name=c["name"],
+                name=c["name"] if c["gid"] != "8255db36-4902-4cf6-8612-0f2b4288bc9a" else "Strauss II, Johann",  # Fix for Johann Strauss II
                 birth_year=c["birth_year"],
                 death_year=c["death_year"],
                 works=[self._parse_work_tree(w) for w in c["works"]],
@@ -694,6 +694,7 @@ class MusicbrainzProcessor:
             return "piano"  # Chopin
         if "Piano Sonata" in work.name and work.type == "Sonata":
             return "piano"
+        
         if work.type in TYPE_MAPPING:
             type_map = TYPE_MAPPING[work.type]
             if type_map != "other":

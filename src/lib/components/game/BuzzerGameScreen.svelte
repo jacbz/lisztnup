@@ -253,6 +253,7 @@
 		// Play buzzer sound immediately when button is pressed
 		if (buzzerAudio) {
 			buzzerAudio.currentTime = 0;
+			console.log('Buzzer volume:', $settings.buzzerVolume);
 			buzzerAudio.volume = $settings.buzzerVolume;
 			buzzerAudio.play().catch((err) => console.warn('Failed to play buzzer sound:', err));
 		}
@@ -323,7 +324,10 @@
 	<div class="flex h-screen flex-col items-center justify-center">
 		<!-- Buzzer Button (always centered) with floating countdown -->
 		<!-- Category & Time Display -->
-		<EdgeDisplay visible={hasStartedPlaying && !isBuzzerPressed}>
+		<EdgeDisplay
+			visible={hasStartedPlaying && !isBuzzerPressed}
+			hideLeftRight={$gameSession.players.length < 3}
+		>
 			{#snippet children()}
 				{@const categoryDef = getCategoryDefinition(currentCategory)}
 				<div

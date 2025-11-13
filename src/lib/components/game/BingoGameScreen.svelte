@@ -139,7 +139,7 @@
 			class="rounded-2xl border-2 px-10 py-2 backdrop-blur-xs"
 			style="border-color: {categoryDef.color2}; box-shadow: 0 0 40px {categoryDef.glowColor}; color: {categoryDef.color1};"
 		>
-			<p class="text-3xl font-bold tracking-wider text-white uppercase drop-shadow-lg">
+			<p class="text-3xl font-bold tracking-wider uppercase drop-shadow-lg">
 				{$_('game.guessCategory', {
 					values: { category: $_(`game.categories.${$currentRound.category}`) }
 				})}

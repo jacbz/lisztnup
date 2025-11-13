@@ -6,21 +6,27 @@
 		visible?: boolean;
 		children: Snippet;
 		hideTop?: boolean;
+		hideLeftRight?: boolean;
 		margin?: string;
 	}
 
-	let { visible = true, children, hideTop = false, margin = '20px' }: Props = $props();
-
+	let {
+		visible = true,
+		children,
+		hideTop = false,
+		hideLeftRight = false,
+		margin = '20px'
+	}: Props = $props();
 	const positions = [
 		{
 			name: 'top',
-			innerTransform: `translate(-50%, -50%) rotate(180deg) translateY(calc(50vh - 50% - ${margin}))`,
+			innerTransform: `translate(-50%, -50%) rotate(180deg) translateY(calc(50dvh - 50% - ${margin}))`,
 			hideOnNarrow: false,
 			flyParams: { y: -100, duration: 300 }
 		},
 		{
 			name: 'bottom',
-			innerTransform: `translate(-50%, -50%) translateY(calc(50vh - 50% - ${margin}))`,
+			innerTransform: `translate(-50%, -50%) translateY(calc(50dvh - 50% - ${margin}))`,
 			hideOnNarrow: false,
 			flyParams: { y: 100, duration: 300 }
 		},
@@ -39,7 +45,11 @@
 	];
 
 	const filteredPositions = $derived(
-		hideTop ? positions.filter((p) => p.name !== 'top') : positions
+		positions.filter(
+			(position) =>
+				!(hideTop && position.name === 'top') &&
+				!(hideLeftRight && (position.name === 'left' || position.name === 'right'))
+		)
 	);
 </script>
 
@@ -48,7 +58,7 @@
 		<div
 			class="fixed top-1/2 left-1/2 {position.hideOnNarrow
 				? 'hidden lg:block'
-				: ''} z-100 select-none"
+				: ''} pointer-events-none z-100 select-none"
 			in:fly={position.flyParams}
 			out:fly={position.flyParams}
 		>
