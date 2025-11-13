@@ -106,7 +106,7 @@
 			(playbackTime >= trackDuration || (!$playerState.isPlaying && audioProgressValue >= 0.99))
 		) {
 			// Time's up - auto-buzz and reveal immediately (but wasManuallyBuzzed stays false)
-			deezerPlayer.pause();
+			deezerPlayer.stop();
 			isBuzzerPressed = true;
 			wasManuallyBuzzed = false; // Explicitly set to false for timeout
 
@@ -221,7 +221,7 @@
 		} else if (!isBuzzerPressed) {
 			// Buzzer pressed during playback - pause and show reveal button
 			playBuzzerSound();
-			deezerPlayer.pause();
+			deezerPlayer.stop();
 			isBuzzerPressed = true;
 			wasManuallyBuzzed = true; // Mark that someone actually pressed the buzzer
 			showReveal = true;
@@ -290,7 +290,7 @@
 	}
 
 	async function handleBuzzerNextRound() {
-		deezerPlayer.pause();
+		deezerPlayer.stop();
 
 		// Reset state for next round
 		hasStartedPlaying = false;

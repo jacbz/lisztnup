@@ -47,21 +47,14 @@
 	let holdTimer: number | null = null;
 	let windowSize = $state({ width: 0, height: 0 });
 	let displayProgress = $state(0);
-	let lastIsPlaying = $state(false);
 
 	// Reset progress when playback starts fresh (transition from not playing to playing)
 	$effect(() => {
-		if (isPlaying && !lastIsPlaying) {
-			// Just started playing - reset to 0
-			displayProgress = 0;
-		} else if (isPlaying) {
-			// Currently playing - update progress
+		if (isPlaying) {
 			displayProgress = progress;
-		} else if (playbackEnded) {
-			// Playback ended - keep at 100%
-			displayProgress = 1;
+		} else {
+			displayProgress = 0;
 		}
-		lastIsPlaying = isPlaying;
 	});
 
 	onMount(() => {

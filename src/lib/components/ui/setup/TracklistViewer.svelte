@@ -78,7 +78,7 @@
 			page = 1;
 			// Stop any playing audio
 			if (currentlyPlayingDeezerId !== null) {
-				deezerPlayer.pause();
+				deezerPlayer.stop();
 				currentlyPlayingDeezerId = null;
 			}
 		}
@@ -354,7 +354,7 @@
 	}
 
 	function stopPlayback(): void {
-		deezerPlayer.pause();
+		deezerPlayer.stop();
 		currentlyPlayingDeezerId = null;
 	}
 </script>

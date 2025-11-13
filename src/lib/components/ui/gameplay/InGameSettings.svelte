@@ -39,7 +39,7 @@
 
 	function handleAudioNormalizationToggle() {
 		enableAudioNormalization = !enableAudioNormalization;
-		deezerPlayer.pause();
+		deezerPlayer.stop();
 		deezerPlayer.setEnableAudioNormalization(enableAudioNormalization);
 		settingsStore.update((s) => ({ ...s, enableAudioNormalization }));
 	}

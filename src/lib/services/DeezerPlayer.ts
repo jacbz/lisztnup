@@ -42,7 +42,6 @@ class DeezerPlayer {
 
 	private progressInterval: number | null = null;
 	private playbackStartTime = 0;
-	private playbackPausedTime = 0;
 
 	private trackLength: number = 30; // 30s previews from Deezer
 	private ignoreTrackLength: boolean = false; // If true, always use full 30s duration
@@ -273,20 +272,17 @@ class DeezerPlayer {
 				audioContext.currentTime + FADE_DURATION
 			);
 
-			const offset = this.playbackPausedTime;
 			const effectiveTrackLength = this.ignoreTrackLength ? 30 : this.trackLength;
-			const duration = effectiveTrackLength > offset ? effectiveTrackLength - offset : 0;
 
-			this.sourceNode.start(0, offset, duration);
+			this.sourceNode.start(0, 0, effectiveTrackLength);
 
-			this.playbackStartTime = audioContext.currentTime - offset;
-			this.playbackPausedTime = 0;
+			this.playbackStartTime = audioContext.currentTime;
 
 			playerState.update((s) => ({ ...s, isPlaying: true, analyserNode: this.analyserNode }));
 			this.startProgressTracking();
 
 			this.sourceNode.onended = () => {
-				this.stop(false); // Stop without destroying if it ended naturally
+				this.stop();
 				this.onPlaybackEndCallback?.();
 			};
 		} else {
@@ -301,22 +297,17 @@ class DeezerPlayer {
 				return;
 			}
 
-			const offset = this.playbackPausedTime;
-			this.audioElement.currentTime = offset;
-
+			this.audioElement.currentTime = 0;
 			const effectiveTrackLength = this.ignoreTrackLength ? 30 : this.trackLength;
-
 			await this.audioElement.play();
-
-			this.playbackStartTime = performance.now() / 1000 - offset;
-			this.playbackPausedTime = 0;
+			this.playbackStartTime = performance.now() / 1000;
 
 			playerState.update((s) => ({ ...s, isPlaying: true, analyserNode: null }));
 			this.startProgressTracking();
 
 			// Set up event listeners for playback end
 			const handleEnded = () => {
-				this.stop(false);
+				this.stop();
 				this.onPlaybackEndCallback?.();
 			};
 
@@ -325,7 +316,7 @@ class DeezerPlayer {
 					this.audioElement.pause();
 					this.audioElement.removeEventListener('ended', handleEnded);
 					this.audioElement.removeEventListener('timeupdate', handleTimeUpdate);
-					this.stop(false);
+					this.stop();
 					this.onPlaybackEndCallback?.();
 				}
 			};
@@ -335,18 +326,7 @@ class DeezerPlayer {
 		}
 	}
 
-	pause(): void {
-		if (this.enableAudioNormalization) {
-			if (!this.sourceNode) return;
-			this.playbackPausedTime = this.getAudioContext().currentTime - this.playbackStartTime;
-		} else {
-			if (!this.audioElement || this.audioElement.paused) return;
-			this.playbackPausedTime = this.audioElement.currentTime;
-		}
-		this.stop(true); // Stop and preserve state for resume
-	}
-
-	private stop(isPausing: boolean): void {
+	stop(): void {
 		if (this.enableAudioNormalization) {
 			// Web Audio API mode
 			if (!this.sourceNode) return;
@@ -358,20 +338,13 @@ class DeezerPlayer {
 			this.gainNode?.disconnect();
 
 			this.sourceNode = null;
-
-			if (!isPausing) {
-				this.playbackPausedTime = 0;
-			}
 		} else {
 			// HTML Audio Element mode
 			if (!this.audioElement) return;
 
 			this.audioElement.pause();
 
-			if (!isPausing) {
-				this.audioElement.currentTime = 0;
-				this.playbackPausedTime = 0;
-			}
+			this.audioElement.currentTime = 0;
 		}
 
 		this.stopProgressTracking();
@@ -379,11 +352,10 @@ class DeezerPlayer {
 	}
 
 	destroy(): void {
-		this.stop(false);
+		this.stop();
 		this.audioBuffer = null;
 		this.audioElement = null;
 		this.currentTrackData = null;
-		this.playbackPausedTime = 0;
 		playerState.set({
 			isPlaying: false,
 			progress: 0,
@@ -418,7 +390,7 @@ class DeezerPlayer {
 				return this.audioElement.currentTime;
 			}
 		}
-		return this.playbackPausedTime;
+		return 0;
 	}
 
 	getDuration(): number {
@@ -485,49 +457,7 @@ class DeezerPlayer {
 		this.stopProgressTracking();
 		playerState.update((s) => ({ ...s, isPlaying: false, progress: 0 }));
 
-		this.playbackPausedTime = 0;
 		this.play();
-	}
-
-	seek(time: number): void {
-		if (this.enableAudioNormalization) {
-			if (!this.audioBuffer) return;
-
-			const wasPlaying = this.isPlaying();
-			if (this.sourceNode) {
-				this.sourceNode.onended = null;
-				this.sourceNode.stop();
-				this.sourceNode.disconnect();
-				this.analyserNode?.disconnect();
-				this.gainNode?.disconnect();
-				this.sourceNode = null;
-			}
-			this.stopProgressTracking();
-
-			this.playbackPausedTime = time;
-
-			if (wasPlaying) {
-				this.play();
-			} else {
-				const duration = this.audioBuffer?.duration ?? this.trackLength;
-				const progress = duration > 0 ? time / duration : 0;
-				playerState.update((s) => ({ ...s, progress }));
-			}
-		} else {
-			if (!this.audioElement) return;
-
-			const wasPlaying = this.isPlaying();
-			this.audioElement.currentTime = time;
-			this.playbackPausedTime = time;
-
-			if (wasPlaying) {
-				// Will resume from new position
-			} else {
-				const duration = this.audioElement.duration ?? this.trackLength;
-				const progress = duration > 0 ? time / duration : 0;
-				playerState.update((s) => ({ ...s, progress }));
-			}
-		}
 	}
 
 	// LUFS Calculation (based on ITU-R BS.1770-4)

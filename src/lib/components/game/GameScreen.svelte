@@ -190,7 +190,7 @@
 	}
 
 	function stopTrack(): void {
-		deezerPlayer.pause();
+		deezerPlayer.stop();
 		currentRound.update((state) => ({
 			...state,
 			isPlaying: false,
@@ -227,7 +227,7 @@
 	}
 
 	async function nextRound(): Promise<void> {
-		deezerPlayer.pause();
+		deezerPlayer.stop();
 
 		currentRound.update((state) => ({
 			...state,
