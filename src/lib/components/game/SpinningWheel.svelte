@@ -111,15 +111,15 @@
 	/**
 	 * Generate a valid random final rotation that avoids year categories if track has no year data
 	 */
-	function generateValidFinalRotation(): number {
+	function generateValidFinalRotation(direction: number = 1): number {
 		let attempts = 0;
 		const maxAttempts = 100;
 
 		while (attempts < maxAttempts) {
 			// Generate random rotation: current + 3-5 full rotations + random position
 			const fullRotations = 3 + Math.floor(Math.random() * 2); // 3-5 full spins
-			const randomAngle = Math.random() * 360;
-			const finalRotation = currentRotation + fullRotations * 360 + randomAngle;
+			const randomAngle = Math.random() * 360 * direction;
+			const finalRotation = currentRotation + direction * fullRotations * 360 + randomAngle;
 
 			// If track has valid years OR doesn't land on year category, we're good
 			if (hasValidYears || !wouldLandOnYearCategory(finalRotation)) {
@@ -134,7 +134,9 @@
 
 		// Fallback: just return a random rotation (shouldn't happen with reasonable category counts)
 		console.warn('Failed to generate valid rotation after max attempts, using fallback');
-		return currentRotation + (3 + Math.random() * 3) * 360 + Math.random() * 360;
+		return (
+			currentRotation + direction * (3 + Math.random() * 3) * 360 + Math.random() * 360 * direction
+		);
 	}
 
 	function handleResize() {
@@ -372,7 +374,7 @@
 	/**
 	 * Main spin function - generates valid final rotation and animates to it
 	 */
-	function spin() {
+	function spin(direction: number = 1) {
 		if (isSpinning) return;
 
 		isSpinning = true;
@@ -381,7 +383,7 @@
 		onSpinStart();
 
 		// Generate a valid final rotation that avoids year categories if needed
-		const targetRotation = generateValidFinalRotation();
+		const targetRotation = generateValidFinalRotation(direction);
 		const totalDistance = targetRotation - currentRotation;
 		const startRotation = currentRotation;
 
@@ -642,13 +644,13 @@
 		event.preventDefault();
 
 		// Velocity threshold: 0.3 degrees per millisecond = 108 degrees in 360ms (moderate flick)
-		// Lowered from 0.5 to be more sensitive and consistent across browsers
 		const VELOCITY_THRESHOLD = 0.3;
 		const absVelocity = Math.abs(dragVelocity);
 
 		if (absVelocity >= VELOCITY_THRESHOLD) {
 			// Fast drag - trigger validated spin
-			spin();
+			const direction = dragVelocity > 0 ? 1 : -1;
+			spin(direction);
 		} else {
 			// Slow drag - apply natural deceleration
 			applyDeceleration();
