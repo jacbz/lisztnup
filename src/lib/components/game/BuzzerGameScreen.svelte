@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy, getContext } from 'svelte';
+	import { fly } from 'svelte/transition';
 	import type { GuessCategory } from '$lib/types';
 	import { BUZZER_TIME_PERCENTAGES, CATEGORY_POINTS } from '$lib/types';
 	import { currentRound, tracklist, settings } from '$lib/stores';
@@ -15,6 +16,7 @@
 	import { playerState } from '$lib/services';
 	import { gameSession, toast } from '$lib/stores';
 	import { deezerPlayer } from '$lib/services';
+	import { BUZZER_PREVIEW_COUNTDOWN } from '$lib/types/game';
 
 	// Get context from parent GameScreen
 	const gameContext = getContext(GAME_SCREEN_CONTEXT) as {
@@ -36,9 +38,6 @@
 
 	// Get enableScoring from context
 	const enableScoring = $derived(gameContext.enableScoring);
-
-	// Get numberOfTracks from settings
-	const numberOfTracks = $derived($settings.numberOfTracks);
 
 	// Get active categories from context
 	const activeCategories = $derived(gameContext.activeCategories);
@@ -197,6 +196,20 @@
 		return categoryProgression.slice(0, currentIndex + 1);
 	});
 
+	// Categories to display (revealed + placeholder if in transition)
+	const categoriesToDisplay = $derived.by((): GuessCategory[] => {
+		const base = [...revealedCategories];
+		const currentIndex = categoryProgression.indexOf(currentCategory);
+		const next =
+			currentIndex >= 0 && currentIndex < categoryProgression.length - 1
+				? categoryProgression[currentIndex + 1]
+				: null;
+		if (timeRemaining < BUZZER_PREVIEW_COUNTDOWN && next) {
+			base.push(next);
+		}
+		return base;
+	});
+
 	// Buzzer-specific play function
 	async function handleBuzzerPlay(): Promise<void> {
 		if (!hasStartedPlaying) {
@@ -339,28 +352,56 @@
 			hideLeftRight={$gameSession.players.length < 3}
 		>
 			{#snippet children()}
-				{@const categoryDef = getCategoryDefinition(currentCategory)}
-				<div
-					class="flex max-w-[90vw] flex-col items-center gap-3 rounded-[20px] border-[3px] px-6 py-3 shadow-[0_0_40px] backdrop-blur-xs md:flex-row md:gap-6 md:px-8"
-					style="border-color: {categoryDef.color2}; box-shadow: 0 0 40px {categoryDef.glowColor};"
-				>
-					<div
-						class="text-xl font-bold tracking-wider uppercase md:text-2xl"
-						style="color: {categoryDef.color1};"
-					>
-						{$_(`game.categories.${currentCategory}`)}
-					</div>
-					<div
-						class="text-base font-semibold text-nowrap md:text-lg"
-						style="color: {categoryDef.color2};"
-					>
-						{$_('scoring.pointsAwarded', {
-							values: { points: CATEGORY_POINTS[currentCategory] }
-						})}
-					</div>
-					<div class="min-w-[60px] text-center text-4xl font-bold text-white md:text-5xl">
-						{Math.ceil(timeRemaining)}
-					</div>
+				<div class="flex max-w-[90vw] items-center justify-center gap-2 md:gap-3">
+					{#each categoriesToDisplay as category, index (category)}
+						{@const currentIndex = categoryProgression.indexOf(currentCategory)}
+						{@const next =
+							currentIndex >= 0 && currentIndex < categoryProgression.length - 1
+								? categoryProgression[currentIndex + 1]
+								: null}
+						{@const isPlaceholder = timeRemaining < BUZZER_PREVIEW_COUNTDOWN && category === next}
+						{@const categoryDef = isPlaceholder
+							? null
+							: getCategoryDefinition(category as GuessCategory)}
+						{@const isCurrent = category === currentCategory}
+						<div
+							in:fly={{ x: 100, duration: 300 }}
+							out:fly={{ x: -100, duration: 300 }}
+							class="flex flex-col items-center gap-2 rounded-[20px] border-[3px] px-4 py-3 shadow-[0_0_40px] backdrop-blur-xs transition-all duration-300 md:flex-row md:gap-6 md:px-8"
+							style="border-color: {isPlaceholder
+								? '#6b7280'
+								: categoryDef!.color2}; box-shadow: 0 0 40px {isPlaceholder
+								? 'rgba(107, 114, 128, 0.6)'
+								: categoryDef!.glowColor};"
+						>
+							{#if isPlaceholder}
+								<div class="text-4xl font-bold text-gray-400 md:text-5xl">?</div>
+								<div class="min-w-[60px] text-center text-4xl font-bold text-gray-400 md:text-5xl">
+									{Math.ceil(timeRemaining)}
+								</div>
+							{:else}
+								<div
+									class="text-2xl font-bold tracking-wider uppercase"
+									style="color: {categoryDef!.color1};"
+								>
+									{$_(`game.categories.${category}`)}
+								</div>
+								<div
+									class="text-lg font-semibold text-nowrap"
+									style="color: {categoryDef!.color2};"
+								>
+									{$_('scoring.pointsAwarded', {
+										values: { points: CATEGORY_POINTS[category as GuessCategory] }
+									})}
+								</div>
+								{#if isCurrent}
+									<div class="min-w-[60px] text-center text-4xl font-bold text-white md:text-5xl">
+										{Math.ceil(trackDuration - playbackTime)}
+									</div>
+								{/if}
+							{/if}
+						</div>
+					{/each}
 				</div>
 			{/snippet}
 		</EdgeDisplay>

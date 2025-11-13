@@ -7,7 +7,7 @@
 	import TrackInfo from './TrackInfo.svelte';
 	import { _ } from 'svelte-i18n';
 	import { onMount } from 'svelte';
-	import { deezerPlayer, playerState } from '$lib/services';
+	import { playerState } from '$lib/services';
 	import Visualizer from './Visualizer.svelte';
 
 	interface Props {
@@ -202,7 +202,7 @@
 					>
 						<circle
 							class="transition-[stroke-dashoffset] duration-100"
-							stroke="#22d3ee"
+							stroke="#00D4F3"
 							stroke-width={progressPath.strokeWidth}
 							fill="transparent"
 							r={progressPath.radius}
