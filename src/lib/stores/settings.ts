@@ -2,7 +2,7 @@ import { writable, derived } from 'svelte/store';
 import type { GameSettings, Tracklist } from '$lib/types';
 import { DEFAULT_SETTINGS } from '$lib/types';
 import { DEFAULT_TRACKLISTS } from '$lib/data/defaultTracklists';
-import { SettingsService } from '$lib/services';
+import { deezerPlayer, SettingsService } from '$lib/services';
 
 const SETTINGS_KEY = 'lisztnup-settings';
 
@@ -40,7 +40,10 @@ function createSettingsStore() {
 				if (stored) {
 					try {
 						const parsed = JSON.parse(stored);
-						set({ ...DEFAULT_SETTINGS, ...parsed });
+						const merged = { ...DEFAULT_SETTINGS, ...parsed };
+						set(merged);
+						deezerPlayer.setEnableAudioNormalization(merged.enableAudioNormalization);
+						deezerPlayer.setTrackLength(merged.trackLengthLimit);
 					} catch (error) {
 						console.error('Error loading settings:', error);
 					}

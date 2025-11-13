@@ -3,6 +3,7 @@ import { writable, type Readable, get } from 'svelte/store';
 // Target LUFS for normalization.
 const TARGET_LUFS = -23;
 const FADE_DURATION = 0.3;
+const MAX_GAIN = 2.5; // Maximum allowed gain to prevent excessive amplification
 
 interface DeezerTrackData {
 	id: number;
@@ -47,7 +48,7 @@ class DeezerPlayer {
 	private ignoreTrackLength: boolean = false; // If true, always use full 30s duration
 	private loadPromise: Promise<void> | null = null;
 
-	private enableAudioNormalization: boolean = true; // Default to true, controlled by settings
+	private enableAudioNormalization: boolean = false;
 
 	/**
 	 * Sets the track length limit in seconds (5-30)
@@ -167,9 +168,11 @@ class DeezerPlayer {
 				);
 
 				let gain = 10 ** ((TARGET_LUFS - lufs) / 20);
-				if (gain > 5) {
-					gain = 5; // Limit max gain to prevent excessive amplification
-					console.warn(`[DeezerPlayer] Max gain exceeded. Clamping gain to ${gain.toFixed(2)}.`);
+				if (gain > MAX_GAIN) {
+					console.warn(
+						`[DeezerPlayer] Max gain exceeded: ${gain.toFixed(2)}. Clamping gain to ${MAX_GAIN.toFixed(2)}.`
+					);
+					gain = MAX_GAIN;
 				}
 				console.log(
 					`[DeezerPlayer] Calculated gain of ${gain.toFixed(2)} to reach ${TARGET_LUFS} LUFS.`

@@ -70,7 +70,7 @@ export const DEFAULT_CATEGORY_WEIGHTS: CategoryWeights = {
 // Work score range constants
 export const MIN_WORK_SCORE = 2.3;
 /// The maximum work score outputed by process_musicbrainz.py
-export const MAX_WORK_SCORE = 6.55;
+export const MAX_WORK_SCORE = 6.54;
 
 export const MIN_WORK_SCORE_ROUNDED = Math.floor(MIN_WORK_SCORE * 10) / 10;
 export const MAX_WORK_SCORE_ROUNDED = Math.ceil(MAX_WORK_SCORE * 10) / 10;

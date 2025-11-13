@@ -29,7 +29,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyVeryEasy,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [5.13, MAX_WORK_SCORE_ROUNDED],
+			workScoreRange: [5.12, MAX_WORK_SCORE_ROUNDED],
 			limitWorksFromComposer: 0.075,
 			maxTracksFromSingleWork: 1,
 			enablePopularityWeighting: false

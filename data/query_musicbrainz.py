@@ -197,22 +197,39 @@ ORDER BY c.sort_name, COALESCE(wa.name, w.name);
 """
 
 GET_RECORDINGS_FOR_WORK_SQL = """
-SELECT r.gid AS recording_gid, r.name AS recording_name, i.isrc,
+-- Get recordings linked to a specific work, with artist, label, and Deezer information
+SELECT r.gid AS recording_gid, 
+       r.name AS recording_name, 
+       i.isrc,
        STRING_AGG(DISTINCT label.name, ', ') AS recording_labels, 
        d.track_id AS deezer_id,
-       STRING_AGG(DISTINCT at.name, ', ') AS attributes
+       STRING_AGG(DISTINCT at.name, ', ') AS attributes,
+       STRING_AGG(DISTINCT artist.name, '; ') AS artist_name,
+       STRING_AGG(DISTINCT artist.comment, '; ') AS artist_comment
 FROM musicbrainz.recording AS r
+-- Join to get the link between recording and work
 JOIN musicbrainz.l_recording_work AS lrw ON r.id = lrw.entity0
 JOIN musicbrainz.link AS l ON lrw.link = l.id
+-- Get link attributes (e.g., "partial" recordings)
 LEFT JOIN musicbrainz.link_attribute AS la ON l.id = la.link
 LEFT JOIN musicbrainz.link_attribute_type AS at ON la.attribute_type = at.id
+-- Get ISRC codes for the recording
 LEFT JOIN musicbrainz.isrc AS i ON r.id = i.recording
+-- Get Deezer track ID via ISRC
 LEFT JOIN musicbrainz.deezer AS d ON i.isrc = d.isrc
+-- Get labels associated with the recording
 LEFT JOIN musicbrainz.l_label_recording AS llr ON r.id = llr.entity1
 LEFT JOIN musicbrainz.label AS label ON llr.entity0 = label.id
+-- Get artists from two sources:
+-- 1. Artists linked via l_artist_recording relation
+LEFT JOIN musicbrainz.l_artist_recording AS lar ON r.id = lar.entity1
+-- 2. Artists from the recording's artist credit
+LEFT JOIN musicbrainz.artist_credit_name AS acn ON r.artist_credit = acn.artist_credit
+-- Join artist table for both sources
+LEFT JOIN musicbrainz.artist AS artist ON (lar.entity0 = artist.id OR acn.artist = artist.id)
 WHERE lrw.entity1 = %(work_id)s
 GROUP BY r.gid, r.name, i.isrc, d.track_id
--- Exclude partial recordings
+-- Exclude partial recordings (e.g., excerpts, sections)
 HAVING STRING_AGG(DISTINCT at.name, ', ') IS NULL 
     OR STRING_AGG(DISTINCT at.name, ', ') NOT ILIKE '%%partial%%'
 ORDER BY r.name;
@@ -234,6 +251,9 @@ WHERE lww.entity0 = %(work_id)s AND l.link_type = 281
 ORDER BY lww.link_order, child_work.name;
 """
 
+forbidden_artist_comment = ['band', 'pop', 'rock', 'jazz', 'hip hop', 'rap', 
+                    'metal', 'punk', 'electronic', 'folk', 'country', 
+                    'blues', 'r&b', 'soul']
 
 def get_work_details_recursive(cursor, work_id, label_counter):
     # Returns: subworks, recordings, total_recordings, descendant_types
@@ -241,6 +261,10 @@ def get_work_details_recursive(cursor, work_id, label_counter):
     recordings_data = cursor.fetchall()
     recordings = []
     for rec in recordings_data:
+        artist_comment = rec.get("artist_comment") or ""
+        if any(term in artist_comment.lower() for term in forbidden_artist_comment):
+            continue
+        
         # The SQL returns an `attributes` column which is a
         # comma-separated string (e.g. 'live, partial'). When any of the
         # excluded attributes are present we will not include the

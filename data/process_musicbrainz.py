@@ -166,6 +166,7 @@ EXCLUDED_COMPOSERS: Set[str] = set([
     "Foster, Stephen",
     "Willis, Wallace",
     "Barry, John",
+    "Bradbury, William B."
 ])
 
 # Deezer IDs without preview mp3s, loaded from 'excluded_deezer_ids' file
@@ -176,10 +177,12 @@ EXCLUDED_WORKS: Set[str] = set([
     "8531b357-339e-3cc7-9ed2-0d6b928ed12e", # Joy to the World
     "bc0cdd41-eaa3-3330-b972-8e8174b9e64d", # Hark! The Herald Angels Sing
     "718b96fa-75eb-436e-8c30-0c647aa99696", # Ave Maria (duplicate)
+    "92fb101d-4e49-4005-a88a-fdb0a1620f41", # Love Life
+    "5132c517-1141-3807-abc5-6779ed91209c", # Moon Love
 ])
 
 WSS_OVERRIDES: Dict[str, float] = {
-    "11f48c5e-5ee9-4646-9826-fb7c2fccce7f": 5.4,  # Swan Lake
+    "11f48c5e-5ee9-4646-9826-fb7c2fccce7f": 5.4, # Swan Lake
     "bcc558d9-b9d5-39cd-b599-df5a988b9eee": 2.5, # Memories of the Alhambra
     "300dc2e7-fd2c-48c5-bbdc-29553afa56da": 3.5, # La paloma
     "15649d4e-2dd2-4211-84bc-f5d2d316203a": 4.0, # Messe solennelle en la majeur, op. 12
