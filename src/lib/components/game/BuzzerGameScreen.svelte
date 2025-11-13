@@ -83,6 +83,8 @@
 
 	// Audio element for buzzer sound
 	let buzzerAudio: HTMLAudioElement | null = null;
+	let audioContext: AudioContext | null = null;
+	let gainNode: GainNode | null = null;
 
 	// Detect if device has touch capability
 	let hasTouch = $state(false);
@@ -251,11 +253,12 @@
 
 	function playBuzzerSound() {
 		// Play buzzer sound immediately when button is pressed
-		if (buzzerAudio) {
+		if (buzzerAudio && audioContext && gainNode) {
 			buzzerAudio.currentTime = 0;
-			console.log('Buzzer volume:', $settings.buzzerVolume);
-			buzzerAudio.volume = $settings.buzzerVolume;
-			buzzerAudio.play().catch((err) => console.warn('Failed to play buzzer sound:', err));
+			gainNode.gain.value = $settings.buzzerVolume;
+			audioContext.resume().then(() => {
+				buzzerAudio!.play().catch((err) => console.warn('Failed to play buzzer sound:', err));
+			});
 		}
 	}
 
@@ -309,6 +312,13 @@
 
 		// Create buzzer audio element
 		buzzerAudio = new Audio('/buzzer.mp3');
+
+		// Create Web Audio API context and gain node for volume control
+		audioContext = new AudioContext();
+		gainNode = audioContext.createGain();
+		const source = audioContext.createMediaElementSource(buzzerAudio);
+		source.connect(gainNode);
+		gainNode.connect(audioContext.destination);
 
 		// Add keyboard event listener for buzzer
 		window.addEventListener('keydown', handleKeyDown);

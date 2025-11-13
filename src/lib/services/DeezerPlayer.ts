@@ -78,6 +78,19 @@ class DeezerPlayer {
 		this.enableAudioNormalization = enable;
 	}
 
+	private supportsVolumeControl(): boolean {
+		const audio = document.createElement('audio');
+		const originalVolume = audio.volume;
+
+		// Try to set a different volume
+		audio.volume = 0.5;
+
+		// Check if it actually changed
+		const supportsVolume = audio.volume !== originalVolume;
+
+		return supportsVolume;
+	}
+
 	private getAudioContext(): AudioContext {
 		if (!this.audioContext) {
 			this.audioContext = new AudioContext();
@@ -139,37 +152,63 @@ class DeezerPlayer {
 
 			playerState.update((s) => ({ ...s, track: this.currentTrackData }));
 
-			// Always fetch and analyze audio for LUFS
-			const response = await fetch(this.currentTrackData.preview);
-			const arrayBuffer = await response.arrayBuffer();
+			// Fetch and analyze audio for LUFS (when normalization is enabled or volume control is supported)
+			if (this.enableAudioNormalization || this.supportsVolumeControl()) {
+				const response = await fetch(this.currentTrackData.preview);
+				const arrayBuffer = await response.arrayBuffer();
 
-			// Decode audio data for analysis (and for Web Audio API playback if enabled)
-			const audioContext = this.getAudioContext();
-			const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+				// Decode audio data for analysis (and for Web Audio API playback if enabled)
+				const audioContext = this.getAudioContext();
+				const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
 
-			// Calculate LUFS for normalization
-			const lufs = await this.calculateLUFS(audioBuffer);
-			console.log(
-				`[DeezerPlayer] Calculated LUFS for track ${this.currentTrackData.id}: ${lufs.toFixed(2)}`
-			);
+				// Calculate LUFS for normalization
+				const lufs = await this.calculateLUFS(audioBuffer);
+				console.log(
+					`[DeezerPlayer] Calculated LUFS for track ${this.currentTrackData.id}: ${lufs.toFixed(2)}`
+				);
 
-			let gain = 10 ** ((TARGET_LUFS - lufs) / 20);
-			if (gain > 5) {
-				gain = 5; // Limit max gain to prevent excessive amplification
-				console.warn(`[DeezerPlayer] Max gain exceeded. Clamping gain to ${gain.toFixed(2)}.`);
-			}
-			console.log(
-				`[DeezerPlayer] Calculated gain of ${gain.toFixed(2)} to reach ${TARGET_LUFS} LUFS.`
-			);
+				let gain = 10 ** ((TARGET_LUFS - lufs) / 20);
+				if (gain > 5) {
+					gain = 5; // Limit max gain to prevent excessive amplification
+					console.warn(`[DeezerPlayer] Max gain exceeded. Clamping gain to ${gain.toFixed(2)}.`);
+				}
+				console.log(
+					`[DeezerPlayer] Calculated gain of ${gain.toFixed(2)} to reach ${TARGET_LUFS} LUFS.`
+				);
 
-			if (this.enableAudioNormalization) {
-				// Web Audio API mode - use GainNode
-				this.audioBuffer = audioBuffer;
-				this.gainNode = audioContext.createGain();
-				this.gainNode.gain.value = gain;
-				console.log(`[DeezerPlayer] Web Audio API mode: applying gain via GainNode`);
+				if (this.enableAudioNormalization) {
+					// Web Audio API mode - use GainNode
+					this.audioBuffer = audioBuffer;
+					this.gainNode = audioContext.createGain();
+					this.gainNode.gain.value = gain;
+					console.log(`[DeezerPlayer] Web Audio API mode: applying gain via GainNode`);
+				} else {
+					// HTML Audio Element mode - translate gain to volume
+					this.audioElement = new Audio(this.currentTrackData.preview);
+					this.audioElement.crossOrigin = 'anonymous';
+
+					// Preload the audio
+					await new Promise<void>((resolve, reject) => {
+						if (!this.audioElement) {
+							reject(new Error('Audio element not initialized'));
+							return;
+						}
+
+						this.audioElement.addEventListener('canplaythrough', () => resolve(), { once: true });
+						this.audioElement.addEventListener('error', (e) => reject(e), { once: true });
+						this.audioElement.load();
+					});
+
+					// Translate gain to volume: gain of 2 = volume 1.0, gain of 1 = volume 0.5
+					// Volume = min(1, gain / 2)
+					const volume = Math.min(1, gain / 2);
+					this.audioElement.volume = volume;
+					console.log(
+						`[DeezerPlayer] HTML Audio mode: translated gain ${gain.toFixed(2)} to volume ${volume.toFixed(2)}`
+					);
+				}
 			} else {
-				// HTML Audio Element mode - translate gain to volume
+				// iOS without normalization: use HTML Audio without volume adjustment
 				this.audioElement = new Audio(this.currentTrackData.preview);
 				this.audioElement.crossOrigin = 'anonymous';
 
@@ -184,14 +223,6 @@ class DeezerPlayer {
 					this.audioElement.addEventListener('error', (e) => reject(e), { once: true });
 					this.audioElement.load();
 				});
-
-				// Translate gain to volume: gain of 2 = volume 1.0, gain of 1 = volume 0.5
-				// Volume = min(1, gain / 2)
-				const volume = Math.min(1, gain / 2);
-				this.audioElement.volume = volume;
-				console.log(
-					`[DeezerPlayer] HTML Audio mode: translated gain ${gain.toFixed(2)} to volume ${volume.toFixed(2)}`
-				);
 			}
 		} catch (error) {
 			console.error('DeezerPlayer: Error loading track', error);
