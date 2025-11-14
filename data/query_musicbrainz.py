@@ -237,7 +237,7 @@ ORDER BY r.name;
 """
 
 GET_SUBWORKS_FOR_WORK_SQL = """
-SELECT DISTINCT ON (lww.link_order, child_work.id)
+SELECT DISTINCT ON (lww.link_order, child_work.id, child_work.name)
   child_work.id AS work_id,
   child_work.gid AS work_gid,
   COALESCE(wa.name, child_work.name) AS work_name,
@@ -249,7 +249,7 @@ JOIN musicbrainz.link AS l ON lww.link = l.id
 JOIN musicbrainz.work AS child_work ON lww.entity1 = child_work.id
 LEFT JOIN musicbrainz.work_alias AS wa ON child_work.id = wa.work AND wa.locale = 'en' AND wa.type = 1 AND wa.primary_for_locale = true
 WHERE lww.entity0 = %(work_id)s AND l.link_type = 281
-ORDER BY lww.link_order;
+ORDER BY lww.link_order, child_work.name;
 """
 
 forbidden_artist_comment = ['band', 'pop', 'rock', 'jazz', 'hip hop', 'rap', 

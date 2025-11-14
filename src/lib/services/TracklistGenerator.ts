@@ -4,13 +4,12 @@ import {
 	type Track,
 	type Composer,
 	type Work,
-	type WorkCategory,
 	type CategoryAdjustments
 } from '$lib/types';
 import { weightedRandom } from '$lib/utils/random';
 
 /**
- * Tracklist generator that uses O(1) swap-and-pop sampling
+ * Tracklist generator that uses swap-and-pop sampling
  * Filters data once on initialization, then samples tracks on demand
  */
 export class TracklistGenerator {
@@ -21,12 +20,6 @@ export class TracklistGenerator {
 	private filteredWorks: Work[] = [];
 	private filteredComposers: Composer[] = [];
 	private composerMap: Map<string, Composer> = new Map();
-	private worksByComposer: Map<string, Work[]> = new Map();
-	private worksByCategory: Map<WorkCategory, Work[]> = new Map();
-	private composersByCategory: Map<WorkCategory, Composer[]> = new Map();
-	private composerWeightMap: Map<string, number> = new Map();
-	private categoryWeights: number[] = [];
-	private categories: WorkCategory[] = [];
 
 	constructor(data: LisztnupData, tracklist: Tracklist) {
 		this.data = data;
@@ -43,11 +36,7 @@ export class TracklistGenerator {
 	 */
 	private filterData(): void {
 		const config = this.tracklist.config;
-		let works: Work[] = [];
-
-		Object.keys(this.data.works).forEach((category) => {
-			works.push(...this.data.works[category as WorkCategory]);
-		});
+		let works: Work[] = [...this.data.works];
 
 		// Step 1: Apply category adjustments to work scores
 		if (config.categoryAdjustments) {
@@ -123,12 +112,13 @@ export class TracklistGenerator {
 
 		// Step 6: Build composer list and group works by composer
 		const composerSet = new Set<string>();
+		const worksByComposer: Map<string, Work[]> = new Map();
 		works.forEach((work) => {
 			composerSet.add(work.composer);
-			if (!this.worksByComposer.has(work.composer)) {
-				this.worksByComposer.set(work.composer, []);
+			if (!worksByComposer.has(work.composer)) {
+				worksByComposer.set(work.composer, []);
 			}
-			this.worksByComposer.get(work.composer)!.push(work);
+			worksByComposer.get(work.composer)!.push(work);
 		});
 
 		// Filter composers to those with works
@@ -154,12 +144,12 @@ export class TracklistGenerator {
 			works = works.filter((work) => topComposers.includes(work.composer));
 
 			// Rebuild worksByComposer map
-			this.worksByComposer.clear();
+			worksByComposer.clear();
 			works.forEach((work) => {
-				if (!this.worksByComposer.has(work.composer)) {
-					this.worksByComposer.set(work.composer, []);
+				if (!worksByComposer.has(work.composer)) {
+					worksByComposer.set(work.composer, []);
 				}
-				this.worksByComposer.get(work.composer)!.push(work);
+				worksByComposer.get(work.composer)!.push(work);
 			});
 		}
 
@@ -197,15 +187,6 @@ export class TracklistGenerator {
 			});
 
 			works = limitedWorksArray;
-
-			// Rebuild worksByComposer map after limiting
-			this.worksByComposer.clear();
-			works.forEach((work) => {
-				if (!this.worksByComposer.has(work.composer)) {
-					this.worksByComposer.set(work.composer, []);
-				}
-				this.worksByComposer.get(work.composer)!.push(work);
-			});
 
 			// Count works per composer after limiting
 			const worksAfterLimiting = new Map<string, number>();
@@ -254,47 +235,6 @@ export class TracklistGenerator {
 		// Store filtered results
 		this.filteredWorks = works;
 		this.filteredComposers = composers;
-
-		// Precompute composer weights (sublinear weighting)
-		composers.map((c) => {
-			const workCount = this.worksByComposer.get(c.gid)?.length || 0;
-			const weight = Math.pow(workCount + 1, 0.75);
-			this.composerWeightMap.set(c.gid, weight);
-			return weight;
-		});
-
-		// Group works by category
-		this.worksByCategory.clear();
-		this.composersByCategory.clear();
-
-		works.forEach((work) => {
-			const category = work.type as WorkCategory;
-
-			if (!this.worksByCategory.has(category)) {
-				this.worksByCategory.set(category, []);
-				this.composersByCategory.set(category, []);
-			}
-
-			this.worksByCategory.get(category)!.push(work);
-		});
-
-		// Build composer list per category
-		this.composersByCategory.forEach((composerList, category) => {
-			const composerSet = new Set<string>();
-			this.worksByCategory.get(category)!.forEach((work) => {
-				composerSet.add(work.composer);
-			});
-
-			const categoryComposers = composers.filter((c) => composerSet.has(c.gid));
-			this.composersByCategory.set(category, categoryComposers);
-		});
-
-		// Build category list and weights
-		this.categories = Array.from(this.worksByCategory.keys());
-		this.categoryWeights = this.categories.map((category) => {
-			const numWorksInCategory = this.worksByCategory.get(category)?.length || 0;
-			return numWorksInCategory;
-		});
 	}
 
 	/**
@@ -303,74 +243,26 @@ export class TracklistGenerator {
 	 * Pops the selected part to prevent duplicate selection
 	 */
 	sample(): Track | null {
-		if (this.categories.length === 0 || this.filteredWorks.length === 0) {
+		if (this.filteredWorks.length === 0) {
 			return null;
 		}
 
-		// Step 1: Select category with weight
-		const categoryIndex = weightedRandom(
-			this.categories.map((_, i) => i),
-			(i) => this.categoryWeights[i]
-		);
-		const category = this.categories[categoryIndex];
-
-		// Get works and composers for this category
-		const categoryWorksArray = this.worksByCategory.get(category);
-		const categoryComposers = this.composersByCategory.get(category);
-
-		if (
-			!categoryWorksArray ||
-			categoryWorksArray.length === 0 ||
-			!categoryComposers ||
-			categoryComposers.length === 0
-		) {
-			// Category exhausted, remove it and try again
-			this.categories.splice(categoryIndex, 1);
-			this.categoryWeights.splice(categoryIndex, 1);
-			return this.sample();
-		}
-
-		// Step 2: Select composer with weighting
-		const composerIndex = weightedRandom(
-			categoryComposers.map((_, i) => i),
-			(i) => this.composerWeightMap.get(categoryComposers[i].gid) || 1
-		);
-		const composer = categoryComposers[composerIndex];
-
-		// Step 3: Get works for this composer in this category
-		const composerWorks = categoryWorksArray.filter((work) => work.composer === composer.gid);
-
-		if (composerWorks.length === 0) {
-			// Composer exhausted in this category, remove and try again
-			categoryComposers.splice(composerIndex, 1);
-			return this.sample();
-		}
-
-		// Step 4: Select work with optional score weighting
+		// Step 1: Select work with optional score weighting
 		const usePopularityWeighting = this.tracklist.config.enablePopularityWeighting ?? true;
-		const workIndex = weightedRandom(
-			composerWorks.map((_, i) => i),
-			(i) => (usePopularityWeighting ? composerWorks[i].score : 1)
-		);
-		const work = composerWorks[workIndex];
+		const work = weightedRandom(this.filteredWorks, (i) => (usePopularityWeighting ? i.score : 1));
 
-		// Step 5: Check if work has parts
+		// Step 2: Check if work has parts
 		if (work.parts.length === 0) {
 			// Work exhausted, remove it
-			const workIndexInCategory = categoryWorksArray.indexOf(work);
-			if (workIndexInCategory !== -1) {
-				categoryWorksArray.splice(workIndexInCategory, 1);
-			}
-
-			const workIndexInComposer = this.worksByComposer.get(composer.gid)?.indexOf(work);
-			if (workIndexInComposer !== undefined && workIndexInComposer !== -1) {
-				this.worksByComposer.get(composer.gid)?.splice(workIndexInComposer, 1);
+			const workIndex = this.filteredWorks.indexOf(work);
+			if (workIndex !== -1) {
+				this.filteredWorks.splice(workIndex, 1);
 			}
 
 			return this.sample();
 		}
 
-		// Step 6: Select part with optional score weighting and POP it
+		// Step 3: Select part with  score weighting and POP it
 		const partIndex = weightedRandom(
 			work.parts.map((_, i) => i),
 			(i) => (usePopularityWeighting ? work.parts[i].score : 1)
@@ -380,19 +272,14 @@ export class TracklistGenerator {
 
 		// If work is now empty, remove it
 		if (work.parts.length === 0) {
-			const workIndexInCategory = categoryWorksArray.indexOf(work);
-			if (workIndexInCategory !== -1) {
-				categoryWorksArray.splice(workIndexInCategory, 1);
-			}
-
-			const workIndexInComposer = this.worksByComposer.get(composer.gid)?.indexOf(work);
-			if (workIndexInComposer !== undefined && workIndexInComposer !== -1) {
-				this.worksByComposer.get(composer.gid)?.splice(workIndexInComposer, 1);
+			const workIndex = this.filteredWorks.indexOf(work);
+			if (workIndex !== -1) {
+				this.filteredWorks.splice(workIndex, 1);
 			}
 		}
 
 		return {
-			composer,
+			composer: this.composerMap.get(work.composer)!,
 			work,
 			part
 		};
@@ -434,7 +321,7 @@ export class TracklistGenerator {
 		}
 
 		// Disable 'type' if only one work category
-		if (this.worksByCategory.size <= 1) {
+		if (this.filteredWorks.every((work) => work.type === this.filteredWorks[0].type)) {
 			disabled.push('type');
 		}
 

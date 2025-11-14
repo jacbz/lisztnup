@@ -1,7 +1,7 @@
 import type { Composer } from './composer';
-import type { WorksByCategory } from './work';
+import type { Work } from './work';
 
 export interface LisztnupData {
 	composers: Composer[];
-	works: WorksByCategory;
+	works: Work[];
 }

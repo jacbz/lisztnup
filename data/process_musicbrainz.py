@@ -280,15 +280,12 @@ class FinalOutput:
     """Top-level container for the final JSON output."""
 
     composers: List[FinalComposer]
-    works: Dict[str, List[FinalWork]]
+    works: List[FinalWork]
 
     def to_dict(self) -> Dict[str, Any]:
         return {
             "composers": [c.to_dict() for c in self.composers],
-            "works": {
-                type_name: [w.to_dict() for w in works_list]
-                for type_name, works_list in self.works.items()
-            },
+            "works": [w.to_dict() for w in self.works],
         }
 
 
@@ -384,17 +381,20 @@ class MusicbrainzProcessor:
 
         # Stage 4: Synchronize lists, removing works by composers who were dropped
         final_composer_gids = {c.gid for c in final_composers}
-        final_works: Dict[str, List[FinalWork]] = {}
+        all_works = []
         for work_type, works in works_after_wss.items():
             synced_list = [
                 work for work in works if work.composer in final_composer_gids
             ]
-            if synced_list:
-                final_works[work_type] = synced_list
+            all_works.extend(synced_list)
+
+        # Sort by composer name then work name
+        composer_map = {c.gid: c.name for c in final_composers}
+        all_works.sort(key=lambda w: (composer_map.get(w.composer, ""), w.name))
 
         # Stage 5: Write logs and return the final packaged data
-        self._write_unresolved_log(final_works)
-        return FinalOutput(composers=final_composers, works=final_works)
+        self._write_unresolved_log(all_works)
+        return FinalOutput(composers=final_composers, works=all_works)
 
     def _filter_composers_by_birth_year(
         self, composers: List[MBComposer]
@@ -773,11 +773,11 @@ class MusicbrainzProcessor:
         
         return selected_ids
 
-    def _write_unresolved_log(self, final_works: Dict[str, List[FinalWork]]) -> None:
+    def _write_unresolved_log(self, final_works: List[FinalWork]) -> None:
         """Writes a log of works in the final output whose types remain 'other'."""
         if not self.unresolved_work_candidates:
             return
-        final_unresolved_names = {w.name for w in final_works.get("other", [])}
+        final_unresolved_names = {w.name for w in final_works if w.type == "other"}
         final_messages = sorted(
             [
                 msg
@@ -809,7 +809,7 @@ class MusicbrainzProcessor:
         )
         print(f"{'Final composers in output:':<45} {self.stats['final_composers']}")
 
-        all_final_works = [w for works in final_output.works.values() for w in works]
+        all_final_works = final_output.works
         total_final_works = len(all_final_works)
         total_final_parts = sum(len(w.parts) for w in all_final_works)
         print("\n--- Work & Part Filtering Pipeline ---")
@@ -873,17 +873,16 @@ class MusicbrainzProcessor:
             )
 
         print("\n--- Final Data Distribution by Type ---")
-        type_counts = {
-            type_name: len(works) for type_name, works in final_output.works.items()
-        }
+        type_counts = Counter(w.type for w in final_output.works)
         for type_name, count in sorted(
             type_counts.items(), key=lambda item: item[1], reverse=True
         ):
             print(f"  - {type_name:<12}: {count} works")
 
-        if final_output.works.get("other"):
+        other_works = [w for w in final_output.works if w.type == "other"]
+        if other_works:
             print(
-                f"\nWrote {len(final_output.works['other'])} unresolved work types to 'unresolved_types.txt'."
+                f"\nWrote {len(other_works)} unresolved work types to 'unresolved_types.txt'."
             )
         print("=" * 80)
 
@@ -900,49 +899,40 @@ def generate_markdown_report(final_output: FinalOutput) -> None:
     :param final_output: The final, curated data object.
     """
     composer_map = {c.gid: c.name for c in final_output.composers}
-    all_works = [w for works_list in final_output.works.values() for w in works_list]
-
-    all_works.sort(key=lambda w: (composer_map.get(w.composer, "Z"), w.name))
-
-    works_by_type: Dict[str, List[FinalWork]] = defaultdict(list)
-    for work in all_works:
-        works_by_type[work.type].append(work)
+    all_works = final_output.works
 
     with open("lisztnup.md", "w", encoding="utf-8") as f:
         f.write("# LisztNUp Curated Works\n\n")
         f.write(
-            "A curated list of classical works, sorted by composer and work title within each category.\n\n"
+            "A curated list of classical works, sorted by composer and work title.\n\n"
         )
 
-        for type_name in sorted(works_by_type.keys()):
-            f.write(f"## {type_name.capitalize()}\n\n")
-            f.write("| Composer | Work (Year) | Score | Parts (Score) |\n")
-            f.write("| :--- | :--- | :---: | :--- |\n")
+        f.write("| Composer | Work (Year) | Score | Parts (Score) |\n")
+        f.write("| :--- | :--- | :---: | :--- |\n")
 
-            for work in works_by_type[type_name]:
-                composer_name = composer_map.get(work.composer, "N/A")
+        for work in all_works:
+            composer_name = composer_map.get(work.composer, "N/A")
 
-                year_str = ""
-                if work.begin_year:
-                    if work.end_year and work.end_year != work.begin_year:
-                        year_str = f"({work.begin_year}–{work.end_year})"
-                    else:
-                        year_str = f"({work.begin_year})"
-                elif work.end_year:
-                    year_str = f"({work.end_year})"
+            year_str = ""
+            if work.begin_year:
+                if work.end_year and work.end_year != work.begin_year:
+                    year_str = f"({work.begin_year}–{work.end_year})"
+                else:
+                    year_str = f"({work.begin_year})"
+            elif work.end_year:
+                year_str = f"({work.end_year})"
 
-                work_cell = f"{work.name} {year_str}".strip()
-                work_score_cell = f"{work.score:.2f}"
+            work_cell = f"{work.name} {year_str}".strip()
+            work_score_cell = f"{work.score:.2f}"
 
-                parts_cell_items = []
-                for part in sorted(work.parts, key=lambda p: p.name):
-                    parts_cell_items.append(f"* {part.name} ({part.score:.2f})")
-                parts_cell = "<br>".join(parts_cell_items)
+            parts_cell_items = []
+            for part in sorted(work.parts, key=lambda p: p.name):
+                parts_cell_items.append(f"* {part.name} ({part.score:.2f})")
+            parts_cell = "<br>".join(parts_cell_items)
 
-                f.write(
-                    f"| {composer_name} | {work_cell} | {work_score_cell} | {parts_cell} |\n"
-                )
-            f.write("\n")
+            f.write(
+                f"| {composer_name} | {work_cell} | {work_score_cell} | {parts_cell} |\n"
+            )
     print("Generated markdown report 'lisztnup.md'.")
 
 
