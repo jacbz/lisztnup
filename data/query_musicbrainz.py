@@ -170,7 +170,7 @@ FROM
   JOIN musicbrainz.l_artist_work AS law ON w.id = law.entity1
   JOIN musicbrainz.link AS l ON law.link = l.id
   JOIN classical_composers AS c ON law.entity0 = c.id
-  LEFT JOIN musicbrainz.work_alias AS wa ON w.id = wa.work AND wa.locale = 'en' AND wa.type = 1
+  LEFT JOIN musicbrainz.work_alias AS wa ON w.id = wa.work AND wa.locale = 'en' AND wa.type = 1 AND wa.primary_for_locale = true
   LEFT JOIN musicbrainz.work_tag AS wt ON w.id = wt.work
   LEFT JOIN musicbrainz.tag AS t ON wt.tag = t.id
 WHERE
@@ -237,7 +237,7 @@ ORDER BY r.name;
 """
 
 GET_SUBWORKS_FOR_WORK_SQL = """
-SELECT
+SELECT DISTINCT ON (lww.link_order, child_work.id)
   child_work.id AS work_id,
   child_work.gid AS work_gid,
   COALESCE(wa.name, child_work.name) AS work_name,
@@ -247,9 +247,9 @@ SELECT
 FROM musicbrainz.l_work_work AS lww
 JOIN musicbrainz.link AS l ON lww.link = l.id
 JOIN musicbrainz.work AS child_work ON lww.entity1 = child_work.id
-LEFT JOIN musicbrainz.work_alias AS wa ON child_work.id = wa.work AND wa.locale = 'en' AND wa.type = 1
+LEFT JOIN musicbrainz.work_alias AS wa ON child_work.id = wa.work AND wa.locale = 'en' AND wa.type = 1 AND wa.primary_for_locale = true
 WHERE lww.entity0 = %(work_id)s AND l.link_type = 281
-ORDER BY lww.link_order, child_work.name;
+ORDER BY lww.link_order;
 """
 
 forbidden_artist_comment = ['band', 'pop', 'rock', 'jazz', 'hip hop', 'rap', 

@@ -86,9 +86,9 @@ KEYWORD_RULES = [
     # 2. Vocal Works (Sacred and Secular)
     # Captures major choral, religious, and vocal ensemble pieces.
     # ========================================================================
-    (r'(?i)Cantata|Kantate|Oratorio|Stabat Mater|Requiem|Magnificat|Passion|Mass\b|Missa|Coronation Anthem|Chandos Anthem|(Gott|Herr|Jesu|Mensch).*BWV', 'vocal'),
+    (r'(?i)Cantata|Kantate|Oratorio|Stabat Mater|Requiem|Magnificat|Mass\b|Missa|Coronation Anthem|Chandos Anthem|(Gott|Herr|Jesu|Mensch).*BWV', 'vocal'),
     (r'(?i)Te Deum|Vesperae|Litaniae|Psalm|Salve Regina|Ave Maria|Kyrie|Credo|Agnus Dei|Dixit Dominus|Nisi Dominus|Offertorium|Motet|Hymn', 'vocal'),
-    (r'(?i)Aria|Lied(?!chen)|Lieder|Gesänge|Chanson|Song(?!s? Without Words)|Recitative|Dichterliebe|Winterreise|Schwanengesang', 'vocal'),
+    (r'(?i)Aria|Lied(?!chen)|Lieder|Gesänge|Chanson|Recitative|Dichterliebe|Winterreise|Schwanengesang', 'vocal'),
     (r'(?i)Choral|Choräl|Coro\b|Chorus|for Soprano|for Bass|for Solo Voice', 'vocal'),
 
     # ========================================================================
@@ -123,7 +123,7 @@ KEYWORD_RULES = [
     (r'(?i)Piano Sonata|Sonata .* K .* |Klaviersonate|Keyboard Sonata|Harpsichord Sonata|Orgel', 'piano'),
     (r'(?i)(for|pour) Piano|für Klavier|Klavierstück|for Harpsichord|pour le Clavecin|Pièces de Clavecin|for Keyboard', 'piano'),
     (r'(?i)Album für die Jugend|Fantasiestück', 'piano'),
-    (r'(?i)\bVariations? for Piano|\bVariationen für Klavier|Goldberg Variations|Diabelli Variations', 'piano'),
+    (r'(?i)\bVariations? for Piano|\bVariationen für Klavier|Goldberg Variations|Diabelli Variations|Préludes.*L\.|Images.*L\.', 'piano'),
     (r'(?i)Kinderszenen|Albumblatt|Albumblätter|Papillons|Carnaval|Kreisleriana|Davidsbündlertänze|Waldszenen', 'piano'),
     (r'(?i)Well-Tempered Clavier|Wohltemperiert|Inventio|Sinfonia.*BWV (7|8)|Präludium und Fuge', 'piano'), # Catches Bach's major keyboard cycles
 ]

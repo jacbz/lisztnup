@@ -968,18 +968,18 @@
 	<div class="mt-6 flex gap-3">
 		<button
 			type="button"
+			onclick={onCancel}
+			class="flex-1 rounded-xl border-2 border-slate-700 bg-slate-800 px-6 py-3 font-semibold text-slate-300 transition-all hover:border-cyan-400/50 hover:bg-slate-700 active:scale-95"
+		>
+			{$_('tracklistEditor.cancel')}
+		</button>
+		<button
+			type="button"
 			onclick={handleSave}
 			disabled={!name.trim()}
 			class="flex-1 rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3 font-semibold text-white shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
 		>
 			{$_('tracklistEditor.save')}
-		</button>
-		<button
-			type="button"
-			onclick={onCancel}
-			class="flex-1 rounded-xl border-2 border-slate-700 bg-slate-800 px-6 py-3 font-semibold text-slate-300 transition-all hover:border-cyan-400/50 hover:bg-slate-700 active:scale-95"
-		>
-			{$_('tracklistEditor.cancel')}
 		</button>
 	</div>
 </Popup>
