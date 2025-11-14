@@ -39,7 +39,7 @@
 				<span class="font-semibold text-cyan-400">{label}</span>
 			{/if}
 			{#if showValue}
-				<span class="text-xl font-bold text-white {!label ? 'mx-auto' : ''}"
+				<span class="text-base font-semibold text-white {!label ? 'mx-auto' : ''}"
 					>{valueFormatter ? valueFormatter(value) : `${value}${valueSuffix}`}</span
 				>
 			{/if}

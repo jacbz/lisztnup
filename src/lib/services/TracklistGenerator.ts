@@ -128,20 +128,12 @@ export class TracklistGenerator {
 		if (config.composerFilter?.mode === 'topN') {
 			const topNCount = config.composerFilter.count;
 
-			// Count works per composer
-			const workCounts = new Map<string, number>();
-			works.forEach((work) => {
-				workCounts.set(work.composer, (workCounts.get(work.composer) || 0) + 1);
-			});
+			// Sort composers by score (descending) and take top N
+			composers = [...composers].sort((a, b) => b.score - a.score).slice(0, topNCount);
+			console.log(composers);
 
-			// Sort composers by work count and take top N
-			const topComposers = [...workCounts.entries()]
-				.sort((a, b) => b[1] - a[1])
-				.slice(0, topNCount)
-				.map(([gid]) => gid);
-
-			composers = composers.filter((c) => topComposers.includes(c.gid));
-			works = works.filter((work) => topComposers.includes(work.composer));
+			const composerIds = new Set(composers.map((c) => c.gid));
+			works = works.filter((work) => composerIds.has(work.composer));
 
 			// Rebuild worksByComposer map
 			worksByComposer.clear();

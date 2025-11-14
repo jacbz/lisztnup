@@ -189,6 +189,7 @@
 		"includeMode": "Include Only",
 		"excludeMode": "Exclude",
 		"topNMode": "Top N",
+		"topNModeDesc": "Include only the top {n} most popular composers",
 		"searchComposers": "Search composers...",
 		"selectAll": "Select All",
 		"selectNone": "Select None",

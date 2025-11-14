@@ -16,7 +16,9 @@
 	import RangeSlider from '../primitives/RangeSlider.svelte';
 	import ToggleButton from '../primitives/ToggleButton.svelte';
 	import { _ } from 'svelte-i18n';
-	import { formatComposerName } from '$lib/utils';
+	import { formatComposerName, formatLifespan, formatYearRange } from '$lib/utils';
+	import SquareCheck from 'lucide-svelte/icons/square-check';
+	import SquareX from 'lucide-svelte/icons/square-x';
 
 	interface Props {
 		visible?: boolean;
@@ -458,8 +460,8 @@
 			composers = composers.filter((c) => c.name.toLowerCase().includes(search));
 		}
 
-		// Sort alphabetically
-		composers.sort((a, b) => a.name.localeCompare(b.name));
+		// Sort by score
+		composers.sort((a, b) => b.score - a.score);
 
 		return composers;
 	});
@@ -552,6 +554,7 @@
 								step={0.1}
 								label={$_(`settings.categories.${category}`)}
 								showValue={true}
+								valueFormatter={(val) => (val >= 0 ? `+${val.toFixed(1)}` : `${val.toFixed(1)}`)}
 								onChange={(val) =>
 									handleCategoryAdjustmentChange(category as keyof CategoryAdjustments, val)}
 							/>
@@ -606,12 +609,15 @@
 						<Slider
 							value={topNCount}
 							min={1}
-							max={200}
+							max={400}
 							step={1}
 							label={$_('tracklistEditor.topNComposers')}
 							showValue={true}
 							onChange={(val) => (topNCount = val)}
 						/>
+						<p class="mt-2 text-xs text-slate-400">
+							{$_('tracklistEditor.topNModeDesc', { values: { n: topNCount } })}
+						</p>
 					{:else}
 						<!-- Composer selection -->
 						<div class="space-y-2">
@@ -628,19 +634,7 @@
 									class="rounded-lg bg-slate-700 px-3 py-2 text-sm text-slate-300 hover:bg-slate-600"
 									title={$_('tracklistEditor.selectAll')}
 								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="16"
-										height="16"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									>
-										<path d="M20 6 9 17l-5-5"></path>
-									</svg>
+									<SquareCheck class="h-4 w-4" />
 								</button>
 								<button
 									type="button"
@@ -648,26 +642,13 @@
 									class="rounded-lg bg-slate-700 px-3 py-2 text-sm text-slate-300 hover:bg-slate-600"
 									title={$_('tracklistEditor.selectNone')}
 								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="16"
-										height="16"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									>
-										<path d="M18 6 6 18"></path>
-										<path d="m6 6 12 12"></path>
-									</svg>
+									<SquareX class="h-4 w-4" />
 								</button>
 							</div>
 							<div
 								class="max-h-48 overflow-y-auto rounded-lg border-2 border-slate-700 bg-slate-800 p-2"
 							>
-								<div class="grid grid-cols-2 gap-1">
+								<div class="grid grid-cols-1 gap-1 md:grid-cols-2">
 									{#each composerList as composer}
 										<label
 											class="flex items-center gap-2 rounded px-2 py-1 text-sm hover:bg-slate-700"
@@ -678,7 +659,15 @@
 												onchange={() => toggleComposer(composer.gid)}
 												class="rounded border-slate-600 bg-slate-700 text-cyan-500 focus:ring-cyan-500"
 											/>
-											<span class="text-slate-300">{composer.name}</span>
+											<span
+												class="text-slate-300"
+												style="font-weight: {Math.min(900, 200 + composer.score * 7)}"
+											>
+												{composer.name}
+												<span class="ml-auto text-xs text-slate-400">
+													({formatLifespan(composer.birth_year, composer.death_year)})</span
+												>
+											</span>
 										</label>
 									{/each}
 								</div>

@@ -270,6 +270,7 @@ class FinalComposer:
     name: str
     birth_year: Optional[int]
     death_year: Optional[int]
+    score: float
 
     def to_dict(self) -> Dict[str, Any]:
         return self.__dict__
@@ -374,8 +375,9 @@ class MusicbrainzProcessor:
         works_after_wss = self._filter_works_cleanup(works_after_wss)
 
         # Stage 3: Finalize the composer list based on who has works remaining
+        all_works_for_scores = [w for works in works_after_wss.values() for w in works]
         final_composers = self._filter_final_composers(
-            composers_by_birth_year, works_after_wss
+            composers_by_birth_year, works_after_wss, all_works_for_scores
         )
         self.stats["final_composers"] = len(final_composers)
 
@@ -536,6 +538,7 @@ class MusicbrainzProcessor:
         self,
         original_composers: List[MBComposer],
         final_works: Dict[str, List[FinalWork]],
+        all_works: List[FinalWork],
     ) -> List[FinalComposer]:
         """
         Determines the final list of composers based on who has enough works
@@ -554,11 +557,118 @@ class MusicbrainzProcessor:
                         name=composer.name,
                         birth_year=composer.birth_year,
                         death_year=composer.death_year,
+                        score=0.0,  # Temporary, will be calculated below
                     )
                 )
             elif composer.gid in composer_work_counts:
                 self.stats["composers_dropped_min_works"] += 1
+        
+        # Calculate raw scores
+        # First, find the maximum work count across all composers
+        work_counts = [len([w for w in all_works if w.composer == c.gid]) for c in final_composers]
+        max_work_count = max(work_counts) if work_counts else 0
+        # Determine maximum WSS across all works (dynamic top score for normalization)
+        max_wss = max((w.score for w in all_works), default=MINIMUM_WSS)
+
+        raw_scores = [
+            self._calculate_composer_score(c.gid, all_works, max_work_count, max_wss)
+            for c in final_composers
+        ]
+
+        # Normalize raw_scores to 0-100 based on dataset min/max
+        if raw_scores:
+            min_score = min(raw_scores)
+            max_score = max(raw_scores)
+            for idx, final_composer in enumerate(final_composers):
+                if max_score > min_score:
+                    normalized = (raw_scores[idx] - min_score) / (max_score - min_score) * 100
+                else:
+                    normalized = 0.0
+                final_composer.score = round(normalized, 2)
+        
         return sorted(final_composers, key=lambda c: c.name)
+
+    def _calculate_composer_score(self, composer_gid: str, all_works: List[FinalWork], max_work_count: int, max_wss: float) -> float:
+        """
+        Calculates the composer score using a balanced formula that considers three key aspects:
+        peak performance, overall depth, and volume of works. The score is designed to reward
+        composers who have both standout works and a consistent body of significant compositions,
+        while also accounting for the sheer quantity of their output.
+        
+        Formula: Composer Score = Peak Component + Depth Component ü Volume Component
+        
+        Components:
+        1. Peak Component (0-1 scale):
+           - Measures the composer's highest achievements by averaging the top works' WSS scores.
+           - Rationale: Highlights composers with exceptional masterpieces, capturing the "peak" impact
+             that can define a composer's legacy. Using the top provides robustness against outliers
+             while still emphasizing standout works.
+           - Normalization: (avg_top_3 - MINIMUM_WSS) / (max_wss - MINIMUM_WSS)
+             - Uses the dataset's actual maximum WSS as the upper bound for fair comparison across composers.
+             - MINIMUM_WSS (1.9) is the threshold below which works are filtered out.
+        
+        2. Depth Component (0-1 scale):
+           - Measures the average quality across all of the composer's works.
+           - Rationale: Rewards consistency and breadth in quality output. A composer with many
+             moderately successful works should score higher than one with only a few hits, promoting
+             depth over narrow specialization.
+           - Normalization: Same as Peak Component, using dataset min/max WSS.
+        
+        3. Volume Component (0-1 scale):
+           - Measures the logarithm of the number of works, providing diminishing returns.
+           - Rationale: Accounts for prolificacy without over-rewarding sheer quantity. The log scale
+             ensures that doubling from 10 to 20 works is more impactful than from 100 to 200.
+             Adding 1 prevents log(0) issues.
+           - Formula: log10(work_count + 1) / log10(max_work_count + 1)
+             - Normalized against the most prolific composer in the dataset.
+        
+        Weights Rationale:
+        - Peak: Recognizes exceptional achievements, which contribute to a composer's legacy.
+        - Depth: Prioritizes consistent quality across works, rewarding breadth and reliability.
+        - Volumee Accounts for prolificacy, valuing the quantity of output alongside quality.
+        
+        Overall Rationale:
+        - The formula balances recognition of genius (peaks), reliability (depth), and productivity (volume).
+        - Normalization ensures fairness across different eras and datasets by using relative scales.
+        - Scores are clamped to 0-1 per component and combined to produce a final 0-100 score.
+        
+        :param composer_gid: The unique GID of the composer.
+        :param all_works: List of all final works in the dataset.
+        :param max_work_count: The maximum number of works any composer has in the dataset.
+        :param max_wss: The maximum WSS score of any work in the dataset.
+        :return: The composer score as a float between 0 and 100.
+        """
+        composer_works = [w for w in all_works if w.composer == composer_gid]
+        if not composer_works:
+            return 0.0
+        
+        wss_scores = [w.score for w in composer_works]
+        work_count = len(composer_works)
+        
+        # Peak Component: Average of top n works' WSS, normalized
+        n = 5
+        top_scores = sorted(wss_scores, reverse=True)[:n]
+        avg_top = sum(top_scores) / len(top_scores) if top_scores else 0
+
+        # Use dataset max WSS (max_wss) as the normalization upper bound
+        denom = max_wss - MINIMUM_WSS
+        peak_component = (avg_top - MINIMUM_WSS) / denom if denom > 0 else 0.0
+        peak_component = max(0, min(1, peak_component))  # Clamp to 0-1
+
+        # Depth Component: Average WSS of ALL works, normalized
+        avg_all = sum(wss_scores) / len(wss_scores)
+        depth_component = (avg_all - MINIMUM_WSS) / denom if denom > 0 else 0.0
+        depth_component = max(0, min(1, depth_component))  # Clamp to 0-1
+        
+        # Volume Component: log10(work_count + 1) / log10(max_work_count + 1)
+        if max_work_count > 0:
+            volume_component = math.log10(work_count + 1) / math.log10(max_work_count + 1)
+        else:
+            volume_component = 0.0
+        
+        # Final score
+        score = (peak_component * 15) + (depth_component * 25) + (volume_component * 60)
+        return score
 
     def _filter_works_cleanup(
         self, works_after_wss: Dict[str, List[FinalWork]]
