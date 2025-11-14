@@ -78,6 +78,9 @@
 			searchQuery = '';
 			hasManualSort = false;
 			page = 1;
+			// Reset sort to default
+			sortColumn = 'composer';
+			sortDirection = 'asc';
 			// Stop any playing audio
 			if (currentlyPlayingDeezerId !== null) {
 				deezerPlayer.stop();

@@ -90,6 +90,7 @@ WITH classical_composers AS (
   SELECT id, gid, sort_name, begin_date_year, end_date_year
   FROM musicbrainz.artist
   WHERE begin_date_year IS NOT NULL AND begin_date_year <= 1949
+  AND sort_name ~ '^[A-Za-z]'  -- Must start with ASCII letter
 ),
 work_composer_counts AS (
   -- Count distinct composers per work using only work-level filters
@@ -103,11 +104,18 @@ work_composer_counts AS (
     JOIN musicbrainz.l_artist_work AS law ON w.id = law.entity1
     JOIN musicbrainz.link AS l ON law.link = l.id
     JOIN classical_composers AS c ON law.entity0 = c.id
-    LEFT JOIN musicbrainz.work_alias AS wa ON w.id = wa.work AND wa.locale = 'en' AND wa.type = 1
   WHERE
     l.link_type = 168 -- 'composer' relationship
     -- Work-level filters (apply uniformly, don't affect composer count)
-    AND COALESCE(wa.name, w.name) ~* '^[A-Za-zÀ-ÿŒ0-9"“„‘'']'  -- Work name must start with letter, number, or quote
+    AND COALESCE(
+      (SELECT wa.name 
+       FROM musicbrainz.work_alias AS wa
+       WHERE wa.work = w.id 
+         AND wa.locale = 'en' 
+         AND wa.type = 1
+       LIMIT 1),
+      w.name
+    ) ~* '^[A-Za-zÀ-ÿŒ0-9"“„‘'']'  -- Work name must start with letter, number, or quote
     AND COALESCE(w.type, 17) NOT IN(19, 20, 21, 22, 23, 25, 26, 28, 29) -- Exclude non-classical work types
     AND NOT EXISTS (
       -- Exclude works that are parts or arrangements of other works
@@ -159,7 +167,18 @@ SELECT
   c.end_date_year AS composer_death_year,
   w.id AS work_id, 
   w.gid AS work_gid, 
-  COALESCE(wa.name, w.name) AS work_name,
+  COALESCE(
+    (SELECT wa.name 
+     FROM musicbrainz.work_alias AS wa
+     WHERE wa.work = w.id 
+       AND wa.locale = 'en' 
+       AND wa.primary_for_locale = true
+     ORDER BY 
+       CASE WHEN wa.type = 1 THEN 0 ELSE 1 END,
+       wa.id
+     LIMIT 1),
+    w.name
+  ) AS work_name,
   w.type AS work_type, 
   l.begin_date_year AS work_begin_year, 
   l.end_date_year AS work_end_year,
@@ -170,13 +189,11 @@ FROM
   JOIN musicbrainz.l_artist_work AS law ON w.id = law.entity1
   JOIN musicbrainz.link AS l ON law.link = l.id
   JOIN classical_composers AS c ON law.entity0 = c.id
-  LEFT JOIN musicbrainz.work_alias AS wa ON w.id = wa.work AND wa.locale = 'en' AND wa.type = 1 AND wa.primary_for_locale = true
   LEFT JOIN musicbrainz.work_tag AS wt ON w.id = wt.work
   LEFT JOIN musicbrainz.tag AS t ON wt.tag = t.id
 WHERE
   l.link_type = 168 -- 'composer' relationship
   -- Composer-specific filters (can vary by composer for the same work)
-  AND c.sort_name ~ '^[A-Za-z]'  -- Composer name must start with ASCII letter
   AND (
     -- Include if not a song (type 17), or if a song but composer died before 1900
     w.type IS DISTINCT FROM 17 OR c.end_date_year < 1900
@@ -192,8 +209,8 @@ WHERE
   )
 GROUP BY 
   c.id, c.gid, c.sort_name, c.begin_date_year, c.end_date_year,
-  w.id, w.gid, w.name, w.type, l.begin_date_year, l.end_date_year, wa.name
-ORDER BY c.sort_name, COALESCE(wa.name, w.name);
+  w.id, w.gid, w.name, w.type, l.begin_date_year, l.end_date_year
+ORDER BY c.sort_name, work_name;
 """
 
 GET_RECORDINGS_FOR_WORK_SQL = """
@@ -237,19 +254,29 @@ ORDER BY r.name;
 """
 
 GET_SUBWORKS_FOR_WORK_SQL = """
-SELECT DISTINCT ON (lww.link_order, child_work.id, child_work.name)
+SELECT DISTINCT ON (lww.link_order, child_work.id, work_name)
   child_work.id AS work_id,
   child_work.gid AS work_gid,
-  COALESCE(wa.name, child_work.name) AS work_name,
+  COALESCE(
+    (SELECT wa.name
+     FROM musicbrainz.work_alias AS wa
+     WHERE wa.work = child_work.id 
+       AND wa.locale = 'en' 
+       AND wa.primary_for_locale = true
+     ORDER BY 
+       CASE WHEN wa.type = 1 THEN 0 ELSE 1 END,
+       wa.id
+     LIMIT 1),
+    child_work.name
+  ) AS work_name,
   child_work.type AS work_type,
   l.begin_date_year AS work_begin_year,
   l.end_date_year AS work_end_year
 FROM musicbrainz.l_work_work AS lww
 JOIN musicbrainz.link AS l ON lww.link = l.id
 JOIN musicbrainz.work AS child_work ON lww.entity1 = child_work.id
-LEFT JOIN musicbrainz.work_alias AS wa ON child_work.id = wa.work AND wa.locale = 'en' AND wa.type = 1 AND wa.primary_for_locale = true
 WHERE lww.entity0 = %(work_id)s AND l.link_type = 281
-ORDER BY lww.link_order, child_work.name;
+ORDER BY lww.link_order, work_name;
 """
 
 forbidden_artist_comment = ['band', 'pop', 'rock', 'jazz', 'hip hop', 'rap', 
