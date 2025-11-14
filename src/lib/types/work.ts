@@ -23,4 +23,5 @@ export type WorkCategory =
 	| 'concerto'
 	| 'opera'
 	| 'ballet'
+	| 'solo'
 	| 'other';

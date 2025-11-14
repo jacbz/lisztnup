@@ -1,11 +1,14 @@
 /**
- * Formats a composer sort name (e.g., "Bach, Johann Sebastian")
- * into a display name (e.g., "Johann Sebastian Bach")
+ * Formats a composer sort name (e.g., "Bach, Johann Sebastian" or "Strauss, Johann, II")
+ * into a display name (e.g., "Johann Sebastian Bach" or "Johann Strauss II")
  */
 export function formatComposerName(sortName: string): string {
 	const parts = sortName.split(',').map((part) => part.trim());
-	if (parts.length === 2) {
-		return `${parts[1]} ${parts[0]}`;
+	if (parts.length >= 2) {
+		const firstName = parts[1];
+		const lastName = parts[0];
+		const suffix = parts.length > 2 ? ' ' + parts.slice(2).join(' ') : '';
+		return `${firstName} ${lastName}${suffix}`;
 	}
 	return sortName;
 }

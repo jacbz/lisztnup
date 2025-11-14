@@ -34,6 +34,7 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Any, Tuple
+import yaml
 
 # ==============================================================================
 # --- Configuration Constants ---
@@ -74,60 +75,6 @@ TYPE_MAPPING = {
     "Sonata": "other", "Partita": "other"
 }
 
-KEYWORD_RULES = [
-    # ========================================================================
-    # 1. Stage Works (Opera, Ballet)
-    # These are specific and should be checked first.
-    # ========================================================================
-    (r'(?i)\bopera\b|Singspiel|Musikdrama|Zoroastre|Armide|Orfeo|dramatico|Acte\b|Atto\b|Porgy and Bess', 'opera'),
-    (r'(?i)Swan Lake|Nutcracker|Creatures of Prometheus|L\'Arlésienne', 'ballet'),
-
-    # ========================================================================
-    # 2. Vocal Works (Sacred and Secular)
-    # Captures major choral, religious, and vocal ensemble pieces.
-    # ========================================================================
-    (r'(?i)Cantata|Kantate|Oratorio|Stabat Mater|Requiem|Magnificat|Mass\b|Missa|Coronation Anthem|Chandos Anthem|(Gott|Herr|Jesu|Mensch).*BWV', 'vocal'),
-    (r'(?i)Te Deum|Vesperae|Litaniae|Psalm|Salve Regina|Ave Maria|Kyrie|Credo|Agnus Dei|Dixit Dominus|Nisi Dominus|Offertorium|Motet|Hymn', 'vocal'),
-    (r'(?i)Aria|Lied(?!chen)|Lieder|Gesänge|Chanson|Recitative|Dichterliebe|Winterreise|Schwanengesang', 'vocal'),
-    (r'(?i)Choral|Choräl|Coro\b|Chorus|for Soprano|for Bass|for Solo Voice', 'vocal'),
-
-    # ========================================================================
-    # 3. Concerto
-    # Works featuring a soloist or group of soloists with an orchestra.
-    # ========================================================================
-    (r'(?i)Concerto|Konzert|Concertante|Concertstück|Rondo for .* and Orchestra|Variations on a Rococo Theme|for .* and Orchestra|Rhapsody in Blue', 'concerto'),
-
-    # ========================================================================
-    # 4. Orchestral Works
-    # Music for a large ensemble, including symphonies, overtures, and dances.
-    # ========================================================================
-    (r'(?i)Symphony|Symphonie|Symphonische', 'orchestral'),
-    (r'(?i)Overture|Ouverture|Poème symphonique|Symphonic|Serenade for Orchestra|Divertimento for Orchestra|Cassation|American in Paris', 'orchestral'),
-    (r'(?i)Orchestersuite|for Orchestra|for Orchestra|for strings|for Wind Ensemble|for Military Band', 'orchestral'),
-
-    # ========================================================================
-    # 5. Chamber Music
-    # Music for small ensembles, from duos to nonets, including most instrumental sonatas.
-    # Also includes solo works except for keyboard solo works (handled separately).
-    # ========================================================================
-    (r'(?i)String Quartet|String Quintet|String Trio|Piano Quintet|Piano Trio|Clarinet Quintet|Horn Trio', 'chamber'),
-    (r'(?i)Cello Sonata|Violin Sonata|Flute Sonata|Sonata for .* and|Trio Sonata|Triosonate|Pianoforte und Violine|violino e fagotto|Trio for Piano|four hands|4 hands', 'chamber'),
-    (r'(?i)\bDuo\b|\bDuet\b|Trio\b(?! for Piano)|Quartet|Quintet|Sextet|Septet|Octet|Nonet', 'chamber'), # Excludes Piano Trio to avoid double-matching
-    (r'(?i)Serenade for (Flute|Violin|Strings)|Divertiment.* for (Violin|Strings|Winds)|Caprice sur des airs', 'chamber'),
-    (r'(?i)for (.+) and (.+)|pour (.+) et (.+)|für (.+) und (.+)|for Clarinet and Viola|for .+ Violins|Viol.* Solo|Divertiment|for \d', 'chamber'),
-
-    # ========================================================================
-    # 6. Keyboard Works (Piano, Harpsichord, Organ etc.)
-    # This is a broad category for solo keyboard music, with many specific forms.
-    # ========================================================================
-    (r'(?i)Piano Sonata|Sonata .* K .* |Klaviersonate|Keyboard Sonata|Harpsichord Sonata|Orgel', 'piano'),
-    (r'(?i)(for|pour) Piano|für Klavier|Klavierstück|for Harpsichord|pour le Clavecin|Pièces de Clavecin|for Keyboard', 'piano'),
-    (r'(?i)Album für die Jugend|Fantasiestück', 'piano'),
-    (r'(?i)\bVariations? for Piano|\bVariationen für Klavier|Goldberg Variations|Diabelli Variations|Préludes.*L\.|Images.*L\.', 'piano'),
-    (r'(?i)Kinderszenen|Albumblatt|Albumblätter|Papillons|Carnaval|Kreisleriana|Davidsbündlertänze|Waldszenen', 'piano'),
-    (r'(?i)Well-Tempered Clavier|Wohltemperiert|Inventio|Sinfonia.*BWV (7|8)|Präludium und Fuge', 'piano'), # Catches Bach's major keyboard cycles
-]
-
 # --- Recording Selection Preferences ---
 LABEL_PREFERENCE = [
     "Deutsche Grammophon", "EMI", "Decca", "Hyperion", "Chandos", "Universal", "Philips"
@@ -167,7 +114,10 @@ EXCLUDED_COMPOSERS: Set[str] = set([
     "Willis, Wallace",
     "Barry, John",
     "Bradbury, William B.",
-    "Mangione, Chuck"
+    "Mangione, Chuck",
+    "Hisaishi, Joe",
+    "Herrmann, Bernard",
+
 ])
 
 # Deezer IDs without preview mp3s, loaded from 'excluded_deezer_ids' file
@@ -180,6 +130,9 @@ EXCLUDED_WORKS: Set[str] = set([
     "718b96fa-75eb-436e-8c30-0c647aa99696", # Ave Maria (duplicate)
     "92fb101d-4e49-4005-a88a-fdb0a1620f41", # Love Life
     "5132c517-1141-3807-abc5-6779ed91209c", # Moon Love
+    "c5336b3f-cc5d-3ed7-b0f4-6754b78f920f", # A Fifth of Beethoven
+    "3bf709a7-a17a-3401-8025-cd522096f893", # March from A Clockwork Orange
+    "172693ca-7e2e-41d2-afa5-6e718f033d56", # Russian Rag
 ])
 
 WSS_OVERRIDES: Dict[str, float] = {
@@ -308,7 +261,11 @@ class MusicbrainzProcessor:
         :param composers_data: A list of composer dictionaries from the raw JSON file.
         """
         self.composers = self._parse_input_data(composers_data)
-        self.unresolved_work_candidates: Dict[str, str] = {}
+        self.unresolved_work_candidates: Dict[str, List[Tuple[str, str]]] = defaultdict(list)
+        with open("work_type_matching.yaml", "r", encoding="utf-8") as f:
+            rules = yaml.safe_load(f)
+        self.general_rules = rules.get("general_rules", {})
+        self.composer_specific_rules = rules.get("composer_specific_rules", {})
         self.stats: Counter = Counter()
 
     def _parse_input_data(self, raw_data: List[Dict[str, Any]]) -> List[MBComposer]:
@@ -321,7 +278,7 @@ class MusicbrainzProcessor:
         return [
             MBComposer(
                 gid=c["gid"],
-                name=c["name"] if c["gid"] != "8255db36-4902-4cf6-8612-0f2b4288bc9a" else "Strauss II, Johann",  # Fix for Johann Strauss II
+                name=c["name"] if "," in c["name"] else f"{c['name'].split()[-1]}, {' '.join(c['name'].split()[:-1])}",
                 birth_year=c["birth_year"],
                 death_year=c["death_year"],
                 works=[self._parse_work_tree(w) for w in c["works"]],
@@ -395,8 +352,9 @@ class MusicbrainzProcessor:
         all_works.sort(key=lambda w: (composer_map.get(w.composer, ""), w.name))
 
         # Stage 5: Write logs and return the final packaged data
-        self._write_unresolved_log(all_works)
-        return FinalOutput(composers=final_composers, works=all_works)
+        final_output = FinalOutput(composers=final_composers, works=all_works)
+        self._write_unresolved_log(final_output)
+        return final_output
 
     def _filter_composers_by_birth_year(
         self, composers: List[MBComposer]
@@ -501,7 +459,7 @@ class MusicbrainzProcessor:
                         gid=root_work.gid,
                         composer=composer.gid,
                         name=root_work.name,
-                        type=self._transform_type(root_work, composer.gid),
+                        type=self._transform_type(root_work, composer),
                         begin_year=root_work.begin_year,
                         end_year=root_work.end_year,
                         score=round(wss, 2),
@@ -807,29 +765,51 @@ class MusicbrainzProcessor:
             return [work]
         return filtered_leafs
 
-    def _transform_type(self, work: MBWork, composer_gid: str) -> str:
+    def _transform_type(self, work: MBWork, composer: MBComposer) -> str:
         """
         Applies a series of rules to map a Musicbrainz work type to the custom taxonomy.
         """
-        if (
-            composer_gid == "09ff1fe8-d61c-4b98-bb82-18487c74d7b7"
-            and work.type == "Unknown"
-        ):
-            return "piano"  # Chopin
-        if "Piano Sonata" in work.name and work.type == "Sonata":
+        composer_name = composer.name
+
+        work_name_normalized = work.name.replace("’", "'").replace("“", '"').replace("”", '"')
+
+        if "Piano Sonata" in work_name_normalized and work.type == "Sonata":
             return "piano"
         
         if work.type in TYPE_MAPPING:
             type_map = TYPE_MAPPING[work.type]
             if type_map != "other":
                 return type_map
-        for pattern, new_type in KEYWORD_RULES:
-            if re.search(pattern, work.name, re.IGNORECASE):
-                return new_type
 
-        self.unresolved_work_candidates[work.name] = (
-            f"'{work.name}' (Original Type: {work.type})"
-        )
+        # Composer specific rules
+        try:
+            if composer_name in self.composer_specific_rules:
+                for rule_type, patterns in self.composer_specific_rules[composer_name].items():
+                    if isinstance(patterns, list):
+                        for pattern in patterns:
+                            if isinstance(pattern, str):
+                                if re.search(pattern, work_name_normalized, re.IGNORECASE):
+                                    return rule_type
+                            else:
+                                print(f"Invalid pattern type: {type(pattern)} for {pattern}")
+                    else:
+                        print(f"Invalid patterns type for {composer_name} {rule_type}: {type(patterns)}")
+
+            # General rules
+            for rule_type, patterns in self.general_rules.items():
+                if isinstance(patterns, list):
+                    for pattern in patterns:
+                        if isinstance(pattern, str):
+                            if re.search(pattern, work_name_normalized, re.IGNORECASE):
+                                return rule_type
+                        else:
+                            print(f"Invalid pattern type: {type(pattern)} for {pattern}")
+                else:
+                    print(f"Invalid patterns type for general {rule_type}: {type(patterns)}")
+        except (re.error, TypeError) as e:
+            print(f"Error processing pattern: {e}, pattern: {pattern}")
+
+        self.unresolved_work_candidates[composer.gid].append((work.name, work.type))
         return "other"
 
     def _select_deezer_ids(self, recordings: List[MBRecording], max_ids: int = 5) -> List[int]:
@@ -883,27 +863,27 @@ class MusicbrainzProcessor:
         
         return selected_ids
 
-    def _write_unresolved_log(self, final_works: List[FinalWork]) -> None:
+    def _write_unresolved_log(self, final_output: FinalOutput) -> None:
         """Writes a log of works in the final output whose types remain 'other'."""
         if not self.unresolved_work_candidates:
             return
-        final_unresolved_names = {w.name for w in final_works if w.type == "other"}
-        final_messages = sorted(
-            [
-                msg
-                for name, msg in self.unresolved_work_candidates.items()
-                if name in final_unresolved_names
-            ]
-        )
-        if not final_messages:
+        composer_map = {c.gid: c.name for c in final_output.composers}
+        final_unresolved = {(w.composer, w.name) for w in final_output.works if w.type == "other"}
+        grouped = defaultdict(list)
+        for composer_gid, works in self.unresolved_work_candidates.items():
+            composer_name = composer_map.get(composer_gid, composer_gid)
+            for work_name, orig_type in works:
+                if (composer_gid, work_name) in final_unresolved:
+                    grouped[composer_name].append((work_name, orig_type))
+        if not grouped:
             return
 
         with open("unresolved_types.txt", "w", encoding="utf-8") as f:
-            f.write(
-                "List of works in the final output whose types could not be resolved by defined rules:\n"
-            )
-            f.write("=" * 80 + "\n")
-            f.writelines(f"{item}\n" for item in final_messages)
+            for composer_name in sorted(grouped.keys()):
+                f.write(f"# {composer_name}\n")
+                for work_name, orig_type in sorted(grouped[composer_name]):
+                    f.write(f"{work_name}\n")
+                f.write("\n")
 
     def print_summary(self, final_output: FinalOutput) -> None:
         """Prints a detailed statistical summary of the entire transformation process."""
@@ -1054,10 +1034,6 @@ def compact_json_dumps(data, indent=2):
     """Pretty print JSON with indent, but keep number arrays on one line."""
     # First, do normal pretty printing
     pretty = json.dumps(data, indent=indent)
-    
-    # Regex pattern to match arrays containing only numbers
-    # Matches arrays like [ 1, 2, 3 ] or [ 1.5, 2.3 ] across multiple lines
-    pattern = r'\[\s*(-?\d+\.?\d*\s*,\s*)*-?\d+\.?\d*\s*\]'
     
     # Find all number arrays that span multiple lines
     def compress_array(match):

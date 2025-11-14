@@ -35,6 +35,7 @@
 			"concerto": "Concerto",
 			"opera": "Opera",
 			"ballet": "Ballet",
+			"solo": "Solo",
 			"other": "Other"
 		}
 	},

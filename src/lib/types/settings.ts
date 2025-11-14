@@ -11,6 +11,7 @@ export interface CategoryAdjustments {
 	concerto: number;
 	opera: number;
 	ballet: number;
+	solo: number;
 	other: number;
 }
 
@@ -67,6 +68,7 @@ export const DEFAULT_CATEGORY_ADJUSTMENTS: CategoryAdjustments = {
 	concerto: 0,
 	opera: 0,
 	ballet: 0,
+	solo: 0,
 	other: 0
 };
 
