@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { fade } from 'svelte/transition';
+	import { fade, fly, scale } from 'svelte/transition';
 	import { settings } from '$lib/stores';
 	import type { BingoGridCell, GuessCategory } from '$lib/types';
 	import { allCategories, getCategoryDefinition } from '$lib/data/categories';
@@ -349,137 +349,145 @@
 </svelte:head>
 
 <div class="fixed inset-0 flex flex-col text-white">
-	<!-- Header -->
-	<div class="absolute flex w-full items-center justify-between p-4 sm:p-6">
-		<Logo onClick={handleHomeClick} size="medium" />
-		<div class="no-print flex gap-2">
-			<button
-				type="button"
-				onclick={handlePrint}
-				class="flex items-center gap-2 rounded-lg border-2 border-purple-400/30 bg-slate-900/50 px-3 py-2 text-purple-400 transition-all hover:border-purple-400 hover:bg-slate-800/70 sm:px-4"
-			>
-				<Printer class="h-5 w-5" />
-				<span class="hidden sm:inline">{$_('bingo.print', { default: 'Print' })}</span>
-			</button>
-			<button
-				type="button"
-				onclick={handleReset}
-				class="flex items-center gap-2 rounded-lg border-2 border-purple-400/30 bg-slate-900/50 px-3 py-2 text-purple-400 transition-all hover:border-purple-400 hover:bg-slate-800/70 sm:px-4"
-			>
-				<RefreshCw class="h-5 w-5" />
-				<span class="hidden sm:inline">{$_('bingo.reset', { default: 'Reset' })}</span>
-			</button>
-		</div>
-	</div>
-
-	<!-- Main Content - No scroll, flex layout -->
-	<div class="flex flex-1 flex-col items-center justify-center overflow-hidden p-4">
+	{#if grid.length > 0}
+		<!-- Header -->
 		<div
-			class="flex h-full w-full max-w-2xl flex-col items-center justify-center gap-12 pt-16 md:p-4 xl:p-4"
+			class="absolute flex w-full items-center justify-between p-4 sm:p-6"
+			transition:fly={{ y: -100, duration: 500, delay: 300 }}
 		>
-			<!-- Grid - Responsive size -->
-			<div class="grid grid-cols-5 gap-1 md:gap-2">
-				{#each grid as row, rowIndex}
-					{#each row as cell, colIndex}
-						{@const categoryDef = getCategoryDefinition(cell.category)}
-						{@const isWinning = winningCells.has(`${rowIndex}-${colIndex}`)}
+			<Logo onClick={handleHomeClick} size="medium" />
+			<div class="no-print flex gap-2">
+				<button
+					type="button"
+					onclick={handlePrint}
+					class="flex items-center gap-2 rounded-lg border-2 border-purple-400/30 bg-slate-900/50 px-3 py-2 text-purple-400 transition-all hover:border-purple-400 hover:bg-slate-800/70 sm:px-4"
+				>
+					<Printer class="h-5 w-5" />
+					<span class="hidden sm:inline">{$_('bingo.print', { default: 'Print' })}</span>
+				</button>
+				<button
+					type="button"
+					onclick={handleReset}
+					class="flex items-center gap-2 rounded-lg border-2 border-purple-400/30 bg-slate-900/50 px-3 py-2 text-purple-400 transition-all hover:border-purple-400 hover:bg-slate-800/70 sm:px-4"
+				>
+					<RefreshCw class="h-5 w-5" />
+					<span class="hidden sm:inline">{$_('bingo.reset', { default: 'Reset' })}</span>
+				</button>
+			</div>
+		</div>
+		<!-- Main Content -->
+		<div
+			class="flex flex-1 flex-col items-center justify-center overflow-hidden p-4"
+			transition:scale={{ duration: 800 }}
+		>
+			<div
+				class="flex h-full w-full max-w-2xl flex-col items-center justify-center gap-12 pt-16 md:p-4 xl:p-4"
+			>
+				<!-- Grid - Responsive size -->
+				<div class="grid grid-cols-5 gap-1 md:gap-2">
+					{#each grid as row, rowIndex}
+						{#each row as cell, colIndex}
+							{@const categoryDef = getCategoryDefinition(cell.category)}
+							{@const isWinning = winningCells.has(`${rowIndex}-${colIndex}`)}
+							<button
+								type="button"
+								onclick={() => toggleCell(rowIndex, colIndex)}
+								class="relative flex aspect-square cursor-pointer items-center justify-center rounded-lg border-2 p-2 transition-all"
+								class:winning-cell={isWinning}
+								style="border-color: {isWinning
+									? '#ffffff'
+									: categoryDef?.color1 || '#06b6d4'}; background-color: {isWinning
+									? '#ffffff40'
+									: cell.marked
+										? categoryDef?.color1 + '80'
+										: categoryDef?.color1 + '20'}; --cell-bg-unmarked: {(categoryDef?.color1 ||
+									'#06b6d4') + '20'};"
+							>
+								<!-- Category Icon (hidden when marked) -->
+								<div
+									class="w-14 items-center justify-center sm:w-16 lg:w-20"
+									class:opacity-0={cell.marked}
+								>
+									{#if categoryDef}
+										<svg viewBox="0 0 24 24" class="opacity-30" style="fill: {categoryDef.color1};">
+											{#each categoryDef.iconPath as path}
+												<path d={path} />
+											{/each}
+										</svg>
+									{/if}
+								</div>
+
+								<!-- X Mark when marked -->
+								{#if cell.marked}
+									<div class="absolute inset-0 flex items-center justify-center rounded-lg">
+										<X
+											class="h-16 w-16 sm:h-24 sm:w-24"
+											style="color: {categoryDef?.color1}; stroke-width: 4;"
+										/>
+									</div>
+								{/if}
+							</button>
+						{/each}
+					{/each}
+				</div>
+
+				<!-- Guess Panel - Fills remaining space -->
+				<div
+					class="no-print flex w-full flex-1 flex-col overflow-hidden rounded-lg border-2 border-purple-500"
+					transition:fade={{ duration: 300, delay: 800 }}
+				>
+					{#if guessState === 'input'}
+						<div class="flex h-full flex-col gap-2">
+							<!-- svelte-ignore a11y_autofocus -->
+							<textarea
+								id="guess-input"
+								bind:this={inputElement}
+								bind:value={guessText}
+								autofocus
+								class="flex-1 resize-none rounded-lg p-3 text-center text-4xl text-white placeholder-slate-500 focus:outline-none"
+								placeholder={$_('bingo.guessPlaceholder')}
+							></textarea>
+							<button
+								type="button"
+								onclick={handleGuessClose}
+								disabled={!guessText.trim()}
+								class="shrink-0 bg-purple-500 px-4 py-2 font-semibold text-white transition-all hover:bg-purple-600 disabled:cursor-not-allowed disabled:opacity-50"
+							>
+								{$_('bingo.closeGuess')}
+							</button>
+						</div>
+					{:else}
 						<button
 							type="button"
-							onclick={() => toggleCell(rowIndex, colIndex)}
-							class="relative flex aspect-square cursor-pointer items-center justify-center rounded-lg border-2 p-2 transition-all"
-							class:winning-cell={isWinning}
-							style="border-color: {isWinning
-								? '#ffffff'
-								: categoryDef?.color1 || '#06b6d4'}; background-color: {isWinning
-								? '#ffffff40'
-								: cell.marked
-									? categoryDef?.color1 + '80'
-									: categoryDef?.color1 + '20'}; --cell-bg-unmarked: {(categoryDef?.color1 ||
-								'#06b6d4') + '20'};"
+							onclick={handleGuessClick}
+							class="relative flex h-full w-full flex-col items-center justify-center gap-2 overflow-hidden rounded-lg text-5xl transition-all"
 						>
-							<!-- Category Icon (hidden when marked) -->
-							<div
-								class="w-14 items-center justify-center sm:w-16 lg:w-20"
-								class:opacity-0={cell.marked}
-							>
-								{#if categoryDef}
-									<svg viewBox="0 0 24 24" class="opacity-30" style="fill: {categoryDef.color1};">
-										{#each categoryDef.iconPath as path}
-											<path d={path} />
-										{/each}
-									</svg>
-								{/if}
-							</div>
-
-							<!-- X Mark when marked -->
-							{#if cell.marked}
-								<div class="absolute inset-0 flex items-center justify-center rounded-lg">
-									<X
-										class="h-16 w-16 sm:h-24 sm:w-24"
-										style="color: {categoryDef?.color1}; stroke-width: 4;"
-									/>
+							{#if guessState === 'hidden'}
+								<div
+									class="pointer-events-none absolute inset-0 z-10 bg-black/30 backdrop-blur-2xl"
+									in:fade={{ duration: 220 }}
+									out:fade={{ duration: 220 }}
+								></div>
+								<div
+									class="absolute inset-0 z-20 flex items-center justify-center text-4xl font-light text-purple-400"
+									in:fade={{ duration: 200 }}
+									out:fade={{ duration: 160 }}
+								>
+									{$_('bingo.reveal')}
 								</div>
 							{/if}
-						</button>
-					{/each}
-				{/each}
-			</div>
-
-			<!-- Guess Panel - Fills remaining space -->
-			<div
-				class="no-print flex w-full flex-1 flex-col overflow-hidden rounded-lg border-2 border-purple-500"
-			>
-				{#if guessState === 'input'}
-					<div class="flex h-full flex-col gap-2">
-						<!-- svelte-ignore a11y_autofocus -->
-						<textarea
-							id="guess-input"
-							bind:this={inputElement}
-							bind:value={guessText}
-							autofocus
-							class="flex-1 resize-none rounded-lg p-3 text-center text-4xl text-white placeholder-slate-500 focus:outline-none"
-							placeholder={$_('bingo.guessPlaceholder')}
-						></textarea>
-						<button
-							type="button"
-							onclick={handleGuessClose}
-							disabled={!guessText.trim()}
-							class="shrink-0 bg-purple-500 px-4 py-2 font-semibold text-white transition-all hover:bg-purple-600 disabled:cursor-not-allowed disabled:opacity-50"
-						>
-							{$_('bingo.closeGuess')}
-						</button>
-					</div>
-				{:else}
-					<button
-						type="button"
-						onclick={handleGuessClick}
-						class="relative flex h-full w-full flex-col items-center justify-center gap-2 overflow-hidden rounded-lg text-5xl transition-all"
-					>
-						{#if guessState === 'hidden'}
 							<div
-								class="pointer-events-none absolute inset-0 z-10 bg-black/30 backdrop-blur-2xl"
-								in:fade={{ duration: 220 }}
-								out:fade={{ duration: 220 }}
-							></div>
-							<div
-								class="absolute inset-0 z-20 flex items-center justify-center text-4xl font-light text-purple-400"
-								in:fade={{ duration: 200 }}
-								out:fade={{ duration: 160 }}
+								class="relative z-0 text-center font-bold text-white"
+								class:select-none={guessState === 'hidden'}
 							>
-								{$_('bingo.reveal')}
+								{guessText}
 							</div>
-						{/if}
-						<div
-							class="relative z-0 text-center font-bold text-white"
-							class:select-none={guessState === 'hidden'}
-						>
-							{guessText}
-						</div>
-					</button>
-				{/if}
+						</button>
+					{/if}
+				</div>
 			</div>
 		</div>
-	</div>
+	{/if}
 
 	<!-- Footer (Print Only) -->
 	<div class="print-only absolute bottom-4 w-full text-center text-slate-400">

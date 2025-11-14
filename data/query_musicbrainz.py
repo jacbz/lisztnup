@@ -205,7 +205,8 @@ SELECT r.gid AS recording_gid,
        d.track_id AS deezer_id,
        STRING_AGG(DISTINCT at.name, ', ') AS attributes,
        STRING_AGG(DISTINCT artist.name, '; ') AS artist_name,
-       STRING_AGG(DISTINCT artist.comment, '; ') AS artist_comment
+       STRING_AGG(DISTINCT artist.comment, '; ') AS artist_comment,
+       STRING_AGG(DISTINCT acn.name, '; ') AS artist_credit_name
 FROM musicbrainz.recording AS r
 -- Join to get the link between recording and work
 JOIN musicbrainz.l_recording_work AS lrw ON r.id = lrw.entity0
@@ -226,10 +227,10 @@ LEFT JOIN musicbrainz.l_artist_recording AS lar ON r.id = lar.entity1
 -- 2. Artists from the recording's artist credit
 LEFT JOIN musicbrainz.artist_credit_name AS acn ON r.artist_credit = acn.artist_credit
 -- Join artist table for both sources
-LEFT JOIN musicbrainz.artist AS artist ON (lar.entity0 = artist.id OR acn.artist = artist.id)
+LEFT JOIN musicbrainz.artist AS artist ON (acn.artist = artist.id OR lar.entity0 = artist.id)
 WHERE lrw.entity1 = %(work_id)s
 GROUP BY r.gid, r.name, i.isrc, d.track_id
--- Exclude partial recordings (e.g., excerpts, sections)
+-- Exclude partial recordings
 HAVING STRING_AGG(DISTINCT at.name, ', ') IS NULL 
     OR STRING_AGG(DISTINCT at.name, ', ') NOT ILIKE '%%partial%%'
 ORDER BY r.name;
@@ -261,20 +262,24 @@ def get_work_details_recursive(cursor, work_id, label_counter):
     recordings_data = cursor.fetchall()
     recordings = []
     for rec in recordings_data:
+        deezer_id = rec.get("deezer_id")
+
         artist_comment = rec.get("artist_comment") or ""
+        # Exclude recordings where the artist comment contains forbidden terms
         if any(term in artist_comment.lower() for term in forbidden_artist_comment):
-            continue
+            deezer_id = None
+
+        # Exclude recordings where the artist credit name does not contain a space, most often a band name
+        if ' ' not in rec.get("artist_credit_name", ''):
+            deezer_id = None
         
         # The SQL returns an `attributes` column which is a
         # comma-separated string (e.g. 'live, partial'). When any of the
-        # excluded attributes are present we will not include the
-        # Deezer ID for that recording.
+        # excluded attributes are present, exclude
         attrs = rec.get("attributes") or ""
         attr_list = [a.strip().lower() for a in attrs.split(",") if a and a.strip()]
         if any(a in ("medley", "cover", "karaoke") for a in attr_list):
             deezer_id = None
-        else:
-            deezer_id = rec.get("deezer_id")
 
         recordings.append(
             {
@@ -285,6 +290,7 @@ def get_work_details_recursive(cursor, work_id, label_counter):
                 "deezerId": deezer_id
             }
         )
+
     # if not a single recording has a deezerId, skip this work
     if all(rec["deezerId"] is None for rec in recordings):
         recordings = []

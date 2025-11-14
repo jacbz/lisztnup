@@ -29,7 +29,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyVeryEasy,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [5.12, MAX_WORK_SCORE_ROUNDED],
+			workScoreRange: [5.0, MAX_WORK_SCORE_ROUNDED],
 			limitWorksFromComposer: 0.075,
 			maxTracksFromSingleWork: 1,
 			enablePopularityWeighting: false
@@ -42,7 +42,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyEasy,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [4.7, MAX_WORK_SCORE_ROUNDED],
+			workScoreRange: [4.6, MAX_WORK_SCORE_ROUNDED],
 			limitWorksFromComposer: 0.075,
 			maxTracksFromSingleWork: 1,
 			enablePopularityWeighting: false
@@ -55,7 +55,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyMedium,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [4.3, MAX_WORK_SCORE_ROUNDED],
+			workScoreRange: [4.2, MAX_WORK_SCORE_ROUNDED],
 			limitWorksFromComposer: 0.1,
 			maxTracksFromSingleWork: 1,
 			enablePopularityWeighting: false

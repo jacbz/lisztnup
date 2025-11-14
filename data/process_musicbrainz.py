@@ -33,7 +33,7 @@ import re
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional, Set, Any
+from typing import Dict, List, Optional, Set, Any, Tuple
 
 # ==============================================================================
 # --- Configuration Constants ---
@@ -166,7 +166,8 @@ EXCLUDED_COMPOSERS: Set[str] = set([
     "Foster, Stephen",
     "Willis, Wallace",
     "Barry, John",
-    "Bradbury, William B."
+    "Bradbury, William B.",
+    "Mangione, Chuck"
 ])
 
 # Deezer IDs without preview mp3s, loaded from 'excluded_deezer_ids' file
@@ -627,15 +628,25 @@ class MusicbrainzProcessor:
                         self.stats["parts_dropped_cross_work_duplicate"] += 1
 
                 # Filter duplicate parts within work by checking for overlapping deezer IDs
-                seen_deezer = set()
+                # Keep the part with the highest score for each Deezer ID
+                deezer_to_best_part: Dict[int, Tuple[float, FinalPart]] = {}
+                
+                for part in filtered_parts:
+                    for deezer_id in part.deezer:
+                        if deezer_id not in deezer_to_best_part or part.score > deezer_to_best_part[deezer_id][0]:
+                            deezer_to_best_part[deezer_id] = (part.score, part)
+                
                 final_parts = []
                 for part in filtered_parts:
-                    # Check if any deezer ID in this part has been seen
-                    if not any(deezer_id in seen_deezer for deezer_id in part.deezer):
-                        # Add all deezer IDs from this part to seen set
-                        seen_deezer.update(part.deezer)
+                    # Collect Deezer IDs where this part has the highest score
+                    assigned_deezer = [deezer_id for deezer_id in part.deezer if deezer_to_best_part.get(deezer_id, (0, None))[1] is part]
+                    
+                    if assigned_deezer:
+                        # Keep this part with only the assigned Deezer IDs
+                        part.deezer = assigned_deezer
                         final_parts.append(part)
                     else:
+                        # This part lost all its Deezer IDs to higher-scoring parts
                         self.stats["parts_dropped_duplicate_deezer"] += 1
                 work.parts = final_parts
 
