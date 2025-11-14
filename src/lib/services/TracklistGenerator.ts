@@ -5,7 +5,7 @@ import {
 	type Composer,
 	type Work,
 	type WorkCategory,
-	DEFAULT_CATEGORY_WEIGHTS
+	type CategoryAdjustments
 } from '$lib/types';
 import { weightedRandom } from '$lib/utils/random';
 
@@ -45,20 +45,17 @@ export class TracklistGenerator {
 		const config = this.tracklist.config;
 		let works: Work[] = [];
 
-		// Step 1: Filter by category weights
-		if (config.categoryWeights) {
-			// Only include categories with weight > 0
-			// Weights are now 0-100, so anything above 0 is included
-			Object.entries(config.categoryWeights).forEach(([category, weight]) => {
-				if (weight > 0) {
-					works.push(...this.data.works[category as WorkCategory]);
-				}
-			});
-		} else {
-			// Include all categories
-			Object.keys(this.data.works).forEach((category) => {
-				works.push(...this.data.works[category as WorkCategory]);
-			});
+		Object.keys(this.data.works).forEach((category) => {
+			works.push(...this.data.works[category as WorkCategory]);
+		});
+
+		// Step 1: Apply category adjustments to work scores
+		if (config.categoryAdjustments) {
+			works = works.map((work) => ({
+				...work,
+				score:
+					work.score + (config.categoryAdjustments![work.type as keyof CategoryAdjustments] ?? 0)
+			}));
 		}
 
 		// Step 2: Filter by year range
@@ -295,11 +292,8 @@ export class TracklistGenerator {
 		// Build category list and weights
 		this.categories = Array.from(this.worksByCategory.keys());
 		this.categoryWeights = this.categories.map((category) => {
-			const weight = (config.categoryWeights ?? DEFAULT_CATEGORY_WEIGHTS)[category] ?? 1;
 			const numWorksInCategory = this.worksByCategory.get(category)?.length || 0;
-			// Weight * number of works = effective sampling probability
-			// E.g., 20 piano pieces (weight=1) vs 10 ballet (weight=1) -> piano 2x as likely
-			return weight * numWorksInCategory;
+			return numWorksInCategory;
 		});
 	}
 

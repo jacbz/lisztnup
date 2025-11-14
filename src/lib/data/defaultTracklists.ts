@@ -1,4 +1,9 @@
-import { MAX_WORK_SCORE_ROUNDED, MIN_WORK_SCORE, type Tracklist } from '$lib/types';
+import {
+	MAX_WORK_SCORE_ROUNDED,
+	MIN_WORK_SCORE,
+	CATEGORY_ADJUSTMENT_DIFF,
+	type Tracklist
+} from '$lib/types';
 import difficultyVeryEasy from '$lib/assets/icons/difficulty-veryeasy.svg?raw';
 import difficultyEasy from '$lib/assets/icons/difficulty-easy.svg?raw';
 import difficultyMedium from '$lib/assets/icons/difficulty-medium.svg?raw';
@@ -30,6 +35,16 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'difficulty',
 		config: {
 			workScoreRange: [5.0, MAX_WORK_SCORE_ROUNDED],
+			categoryAdjustments: {
+				vocal: 0,
+				chamber: 0.1,
+				orchestral: -0.1,
+				piano: 0,
+				concerto: 0,
+				opera: 0.2,
+				ballet: 0.3,
+				other: 0
+			},
 			limitWorksFromComposer: 0.075,
 			maxTracksFromSingleWork: 1,
 			enablePopularityWeighting: false
@@ -43,6 +58,16 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'difficulty',
 		config: {
 			workScoreRange: [4.6, MAX_WORK_SCORE_ROUNDED],
+			categoryAdjustments: {
+				vocal: 0,
+				chamber: 0,
+				orchestral: 0,
+				piano: 0,
+				concerto: 0,
+				opera: 0,
+				ballet: 0.3,
+				other: 0
+			},
 			limitWorksFromComposer: 0.075,
 			maxTracksFromSingleWork: 1,
 			enablePopularityWeighting: false
@@ -69,6 +94,16 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'difficulty',
 		config: {
 			workScoreRange: [3.5, MAX_WORK_SCORE_ROUNDED],
+			categoryAdjustments: {
+				vocal: -0.2,
+				chamber: 0,
+				orchestral: 0,
+				piano: 0,
+				concerto: 0,
+				opera: 0,
+				ballet: 0,
+				other: 0
+			},
 			limitWorksFromComposer: 0.15,
 			maxTracksFromSingleWork: 2,
 			enablePopularityWeighting: false
@@ -82,6 +117,16 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'difficulty',
 		config: {
 			workScoreRange: [3, MAX_WORK_SCORE_ROUNDED],
+			categoryAdjustments: {
+				vocal: -0.3,
+				chamber: 0,
+				orchestral: 0,
+				piano: 0,
+				concerto: 0,
+				opera: 0,
+				ballet: 0,
+				other: 0
+			},
 			maxTracksFromSingleWork: 3,
 			enablePopularityWeighting: false
 		}
@@ -104,6 +149,16 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'difficulty',
 		config: {
 			workScoreRange: [MIN_WORK_SCORE, 3],
+			categoryAdjustments: {
+				vocal: -0.8,
+				chamber: 0,
+				orchestral: 0,
+				piano: 0,
+				concerto: 0,
+				opera: 0,
+				ballet: 0,
+				other: 0
+			},
 			enablePopularityWeighting: false
 		}
 	},
@@ -115,15 +170,15 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: pianoIcon,
 		category: 'categories',
 		config: {
-			categoryWeights: {
-				vocal: 0,
-				chamber: 0,
-				orchestral: 0,
-				piano: 10,
-				concerto: 0,
-				opera: 0,
-				ballet: 0,
-				other: 0
+			categoryAdjustments: {
+				vocal: -CATEGORY_ADJUSTMENT_DIFF,
+				chamber: -CATEGORY_ADJUSTMENT_DIFF,
+				orchestral: -CATEGORY_ADJUSTMENT_DIFF,
+				piano: 0,
+				concerto: -CATEGORY_ADJUSTMENT_DIFF,
+				opera: -CATEGORY_ADJUSTMENT_DIFF,
+				ballet: -CATEGORY_ADJUSTMENT_DIFF,
+				other: -CATEGORY_ADJUSTMENT_DIFF
 			},
 			yearFilter: [1800, 2000],
 			workScoreRange: [3, MAX_WORK_SCORE_ROUNDED],
@@ -137,15 +192,15 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: concertoIcon,
 		category: 'categories',
 		config: {
-			categoryWeights: {
-				vocal: 0,
-				chamber: 0,
-				orchestral: 0,
-				piano: 0,
-				concerto: 10,
-				opera: 0,
-				ballet: 0,
-				other: 0
+			categoryAdjustments: {
+				vocal: -CATEGORY_ADJUSTMENT_DIFF,
+				chamber: -CATEGORY_ADJUSTMENT_DIFF,
+				orchestral: -CATEGORY_ADJUSTMENT_DIFF,
+				piano: -CATEGORY_ADJUSTMENT_DIFF,
+				concerto: 0,
+				opera: -CATEGORY_ADJUSTMENT_DIFF,
+				ballet: -CATEGORY_ADJUSTMENT_DIFF,
+				other: -CATEGORY_ADJUSTMENT_DIFF
 			},
 			workScoreRange: [3.5, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
@@ -158,15 +213,15 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: orchestraIcon,
 		category: 'categories',
 		config: {
-			categoryWeights: {
-				vocal: 0,
-				chamber: 0,
-				orchestral: 10,
-				piano: 0,
-				concerto: 0,
-				opera: 0,
-				ballet: 0,
-				other: 0
+			categoryAdjustments: {
+				vocal: -CATEGORY_ADJUSTMENT_DIFF,
+				chamber: -CATEGORY_ADJUSTMENT_DIFF,
+				orchestral: 0,
+				piano: -CATEGORY_ADJUSTMENT_DIFF,
+				concerto: -CATEGORY_ADJUSTMENT_DIFF,
+				opera: -CATEGORY_ADJUSTMENT_DIFF,
+				ballet: -CATEGORY_ADJUSTMENT_DIFF,
+				other: -CATEGORY_ADJUSTMENT_DIFF
 			},
 			workScoreRange: [3.5, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
@@ -179,15 +234,15 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: chamberIcon,
 		category: 'categories',
 		config: {
-			categoryWeights: {
-				vocal: 0,
-				chamber: 10,
-				orchestral: 0,
-				piano: 0,
-				concerto: 0,
-				opera: 0,
-				ballet: 0,
-				other: 0
+			categoryAdjustments: {
+				vocal: -CATEGORY_ADJUSTMENT_DIFF,
+				chamber: 0,
+				orchestral: -CATEGORY_ADJUSTMENT_DIFF,
+				piano: -CATEGORY_ADJUSTMENT_DIFF,
+				concerto: -CATEGORY_ADJUSTMENT_DIFF,
+				opera: -CATEGORY_ADJUSTMENT_DIFF,
+				ballet: -CATEGORY_ADJUSTMENT_DIFF,
+				other: -CATEGORY_ADJUSTMENT_DIFF
 			},
 			workScoreRange: [3.5, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
@@ -200,15 +255,15 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: balletIcon,
 		category: 'categories',
 		config: {
-			categoryWeights: {
-				vocal: 0,
-				chamber: 0,
-				orchestral: 0,
-				piano: 0,
-				concerto: 0,
-				opera: 0,
-				ballet: 10,
-				other: 0
+			categoryAdjustments: {
+				vocal: -CATEGORY_ADJUSTMENT_DIFF,
+				chamber: -CATEGORY_ADJUSTMENT_DIFF,
+				orchestral: -CATEGORY_ADJUSTMENT_DIFF,
+				piano: -CATEGORY_ADJUSTMENT_DIFF,
+				concerto: -CATEGORY_ADJUSTMENT_DIFF,
+				opera: -CATEGORY_ADJUSTMENT_DIFF,
+				ballet: 0,
+				other: -CATEGORY_ADJUSTMENT_DIFF
 			},
 			workScoreRange: [2.3, MAX_WORK_SCORE_ROUNDED]
 		}
@@ -220,15 +275,15 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: operaIcon,
 		category: 'categories',
 		config: {
-			categoryWeights: {
-				vocal: 0,
-				chamber: 0,
-				orchestral: 0,
-				piano: 0,
-				concerto: 0,
-				opera: 10,
-				ballet: 0,
-				other: 0
+			categoryAdjustments: {
+				vocal: -CATEGORY_ADJUSTMENT_DIFF,
+				chamber: -CATEGORY_ADJUSTMENT_DIFF,
+				orchestral: -CATEGORY_ADJUSTMENT_DIFF,
+				piano: -CATEGORY_ADJUSTMENT_DIFF,
+				concerto: -CATEGORY_ADJUSTMENT_DIFF,
+				opera: 0,
+				ballet: -CATEGORY_ADJUSTMENT_DIFF,
+				other: -CATEGORY_ADJUSTMENT_DIFF
 			},
 			workScoreRange: [3.8, MAX_WORK_SCORE_ROUNDED]
 		}
@@ -240,15 +295,15 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'categories',
 		icon: pianoIcon,
 		config: {
-			categoryWeights: {
-				vocal: 0,
-				chamber: 0,
-				orchestral: 0,
-				piano: 0,
-				concerto: 10,
-				opera: 0,
-				ballet: 0,
-				other: 0
+			categoryAdjustments: {
+				vocal: -CATEGORY_ADJUSTMENT_DIFF,
+				chamber: -CATEGORY_ADJUSTMENT_DIFF,
+				orchestral: -CATEGORY_ADJUSTMENT_DIFF,
+				piano: -CATEGORY_ADJUSTMENT_DIFF,
+				concerto: 0,
+				opera: -CATEGORY_ADJUSTMENT_DIFF,
+				ballet: -CATEGORY_ADJUSTMENT_DIFF,
+				other: -CATEGORY_ADJUSTMENT_DIFF
 			},
 			nameFilter: ['piano', 'klavier']
 		}
@@ -260,15 +315,15 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'categories',
 		icon: violinIcon,
 		config: {
-			categoryWeights: {
-				vocal: 0,
-				chamber: 0,
-				orchestral: 0,
-				piano: 0,
-				concerto: 10,
-				opera: 0,
-				ballet: 0,
-				other: 0
+			categoryAdjustments: {
+				vocal: -CATEGORY_ADJUSTMENT_DIFF,
+				chamber: -CATEGORY_ADJUSTMENT_DIFF,
+				orchestral: -CATEGORY_ADJUSTMENT_DIFF,
+				piano: -CATEGORY_ADJUSTMENT_DIFF,
+				concerto: 0,
+				opera: -CATEGORY_ADJUSTMENT_DIFF,
+				ballet: -CATEGORY_ADJUSTMENT_DIFF,
+				other: -CATEGORY_ADJUSTMENT_DIFF
 			},
 			nameFilter: ['violin', 'violon']
 		}
@@ -280,15 +335,15 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'categories',
 		icon: celloIcon,
 		config: {
-			categoryWeights: {
-				vocal: 0,
-				chamber: 0,
-				orchestral: 0,
-				piano: 0,
-				concerto: 10,
-				opera: 0,
-				ballet: 0,
-				other: 0
+			categoryAdjustments: {
+				vocal: -CATEGORY_ADJUSTMENT_DIFF,
+				chamber: -CATEGORY_ADJUSTMENT_DIFF,
+				orchestral: -CATEGORY_ADJUSTMENT_DIFF,
+				piano: -CATEGORY_ADJUSTMENT_DIFF,
+				concerto: 0,
+				opera: -CATEGORY_ADJUSTMENT_DIFF,
+				ballet: -CATEGORY_ADJUSTMENT_DIFF,
+				other: -CATEGORY_ADJUSTMENT_DIFF
 			},
 			nameFilter: ['cello'],
 			maxTracksFromSingleWork: 5

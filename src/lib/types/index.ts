@@ -6,7 +6,7 @@ export type { Track } from './track';
 export type {
 	GameSettings,
 	Tracklist,
-	CategoryWeights,
+	CategoryAdjustments,
 	ComposerFilter,
 	TracklistConfig,
 	BingoGridCell
@@ -23,10 +23,11 @@ export type {
 export { PLAYER_COLORS, CATEGORY_POINTS, BUZZER_TIME_PERCENTAGES } from './game';
 export {
 	DEFAULT_SETTINGS,
-	DEFAULT_CATEGORY_WEIGHTS,
+	DEFAULT_CATEGORY_ADJUSTMENTS,
 	DEFAULT_TRACKLIST_CONFIG,
 	MIN_WORK_SCORE,
 	MAX_WORK_SCORE,
 	MIN_WORK_SCORE_ROUNDED,
-	MAX_WORK_SCORE_ROUNDED
+	MAX_WORK_SCORE_ROUNDED,
+	CATEGORY_ADJUSTMENT_DIFF
 } from './settings';

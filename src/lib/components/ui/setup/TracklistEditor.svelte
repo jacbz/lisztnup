@@ -1,10 +1,11 @@
 <script lang="ts">
-	import type { Tracklist, CategoryWeights, TracklistConfig, ComposerFilter } from '$lib/types';
+	import type { Tracklist, CategoryAdjustments, TracklistConfig, ComposerFilter } from '$lib/types';
 	import {
-		DEFAULT_CATEGORY_WEIGHTS,
+		DEFAULT_CATEGORY_ADJUSTMENTS,
 		DEFAULT_TRACKLIST_CONFIG,
 		MIN_WORK_SCORE_ROUNDED,
-		MAX_WORK_SCORE_ROUNDED
+		MAX_WORK_SCORE_ROUNDED,
+		CATEGORY_ADJUSTMENT_DIFF
 	} from '$lib/types';
 	import { gameData } from '$lib/stores';
 	import { TracklistGenerator, SettingsService } from '$lib/services';
@@ -38,7 +39,7 @@
 	let originalTracklist = $state<Tracklist | null>(null);
 
 	// Track which filters are enabled
-	let categoryWeightsEnabled = $state(false);
+	let categoryAdjustmentsEnabled = $state(false);
 	let composerFilterEnabled = $state(false);
 	let yearFilterEnabled = $state(false);
 	let workScoreRangeEnabled = $state(true);
@@ -87,7 +88,7 @@
 				config = JSON.parse(JSON.stringify(tracklist.config)); // Deep clone
 
 				// Set enabled flags
-				categoryWeightsEnabled = config.categoryWeights !== undefined;
+				categoryAdjustmentsEnabled = config.categoryAdjustments !== undefined;
 				workScoreRangeEnabled = config.workScoreRange !== undefined;
 				limitWorksFromComposerEnabled = config.limitWorksFromComposer !== undefined;
 				maxTracksFromSingleWorkEnabled = config.maxTracksFromSingleWork !== undefined;
@@ -117,7 +118,7 @@
 				name = '';
 				description = '';
 				config = JSON.parse(JSON.stringify(DEFAULT_TRACKLIST_CONFIG));
-				categoryWeightsEnabled = false;
+				categoryAdjustmentsEnabled = false;
 				composerFilterEnabled = false;
 				yearFilterEnabled = false;
 				workScoreRangeEnabled = true;
@@ -140,7 +141,7 @@
 	$effect(() => {
 		// Track dependencies for preview
 		const deps = [
-			categoryWeightsEnabled,
+			categoryAdjustmentsEnabled,
 			composerFilterEnabled,
 			yearFilterEnabled,
 			workScoreRangeEnabled,
@@ -249,8 +250,8 @@
 	function buildCurrentConfig(): TracklistConfig {
 		const newConfig: TracklistConfig = {};
 
-		if (categoryWeightsEnabled && config.categoryWeights) {
-			newConfig.categoryWeights = config.categoryWeights;
+		if (categoryAdjustmentsEnabled && config.categoryAdjustments) {
+			newConfig.categoryAdjustments = config.categoryAdjustments;
 		}
 
 		if (composerFilterEnabled) {
@@ -298,18 +299,20 @@
 		}
 	}
 
-	function handleCategoryWeightChange(category: keyof CategoryWeights, value: number) {
-		if (config.categoryWeights) {
-			config.categoryWeights = { ...config.categoryWeights, [category]: value };
+	function handleCategoryAdjustmentChange(category: keyof CategoryAdjustments, value: number) {
+		if (config.categoryAdjustments) {
+			config.categoryAdjustments = { ...config.categoryAdjustments, [category]: value };
 		}
 	}
 
-	function toggleCategoryWeights() {
-		categoryWeightsEnabled = !categoryWeightsEnabled;
-		if (categoryWeightsEnabled) {
-			config.categoryWeights = config.categoryWeights || { ...DEFAULT_CATEGORY_WEIGHTS };
+	function toggleCategoryAdjustments() {
+		categoryAdjustmentsEnabled = !categoryAdjustmentsEnabled;
+		if (categoryAdjustmentsEnabled) {
+			config.categoryAdjustments = config.categoryAdjustments || {
+				...DEFAULT_CATEGORY_ADJUSTMENTS
+			};
 		} else {
-			config.categoryWeights = undefined;
+			config.categoryAdjustments = undefined;
 		}
 	}
 
@@ -528,27 +531,29 @@
 				{/if}
 			</div>
 
-			<!-- Category Weights -->
+			<!-- Category Adjustments -->
 			<div class="rounded-lg border-2 border-slate-700 bg-slate-800/50 p-4">
 				<div class="mb-3 flex items-center justify-between">
 					<div>
-						<span class="font-semibold text-cyan-300">{$_('tracklistEditor.categoryWeights')}</span>
-						<p class="text-xs text-slate-400">{$_('tracklistEditor.categoryWeightsDesc')}</p>
+						<span class="font-semibold text-cyan-300"
+							>{$_('tracklistEditor.categoryAdjustments')}</span
+						>
+						<p class="text-xs text-slate-400">{$_('tracklistEditor.categoryAdjustmentsDesc')}</p>
 					</div>
-					<ToggleButton value={categoryWeightsEnabled} onToggle={toggleCategoryWeights} />
+					<ToggleButton value={categoryAdjustmentsEnabled} onToggle={toggleCategoryAdjustments} />
 				</div>
-				{#if categoryWeightsEnabled && config.categoryWeights}
+				{#if categoryAdjustmentsEnabled && config.categoryAdjustments}
 					<div class="grid grid-cols-2 gap-3">
-						{#each Object.keys(config.categoryWeights) as category}
+						{#each Object.keys(config.categoryAdjustments) as category}
 							<Slider
-								value={config.categoryWeights[category as keyof CategoryWeights]}
-								min={0}
-								max={10}
+								value={config.categoryAdjustments[category as keyof CategoryAdjustments]}
+								min={-CATEGORY_ADJUSTMENT_DIFF}
+								max={CATEGORY_ADJUSTMENT_DIFF}
 								step={0.1}
 								label={$_(`settings.categories.${category}`)}
-								showValue={false}
+								showValue={true}
 								onChange={(val) =>
-									handleCategoryWeightChange(category as keyof CategoryWeights, val)}
+									handleCategoryAdjustmentChange(category as keyof CategoryAdjustments, val)}
 							/>
 						{/each}
 					</div>

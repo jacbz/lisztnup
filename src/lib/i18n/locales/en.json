@@ -27,7 +27,6 @@
 		"presetInfo": {
 			"default": "{composers, plural, =0 {no composers} one {# composer} other {# composers}}, {works, plural, =0 {no works} one {# work} other {# works}}, {tracks, plural, =0 {no tracks} one {# track} other {# tracks}}"
 		},
-		"categoryWeights": "Category Weights",
 		"categories": {
 			"vocal": "Vocal",
 			"chamber": "Chamber",
@@ -183,8 +182,8 @@
 		"description": "Description",
 		"filters": "Filters",
 		"filtersDescription": "Tracklists are constructed by applying filters on the entire collection.",
-		"categoryWeights": "Categories",
-		"categoryWeightsDesc": "Adjust how much each musical category is favored. Setting to 0 excludes that category.",
+		"categoryAdjustments": "Categories",
+		"categoryAdjustmentsDesc": "Adjust how much each musical category is favored.",
 		"composerFilter": "Composers",
 		"composerFilterDesc": "Control which composers are included in your tracklist",
 		"includeMode": "Include Only",

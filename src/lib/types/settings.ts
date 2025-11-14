@@ -1,9 +1,9 @@
-/// These weights are multiplied with the number of works in each category (0-10, default 1)
+/// These adjustments are added to work scores for each category (-DIFF to DIFF, default 0)
 
 import type { GuessCategory } from './game';
 
-/// E.g., 20 piano pieces (weight=1) vs 10 ballet (weight=1) -> piano is 2x as likely to be selected
-export interface CategoryWeights {
+/// E.g., piano pieces with +1 adjustment have their scores increased by 1, making them more likely to be selected
+export interface CategoryAdjustments {
 	vocal: number;
 	chamber: number;
 	orchestral: number;
@@ -21,7 +21,7 @@ export type ComposerFilter =
 	| { mode: 'topN'; count: number };
 
 export interface TracklistConfig {
-	categoryWeights?: CategoryWeights;
+	categoryAdjustments?: CategoryAdjustments;
 	composerFilter?: ComposerFilter;
 	yearFilter?: [number, number]; // [startYear, endYear]
 	workScoreRange?: [number, number]; // [minScore, maxScore]
@@ -59,15 +59,15 @@ export interface GameSettings {
 }
 
 // Default values for tracklist configuration
-export const DEFAULT_CATEGORY_WEIGHTS: CategoryWeights = {
-	vocal: 0.8,
-	chamber: 1,
-	orchestral: 1,
-	piano: 1,
-	concerto: 1,
-	opera: 1,
-	ballet: 1.2,
-	other: 0.8
+export const DEFAULT_CATEGORY_ADJUSTMENTS: CategoryAdjustments = {
+	vocal: 0,
+	chamber: 0,
+	orchestral: 0,
+	piano: 0,
+	concerto: 0,
+	opera: 0,
+	ballet: 0,
+	other: 0
 };
 
 // Work score range constants
@@ -77,6 +77,8 @@ export const MAX_WORK_SCORE = 6.54;
 
 export const MIN_WORK_SCORE_ROUNDED = Math.floor(MIN_WORK_SCORE * 10) / 10;
 export const MAX_WORK_SCORE_ROUNDED = Math.ceil(MAX_WORK_SCORE * 10) / 10;
+
+export const CATEGORY_ADJUSTMENT_DIFF = MAX_WORK_SCORE_ROUNDED - MIN_WORK_SCORE_ROUNDED;
 
 export const DEFAULT_TRACKLIST_CONFIG: TracklistConfig = {
 	workScoreRange: [MIN_WORK_SCORE_ROUNDED, MAX_WORK_SCORE_ROUNDED],
