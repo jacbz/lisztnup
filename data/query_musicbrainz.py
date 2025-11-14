@@ -83,14 +83,56 @@ def normalize_name(name):
         return ""
     return re.sub(r"[^a-z0-9]", "", name.lower())
 
+forbidden_artist_comment = ['band', 'score composer', 'producer', 'songwriter', 'film', 'soundtrack', 'TV', 'pop', 'rock', 'jazz', 'hip hop', 'rap', 
+                    'metal', 'punk', 'electronic', 'folk', 'country', 'dj', 'dance', 'reggae', 'new age', 'fusion', 'crossover'
+                    'blues', 'r&b', 'soul', 'schlager']
+patterns = [f"%{x}%" for x in forbidden_artist_comment]
 
 # --- SQL Queries ---
 GET_TOP_LEVEL_WORKS_SQL = """
 WITH classical_composers AS (
-  SELECT id, gid, sort_name, begin_date_year, end_date_year
-  FROM musicbrainz.artist
-  WHERE begin_date_year IS NOT NULL AND begin_date_year <= 1949
-  AND sort_name ~ '^[A-Za-z]'  -- Must start with ASCII letter
+  SELECT
+      id,
+      gid,
+      COALESCE(
+        (SELECT sort_name
+           FROM musicbrainz.artist_alias AS aa
+          WHERE aa.artist = artist.id
+            AND aa.locale = 'en'
+            AND aa.primary_for_locale = true
+          ORDER BY CASE WHEN aa.type = 1 THEN 0 ELSE 1 END
+          LIMIT 1),
+        sort_name
+      ) AS sort_name,
+      begin_date_year,
+      end_date_year,
+      comment
+    FROM musicbrainz.artist
+    WHERE
+      -- These conditions apply to all artists we select
+    begin_date_year IS NOT NULL
+    AND sort_name ~ '^[A-Za-z]'
+      -- Now, we check for one of two valid scenarios
+      AND (
+        -- Artists with a comment: must contain 'composer' but not any forbidden terms
+        (
+          COALESCE(comment, '') <> ''
+          AND comment ~ 'composer'
+          AND comment NOT ILIKE ANY (%s)
+        )
+        OR
+        -- Artists with a null/empty comment: check for 'classical' or 'composer' tag instead
+        (
+          COALESCE(comment, '') = ''
+          AND EXISTS (
+            SELECT 1
+              FROM musicbrainz.artist_tag AS at
+              WHERE at.artist = artist.id
+              -- Tag ID 15 is 'classical', 670 is 'composer'
+              AND at.tag IN (15, 670)
+          )
+        )
+      )
 ),
 work_composer_counts AS (
   -- Count distinct composers per work using only work-level filters
@@ -137,7 +179,7 @@ work_composer_counts AS (
         AND law_arr.entity0 NOT IN (SELECT id FROM classical_composers)
         AND law_arr.entity0 != 422300  -- Exception for Ralph Greaves (Fantasia on Greensleeves)
     )
-    AND w.name NOT LIKE '[%'  -- Exclude works with names starting with '['
+    AND w.name NOT LIKE '[%%'  -- Exclude works with names starting with '['
   GROUP BY w.id
   HAVING COUNT(DISTINCT law.entity0) = 1  -- Only works with exactly one composer
 ),
@@ -213,8 +255,26 @@ GROUP BY
 ORDER BY c.sort_name, work_name;
 """
 
+# SQL to get recordings for a given work ID
+# Advanced checks to filter out non-classical covers etc.
 GET_RECORDINGS_FOR_WORK_SQL = """
--- Get recordings linked to a specific work, with artist, label, and Deezer information
+-- This CTE recursively finds all link_type IDs that are descendants of
+-- the main 'artist-recording' relationship type (ID 122). This ensures
+-- we only consider valid artist relationships (e.g., performer, instrument, vocals)
+-- and exclude other types of relationships a recording might have.
+WITH RECURSIVE artist_link_types AS (
+    -- Anchor member: The root 'artist-recording' link type ID
+    SELECT id
+    FROM musicbrainz.link_type
+    WHERE id = 122
+
+    UNION ALL
+
+    -- Recursive member: Find all child link types
+    SELECT lt.id
+    FROM musicbrainz.link_type AS lt
+    JOIN artist_link_types AS alt ON lt.parent = alt.id
+)
 SELECT r.gid AS recording_gid, 
        r.name AS recording_name, 
        i.isrc,
@@ -240,7 +300,11 @@ LEFT JOIN musicbrainz.l_label_recording AS llr ON r.id = llr.entity1
 LEFT JOIN musicbrainz.label AS label ON llr.entity0 = label.id
 -- Get artists from two sources:
 -- 1. Artists linked via l_artist_recording relation
-LEFT JOIN musicbrainz.l_artist_recording AS lar ON r.id = lar.entity1
+LEFT JOIN musicbrainz.l_artist_recording AS lar
+    -- We must also join the link table to check the link_type
+    JOIN musicbrainz.link AS l_ar ON lar.link = l_ar.id
+-- The join condition links to the recording AND filters by the valid link types from the CTE.
+ON r.id = lar.entity1 AND l_ar.link_type IN (SELECT id FROM artist_link_types)
 -- 2. Artists from the recording's artist credit
 LEFT JOIN musicbrainz.artist_credit_name AS acn ON r.artist_credit = acn.artist_credit
 -- Join artist table for both sources
@@ -278,10 +342,6 @@ JOIN musicbrainz.work AS child_work ON lww.entity1 = child_work.id
 WHERE lww.entity0 = %(work_id)s AND l.link_type = 281
 ORDER BY lww.link_order, work_name;
 """
-
-forbidden_artist_comment = ['band', 'pop', 'rock', 'jazz', 'hip hop', 'rap', 
-                    'metal', 'punk', 'electronic', 'folk', 'country', 
-                    'blues', 'r&b', 'soul']
 
 def get_work_details_recursive(cursor, work_id, label_counter):
     # Returns: subworks, recordings, total_recordings, descendant_types
@@ -484,7 +544,7 @@ def main():
         conn = psycopg2.connect(**DB_CONFIG)
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         print("Fetching and grouping top-level works...")
-        cursor.execute(GET_TOP_LEVEL_WORKS_SQL)
+        cursor.execute(GET_TOP_LEVEL_WORKS_SQL, (patterns,))
         top_level_works_raw = cursor.fetchall()
 
         grouped_works = defaultdict(list)
@@ -614,7 +674,6 @@ def main():
         print_statistics(final_data, stats)
 
     except (Exception, psycopg2.DatabaseError) as error:
-
         print("An error occurred while processing MusicBrainz data.")
         print(f"Error type   : {type(error).__name__}")
         print(f"Error message: {error!s}")
