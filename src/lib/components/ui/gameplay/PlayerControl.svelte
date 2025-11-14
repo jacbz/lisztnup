@@ -51,7 +51,7 @@
 	// Reset progress when playback starts fresh (transition from not playing to playing)
 	$effect(() => {
 		if (isPlaying) {
-			displayProgress = progress;
+			displayProgress = Math.max(0, Math.min(1, progress));
 		} else {
 			displayProgress = 0;
 		}

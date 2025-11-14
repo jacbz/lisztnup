@@ -1,4 +1,7 @@
 /// These weights are multiplied with the number of works in each category (0-10, default 1)
+
+import type { GuessCategory } from './game';
+
 /// E.g., 20 piano pieces (weight=1) vs 10 ballet (weight=1) -> piano is 2x as likely to be selected
 export interface CategoryWeights {
 	vocal: number;
@@ -38,7 +41,7 @@ export interface Tracklist {
 }
 
 export interface BingoGridCell {
-	category: string; // GuessCategory
+	category: GuessCategory;
 	marked: boolean;
 }
 

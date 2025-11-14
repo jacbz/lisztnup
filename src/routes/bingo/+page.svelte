@@ -2,8 +2,8 @@
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { settings } from '$lib/stores';
-	import type { BingoGridCell } from '$lib/types';
-	import { categories } from '$lib/data/categories';
+	import type { BingoGridCell, GuessCategory } from '$lib/types';
+	import { allCategories, getCategoryDefinition } from '$lib/data/categories';
 	import { _ } from 'svelte-i18n';
 	import X from 'lucide-svelte/icons/x';
 	import RefreshCw from 'lucide-svelte/icons/refresh-cw';
@@ -21,11 +21,11 @@
 
 	// Category weights: composer 7, work 6, era 5, type 4, decade 3 (total 25)
 	const CATEGORY_WEIGHTS = {
-		composer: 7,
+		composer: 6,
 		work: 6,
 		era: 5,
 		type: 4,
-		decade: 3
+		decade: 4
 	};
 
 	// Generate a weighted random grid with constraints
@@ -35,8 +35,8 @@
 			.map(() => Array(5).fill(null));
 
 		// Create weighted pool (25 items)
-		const pool: string[] = [];
-		for (const cat of categories) {
+		const pool: GuessCategory[] = [];
+		for (const cat of allCategories) {
 			const weight = CATEGORY_WEIGHTS[cat.id as keyof typeof CATEGORY_WEIGHTS] || 0;
 			for (let i = 0; i < weight; i++) {
 				pool.push(cat.id);
@@ -140,8 +140,8 @@
 			.fill(null)
 			.map(() => Array(5).fill(null));
 
-		const pool: string[] = [];
-		for (const cat of categories) {
+		const pool: GuessCategory[] = [];
+		for (const cat of allCategories) {
 			const weight = CATEGORY_WEIGHTS[cat.id as keyof typeof CATEGORY_WEIGHTS] || 0;
 			for (let i = 0; i < weight; i++) {
 				pool.push(cat.id);
@@ -381,7 +381,7 @@
 			<div class="grid grid-cols-5 gap-1 md:gap-2">
 				{#each grid as row, rowIndex}
 					{#each row as cell, colIndex}
-						{@const categoryDef = categories.find((c) => c.id === cell.category)}
+						{@const categoryDef = getCategoryDefinition(cell.category)}
 						{@const isWinning = winningCells.has(`${rowIndex}-${colIndex}`)}
 						<button
 							type="button"

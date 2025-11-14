@@ -409,7 +409,7 @@
 			<button
 				type="button"
 				onclick={handleShowStats}
-				class="flex cursor-pointer items-center justify-center rounded-full border-2 border-cyan-400 bg-slate-900 p-3 text-cyan-400 shadow-[0_4px_20px_rgba(34,211,238,0.4)] transition-all duration-200 hover:scale-110 hover:shadow-[0_6px_30px_rgba(34,211,238,0.6)] active:scale-95 md:p-3.5"
+				class="flex cursor-pointer items-center justify-center rounded-full border-2 border-cyan-400 p-3 text-cyan-400 shadow-[0_4px_20px_rgba(34,211,238,0.4)] transition-all duration-200 hover:scale-110 hover:shadow-[0_6px_30px_rgba(34,211,238,0.6)] active:scale-95 md:p-3.5"
 				aria-label="View statistics"
 			>
 				<BarChart class="h-5 w-5 md:h-6 md:w-6" />
