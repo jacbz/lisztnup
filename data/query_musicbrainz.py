@@ -134,27 +134,27 @@ WITH classical_composers AS (
         )
       )
 ),
-work_composer_counts AS (
-  -- Count distinct composers per work using only work-level filters
-  -- This ensures multi-composer works are excluded even if some composers
-  -- would be filtered out by composer-specific criteria later
+eligible_works AS (
+  -- Count distinct composers per work and apply all work-level filters
   SELECT
-    w.id AS work_id,
-    COUNT(DISTINCT law.entity0) AS composer_count
+    w.id AS work_id
   FROM
     musicbrainz.work AS w
     JOIN musicbrainz.l_artist_work AS law ON w.id = law.entity1
     JOIN musicbrainz.link AS l ON law.link = l.id
-    JOIN classical_composers AS c ON law.entity0 = c.id
   WHERE
     l.link_type = 168 -- 'composer' relationship
-    -- Work-level filters (apply uniformly, don't affect composer count)
+    AND law.entity0 IN (SELECT id FROM classical_composers)
+    -- Work-level filters (apply uniformly)
     AND COALESCE(
       (SELECT wa.name 
        FROM musicbrainz.work_alias AS wa
        WHERE wa.work = w.id 
          AND wa.locale = 'en' 
-         AND wa.type = 1
+         AND wa.primary_for_locale = true
+       ORDER BY 
+         CASE WHEN wa.type = 1 THEN 0 ELSE 1 END,
+         wa.id
        LIMIT 1),
       w.name
     ) ~* '^[A-Za-zÀ-ÿŒ0-9"“„‘'']'  -- Work name must start with letter, number, or quote
@@ -224,15 +224,25 @@ SELECT
   w.type AS work_type, 
   l.begin_date_year AS work_begin_year, 
   l.end_date_year AS work_end_year,
-  STRING_AGG(t.name, ',' ORDER BY t.name) AS tag_names
+  STRING_AGG(DISTINCT t.name, ',' ORDER BY t.name) AS tag_names,
+  STRING_AGG(DISTINCT arr.sort_name, '; ' ORDER BY arr.sort_name) FILTER (WHERE arr.id != c.id) AS arrangers,
+  STRING_AGG(DISTINCT orc.sort_name, '; ' ORDER BY orc.sort_name) FILTER (WHERE orc.id != c.id) AS orchestrators
 FROM
-  work_composer_counts AS wcc
-  JOIN musicbrainz.work AS w ON wcc.work_id = w.id
+  eligible_works AS ew
+  JOIN musicbrainz.work AS w ON ew.work_id = w.id
   JOIN musicbrainz.l_artist_work AS law ON w.id = law.entity1
   JOIN musicbrainz.link AS l ON law.link = l.id
   JOIN classical_composers AS c ON law.entity0 = c.id
   LEFT JOIN musicbrainz.work_tag AS wt ON w.id = wt.work
   LEFT JOIN musicbrainz.tag AS t ON wt.tag = t.id
+  -- Joins to fetch arrangers
+  LEFT JOIN musicbrainz.l_artist_work AS law_arr ON w.id = law_arr.entity1
+  LEFT JOIN musicbrainz.link AS l_arr ON law_arr.link = l_arr.id
+  LEFT JOIN musicbrainz.artist AS arr ON law_arr.entity0 = arr.id AND l_arr.link_type = 293 -- 'arranger' relationship
+  -- Joins to fetch orchestrators
+  LEFT JOIN musicbrainz.l_artist_work AS law_orc ON w.id = law_orc.entity1
+  LEFT JOIN musicbrainz.link AS l_orc ON law_orc.link = l_orc.id
+  LEFT JOIN musicbrainz.artist AS orc ON law_orc.entity0 = orc.id AND l_orc.link_type = 164 -- 'orchestrator' relationship
 WHERE
   l.link_type = 168 -- 'composer' relationship
   -- Composer-specific filters (can vary by composer for the same work)
@@ -549,8 +559,19 @@ def main():
 
         grouped_works = defaultdict(list)
         for work in top_level_works_raw:
+            orchestrators = [o.split(", ")[0] for o in work["orchestrators"].split("; ") if not o.startswith("[")] if work["orchestrators"] else []
+            arrangers = [a.split(", ")[0] for a in work["arrangers"].split("; ") if not a.startswith("[")] if work["arrangers"] else []
+
+            work_name = work["work_name"]
+
+            if orchestrators:
+                work_name += " (orch. " + ", ".join(orchestrators) + ")"
+            elif arrangers:
+                work_name += " (arr. " + ", ".join(arrangers) + ")"
+
+            work["work_name"] = work_name
             grouped_works[
-                (work["composer_id"], normalize_name(work["work_name"]))
+                (work["composer_id"], normalize_name(work_name))
             ].append(work)
 
         print(

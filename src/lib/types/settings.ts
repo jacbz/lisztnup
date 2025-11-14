@@ -12,7 +12,6 @@ export interface CategoryAdjustments {
 	opera: number;
 	ballet: number;
 	solo: number;
-	other: number;
 }
 
 // Composer filter as a discriminated union (OR type)
@@ -68,8 +67,7 @@ export const DEFAULT_CATEGORY_ADJUSTMENTS: CategoryAdjustments = {
 	concerto: 0,
 	opera: 0,
 	ballet: 0,
-	solo: 0,
-	other: 0
+	solo: 0
 };
 
 // Work score range constants

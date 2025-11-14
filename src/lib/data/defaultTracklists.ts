@@ -43,7 +43,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: 0,
 				opera: 0.2,
 				ballet: 0.3,
-				other: 0
+				solo: 0
 			},
 			limitWorksFromComposer: 0.075,
 			maxTracksFromSingleWork: 1,
@@ -66,7 +66,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: 0,
 				opera: 0,
 				ballet: 0.3,
-				other: 0
+				solo: 0
 			},
 			limitWorksFromComposer: 0.075,
 			maxTracksFromSingleWork: 1,
@@ -102,7 +102,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: 0,
 				opera: 0,
 				ballet: 0,
-				other: 0
+				solo: 0
 			},
 			limitWorksFromComposer: 0.15,
 			maxTracksFromSingleWork: 2,
@@ -125,7 +125,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: 0,
 				opera: 0,
 				ballet: 0,
-				other: 0
+				solo: 0
 			},
 			maxTracksFromSingleWork: 3,
 			enablePopularityWeighting: false
@@ -157,7 +157,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: 0,
 				opera: 0,
 				ballet: 0,
-				other: 0
+				solo: 0
 			},
 			enablePopularityWeighting: false
 		}
@@ -178,7 +178,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: -CATEGORY_ADJUSTMENT_DIFF,
 				opera: -CATEGORY_ADJUSTMENT_DIFF,
 				ballet: -CATEGORY_ADJUSTMENT_DIFF,
-				other: -CATEGORY_ADJUSTMENT_DIFF
+				solo: -CATEGORY_ADJUSTMENT_DIFF
 			},
 			yearFilter: [1800, 2000],
 			workScoreRange: [3, MAX_WORK_SCORE_ROUNDED],
@@ -200,7 +200,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: 0,
 				opera: -CATEGORY_ADJUSTMENT_DIFF,
 				ballet: -CATEGORY_ADJUSTMENT_DIFF,
-				other: -CATEGORY_ADJUSTMENT_DIFF
+				solo: -CATEGORY_ADJUSTMENT_DIFF
 			},
 			workScoreRange: [3.5, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
@@ -221,7 +221,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: -CATEGORY_ADJUSTMENT_DIFF,
 				opera: -CATEGORY_ADJUSTMENT_DIFF,
 				ballet: -CATEGORY_ADJUSTMENT_DIFF,
-				other: -CATEGORY_ADJUSTMENT_DIFF
+				solo: -CATEGORY_ADJUSTMENT_DIFF
 			},
 			workScoreRange: [3.5, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
@@ -242,7 +242,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: -CATEGORY_ADJUSTMENT_DIFF,
 				opera: -CATEGORY_ADJUSTMENT_DIFF,
 				ballet: -CATEGORY_ADJUSTMENT_DIFF,
-				other: -CATEGORY_ADJUSTMENT_DIFF
+				solo: -CATEGORY_ADJUSTMENT_DIFF
 			},
 			workScoreRange: [3.5, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
@@ -263,7 +263,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: -CATEGORY_ADJUSTMENT_DIFF,
 				opera: -CATEGORY_ADJUSTMENT_DIFF,
 				ballet: 0,
-				other: -CATEGORY_ADJUSTMENT_DIFF
+				solo: -CATEGORY_ADJUSTMENT_DIFF
 			},
 			workScoreRange: [2.3, MAX_WORK_SCORE_ROUNDED]
 		}
@@ -283,7 +283,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: -CATEGORY_ADJUSTMENT_DIFF,
 				opera: 0,
 				ballet: -CATEGORY_ADJUSTMENT_DIFF,
-				other: -CATEGORY_ADJUSTMENT_DIFF
+				solo: -CATEGORY_ADJUSTMENT_DIFF
 			},
 			workScoreRange: [3.8, MAX_WORK_SCORE_ROUNDED]
 		}
@@ -303,7 +303,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: 0,
 				opera: -CATEGORY_ADJUSTMENT_DIFF,
 				ballet: -CATEGORY_ADJUSTMENT_DIFF,
-				other: -CATEGORY_ADJUSTMENT_DIFF
+				solo: -CATEGORY_ADJUSTMENT_DIFF
 			},
 			nameFilter: ['piano', 'klavier']
 		}
@@ -323,7 +323,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: 0,
 				opera: -CATEGORY_ADJUSTMENT_DIFF,
 				ballet: -CATEGORY_ADJUSTMENT_DIFF,
-				other: -CATEGORY_ADJUSTMENT_DIFF
+				solo: -CATEGORY_ADJUSTMENT_DIFF
 			},
 			nameFilter: ['violin', 'violon']
 		}
@@ -343,7 +343,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: 0,
 				opera: -CATEGORY_ADJUSTMENT_DIFF,
 				ballet: -CATEGORY_ADJUSTMENT_DIFF,
-				other: -CATEGORY_ADJUSTMENT_DIFF
+				solo: -CATEGORY_ADJUSTMENT_DIFF
 			},
 			nameFilter: ['cello'],
 			maxTracksFromSingleWork: 5

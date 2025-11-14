@@ -125,6 +125,7 @@ EXCLUDED_DEEZER_IDS: Set[int] = set([])
 
 EXCLUDED_WORKS: Set[str] = set([
     "bf57c435-6ce0-3d57-ab04-e2a9179b178c", # O Holy Night
+    "0e587c69-8ec2-3c66-ae73-c7ed79956af7", # O Holy Night
     "8531b357-339e-3cc7-9ed2-0d6b928ed12e", # Joy to the World
     "bc0cdd41-eaa3-3330-b972-8e8174b9e64d", # Hark! The Herald Angels Sing
     "718b96fa-75eb-436e-8c30-0c647aa99696", # Ave Maria (duplicate)
@@ -775,12 +776,15 @@ class MusicbrainzProcessor:
 
         if "Piano Sonata" in work_name_normalized and work.type == "Sonata":
             return "piano"
-        
+                
         if work.type in TYPE_MAPPING:
             type_map = TYPE_MAPPING[work.type]
             if type_map != "other":
                 return type_map
 
+        if "orch." in work_name_normalized:
+            return "orchestral"
+        
         # Composer specific rules
         try:
             if composer_name in self.composer_specific_rules:
@@ -865,8 +869,6 @@ class MusicbrainzProcessor:
 
     def _write_unresolved_log(self, final_output: FinalOutput) -> None:
         """Writes a log of works in the final output whose types remain 'other'."""
-        if not self.unresolved_work_candidates:
-            return
         composer_map = {c.gid: c.name for c in final_output.composers}
         final_unresolved = {(w.composer, w.name) for w in final_output.works if w.type == "other"}
         grouped = defaultdict(list)
@@ -875,8 +877,6 @@ class MusicbrainzProcessor:
             for work_name, orig_type in works:
                 if (composer_gid, work_name) in final_unresolved:
                     grouped[composer_name].append((work_name, orig_type))
-        if not grouped:
-            return
 
         with open("unresolved_types.txt", "w", encoding="utf-8") as f:
             for composer_name in sorted(grouped.keys()):

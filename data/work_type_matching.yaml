@@ -39,14 +39,13 @@ general_rules:
     - Overture|Ouverture|Vorspiel|Capriccio sinfonico
     - Orchestral Suite|Orchestersuite|Suite for Orchestra
     - for Orchestra|for String Orchestra|for strings|for Wind Ensemble|for Military Band
-    - orch.
 
   #=============================================================================
   # 5. Concerto: A featured solo instrument with orchestra.
   #=============================================================================
   concerto:
     # Core genre identifiers.
-    - Concerto|Konzert|Concertino|Concertante|Concertstück
+    - Concerto|Konzert\b|Concertino|Concertante|Concertstück
     - Concerto Grosso|Concerti Grossi|Sinfonia Concertante
     - for .* and (string |small )?Orchestra|pour .* et Orchestre|für .* und Orchester
 
@@ -582,6 +581,8 @@ composer_specific_rules:
     piano:
       - Lyric pieces|Lyriske stykker|Norwegian folk songs|album leaves|Humoresker|Poetic Tone Pictures|Stemninger
       - Agitato|Ballade, op\. 24|Norwegian Peasant Dances|Scenes of country life|Sørgemarsj|Valse-kapriser
+    chamber:
+      - Four Norwegian Dances
     concerto:
       - Piano Concerto in A minor
     orchestral:
@@ -636,7 +637,7 @@ composer_specific_rules:
     solo:
       - Sonata for Cello Solo
     orchestral:
-      - Meditation from Nobilissima visione
+      - Meditation from Nobilissima visione|Konzertmusik
   'Holst, Gustav':
     orchestral:
       - Egdon Heath
@@ -762,7 +763,7 @@ composer_specific_rules:
       - Feierlicher Marsch|Feierlicher Marsch zum heiligen Gral|S\.\s?450
       - 'Réminiscences de|Paraphrase de concert sur|Stücke aus Tannhäuser|Ballade aus Der fliegende|Danza sacra.*Aida|Miserere du Trovatore|Pilgerchor'
       - Consolations|Grand galop chromatique|Rhapsodie espagnole|Soirées de Vienne|Weihnachtsbaum|Après une lecture du Dante
-      - '(Csárdás|Polonaises|Vortragsstücke|Ballade|Berceuse|Légendes|exécution transcendante|études de Paganini|S\.\s?140|études de Paganini|Impromptu|gondola|Mephisto-Polka|Polonaise aus.*Onegin|Scherzo und Marsch|études de concert|Valse|Valses|Weinen, Klagen|Bagatelle|Elegy|En rêve|Epithalam|Resignazione|Schlaflos!|Trübe Wolken|Unstern!|R\. W\. - Venezia|Recueillement|Wish Liszt)'
+      - '(Csárdás|Polonaises|Vortragsstücke|Ballade|Berceuse|Légendes|exécution transcendante|études de Paganini|Konzertetüden|S\.\s?140|études de Paganini|Impromptu|gondola|Mephisto-Polka|Polonaise aus.*Onegin|Scherzo und Marsch|études de concert|Valse|Valses|Weinen, Klagen|Bagatelle|Elegy|En rêve|Epithalam|Resignazione|Schlaflos!|Trübe Wolken|Unstern!|R\. W\. - Venezia|Recueillement|Wish Liszt)'
     solo: # Organ
       - Prelude and Fugue on .* BACH|Fantasia and Fugue on .* Ad nos
     vocal:
@@ -859,7 +860,7 @@ composer_specific_rules:
       - études de virtuosité|Phantasiestücke|Caprice espagnol|morceaux caractèristiques
   'Mozart, Wolfgang Amadeus':
     piano:
-      - Piano Sonata .* K\.\s?\d+|Fantasia .* K\.\s?\d+|Rondo .* K\.\s?\d+|Adagio.*K\.\s(617a|356)|Allegro.*K\.|Präludium.*K\.|(Allegro|Andante|Menuett|Minuet|Piano piece|Romanze|Rondo).*(in|D-Dur)|Rondo no\.?\s?2
+      - Piano Sonata .* K\.\s?\d+|Fantasia .* K\.\s?\d+|Rondo .* K\.\s?\d+|Adagio.*K\.\s(617a|356)|Allegro.*K\.|Präludium.*K\.|(Allegro|Andante|Menuett|Minuet|Piano piece|Romanze|Rondo).*(in|D-Dur)|Rondo no\.?\s?2|The London Sketchbook
     chamber:
       - 'Church Sonata|Divertimento .* K\.|(Violin|Horn|Clarinet).*(Quintet|Concerto).*K\.'
       - Sonata for 2 Pianos|Adagio for 2 Basset Horns
@@ -1133,10 +1134,10 @@ composer_specific_rules:
       - Friede auf Erden|Sechs Stücke für Männerchor
   'Schubert, Franz':
     piano:
+      # Liszt arrangements
+      - Sechs Melodien von Franz Schubert|arr. Liszt
       - Impromptus|Moments Musicaux|Wanderer|Fantasy in C major, D\.\s?760|D\.\s?760|12 Ländler|12 Valses Nobles|16 German Dances|2 Scherzos|Allegretto in C minor
       - (Valses sentimentales|Waltzes, Ländler and Ecossaises|Deutsche Tänze|Ländler, D\. 814|Polonaises, op\. 75|Adagio.*D\. 505|Allegretto.*D\. 346|Galopp und.*Ecossaisen|Menuet|Menuette und Deutsche|Sonata.*D\. 613|Ungarische Melodie|Waltz.*D\. 844)
-      # Liszt arrangements
-      - Sechs Melodien von Franz Schubert
     chamber:
       - Fantasia in F minor, .* D\. 940|Marches militaires|Arpeggione Sonata|Trout Quintet|Death and the Maiden|Allegro.*Lebensstürme|Divertissement.*D\. 8|Grand Rondeau
     vocal:
@@ -1161,6 +1162,8 @@ composer_specific_rules:
       - Adagio und Allegro, op\. 70|Märchenbilder|Phantasiestücke, op\. 88
     vocal:
       - Dichterliebe|Frauenliebe und -leben|Ritornelle in canonischen Weisen
+    concerto:
+      - Konzertstück
   'Schütz, Heinrich':
     vocal:
       - Bringt her dem Herren|Eile mich, Gott|Erbarm dich mein|Historia der Auferstehung|O süßer, o freundlicher|Weihnachts-Historie
