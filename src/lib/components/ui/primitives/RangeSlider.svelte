@@ -63,13 +63,13 @@
 				class="absolute left-0 -translate-x-1/2 text-xs font-semibold text-cyan-300"
 				style="left: {minPercent}%"
 			>
-				{valueMin}
+				{valueMin.toFixed(1)}
 			</div>
 			<div
 				class="absolute left-0 -translate-x-1/2 text-xs font-semibold text-purple-300"
 				style="left: {maxPercent}%"
 			>
-				{valueMax}
+				{valueMax.toFixed(1)}
 			</div>
 		</div>
 

@@ -71,7 +71,7 @@ export const DEFAULT_CATEGORY_ADJUSTMENTS: CategoryAdjustments = {
 };
 
 // Work score range constants
-export const MIN_WORK_SCORE = 2.3;
+export const MIN_WORK_SCORE = 1.9;
 /// The maximum work score outputed by process_musicbrainz.py
 export const MAX_WORK_SCORE = 6.54;
 

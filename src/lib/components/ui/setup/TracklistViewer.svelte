@@ -41,6 +41,7 @@
 	let searchQuery = $state('');
 	let sortColumn = $state<'composer' | 'work' | 'popularity' | 'year'>('composer');
 	let sortDirection = $state<'asc' | 'desc'>('asc');
+	let hasManualSort = $state(false);
 	let isLoading = $state(false);
 
 	// Pagination
@@ -75,6 +76,7 @@
 			isLoading = false;
 			// Clear search and pagination when closing
 			searchQuery = '';
+			hasManualSort = false;
 			page = 1;
 			// Stop any playing audio
 			if (currentlyPlayingDeezerId !== null) {
@@ -111,12 +113,14 @@
 
 	// Computed sorted data
 	const tableData = $derived.by(() => {
-		// If a search is active, preserve the filtered order (Fuse ranking or original order)
-		if (searchQuery && searchQuery.trim()) {
+		const shouldSort = !searchQuery.trim() || hasManualSort;
+
+		if (!shouldSort) {
 			const start = (page - 1) * PAGE_SIZE;
 			const end = start + PAGE_SIZE;
 			return filteredRawData.slice(start, end);
 		}
+
 		const sorted = [...filteredRawData].sort((a, b) => {
 			let aVal: string | number;
 			let bVal: string | number;
@@ -181,6 +185,7 @@
 			// the data loader so the spinner remains visible until `loadTracklistData`
 			// finishes and clears `isLoading`.
 			filteredRawData = rawTableData;
+			hasManualSort = false;
 			page = 1;
 			return;
 		}
@@ -196,6 +201,7 @@
 				filteredRawData = [];
 			}
 			isLoading = false;
+			hasManualSort = false;
 			page = 1;
 		}, DEBOUNCE_MS) as unknown as number;
 
@@ -264,6 +270,7 @@
 	}
 
 	function handleSort(column: typeof sortColumn) {
+		hasManualSort = true;
 		if (sortColumn === column) {
 			// Toggle direction if clicking the same column (keep current page)
 			sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
@@ -324,7 +331,7 @@
 	function renderPartScore(score: number): string {
 		// For parts, show a subtle gradient bar from 50 to 100 (parts are always above 50)
 		const normalizedScore = Math.max(0, Math.min(100, ((score - 50) / 50) * 100));
-		return `<div title="${score}" class="h-1.5 w-5 shrink-0 rounded-full bg-slate-700">
+		return `<div title="${score.toFixed(1)}" class="h-1.5 w-5 shrink-0 rounded-full bg-slate-700">
 				<div class="h-full rounded-full bg-gradient-to-r from-cyan-600 to-cyan-400" style="width: ${normalizedScore}%"></div>
 			</div>`;
 	}
@@ -467,7 +474,7 @@
 									onclick={() => handleSort('composer')}
 								>
 									{$_('tracklistViewer.columns.composer')}
-									{#if sortColumn === 'composer'}
+									{#if sortColumn === 'composer' && (!searchQuery.trim() || hasManualSort)}
 										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
 									{/if}
 								</th>
@@ -476,7 +483,7 @@
 									onclick={() => handleSort('work')}
 								>
 									{$_('tracklistViewer.columns.work')}
-									{#if sortColumn === 'work'}
+									{#if sortColumn === 'work' && (!searchQuery.trim() || hasManualSort)}
 										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
 									{/if}
 								</th>
@@ -485,7 +492,7 @@
 									onclick={() => handleSort('popularity')}
 								>
 									{$_('tracklistViewer.columns.popularity')}
-									{#if sortColumn === 'popularity'}
+									{#if sortColumn === 'popularity' && (!searchQuery.trim() || hasManualSort)}
 										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
 									{/if}
 								</th>
@@ -494,7 +501,7 @@
 									onclick={() => handleSort('year')}
 								>
 									{$_('tracklistViewer.columns.year')}
-									{#if sortColumn === 'year'}
+									{#if sortColumn === 'year' && (!searchQuery.trim() || hasManualSort)}
 										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
 									{/if}
 								</th>
@@ -570,7 +577,7 @@
 											</ul>
 										{/if}
 									</td>
-									<td class="cell text-sm text-yellow-400" title={row.popularity + ''}>
+									<td class="cell text-sm text-yellow-400" title={row.popularity.toFixed(1)}>
 										{@html renderPopularityStars(row.popularity)}
 									</td>
 									<td class="cell hidden text-sm text-slate-400 md:table-cell">{row.year}</td>

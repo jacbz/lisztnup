@@ -605,9 +605,9 @@
 						<!-- Top N slider -->
 						<Slider
 							value={topNCount}
-							min={5}
+							min={1}
 							max={200}
-							step={5}
+							step={1}
 							label={$_('tracklistEditor.topNComposers')}
 							showValue={true}
 							onChange={(val) => (topNCount = val)}

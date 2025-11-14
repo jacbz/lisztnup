@@ -43,7 +43,7 @@ from typing import Dict, List, Optional, Set, Any, Tuple
 MIN_WORKS_PER_COMPOSER = 2      # Composers with fewer final works than this will be dropped.
 MIN_BIRTH_YEAR = 1400           # Composers born before this year will be dropped.
 MIN_RECORDINGS_PER_PART = 3     # Leaf works (parts) with fewer recordings will be dropped at the start.
-MINIMUM_WSS = 2.3               # The absolute minimum Work Significance Score for a work to be considered.
+MINIMUM_WSS = 1.9               # The absolute minimum Work Significance Score for a work to be considered.
 
 # --- Popularity Scoring Parameters ---
 POPULARITY_ALPHA = 0.5          # Balances peak vs. average part popularity in the WSS formula.
