@@ -8,6 +8,7 @@
 		getWorkEra
 	} from '$lib/utils';
 	import { deezerPlayer, playerState } from '$lib/services';
+	import deezer from '$lib/assets/icons/deezer.svg?raw';
 
 	interface Props {
 		track: Track | null;
@@ -108,8 +109,10 @@
 					href={deezerTrackUrl}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-block text-center text-sm text-cyan-400 no-underline transition-all duration-200 hover:underline"
+					class="inline-flex items-center justify-center gap-1 text-sm no-underline transition-all duration-200 hover:underline"
+					style="color: rgb(162, 56, 255)"
 				>
+					{@html deezer}
 					{artists.join(', ')}
 				</a>
 			</div>
