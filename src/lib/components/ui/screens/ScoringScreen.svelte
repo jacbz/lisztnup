@@ -183,9 +183,6 @@
 	padding="lg"
 	showCloseButton={false}
 >
-	<h2 class="mb-6 text-center text-3xl font-bold text-cyan-400">
-		{$_('scoring.title')}
-	</h2>
 	<div class="mb-4 grid grid-cols-1 gap-8 md:grid-cols-[1fr_1fr]">
 		<!-- Left: Track Info -->
 		<div class="flex flex-col gap-3 rounded-2xl border border-slate-700 bg-slate-900 p-5">
@@ -194,6 +191,9 @@
 
 		<!-- Right: Scoring Table -->
 		<div class="flex flex-col">
+			<h2 class="mb-6 text-center text-3xl font-bold text-cyan-400">
+				{$_('scoring.title')}
+			</h2>
 			{#if isSoloMode && mode === 'classic'}
 				<!-- Solo Classic Mode: Big Category Buttons -->
 				<div class="flex flex-col">
