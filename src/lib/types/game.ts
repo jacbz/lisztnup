@@ -22,7 +22,7 @@ export const PLAYER_COLORS = [
 // Category scoring points
 export const CATEGORY_POINTS: Record<GuessCategory, number> = {
 	work: 15,
-	decade: 20,
+	decade: 12,
 	composer: 9,
 	era: 4,
 	type: 2

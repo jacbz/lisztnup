@@ -27,21 +27,59 @@ export function formatYearRange(
 }
 
 /**
- * Formats a part name by stripping the work name prefix if present
- * @param partName - The full part name
- * @param workName - The work name to potentially strip from the part
- * @returns The formatted part name with work prefix removed if applicable
+ * Formats a part name by attempting to remove the work title.
+ * It first tries to strip the `workName` as a direct prefix.
+ * If that fails, it falls back to looking for a colon followed by a
+ * common movement identifier (e.g., Roman numeral, "No. 5").
+ *
+ * @param partName - The full part name, which may include the work title.
+ * @param workName - The work name to potentially strip.
+ * @returns The formatted part name with the work title removed if applicable.
+ *
+ * @example
+ * // Prefix stripping
+ * formatPartName('Symphony No. 5: I. Allegro', 'Symphony No. 5')
+ * // => 'I. Allegro'
+ *
+ * @example
+ * // Fallback pattern matching
+ * formatPartName('Französische Suite Nr. 5 G-dur, BWV 816: IV. Gavotte', '...')
+ * // => 'IV. Gavotte'
+ *
+ * @example
+ * // Fallback with multiple colons
+ * formatPartName('A Midsummer Night’s Dream, op. 61: no. 9. Wedding March: Allegro vivace', '...')
+ * // => 'no. 9. Wedding March: Allegro vivace'
  */
 export function formatPartName(partName: string, workName: string): string {
-	// Check if part starts with work name followed by punctuation
+	// 1. First, try the original logic: strip the exact workName as a prefix.
+	// This is the most reliable method when workName is accurate.
 	const prefixPattern = new RegExp(
+		// Escape special regex characters in the workName
 		`^${workName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[:\\-,]\\s*`,
 		'i'
 	);
-	const strippedName = partName.replace(prefixPattern, '').trim();
+	const strippedByPrefix = partName.replace(prefixPattern, '').trim();
 
-	// Return stripped name if it's different and not empty, otherwise return full part name
-	return strippedName && strippedName !== partName ? strippedName : partName;
+	// If the prefix was successfully stripped, return the result.
+	if (strippedByPrefix && strippedByPrefix !== partName) {
+		return strippedByPrefix;
+	}
+
+	// 2. If prefix stripping failed, fall back to a general pattern.
+	// This looks for ": {movement identifier}" and extracts the part after the colon.
+	// It handles Roman numerals (I, II, IV.), number indicators (No., Nr., Op.), or just a number.
+	const movementPattern = /:\s*((?:[IVXLCDM]+\.?|(?:(?:No|Nº|Nr|Op)\.?\s*)?\d+\.?)\s*.*)/i;
+
+	const movementMatch = partName.match(movementPattern);
+
+	// If a match is found, return the captured group (the part after the colon).
+	if (movementMatch && movementMatch[1]) {
+		return movementMatch[1].trim();
+	}
+
+	// 3. If no patterns matched, return the original partName.
+	return partName;
 }
 
 /**

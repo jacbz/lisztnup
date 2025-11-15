@@ -84,33 +84,13 @@ LABEL_PREFERENCE = [
 EXCLUDED_COMPOSERS: Set[str] = set([
     "Gruber, Franz Xaver",
     "Pierpont, James Lord",
-    "Ellington, Duke",
-    "Coltrane, John",
-    "Tizol, Juan",
-    "Gilmour, David",
-    "Mason, Nick",
-    "Waters, Roger",
-    "Wright, Richard",
-    "Young, Neil",
-    "McLaughlin, John",
-    "Townshend, Pete",
-    "Wakeman, Rick",
-    "Gardel, Carlos",
-    "Vangelis",
-    "Morricone, Ennio",
-    "Emerson, Keith",
-    "Strayhorn, Billy",
-    "Ibrahim, Abdullah",
-    "Cherry, Don",
-    "Cale, John",
-    "Handy, William Christopher",
-    "Johnson, James P.",
-    "Anderson, Leroy",
-    "Goldsmith, Jerry",
-    "Newman, Randy",
-    "Jarre, Maurice",
-    "Mills, Irving",
     "Foster, Stephen",
+    "Anderson, Leroy",
+    "Ellington, Duke",
+    "Goldsmith, Jerry",
+    "Ibrahim, Abdullah",
+    "Morricone, Ennio",
+    "Wakeman, Rick",
     "Willis, Wallace",
     "Barry, John",
     "Bradbury, William B.",
@@ -126,6 +106,8 @@ EXCLUDED_DEEZER_IDS: Set[int] = set([])
 EXCLUDED_WORKS: Set[str] = set([
     "bf57c435-6ce0-3d57-ab04-e2a9179b178c", # O Holy Night
     "0e587c69-8ec2-3c66-ae73-c7ed79956af7", # O Holy Night
+    "681428fa-9095-388d-9500-ad88c7837f0c", # O Holy Night
+    "eef61485-ad91-4586-97b0-7421a683aeb5", # O Holy Night
     "8531b357-339e-3cc7-9ed2-0d6b928ed12e", # Joy to the World
     "bc0cdd41-eaa3-3330-b972-8e8174b9e64d", # Hark! The Herald Angels Sing
     "718b96fa-75eb-436e-8c30-0c647aa99696", # Ave Maria (duplicate)
@@ -134,6 +116,8 @@ EXCLUDED_WORKS: Set[str] = set([
     "c5336b3f-cc5d-3ed7-b0f4-6754b78f920f", # A Fifth of Beethoven
     "3bf709a7-a17a-3401-8025-cd522096f893", # March from A Clockwork Orange
     "172693ca-7e2e-41d2-afa5-6e718f033d56", # Russian Rag
+    "9b15b8ac-5e35-3fd6-910a-1f59f51aa0cc", # Pictures at an Exhibition: Promenade (duplicate)
+    "ac469a24-9918-359b-8a95-54566968455c", # Promenade
 ])
 
 WSS_OVERRIDES: Dict[str, float] = {

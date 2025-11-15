@@ -131,7 +131,7 @@ button {
 }
 
 @theme {
-	--font-sans: 'Rajdhani', sans-serif;
+	--font-sans: 'Rajdhani', system-ui, sans-serif;
 	--font-streamster: 'Streamster', cursive;
 
 	--animate-trophy-glow: trophy-glow 2s ease-in-out infinite;
