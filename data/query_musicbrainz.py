@@ -144,6 +144,7 @@ eligible_works AS (
     JOIN musicbrainz.link AS l ON law.link = l.id
   WHERE
     l.link_type = 168 -- 'composer' relationship
+    AND l.attribute_count = 0 -- Primary composer, not additional
     AND law.entity0 IN (SELECT id FROM classical_composers)
     -- Work-level filters (apply uniformly)
     AND COALESCE(
