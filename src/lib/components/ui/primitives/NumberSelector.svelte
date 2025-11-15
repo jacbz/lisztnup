@@ -5,7 +5,7 @@
 		onChange?: (value: number) => void;
 	}
 
-	let { value = 10, options = [5, 10, 15, 20], onChange = () => {} }: Props = $props();
+	let { value = 10, options = [10, 20, 30], onChange = () => {} }: Props = $props();
 
 	function handleSelect(option: number) {
 		onChange(option);

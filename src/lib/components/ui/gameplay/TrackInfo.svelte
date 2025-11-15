@@ -126,18 +126,16 @@
 
 		<!-- Artist/Performer (only if not unknown) -->
 		{#if shouldShowArtist}
-			<div class="flex flex-col gap-1.5">
-				<a
-					href={deezerTrackUrl}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="inline-flex items-center justify-center gap-1 text-sm no-underline transition-all duration-200 hover:underline"
-					style="color: rgb(162, 56, 255)"
-				>
-					{@html deezer}
-					{artists.join(', ')}
-				</a>
-			</div>
+			<a
+				href={deezerTrackUrl}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="text-center text-sm no-underline transition-all duration-200 hover:underline"
+				style="color: rgb(162, 56, 255)"
+			>
+				<div class="mr-[0.1em] mb-[0.2em] inline-flex h-[0.9em] align-middle">{@html deezer}</div>
+				{artists.join(', ')}
+			</a>
 		{/if}
 	</div>
 {/if}

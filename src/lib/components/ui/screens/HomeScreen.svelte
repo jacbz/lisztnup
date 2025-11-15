@@ -222,7 +222,7 @@
 							>
 							<NumberSelector
 								value={localSettings.numberOfTracks}
-								options={[5, 10, 15, 20]}
+								options={[10, 20, 30]}
 								onChange={handleNumberOfTracksChange}
 							/>
 						</div>
@@ -342,7 +342,7 @@
 							<span>MusicBrainz</span>
 						</a>`,
 						second: `<a href="http://deezer.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-cyan-400 transition-colors hover:text-cyan-300">
-							${deezer}
+							<div class="w-[12px]">${deezer}</div>
 							<span>Deezer</span>
 						</a>`
 					}
