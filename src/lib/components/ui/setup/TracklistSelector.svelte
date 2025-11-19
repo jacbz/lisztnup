@@ -17,6 +17,7 @@
 	import Edit from 'lucide-svelte/icons/edit';
 	import ShareIcon from 'lucide-svelte/icons/share';
 	import Trash from 'lucide-svelte/icons/trash';
+	import Library from 'lucide-svelte/icons/library';
 
 	interface Props {
 		visible?: boolean;
@@ -125,6 +126,11 @@
 		showViewer = true;
 	}
 
+	function handleBrowseLibrary() {
+		viewingTracklist = null;
+		showViewer = true;
+	}
+
 	async function handleShare(tracklist: Tracklist) {
 		try {
 			const json = JSON.stringify(tracklist);
@@ -196,9 +202,23 @@
 </script>
 
 <Popup visible={visible && !showEditor && !showViewer} {onClose} width="3xl">
-	<h2 class="mb-5 text-center text-3xl font-bold text-cyan-400">
-		{$_('tracklistSelector.title')}
-	</h2>
+	<div class="mb-5 flex flex-col justify-between gap-4 md:flex-row">
+		<h2 class="text-3xl font-bold text-cyan-400">
+			{$_('tracklistSelector.title')}
+		</h2>
+
+		<!-- Browse Library Button -->
+		<div class="md:mr-9">
+			<button
+				type="button"
+				onclick={handleBrowseLibrary}
+				class="flex items-center gap-2 rounded-lg bg-purple-600 px-3 py-2 text-sm text-white transition-all hover:bg-purple-500 focus:ring-2 focus:ring-purple-400 focus:outline-none"
+			>
+				<Library class="h-4 w-4" />
+				<span>{$_('tracklistSelector.browseLibrary')}</span>
+			</button>
+		</div>
+	</div>
 
 	<!-- Tracklist Selection by Category -->
 	<div class="space-y-6">

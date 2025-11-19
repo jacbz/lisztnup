@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Tracklist, Composer } from '$lib/types';
+	import type { Tracklist, Composer, Work, Part } from '$lib/types';
 	import { MIN_WORK_SCORE, MAX_WORK_SCORE } from '$lib/types';
 	import { gameData } from '$lib/stores';
 	import { TracklistGenerator, deezerPlayer, playerState, progress } from '$lib/services';
@@ -15,6 +15,8 @@
 	import ChevronLeft from 'lucide-svelte/icons/chevron-left';
 	import ChevronsRight from 'lucide-svelte/icons/chevrons-right';
 	import ChevronsLeft from 'lucide-svelte/icons/chevrons-left';
+	import Library from 'lucide-svelte/icons/library';
+	import ListMusic from 'lucide-svelte/icons/list-music';
 
 	interface Props {
 		visible?: boolean;
@@ -63,7 +65,7 @@
 
 	// Load data when tracklist or visibility changes
 	$effect(() => {
-		if (visible && tracklist) {
+		if (visible) {
 			isLoading = true;
 			// Use setTimeout to defer heavy computation and prevent UI freeze
 			setTimeout(() => {
@@ -220,14 +222,24 @@
 	const totalPages = $derived.by(() => Math.max(1, Math.ceil(filteredRawData.length / PAGE_SIZE)));
 
 	function loadTracklistData() {
-		if (!tracklist) return;
-
 		const data = get(gameData);
 		if (!data) return;
 
 		try {
-			const generator = new TracklistGenerator(data, tracklist);
-			const { composers, works } = generator.getFilteredData();
+			let composers: Composer[];
+			let works: Work[];
+
+			if (tracklist) {
+				// Use tracklist filtering
+				const generator = new TracklistGenerator(data, tracklist);
+				const filteredData = generator.getFilteredData();
+				composers = filteredData.composers;
+				works = filteredData.works;
+			} else {
+				// Show whole library - no filtering
+				composers = data.composers;
+				works = data.works;
+			}
 
 			// Create a map of composer GIDs to composer objects
 			const composerMap = new Map<string, Composer>();
@@ -251,7 +263,7 @@
 					composerLifespan: formatLifespan(composer.birth_year, composer.death_year),
 					workGid: work.gid,
 					work: work.name,
-					parts: work.parts.map((p) => ({
+					parts: work.parts.map((p: Part) => ({
 						name: p.name,
 						score: p.score,
 						deezerIds: p.deezer
@@ -373,9 +385,13 @@
 	<div class="flex h-full flex-col">
 		<div class="border-b-2 border-cyan-400/30 bg-slate-800/50 p-6">
 			<div class="flex items-center justify-between">
-				<h2 class="text-2xl font-bold text-cyan-400">
+				<h2 class="flex items-center gap-2 text-2xl font-bold text-cyan-400">
 					{#if tracklist}
+						<ListMusic class="h-6 w-6" />
 						{tracklist.isDefault ? $_(tracklist.name) : tracklist.name}
+					{:else}
+						<Library class="h-6 w-6" />
+						{$_('tracklistViewer.library')}
 					{/if}
 				</h2>
 
