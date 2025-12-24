@@ -254,11 +254,22 @@
 						{#each categories as category}
 							{@const def = getCategoryDefinition(category)}
 							<div
-								class="flex flex-col items-center justify-center gap-0.5 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
+								class="relative flex flex-col items-center justify-center gap-0.5 overflow-hidden p-2 px-2 py-2 text-sm font-bold text-white uppercase"
 								style="background: linear-gradient(135deg, {def.color1}, {def.color2});"
 							>
-								<span class="text-sm">{$_(`game.categoriesShort.${category}`)}</span>
-								<span class="text-xs opacity-80">+{CATEGORY_POINTS[category]}</span>
+								<!-- Background Icon -->
+								<svg
+									class="pointer-events-none absolute inset-0 h-full w-full p-2 opacity-30"
+									viewBox="0 0 24 24"
+									fill="currentColor"
+									preserveAspectRatio="xMidYMid meet"
+								>
+									{#each def.iconPaths as pathData}
+										<path d={pathData} />
+									{/each}
+								</svg>
+								<span class="relative z-10 text-sm">{$_(`game.categoriesShort.${category}`)}</span>
+								<span class="relative z-10 text-xs opacity-80">+{CATEGORY_POINTS[category]}</span>
 							</div>
 						{/each}
 						<div
@@ -287,14 +298,27 @@
 								{@const isSelected = selectedCells.has(`${player.name}:${category}`)}
 								<button
 									type="button"
-									class="flex cursor-pointer items-center justify-center bg-slate-700 p-2 px-2 transition-all duration-200 hover:bg-slate-600"
+									class="relative flex cursor-pointer items-center justify-center overflow-hidden bg-slate-700 p-2 px-2 transition-all duration-200 hover:bg-slate-600"
 									style={isSelected
 										? `background: linear-gradient(135deg, ${def.color1}, ${def.color2});`
 										: ''}
 									onclick={() => toggleCell(player.name, category)}
 								>
+									{#if isSelected}
+										<!-- Background Icon -->
+										<svg
+											class="pointer-events-none absolute inset-0 h-full w-full p-2 opacity-30"
+											viewBox="0 0 24 24"
+											fill="currentColor"
+											preserveAspectRatio="xMidYMid meet"
+										>
+											{#each def.iconPaths as pathData}
+												<path d={pathData} />
+											{/each}
+										</svg>
+									{/if}
 									<span
-										class="text-base font-bold text-white transition-opacity duration-200"
+										class="relative z-10 text-base font-bold text-white transition-opacity duration-200"
 										class:opacity-0={!isSelected}
 										class:opacity-100={isSelected}
 									>
@@ -337,11 +361,22 @@
 						{#each revealedCategories as category}
 							{@const def = getCategoryDefinition(category)}
 							<div
-								class="flex flex-col items-center justify-center gap-0.5 p-2 px-2 py-2 text-sm font-bold text-white uppercase"
+								class="relative flex flex-col items-center justify-center gap-0.5 overflow-hidden p-2 px-2 py-2 text-sm font-bold text-white uppercase"
 								style="background: linear-gradient(135deg, {def.color1}, {def.color2});"
 							>
-								<span class="text-sm">{$_(`game.categoriesShort.${category}`)}</span>
-								<span class="text-xs opacity-80">+{CATEGORY_POINTS[category]}</span>
+								<!-- Background Icon -->
+								<svg
+									class="pointer-events-none absolute inset-0 h-full w-full p-2 opacity-30"
+									viewBox="0 0 24 24"
+									fill="currentColor"
+									preserveAspectRatio="xMidYMid meet"
+								>
+									{#each def.iconPaths as pathData}
+										<path d={pathData} />
+									{/each}
+								</svg>
+								<span class="relative z-10 text-sm">{$_(`game.categoriesShort.${category}`)}</span>
+								<span class="relative z-10 text-xs opacity-80">+{CATEGORY_POINTS[category]}</span>
 							</div>
 						{/each}
 						<div
@@ -381,14 +416,27 @@
 								{@const isSelected = selectedCells.has(`${player.name}:${category}`)}
 								<button
 									type="button"
-									class="flex cursor-pointer items-center justify-center bg-slate-700 p-2 px-2 transition-all duration-200 hover:bg-slate-600"
+									class="relative flex cursor-pointer items-center justify-center overflow-hidden bg-slate-700 p-2 px-2 transition-all duration-200 hover:bg-slate-600"
 									style={isSelected
 										? `background: linear-gradient(135deg, ${def.color1}, ${def.color2});`
 										: ''}
 									onclick={() => toggleCell(player.name, category)}
 								>
+									{#if isSelected}
+										<!-- Background Icon -->
+										<svg
+											class="pointer-events-none absolute inset-0 h-full w-full p-2 opacity-30"
+											viewBox="0 0 24 24"
+											fill="currentColor"
+											preserveAspectRatio="xMidYMid meet"
+										>
+											{#each def.iconPaths as pathData}
+												<path d={pathData} />
+											{/each}
+										</svg>
+									{/if}
 									<span
-										class="text-base font-bold text-white transition-opacity duration-200"
+										class="relative z-10 text-base font-bold text-white transition-opacity duration-200"
 										class:opacity-0={!isSelected}
 										class:opacity-100={isSelected}
 									>

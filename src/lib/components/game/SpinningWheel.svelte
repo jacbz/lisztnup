@@ -263,13 +263,13 @@
 			const iconX = centerX + Math.cos(midAngle) * iconDistance;
 			const iconY = centerY + Math.sin(midAngle) * iconDistance;
 
-			if (category.iconPath) {
+			if (category.iconPaths) {
 				ctx.save();
 				ctx.translate(iconX, iconY);
 				ctx.rotate(midAngle - Math.PI / 2);
 
 				const iconScale = size / 300;
-				drawSVGPaths(ctx, category.iconPath, iconScale * 1.5);
+				drawSVGPaths(ctx, category.iconPaths, iconScale * 1.5);
 
 				ctx.restore();
 			}

@@ -51,13 +51,25 @@
 					{#each activeCategories as category, index}
 						{@const categoryDef = getCategoryDefinition(category)}
 						<div
-							class="flex w-[calc(50%-0.1875rem)] flex-col items-center justify-center rounded-2xl border-3 border-transparent py-1 backdrop-blur-md md:w-[calc(33%-0.1875rem)] md:py-2"
+							class="relative flex w-[calc(50%-0.1875rem)] flex-col items-center justify-center overflow-hidden rounded-2xl border-3 border-transparent py-1 backdrop-blur-md md:w-[calc(33%-0.1875rem)] md:py-2"
 							style="border-color: {categoryDef.color2}; box-shadow: 0 0 40px {categoryDef.glowColor}; color: {categoryDef.color1};"
 						>
-							<span class="px-3 text-xl font-bold tracking-wider uppercase md:text-2xl"
+							<!-- Background Icon -->
+							<svg
+								class="pointer-events-none absolute inset-0 h-full w-full p-2 opacity-20"
+								viewBox="0 0 24 24"
+								fill="currentColor"
+								preserveAspectRatio="xMidYMid meet"
+							>
+								{#each categoryDef.iconPaths as pathData}
+									<path d={pathData} />
+								{/each}
+							</svg>
+							<span
+								class="relative z-10 px-3 text-xl font-bold tracking-wider uppercase md:text-2xl"
 								>{$_(`game.categories.${category}`)}</span
 							>
-							<span class="text-sm font-semibold text-nowrap md:text-base">
+							<span class="relative z-10 text-sm font-semibold text-nowrap md:text-base">
 								{$_('scoring.pointsAwarded', { values: { points: CATEGORY_POINTS[category] } })}
 							</span>
 						</div>

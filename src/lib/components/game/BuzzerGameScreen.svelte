@@ -367,7 +367,7 @@
 						<div
 							in:fly={{ x: 100, duration: 300 }}
 							out:fly={{ x: -100, duration: 300 }}
-							class="flex flex-col items-center gap-2 rounded-[20px] border-[3px] px-4 py-3 shadow-[0_0_40px] backdrop-blur-xs transition-all duration-300 md:flex-row md:gap-6 md:px-8"
+							class="relative flex flex-col items-center gap-2 overflow-hidden rounded-[20px] border-[3px] px-4 py-3 shadow-[0_0_40px] backdrop-blur-xs transition-all duration-300 md:flex-row md:gap-6 md:px-8"
 							style="border-color: {isPlaceholder
 								? '#6b7280'
 								: categoryDef!.color2}; box-shadow: 0 0 40px {isPlaceholder
@@ -380,14 +380,26 @@
 									{Math.ceil(timeRemaining)}
 								</div>
 							{:else}
+								<!-- Background Icon -->
+								<svg
+									class="pointer-events-none absolute inset-0 h-full w-full p-2 opacity-20"
+									viewBox="0 0 24 24"
+									fill="currentColor"
+									preserveAspectRatio="xMidYMid meet"
+									style="color: {categoryDef!.color1};"
+								>
+									{#each categoryDef!.iconPaths as pathData}
+										<path d={pathData} />
+									{/each}
+								</svg>
 								<div
-									class="text-2xl font-bold tracking-wider uppercase"
+									class="relative z-10 text-2xl font-bold tracking-wider uppercase"
 									style="color: {categoryDef!.color1};"
 								>
 									{$_(`game.categories.${category}`)}
 								</div>
 								<div
-									class="text-lg font-semibold text-nowrap"
+									class="relative z-10 text-lg font-semibold text-nowrap"
 									style="color: {categoryDef!.color2};"
 								>
 									{$_('scoring.pointsAwarded', {
@@ -395,7 +407,9 @@
 									})}
 								</div>
 								{#if isCurrent}
-									<div class="min-w-[60px] text-center text-4xl font-bold text-white md:text-5xl">
+									<div
+										class="relative z-10 min-w-[60px] text-center text-4xl font-bold text-white md:text-5xl"
+									>
 										{Math.ceil(trackDuration - playbackTime)}
 									</div>
 								{/if}

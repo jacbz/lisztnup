@@ -410,7 +410,7 @@
 								>
 									{#if categoryDef}
 										<svg viewBox="0 0 24 24" class="opacity-30" style="fill: {categoryDef.color1};">
-											{#each categoryDef.iconPath as path}
+											{#each categoryDef.iconPaths as path}
 												<path d={path} />
 											{/each}
 										</svg>

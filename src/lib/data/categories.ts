@@ -11,7 +11,8 @@ export interface CategoryDefinition {
 	color1: string;
 	color2: string;
 	glowColor: string;
-	iconPath: string[];
+	icon: string;
+	iconPaths: string[];
 }
 
 export const categories: Record<GuessCategory, CategoryDefinition> = {
@@ -20,35 +21,40 @@ export const categories: Record<GuessCategory, CategoryDefinition> = {
 		color1: '#06b6d4',
 		color2: '#22d3ee',
 		glowColor: 'rgba(6, 182, 212, 0.8)',
-		iconPath: extractPathFromSVG(composerIcon)
+		icon: composerIcon,
+		iconPaths: extractPathFromSVG(composerIcon)
 	},
 	work: {
 		id: 'work',
 		color1: '#ec4899',
 		color2: '#f472b6',
 		glowColor: 'rgba(236, 72, 153, 0.8)',
-		iconPath: extractPathFromSVG(workIcon)
+		icon: workIcon,
+		iconPaths: extractPathFromSVG(workIcon)
 	},
 	era: {
 		id: 'era',
 		color1: '#8b5cf6',
 		color2: '#a78bfa',
 		glowColor: 'rgba(139, 92, 246, 0.8)',
-		iconPath: extractPathFromSVG(eraIcon)
+		icon: eraIcon,
+		iconPaths: extractPathFromSVG(eraIcon)
 	},
 	type: {
 		id: 'type',
 		color1: '#f59e0b',
 		color2: '#fbbf24',
 		glowColor: 'rgba(245, 158, 11, 0.8)',
-		iconPath: extractPathFromSVG(typeIcon)
+		icon: typeIcon,
+		iconPaths: extractPathFromSVG(typeIcon)
 	},
 	decade: {
 		id: 'decade',
 		color1: '#10b981',
 		color2: '#34d399',
 		glowColor: 'rgba(16, 185, 129, 0.8)',
-		iconPath: extractPathFromSVG(decadeIcon)
+		icon: decadeIcon,
+		iconPaths: extractPathFromSVG(decadeIcon)
 	}
 };
 
