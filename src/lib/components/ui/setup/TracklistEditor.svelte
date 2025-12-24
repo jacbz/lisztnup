@@ -51,9 +51,9 @@
 	let enablePopularityWeighting = $state(true);
 
 	// Composer filter mode state
-	let composerFilterMode = $state<'include' | 'exclude' | 'topN'>('include');
+	let composerFilterMode = $state<'include' | 'exclude' | 'notabilityRange'>('include');
 	let selectedComposers = $state<string[]>([]);
-	let topNCount = $state(50);
+	let notabilityRange = $state<[number, number]>([1, 400]); // Default to all composers (will be updated based on actual count)
 	let composerSearchTerm = $state('');
 
 	// Name filter state
@@ -111,8 +111,8 @@
 						config.composerFilter.mode === 'exclude'
 					) {
 						selectedComposers = [...config.composerFilter.composers];
-					} else {
-						topNCount = config.composerFilter.count;
+					} else if (config.composerFilter.mode === 'notabilityRange') {
+						notabilityRange = [...config.composerFilter.range];
 					}
 				}
 			} else {
@@ -130,7 +130,7 @@
 				enablePopularityWeighting = true;
 				composerFilterMode = 'include';
 				selectedComposers = [];
-				topNCount = 50;
+				notabilityRange = [1, 400];
 				nameFilters = [];
 				nameFilterInput = '';
 			}
@@ -151,6 +151,9 @@
 			maxTracksFromSingleWorkEnabled,
 			nameFilterEnabled,
 			enablePopularityWeighting,
+			composerFilterMode,
+			selectedComposers,
+			notabilityRange,
 			JSON.stringify(config),
 			JSON.stringify(nameFilters)
 		];
@@ -297,7 +300,7 @@
 		} else if (composerFilterMode === 'exclude') {
 			return { mode: 'exclude', composers: selectedComposers };
 		} else {
-			return { mode: 'topN', count: topNCount };
+			return { mode: 'notabilityRange', range: notabilityRange };
 		}
 	}
 
@@ -595,28 +598,29 @@
 						</button>
 						<button
 							type="button"
-							onclick={() => (composerFilterMode = 'topN')}
-							class="flex-1 rounded-lg px-3 py-2 text-sm {composerFilterMode === 'topN'
+							onclick={() => (composerFilterMode = 'notabilityRange')}
+							class="flex-1 rounded-lg px-3 py-2 text-sm {composerFilterMode === 'notabilityRange'
 								? 'bg-cyan-500 text-white'
 								: 'bg-slate-700 text-slate-300'}"
 						>
-							{$_('tracklistEditor.topNMode')}
+							{$_('tracklistEditor.notabilityRangeMode')}
 						</button>
 					</div>
 
-					{#if composerFilterMode === 'topN'}
-						<!-- Top N slider -->
-						<Slider
-							value={topNCount}
+					{#if composerFilterMode === 'notabilityRange'}
+						<!-- Notability Range slider -->
+						<RangeSlider
+							bind:valueMin={notabilityRange[0]}
+							bind:valueMax={notabilityRange[1]}
 							min={1}
 							max={400}
 							step={1}
-							label={$_('tracklistEditor.topNComposers')}
-							showValue={true}
-							onChange={(val) => (topNCount = val)}
+							label={$_('tracklistEditor.notabilityRange')}
 						/>
 						<p class="mt-2 text-xs text-slate-400">
-							{$_('tracklistEditor.topNModeDesc', { values: { n: topNCount } })}
+							{$_('tracklistEditor.notabilityRangeModeDesc', {
+								values: { start: notabilityRange[0], end: notabilityRange[1] }
+							})}
 						</p>
 					{:else}
 						<!-- Composer selection -->

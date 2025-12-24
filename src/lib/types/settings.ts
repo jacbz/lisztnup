@@ -18,7 +18,7 @@ export interface CategoryAdjustments {
 export type ComposerFilter =
 	| { mode: 'include'; composers: string[] }
 	| { mode: 'exclude'; composers: string[] }
-	| { mode: 'topN'; count: number };
+	| { mode: 'notabilityRange'; range: [number, number] };
 
 export interface TracklistConfig {
 	categoryAdjustments?: CategoryAdjustments;

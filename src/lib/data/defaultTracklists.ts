@@ -162,6 +162,20 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			enablePopularityWeighting: false
 		}
 	},
+	{
+		name: 'tracklists.obscure.name',
+		description: 'tracklists.obscure.description',
+		isDefault: true,
+		icon: composerIcon,
+		category: 'difficulty',
+		config: {
+			composerFilter: {
+				mode: 'notabilityRange',
+				range: [201, 400]
+			},
+			enablePopularityWeighting: false
+		}
+	},
 	// Category-based tracklists
 	{
 		name: 'tracklists.piano.name',

@@ -68,6 +68,10 @@
 			"name": "Cadenza",
 			"description": "For the true connoisseur seeking the ultimate challenge – no popular hits, only the rare and refined."
 		},
+		"obscure": {
+			"name": "Obscure Composers",
+			"description": "Discover hidden gems from lesser-known composers outside the standard repertoire."
+		},
 		"piano": {
 			"name": "Piano",
 			"description": "Works focused on piano repertoire."
@@ -191,8 +195,9 @@
 		"composerFilterDesc": "Control which composers are included in your tracklist",
 		"includeMode": "Include Only",
 		"excludeMode": "Exclude",
-		"topNMode": "Top N",
-		"topNModeDesc": "Include only the top {n} most popular composers",
+		"notabilityRangeMode": "Notability",
+		"notabilityRange": "Notability Range",
+		"notabilityRangeModeDesc": "Include composers ranked {start} to {end} by notability (1 = Bach, 2 = Mozart, etc.)",
 		"searchComposers": "Search composers...",
 		"selectAll": "Select All",
 		"selectNone": "Select None",
@@ -203,7 +208,6 @@
 		"yearFilterDesc": "Limit works to a specific time period",
 		"yearStart": "Start Year",
 		"yearEnd": "End Year",
-		"topNComposers": "Top N Composers",
 		"workScoreRange": "Popularity Range",
 		"workScoreRangeDesc": "Filter works by popularity score (higher = more recordings of this work exist)",
 		"limitWorksFromComposer": "Limit Works per Composer",
@@ -312,7 +316,7 @@
 			"description": "Race against time and your opponents! Hit the buzzer when you know the answer.",
 			"step1": {
 				"title": "Hit the Buzzer",
-				"desc": "Hit the giant buzzer button when you know the answer to score points."
+				"desc": "Hit the giant buzzer button when you know the answer to score points. You can also press any key on your keyboard (or external button) to buzz."
 			},
 			"step2": {
 				"title": "Categories Change Over Time",

@@ -63,13 +63,13 @@
 				class="absolute left-0 -translate-x-1/2 text-xs font-semibold text-cyan-300"
 				style="left: {minPercent}%"
 			>
-				{valueMin.toFixed(1)}
+				{valueMin.toFixed(step < 1 ? 1 : 0)}
 			</div>
 			<div
 				class="absolute left-0 -translate-x-1/2 text-xs font-semibold text-purple-300"
 				style="left: {maxPercent}%"
 			>
-				{valueMax.toFixed(1)}
+				{valueMax.toFixed(step < 1 ? 1 : 0)}
 			</div>
 		</div>
 

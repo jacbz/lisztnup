@@ -124,13 +124,19 @@ export class TracklistGenerator {
 		// Filter composers to those with works
 		let composers = this.data.composers.filter((c) => composerSet.has(c.gid));
 
-		// Step 7: Filter by top N composers
-		if (config.composerFilter?.mode === 'topN') {
-			const topNCount = config.composerFilter.count;
+		// Step 7: Filter by notability range (rank-based filtering)
+		if (config.composerFilter?.mode === 'notabilityRange') {
+			const [startRank, endRank] = config.composerFilter.range;
 
-			// Sort composers by score (descending) and take top N
-			composers = [...composers].sort((a, b) => b.score - a.score).slice(0, topNCount);
-			console.log(composers);
+			// Sort composers by score (descending) to determine rank
+			const sortedComposers = [...composers].sort((a, b) => b.score - a.score);
+
+			// Take composers in the specified rank range (1-indexed, inclusive)
+			// startRank=1, endRank=50 means take composers ranked 1-50 (most notable)
+			// startRank=51, endRank=100 means take composers ranked 51-100 (less notable)
+			const startIndex = Math.max(0, startRank - 1); // Convert to 0-indexed
+			const endIndex = Math.min(sortedComposers.length, endRank); // Inclusive end
+			composers = sortedComposers.slice(startIndex, endIndex);
 
 			const composerIds = new Set(composers.map((c) => c.gid));
 			works = works.filter((work) => composerIds.has(work.composer));
