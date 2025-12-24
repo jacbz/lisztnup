@@ -42,6 +42,7 @@
 		<EdgeDisplay
 			margin="42px"
 			visible={$currentRound.isPlaying}
+			hideTop={$gameSession.players.length < 2}
 			hideLeftRight={$gameSession.players.length < 3}
 		>
 			{#snippet children()}

@@ -359,8 +359,7 @@
 	"scoring": {
 		"title": "Score This Round",
 		"player": "Player",
-		"selectCategory": "Select the category that was guessed correctly:",
-		"wrong": "❌",
+		"selectCategory": "For each player, select the category that was guessed correctly.",
 		"noGuess": "No Guess",
 		"continue": "Continue",
 		"correctGuess": "Who guessed correctly?",
@@ -369,7 +368,8 @@
 		"noPoints": "0 pts",
 		"pts": "{points} pts",
 		"pointsAwarded": "+{points} pts",
-		"pointsPenalty": "-{points} pts"
+		"pointsPenalty": "-{points} pts",
+		"pointsPreview": "{current} ({delta}) pts"
 	},
 	"stats": {
 		"title": "Statistics",

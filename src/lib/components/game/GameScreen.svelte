@@ -450,7 +450,6 @@
 	mode={mode === 'bingo' ? 'classic' : mode}
 	track={currentTrack}
 	players={$gameSession.players}
-	{isSoloMode}
 	categories={activeCategories}
 	onScore={handleScoreSubmit}
 />
