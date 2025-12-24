@@ -253,6 +253,9 @@
 									<button
 										type="button"
 										onclick={() => playerSetupRef?.addPlayer()}
+										disabled={!enableScoring}
+										class:opacity-40={!enableScoring}
+										class:pointer-events-none={!enableScoring}
 										class="rounded-lg border-2 border-cyan-400/30 bg-slate-900 px-3 py-1.5 text-sm font-semibold text-cyan-400 transition-all duration-200 hover:border-cyan-400 hover:bg-slate-800"
 									>
 										<Plus class="inline h-4 w-4" />
@@ -342,7 +345,7 @@
 							<span>MusicBrainz</span>
 						</a>`,
 						second: `<a href="http://deezer.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-cyan-400 transition-colors hover:text-cyan-300">
-							<div class="w-[12px]">${deezer}</div>
+							<div class="w-3">${deezer}</div>
 							<span>Deezer</span>
 						</a>`
 					}

@@ -51,7 +51,7 @@
 			{@const isSelected = selectedMode === mode.id}
 			<button
 				type="button"
-				class="relative flex flex-1 cursor-pointer items-start gap-4 overflow-hidden rounded-2xl border-2 p-6 text-left backdrop-blur-xl transition-all duration-300 hover:scale-[1.02]"
+				class="relative flex flex-1 cursor-pointer items-start gap-4 overflow-hidden rounded-2xl border-2 p-6 text-left transition-all duration-300 hover:scale-[1.02]"
 				class:shadow-none={!isSelected}
 				style={isSelected
 					? `border-color: ${mode.color}; box-shadow: 0 0 30px ${mode.color}80;`

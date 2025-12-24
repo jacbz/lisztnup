@@ -30,7 +30,7 @@ export const CATEGORY_POINTS: Record<GuessCategory, number> = {
 
 // Buzzer mode time percentages (of track duration)
 // Takes first n elements and normalizes them based on number of categories
-export const BUZZER_TIME_PERCENTAGES = [14, 10, 6];
+export const BUZZER_TIME_PERCENTAGES = [15, 10, 5];
 export const BUZZER_PREVIEW_COUNTDOWN = 5; // seconds
 
 export interface Player {

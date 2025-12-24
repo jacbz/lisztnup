@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
 	import {
 		gameData,
 		isDataLoaded,
@@ -112,30 +113,38 @@
 </script>
 
 {#if $gameState === 'loading'}
-	<LoadingScreen />
+	<div in:fade={{ duration: 300, delay: 300 }} out:fade={{ duration: 300 }}>
+		<LoadingScreen />
+	</div>
 {:else if $gameState === 'generating'}
-	<LoadingScreen />
+	<div in:fade={{ duration: 300, delay: 300 }} out:fade={{ duration: 300 }}>
+		<LoadingScreen />
+	</div>
 {:else if $gameState === 'home'}
-	<HomeScreen onStart={handleStartGame} />
+	<div in:fade={{ duration: 300, delay: 300 }} out:fade={{ duration: 300 }}>
+		<HomeScreen onStart={handleStartGame} />
+	</div>
 {:else if $gameState === 'game' && generator && currentMode}
-	<GameScreen
-		generator={generator!}
-		numberOfTracks={$settings.numberOfTracks}
-		mode={currentMode}
-		players={currentPlayers}
-		{isSoloMode}
-		enableScoring={currentMode === 'bingo' ? false : $settings.enableScoring}
-		ignoreTrackLength={currentMode === 'buzzer'}
-		onHome={handleBackToHome}
-	>
-		{#snippet children()}
-			{#if currentMode === 'classic'}
-				<ClassicGameScreen />
-			{:else if currentMode === 'buzzer'}
-				<BuzzerGameScreen />
-			{:else}
-				<BingoGameScreen />
-			{/if}
-		{/snippet}
-	</GameScreen>
+	<div in:fade={{ duration: 300, delay: 300 }} out:fade={{ duration: 300 }}>
+		<GameScreen
+			generator={generator!}
+			numberOfTracks={$settings.numberOfTracks}
+			mode={currentMode}
+			players={currentPlayers}
+			{isSoloMode}
+			enableScoring={currentMode === 'bingo' ? false : $settings.enableScoring}
+			ignoreTrackLength={currentMode === 'buzzer'}
+			onHome={handleBackToHome}
+		>
+			{#snippet children()}
+				{#if currentMode === 'classic'}
+					<ClassicGameScreen />
+				{:else if currentMode === 'buzzer'}
+					<BuzzerGameScreen />
+				{:else}
+					<BingoGameScreen />
+				{/if}
+			{/snippet}
+		</GameScreen>
+	</div>
 {/if}

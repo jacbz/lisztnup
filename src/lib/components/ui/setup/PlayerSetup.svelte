@@ -4,6 +4,7 @@
 	import { settings } from '$lib/stores';
 	import X from 'lucide-svelte/icons/x';
 	import Plus from 'lucide-svelte/icons/plus';
+	import { slide } from 'svelte/transition';
 
 	interface Props {
 		onPlayersChange?: (players: Player[], isSoloMode: boolean, isValid: boolean) => void;
@@ -138,7 +139,7 @@
 <div class="flex w-full flex-col gap-2">
 	<!-- Players List -->
 	{#each players as player, index (index)}
-		<div class="flex flex-col gap-1">
+		<div class="flex flex-col gap-1" transition:slide={{ duration: 300 }}>
 			<div class="flex items-center gap-2">
 				<!-- Player Name Input -->
 				<input
