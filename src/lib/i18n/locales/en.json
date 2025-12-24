@@ -402,5 +402,30 @@
 	"footer": {
 		"madeBy": "A Game by Jacob Zhang",
 		"poweredBy": "Powered by {first} and {second}"
+	},
+	"eras": {
+		"ancient": "Ancient",
+		"medieval": "Medieval",
+		"earlyRenaissance": "Early Renaissance",
+		"middleRenaissance": "Middle Renaissance",
+		"lateRenaissance": "Late Renaissance",
+		"lateRenaissanceEarlyBaroque": "Late Renaissance / Early Baroque",
+		"earlyBaroque": "Early Baroque",
+		"baroque": "Baroque",
+		"lateBaroque": "Late Baroque",
+		"lateBaroqueEarlyClassical": "Late Baroque / Early Classical",
+		"earlyClassical": "Early Classical",
+		"classical": "Classical",
+		"lateClassical": "Late Classical",
+		"earlyRomantic": "Early Romantic",
+		"romantic": "Romantic",
+		"lateRomantic": "Late Romantic",
+		"20thCentury": "20th-century",
+		"contemporary": "Contemporary",
+		"ragtime": "Ragtime",
+		"impressionism": "Impressionism",
+		"secondVienneseSchool": "Second Viennese School",
+		"modernism": "Modernism",
+		"minimalism": "Minimalism"
 	}
 }

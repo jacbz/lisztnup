@@ -9,6 +9,7 @@
 	} from '$lib/utils';
 	import { deezerPlayer, playerState } from '$lib/services';
 	import deezer from '$lib/assets/icons/deezer.svg?raw';
+	import { _ } from 'svelte-i18n';
 
 	interface Props {
 		track: Track | null;
@@ -52,7 +53,8 @@
 	const era = $derived.by(() => {
 		const { begin_year, end_year } = track?.work ?? {};
 		const composerName = track?.composer.name;
-		return getWorkEra(begin_year, end_year, composerName);
+		const era = getWorkEra(begin_year, end_year, composerName);
+		return $_(`eras.${era}`);
 	});
 </script>
 

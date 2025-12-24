@@ -132,116 +132,114 @@ export function getDecade(year: number): string {
 /**
  * Musical periods defined by their starting year.
  * The end of a period is implicitly the start of the next period minus 1.
+ * Labels are i18n keys in the format 'eras.{key}'
  */
 const PERIODS = [
-	{ start: -Infinity, label: 'Ancient' },
-	{ start: 476, label: 'Medieval' },
-	{ start: 1400, label: 'Early Renaissance' },
-	{ start: 1470, label: 'Middle Renaissance' },
-	{ start: 1530, label: 'Late Renaissance' },
-	{ start: 1600, label: 'Late Renaissance / Early Baroque' },
-	{ start: 1620, label: 'Early Baroque' },
-	{ start: 1650, label: 'Baroque' },
-	{ start: 1730, label: 'Late Baroque' },
-	{ start: 1750, label: 'Late Baroque / Early Classical' },
-	{ start: 1770, label: 'Early Classical' },
-	{ start: 1785, label: 'Classical' },
-	{ start: 1800, label: 'Late Classical' },
-	{ start: 1820, label: 'Early Romantic' },
-	{ start: 1850, label: 'Romantic' },
-	{ start: 1880, label: 'Late Romantic' },
-	{ start: 1900, label: '20th-century' },
-	{ start: 2000, label: 'Contemporary' }
+	{ start: -Infinity, key: 'ancient' },
+	{ start: 476, key: 'medieval' },
+	{ start: 1400, key: 'earlyRenaissance' },
+	{ start: 1470, key: 'middleRenaissance' },
+	{ start: 1530, key: 'lateRenaissance' },
+	{ start: 1600, key: 'lateRenaissanceEarlyBaroque' },
+	{ start: 1620, key: 'earlyBaroque' },
+	{ start: 1650, key: 'baroque' },
+	{ start: 1730, key: 'lateBaroque' },
+	{ start: 1750, key: 'lateBaroqueEarlyClassical' },
+	{ start: 1770, key: 'earlyClassical' },
+	{ start: 1785, key: 'classical' },
+	{ start: 1800, key: 'lateClassical' },
+	{ start: 1820, key: 'earlyRomantic' },
+	{ start: 1850, key: 'romantic' },
+	{ start: 1880, key: 'lateRomantic' },
+	{ start: 1900, key: '20thCentury' },
+	{ start: 2000, key: 'contemporary' }
 ];
 
 /**
  * Manual overrides for specific composers whose music fits into
- * specific genres or movements not captured by standard period classification
- * Key is composer name in sort format (Last, First)
+ * specific genres or movements not captured by standard period classification.
+ * Values are i18n keys in the format 'eras.{key}'.
  */
-const COMPOSER_ERA_OVERRIDES: Record<string, string> = {
-	// Ragtime & Jazz Age
-	'Joplin, Scott': 'Ragtime',
-	'Gershwin, George': 'American Jazz / Classical Fusion',
+const COMPOSER_ERA_OVERRIDES = new Map<string, string>([
+	// Ragtime
+	['Joplin, Scott', 'ragtime'],
 
 	// Impressionism
-	'Satie, Erik': 'Impressionism',
-	'Debussy, Claude': 'Impressionism',
-	'Ravel, Maurice': 'Impressionism',
+	['Satie, Erik', 'impressionism'],
+	['Debussy, Claude', 'impressionism'],
+	['Ravel, Maurice', 'impressionism'],
 
-	// Les Six & Neo-Classical
-	'Poulenc, Francis': 'Les Six / Neo-Classical',
-	'Milhaud, Darius': 'Les Six / Modernism',
+	// Second Viennese School
+	['Schönberg, Arnold', 'secondVienneseSchool'],
+	['Berg, Alban', 'secondVienneseSchool'],
+	['Webern, Anton', 'secondVienneseSchool'],
 
-	// Second Viennese School / Atonality
-	'Schönberg, Arnold': 'Second Viennese School / Atonality',
-	'Berg, Alban': 'Second Viennese School / Atonality',
-	'Webern, Anton': 'Second Viennese School / Atonality',
-
-	// Modernism & Neoclassicism
-	'Stravinsky, Igor Fyodorovitch': 'Modernism / Neoclassicism',
-	'Bartók, Béla': 'Modernism / Ethnomusicology',
-	'Prokofiev, Sergei Sergeyevich': 'Russian Modernism',
-	'Shostakovich, Dmitri Dmitrievich': 'Soviet Modernism',
-
-	// American Modernism
-	'Bernstein, Leonard': 'American Modernism',
-	'Copland, Aaron': 'American Modernism',
-	'Ives, Charles': 'American Experimental',
-	'Barber, Samuel': 'American Neo-Romanticism',
-	'Cage, John': 'American Avant-Garde',
-	'Adams, John': 'Minimalism / Post-Minimalism',
+	// Modernism
+	['Poulenc, Francis', 'modernism'],
+	['Milhaud, Darius', 'modernism'],
+	['Gershwin, George', 'modernism'],
+	['Stravinsky, Igor Fyodorovitch', 'modernism'],
+	['Bartók, Béla', 'modernism'],
+	['Prokofiev, Sergei Sergeyevich', 'modernism'],
+	['Shostakovich, Dmitri Dmitrievich', 'modernism'],
+	['Bernstein, Leonard', 'modernism'],
+	['Copland, Aaron', 'modernism'],
+	['Ives, Charles', 'modernism'],
+	['Barber, Samuel', 'modernism'],
+	['Cage, John', 'modernism'],
+	['Messiaen, Olivier', 'modernism'],
+	['Ligeti, György', 'modernism'],
+	['Penderecki, Krzysztof', 'modernism'],
 
 	// Minimalism
-	'Glass, Philip': 'Minimalism',
-	'Reich, Steve': 'Minimalism',
-	'Pärt, Arvo': 'Holy Minimalism',
+	['Adams, John', 'minimalism'],
+	['Glass, Philip', 'minimalism'],
+	['Reich, Steve', 'minimalism'],
+	['Pärt, Arvo', 'minimalism'],
 
-	// Avant-Garde & Experimental
-	'Messiaen, Olivier': 'Mystical Modernism',
-	'Ligeti, György': 'Avant-Garde / Micropolyphony',
-	'Penderecki, Krzysztof': 'Polish Avant-Garde',
-
-	// Late Romantic / National Schools
-	'Rachmaninoff, Sergei Vasilievich': 'Late Romantic',
-	'Scriabin, Alexander Nikolayevich': 'Late Romantic',
-	'Sibelius, Jean': 'Late Romantic',
-	'Nielsen, Carl': 'Late Romantic',
-	'Elgar, Edward': 'Late Romantic',
-	'Vaughan Williams, Ralph': 'Late Romantic'
-};
+	// Late Romantic
+	['Rachmaninoff, Sergei Vasilievich', 'lateRomantic'],
+	['Scriabin, Alexander Nikolayevich', 'lateRomantic'],
+	['Sibelius, Jean', 'lateRomantic'],
+	['Nielsen, Carl', 'lateRomantic'],
+	['Elgar, Edward', 'lateRomantic'],
+	['Vaughan Williams, Ralph', 'lateRomantic']
+]);
 
 /**
- * Gets the musical era/period label for a given year
+ * Gets the musical era/period i18n key for a given year.
  * @param year - The year to get the era for
- * @returns The era label, or empty string if year is null/undefined
+ * @returns The era i18n key (e.g., 'baroque', 'romantic'), or empty string if year is null/undefined.
+ *          Use with 'eras.' prefix for translation (e.g., $t('eras.baroque'))
  */
 export function getEra(year: number | null | undefined): string {
 	if (year == null) return '';
 
 	// Find the last period whose start is <= year
 	for (let i = PERIODS.length - 1; i >= 0; i--) {
-		if (year >= PERIODS[i].start) return PERIODS[i].label;
+		if (year >= PERIODS[i].start) return PERIODS[i].key;
 	}
 	return '';
 }
 
 /**
- * Gets the musical era/period label for a work based on its composition year range
+ * Gets the musical era/period i18n key for a work based on its composition year range
  * and composer. Checks for manual overrides first, then falls back to year-based periods.
- * Uses the end_year if available, otherwise begin_year
+ * Uses the end_year if available, otherwise begin_year.
  * @param beginYear - The start year of composition
  * @param endYear - The end year of composition
  * @param composerName - The composer's sort name (e.g., "Joplin, Scott") for override lookup
- * @returns The era label, or empty string if no valid year
+ * @returns The era i18n key (e.g., 'baroque', 'impressionism'), or empty string if no valid year.
+ *          Use with 'eras.' prefix for translation (e.g., $t('eras.baroque'))
  */
 export function getWorkEra(
 	beginYear: number | null | undefined,
 	endYear: number | null | undefined,
 	composerName?: string
 ): string {
-	if (composerName && COMPOSER_ERA_OVERRIDES[composerName]) {
-		return COMPOSER_ERA_OVERRIDES[composerName];
+	if (composerName) {
+		const override = COMPOSER_ERA_OVERRIDES.get(composerName);
+		if (override) return override;
 	}
 
 	// Fall back to year-based period
