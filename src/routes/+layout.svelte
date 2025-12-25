@@ -13,6 +13,9 @@
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 	<meta name="apple-mobile-web-app-title" content="Liszt’n Up!" />
 	<link rel="manifest" href="/site.webmanifest" />
+	<!-- Preconnect to Google Fonts for faster CJK font loading -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 	<title>Liszt’n Up!</title>
 </svelte:head>
 

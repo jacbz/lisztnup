@@ -1,0 +1,431 @@
+{
+	"common": {
+		"enabled": "已启用",
+		"disabled": "已禁用",
+		"on": "开",
+		"off": "关",
+		"confirm": "确认"
+	},
+	"app": {
+		"title": "Liszt’n Up!",
+		"subtitle": "古典音乐猜谜大挑战"
+	},
+	"loading": {
+		"progress": "正在加载乐库..."
+	},
+	"home": {
+		"start": "开始",
+		"startGame": "开始游戏",
+		"settings": "设置",
+		"tracklist": "歌单",
+		"scoringOn": "计分已开",
+		"scoringOff": "计分已关"
+	},
+	"settings": {
+		"numberOfTracks": "曲目数量",
+		"language": "语言",
+		"presetInfo": {
+			"default": "{composers, plural, =0 {无作曲家} other {# 位作曲家}}, {works, plural, =0 {无作品} other {# 部作品}}, {tracks, plural, =0 {无音轨} other {# 条音轨}}"
+		},
+		"categories": {
+			"vocal": "声乐",
+			"chamber": "室内乐",
+			"orchestral": "管弦乐",
+			"piano": "钢琴",
+			"concerto": "协奏曲",
+			"opera": "歌剧",
+			"ballet": "芭蕾",
+			"solo": "独奏",
+			"other": "其他"
+		}
+	},
+	"tracklists": {
+		"beginner": {
+			"name": "入门",
+			"description": "耳熟能详的永恒经典，古典乐新手的最佳起点。"
+		},
+		"intermediate": {
+			"name": "进阶",
+			"description": "音乐会常客的最爱，拓宽你的听觉视野。"
+		},
+		"skilled": {
+			"name": "熟练",
+			"description": "大众最爱与精致小品的完美平衡。"
+		},
+		"advanced": {
+			"name": "专家",
+			"description": "步入音乐厅的深处，探索更复杂深邃的篇章。"
+		},
+		"expert": {
+			"name": "大师",
+			"description": "挑战你的耳朵，包含冷门佳作与高深曲目。"
+		},
+		"virtuoso": {
+			"name": "炫技",
+			"description": "全收录挑战——从家喻户晓到鲜为人知，无所不包。"
+		},
+		"cadenza": {
+			"name": "华彩",
+			"description": "真正的鉴赏家挑战——拒绝口水歌，只留给最挑剔的耳朵。"
+		},
+		"obscure": {
+			"name": "冷门作曲家",
+			"description": "发掘那些被标准曲目库遗忘的宝藏作曲家。"
+		},
+		"piano": {
+			"name": "钢琴",
+			"description": "黑白键上的无限世界。"
+		},
+		"concerto": {
+			"name": "协奏曲",
+			"description": "独奏家与乐队的精彩对话。"
+		},
+		"orchestral": {
+			"name": "管弦乐",
+			"description": "气势恢宏的交响篇章。"
+		},
+		"chamber": {
+			"name": "室内乐",
+			"description": "精致亲密的重奏作品。"
+		},
+		"ballet": {
+			"name": "芭蕾",
+			"description": "为舞蹈而生的优美旋律。"
+		},
+		"opera": {
+			"name": "歌剧",
+			"description": "戏剧与歌唱的艺术巅峰。"
+		},
+		"pianoconcerto": {
+			"name": "钢琴协奏曲",
+			"description": "领略钢琴作为乐器之王的王者风范。"
+		},
+		"violinconcerto": {
+			"name": "小提琴协奏曲",
+			"description": "弓弦之间流淌的辉煌乐章。"
+		},
+		"celloconcerto": {
+			"name": "大提琴协奏曲",
+			"description": "深沉而深情的低音吟唱。"
+		},
+		"liszt": {
+			"name": "Lisztomania",
+			"description": "准备好见识一下什么是真正的“手速”了吗？键盘要着火了！"
+		},
+		"bach": {
+			"name": "Bach to the Future",
+			"description": "音乐之父的数学课，每一个音符都精确得如同宇宙真理。"
+		},
+		"chopin": {
+			"name": "Chopin Spree",
+			"description": "钢琴诗人的浪漫独白，请备好纸巾，小心泪流满面。"
+		},
+		"mozart": {
+			"name": "Mozart in the Machine",
+			"description": "是上帝的宠儿，还是永恒的顽童？感受纯粹的天才之光。"
+		},
+		"tchaikovsky": {
+			"name": "Tchaik It Off",
+			"description": "从芭蕾仙境到悲怆深渊，旋律美到窒息（甚至还有大炮）。"
+		},
+		"vivaldi": {
+			"name": "Viva la Vivaldi",
+			"description": "四季轮转，不仅是红发神父的热情，更是巴洛克的活力巅峰。"
+		},
+		"renaissance": {
+			"name": "文艺复兴",
+			"description": "来自再生时代的古老回响 (1400-1600)。"
+		},
+		"baroque": {
+			"name": "巴洛克",
+			"description": "华丽、繁复且富有表现力的乐章 (1600-1750)。"
+		},
+		"classical": {
+			"name": "古典主义",
+			"description": "崇尚优雅、平衡与清晰的黄金时代 (1750-1820)。"
+		},
+		"romantic": {
+			"name": "浪漫主义",
+			"description": "情感爆发与个人表达的极致 (1820-1910)。"
+		},
+		"20thcentury": {
+			"name": "20世纪",
+			"description": "打破常规的现代与实验性作品。"
+		}
+	},
+	"tracklistSelector": {
+		"title": "选择歌单",
+		"done": "完成",
+		"view": "查看",
+		"clone": "克隆",
+		"edit": "编辑",
+		"share": "分享",
+		"delete": "删除",
+		"createNew": "创建新歌单",
+		"browseLibrary": "浏览完整乐库",
+		"deleteDialog": {
+			"title": "删除歌单？",
+			"message": "确定要删除 {name} 吗？此操作无法撤销。",
+			"confirm": "删除",
+			"cancel": "取消"
+		}
+	},
+	"tracklistViewer": {
+		"loading": "加载中...",
+		"noData": "未找到作品。",
+		"searchPlaceholder": "搜索作品或作曲家...",
+		"library": "乐库",
+		"columns": {
+			"composer": "作曲家",
+			"work": "作品",
+			"popularity": "热度",
+			"year": "年份"
+		}
+	},
+	"tracklistEditor": {
+		"editTitle": "编辑歌单",
+		"createTitle": "创建歌单",
+		"name": "名称",
+		"description": "描述",
+		"filters": "筛选器",
+		"filtersDescription": "通过对整个乐库应用筛选条件来构建歌单。",
+		"categoryAdjustments": "分类权重",
+		"categoryAdjustmentsDesc": "调整各个音乐分类在游戏中出现的频率偏好。",
+		"composerFilter": "作曲家",
+		"composerFilterDesc": "控制歌单中包含哪些作曲家。",
+		"includeMode": "仅包含",
+		"excludeMode": "排除",
+		"notabilityRangeMode": "知名度",
+		"notabilityRange": "知名度范围",
+		"notabilityRangeModeDesc": "包含知名度排名在 {start} 到 {end} 之间的作曲家（1 = 巴赫，2 = 莫扎特，以此类推）。",
+		"searchComposers": "搜索作曲家...",
+		"selectAll": "全选",
+		"selectNone": "全不选",
+		"composersSelected": "已选 {count} 位作曲家",
+		"composerInclude": "包含作曲家",
+		"composerExclude": "排除作曲家",
+		"yearFilter": "创作年份",
+		"yearFilterDesc": "将作品限制在特定时期内。",
+		"yearStart": "起始年份",
+		"yearEnd": "结束年份",
+		"workScoreRange": "热度范围",
+		"workScoreRangeDesc": "按热度评分筛选作品（分数越高代表该作品的录音版本越多）。",
+		"limitWorksFromComposer": "限制单位作曲家作品数",
+		"limitWorksFromComposerDesc": "限制每位作曲家的作品占本歌单总作品数的百分比。",
+		"maxTracksFromSingleWork": "单部作品最大音轨数",
+		"maxTracksFromSingleWorkDesc": "限制从大型作品（如交响曲、歌剧）中选取的乐章/部分数量。",
+		"nameFilter": "作品名称",
+		"nameFilterDesc": "仅包含名称中含有特定词汇的作品（不区分大小写）。使用斜杠包裹可使用高级模式（例如 /symphony|concerto/ 可匹配交响曲或协奏曲）。",
+		"nameFilterPlaceholder": "输入作品名或 /正则表达式/",
+		"nameFilterAdd": "添加",
+		"enablePopularityWeighting": "热度加权",
+		"enablePopularityWeightingDesc": "根据热度评分对曲目选择进行加权。启用后，热门作品和录音被选中的概率更高。禁用则为完全随机选择。",
+		"preview": "预览",
+		"previewComposers": "作曲家",
+		"previewWorks": "作品",
+		"previewTracks": "音轨",
+		"previewLoading": "计算中...",
+		"save": "保存",
+		"cancel": "取消",
+		"enableFilter": "启用 {filter}",
+		"disableFilter": "禁用 {filter}",
+		"categoryDifficulty": "难度",
+		"categoryCategories": "分类",
+		"categoryComposers": "作曲家",
+		"categoryEras": "时期",
+		"categoryCustom": "自定义"
+	},
+	"shareLink": {
+		"openLink": "打开",
+		"copyFailed": "复制到剪贴板失败",
+		"copy": "复制",
+		"copied": "已复制！",
+		"share": "分享",
+		"tracklistTitle": "分享歌单",
+		"tracklistText": "快来看看这个 Liszt’n Up 歌单！"
+	},
+	"inGameSettings": {
+		"title": "设置",
+		"trackLength": "片段长度",
+		"trackLengthHint": "每首曲目播放的时长。更改将从下一首曲目开始生效。此设置不适用于抢答模式。",
+		"audioNormalization": "音频标准化",
+		"audioNormalizationHint": "使用高级音频处理平衡不同曲目的音量，并驱动可视化效果。如果在 Apple 设备浏览器上遇到播放问题，请关闭此选项。更改将从下一首曲目开始生效。",
+		"buzzerVolume": "抢答音量",
+		"buzzerVolumeHint": "抢答按钮音效的音量。"
+	},
+	"quitDialog": {
+		"title": "退出游戏？",
+		"message": "确定要退出吗？当前的游戏进度将会丢失。",
+		"confirm": "退出",
+		"cancel": "继续游戏"
+	},
+	"game": {
+		"round": "第 {current} 轮 / 共 {total} 轮",
+		"home": "主页",
+		"spin": "旋转！",
+		"play": "播放",
+		"pause": "暂停",
+		"guessCategory": "{category}",
+		"reveal": "揭晓",
+		"nextRound": "下一轮",
+		"gameOver": "游戏结束！",
+		"playAgain": "再玩一次",
+		"quitTitle": "离开游戏？",
+		"quitMessage": "确定要离开吗？你的宾果盘将会被保存。",
+		"quitConfirm": "离开",
+		"quitCancel": "留下",
+		"buzzer": {
+			"pressToStart": "开始",
+			"buzz": "抢答！"
+		},
+		"loadingAudio": "分析音频中...",
+		"categories": {
+			"composer": "作曲家",
+			"decade": "年代",
+			"era": "时期",
+			"work": "作品",
+			"type": "体裁"
+		},
+		"categoriesShort": {
+			"composer": "作曲",
+			"decade": "年代",
+			"era": "时期",
+			"work": "作品",
+			"type": "体裁"
+		}
+	},
+	"modes": {
+		"classic": {
+			"name": "经典模式",
+			"description": "根据分类难度得分。猜得越精准，得分越高！",
+			"step1": {
+				"title": "聆听片段",
+				"desc": "仔细聆听音乐片段，尝试识别作品的细节。将你的猜测写下来。"
+			},
+			"step2": {
+				"title": "猜测分类",
+				"desc": "你的猜测越具体（作品名、年代、作曲家、时期、体裁），得分就越高。难度越大的分类分值越高！"
+			},
+			"step3": {
+				"title": "赢得胜利",
+				"desc": "游戏结束时得分最高的玩家获胜。明智地选择分类，测试你的古典乐知识储备！"
+			}
+		},
+		"buzzer": {
+			"name": "抢答模式",
+			"description": "与时间赛跑，与对手竞争！知道答案就拍下抢答器。",
+			"step1": {
+				"title": "拍下抢答器",
+				"desc": "当你听出答案时，点击巨大的抢答按钮得分。你也可以按键盘上的任意键（或外部按钮）来抢答。"
+			},
+			"step2": {
+				"title": "分类随时间变化",
+				"desc": "随着时间流逝，猜测的分类会变得更容易。越早抢答，就能挑战更难的分类以获取更高分数。"
+			},
+			"step3": {
+				"title": "竞速夺冠",
+				"desc": "答错会扣分，所以要小心！得分最高的玩家获胜！"
+			}
+		},
+		"bingo": {
+			"name": "宾果模式",
+			"description": "转动轮盘选择分类，猜对即可填充你的宾果卡！",
+			"step1": {
+				"title": "打开宾果盘",
+				"desc": "每位玩家需要一个独特的宾果盘。在设备上打开、打印或截图你的盘面。"
+			},
+			"step2": {
+				"title": "旋转与猜测",
+				"desc": "转动轮盘为每一轮随机选择一个分类。聆听曲目并写下猜测。如果正确，在宾果卡上标记对应的格子。"
+			},
+			"step3": {
+				"title": "连成五子",
+				"desc": "第一个在横向、纵向或对角线上连成五个标记的玩家获胜！"
+			}
+		}
+	},
+	"players": {
+		"setup": "玩家设置",
+		"playSolo": "单人游玩",
+		"addPlayer": "玩家",
+		"playerName": "玩家 {number}",
+		"nameLabel": "名字",
+		"colorLabel": "颜色",
+		"removePlayer": "移除",
+		"startGame": "开始游戏",
+		"cancel": "取消",
+		"minPlayers": "开启计分时，该模式至少需要两名玩家。"
+	},
+	"scoring": {
+		"title": "本轮计分",
+		"player": "玩家",
+		"selectCategory": "为每位玩家选择其猜对的分类。",
+		"noGuess": "未作答",
+		"continue": "继续",
+		"correctGuess": "谁猜对了？",
+		"wrongGuess": "谁猜错了？",
+		"noOne": "无人",
+		"noPoints": "0 分",
+		"pts": "{points} 分",
+		"pointsAwarded": "+{points} 分",
+		"pointsPenalty": "-{points} 分",
+		"pointsPreview": "{current} ({delta}) 分"
+	},
+	"stats": {
+		"title": "统计数据",
+		"round": "轮次",
+		"score": "得分",
+		"noData": "暂无对局数据"
+	},
+	"endGame": {
+		"title": "游戏结束！",
+		"winner": "{name} 获胜！",
+		"tie": "平局！",
+		"finalScores": "最终得分",
+		"viewStats": "查看统计",
+		"playAgain": "再玩一次",
+		"home": "返回主页"
+	},
+	"bingo": {
+		"setupDescription": "每位玩家需要拥有自己独特的宾果盘。",
+		"reset": "重置",
+		"resetTitle": "重置宾果盘？",
+		"resetMessage": "这将生成一个新的随机盘面并清除所有标记。确定吗？",
+		"resetConfirm": "重置",
+		"resetCancel": "取消",
+		"shareTitle": "分享宾果盘",
+		"shareText": "加入我的宾果游戏！",
+		"guessPlaceholder": "输入你的猜测...",
+		"closeGuess": "锁定答案",
+		"reveal": "显示答案"
+	},
+	"footer": {
+		"madeBy": "A Game by Jacob Zhang",
+		"poweredBy": "数据与音频由 {first} 和 {second} 提供"
+	},
+	"eras": {
+		"ancient": "远古时期",
+		"medieval": "中世纪",
+		"earlyRenaissance": "文艺复兴早期",
+		"middleRenaissance": "文艺复兴中期",
+		"lateRenaissance": "文艺复兴晚期",
+		"lateRenaissanceEarlyBaroque": "文艺复兴晚期 / 巴洛克早期",
+		"earlyBaroque": "巴洛克早期",
+		"baroque": "巴洛克",
+		"lateBaroque": "巴洛克晚期",
+		"lateBaroqueEarlyClassical": "巴洛克晚期 / 古典早期",
+		"earlyClassical": "古典早期",
+		"classical": "古典主义",
+		"lateClassical": "古典晚期",
+		"earlyRomantic": "浪漫主义早期",
+		"romantic": "浪漫主义",
+		"lateRomantic": "浪漫主义晚期",
+		"20thCentury": "20世纪",
+		"contemporary": "当代",
+		"ragtime": "拉格泰姆",
+		"impressionism": "印象派",
+		"secondVienneseSchool": "第二维也纳乐派",
+		"modernism": "现代主义",
+		"minimalism": "极简主义"
+	}
+}

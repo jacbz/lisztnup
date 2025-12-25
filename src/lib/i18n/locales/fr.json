@@ -1,0 +1,431 @@
+{
+	"common": {
+		"enabled": "Activé",
+		"disabled": "Désactivé",
+		"on": "On",
+		"off": "Off",
+		"confirm": "Confirmer"
+	},
+	"app": {
+		"title": "Liszt’n Up!",
+		"subtitle": "Le jeu de devinettes de musique classique"
+	},
+	"loading": {
+		"progress": "Chargement de la musique..."
+	},
+	"home": {
+		"start": "JOUER",
+		"startGame": "Lancer la partie",
+		"settings": "Paramètres",
+		"tracklist": "Sélection",
+		"scoringOn": "Score activé",
+		"scoringOff": "Score désactivé"
+	},
+	"settings": {
+		"numberOfTracks": "Nombre de pistes",
+		"language": "Langue",
+		"presetInfo": {
+			"default": "{composers, plural, =0 {aucun compositeur} one {# compositeur} other {# compositeurs}}, {works, plural, =0 {aucune œuvre} one {# œuvre} other {# œuvres}}, {tracks, plural, =0 {aucune piste} one {# piste} other {# pistes}}"
+		},
+		"categories": {
+			"vocal": "Vocal",
+			"chamber": "Musique de chambre",
+			"orchestral": "Orchestral",
+			"piano": "Piano",
+			"concerto": "Concerto",
+			"opera": "Opéra",
+			"ballet": "Ballet",
+			"solo": "Solo",
+			"other": "Autre"
+		}
+	},
+	"tracklists": {
+		"beginner": {
+			"name": "Débutant",
+			"description": "Une douce introduction aux chefs-d'œuvre intemporels."
+		},
+		"intermediate": {
+			"name": "Intermédiaire",
+			"description": "Élargis ton répertoire avec les grands classiques du concert."
+		},
+		"skilled": {
+			"name": "Confirmé",
+			"description": "Un équilibre subtil entre favoris du public et œuvres raffinées."
+		},
+		"advanced": {
+			"name": "Avancé",
+			"description": "Entre dans la salle de concert des compositions complexes."
+		},
+		"expert": {
+			"name": "Expert",
+			"description": "Teste ton oreille avec des œuvres sophistiquées et méconnues."
+		},
+		"virtuoso": {
+			"name": "Virtuose",
+			"description": "La collection complète — de l'iconique à l'obscur."
+		},
+		"cadenza": {
+			"name": "Cadence",
+			"description": "Pour le vrai connaisseur cherchant le défi ultime – pas de tubes, seulement le rare et l'exquis."
+		},
+		"obscure": {
+			"name": "Compositeurs Oubliés",
+			"description": "Découvre des perles rares hors du répertoire standard."
+		},
+		"piano": {
+			"name": "Piano",
+			"description": "Œuvres centrées sur le répertoire pour piano."
+		},
+		"concerto": {
+			"name": "Concerto",
+			"description": "Concertos mettant en lumière les solistes avec orchestre."
+		},
+		"orchestral": {
+			"name": "Orchestral",
+			"description": "Œuvres symphoniques pour grand orchestre."
+		},
+		"chamber": {
+			"name": "Musique de Chambre",
+			"description": "Œuvres intimistes pour petits ensembles."
+		},
+		"ballet": {
+			"name": "Ballet",
+			"description": "Musique composée pour le ballet."
+		},
+		"opera": {
+			"name": "Opéra",
+			"description": "Célèbres œuvres lyriques et grands arias."
+		},
+		"pianoconcerto": {
+			"name": "Concertos pour Piano",
+			"description": "Toute la grandeur du piano concertant."
+		},
+		"violinconcerto": {
+			"name": "Concertos pour Violon",
+			"description": "La brillance du violon sous les projecteurs."
+		},
+		"celloconcerto": {
+			"name": "Concertos pour Violoncelle",
+			"description": "Explore la profondeur du violoncelle."
+		},
+		"liszt": {
+			"name": "Lisztomania",
+			"description": "Une virtuosité qui va te faire tourner la tête."
+		},
+		"bach": {
+			"name": "Bach to the Future",
+			"description": "Là où l'on ne badine pas avec la fugue."
+		},
+		"chopin": {
+			"name": "Chopin Spree",
+			"description": "Laisse-toi emporter, un Nocturne à la fois."
+		},
+		"mozart": {
+			"name": "Mozart in the Machine",
+			"description": "De la flûte enchantée au requiem, le génie à l'état pur."
+		},
+		"tchaikovsky": {
+			"name": "Tchaik It Off",
+			"description": "Fais valser tes émotions, du Lac des Cygnes au Pathétique."
+		},
+		"vivaldi": {
+			"name": "Viva la Vivaldi",
+			"description": "Quatre saisons ne suffisent pas pour tant de talent."
+		},
+		"renaissance": {
+			"name": "Renaissance",
+			"description": "Musique de l'âge de la redécouverte (1400-1600)."
+		},
+		"baroque": {
+			"name": "Baroque",
+			"description": "Œuvres ornées et expressives (1600-1750)."
+		},
+		"classical": {
+			"name": "Classique",
+			"description": "Élégance et clarté de la période Classique (1750-1820)."
+		},
+		"romantic": {
+			"name": "Romantique",
+			"description": "Œuvres passionnées et expressives (1820-1910)."
+		},
+		"20thcentury": {
+			"name": "XXe Siècle",
+			"description": "Œuvres modernes et expérimentales."
+		}
+	},
+	"tracklistSelector": {
+		"title": "Choisir une liste",
+		"done": "Terminé",
+		"view": "Voir",
+		"clone": "Cloner",
+		"edit": "Éditer",
+		"share": "Partager",
+		"delete": "Supprimer",
+		"createNew": "Créer une nouvelle liste",
+		"browseLibrary": "Parcourir la bibliothèque",
+		"deleteDialog": {
+			"title": "Supprimer la liste ?",
+			"message": "Es-tu sûr de vouloir supprimer {name} ? Cette action est irréversible.",
+			"confirm": "Supprimer",
+			"cancel": "Annuler"
+		}
+	},
+	"tracklistViewer": {
+		"loading": "Chargement...",
+		"noData": "Aucune œuvre trouvée.",
+		"searchPlaceholder": "Chercher une œuvre ou un compositeur...",
+		"library": "Bibliothèque",
+		"columns": {
+			"composer": "Compositeur",
+			"work": "Œuvre",
+			"popularity": "Popularité",
+			"year": "Année"
+		}
+	},
+	"tracklistEditor": {
+		"editTitle": "Éditer la liste",
+		"createTitle": "Créer une liste",
+		"name": "Nom",
+		"description": "Description",
+		"filters": "Filtres",
+		"filtersDescription": "Les listes sont construites en appliquant des filtres sur toute la collection.",
+		"categoryAdjustments": "Catégories",
+		"categoryAdjustmentsDesc": "Ajuste la fréquence d'apparition de chaque catégorie musicale.",
+		"composerFilter": "Compositeurs",
+		"composerFilterDesc": "Contrôle quels compositeurs sont inclus dans ta liste.",
+		"includeMode": "Inclure uniquement",
+		"excludeMode": "Exclure",
+		"notabilityRangeMode": "Notoriété",
+		"notabilityRange": "Plage de notoriété",
+		"notabilityRangeModeDesc": "Inclut les compositeurs classés de {start} à {end} par notoriété (1 = Bach, 2 = Mozart, etc.)",
+		"searchComposers": "Chercher des compositeurs...",
+		"selectAll": "Tout sélectionner",
+		"selectNone": "Tout désélectionner",
+		"composersSelected": "{count} compositeurs sélectionnés",
+		"composerInclude": "Inclure les compositeurs",
+		"composerExclude": "Exclure les compositeurs",
+		"yearFilter": "Année de composition",
+		"yearFilterDesc": "Limite les œuvres à une période spécifique.",
+		"yearStart": "Année de début",
+		"yearEnd": "Année de fin",
+		"workScoreRange": "Plage de popularité",
+		"workScoreRangeDesc": "Filtre les œuvres par score de popularité (plus haut = plus d'enregistrements existants).",
+		"limitWorksFromComposer": "Limite d'œuvres par compositeur",
+		"limitWorksFromComposerDesc": "Limite chaque compositeur à un pourcentage du total des œuvres de cette liste.",
+		"maxTracksFromSingleWork": "Max pistes par œuvre unique",
+		"maxTracksFromSingleWorkDesc": "Limite le nombre de mouvements/parties inclus pour les œuvres de grande envergure.",
+		"nameFilter": "Nom de l'œuvre",
+		"nameFilterDesc": "Inclut uniquement les œuvres dont le nom contient certains mots (insensible à la casse). Entoure de barres obliques pour les motifs avancés (ex: /symphonie|concerto/).",
+		"nameFilterPlaceholder": "Entrer un nom ou une /regex/",
+		"nameFilterAdd": "Ajouter",
+		"enablePopularityWeighting": "Pondération par popularité",
+		"enablePopularityWeightingDesc": "Favorise les œuvres populaires lors de la sélection. Si activé, les œuvres connues apparaîtront plus souvent. Désactive pour une sélection totalement aléatoire.",
+		"preview": "Aperçu",
+		"previewComposers": "Compositeurs",
+		"previewWorks": "Œuvres",
+		"previewTracks": "Pistes",
+		"previewLoading": "Calcul...",
+		"save": "Enregistrer",
+		"cancel": "Annuler",
+		"enableFilter": "Activer {filter}",
+		"disableFilter": "Désactiver {filter}",
+		"categoryDifficulty": "Difficulté",
+		"categoryCategories": "Catégories",
+		"categoryComposers": "Compositeurs",
+		"categoryEras": "Époques",
+		"categoryCustom": "Personnalisé"
+	},
+	"shareLink": {
+		"openLink": "Ouvrir",
+		"copyFailed": "Échec de la copie",
+		"copy": "Copier",
+		"copied": "Copié !",
+		"share": "Partager",
+		"tracklistTitle": "Partager la liste",
+		"tracklistText": "Jette un œil à cette sélection Liszt’n Up !"
+	},
+	"inGameSettings": {
+		"title": "Paramètres",
+		"trackLength": "Durée de l'extrait",
+		"trackLengthHint": "Durée de lecture de chaque piste. S'appliquera à la piste suivante. Ne s'applique pas au mode Buzzer.",
+		"audioNormalization": "Normalisation audio",
+		"audioNormalizationHint": "Utilise un traitement avancé pour égaliser le volume et alimenter le visualiseur. Peut causer des problèmes sur les appareils Apple ; désactive si tu rencontres des soucis. S'applique à la piste suivante.",
+		"buzzerVolume": "Volume du buzzer",
+		"buzzerVolumeHint": "Volume sonore du buzzer."
+	},
+	"quitDialog": {
+		"title": "Quitter la partie ?",
+		"message": "Es-tu sûr de vouloir quitter ? Ta progression actuelle sera perdue.",
+		"confirm": "Quitter",
+		"cancel": "Continuer à jouer"
+	},
+	"game": {
+		"round": "Manche {current} sur {total}",
+		"home": "Accueil",
+		"spin": "Tourner !",
+		"play": "Lecture",
+		"pause": "Pause",
+		"guessCategory": "{category}",
+		"reveal": "Révéler",
+		"nextRound": "Manche suivante",
+		"gameOver": "Partie terminée !",
+		"playAgain": "Rejouer",
+		"quitTitle": "Quitter le jeu ?",
+		"quitMessage": "Es-tu sûr de vouloir partir ? Ta grille sera sauvegardée.",
+		"quitConfirm": "Partir",
+		"quitCancel": "Rester",
+		"buzzer": {
+			"pressToStart": "Lancer",
+			"buzz": "Buzzer !"
+		},
+		"loadingAudio": "Analyse audio...",
+		"categories": {
+			"composer": "Compositeur",
+			"decade": "Décennie",
+			"era": "Époque",
+			"work": "Œuvre",
+			"type": "Genre"
+		},
+		"categoriesShort": {
+			"composer": "comp",
+			"decade": "déc",
+			"era": "épo",
+			"work": "œuv",
+			"type": "gen"
+		}
+	},
+	"modes": {
+		"classic": {
+			"name": "Classique",
+			"description": "Marque des points selon la difficulté. Plus la catégorie est dure, plus tu gagnes !",
+			"step1": {
+				"title": "Écoute l'extrait",
+				"desc": "Écoute l'extrait musical et essaie d'identifier les détails de la composition. Note ta proposition."
+			},
+			"step2": {
+				"title": "Devine la catégorie",
+				"desc": "Plus ta réponse est précise (œuvre, décennie, compositeur, époque, genre), plus tu marques de points."
+			},
+			"step3": {
+				"title": "Gagne la partie",
+				"desc": "Le joueur avec le plus de points à la fin l'emporte. Choisis tes combats et teste ta culture musicale !"
+			}
+		},
+		"buzzer": {
+			"name": "Buzzer",
+			"description": "Course contre la montre ! Sois le plus rapide à buzzer quand tu as la réponse.",
+			"step1": {
+				"title": "Frappe le Buzzer",
+				"desc": "Appuie sur le bouton géant dès que tu as la réponse pour marquer. Tu peux aussi utiliser n'importe quelle touche du clavier."
+			},
+			"step2": {
+				"title": "Les catégories évoluent",
+				"desc": "Les catégories deviennent plus faciles avec le temps. Buzzer tôt te permet de tenter des catégories plus difficiles (et lucratives)."
+			},
+			"step3": {
+				"title": "La course à la victoire",
+				"desc": "Les mauvaises réponses coûtent des points, alors attention ! Le joueur avec le plus de points gagne !"
+			}
+		},
+		"bingo": {
+			"name": "Bingo",
+			"description": "Tourne la roue pour choisir une catégorie, et remplis ta grille de bingo en devinant juste !",
+			"step1": {
+				"title": "Ouvre ta grille",
+				"desc": "Chaque joueur a besoin de sa propre grille. Ouvre-la sur ton téléphone, ou imprime-la."
+			},
+			"step2": {
+				"title": "Tourne et devine",
+				"desc": "Tourne la roue pour choisir une catégorie. Écoute la piste et note ta réponse. Si c'est correct, coche la case correspondante sur ta grille."
+			},
+			"step3": {
+				"title": "Cinq à la suite",
+				"desc": "Sois le premier à aligner cinq cases cochées (horizontalement, verticalement ou en diagonale) pour gagner !"
+			}
+		}
+	},
+	"players": {
+		"setup": "Joueurs",
+		"playSolo": "Partie Solo",
+		"addPlayer": "Joueur",
+		"playerName": "Joueur {number}",
+		"nameLabel": "Nom",
+		"colorLabel": "Couleur",
+		"removePlayer": "Retirer",
+		"startGame": "Lancer la partie",
+		"cancel": "Annuler",
+		"minPlayers": "Au moins deux joueurs sont requis si le score est activé."
+	},
+	"scoring": {
+		"title": "Score de la manche",
+		"player": "Joueur",
+		"selectCategory": "Pour chaque joueur, sélectionne la catégorie qui a été devinée correctement.",
+		"noGuess": "Pas de réponse",
+		"continue": "Continuer",
+		"correctGuess": "Qui a bien deviné ?",
+		"wrongGuess": "Qui s'est trompé ?",
+		"noOne": "Personne",
+		"noPoints": "0 pts",
+		"pts": "{points} pts",
+		"pointsAwarded": "+{points} pts",
+		"pointsPenalty": "-{points} pts",
+		"pointsPreview": "{current} ({delta}) pts"
+	},
+	"stats": {
+		"title": "Statistiques",
+		"round": "Manche",
+		"score": "Score",
+		"noData": "Aucune manche jouée"
+	},
+	"endGame": {
+		"title": "Partie terminée !",
+		"winner": "{name} a gagné !",
+		"tie": "Égalité parfaite !",
+		"finalScores": "Scores finaux",
+		"viewStats": "Voir les stats",
+		"playAgain": "Rejouer",
+		"home": "Accueil"
+	},
+	"bingo": {
+		"setupDescription": "Chaque joueur a besoin de sa propre grille unique.",
+		"reset": "Réinitialiser",
+		"resetTitle": "Nouvelle grille ?",
+		"resetMessage": "Ceci va générer une nouvelle grille aléatoire et effacer tes marques. Es-tu sûr ?",
+		"resetConfirm": "Réinitialiser",
+		"resetCancel": "Annuler",
+		"shareTitle": "Partager la grille",
+		"shareText": "Rejoins ma partie de Bingo !",
+		"guessPlaceholder": "Entre ta réponse...",
+		"closeGuess": "Valider",
+		"reveal": "Révéler"
+	},
+	"footer": {
+		"madeBy": "Un jeu créé par Jacob Zhang",
+		"poweredBy": "Propulsé par {first} et {second}"
+	},
+	"eras": {
+		"ancient": "Antiquité",
+		"medieval": "Médiéval",
+		"earlyRenaissance": "Première Renaissance",
+		"middleRenaissance": "Renaissance (moyen)",
+		"lateRenaissance": "Renaissance tardive",
+		"lateRenaissanceEarlyBaroque": "Renaissance tardive / Début Baroque",
+		"earlyBaroque": "Début Baroque",
+		"baroque": "Baroque",
+		"lateBaroque": "Baroque tardif",
+		"lateBaroqueEarlyClassical": "Baroque tardif / Début Classique",
+		"earlyClassical": "Début Classique",
+		"classical": "Classique",
+		"lateClassical": "Classique tardif",
+		"earlyRomantic": "Début Romantique",
+		"romantic": "Romantique",
+		"lateRomantic": "Romantique tardif",
+		"20thCentury": "XXe siècle",
+		"contemporary": "Contemporain",
+		"ragtime": "Ragtime",
+		"impressionism": "Impressionnisme",
+		"secondVienneseSchool": "Seconde école de Vienne",
+		"modernism": "Modernisme",
+		"minimalism": "Minimalisme"
+	}
+}

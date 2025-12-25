@@ -201,7 +201,7 @@
 		"searchComposers": "Search composers...",
 		"selectAll": "Select All",
 		"selectNone": "Select None",
-		"composersSelected": "composers selected",
+		"composersSelected": "{count} composers selected",
 		"composerInclude": "Include Composers",
 		"composerExclude": "Exclude Composers",
 		"yearFilter": "Year of Composition",

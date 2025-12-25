@@ -677,8 +677,7 @@
 								</div>
 							</div>
 							<p class="text-xs text-slate-400">
-								{selectedComposers.length}
-								{$_('tracklistEditor.composersSelected')}
+								{($_('tracklistEditor.composersSelected'), { count: selectedComposers.length })}
 							</p>
 						</div>
 					{/if}

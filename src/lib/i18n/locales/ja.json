@@ -1,0 +1,431 @@
+{
+	"common": {
+		"enabled": "有効",
+		"disabled": "無効",
+		"on": "オン",
+		"off": "オフ",
+		"confirm": "確定"
+	},
+	"app": {
+		"title": "Liszt’n Up!",
+		"subtitle": "クラシック音楽クイズゲーム"
+	},
+	"loading": {
+		"progress": "音楽データを読み込んでいます..."
+	},
+	"home": {
+		"start": "スタート",
+		"startGame": "ゲーム開始",
+		"settings": "設定",
+		"tracklist": "トラックリスト",
+		"scoringOn": "スコアあり",
+		"scoringOff": "スコアなし"
+	},
+	"settings": {
+		"numberOfTracks": "トラック数",
+		"language": "言語",
+		"presetInfo": {
+			"default": "{composers}人の作曲家、{works}曲の作品、{tracks}トラック"
+		},
+		"categories": {
+			"vocal": "声楽",
+			"chamber": "室内楽",
+			"orchestral": "管弦楽",
+			"piano": "ピアノ",
+			"concerto": "協奏曲",
+			"opera": "オペラ",
+			"ballet": "バレエ",
+			"solo": "ソロ",
+			"other": "その他"
+		}
+	},
+	"tracklists": {
+		"beginner": {
+			"name": "初級",
+			"description": "誰もが一度は耳にしたことがある、クラシック音楽の入門編。"
+		},
+		"intermediate": {
+			"name": "中級",
+			"description": "コンサートの定番曲を中心に、少しレパートリーを広げたい方へ。"
+		},
+		"skilled": {
+			"name": "上級",
+			"description": "有名曲と、通好みの渋い選曲をバランスよくミックス。"
+		},
+		"advanced": {
+			"name": "超上級",
+			"description": "より深く、より複雑な作品の世界へ。知識の深さが試されます。"
+		},
+		"expert": {
+			"name": "達人",
+			"description": "洗練された耳を持つあなたへ。難解かつ美しい至高の難問集。"
+		},
+		"virtuoso": {
+			"name": "マエストロ",
+			"description": "定番から知られざる名曲まで、すべてを網羅した完全版。"
+		},
+		"cadenza": {
+			"name": "カデンツァ",
+			"description": "真の愛好家のための究極の挑戦。有名な曲は一切含まれていません。"
+		},
+		"obscure": {
+			"name": "隠れた名曲",
+			"description": "歴史に埋もれた作曲家たちの、知られざる傑作を発掘しましょう。"
+		},
+		"piano": {
+			"name": "ピアノ曲",
+			"description": "鍵盤の魔術師たちが紡ぐ、ピアノ作品の数々。"
+		},
+		"concerto": {
+			"name": "協奏曲",
+			"description": "ソリストとオーケストラが織りなす華麗なる競演。"
+		},
+		"orchestral": {
+			"name": "管弦楽曲",
+			"description": "交響曲や管弦楽のための壮大な作品集。"
+		},
+		"chamber": {
+			"name": "室内楽",
+			"description": "少人数アンサンブルによる、親密で繊細な響き。"
+		},
+		"ballet": {
+			"name": "バレエ音楽",
+			"description": "物語を彩る、躍動感あふれる舞踊音楽。"
+		},
+		"opera": {
+			"name": "オペラ",
+			"description": "歌劇の名シーンや、心揺さぶるアリアの数々。"
+		},
+		"pianoconcerto": {
+			"name": "ピアノ協奏曲",
+			"description": "ピアノとオーケストラのダイナミックな対話。"
+		},
+		"violinconcerto": {
+			"name": "ヴァイオリン協奏曲",
+			"description": "ヴァイオリンの技巧と歌心が光る名曲集。"
+		},
+		"celloconcerto": {
+			"name": "チェロ協奏曲",
+			"description": "チェロの深く豊かな音色を堪能するコレクション。"
+		},
+		"liszt": {
+			"name": "Lisztomania",
+			"description": "超絶技巧のピアノに酔いしれて。リストの魔術に魅了されるひととき。"
+		},
+		"bach": {
+			"name": "Bach to the Future",
+			"description": "音楽の父、バッハ。幾何学的な美しさと深遠なる対位法の宇宙。"
+		},
+		"chopin": {
+			"name": "Chopin Spree",
+			"description": "ピアノの詩人、ショパン。美しくも儚い旋律が、心に染み渡る。"
+		},
+		"mozart": {
+			"name": "Mozart in the Machine",
+			"description": "天才モーツァルトの煌めき。軽やかで完璧な調和が生み出す至福。"
+		},
+		"tchaikovsky": {
+			"name": "Tchaik It Off",
+			"description": "チャイコフスキーの情熱。バレエ音楽から交響曲まで、ドラマティックな旋律の宝庫。"
+		},
+		"vivaldi": {
+			"name": "Viva la Vivaldi",
+			"description": "ヴィヴァルディの四季だけじゃない！バロックの華やかな響きを堪能して。"
+		},
+		"renaissance": {
+			"name": "ルネサンス",
+			"description": "調和とポリフォニーの時代（1400-1600年頃）。"
+		},
+		"baroque": {
+			"name": "バロック",
+			"description": "豪華絢爛、感情表現豊かな通奏低音の時代（1600-1750年頃）。"
+		},
+		"classical": {
+			"name": "古典派",
+			"description": "形式美と明晰さを追求した優雅な時代（1750-1820年頃）。"
+		},
+		"romantic": {
+			"name": "ロマン派",
+			"description": "個人の感情と物語性を重視した情熱の時代（1820-1910年頃）。"
+		},
+		"20thcentury": {
+			"name": "近現代",
+			"description": "伝統の打破、そして新たな音の探求へ。"
+		}
+	},
+	"tracklistSelector": {
+		"title": "トラックリスト選択",
+		"done": "完了",
+		"view": "詳細",
+		"clone": "複製",
+		"edit": "編集",
+		"share": "共有",
+		"delete": "削除",
+		"createNew": "新規作成",
+		"browseLibrary": "ライブラリを表示",
+		"deleteDialog": {
+			"title": "トラックリストを削除しますか？",
+			"message": "本当に {name} を削除してもよろしいですか？この操作は取り消せません。",
+			"confirm": "削除",
+			"cancel": "キャンセル"
+		}
+	},
+	"tracklistViewer": {
+		"loading": "読み込み中...",
+		"noData": "作品が見つかりません。",
+		"searchPlaceholder": "作品名または作曲家で検索...",
+		"library": "ライブラリ",
+		"columns": {
+			"composer": "作曲家",
+			"work": "作品名",
+			"popularity": "人気度",
+			"year": "作曲年"
+		}
+	},
+	"tracklistEditor": {
+		"editTitle": "トラックリスト編集",
+		"createTitle": "トラックリスト作成",
+		"name": "リスト名",
+		"description": "説明",
+		"filters": "フィルター",
+		"filtersDescription": "コレクション全体にフィルターを適用して、独自のトラックリストを作成します。",
+		"categoryAdjustments": "カテゴリ調整",
+		"categoryAdjustmentsDesc": "ゲーム内ルーレットで、各カテゴリが選ばれる確率を調整します。",
+		"composerFilter": "作曲家フィルター",
+		"composerFilterDesc": "リストに含める作曲家を制御します",
+		"includeMode": "指定した作曲家を含める",
+		"excludeMode": "指定した作曲家を除外する",
+		"notabilityRangeMode": "知名度ランク指定",
+		"notabilityRange": "知名度範囲",
+		"notabilityRangeModeDesc": "知名度ランキング {start}位 ～ {end}位 の作曲家を含める (1位=バッハなど)",
+		"searchComposers": "作曲家を検索...",
+		"selectAll": "すべて選択",
+		"selectNone": "選択解除",
+		"composersSelected": "{count}人の作曲家を選択中",
+		"composerInclude": "含める作曲家",
+		"composerExclude": "除外する作曲家",
+		"yearFilter": "作曲年代",
+		"yearFilterDesc": "特定の期間に作曲された作品のみに限定します",
+		"yearStart": "開始年",
+		"yearEnd": "終了年",
+		"workScoreRange": "人気度範囲",
+		"workScoreRangeDesc": "作品の人気度スコアでフィルタリングします（高いほど録音数が多い有名な作品です）",
+		"limitWorksFromComposer": "作曲家ごとの選出制限",
+		"limitWorksFromComposerDesc": "このトラックリスト内で、1人の作曲家の作品が占める割合の上限を設定します。",
+		"maxTracksFromSingleWork": "同一作品からの最大トラック数",
+		"maxTracksFromSingleWorkDesc": "交響曲などの大規模な作品から選出される楽章（トラック）の数を制限します",
+		"nameFilter": "作品名フィルター",
+		"nameFilterDesc": "作品名に特定の語句を含むものに限定します（大文字小文字は区別しません）。スラッシュで囲むと正規表現が使えます（例: /交響曲|協奏曲/）。",
+		"nameFilterPlaceholder": "作品名 または /正規表現/",
+		"nameFilterAdd": "追加",
+		"enablePopularityWeighting": "人気度による重み付け",
+		"enablePopularityWeightingDesc": "人気度スコアに基づいてトラックを選出します。有効にすると、有名な作品や録音が選ばれやすくなります。無効にすると完全にランダムになります。",
+		"preview": "プレビュー",
+		"previewComposers": "作曲家",
+		"previewWorks": "作品数",
+		"previewTracks": "トラック",
+		"previewLoading": "計算中...",
+		"save": "保存",
+		"cancel": "キャンセル",
+		"enableFilter": "{filter} を有効にする",
+		"disableFilter": "{filter} を無効にする",
+		"categoryDifficulty": "難易度",
+		"categoryCategories": "カテゴリ",
+		"categoryComposers": "作曲家",
+		"categoryEras": "時代",
+		"categoryCustom": "カスタム"
+	},
+	"shareLink": {
+		"openLink": "開く",
+		"copyFailed": "クリップボードへのコピーに失敗しました",
+		"copy": "コピー",
+		"copied": "コピーしました！",
+		"share": "共有",
+		"tracklistTitle": "トラックリストを共有",
+		"tracklistText": "Liszt’n Up! のトラックリストをチェックしてね！"
+	},
+	"inGameSettings": {
+		"title": "設定",
+		"trackLength": "再生時間",
+		"trackLengthHint": "ゲーム中の音楽再生時間を設定します。次のトラックから適用されます。（早押しモードには適用されません）",
+		"audioNormalization": "音量自動調整",
+		"audioNormalizationHint": "高度な音声処理により、トラック間の音量差をなくします。ビジュアライザー機能もこれを使用します。Apple製デバイスのブラウザで再生に問題がある場合はオフにしてください。次のトラックから適用されます。",
+		"buzzerVolume": "ブザー音量",
+		"buzzerVolumeHint": "ブザーの効果音の音量です。"
+	},
+	"quitDialog": {
+		"title": "ゲームをやめますか？",
+		"message": "本当にゲームを終了しますか？現在の進行状況は失われます。",
+		"confirm": "やめる",
+		"cancel": "続ける"
+	},
+	"game": {
+		"round": "ラウンド {current} / {total}",
+		"home": "ホーム",
+		"spin": "回す！",
+		"play": "再生",
+		"pause": "一時停止",
+		"guessCategory": "{category} を推測",
+		"reveal": "正解を表示",
+		"nextRound": "次のラウンドへ",
+		"gameOver": "ゲーム終了！",
+		"playAgain": "もう一度遊ぶ",
+		"quitTitle": "退出しますか？",
+		"quitMessage": "本当に退出しますか？グリッドの状態は保存されます。",
+		"quitConfirm": "退出する",
+		"quitCancel": "とどまる",
+		"buzzer": {
+			"pressToStart": "スタート",
+			"buzz": "ブザー！"
+		},
+		"loadingAudio": "音声解析中...",
+		"categories": {
+			"composer": "作曲家",
+			"decade": "年代",
+			"era": "時代",
+			"work": "作品名",
+			"type": "種類"
+		},
+		"categoriesShort": {
+			"composer": "作曲家",
+			"decade": "年代",
+			"era": "時代",
+			"work": "作品",
+			"type": "種類"
+		}
+	},
+	"modes": {
+		"classic": {
+			"name": "クラシック",
+			"description": "難易度に応じたスコア制。難しいカテゴリほど高得点！",
+			"step1": {
+				"title": "曲を聴く",
+				"desc": "流れてくる曲の一部を聴いて、その特徴や構成を推測し、答えを書き留めましょう。"
+			},
+			"step2": {
+				"title": "カテゴリを当てる",
+				"desc": "作品名、年代、作曲家など、推測が具体的であるほど高得点になります。難しいカテゴリに挑戦しましょう！"
+			},
+			"step3": {
+				"title": "勝利を目指す",
+				"desc": "最終的に最も多くのポイントを獲得したプレイヤーの勝利です。知識を武器に戦いましょう！"
+			}
+		},
+		"buzzer": {
+			"name": "早押し",
+			"description": "タイムアタック！ライバルより早くブザーを押して答えよう。",
+			"step1": {
+				"title": "ブザーを押す",
+				"desc": "答えがわかったら、画面の巨大なボタン（またはキーボードのキー）を押して回答権を得ましょう。"
+			},
+			"step2": {
+				"title": "時間はヒント",
+				"desc": "時間が経つにつれてヒントとなるカテゴリが開示され、難易度が下がります（獲得できる得点も下がります）。早く押すほど高得点のチャンス！"
+			},
+			"step3": {
+				"title": "スピード勝負",
+				"desc": "ただし、お手つき（不正解）は減点です。慎重かつ大胆に、最高得点を目指しましょう！"
+			}
+		},
+		"bingo": {
+			"name": "ビンゴ",
+			"description": "ルーレットを回してカテゴリを決め、正解してビンゴを狙おう！",
+			"step1": {
+				"title": "ビンゴカードを用意",
+				"desc": "プレイヤーごとに異なるビンゴカードが必要です。各自のデバイスで開くか、印刷して使いましょう。"
+			},
+			"step2": {
+				"title": "回して当てる",
+				"desc": "ルーレットで毎ラウンドのカテゴリを決めます。曲を聴いて正解できたら、カード上の該当するマスを埋めます。"
+			},
+			"step3": {
+				"title": "一列揃えば勝ち",
+				"desc": "縦、横、斜めのいずれか一列を最初に揃えたプレイヤーの勝利です！"
+			}
+		}
+	},
+	"players": {
+		"setup": "プレイヤー設定",
+		"playSolo": "ソロプレイ",
+		"addPlayer": "追加",
+		"playerName": "プレイヤー {number}",
+		"nameLabel": "名前",
+		"colorLabel": "色",
+		"removePlayer": "削除",
+		"startGame": "ゲーム開始",
+		"cancel": "キャンセル",
+		"minPlayers": "スコアありで遊ぶ場合、最低2人のプレイヤーが必要です。"
+	},
+	"scoring": {
+		"title": "採点タイム",
+		"player": "プレイヤー",
+		"selectCategory": "各プレイヤーが正解したカテゴリを選択してください。",
+		"noGuess": "回答なし",
+		"continue": "次へ",
+		"correctGuess": "正解者は？",
+		"wrongGuess": "不正解者は？",
+		"noOne": "なし",
+		"noPoints": "0 pts",
+		"pts": "{points} pts",
+		"pointsAwarded": "+{points} pts",
+		"pointsPenalty": "-{points} pts",
+		"pointsPreview": "{current} ({delta}) pts"
+	},
+	"stats": {
+		"title": "成績",
+		"round": "ラウンド",
+		"score": "スコア",
+		"noData": "まだデータがありません"
+	},
+	"endGame": {
+		"title": "ゲーム終了！",
+		"winner": "{name} の勝利！",
+		"tie": "引き分け！",
+		"finalScores": "最終スコア",
+		"viewStats": "詳細データを見る",
+		"playAgain": "もう一度遊ぶ",
+		"home": "ホームへ戻る"
+	},
+	"bingo": {
+		"setupDescription": "各プレイヤーは自分の端末で専用のビンゴカードを開く必要があります。",
+		"reset": "リセット",
+		"resetTitle": "グリッドをリセット？",
+		"resetMessage": "新しいグリッドを生成し、マークをすべて消去します。よろしいですか？",
+		"resetConfirm": "リセット",
+		"resetCancel": "キャンセル",
+		"shareTitle": "ビンゴカードを共有",
+		"shareText": "一緒にビンゴで遊ぼう！",
+		"guessPlaceholder": "答えを入力...",
+		"closeGuess": "決定",
+		"reveal": "答えを見る"
+	},
+	"footer": {
+		"madeBy": "A Game by Jacob Zhang",
+		"poweredBy": "Powered by {first} & {second}"
+	},
+	"eras": {
+		"ancient": "古代",
+		"medieval": "中世",
+		"earlyRenaissance": "ルネサンス初期",
+		"middleRenaissance": "ルネサンス中期",
+		"lateRenaissance": "ルネサンス後期",
+		"lateRenaissanceEarlyBaroque": "ルネサンス後期 / バロック初期",
+		"earlyBaroque": "バロック初期",
+		"baroque": "バロック",
+		"lateBaroque": "バロック後期",
+		"lateBaroqueEarlyClassical": "バロック後期 / 古典派初期",
+		"earlyClassical": "古典派初期",
+		"classical": "古典派",
+		"lateClassical": "古典派後期",
+		"earlyRomantic": "ロマン派初期",
+		"romantic": "ロマン派",
+		"lateRomantic": "ロマン派後期",
+		"20thCentury": "20世紀",
+		"contemporary": "現代音楽",
+		"ragtime": "ラグタイム",
+		"impressionism": "印象派",
+		"secondVienneseSchool": "新ウィーン楽派",
+		"modernism": "モダニズム",
+		"minimalism": "ミニマリズム"
+	}
+}

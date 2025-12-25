@@ -31,6 +31,7 @@
 
 	let showTracklistSelector = $state(false);
 	let showShareLinkPopup = $state(false);
+	let showLocaleDropdown = $state(false);
 	let bingoUrl = $state('');
 	let selectedMode = $state<GameMode | null>($settingsStore.gameMode || 'classic');
 	let localSettings = $state({ ...$settingsStore });
@@ -143,25 +144,56 @@
 	onMount(() => {
 		// Create start audio element
 		startAudio = new Audio('/start.mp3');
+
+		// Close locale dropdown when clicking outside
+		const handleClickOutside = (event: MouseEvent) => {
+			const target = event.target as HTMLElement;
+			if (!target.closest('[data-locale-dropdown]')) {
+				showLocaleDropdown = false;
+			}
+		};
+		document.addEventListener('click', handleClickOutside);
+		return () => document.removeEventListener('click', handleClickOutside);
 	});
 </script>
 
 <div class="flex min-h-screen w-full items-center justify-center">
 	<!-- Locale Button (Top Right) -->
-	<div class="absolute top-8 right-8">
-		<button
-			type="button"
-			onclick={() => {
-				const currentIndex = locales.findIndex((l) => l.code === currentLocale);
-				const nextIndex = (currentIndex + 1) % locales.length;
-				handleLocaleChange(locales[nextIndex].code);
-			}}
-			class="flex items-center gap-2 rounded-lg border-2 border-cyan-400/30 bg-slate-900/50 px-4 py-2 text-cyan-400 backdrop-blur-sm transition-all hover:border-cyan-400/60 hover:bg-slate-800/70 active:scale-95"
-			title="Change Language"
-		>
-			<Languages class="h-5 w-5" />
-			<span class="font-semibold">{locales.find((l) => l.code === currentLocale)?.name}</span>
-		</button>
+	<div class="absolute top-8 right-8" data-locale-dropdown>
+		<div class="relative">
+			<button
+				type="button"
+				onclick={() => (showLocaleDropdown = !showLocaleDropdown)}
+				class="flex items-center gap-2 rounded-lg border-2 border-cyan-400/30 bg-slate-900/50 px-4 py-2 text-cyan-400 backdrop-blur-sm transition-all hover:border-cyan-400/60 hover:bg-slate-800/70 active:scale-95"
+				title="Change Language"
+			>
+				<Languages class="h-5 w-5" />
+				<span class="font-semibold">{locales.find((l) => l.code === currentLocale)?.name}</span>
+			</button>
+
+			{#if showLocaleDropdown}
+				<div
+					class="absolute right-0 z-50 mt-2 rounded-lg border-2 border-cyan-400/30 bg-slate-900/95 shadow-lg backdrop-blur-sm"
+				>
+					{#each locales as loc}
+						<button
+							type="button"
+							onclick={() => {
+								handleLocaleChange(loc.code);
+								showLocaleDropdown = false;
+							}}
+							lang={loc.code}
+							class="w-full px-4 py-2 text-left text-cyan-400 transition-colors first:rounded-t-md last:rounded-b-md hover:bg-slate-800/70 {currentLocale ===
+							loc.code
+								? 'bg-cyan-400/10 font-semibold'
+								: ''}"
+						>
+							{loc.name}
+						</button>
+					{/each}
+				</div>
+			{/if}
+		</div>
 	</div>
 
 	<div class="w-full max-w-5xl px-6 text-center">
@@ -354,7 +386,6 @@
 		</div>
 	</div>
 </div>
-
 <TracklistSelector
 	visible={showTracklistSelector}
 	selectedTracklist={$selectedTracklist}
