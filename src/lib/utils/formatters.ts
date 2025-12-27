@@ -1,3 +1,5 @@
+import type { Composer } from '$lib/types';
+
 /**
  * Formats a composer sort name (e.g., "Bach, Johann Sebastian" or "Strauss, Johann, II")
  * into a display name (e.g., "Johann Sebastian Bach" or "Johann Strauss II")
@@ -235,14 +237,24 @@ export function getEra(year: number | null | undefined): string {
 export function getWorkEra(
 	beginYear: number | null | undefined,
 	endYear: number | null | undefined,
-	composerName?: string
+	composer: Composer | null | undefined
 ): string {
-	if (composerName) {
-		const override = COMPOSER_ERA_OVERRIDES.get(composerName);
+	if (composer) {
+		const override = COMPOSER_ERA_OVERRIDES.get(composer.name);
 		if (override) return override;
 	}
 
 	// Fall back to year-based period
 	const year = endYear ?? beginYear;
-	return getEra(year);
+	let era = getEra(year);
+
+	if (!era) {
+		// try composer's birth and death years if available and the same
+		era = getEra(composer?.death_year);
+		if (getEra(composer?.birth_year) === era) {
+			return era;
+		}
+	}
+
+	return era;
 }
