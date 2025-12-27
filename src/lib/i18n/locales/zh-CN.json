@@ -361,6 +361,7 @@
 		"player": "玩家",
 		"selectCategory": "为每位玩家选择其猜对的分类。",
 		"noGuess": "未作答",
+		"wrong": "错误",
 		"continue": "继续",
 		"correctGuess": "谁猜对了？",
 		"wrongGuess": "谁猜错了？",

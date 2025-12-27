@@ -105,7 +105,9 @@
 			>
 				<!-- Background Icon -->
 				<X class="pointer-events-none absolute inset-0 h-full w-full opacity-30" />
-				<span class="relative z-10 text-sm font-bold text-white uppercase">Wrong</span>
+				<span class="relative z-10 text-sm font-bold text-white uppercase"
+					>{$_('scoring.wrong')}</span
+				>
 				<span class="relative z-10 text-xs font-semibold text-white/90">-10</span>
 			</button>
 		{/if}

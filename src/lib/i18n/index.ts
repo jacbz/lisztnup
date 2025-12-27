@@ -23,13 +23,44 @@ addMessages('ja', ja);
 // Get saved locale from localStorage or use browser language
 const savedLocale = typeof window !== 'undefined' ? localStorage.getItem('locale') : null;
 
-// Initialize with fallback chain
-init({
-	fallbackLocale: 'en',
-	initialLocale: savedLocale || 'en'
-});
+// Detect browser language and find best match
+function getBrowserLocale(): string {
+	if (typeof navigator === 'undefined') return 'en';
 
-// Export available locales for the language switcher
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const browserLang = navigator.language || (navigator as any).userLanguage;
+	if (!browserLang) return 'en';
+
+	// Direct match (e.g., 'ja', 'en', 'de', 'fr')
+	const directMatch = locales.find((l) => l.code === browserLang);
+	if (directMatch) return directMatch.code;
+
+	// Match language prefix (e.g., 'en-US' -> 'en', 'zh-Hans' -> 'zh-CN')
+	const langPrefix = browserLang.split('-')[0].toLowerCase();
+
+	// Special handling for Chinese variants
+	if (langPrefix === 'zh') {
+		// Check if it's traditional or simplified
+		const lowerLang = browserLang.toLowerCase();
+		if (
+			lowerLang.includes('hant') ||
+			lowerLang.includes('tw') ||
+			lowerLang.includes('hk') ||
+			lowerLang.includes('mo')
+		) {
+			return 'zh-TW';
+		}
+		return 'zh-CN'; // Default to simplified
+	}
+
+	// Match by language prefix for other languages
+	const prefixMatch = locales.find((l) => l.code.split('-')[0].toLowerCase() === langPrefix);
+	if (prefixMatch) return prefixMatch.code;
+
+	return 'en'; // Final fallback
+}
+
+// Export available locales for the language switcher (needed before init)
 export const locales = [
 	{ code: 'en', name: 'English' },
 	{ code: 'de', name: 'Deutsch' },
@@ -41,6 +72,12 @@ export const locales = [
 	{ code: 'ja', name: '日本語' }
 ];
 
+// Initialize with fallback chain
+init({
+	fallbackLocale: 'en',
+	initialLocale: savedLocale || getBrowserLocale()
+});
+
 // Export locale store for external use
 export { locale };
 
@@ -48,6 +85,9 @@ export { locale };
 if (typeof window !== 'undefined') {
 	locale.subscribe((value) => {
 		if (value) {
+			// Persist locale to localStorage
+			localStorage.setItem('locale', value);
+
 			// Small delay to ensure locale change is processed
 			setTimeout(() => {
 				if (requiresCustomFont(value)) {

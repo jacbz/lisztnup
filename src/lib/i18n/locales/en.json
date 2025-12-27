@@ -361,6 +361,7 @@
 		"player": "Player",
 		"selectCategory": "For each player, select the category that was guessed correctly.",
 		"noGuess": "No Guess",
+		"wrong": "Wrong",
 		"continue": "Continue",
 		"correctGuess": "Who guessed correctly?",
 		"wrongGuess": "Who made a wrong guess?",

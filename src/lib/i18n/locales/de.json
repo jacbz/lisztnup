@@ -297,7 +297,7 @@
 	"modes": {
 		"classic": {
 			"name": "Klassisch",
-			"description": "Punkte basierend auf der Kategorie-Schwierigkeit. Je härter der Tipp, desto mehr Punkte!",
+			"description": "Punkte basierend auf der Schwierigkeit der Kategorie. Je härter der Tipp, desto mehr Punkte!",
 			"step1": {
 				"title": "Hör genau hin",
 				"desc": "Lausche dem Ausschnitt und versuche, Details der Komposition zu erkennen. Notiere deinen Tipp."
@@ -361,6 +361,7 @@
 		"player": "Spieler",
 		"selectCategory": "Wähle für jeden Spieler die Kategorie, die richtig erraten wurde.",
 		"noGuess": "Kein Tipp",
+		"wrong": "Falsch",
 		"continue": "Weiter",
 		"correctGuess": "Wer lag richtig?",
 		"wrongGuess": "Wer hat falsch geraten?",

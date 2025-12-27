@@ -81,9 +81,7 @@
 	function handleLocaleChange(newLocale: string) {
 		currentLocale = newLocale;
 		locale.set(newLocale);
-		if (typeof window !== 'undefined') {
-			localStorage.setItem('locale', newLocale);
-		}
+		// localStorage persistence is handled automatically in i18n/index.ts
 	}
 
 	function handleModeSelect(mode: GameMode) {

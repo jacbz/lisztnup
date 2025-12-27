@@ -361,6 +361,7 @@
 		"player": "プレイヤー",
 		"selectCategory": "各プレイヤーが正解したカテゴリを選択してください。",
 		"noGuess": "回答なし",
+		"wrong": "不正解",
 		"continue": "次へ",
 		"correctGuess": "正解者は？",
 		"wrongGuess": "不正解者は？",

@@ -361,6 +361,7 @@
 		"player": "Joueur",
 		"selectCategory": "Pour chaque joueur, sélectionne la catégorie qui a été devinée correctement.",
 		"noGuess": "Pas de réponse",
+		"wrong": "Faux",
 		"continue": "Continuer",
 		"correctGuess": "Qui a bien deviné ?",
 		"wrongGuess": "Qui s'est trompé ?",
