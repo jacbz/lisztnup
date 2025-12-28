@@ -3,10 +3,29 @@
 	import type { Snippet } from 'svelte';
 
 	interface Props {
+		/**
+		 * Whether the display is visible.
+		 * @default true
+		 */
 		visible?: boolean;
+		/**
+		 * The content to display.
+		 */
 		children: Snippet;
+		/**
+		 * Whether to hide the top display.
+		 * @default false
+		 */
 		hideTop?: boolean;
+		/**
+		 * Whether to hide the left and right displays.
+		 * @default false
+		 */
 		hideLeftRight?: boolean;
+		/**
+		 * The margin of the display.
+		 * @default '20px'
+		 */
 		margin?: string;
 	}
 

@@ -1,11 +1,34 @@
 <script lang="ts">
 	interface Props {
+		/**
+		 * The minimum value of the slider.
+		 */
 		min: number;
+		/**
+		 * The maximum value of the slider.
+		 */
 		max: number;
+		/**
+		 * The step value of the slider.
+		 * @default 1
+		 */
 		step?: number;
+		/**
+		 * The minimum value of the selected range.
+		 */
 		valueMin: number;
+		/**
+		 * The maximum value of the selected range.
+		 */
 		valueMax: number;
+		/**
+		 * The label of the slider.
+		 * @default ''
+		 */
 		label?: string;
+		/**
+		 * The function to call when the value changes.
+		 */
 		onChange?: (min: number, max: number) => void;
 	}
 

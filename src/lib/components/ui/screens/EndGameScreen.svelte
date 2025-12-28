@@ -21,9 +21,7 @@
 		visible = false,
 		players = [],
 		isSoloMode = false,
-		mode = 'classic',
 		enableScoring = true,
-		onPlayAgain = () => {},
 		onViewStats = () => {},
 		onHome = () => {}
 	}: Props = $props();
@@ -93,7 +91,7 @@
 						{$_('endGame.finalScores')}
 					</h2>
 					<div class="flex flex-col gap-3">
-						{#each sortedPlayers as player, index}
+						{#each sortedPlayers as player, index (player.name)}
 							<div
 								class={index === 0
 									? 'flex items-center gap-4 rounded-xl border-2 border-amber-400 bg-slate-800 p-4 shadow-[0_0_20px_rgba(251,191,36,0.3)] transition-all duration-200 sm:gap-3 sm:p-3'

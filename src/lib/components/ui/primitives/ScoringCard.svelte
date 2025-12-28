@@ -5,10 +5,25 @@
 	import { getCategoryDefinition } from '$lib/data/categories';
 
 	interface Props {
+		/**
+		 * The player to display the scoring card for.
+		 */
 		player: Player;
+		/**
+		 * The game mode.
+		 */
 		mode: 'classic' | 'buzzer';
+		/**
+		 * The available categories to choose from.
+		 */
 		categories: readonly GuessCategory[];
+		/**
+		 * The currently selected option.
+		 */
 		selectedOption: GuessCategory | 'none' | 'wrong' | null;
+		/**
+		 * The function to call when an option is selected.
+		 */
 		onSelect: (option: GuessCategory | 'none' | 'wrong') => void;
 	}
 
@@ -60,7 +75,7 @@
 		</button>
 
 		<!-- Category Buttons -->
-		{#each categories as category}
+		{#each categories as category (category)}
 			{@const def = getCategoryDefinition(category)}
 			<button
 				type="button"
@@ -79,7 +94,7 @@
 					fill="currentColor"
 					preserveAspectRatio="xMidYMid meet"
 				>
-					{#each def.iconPaths as pathData}
+					{#each def.iconPaths as pathData (pathData)}
 						<path d={pathData} />
 					{/each}
 				</svg>

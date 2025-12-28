@@ -47,7 +47,7 @@
 
 <div class="mx-auto w-full max-w-[1200px]">
 	<div class="flex flex-col justify-center gap-4 md:flex-row">
-		{#each modes as mode}
+		{#each modes as mode (mode.id)}
 			{@const isSelected = selectedMode === mode.id}
 			<button
 				type="button"

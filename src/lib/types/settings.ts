@@ -58,7 +58,9 @@ export interface GameSettings {
 	buzzerVolume: number; // Buzzer volume level (0-1)
 }
 
-// Default values for tracklist configuration
+/**
+ * The default values for the category adjustments.
+ */
 export const DEFAULT_CATEGORY_ADJUSTMENTS: CategoryAdjustments = {
 	vocal: 0,
 	chamber: 0,
@@ -70,16 +72,32 @@ export const DEFAULT_CATEGORY_ADJUSTMENTS: CategoryAdjustments = {
 	solo: 0
 };
 
-// Work score range constants
+/**
+ * The minimum work score.
+ */
 export const MIN_WORK_SCORE = 1.9;
-/// The maximum work score outputed by process_musicbrainz.py
+/**
+ * The maximum work score outputted by process_musicbrainz.py
+ */
 export const MAX_WORK_SCORE = 6.54;
 
+/**
+ * The minimum work score, rounded to one decimal place.
+ */
 export const MIN_WORK_SCORE_ROUNDED = Math.floor(MIN_WORK_SCORE * 10) / 10;
+/**
+ * The maximum work score, rounded to one decimal place.
+ */
 export const MAX_WORK_SCORE_ROUNDED = Math.ceil(MAX_WORK_SCORE * 10) / 10;
 
+/**
+ * The difference between the maximum and minimum work scores, rounded to one decimal place.
+ */
 export const CATEGORY_ADJUSTMENT_DIFF = MAX_WORK_SCORE_ROUNDED - MIN_WORK_SCORE_ROUNDED;
 
+/**
+ * The default values for the tracklist configuration.
+ */
 export const DEFAULT_TRACKLIST_CONFIG: TracklistConfig = {
 	workScoreRange: [MIN_WORK_SCORE_ROUNDED, MAX_WORK_SCORE_ROUNDED],
 	enablePopularityWeighting: true
@@ -91,6 +109,9 @@ const isWebKit =
 	/AppleWebKit/.test(navigator.userAgent) &&
 	!/Chrome|Chromium/.test(navigator.userAgent);
 
+/**
+ * The default values for the game settings.
+ */
 export const DEFAULT_SETTINGS: GameSettings = {
 	numberOfTracks: 10,
 	selectedTracklist: 'tracklists.beginner.name',

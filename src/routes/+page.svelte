@@ -27,13 +27,14 @@
 	let isSoloMode = false;
 	let enableScoring = true;
 
-	onMount(async () => {
-		// Load settings from localStorage
-		settings.load();
-
-		// Handle addTracklist URL parameter
+	/**
+	 * Processes a shared tracklist from the 'addTracklist' URL parameter.
+	 * Decompresses, validates, and saves the tracklist if it's new.
+	 */
+	async function handleTracklistFromURL() {
 		const urlParams = new URLSearchParams(window.location.search);
 		const addTracklistParam = urlParams.get('addTracklist');
+
 		if (addTracklistParam) {
 			try {
 				const decompressed = await decompress(decodeURIComponent(addTracklistParam));
@@ -60,10 +61,16 @@
 				toast.error('Failed to import shared tracklist');
 			}
 
-			// Clear the URL parameter
+			// Clear the URL parameter for a cleaner user experience
 			const newUrl = window.location.pathname + window.location.hash;
 			window.history.replaceState({}, document.title, newUrl);
 		}
+	}
+
+	onMount(() => {
+		// Load settings from localStorage and check for shared tracklists in the URL
+		settings.load();
+		handleTracklistFromURL();
 	});
 
 	function handleStartGame(

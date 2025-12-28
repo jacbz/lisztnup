@@ -39,7 +39,6 @@
 	// Strip work name prefix from part name if part starts with work name
 	const displayPartName = $derived.by(() => {
 		if (!track || !shouldShowPart) return '';
-		artists;
 
 		return formatPartName(track.part.name, track.work.name);
 	});
@@ -130,11 +129,16 @@
 			<a
 				href={deezerTrackUrl}
 				target="_blank"
-				rel="noopener noreferrer"
+				rel="noopener noreferrer external"
+				data-sveltekit-reload
+				data-sveltekit-noscroll
+				data-sveltekit-preload-data="false"
 				class="text-center text-sm no-underline transition-all duration-200 hover:underline"
 				style="color: rgb(162, 56, 255)"
 			>
-				<div class="mr-[0.1em] mb-[0.2em] inline-flex h-[0.9em] align-middle">{@html deezer}</div>
+				<div class="mr-[0.1em] mb-[0.2em] inline-flex h-[0.9em] align-middle">
+					<!-- eslint-disable-next-line svelte/no-at-html-tags -->{@html deezer}
+				</div>
 				{artists.join(', ')}
 			</a>
 		{/if}

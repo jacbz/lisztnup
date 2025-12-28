@@ -1,7 +1,18 @@
 <script lang="ts">
 	interface Props {
+		/**
+		 * The URL to link to.
+		 */
 		href: string;
+		/**
+		 * Additional classes to apply to the link.
+		 * @default ''
+		 */
 		class?: string;
+		/**
+		 * Whether to hide the link on mobile devices.
+		 * @default false
+		 */
 		hideOnMobile?: boolean;
 	}
 

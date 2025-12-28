@@ -122,7 +122,7 @@
 
 		<!-- Steps -->
 		<div class="space-y-8">
-			{#each modeConfig.steps as step, index}
+			{#each modeConfig.steps as step, index (index)}
 				<div class="flex flex-col gap-4 md:flex-row md:items-start">
 					<!-- Number and Title Row (mobile) / Number Column (desktop) -->
 					<div class="flex items-center gap-3 md:block">

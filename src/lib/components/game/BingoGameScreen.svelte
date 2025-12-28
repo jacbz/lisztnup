@@ -141,7 +141,7 @@
 		>
 			<!-- Background Icon -->
 			<svg
-				class="pointer-events-none absolute inset-0 h-full w-full p-2 opacity-20"
+				class="pointer-events-none absolute inset-0 h-full w-full p-2 opacity-25"
 				viewBox="0 0 24 24"
 				fill="currentColor"
 				preserveAspectRatio="xMidYMid meet"

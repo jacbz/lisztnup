@@ -3,13 +3,42 @@
 	import Popup from './Popup.svelte';
 
 	interface Props {
+		/**
+		 * Whether the dialog is visible.
+		 * @default false
+		 */
 		visible?: boolean;
+		/**
+		 * The title of the dialog.
+		 * @default ''
+		 */
 		title?: string;
+		/**
+		 * The message of the dialog.
+		 * @default ''
+		 */
 		message?: string;
+		/**
+		 * The text of the confirm button.
+		 * @default 'Confirm'
+		 */
 		confirmText?: string;
+		/**
+		 * The text of the cancel button.
+		 * @default 'Cancel'
+		 */
 		cancelText?: string;
+		/**
+		 * The function to call when the confirm button is clicked.
+		 */
 		onConfirm?: () => void;
+		/**
+		 * The function to call when the cancel button is clicked.
+		 */
 		onCancel?: () => void;
+		/**
+		 * The content of the dialog.
+		 */
 		children?: Snippet;
 	}
 

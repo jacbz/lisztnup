@@ -92,7 +92,7 @@
 			<svg width={chartWidth} height={chartHeight} class="mx-auto block w-full">
 				<!-- Grid lines -->
 				<g class="grid-lines">
-					{#each Array(5) as _, i}
+					{#each Array(5) as i (i)}
 						{@const score = minScore + (scoreRange / 4) * i}
 						{@const y = getY(score)}
 						<line
@@ -112,7 +112,7 @@
 
 				<!-- X-axis labels (rounds) -->
 				<g class="x-axis">
-					{#each Array(rounds.length + 1) as _, i}
+					{#each Array(rounds.length + 1) as i (i)}
 						{@const x = getX(i, rounds.length + 1)}
 						<text
 							{x}
@@ -134,7 +134,7 @@
 				</g>
 
 				<!-- Player lines -->
-				{#each chartData as { player, scores }}
+				{#each chartData as { player, scores } (player.name)}
 					<path
 						d={createPath(scores)}
 						fill="none"
@@ -146,7 +146,7 @@
 					/>
 
 					<!-- Points -->
-					{#each scores as score, i}
+					{#each scores as score, i (i)}
 						<circle
 							cx={getX(i, scores.length)}
 							cy={getY(score)}
@@ -163,7 +163,7 @@
 
 		<!-- Legend -->
 		<div class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3">
-			{#each chartData as { player, scores }}
+			{#each chartData as { player, scores } (player.name)}
 				<div class="flex items-center gap-2 rounded-lg bg-slate-700 p-2">
 					<div
 						class="h-5 w-5 shrink-0 rounded-full"

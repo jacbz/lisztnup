@@ -2,7 +2,14 @@
 	import { _ } from 'svelte-i18n';
 
 	interface Props {
+		/**
+		 * The function to call when the logo is clicked.
+		 */
 		onClick?: () => void;
+		/**
+		 * The size of the logo.
+		 * @default 'medium'
+		 */
 		size?: 'small' | 'medium' | 'large';
 	}
 

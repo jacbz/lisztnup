@@ -51,28 +51,32 @@ class DeezerPlayer {
 	private enableAudioNormalization: boolean = false;
 
 	/**
-	 * Sets the track length limit in seconds (5-30)
+	 * Sets the track length limit in seconds.
+	 * @param seconds The desired track length (clamped between 5 and 30).
 	 */
 	setTrackLength(seconds: number): void {
 		this.trackLength = Math.max(5, Math.min(30, seconds));
 	}
 
 	/**
-	 * Gets the current track length limit
+	 * Gets the current track length limit in seconds.
+	 * @returns The current track length.
 	 */
 	getTrackLength(): number {
 		return this.trackLength;
 	}
 
 	/**
-	 * Sets whether to ignore the custom track length setting and always use full 30s
+	 * Sets whether to ignore the custom track length and always use the full 30s preview.
+	 * @param ignore If true, the full 30s preview is always used.
 	 */
 	setIgnoreTrackLength(ignore: boolean): void {
 		this.ignoreTrackLength = ignore;
 	}
 
 	/**
-	 * Sets whether to use Web Audio API with LUFS normalization
+	 * Enables or disables Web Audio API-based LUFS normalization.
+	 * @param enable If true, audio is processed for volume normalization.
 	 */
 	setEnableAudioNormalization(enable: boolean): void {
 		this.enableAudioNormalization = enable;
@@ -135,6 +139,11 @@ class DeezerPlayer {
 		});
 	}
 
+	/**
+	 * Loads a track by its Deezer ID, preparing it for playback.
+	 * This involves fetching track metadata and pre-loading the audio.
+	 * @param deezerId The Deezer track ID.
+	 */
 	async load(deezerId: number): Promise<void> {
 		this.destroy();
 		const loadPromise = this._load(deezerId);
@@ -233,6 +242,9 @@ class DeezerPlayer {
 		}
 	}
 
+	/**
+	 * Starts playing the loaded track from the beginning.
+	 */
 	async play(): Promise<void> {
 		if (this.loadPromise) {
 			await this.loadPromise;
@@ -329,6 +341,9 @@ class DeezerPlayer {
 		}
 	}
 
+	/**
+	 * Stops playback immediately.
+	 */
 	stop(): void {
 		if (this.enableAudioNormalization) {
 			// Web Audio API mode
@@ -354,6 +369,9 @@ class DeezerPlayer {
 		playerState.update((s) => ({ ...s, isPlaying: false, analyserNode: null }));
 	}
 
+	/**
+	 * Stops playback and releases all audio resources.
+	 */
 	destroy(): void {
 		this.stop();
 		this.audioBuffer = null;
@@ -385,6 +403,10 @@ class DeezerPlayer {
 		}
 	}
 
+	/**
+	 * Gets the current playback time in seconds.
+	 * @returns The current time of the track.
+	 */
 	getCurrentTime(): number {
 		if (this.isPlaying()) {
 			if (this.enableAudioNormalization && this.audioContext) {
@@ -396,6 +418,10 @@ class DeezerPlayer {
 		return 0;
 	}
 
+	/**
+	 * Gets the total duration of the loaded audio track in seconds.
+	 * @returns The duration of the track.
+	 */
 	getDuration(): number {
 		if (this.enableAudioNormalization) {
 			return this.audioBuffer?.duration ?? 0;
@@ -404,22 +430,42 @@ class DeezerPlayer {
 		}
 	}
 
+	/**
+	 * Gets the Web Audio API AnalyserNode for visualization.
+	 * @returns The AnalyserNode, or null if not in normalization mode.
+	 */
 	getAnalyserNode(): AnalyserNode | null {
 		return this.analyserNode;
 	}
 
+	/**
+	 * Checks if the player is currently playing.
+	 * @returns True if playing, false otherwise.
+	 */
 	isPlaying(): boolean {
 		return get(playerState).isPlaying;
 	}
 
+	/**
+	 * Sets a callback function to be executed when playback ends.
+	 * @param callback The function to call on playback end.
+	 */
 	setOnPlaybackEnd(callback: (() => void) | null): void {
 		this.onPlaybackEndCallback = callback;
 	}
 
+	/**
+	 * Gets the metadata for the currently loaded track.
+	 * @returns The Deezer track data, or null if no track is loaded.
+	 */
 	getTrackData(): DeezerTrackData | null {
 		return this.currentTrackData;
 	}
 
+	/**
+	 * Gets a list of artist names for the current track.
+	 * @returns An array of artist names.
+	 */
 	getArtists(): string[] {
 		const data = this.currentTrackData;
 		if (!data) return [];
@@ -432,6 +478,9 @@ class DeezerPlayer {
 		return data.artist?.name ? [data.artist.name] : [];
 	}
 
+	/**
+	 * Stops the current track and starts it again from the beginning.
+	 */
 	replay(): void {
 		if (this.enableAudioNormalization) {
 			if (!this.audioBuffer || !this.gainNode) {

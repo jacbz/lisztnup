@@ -1,13 +1,47 @@
 <script lang="ts">
 	interface Props {
+		/**
+		 * The current value of the slider.
+		 * @default 0
+		 */
 		value?: number;
+		/**
+		 * The minimum value of the slider.
+		 * @default 0
+		 */
 		min?: number;
+		/**
+		 * The maximum value of the slider.
+		 * @default 100
+		 */
 		max?: number;
+		/**
+		 * The step value of the slider.
+		 * @default 1
+		 */
 		step?: number;
+		/**
+		 * The label of the slider.
+		 * @default ''
+		 */
 		label?: string;
+		/**
+		 * Whether to show the value of the slider.
+		 * @default true
+		 */
 		showValue?: boolean;
+		/**
+		 * The suffix to add to the value.
+		 * @default ''
+		 */
 		valueSuffix?: string;
+		/**
+		 * A function to format the value.
+		 */
 		valueFormatter?: (value: number) => string;
+		/**
+		 * The function to call when the value changes.
+		 */
 		onChange?: (value: number) => void;
 	}
 

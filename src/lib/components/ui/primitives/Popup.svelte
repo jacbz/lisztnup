@@ -5,22 +5,48 @@
 	import X from 'lucide-svelte/icons/x';
 
 	interface Props {
+		/**
+		 * Whether the popup is visible.
+		 * @default false
+		 */
 		visible?: boolean;
+		/**
+		 * The function to call when the popup is closed.
+		 */
 		onClose?: () => void;
+		/**
+		 * The content of the popup.
+		 */
 		children?: Snippet;
-		/** Width preset or custom width class. Default: 'md' (max-w-md). Options: 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '5xl', '6xl', or custom like 'w-[420px]' */
+		/**
+		 * Width preset or custom width class.
+		 * @default 'md'
+		 */
 		width?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '5xl' | '6xl' | 'screen' | string;
-		/** When using width 'screen', subtract this margin from the viewport width. Can be a CSS size string like '48px' or a number (px). Default: '48px' */
-		screenMargin?: string | number;
-		/** Padding. Default: 'md' (p-6). Options: 'sm' (p-4), 'md' (p-6), 'lg' (p-8), 'responsive' (p-4 md:p-8), or 'none' */
+		/**
+		 * Padding.
+		 * @default 'md'
+		 */
 		padding?: 'none' | 'sm' | 'md' | 'lg' | 'responsive';
-		/** Overflow behavior. Default: 'auto' */
+		/**
+		 * Overflow behavior.
+		 * @default 'auto'
+		 */
 		overflow?: 'auto' | 'hidden' | 'visible';
-		/** Border color. Default: 'border-cyan-400'. Can be set to custom color class or empty string for no border */
+		/**
+		 * Border color.
+		 * @default 'border-cyan-400'
+		 */
 		borderColor?: string;
-		/** Shadow color for the glow effect. Default: 'rgba(34,211,238,0.3)' (cyan). Can be customized for different colors */
+		/**
+		 * Shadow color for the glow effect.
+		 * @default 'rgba(34,211,238,0.3)'
+		 */
 		shadowColor?: string;
-		/** Whether to show the close button in the top-right corner. Default: true */
+		/**
+		 * Whether to show the close button in the top-right corner.
+		 * @default true
+		 */
 		showCloseButton?: boolean;
 	}
 

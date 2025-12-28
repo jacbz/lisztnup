@@ -3,9 +3,22 @@
 	import QRCodeLib from 'qrcode';
 
 	interface Props {
+		/**
+		 * The text to encode in the QR code.
+		 */
 		text: string;
+		/**
+		 * The width of the QR code.
+		 */
 		width?: number;
+		/**
+		 * The minimum width of the QR code.
+		 */
 		minWidth?: number;
+		/**
+		 * Additional classes to apply to the canvas.
+		 * @default ''
+		 */
 		class?: string;
 	}
 

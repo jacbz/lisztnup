@@ -1,11 +1,16 @@
 export type GuessCategory = 'composer' | 'decade' | 'era' | 'work' | 'type';
+/**
+ * An array of all possible guess categories.
+ */
 export const ALL_CATEGORIES: GuessCategory[] = ['composer', 'decade', 'era', 'work', 'type'];
 
 export type GameMode = 'classic' | 'buzzer' | 'bingo';
 
 export type GameState = 'loading' | 'home' | 'settings' | 'generating' | 'game';
 
-// Player color palette
+/**
+ * A palette of colors to be used for players.
+ */
 export const PLAYER_COLORS = [
 	'#ef4444', // red-500
 	'#3b82f6', // blue-500
@@ -19,7 +24,9 @@ export const PLAYER_COLORS = [
 	'#a855f7' // purple-500
 ];
 
-// Category scoring points
+/**
+ * The number of points awarded for correctly guessing each category.
+ */
 export const CATEGORY_POINTS: Record<GuessCategory, number> = {
 	work: 15,
 	decade: 12,
@@ -28,9 +35,13 @@ export const CATEGORY_POINTS: Record<GuessCategory, number> = {
 	type: 2
 };
 
-// Buzzer mode time percentages (of track duration)
-// Takes first n elements and normalizes them based on number of categories
+/**
+ * The time percentages of the track duration at which the buzzer is enabled in buzzer mode.
+ */
 export const BUZZER_TIME_PERCENTAGES = [15, 10, 5];
+/**
+ * The number of seconds to count down before the preview starts in buzzer mode.
+ */
 export const BUZZER_PREVIEW_COUNTDOWN = 5; // seconds
 
 export interface Player {

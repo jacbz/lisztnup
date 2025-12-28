@@ -2,10 +2,27 @@
 	import { _ } from 'svelte-i18n';
 
 	interface Props {
+		/**
+		 * The current value of the toggle button.
+		 * @default false
+		 */
 		value?: boolean;
+		/**
+		 * The function to call when the value changes.
+		 */
 		onToggle?: () => void;
+		/**
+		 * Whether the toggle button is disabled.
+		 * @default false
+		 */
 		disabled?: boolean;
+		/**
+		 * The text to display when the button is enabled.
+		 */
 		enabledText?: string;
+		/**
+		 * The text to display when the button is disabled.
+		 */
 		disabledText?: string;
 	}
 

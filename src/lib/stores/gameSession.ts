@@ -15,7 +15,10 @@ function createGameSessionStore() {
 		subscribe,
 
 		/**
-		 * Start a new game session
+		 * Starts a new game session with the given mode and players.
+		 * @param mode The game mode to start.
+		 * @param players An array of players.
+		 * @param isSoloMode Whether the game is in solo mode.
 		 */
 		startSession: (mode: GameMode, players: Player[], isSoloMode: boolean = false) => {
 			set({
@@ -27,17 +30,17 @@ function createGameSessionStore() {
 		},
 
 		/**
-		 * Record scores for the current round
+		 * Records the scores for the current round and updates player totals.
+		 * @param roundIndex The index of the round being recorded.
+		 * @param playerScores A record of player names to their scores for the round.
 		 */
 		recordRound: (roundIndex: number, playerScores: Record<string, number>) => {
 			update((session) => {
-				// Update player total scores (using name as identifier)
 				const updatedPlayers = session.players.map((player) => ({
 					...player,
 					score: player.score + (playerScores[player.name] || 0)
 				}));
 
-				// Add round to history
 				const newRound: RoundScore = {
 					roundIndex,
 					playerScores
@@ -52,23 +55,18 @@ function createGameSessionStore() {
 		},
 
 		/**
-		 * Reset the game session
+		 * Resets the game session to its initial state.
 		 */
 		reset: () => {
 			set(initialSession);
-		},
-
-		/**
-		 * Get current session state (for reading in components)
-		 */
-		get: (): GameSession => {
-			let session: GameSession = initialSession;
-			subscribe((s) => (session = s))();
-			return session;
 		}
 	};
 }
 
+/**
+ * Manages the state of the current game session, including players, rounds, and scores.
+ * To access the session data in a Svelte component, use the `$gameSession` syntax.
+ */
 export const gameSession = createGameSessionStore();
 
 // Derived store for the current leader

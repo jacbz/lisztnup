@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { loadGameData, isDataLoaded, dataLoadProgress } from '$lib/stores';
+	import { loadGameData, dataLoadProgress } from '$lib/stores';
 	import { _ } from 'svelte-i18n';
 
 	let error = $state<string | null>(null);

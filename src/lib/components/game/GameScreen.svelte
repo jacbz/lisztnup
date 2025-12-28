@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount, onDestroy, setContext } from 'svelte';
 	import type { TracklistGenerator } from '$lib/services';
-	import type { Player, GameMode, Track, GuessCategory } from '$lib/types';
+	import type { Player, GameMode, Track } from '$lib/types';
 	import {
 		gameSession,
 		currentRound,
@@ -10,7 +10,7 @@
 		resetGame,
 		toast
 	} from '$lib/stores';
-	import { deezerPlayer, playerState, progress } from '$lib/services';
+	import { deezerPlayer, progress } from '$lib/services';
 	import ScoringScreen from '../ui/screens/ScoringScreen.svelte';
 	import StatsScreen from '../ui/screens/StatsScreen.svelte';
 	import EndGameScreen from '../ui/screens/EndGameScreen.svelte';
@@ -387,7 +387,7 @@
 			<div
 				class="flex min-w-[140px] flex-col gap-1.5 rounded-xl border-2 border-slate-700 bg-slate-800 px-3 py-2 md:mr-20 md:min-w-[180px] md:gap-2 md:px-4 md:py-3"
 			>
-				{#each sortedPlayers as player}
+				{#each sortedPlayers as player (player.name)}
 					<div class="flex items-center gap-1.5 md:gap-2">
 						<div
 							class="h-2 w-2 shrink-0 rounded-full md:h-2.5 md:w-2.5"

@@ -1,7 +1,18 @@
 <script lang="ts">
 	interface Props {
+		/**
+		 * The currently selected value.
+		 * @default 10
+		 */
 		value?: number;
+		/**
+		 * The available options.
+		 * @default [10, 20, 30]
+		 */
 		options?: number[];
+		/**
+		 * The function to call when the value changes.
+		 */
 		onChange?: (value: number) => void;
 	}
 
@@ -13,7 +24,7 @@
 </script>
 
 <div class="flex rounded-xl bg-slate-800 p-1 select-none">
-	{#each options as option}
+	{#each options as option (option)}
 		<button
 			type="button"
 			onclick={() => handleSelect(option)}
