@@ -253,7 +253,7 @@
 							<span class="text-sm font-semibold text-slate-400">{$_('settings.cardsToWin')}</span>
 							<NumberSelector
 								value={localSettings.timelineCardsToWin}
-								options={[2, 10, 15]}
+								options={[6, 10, 15]}
 								onChange={handleTimelineCardsToWinChange}
 							/>
 						</div>

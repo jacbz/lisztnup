@@ -7,6 +7,7 @@
 	import LifeBuoy from 'lucide-svelte/icons/life-buoy';
 	import Crown from 'lucide-svelte/icons/crown';
 	import History from 'lucide-svelte/icons/history';
+	import SquareStack from 'lucide-svelte/icons/square-stack';
 
 	interface Props {
 		selectedMode?: GameMode | null;
@@ -30,12 +31,12 @@
 	const modes = [
 		{
 			id: 'timeline' as GameMode,
-			icon: History,
-			color: '#22d3ee'
+			icon: SquareStack,
+			color: '#a855f7'
 		},
 		{
-			id: 'classic' as GameMode,
-			icon: Trophy,
+			id: 'bingo' as GameMode,
+			icon: LifeBuoy,
 			color: '#f59e0b'
 		},
 		{
@@ -44,9 +45,9 @@
 			color: '#ef4444'
 		},
 		{
-			id: 'bingo' as GameMode,
-			icon: LifeBuoy,
-			color: '#a855f7'
+			id: 'classic' as GameMode,
+			icon: Trophy,
+			color: '#10b981'
 		}
 	];
 </script>
@@ -57,41 +58,43 @@
 			{@const isSelected = selectedMode === mode.id}
 			<button
 				type="button"
-				class="relative flex flex-1 cursor-pointer items-start gap-4 overflow-hidden rounded-2xl border-2 p-6 text-left transition-all duration-300 hover:scale-[1.02]"
+				class="relative flex flex-1 cursor-pointer flex-col gap-3 overflow-hidden rounded-2xl border-2 p-6 text-left transition-all duration-300 hover:scale-[1.02]"
 				class:shadow-none={!isSelected}
 				style={isSelected
 					? `border-color: ${mode.color}; box-shadow: 0 0 30px ${mode.color}80;`
 					: `border-color: ${mode.color}66;`}
 				onclick={() => handleModeClick(mode.id)}
 			>
-				<!-- Mode Icon -->
-				<div
-					class="shrink-0 transition-colors"
-					class:text-slate-400={!isSelected}
-					style={isSelected ? `color: ${mode.color};` : ''}
-				>
-					<mode.icon class="h-12 w-12" strokeWidth={2} />
-				</div>
+				<!-- Header Row: Icon and Name -->
+				<div class="flex w-full items-center gap-3 pr-8">
+					<!-- Icon -->
+					<div
+						class="shrink-0 transition-colors"
+						class:text-slate-400={!isSelected}
+						style={isSelected ? `color: ${mode.color};` : ''}
+					>
+						<!-- Adjusted size slightly to better fit one-line layout, customizable -->
+						<mode.icon class="h-8 w-8" strokeWidth={2.5} />
+					</div>
 
-				<div class="flex-1">
 					<!-- Mode Name -->
 					<h3
-						class="mb-1 text-xl font-bold transition-colors"
+						class="text-xl font-bold transition-colors"
 						class:text-slate-400={!isSelected}
 						style={isSelected ? `color: ${mode.color};` : ''}
 					>
 						{$_(`modes.${mode.id}.name`)}
 					</h3>
-
-					<!-- Mode Description -->
-					<p
-						class="text-sm leading-relaxed"
-						class:text-slate-400={!isSelected}
-						style={isSelected ? `color: ${mode.color};` : ''}
-					>
-						{$_(`modes.${mode.id}.description`)}
-					</p>
 				</div>
+
+				<!-- Mode Description (Below) -->
+				<p
+					class="text-sm leading-relaxed"
+					class:text-slate-400={!isSelected}
+					style={isSelected ? `color: ${mode.color};` : ''}
+				>
+					{$_(`modes.${mode.id}.description`)}
+				</p>
 
 				<!-- Help Button -->
 				<div

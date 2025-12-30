@@ -18,7 +18,6 @@
 	import { formatYearRange } from '$lib/utils';
 
 	import CardStack from './timeline/CardStack.svelte';
-	import TimelineCard from './timeline/TimelineCard.svelte';
 	import PlayerTimeline, { type TimelineEntry } from './timeline/PlayerTimeline.svelte';
 	import TimelineEndGameScreen from './timeline/TimelineEndGameScreen.svelte';
 	import { fly } from 'svelte/transition';

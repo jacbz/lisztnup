@@ -4,7 +4,7 @@ export type GuessCategory = 'composer' | 'decade' | 'era' | 'work' | 'type';
  */
 export const ALL_CATEGORIES: GuessCategory[] = ['composer', 'decade', 'era', 'work', 'type'];
 
-export type GameMode = 'timeline' | 'classic' | 'buzzer' | 'bingo';
+export type GameMode = 'timeline' | 'bingo' | 'buzzer' | 'classic';
 
 export type GameState = 'loading' | 'home' | 'settings' | 'generating' | 'game';
 
