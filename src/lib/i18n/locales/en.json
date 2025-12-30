@@ -23,6 +23,7 @@
 	},
 	"settings": {
 		"numberOfTracks": "Number of Tracks",
+		"cardsToWin": "Cards to win",
 		"language": "Language",
 		"presetInfo": {
 			"default": "{composers, plural, =0 {no composers} one {# composer} other {# composers}}, {works, plural, =0 {no works} one {# work} other {# works}}, {tracks, plural, =0 {no tracks} one {# track} other {# tracks}}"
@@ -295,6 +296,22 @@
 		}
 	},
 	"modes": {
+		"timeline": {
+			"name": "Timeline",
+			"description": "Build a chronological timeline by placing tracks in the right year order.",
+			"step1": {
+				"title": "Play the Card",
+				"desc": "Start your turn by playing the top card from the deck."
+			},
+			"step2": {
+				"title": "Drag Into Your Timeline",
+				"desc": "Drag the card into your timeline where you think it belongs, then confirm your placement."
+			},
+			"step3": {
+				"title": "First to the Limit Wins",
+				"desc": "Correct placements help you grow your timeline. The first player to reach the cards-to-win limit wins."
+			}
+		},
 		"classic": {
 			"name": "Classic",
 			"description": "Score points based on category difficulty. The harder the guess, the more points you earn!",
@@ -386,6 +403,18 @@
 		"viewStats": "View Statistics",
 		"playAgain": "Play Again",
 		"home": "Home"
+	},
+	"timeline": {
+		"dealing": "Dealing to {name}",
+		"drag": "Drag",
+		"confirm": "Confirm",
+		"help": {
+			"playFirst": "Play the card to begin your turn.",
+			"dragToPlace": "Drag the card into your timeline.",
+			"reorder": "Reorder the card in your timeline, then confirm."
+		},
+		"gameOver": "Game Over",
+		"winner": "Winner: {name}"
 	},
 	"bingo": {
 		"setupDescription": "Each player needs their own unique bingo grid.",

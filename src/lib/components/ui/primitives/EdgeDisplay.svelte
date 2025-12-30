@@ -27,6 +27,11 @@
 		 * @default '20px'
 		 */
 		margin?: string;
+		/**
+		 * Whether to disable pointer events on the display.
+		 * @default true
+		 */
+		disablePointerEvents?: boolean;
 	}
 
 	let {
@@ -34,7 +39,8 @@
 		children,
 		hideTop = false,
 		hideLeftRight = false,
-		margin = '20px'
+		margin = '20px',
+		disablePointerEvents = true
 	}: Props = $props();
 	const positions = [
 		{
@@ -75,9 +81,9 @@
 {#each filteredPositions as position (position.name)}
 	{#if visible}
 		<div
-			class="fixed top-1/2 left-1/2 {position.hideOnNarrow
-				? 'hidden lg:block'
-				: ''} pointer-events-none z-100 select-none"
+			class="fixed top-1/2 left-1/2 {position.hideOnNarrow ? 'hidden lg:block' : ''} z-100"
+			class:pointer-events-none={disablePointerEvents}
+			class:select-none={disablePointerEvents}
 			in:fly={position.flyParams}
 			out:fly={position.flyParams}
 		>

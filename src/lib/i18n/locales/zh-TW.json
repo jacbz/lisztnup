@@ -23,6 +23,7 @@
 	},
 	"settings": {
 		"numberOfTracks": "曲目數量",
+		"cardsToWin": "獲勝所需卡牌數",
 		"language": "語言",
 		"presetInfo": {
 			"default": "{composers, plural, =0 {無作曲家} other {# 位作曲家}}, {works, plural, =0 {無作品} other {# 部作品}}, {tracks, plural, =0 {無音軌} other {# 條音軌}}"
@@ -295,6 +296,22 @@
 		}
 	},
 	"modes": {
+		"timeline": {
+			"name": "時間線",
+			"description": "把曲目依年代順序放進你的時間線。",
+			"step1": {
+				"title": "播放卡牌",
+				"desc": "輪到你時，播放牌堆最上方的卡牌。"
+			},
+			"step2": {
+				"title": "拖入時間線",
+				"desc": "將卡牌拖到你認為正確的位置，然後確認。"
+			},
+			"step3": {
+				"title": "先達標者獲勝",
+				"desc": "最先達到獲勝卡牌數量的玩家獲勝。"
+			}
+		},
 		"classic": {
 			"name": "經典模式",
 			"description": "根據分類難度得分。猜得越精準，得分越高！",
@@ -386,6 +403,18 @@
 		"viewStats": "檢視統計",
 		"playAgain": "再玩一次",
 		"home": "返回首頁"
+	},
+	"timeline": {
+		"dealing": "發牌給 {name}",
+		"drag": "拖曳",
+		"confirm": "確認",
+		"help": {
+			"playFirst": "播放卡牌以開始回合。",
+			"dragToPlace": "將卡牌拖入你的時間線。",
+			"reorder": "調整位置後再確認。"
+		},
+		"gameOver": "遊戲結束",
+		"winner": "勝者：{name}"
 	},
 	"bingo": {
 		"setupDescription": "每位玩家需要擁有自己獨特的賓果盤。",

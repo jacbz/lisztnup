@@ -16,6 +16,7 @@
 	import ClassicGameScreen from '$lib/components/game/ClassicGameScreen.svelte';
 	import BuzzerGameScreen from '$lib/components/game/BuzzerGameScreen.svelte';
 	import BingoGameScreen from '$lib/components/game/BingoGameScreen.svelte';
+	import TimelineGameScreen from '$lib/components/game/TimelineGameScreen.svelte';
 	import GameScreen from '$lib/components/game/GameScreen.svelte';
 	import { decompress } from '$lib/utils';
 	import { toast } from '$lib/stores';
@@ -91,7 +92,9 @@
 		setTimeout(() => {
 			if ($gameData) {
 				// Create a generator with filtered data using selected tracklist
-				generator = new TracklistGenerator($gameData, $selectedTracklist);
+				generator = new TracklistGenerator($gameData, $selectedTracklist, {
+					requireWorkYear: mode === 'classic' || mode === 'timeline'
+				});
 
 				// Initialize empty tracklist - we'll sample tracks on demand
 				tracklist.set([]);
@@ -133,25 +136,34 @@
 	</div>
 {:else if $gameState === 'game' && generator && currentMode}
 	<div in:fade={{ duration: 300, delay: 300 }} out:fade={{ duration: 300 }}>
-		<GameScreen
-			generator={generator!}
-			numberOfTracks={$settings.numberOfTracks}
-			mode={currentMode}
-			players={currentPlayers}
-			{isSoloMode}
-			enableScoring={currentMode === 'bingo' ? false : $settings.enableScoring}
-			ignoreTrackLength={currentMode === 'buzzer'}
-			onHome={handleBackToHome}
-		>
-			{#snippet children()}
-				{#if currentMode === 'classic'}
-					<ClassicGameScreen />
-				{:else if currentMode === 'buzzer'}
-					<BuzzerGameScreen />
-				{:else}
-					<BingoGameScreen />
-				{/if}
-			{/snippet}
-		</GameScreen>
+		{#if currentMode === 'timeline'}
+			<TimelineGameScreen
+				generator={generator!}
+				players={currentPlayers}
+				cardsToWin={$settings.timelineCardsToWin}
+				onHome={handleBackToHome}
+			/>
+		{:else}
+			<GameScreen
+				generator={generator!}
+				numberOfTracks={$settings.numberOfTracks}
+				mode={currentMode}
+				players={currentPlayers}
+				{isSoloMode}
+				enableScoring={currentMode === 'bingo' ? false : $settings.enableScoring}
+				ignoreTrackLength={currentMode === 'buzzer'}
+				onHome={handleBackToHome}
+			>
+				{#snippet children()}
+					{#if currentMode === 'classic'}
+						<ClassicGameScreen />
+					{:else if currentMode === 'buzzer'}
+						<BuzzerGameScreen />
+					{:else}
+						<BingoGameScreen />
+					{/if}
+				{/snippet}
+			</GameScreen>
+		{/if}
 	</div>
 {/if}

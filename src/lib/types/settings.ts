@@ -47,10 +47,12 @@ export interface BingoGridCell {
 
 export interface GameSettings {
 	numberOfTracks: number;
+	/// Timeline mode only: number of cards a player needs in their timeline to win.
+	timelineCardsToWin: number;
 	selectedTracklist: string; // Name of the currently selected tracklist
 	trackLength: number; // Duration in seconds (5-30)
 	volume: number; // Volume level (0-100)
-	gameMode: 'classic' | 'buzzer' | 'bingo'; // Game mode
+	gameMode: 'timeline' | 'classic' | 'buzzer' | 'bingo'; // Game mode
 	players: Array<{ name: string; color: string }>; // Saved player configurations
 	enableScoring: boolean; // Whether scoring is enabled
 	bingoGrid?: BingoGridCell[][]; // 5x5 grid for Bingo mode
@@ -114,6 +116,7 @@ const isWebKit =
  */
 export const DEFAULT_SETTINGS: GameSettings = {
 	numberOfTracks: 10,
+	timelineCardsToWin: 10,
 	selectedTracklist: 'tracklists.beginner.name',
 	trackLength: 30,
 	volume: 100,

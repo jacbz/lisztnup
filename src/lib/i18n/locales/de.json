@@ -23,6 +23,7 @@
 	},
 	"settings": {
 		"numberOfTracks": "Anzahl der Tracks",
+		"cardsToWin": "Karten zum Gewinnen",
 		"language": "Sprache",
 		"presetInfo": {
 			"default": "{composers, plural, =0 {keine Komponisten} one {# Komponist} other {# Komponisten}}, {works, plural, =0 {keine Werke} one {# Werk} other {# Werke}}, {tracks, plural, =0 {keine Tracks} one {# Track} other {# Tracks}}"
@@ -295,6 +296,22 @@
 		}
 	},
 	"modes": {
+		"timeline": {
+			"name": "Timeline",
+			"description": "Baue eine chronologische Timeline, indem du Tracks in die richtige Jahres-Reihenfolge legst.",
+			"step1": {
+				"title": "Karte abspielen",
+				"desc": "Starte deinen Zug, indem du die oberste Karte aus dem Stapel abspielst."
+			},
+			"step2": {
+				"title": "In deine Timeline ziehen",
+				"desc": "Ziehe die Karte an die Stelle, wo du sie vermutest, und bestätige dann."
+			},
+			"step3": {
+				"title": "Erster am Limit gewinnt",
+				"desc": "Wächst deine Timeline bis zum Karten-Limit, gewinnst du das Spiel."
+			}
+		},
 		"classic": {
 			"name": "Klassisch",
 			"description": "Punkte basierend auf der Schwierigkeit der Kategorie. Je härter der Tipp, desto mehr Punkte!",
@@ -386,6 +403,18 @@
 		"viewStats": "Statistik ansehen",
 		"playAgain": "Nochmal spielen",
 		"home": "Start"
+	},
+	"timeline": {
+		"dealing": "Ausgeben an {name}",
+		"drag": "Ziehen",
+		"confirm": "Bestätigen",
+		"help": {
+			"playFirst": "Spiele die Karte ab, um zu beginnen.",
+			"dragToPlace": "Ziehe die Karte in deine Timeline.",
+			"reorder": "Ordne die Karte um und bestätige."
+		},
+		"gameOver": "Spiel beendet",
+		"winner": "Gewinner: {name}"
 	},
 	"bingo": {
 		"setupDescription": "Jeder Spieler benötigt sein eigenes Bingo-Gitter.",

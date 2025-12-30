@@ -5,6 +5,7 @@
 	import Trophy from 'lucide-svelte/icons/trophy';
 	import Crown from 'lucide-svelte/icons/crown';
 	import LifeBuoy from 'lucide-svelte/icons/life-buoy';
+	import History from 'lucide-svelte/icons/history';
 
 	interface Props {
 		visible?: boolean;
@@ -18,6 +19,27 @@
 		if (!mode) return null;
 
 		const configs = {
+			timeline: {
+				icon: History,
+				color: '#22d3ee',
+				steps: [
+					{
+						image: '/screenshots/timeline-1.jpg',
+						titleKey: 'modes.timeline.step1.title',
+						descKey: 'modes.timeline.step1.desc'
+					},
+					{
+						image: '/screenshots/timeline-2.jpg',
+						titleKey: 'modes.timeline.step2.title',
+						descKey: 'modes.timeline.step2.desc'
+					},
+					{
+						image: '/screenshots/timeline-3.jpg',
+						titleKey: 'modes.timeline.step3.title',
+						descKey: 'modes.timeline.step3.desc'
+					}
+				]
+			},
 			classic: {
 				icon: Trophy,
 				color: '#f59e0b',

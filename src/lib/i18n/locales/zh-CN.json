@@ -23,6 +23,7 @@
 	},
 	"settings": {
 		"numberOfTracks": "曲目数量",
+		"cardsToWin": "获胜所需卡牌数",
 		"language": "语言",
 		"presetInfo": {
 			"default": "{composers, plural, =0 {无作曲家} other {# 位作曲家}}, {works, plural, =0 {无作品} other {# 部作品}}, {tracks, plural, =0 {无音轨} other {# 条音轨}}"
@@ -295,6 +296,22 @@
 		}
 	},
 	"modes": {
+		"timeline": {
+			"name": "时间线",
+			"description": "把曲目按年代顺序放入你的时间线。",
+			"step1": {
+				"title": "播放卡牌",
+				"desc": "轮到你时，播放牌堆顶部的卡牌。"
+			},
+			"step2": {
+				"title": "拖入时间线",
+				"desc": "把卡牌拖到你认为正确的位置，然后确认。"
+			},
+			"step3": {
+				"title": "先到达即获胜",
+				"desc": "最先达到获胜卡牌数量的玩家获胜。"
+			}
+		},
 		"classic": {
 			"name": "经典模式",
 			"description": "根据分类难度得分。猜得越精准，得分越高！",
@@ -386,6 +403,17 @@
 		"viewStats": "查看统计",
 		"playAgain": "再玩一次",
 		"home": "返回主页"
+	},
+	"timeline": {
+		"drag": "拖动",
+		"confirm": "确认",
+		"help": {
+			"playFirst": "播放卡牌以开始回合。",
+			"dragToPlace": "将卡牌拖入你的时间线。",
+			"reorder": "调整位置后再确认。"
+		},
+		"gameOver": "游戏结束",
+		"winner": "胜者：{name}"
 	},
 	"bingo": {
 		"setupDescription": "每位玩家需要拥有自己独特的宾果盘。",

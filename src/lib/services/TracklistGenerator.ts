@@ -15,15 +15,17 @@ import { weightedRandom } from '$lib/utils/random';
 export class TracklistGenerator {
 	private data: LisztnupData;
 	private tracklist: Tracklist;
+	private requireWorkYear: boolean;
 
 	// Filtered and weighted data pools
 	private filteredWorks: Work[] = [];
 	private filteredComposers: Composer[] = [];
 	private composerMap: Map<string, Composer> = new Map();
 
-	constructor(data: LisztnupData, tracklist: Tracklist) {
+	constructor(data: LisztnupData, tracklist: Tracklist, options?: { requireWorkYear?: boolean }) {
 		this.data = data;
 		this.tracklist = tracklist;
+		this.requireWorkYear = options?.requireWorkYear ?? false;
 		this.data.composers.forEach((composer) => {
 			this.composerMap.set(composer.gid, composer);
 		});
@@ -37,6 +39,11 @@ export class TracklistGenerator {
 	private filterData(): void {
 		const config = this.tracklist.config;
 		let works: Work[] = [...this.data.works];
+
+		// Step 0: Optionally require explicit work year data (used by game modes that depend on years)
+		if (this.requireWorkYear) {
+			works = works.filter((work) => work.begin_year != null || work.end_year != null);
+		}
 
 		// Step 1: Apply category adjustments to work scores
 		if (config.categoryAdjustments) {

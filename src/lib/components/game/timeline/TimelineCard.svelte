@@ -1,0 +1,115 @@
+<script lang="ts">
+	import type { Track } from '$lib/types';
+	import Logo from '$lib/components/ui/primitives/Logo.svelte';
+
+	interface Props {
+		track?: Track | null;
+		/**
+		 * face-down: Logo (Back of card)
+		 * revealed: Year text (Front of card)
+		 * interactive: Active turn (Player Control slot)
+		 */
+		state?: 'face-down' | 'revealed' | 'interactive';
+
+		size?: 'xs' | 'sm' | 'md' | 'lg';
+		borderVariant?: 'neutral' | 'correct' | 'wrong';
+
+		// For 'revealed' state
+		yearText?: string;
+
+		// Interaction
+		draggable?: boolean;
+		onClick?: () => void;
+		onPointerDown?: (ev: PointerEvent) => void;
+
+		// Slot for interactive content (PlayerControl)
+		children?: import('svelte').Snippet;
+	}
+
+	let {
+		track = null,
+		state = 'face-down',
+		size = 'md',
+		borderVariant = 'neutral',
+		yearText = '',
+		draggable = false,
+		onClick = () => {},
+		onPointerDown = () => {},
+		children
+	}: Props = $props();
+
+	const sizeClasses = $derived.by(() => {
+		switch (size) {
+			case 'xs':
+				return 'h-6 w-6 md:h-8 md:w-8';
+			case 'sm':
+				return 'h-14 w-14 md:h-16 md:w-16';
+			case 'md':
+				return 'h-14 w-14 md:h-18 md:w-18';
+			case 'lg':
+				return 'h-40 w-40 md:h-48 md:w-48';
+		}
+	});
+
+	const borderClasses = $derived.by(() => {
+		switch (borderVariant) {
+			case 'correct':
+				return 'border-green-400/80 shadow-[0_0_15px_rgba(74,222,128,0.4)]';
+			case 'wrong':
+				return 'border-red-400/80 shadow-[0_0_15px_rgba(248,113,113,0.4)]';
+			default:
+				return 'border-slate-700/70';
+		}
+	});
+
+	const textClasses = $derived.by(() => {
+		switch (size) {
+			case 'xs':
+				return 'text-xs md:text-[70%]';
+			case 'sm':
+				return 'text-base md:text-2xl';
+			case 'lg':
+				return 'text-3xl md:text-4xl';
+			default:
+				return 'text-xl md:text-2xl';
+		}
+	});
+
+	const isInteractive = $derived(state === 'interactive');
+	// In 'revealed' mode (year), we allow clicking if the parent asks (for inspection)
+	const isClickable = $derived(isInteractive || (state === 'revealed' && !draggable));
+</script>
+
+<button
+	type="button"
+	class={`relative shrink-0 rounded-[10px] border-2 bg-slate-900 backdrop-blur-sm ${sizeClasses} ${borderClasses}`}
+	class:cursor-pointer={isClickable || draggable}
+	class:cursor-grab={draggable}
+	class:touch-none={draggable}
+	onclick={() => isClickable && onClick()}
+	onpointerdown={(ev) => draggable && onPointerDown(ev)}
+>
+	<!-- Subtle paper-ish highlight -->
+	<div
+		class="pointer-events-none absolute inset-0 rounded-[10px] bg-linear-to-br from-white/8 to-transparent"
+	></div>
+
+	<div class="relative flex h-full w-full flex-col items-center justify-center overflow-hidden">
+		{#if state === 'interactive'}
+			<div class="h-full w-full">
+				{@render children?.()}
+			</div>
+		{:else if state === 'revealed'}
+			<div class="px-1 text-center select-none">
+				<div class={`font-black tracking-wide text-slate-200 ${textClasses}`}>{yearText}</div>
+			</div>
+		{:else}
+			<!-- Face Down / Logo -->
+			<div class="flex h-full w-full items-center justify-center opacity-80 select-none">
+				<div class="pointer-events-none -mr-4">
+					<Logo size={size === 'xs' || size === 'sm' ? 'tiny' : 'small'} onClick={() => {}} />
+				</div>
+			</div>
+		{/if}
+	</div>
+</button>

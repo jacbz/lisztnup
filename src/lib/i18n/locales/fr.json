@@ -23,6 +23,7 @@
 	},
 	"settings": {
 		"numberOfTracks": "Nombre de pistes",
+		"cardsToWin": "Cartes pour gagner",
 		"language": "Langue",
 		"presetInfo": {
 			"default": "{composers, plural, =0 {aucun compositeur} one {# compositeur} other {# compositeurs}}, {works, plural, =0 {aucune œuvre} one {# œuvre} other {# œuvres}}, {tracks, plural, =0 {aucune piste} one {# piste} other {# pistes}}"
@@ -295,6 +296,22 @@
 		}
 	},
 	"modes": {
+		"timeline": {
+			"name": "Timeline",
+			"description": "Construisez une frise chronologique en plaçant les morceaux au bon endroit.",
+			"step1": {
+				"title": "Jouer la carte",
+				"desc": "Commencez votre tour en jouant la carte du dessus."
+			},
+			"step2": {
+				"title": "Glisser dans votre frise",
+				"desc": "Faites glisser la carte dans votre timeline, puis confirmez votre placement."
+			},
+			"step3": {
+				"title": "Premier au seuil gagne",
+				"desc": "Le premier joueur à atteindre la limite de cartes remporte la partie."
+			}
+		},
 		"classic": {
 			"name": "Classique",
 			"description": "Marque des points selon la difficulté. Plus la catégorie est dure, plus tu gagnes !",
@@ -386,6 +403,18 @@
 		"viewStats": "Voir les stats",
 		"playAgain": "Rejouer",
 		"home": "Accueil"
+	},
+	"timeline": {
+		"dealing": "Distribution à {name}",
+		"drag": "Glisser",
+		"confirm": "Confirmer",
+		"help": {
+			"playFirst": "Jouez la carte pour commencer.",
+			"dragToPlace": "Glissez la carte dans votre timeline.",
+			"reorder": "Réorganisez la carte puis confirmez."
+		},
+		"gameOver": "Partie terminée",
+		"winner": "Gagnant : {name}"
 	},
 	"bingo": {
 		"setupDescription": "Chaque joueur a besoin de sa propre grille unique.",

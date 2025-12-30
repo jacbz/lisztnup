@@ -6,6 +6,7 @@
 	import ModeRulesPopup from './ModeRulesPopup.svelte';
 	import LifeBuoy from 'lucide-svelte/icons/life-buoy';
 	import Crown from 'lucide-svelte/icons/crown';
+	import History from 'lucide-svelte/icons/history';
 
 	interface Props {
 		selectedMode?: GameMode | null;
@@ -27,6 +28,11 @@
 		showRulesPopup = true;
 	}
 	const modes = [
+		{
+			id: 'timeline' as GameMode,
+			icon: History,
+			color: '#22d3ee'
+		},
 		{
 			id: 'classic' as GameMode,
 			icon: Trophy,

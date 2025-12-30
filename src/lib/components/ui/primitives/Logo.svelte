@@ -10,12 +10,13 @@
 		 * The size of the logo.
 		 * @default 'medium'
 		 */
-		size?: 'small' | 'medium' | 'large';
+		size?: 'tiny' | 'small' | 'medium' | 'large';
 	}
 
 	let { onClick = () => {}, size = 'medium' }: Props = $props();
 
 	const sizeClasses = {
+		tiny: 'text-xs sm:text-xs',
 		small: 'text-2xl sm:text-3xl',
 		medium: 'text-3xl sm:text-4xl',
 		large: 'text-4xl sm:text-5xl'

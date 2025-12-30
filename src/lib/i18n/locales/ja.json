@@ -23,6 +23,7 @@
 	},
 	"settings": {
 		"numberOfTracks": "トラック数",
+		"cardsToWin": "勝利に必要なカード数",
 		"language": "言語",
 		"presetInfo": {
 			"default": "{composers}人の作曲家、{works}曲の作品、{tracks}トラック"
@@ -295,6 +296,22 @@
 		}
 	},
 	"modes": {
+		"timeline": {
+			"name": "タイムライン",
+			"description": "曲を年代順に並べてタイムラインを作ります。",
+			"step1": {
+				"title": "カードを再生",
+				"desc": "自分の番になったら、山札の一番上のカードを再生します。"
+			},
+			"step2": {
+				"title": "タイムラインへドラッグ",
+				"desc": "正しいと思う位置にドラッグして配置し、確定します。"
+			},
+			"step3": {
+				"title": "先に規定数で勝利",
+				"desc": "先に規定のカード数に到達したプレイヤーの勝ちです。"
+			}
+		},
 		"classic": {
 			"name": "クラシック",
 			"description": "難易度に応じたスコア制。難しいカテゴリほど高得点！",
@@ -386,6 +403,18 @@
 		"viewStats": "詳細データを見る",
 		"playAgain": "もう一度遊ぶ",
 		"home": "ホームへ戻る"
+	},
+	"timeline": {
+		"dealing": "{name} に配る",
+		"drag": "ドラッグ",
+		"confirm": "確定",
+		"help": {
+			"playFirst": "カードを再生して開始します。",
+			"dragToPlace": "カードをタイムラインにドラッグしてください。",
+			"reorder": "配置を調整してから確定してください。"
+		},
+		"gameOver": "ゲーム終了",
+		"winner": "勝者: {name}"
 	},
 	"bingo": {
 		"setupDescription": "各プレイヤーは自分の端末で専用のビンゴカードを開く必要があります。",

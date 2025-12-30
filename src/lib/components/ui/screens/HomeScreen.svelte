@@ -49,8 +49,8 @@
 	// Update local settings when store changes
 	$effect(() => {
 		localSettings = { ...$settingsStore };
-		// Only sync enableScoring if we're not in Bingo mode (where it's temporarily disabled)
-		if (selectedMode !== 'bingo') {
+		// Only sync enableScoring if we're not in Bingo/Timeline (where scoring is forced off/on)
+		if (selectedMode !== 'bingo' && selectedMode !== 'timeline') {
 			enableScoring = $settingsStore.enableScoring;
 		}
 	});
@@ -73,11 +73,6 @@
 		customTracklists = SettingsService.loadCustomTracklists(); // Reload in case of changes
 	}
 
-	function handleNumberOfTracksChange(value: number) {
-		localSettings.numberOfTracks = value;
-		settingsStore.update((s) => ({ ...s, numberOfTracks: value }));
-	}
-
 	function handleLocaleChange(newLocale: string) {
 		currentLocale = newLocale;
 		locale.set(newLocale);
@@ -89,13 +84,21 @@
 		// Update settings to remember the mode
 		settingsStore.update((s) => ({ ...s, gameMode: mode }));
 		// For Bingo mode, always disable scoring (but don't save to settings)
-		// When switching away from Bingo, restore the saved setting
+		// For Timeline mode, always enable scoring (but don't save to settings)
+		// When switching away, restore the saved setting
 		if (mode === 'bingo') {
 			enableScoring = false;
+		} else if (mode === 'timeline') {
+			enableScoring = true;
 		} else {
 			// Restore from settings when switching from Bingo
 			enableScoring = $settingsStore.enableScoring;
 		}
+	}
+
+	function handleTimelineCardsToWinChange(value: number) {
+		localSettings.timelineCardsToWin = value;
+		settingsStore.update((s) => ({ ...s, timelineCardsToWin: value }));
 	}
 
 	function handleStartGame() {
@@ -244,16 +247,14 @@
 						</p>
 					</div>
 
-					<!-- Number of Tracks (not shown for Bingo mode) -->
-					{#if selectedMode !== 'bingo'}
+					<!-- Timeline-only: Cards to Win -->
+					{#if selectedMode === 'timeline'}
 						<div class="flex items-center justify-between">
-							<span class="text-sm font-semibold text-slate-400"
-								>{$_('settings.numberOfTracks')}</span
-							>
+							<span class="text-sm font-semibold text-slate-400">{$_('settings.cardsToWin')}</span>
 							<NumberSelector
-								value={localSettings.numberOfTracks}
-								options={[10, 20, 30]}
-								onChange={handleNumberOfTracksChange}
+								value={localSettings.timelineCardsToWin}
+								options={[2, 10, 15]}
+								onChange={handleTimelineCardsToWinChange}
 							/>
 						</div>
 					{/if}
@@ -269,16 +270,18 @@
 						<div class="mb-3 flex items-center justify-between gap-2">
 							<span class="text-sm font-semibold text-slate-400">{$_('players.setup')}</span>
 							<div class="flex gap-2">
-								<ToggleButton
-									value={enableScoring}
-									disabled={false}
-									onToggle={() => {
-										enableScoring = !enableScoring;
-										settingsStore.update((s) => ({ ...s, enableScoring }));
-									}}
-									enabledText={$_('home.scoringOn')}
-									disabledText={$_('home.scoringOff')}
-								/>
+								{#if selectedMode !== 'timeline'}
+									<ToggleButton
+										value={enableScoring}
+										disabled={false}
+										onToggle={() => {
+											enableScoring = !enableScoring;
+											settingsStore.update((s) => ({ ...s, enableScoring }));
+										}}
+										enabledText={$_('home.scoringOn')}
+										disabledText={$_('home.scoringOff')}
+									/>
+								{/if}
 								{#if currentPlayers.length < 10}
 									<button
 										type="button"

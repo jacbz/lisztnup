@@ -123,20 +123,6 @@
 				return;
 			}
 
-			// In Classic mode, skip tracks without valid year data
-			if (mode === 'classic') {
-				const hasValidYear = track.work.begin_year != null || track.work.end_year != null;
-				if (!hasValidYear) {
-					console.warn(
-						'Track has no valid year data, sampling another:',
-						track.work.name,
-						track.part.deezer
-					);
-					tracklist.update((t) => t.slice(0, -1));
-					continue;
-				}
-			}
-
 			// Try each available deezer ID for this track
 			const availableDeezerIds = [...track.part.deezer]; // Create a copy to modify
 			let trackLoaded = false;
@@ -447,7 +433,7 @@
 <!-- Scoring Screen -->
 <ScoringScreen
 	visible={showScoringScreen}
-	mode={mode === 'bingo' ? 'classic' : mode}
+	mode={mode === 'bingo' || mode === 'timeline' ? 'classic' : mode}
 	track={currentTrack}
 	players={$gameSession.players}
 	categories={activeCategories}

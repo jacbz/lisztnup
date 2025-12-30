@@ -20,9 +20,13 @@ export function formatComposerName(sortName: string): string {
  */
 export function formatYearRange(
 	beginYear: number | null | undefined,
-	endYear: number | null | undefined
+	endYear: number | null | undefined,
+	options?: { preferEndYearWhenRange?: boolean }
 ): string {
 	if (!beginYear && !endYear) return '';
+	if (options?.preferEndYearWhenRange && beginYear && endYear && beginYear !== endYear) {
+		return String(endYear);
+	}
 	if (!endYear || beginYear === endYear) return String(beginYear ?? endYear);
 	if (!beginYear) return String(endYear);
 	return `${beginYear}‑${endYear}`;
