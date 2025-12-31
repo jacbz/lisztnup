@@ -228,6 +228,10 @@
 		"previewLoading": "計算中...",
 		"save": "保存",
 		"cancel": "キャンセル",
+		"errors": {
+			"nameRequired": "トラックリスト名を入力してください",
+			"duplicateName": "同じ名前のトラックリストが既にあります"
+		},
 		"enableFilter": "{filter} を有効にする",
 		"disableFilter": "{filter} を無効にする",
 		"categoryDifficulty": "難易度",
@@ -371,7 +375,11 @@
 		"removePlayer": "削除",
 		"startGame": "ゲーム開始",
 		"cancel": "キャンセル",
-		"minPlayers": "スコアありで遊ぶ場合、最低2人のプレイヤーが必要です。"
+		"minPlayers": "スコアありで遊ぶ場合、最低2人のプレイヤーが必要です。",
+		"errors": {
+			"nameRequired": "プレイヤー名を入力してください",
+			"duplicateName": "同じ名前のプレイヤーが既にいます"
+		}
 	},
 	"scoring": {
 		"title": "採点タイム",

@@ -228,6 +228,10 @@
 		"previewLoading": "计算中...",
 		"save": "保存",
 		"cancel": "取消",
+		"errors": {
+			"nameRequired": "请填写歌单名称",
+			"duplicateName": "已存在同名歌单"
+		},
 		"enableFilter": "启用 {filter}",
 		"disableFilter": "禁用 {filter}",
 		"categoryDifficulty": "难度",
@@ -371,7 +375,11 @@
 		"removePlayer": "移除",
 		"startGame": "开始游戏",
 		"cancel": "取消",
-		"minPlayers": "开启计分时，该模式至少需要两名玩家。"
+		"minPlayers": "开启计分时，该模式至少需要两名玩家。",
+		"errors": {
+			"nameRequired": "请填写玩家名称",
+			"duplicateName": "已存在同名玩家"
+		}
 	},
 	"scoring": {
 		"title": "本轮计分",

@@ -57,7 +57,7 @@
 		players.forEach((p, i) => {
 			const trimmedName = p.name.trim();
 			if (!trimmedName) {
-				newErrors.set(i, 'Name cannot be empty');
+				newErrors.set(i, 'players.errors.nameRequired');
 				allValid = false;
 				return;
 			}
@@ -69,7 +69,7 @@
 			);
 
 			if (duplicate) {
-				newErrors.set(i, 'Name already exists');
+				newErrors.set(i, 'players.errors.duplicateName');
 				allValid = false;
 			}
 		});
@@ -177,7 +177,7 @@
 			</div>
 			{#if nameErrors.has(index)}
 				<p class="pl-1 text-xs text-red-400">
-					{nameErrors.get(index)}
+					{$_(nameErrors.get(index) || '')}
 				</p>
 			{/if}
 		</div>

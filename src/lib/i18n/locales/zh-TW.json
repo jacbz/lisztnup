@@ -228,6 +228,10 @@
 		"previewLoading": "計算中...",
 		"save": "儲存",
 		"cancel": "取消",
+		"errors": {
+			"nameRequired": "請輸入歌單名稱",
+			"duplicateName": "已存在相同名稱的歌單"
+		},
 		"enableFilter": "啟用 {filter}",
 		"disableFilter": "停用 {filter}",
 		"categoryDifficulty": "難度",
@@ -371,7 +375,11 @@
 		"removePlayer": "移除",
 		"startGame": "開始遊戲",
 		"cancel": "取消",
-		"minPlayers": "開啟計分時，該模式至少需要兩名玩家。"
+		"minPlayers": "開啟計分時，該模式至少需要兩名玩家。",
+		"errors": {
+			"nameRequired": "請輸入玩家名稱",
+			"duplicateName": "已存在同名玩家"
+		}
 	},
 	"scoring": {
 		"title": "本輪計分",

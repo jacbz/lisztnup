@@ -228,6 +228,10 @@
 		"previewLoading": "Calcul...",
 		"save": "Enregistrer",
 		"cancel": "Annuler",
+		"errors": {
+			"nameRequired": "La liste doit avoir un nom",
+			"duplicateName": "Une liste avec ce nom existe déjà"
+		},
 		"enableFilter": "Activer {filter}",
 		"disableFilter": "Désactiver {filter}",
 		"categoryDifficulty": "Difficulté",
@@ -371,7 +375,11 @@
 		"removePlayer": "Retirer",
 		"startGame": "Lancer la partie",
 		"cancel": "Annuler",
-		"minPlayers": "Au moins deux joueurs sont requis si le score est activé."
+		"minPlayers": "Au moins deux joueurs sont requis si le score est activé.",
+		"errors": {
+			"nameRequired": "Le joueur doit avoir un nom",
+			"duplicateName": "Un joueur avec ce nom existe déjà"
+		}
 	},
 	"scoring": {
 		"title": "Score de la manche",

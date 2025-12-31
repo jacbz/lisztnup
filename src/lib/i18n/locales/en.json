@@ -228,6 +228,10 @@
 		"previewLoading": "Calculating...",
 		"save": "Save",
 		"cancel": "Cancel",
+		"errors": {
+			"nameRequired": "Tracklist must have a name",
+			"duplicateName": "A tracklist with this name already exists"
+		},
 		"enableFilter": "Enable {filter}",
 		"disableFilter": "Disable {filter}",
 		"categoryDifficulty": "Difficulty",
@@ -371,7 +375,11 @@
 		"removePlayer": "Remove",
 		"startGame": "Start Game",
 		"cancel": "Cancel",
-		"minPlayers": "At least two players are required for this mode if scoring is on."
+		"minPlayers": "At least two players are required for this mode if scoring is on.",
+		"errors": {
+			"nameRequired": "Player must have a name",
+			"duplicateName": "A player with this name already exists"
+		}
 	},
 	"scoring": {
 		"title": "Score This Round",

@@ -416,7 +416,7 @@
 
 	function handleSave() {
 		if (!name.trim()) {
-			nameError = 'Name cannot be empty';
+			nameError = 'tracklistEditor.errors.nameRequired';
 			return;
 		}
 
@@ -430,7 +430,7 @@
 		);
 
 		if (isDuplicate) {
-			nameError = 'A tracklist with this name already exists';
+			nameError = 'tracklistEditor.errors.duplicateName';
 			return;
 		}
 
@@ -496,7 +496,7 @@
 							: 'border-slate-700'} bg-slate-800 px-3 py-2 text-white focus:border-cyan-400 focus:outline-none"
 					/>
 					{#if nameError}
-						<p class="mt-1 text-sm text-red-500">{nameError}</p>
+						<p class="mt-1 text-sm text-red-500">{$_(nameError)}</p>
 					{/if}
 				</div>
 				<div>

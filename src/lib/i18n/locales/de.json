@@ -228,6 +228,10 @@
 		"previewLoading": "Berechne...",
 		"save": "Speichern",
 		"cancel": "Abbrechen",
+		"errors": {
+			"nameRequired": "Die Tracklist muss einen Namen haben",
+			"duplicateName": "Eine Tracklist mit diesem Namen existiert bereits"
+		},
 		"enableFilter": "{filter} aktivieren",
 		"disableFilter": "{filter} deaktivieren",
 		"categoryDifficulty": "Schwierigkeit",
@@ -371,7 +375,11 @@
 		"removePlayer": "Entfernen",
 		"startGame": "Spiel starten",
 		"cancel": "Abbrechen",
-		"minPlayers": "Für diesen Modus (mit Punkten) sind mindestens zwei Spieler erforderlich."
+		"minPlayers": "Für diesen Modus (mit Punkten) sind mindestens zwei Spieler erforderlich.",
+		"errors": {
+			"nameRequired": "Ein Spieler muss einen Namen haben",
+			"duplicateName": "Ein Spieler mit diesem Namen existiert bereits"
+		}
 	},
 	"scoring": {
 		"title": "Rundenwertung",
