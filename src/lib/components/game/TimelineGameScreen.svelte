@@ -170,7 +170,6 @@
 
 		return () => {
 			mq.removeEventListener('change', updateMq);
-			gameContext.stopTrack();
 		};
 	});
 
@@ -406,11 +405,6 @@
 		if (success && droppedId && droppedTrack) {
 			gameState.pendingEntryId = droppedId;
 			gameState.centerStack.shift(); // Remove visual card
-
-			// IMMEDIATE PRELOAD:
-			// Triggers GameScreen to stop old audio, inc index, and preload next track.
-			// When preload finishes, $tracklist updates, and our effect updates centerStack[0].
-			gameContext.nextRound();
 		}
 
 		dragState.active = false;
@@ -536,6 +530,8 @@
 		uiState.showRevealPopup = false;
 		const wasWrong = gameState.revealIsCorrect === false;
 		const entryId = gameState.revealEntryId;
+
+		gameContext.nextRound();
 
 		setTimeout(() => {
 			if (gameState.revealPurpose === 'inspect') {
