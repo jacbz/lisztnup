@@ -664,7 +664,7 @@
 									isRevealed={false}
 									progress={audioProgressValue}
 									{track}
-									playerSize={100}
+									playerSize={120}
 									onPlay={handlePlay}
 									onStop={handleStop}
 									onReveal={() => {}}
@@ -686,7 +686,7 @@
 									isRevealed={false}
 									progress={audioProgressValue}
 									{track}
-									playerSize={100}
+									playerSize={120}
 									onPlay={() => {}}
 									onStop={handleStop}
 									onReveal={() => {}}
