@@ -178,7 +178,12 @@
 	// GameScreen preloads tracks into $tracklist. We watch for the newest track
 	// and update the top of our center stack to match it.
 	let processedTrackIndex = -1;
+
 	$effect(() => {
+		// Prevent syncing while dealing to ensure the preloaded "Turn 1" track
+		// doesn't get dealt to a player by accident.
+		if (uiState.isDealing) return;
+
 		// If we have a track loaded that matches the current round index
 		if ($currentRound.currentTrackIndex < $tracklist.length) {
 			const track = $tracklist[$currentRound.currentTrackIndex];
