@@ -136,34 +136,27 @@
 	</div>
 {:else if $gameState === 'game' && generator && currentMode}
 	<div in:fade={{ duration: 300, delay: 300 }} out:fade={{ duration: 300 }}>
-		{#if currentMode === 'timeline'}
-			<TimelineGameScreen
-				generator={generator!}
-				players={currentPlayers}
-				cardsToWin={$settings.timelineCardsToWin}
-				onHome={handleBackToHome}
-			/>
-		{:else}
-			<GameScreen
-				generator={generator!}
-				numberOfTracks={$settings.numberOfTracks}
-				mode={currentMode}
-				players={currentPlayers}
-				{isSoloMode}
-				enableScoring={currentMode === 'bingo' ? false : $settings.enableScoring}
-				ignoreTrackLength={currentMode === 'buzzer'}
-				onHome={handleBackToHome}
-			>
-				{#snippet children()}
-					{#if currentMode === 'classic'}
-						<ClassicGameScreen />
-					{:else if currentMode === 'buzzer'}
-						<BuzzerGameScreen />
-					{:else}
-						<BingoGameScreen />
-					{/if}
-				{/snippet}
-			</GameScreen>
-		{/if}
+		<GameScreen
+			generator={generator!}
+			numberOfTracks={$settings.numberOfTracks}
+			mode={currentMode}
+			players={currentPlayers}
+			{isSoloMode}
+			enableScoring={currentMode === 'bingo' ? false : $settings.enableScoring}
+			ignoreTrackLength={currentMode === 'buzzer'}
+			onHome={handleBackToHome}
+		>
+			{#snippet children()}
+				{#if currentMode === 'classic'}
+					<ClassicGameScreen />
+				{:else if currentMode === 'buzzer'}
+					<BuzzerGameScreen />
+				{:else if currentMode === 'timeline'}
+					<TimelineGameScreen players={currentPlayers} cardsToWin={$settings.timelineCardsToWin} />
+				{:else}
+					<BingoGameScreen />
+				{/if}
+			{/snippet}
+		</GameScreen>
 	</div>
 {/if}

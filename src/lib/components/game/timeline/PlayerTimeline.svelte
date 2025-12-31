@@ -128,9 +128,14 @@
 
 	<div
 		bind:this={el}
-		class={`relative flex min-h-12 items-center gap-1.5 rounded-xl border bg-slate-950/30 transition-all duration-300 ${helpText || showConfirm ? 'mt-6' : ''} ${active ? 'min-w-[300px] px-10 py-2' : 'min-w-[100px] px-1.5 py-1.5'} ${acceptingDrop ? 'border-cyan-400/40 shadow-[0_0_25px_rgba(34,211,238,0.35)]' : 'border-slate-700/40'}`}
+		class={`relative flex min-h-12 items-center justify-center gap-1.5 rounded-xl border bg-slate-950/30 transition-all duration-300 ${helpText || showConfirm ? 'mt-6' : ''} ${active ? 'min-w-[300px] px-10 py-2' : 'min-w-[100px] px-1.5 py-1.5'} ${acceptingDrop ? 'border-cyan-400/40 shadow-[0_0_25px_rgba(34,211,238,0.35)]' : 'border-slate-700/40'}`}
 		style={active ? `box-shadow: 0 0 30px ${playerColor}55;` : ''}
 	>
+		<div
+			class={`absolute ${active ? 'top-1 left-2 text-xs' : 'top-0.75 left-1 text-[10px]'} opacity-50`}
+		>
+			{entries.length}
+		</div>
 		{#each entries as entry (entry.id)}
 			{@const yearText = formatYearRange(entry.track.work.begin_year, entry.track.work.end_year, {
 				preferEndYearWhenRange: true

@@ -1,35 +1,51 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, getContext } from 'svelte';
 	import { flip } from 'svelte/animate';
-	import type { TracklistGenerator } from '$lib/services';
-	import { deezerPlayer, progress, playerState } from '$lib/services';
+	import { fly } from 'svelte/transition';
 	import type { Player, Track } from '$lib/types';
+	import { currentRound, tracklist, resetGame, gameSession } from '$lib/stores';
 	import { _ } from 'svelte-i18n';
+	import { formatYearRange } from '$lib/utils';
 
-	import Logo from '$lib/components/ui/primitives/Logo.svelte';
-	import SettingsIcon from 'lucide-svelte/icons/settings';
-	import Dialog from '$lib/components/ui/primitives/Dialog.svelte';
-	import InGameSettings from '$lib/components/ui/gameplay/InGameSettings.svelte';
+	// Components
 	import EdgeDisplay from '$lib/components/ui/primitives/EdgeDisplay.svelte';
 	import Popup from '$lib/components/ui/primitives/Popup.svelte';
 	import PlayerControl from '$lib/components/ui/gameplay/PlayerControl.svelte';
 	import TrackInfo from '$lib/components/ui/gameplay/TrackInfo.svelte';
-	import { gameSession, resetGame } from '$lib/stores';
-	import { formatYearRange } from '$lib/utils';
-
 	import CardStack from './timeline/CardStack.svelte';
 	import PlayerTimeline, { type TimelineEntry } from './timeline/PlayerTimeline.svelte';
 	import TimelineEndGameScreen from './timeline/TimelineEndGameScreen.svelte';
-	import { fly } from 'svelte/transition';
+	import { GAME_SCREEN_CONTEXT } from './context';
+	import InGameSettings from '$lib/components/ui/gameplay/InGameSettings.svelte';
+	import Dialog from '$lib/components/ui/primitives/Dialog.svelte';
+	import Logo from '$lib/components/ui/primitives/Logo.svelte';
+	import SettingsIcon from 'lucide-svelte/icons/settings';
 
 	interface Props {
-		generator: TracklistGenerator;
 		players: Player[];
 		cardsToWin: number;
 		onHome?: () => void;
 	}
 
-	let { generator, players, cardsToWin, onHome = () => {} }: Props = $props();
+	let { players, cardsToWin, onHome = () => {} }: Props = $props();
+
+	// --- Context ---
+	const gameContext = getContext(GAME_SCREEN_CONTEXT) as {
+		playTrack: () => Promise<void>;
+		stopTrack: () => void;
+		replayTrack: () => Promise<void>;
+		nextRound: () => Promise<void>;
+		handlePlaybackEnd: () => void;
+		sampleRawTrack: () => Track | null;
+		audioProgress: import('svelte/store').Readable<number>;
+		onHome: () => void;
+	};
+
+	// --- Audio Progress Sync ---
+	let audioProgressValue = $state(0);
+	gameContext.audioProgress.subscribe((value) => {
+		audioProgressValue = value;
+	});
 
 	// --- State Groups ---
 
@@ -45,8 +61,8 @@
 	let gameState = $state({
 		timelines: [] as { player: Player; entries: TimelineEntry[] }[],
 		activePlayerIndex: 0,
-		drawPile: [] as Track[],
-		centerStack: [] as { track: Track; id: string }[],
+		drawPile: [] as Track[], // Raw tracks for visuals/refill
+		centerStack: [] as { track: Track; id: string }[], // Visual stack
 
 		turnPhase: 'idle' as string,
 		pendingEntryId: null as string | null,
@@ -59,12 +75,9 @@
 		revealReachedWin: false
 	});
 
-	let playbackState = $state({
-		isPlaying: false,
-		hasStarted: false,
-		ended: false,
-		progress: 0
-	});
+	// Local state to track if the current card has been started at least once
+	// This drives the "Drag" UI state when playback is paused/stopped
+	let hasPlaybackStarted = $state(false);
 
 	let dragState = $state({
 		active: false,
@@ -94,9 +107,13 @@
 	const topStackItem = $derived(gameState.centerStack[0] ?? null);
 	const topCard = $derived(topStackItem?.track ?? null);
 
+	// In Timeline with GameScreen wrapper, the current playable track is the one
+	// preloaded in $tracklist at currentRound.currentTrackIndex.
+	const loadedTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
+
 	const canDragCenter = $derived(
 		!uiState.isDealing &&
-			playbackState.hasStarted &&
+			hasPlaybackStarted && // Must have started playback to drag
 			gameState.turnPhase !== 'locked' &&
 			!gameState.pendingEntryId
 	);
@@ -125,14 +142,7 @@
 
 	const rotatedTimelines = $derived.by(() => {
 		if (gameState.timelines.length === 0) return [];
-
-		// DURING DEALING: Show natural order (Player 1 top, Player N bottom)
-		// This keeps everyone visible in a standard list.
-		if (uiState.isDealing) {
-			return gameState.timelines;
-		}
-
-		// DURING PLAY: Rotate so the Active Player is at the bottom (interactive area)
+		if (uiState.isDealing) return gameState.timelines;
 		const idx = gameState.activePlayerIndex;
 		const before = gameState.timelines.slice(idx + 1);
 		const after = gameState.timelines.slice(0, idx + 1);
@@ -144,40 +154,51 @@
 		return formatYearRange(
 			gameState.revealTrack.work.begin_year,
 			gameState.revealTrack.work.end_year,
-			{
-				preferEndYearWhenRange: true
-			}
+			{ preferEndYearWhenRange: true }
 		);
 	});
 
 	// --- Lifecycle ---
 
 	onMount(() => {
-		const unsubProgress = progress.subscribe((v) => (playbackState.progress = v));
-		const unsubState = playerState.subscribe((s) => {
-			playbackState.isPlaying = s.isPlaying;
-		});
-
 		const mq = window.matchMedia('(min-width: 768px)');
 		const updateMq = () => (isMdViewport = mq.matches);
 		updateMq();
 		mq.addEventListener('change', updateMq);
 
-		gameSession.startSession('timeline', players, false);
-
-		deezerPlayer.setOnPlaybackEnd(() => {
-			playbackState.ended = true;
-			playbackState.isPlaying = false;
-		});
-
 		initGame();
 
 		return () => {
-			unsubProgress();
-			unsubState();
 			mq.removeEventListener('change', updateMq);
-			deezerPlayer.stop();
+			gameContext.stopTrack();
 		};
+	});
+
+	// --- Track Synchronization ---
+	// GameScreen preloads tracks into $tracklist. We watch for the newest track
+	// and update the top of our center stack to match it.
+	let processedTrackIndex = -1;
+	$effect(() => {
+		// If we have a track loaded that matches the current round index
+		if ($currentRound.currentTrackIndex < $tracklist.length) {
+			const track = $tracklist[$currentRound.currentTrackIndex];
+
+			// Only update if we haven't processed this specific round index yet
+			if ($currentRound.currentTrackIndex > processedTrackIndex) {
+				processedTrackIndex = $currentRound.currentTrackIndex;
+
+				// If stack is empty (start of game), push it.
+				// If stack has items (gameplay), replace the top one.
+				if (gameState.centerStack.length === 0) {
+					gameState.centerStack.push({ track, id: newId() });
+				} else {
+					gameState.centerStack[0].track = track;
+				}
+
+				// New card means reset local playback state
+				hasPlaybackStarted = false;
+			}
+		}
 	});
 
 	// --- Game Logic ---
@@ -188,7 +209,7 @@
 
 	function refillDrawPile(minCount: number) {
 		while (gameState.drawPile.length < minCount) {
-			const next = generator.sample();
+			const next = gameContext.sampleRawTrack();
 			if (!next) break;
 			gameState.drawPile.push(next);
 		}
@@ -205,23 +226,8 @@
 		}
 	}
 
-	async function ensureCardPlayable(track: Track): Promise<boolean> {
-		const available = [...track.part.deezer];
-		while (available.length > 0) {
-			const idx = Math.floor(Math.random() * available.length);
-			const deezerId = available[idx];
-			try {
-				await deezerPlayer.load(deezerId);
-				return true;
-			} catch {
-				available.splice(idx, 1);
-			}
-		}
-		return false;
-	}
-
 	async function initGame() {
-		uiState.isDealing = true; // Ensure visual state is set before population
+		uiState.isDealing = true;
 
 		gameState.timelines = players.map((p) => ({ player: p, entries: [] }));
 		gameState.activePlayerIndex = 0;
@@ -229,11 +235,16 @@
 		refillDrawPile(20);
 
 		gameState.centerStack = [];
+		// We fill the stack with raw cards first
 		restockCenterStack();
+
+		// The effect above will check $tracklist and replace the top card with the preloaded one
+		// shortly after this runs.
 
 		// Wait a tick to let the empty timelines render in natural order
 		await new Promise((r) => setTimeout(r, 500));
 
+		// Deal cards
 		for (let i = 0; i < gameState.timelines.length; i++) {
 			uiState.dealingToName = gameState.timelines[i].player.name;
 
@@ -254,24 +265,24 @@
 			await new Promise((r) => setTimeout(r, 600));
 		}
 
+		// Ensure the top card is the verified one from tracklist if available
+		if (gameState.centerStack.length > 0 && loadedTrack) {
+			gameState.centerStack[0].track = loadedTrack;
+		}
+
 		uiState.dealingToName = null;
-		uiState.isDealing = false; // Triggers rotate animation (Active player moves to bottom)
+		uiState.isDealing = false;
 		resetTurnState();
 	}
 
 	function resetTurnState() {
-		playbackState = {
-			isPlaying: false,
-			hasStarted: false,
-			ended: false,
-			progress: 0
-		};
 		gameState.pendingEntryId = null;
 		gameState.resolvingTurn = false;
 		gameState.turnPhase = 'idle';
 		dragState.active = false;
 		dragState.kind = 'none';
 		dragState.track = null;
+		hasPlaybackStarted = false;
 	}
 
 	function rotateToNextPlayer() {
@@ -288,23 +299,15 @@
 		)
 			return;
 
-		playbackState.ended = false;
-		const ok = await ensureCardPlayable(track);
-		if (!ok) {
-			gameState.centerStack.shift();
-			restockCenterStack();
-			return;
-		}
-
 		gameState.turnPhase = 'playing';
-		playbackState.hasStarted = true;
-		deezerPlayer.play();
+		hasPlaybackStarted = true;
+		await gameContext.playTrack();
 	}
 
 	function handleStop() {
-		deezerPlayer.stop();
-		playbackState.isPlaying = false;
-		playbackState.ended = true;
+		gameContext.stopTrack();
+		// isPlaying becomes false via store, hasPlaybackStarted remains true
+		// This triggers the "Drag" UI state
 	}
 
 	// --- Drag ---
@@ -312,9 +315,7 @@
 	function startDragFromCenter(ev: PointerEvent) {
 		if (!canDragCenter || !topCard) return;
 
-		deezerPlayer.stop();
-		playbackState.isPlaying = false;
-		playbackState.ended = true;
+		gameContext.stopTrack();
 		gameState.turnPhase = 'locked';
 
 		initDrag(ev, 'center', topCard);
@@ -399,7 +400,12 @@
 
 		if (success && droppedId && droppedTrack) {
 			gameState.pendingEntryId = droppedId;
-			gameState.centerStack.shift();
+			gameState.centerStack.shift(); // Remove visual card
+
+			// IMMEDIATE PRELOAD:
+			// Triggers GameScreen to stop old audio, inc index, and preload next track.
+			// When preload finishes, $tracklist updates, and our effect updates centerStack[0].
+			gameContext.nextRound();
 		}
 
 		dragState.active = false;
@@ -491,7 +497,7 @@
 	async function handleConfirmPlacement() {
 		if (!gameState.pendingEntryId) return;
 		gameState.resolvingTurn = true;
-		deezerPlayer.stop();
+		gameContext.stopTrack();
 
 		const entries = activePlayer.entries;
 		const idx = entries.findIndex((e) => e.id === gameState.pendingEntryId);
@@ -582,7 +588,7 @@
 	}
 
 	function handleQuit() {
-		deezerPlayer.stop();
+		gameContext.stopTrack();
 		resetGame();
 		gameSession.reset();
 		onHome();
@@ -590,9 +596,9 @@
 
 	function handlePlayAgain() {
 		uiState.showEndGame = false;
-		deezerPlayer.stop();
 		resetGame();
 		gameSession.startSession('timeline', players, false);
+		gameContext.nextRound(); // Reset game screen track index
 		initGame();
 	}
 </script>
@@ -641,14 +647,17 @@
 			>
 				{#snippet topCardContent(track: Track)}
 					<div class="absolute inset-0 flex flex-col items-center justify-center gap-4 p-4">
-						{#if !playbackState.hasStarted}
+						{#if !hasPlaybackStarted}
+							<!-- State 1: Fresh card, has not started -->
+							<!-- We force playbackEnded={false} here because a fresh card cannot be in 'ended' state.
+							     This fixes the bug where it gets stuck on 'Reveal' if the store hasn't updated yet. -->
 							<div class="relative h-[170px] w-[170px]">
 								<PlayerControl
 									visible={true}
-									isPlaying={playbackState.isPlaying}
+									isPlaying={false}
 									playbackEnded={false}
 									isRevealed={false}
-									progress={playbackState.progress}
+									progress={audioProgressValue}
 									{track}
 									playerSize={100}
 									onPlay={handlePlay}
@@ -657,18 +666,20 @@
 									onReplay={handlePlay}
 								/>
 							</div>
-						{:else if !playbackState.isPlaying}
+						{:else if !$currentRound.isPlaying}
+							<!-- State 2: Started, but now paused/stopped (Drag Prompt) -->
 							<div class="animate-pulse text-center text-3xl font-bold text-slate-300">
 								{$_('timeline.drag')}
 							</div>
 						{:else}
+							<!-- State 3: Playing -->
 							<div class="relative h-[170px] w-[170px]">
 								<PlayerControl
 									visible={true}
 									isPlaying={true}
 									playbackEnded={false}
 									isRevealed={false}
-									progress={playbackState.progress}
+									progress={audioProgressValue}
 									{track}
 									playerSize={100}
 									onPlay={() => {}}
@@ -717,7 +728,7 @@
 							helpText={isActive
 								? gameState.pendingEntryId
 									? $_('timeline.help.reorder')
-									: playbackState.hasStarted
+									: hasPlaybackStarted
 										? $_('timeline.help.dragToPlace')
 										: $_('timeline.help.playFirst')
 								: ''}

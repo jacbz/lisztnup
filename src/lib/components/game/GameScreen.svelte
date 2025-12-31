@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, onDestroy, setContext } from 'svelte';
+	import { onMount, onDestroy, setContext, tick } from 'svelte';
 	import type { TracklistGenerator } from '$lib/services';
 	import type { Player, GameMode, Track } from '$lib/types';
 	import {
@@ -30,7 +30,7 @@
 
 	interface Props {
 		generator: TracklistGenerator;
-		numberOfTracks: number;
+		numberOfTracks?: number; // Optional for timeline
 		mode: GameMode;
 		players: Player[];
 		isSoloMode: boolean;
@@ -42,7 +42,7 @@
 
 	let {
 		generator,
-		numberOfTracks,
+		numberOfTracks = 10,
 		mode,
 		players,
 		isSoloMode,
@@ -53,9 +53,14 @@
 	}: Props = $props();
 
 	const currentTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
+
+	// Timeline and Bingo don't end based on fixed track count
 	const isGameOver = $derived(
-		mode === 'bingo' ? false : $currentRound.currentTrackIndex >= numberOfTracks
+		mode === 'bingo' || mode === 'timeline'
+			? false
+			: $currentRound.currentTrackIndex >= numberOfTracks
 	);
+
 	const sortedPlayers = $derived([...$gameSession.players].sort((a, b) => b.score - a.score));
 	const activeCategories = $derived(
 		ALL_CATEGORIES.filter((cat) => !generator.getDisabledCategories().includes(cat)).sort(
@@ -113,13 +118,21 @@
 		return track;
 	}
 
+	// Just return a track from the generator without adding to tracklist/loading audio
+	// Useful for Timeline deck filling
+	function sampleRawTrack(): Track | null {
+		return generator.sample();
+	}
+
 	async function sampleAndPreloadTrack(): Promise<void> {
 		while (true) {
 			const track = sampleNextTrack();
 			if (!track) {
 				// No more tracks available - end the game
-				toast.show('error', 'No more tracks available to sample');
-				showEndGameScreen = true;
+				if (mode !== 'timeline') {
+					toast.show('error', 'No more tracks available to sample');
+					showEndGameScreen = true;
+				}
 				return;
 			}
 
@@ -132,17 +145,11 @@
 				const randomIndex = Math.floor(Math.random() * availableDeezerIds.length);
 				const deezerId = availableDeezerIds[randomIndex];
 
-				console.log(`Picked deezer ID ${deezerId} out of candidates ${availableDeezerIds}`);
-
 				try {
 					await deezerPlayer.load(deezerId);
 					trackLoaded = true;
 					break; // Successfully loaded, exit the inner loop
 				} catch (error) {
-					console.warn(
-						`Track preview unavailable for deezer ID ${deezerId}, trying another:`,
-						error
-					);
 					// Remove this deezer ID from the available list
 					availableDeezerIds.splice(randomIndex, 1);
 				}
@@ -222,8 +229,12 @@
 			isRevealed: false
 		}));
 
-		// Check if this is the last track and show end game screen (skip for bingo mode)
-		if (mode !== 'bingo' && $currentRound.currentTrackIndex >= numberOfTracks - 1) {
+		// Check if this is the last track and show end game screen (skip for bingo/timeline)
+		if (
+			mode !== 'bingo' &&
+			mode !== 'timeline' &&
+			$currentRound.currentTrackIndex >= numberOfTracks - 1
+		) {
 			showEndGameScreen = true;
 			return;
 		}
@@ -231,6 +242,7 @@
 		nextRoundFn();
 
 		// Preload next track if needed
+		// For timeline, we always want to preload the "next" card when this function is called
 		if ($currentRound.currentTrackIndex >= $tracklist.length) {
 			await sampleAndPreloadTrack();
 		}
@@ -240,8 +252,12 @@
 		gameSession.recordRound($currentRound.currentTrackIndex, scores);
 		showScoringScreen = false;
 
-		// Check if game should end (skip for bingo mode)
-		if (mode !== 'bingo' && $currentRound.currentTrackIndex >= numberOfTracks - 1) {
+		// Check if game should end (skip for bingo/timeline)
+		if (
+			mode !== 'bingo' &&
+			mode !== 'timeline' &&
+			$currentRound.currentTrackIndex >= numberOfTracks - 1
+		) {
 			showEndGameScreen = true;
 		} else {
 			nextRound();
@@ -273,6 +289,7 @@
 	}
 
 	function handleHome(): void {
+		deezerPlayer.stop();
 		resetGame();
 		gameSession.reset();
 		onHome();
@@ -295,6 +312,7 @@
 		revealTrack,
 		nextRound,
 		handlePlaybackEnd,
+		sampleRawTrack,
 		audioProgress: progress,
 		onHome: handleHome,
 		get activeCategories() {
@@ -328,8 +346,8 @@
 		</button>
 	</div>
 
-	<!-- Round Indicator -->
-	{#if !isGameOver && mode !== 'bingo'}
+	<!-- Round Indicator (Standard Modes) -->
+	{#if !isGameOver && mode !== 'bingo' && mode !== 'timeline'}
 		<div class="absolute bottom-6 left-6 z-20 select-none">
 			<p class="text-3xl font-bold text-cyan-400">
 				{$currentRound.currentTrackIndex + 1}/{numberOfTracks}
@@ -365,7 +383,7 @@
 	{/if}
 
 	<!-- Stats Button (for multiplayer modes with scoring) -->
-	{#if !isSoloMode && !isGameOver && !showScoringScreen && enableScoring}
+	{#if !isSoloMode && !isGameOver && !showScoringScreen && enableScoring && mode !== 'timeline'}
 		<!-- Game Summary (bottom-center on mobile, bottom-right on desktop) -->
 		<div
 			class="fixed bottom-4 left-1/2 z-10 -translate-x-1/2 md:right-6 md:left-auto md:translate-x-0"
@@ -404,7 +422,7 @@
 	{/if}
 
 	<!-- Solo Mode Score Display (for Classic mode) -->
-	{#if isSoloMode && !isGameOver && enableScoring && $gameSession.players.length > 0}
+	{#if isSoloMode && !isGameOver && enableScoring && $gameSession.players.length > 0 && mode !== 'timeline'}
 		<div class="absolute right-6 bottom-6 z-20 select-none">
 			<div
 				class="rounded-xl border-2 border-cyan-400 bg-slate-900 px-4 py-2 shadow-[0_0_20px_rgba(34,211,238,0.3)]"
@@ -442,7 +460,7 @@
 
 <!-- Track Info Popup (when scoring is disabled, except for buzzer mode which handles its own) -->
 <Popup
-	visible={$currentRound.isRevealed && !enableScoring && mode !== 'buzzer'}
+	visible={$currentRound.isRevealed && !enableScoring && mode !== 'buzzer' && mode !== 'timeline'}
 	onClose={() => {}}
 	width="w-[420px] max-w-[90vw]"
 	padding="lg"

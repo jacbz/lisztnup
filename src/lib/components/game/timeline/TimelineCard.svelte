@@ -82,7 +82,7 @@
 
 <button
 	type="button"
-	class={`relative shrink-0 rounded-[10px] border-2 bg-slate-900 backdrop-blur-sm ${sizeClasses} ${borderClasses}`}
+	class={`relative shrink-0 rounded-[10px] border-2 bg-slate-900 backdrop-blur-sm ${sizeClasses} ${borderClasses} transition-all`}
 	class:cursor-pointer={isClickable || draggable}
 	class:cursor-grab={draggable}
 	class:touch-none={draggable}
