@@ -96,6 +96,11 @@
 		}
 	}
 
+	function handleNumberOfTracksChange(value: number) {
+		localSettings.numberOfTracks = value;
+		settingsStore.update((s) => ({ ...s, numberOfTracks: value }));
+	}
+
 	function handleTimelineCardsToWinChange(value: number) {
 		localSettings.timelineCardsToWin = value;
 		settingsStore.update((s) => ({ ...s, timelineCardsToWin: value }));
@@ -246,6 +251,20 @@
 								: $selectedTracklist.description}
 						</p>
 					</div>
+
+					<!-- Number of Tracks (not shown for Bingo and Timeline mode) -->
+					{#if selectedMode !== 'bingo' && selectedMode !== 'timeline'}
+						<div class="flex items-center justify-between">
+							<span class="text-sm font-semibold text-slate-400"
+								>{$_('settings.numberOfTracks')}</span
+							>
+							<NumberSelector
+								value={localSettings.numberOfTracks}
+								options={[10, 20, 30]}
+								onChange={handleNumberOfTracksChange}
+							/>
+						</div>
+					{/if}
 
 					<!-- Timeline-only: Cards to Win -->
 					{#if selectedMode === 'timeline'}

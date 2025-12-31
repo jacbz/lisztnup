@@ -368,7 +368,7 @@
 	"players": {
 		"setup": "プレイヤー設定",
 		"playSolo": "ソロプレイ",
-		"addPlayer": "追加",
+		"addPlayer": "1",
 		"playerName": "プレイヤー {number}",
 		"nameLabel": "名前",
 		"colorLabel": "色",
