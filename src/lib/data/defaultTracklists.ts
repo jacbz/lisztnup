@@ -20,6 +20,7 @@ import celloIcon from '$lib/assets/icons/cello.svg?raw';
 import orchestraIcon from '$lib/assets/icons/orchestra.svg?raw';
 import composerIcon from '$lib/assets/icons/composer.svg?raw';
 import eraIcon from '$lib/assets/icons/era.svg?raw';
+import { COMPOSER_COUNT } from '$lib/types/settings';
 
 /**
  * Default tracklist presets organized by categories
@@ -169,9 +170,10 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: composerIcon,
 		category: 'difficulty',
 		config: {
+			workScoreRange: [MIN_WORK_SCORE, 3.2],
 			composerFilter: {
 				mode: 'notabilityRange',
-				range: [201, 400]
+				range: [201, COMPOSER_COUNT]
 			},
 			enablePopularityWeighting: false
 		}

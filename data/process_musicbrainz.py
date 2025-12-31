@@ -41,7 +41,7 @@ import yaml
 # ==============================================================================
 
 # --- Data Filtering Thresholds ---
-MIN_WORKS_PER_COMPOSER = 2      # Composers with fewer final works than this will be dropped.
+MIN_WORKS_PER_COMPOSER = 1      # Composers with fewer final works than this will be dropped.
 MIN_BIRTH_YEAR = 1400           # Composers born before this year will be dropped.
 MIN_RECORDINGS_PER_PART = 3     # Leaf works (parts) with fewer recordings will be dropped at the start.
 MINIMUM_WSS = 1.9               # The absolute minimum Work Significance Score for a work to be considered.
@@ -97,6 +97,7 @@ EXCLUDED_COMPOSERS: Set[str] = set([
     "Mangione, Chuck",
     "Hisaishi, Joe",
     "Herrmann, Bernard",
+    "Romberg, Sigmund",
 
 ])
 

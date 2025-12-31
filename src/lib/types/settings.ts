@@ -84,6 +84,10 @@ export const MIN_WORK_SCORE = 1.9;
 export const MAX_WORK_SCORE = 6.54;
 
 /**
+ * The approximate number of composers in the database.
+ */
+export const COMPOSER_COUNT = 650;
+/**
  * The minimum work score, rounded to one decimal place.
  */
 export const MIN_WORK_SCORE_ROUNDED = Math.floor(MIN_WORK_SCORE * 10) / 10;

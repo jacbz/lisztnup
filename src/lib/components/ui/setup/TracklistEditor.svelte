@@ -19,6 +19,7 @@
 	import { formatComposerName, formatLifespan, formatYearRange } from '$lib/utils';
 	import SquareCheck from 'lucide-svelte/icons/square-check';
 	import SquareX from 'lucide-svelte/icons/square-x';
+	import { COMPOSER_COUNT } from '$lib/types/settings';
 
 	interface Props {
 		visible?: boolean;
@@ -130,7 +131,7 @@
 				enablePopularityWeighting = true;
 				composerFilterMode = 'include';
 				selectedComposers = [];
-				notabilityRange = [1, 400];
+				notabilityRange = [1, COMPOSER_COUNT];
 				nameFilters = [];
 				nameFilterInput = '';
 			}
@@ -613,7 +614,7 @@
 							bind:valueMin={notabilityRange[0]}
 							bind:valueMax={notabilityRange[1]}
 							min={1}
-							max={400}
+							max={COMPOSER_COUNT}
 							step={1}
 							label={$_('tracklistEditor.notabilityRange')}
 						/>
