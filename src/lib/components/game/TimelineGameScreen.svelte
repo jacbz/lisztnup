@@ -531,7 +531,9 @@
 		const wasWrong = gameState.revealIsCorrect === false;
 		const entryId = gameState.revealEntryId;
 
-		gameContext.nextRound();
+		if (gameState.revealPurpose === 'turn') {
+			gameContext.nextRound();
+		}
 
 		setTimeout(() => {
 			if (gameState.revealPurpose === 'inspect') {
