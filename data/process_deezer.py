@@ -80,12 +80,11 @@ async def main() -> None:
         print(f"Recheck mode: will verify {len(ids_to_check)} previously excluded IDs.")
     else:
         # Normal mode: check IDs not excluded or processed
-        for works in data["works"].values():
-            for work in works:
-                for part in work["parts"]:
-                    for deezer_id in part["deezer"]:
-                        if deezer_id not in excluded and deezer_id not in processed:
-                            ids_to_check.add(deezer_id)
+        for work in data["works"]:
+            for part in work["parts"]:
+                for deezer_id in part["deezer"]:
+                    if deezer_id not in excluded and deezer_id not in processed:
+                        ids_to_check.add(deezer_id)
 
     ids_list = list(ids_to_check)
     print(f"Found {len(ids_list)} Deezer IDs to check.")
