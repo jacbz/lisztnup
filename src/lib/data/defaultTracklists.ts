@@ -35,15 +35,15 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyVeryEasy,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [5.0, MAX_WORK_SCORE_ROUNDED],
+			workScoreRange: [4.7, MAX_WORK_SCORE_ROUNDED],
 			categoryAdjustments: {
 				vocal: 0,
-				chamber: 0.1,
-				orchestral: -0.1,
-				piano: 0,
+				chamber: 0.3,
+				orchestral: -0.2,
+				piano: -0.1,
 				concerto: 0,
-				opera: 0.2,
-				ballet: 0.3,
+				opera: 0.1,
+				ballet: 0.5,
 				solo: 0
 			},
 			limitWorksFromComposer: 0.075,
@@ -58,7 +58,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyEasy,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [4.6, MAX_WORK_SCORE_ROUNDED],
+			workScoreRange: [4.3, MAX_WORK_SCORE_ROUNDED],
 			categoryAdjustments: {
 				vocal: 0,
 				chamber: 0,
@@ -81,7 +81,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyMedium,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [4.2, MAX_WORK_SCORE_ROUNDED],
+			workScoreRange: [3.9, MAX_WORK_SCORE_ROUNDED],
 			limitWorksFromComposer: 0.1,
 			maxTracksFromSingleWork: 1,
 			enablePopularityWeighting: false
@@ -94,7 +94,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyHard,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [3.5, MAX_WORK_SCORE_ROUNDED],
+			workScoreRange: [3.6, MAX_WORK_SCORE_ROUNDED],
 			categoryAdjustments: {
 				vocal: -0.2,
 				chamber: 0,
