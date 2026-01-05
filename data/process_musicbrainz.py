@@ -98,6 +98,16 @@ EXCLUDED_COMPOSERS: Set[str] = set([
     "Hisaishi, Joe",
     "Herrmann, Bernard",
     "Romberg, Sigmund",
+    "Bath, Hubert",
+    "Elfman, Danny",
+    "Hess, Nigel",
+    "Lamb, Joseph F.",
+    "Moretti, Raoul",
+    "Quiroga, Manuel",
+    "Shankar, Ravi",
+    "Williams, Charles",
+    "Williams, Clarence",
+    "Wood, Arthur"
 
 ])
 
