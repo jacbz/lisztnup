@@ -607,19 +607,6 @@
 </script>
 
 <div class="fixed inset-0 overflow-hidden text-white">
-	<div class="absolute top-0 right-0 left-0 z-1000 flex items-center justify-between p-6">
-		<div class="pr-4">
-			<Logo onClick={() => (uiState.showQuitDialog = true)} size="large" />
-		</div>
-		<button
-			type="button"
-			onclick={() => (uiState.showInGameSettings = true)}
-			class="flex items-center gap-2 rounded-lg bg-slate-800/80 px-4 py-2 text-cyan-400 backdrop-blur-sm transition-colors hover:bg-slate-700/80"
-		>
-			<SettingsIcon class="h-5 w-5" />
-		</button>
-	</div>
-
 	<div
 		class="relative top-1/2 left-1/2 z-200 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
 	>
