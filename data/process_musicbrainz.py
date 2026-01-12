@@ -68,7 +68,7 @@ TYPE_MAPPING = {
     "Opera": "opera", "Operetta": "opera", "Zarzuela": "opera",
     "Ballet": "ballet",
     "Incidental music": "orchestral", "Symphony": "orchestral", "Symphonic poem": "orchestral",
-    "Overture": "orchestral", "Suite": "orchestral", "Orchestral": "orchestral",
+    "Overture": "orchestral", "Suite": "other", "Orchestral": "orchestral",
     "Concerto": "concerto",
     "Chamber": "chamber",
     "Quartet": "chamber",

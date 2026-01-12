@@ -18,8 +18,6 @@
 	import { GAME_SCREEN_CONTEXT } from './context';
 	import InGameSettings from '$lib/components/ui/gameplay/InGameSettings.svelte';
 	import Dialog from '$lib/components/ui/primitives/Dialog.svelte';
-	import Logo from '$lib/components/ui/primitives/Logo.svelte';
-	import SettingsIcon from 'lucide-svelte/icons/settings';
 
 	interface Props {
 		players: Player[];

@@ -1,6 +1,6 @@
 general_rules:
   #=============================================================================
-  # 1. Stage Works: Unambiguous terms for theatre, opera, and ballet.
+  # Stage Works: Unambiguous terms for theatre, opera, and ballet.
   #=============================================================================
   opera:
     - \bopera\b|Singspiel|Musikdrama|dramma|Opéra comique|Operetta|Opéra-ballet
@@ -10,7 +10,7 @@ general_rules:
     - \bballet\b|Tanzsuite|dance suite
 
   #=============================================================================
-  # 2. Vocal Works: Music for choir or solo voice.
+  # Vocal Works: Music for choir or solo voice.
   #=============================================================================
   vocal:
     # Major sacred and secular forms for choir or soloists.
@@ -31,18 +31,18 @@ general_rules:
     - 'for Solo Voice'
 
   #=============================================================================
-  # 4. Orchestral Works: For a large orchestra without a featured soloist.
+  # Orchestral Works: For a large orchestra without a featured soloist.
   #=============================================================================
   orchestral:
     # Core large-scale orchestral forms.
     - Symphony|Symphonie|Sinfoni[ea]|Sinfonietta
-    - Symphonic Poem|Poème symphonique|Tone Poem|Tondichtung|Symphonic Movement|Symphonic Dances?
+    - Symphonic Poem|Poème symphonique|Tone Poem|Tondichtung|Symphonic Movement|Symphonic Dances?|Symphonic Suite
     - Overture|Ouverture|Vorspiel|Capriccio sinfonico
     - Orchestral Suite|Orchestersuite|Suite for Orchestra
     - for Orchestra|for String Orchestra|for strings|for Wind Ensemble|for Military Band
 
   #=============================================================================
-  # 5. Concerto: A featured solo instrument with orchestra.
+  # Concerto: A featured solo instrument with orchestra.
   #=============================================================================
   concerto:
     # Core genre identifiers.
@@ -51,7 +51,7 @@ general_rules:
     - for .* and (string |small )?Orchestra|pour .* et Orchestre|für .* und Orchester
 
   #=============================================================================
-  # 6. Chamber Music: Music for a small ensemble.
+  # Chamber Music: Music for a small ensemble.
   #=============================================================================
   chamber:
     # Generalized pattern for named ensembles.
@@ -70,24 +70,26 @@ general_rules:
     - Pieces for Clarinet, Viola and Piano
 
   #=============================================================================
-  # 7. Solo Keyboard: Music for a single keyboard player (piano, harpsichord, clavichord).
+  # Solo Keyboard: Music for a single keyboard player (piano, harpsichord, clavichord).
   #=============================================================================
   piano:
     # Core forms.
     - (Piano|Klavi(e|ä)r|Keyboard|Harpsichord|Cembalo) (Sonata|Sonate|Sonatina)
     - (for|pour) Piano|für (das|s) Klavier|Klavierstück|Pièces de Clavecin|for Keyboard|for Harpsichord|for Prepared Piano
+    - Piano Suite|Suite for Piano
 
   #=============================================================================
-  # 8. Solo: Solo works for non-piano instruments (including organ).
+  # Solo: Solo works for non-piano instruments (including organ).
   #=============================================================================
   solo:
     # Organ works.
     - for Organ|for Pedal Piano|\b(Organ|Orgel|Orgue)\b
     - Chorale Prelude|Praeludium|Toccata|Fugue|Fuga|Fiori Musicali
     # Solo instrumental works (non-keyboard).
-    - for Solo (Violin|Viola|Cello|Flute|Clarinet|Guitar|Harp|Lute|Bayan|Accordion)
+    - for Solo (Violin|Viola|Cello|Flute|Clarinet|Guitar|Harp|Lute|Bayan|Accordion|Vihuela)
     - Sonata for (Cello|Viola|Violin) Solo|Partita for Flute
-    # Lute music.
+    - Suite for (Cello|Viola|Violin|Harp|Guitar|Lute)
+    - unaccompanied
     - for Lute|pour le luth
     - \b(Sequenza|Ricercar|Divisions)\b
 
@@ -119,6 +121,8 @@ composer_specific_rules:
   'Alfvén, Hugo':
     vocal:
       - Aftonen|Roslagsvår
+    orchestral:
+      - Bergakungen|Gustav II Adolf
   'Alkan, Charles‐Valentin':
     piano:
       - op\.\s(22|31|33|39|50/2|63|65|75|76)|Grande sonate|Préludes|Esquisses|Toccatina|Nocturne
@@ -170,10 +174,11 @@ composer_specific_rules:
     piano:
       - Goldberg Variations|Well-Tempered Clavier|Wohltemperierte Klavier
       - BWV\s?deest
-      - English Suites?|French Suites?|Partitas?.*BWV\s?8
+      - English Suites?|French Suites?|Französische Suiten|Partitas?.*BWV\s?8
       - Invention.*BWV\s?7|Sinfonia.*BWV\s?[789]|kleine Präludien|Duetto.*BWV 8|Capriccio.*BWV 99|Chromatische Fantasie|BWV\s9\d\d
       - Clavier-büchlein|Marche.*BWV Anh|Minuet.*BWV Anh|Polonaise.*BWV Anh
       - \bPräludium\b|\bFughetta\b
+      - BWV\s?(818|819|823|831|832) # Specific keyboard suites/overtures
     vocal:
       - Mass in B minor|St Matthew Passion|St John Passion|Christmas Oratorio|Magnificat in D major
       - BWV\s(78|140|147)|BWV\s?2[34]\d|Sanctus|O Little One Sweet
@@ -200,15 +205,19 @@ composer_specific_rules:
       - Caazapá|Choro de saudade|Confesión|Danza paraguaya|Estudio de concierto|La catedral|Maxixe|Preludio|Suite andina|Un sueño en la floresta|Una limosna|Valses|Villancico
   'Bartók, Béla':
     piano:
-      - Allegro barbaro|For Children|Out of Doors|Sonatina, Sz\. 55|Mikrokosmos|Elegies|Rondos.*Folktunes|Studies.*op\. 18|Sketches.*op\. 9b|Little Piano Pieces|Dirges|Easy Pieces|Burlesques
+      - Allegro barbaro|For Children|Out of Doors|Sonatina, Sz\. 55|Mikrokosmos|Elegies|Rondos.*Folktunes|Studies.*op\. 18|Sketches.*op\. 9b|Little Piano Pieces|Dirges|Easy Pieces|Burlesques|Petite Suite|Romanian Folk Dances
       - Bagatelles|Romanian Dances
     chamber:
       - Contrasts|44 Duos for Two Violins|Sonata no\. \d for Violin and Piano
     orchestral:
       - Two Pictures|Two Portraits
       - 2 Pictures|2 Pictures, op\. 10|op\.\s?10|Sz\.\s?46
+      - Four Orchestral Pieces|Miraculous Mandarin|Suite no\. 1|op\.\s?3$
     solo:
       - Sonata for Solo Violin
+  'Beach, Amy':
+    piano:
+      - 4 Sketches
   'Bedingham, John':
     vocal:
       - O rosa bella
@@ -232,6 +241,8 @@ composer_specific_rules:
       - Vier Stücke für Klarinette und Klavier
     vocal:
       - Three Fragments from "Wozzeck"
+    orchestral:
+      - Lulu Suite|Lyric Suite
   'Berio, Luciano':
     piano:
       - Sequenza IV|Six Encores
@@ -249,6 +260,8 @@ composer_specific_rules:
       - Seven Anniversaries
     vocal:
       - Chichester Psalms
+    orchestral:
+      - On the Waterfront
   'Biber, Heinrich Ignaz Franz von':
     chamber:
       - Battalia|Harmonia artificioso-ariosa|Mystery Sonatas|Sonatae tam aris|Sonata violino solo representativa
@@ -260,14 +273,16 @@ composer_specific_rules:
       - Elizabethan Serenade|Sailing By|The Watermill
   'Bizet, Georges':
     orchestral:
-      - L'Arlésienne
+      - L'Arlésienne|Carmen Suite|Jeux d'enfants|Scènes bohémiennes
     piano:
       - Chants du Rhin
     vocal:
       - Agnus Dei
   'Bloch, Ernest':
     chamber:
-      - From Jewish Life
+      - From Jewish Life|Baal Shem
+    orchestral:
+      - Suite hébraïque
   'Bonis, Mel':
     piano:
       - Ophélie|Phoebé|Salomé|Scherzo Final|Soir, matin
@@ -275,10 +290,13 @@ composer_specific_rules:
     orchestral:
       - Polovtsian Dances|Polovtsian March
     piano:
-      - Scherzo in A-flat major
+      - Scherzo in A-flat major|Petite Suite
   'Bottesini, Giovanni':
     chamber:
       - Capriccio di Bravura|Elegy
+  'Boëllmann, Léon':
+    solo: # Organ
+      - Suite Gothique
   'Boulanger, Lili':
     orchestral:
       - D'un matin de printemps
@@ -308,17 +326,21 @@ composer_specific_rules:
   'Bridge, Frank':
     chamber:
       - Sir Roger de Coverley|Sonata.*Violoncello
+    orchestral:
+      - The Sea
   'Britten, Benjamin':
     vocal:
       - A Ceremony of Carols|War Requiem|Canticle|Antiphon|Christ's Nativity|The Ballad of Little Musgrave
-    solo: # Cello, Viola, Guitar
-      - Cello Suite No|Elegy for viola solo|Nocturnal after John Dowland|Tema "Sacher"
+    solo: # Cello, Viola, Guitar, Harp
+      - Cello Suite No|Elegy for viola solo|Nocturnal after John Dowland|Tema "Sacher"|Suite for Harp
     chamber:
       - Lachrymae
     piano:
       - Alla Marcia|Night Piece "Notturno"
     opera:
       - Peter Grimes|Billy Budd|The Turn of the Screw
+    orchestral:
+      - English Folk Tunes|Gloriana
   'Brouwer, Leo':
     solo: # Guitar
       - Danza característica|Dos aires populares|El decamerón negro|Estudios sencillos|Ojos brujos|Tres piezas latinoamericanas
@@ -349,6 +371,9 @@ composer_specific_rules:
       - Browning|Fantasia, MB13|My Ladye Nevells Booke|The Bells|The Leaves be Green|Earle of Oxford's March|Pavan.*Earl of Salisbury
     vocal:
       - Come to me, grief|O Lord, Make Thy Servant|Praise our Lord|Quomodo cantabimus|Sing Joyfully|This Sweet and Merry Month|Turn our captivity
+  'Böhm, Georg':
+    piano:
+      - Suite no\.\s?\d
   'Bądarzewska, Tekla':
     piano:
       - A Maiden's Prayer
@@ -362,7 +387,7 @@ composer_specific_rules:
     orchestral:
       - Atlas Eclipticalis|Fontana Mix|Williams Mix
     piano:
-      - Dream|In a Landscape|Sonatas and Interludes|Totem Ancestor
+      - Dream|In a Landscape|Sonatas and Interludes|Totem Ancestor|Toy Piano
     chamber:
       - Six Melodies|Three Dances|Five|Music for
     vocal:
@@ -386,6 +411,8 @@ composer_specific_rules:
   'Cassadó, Gaspar':
     chamber:
       - Requiebros
+    solo:
+      - Suite for solo violoncello
   'Castelnuovo‐Tedesco, Mario':
     solo: # Guitar
       - Capriccio diabolico|Figaro|Greeting Cards|Sonata, op\. 77|Tarantella
@@ -394,7 +421,7 @@ composer_specific_rules:
       - Danzas cubanas
   'Chabrier, Emmanuel':
     orchestral:
-      - España|Joyeuse marche
+      - España|Joyeuse marche|Suite pastorale
     piano:
       - Bourrée fantasque|Haba[nñ]era|Impromptu|Pièces Pittoresques
   'Chaminade, Cécile':
@@ -429,12 +456,19 @@ composer_specific_rules:
   'Clemens non Papa, Jacobus':
     vocal:
       - Ego flos campi
+  'Clérambault, Louis‐Nicolas':
+    piano:
+      - Livre de clavecin
+      - Suite
   'Coates, Eric':
     orchestral:
-      - Calling All Workers|The Dam Busters March
+      - Calling All Workers|The Dam Busters March|London Suite
+  'Coleridge-Taylor, Samuel':
+    orchestral:
+      - Petite Suite de concert
   'Copland, Aaron':
     orchestral:
-      - Fanfare for the Common Man|Lincoln Portrait|Appalachian Spring
+      - Fanfare for the Common Man|Lincoln Portrait|Appalachian Spring|Billy the Kid|Music for Movies|Quiet City|Tender Land|Music for the Theatre
     chamber:
       - Danzón Cubano
     piano:
@@ -457,7 +491,7 @@ composer_specific_rules:
     piano:
       - L'art de toucher le clavecin|Rondeau, BWV Anh
     chamber:
-      - Concerts Royaux|L'Apothéose de Lully|Les Nations
+      - Concerts Royaux|L'Apothéose de Lully|Les Nations|Suite de viole|Pièces de violes
     vocal:
       - Leçons de ténèbres
   'Couperin, Louis':
@@ -492,7 +526,7 @@ composer_specific_rules:
       - Ballade.*L\. 70|Danse bohémienne|D'un cahier d'esquisses|Hommage à Joseph Haydn|La plus que lente|Le Petit Nègre|Masques|Rêverie, L\. 68|Élégie, L\. 138
       - Berceuse héroïque|Mazurka, L\. 67|Morceau de concours|Nocturne, L\. 82|Pièce pour le Vêtement|Tarantelle styrienne|Valse romantique|Les Soirs illuminés
     chamber:
-      - En blanc et noir|Six épigraphes antiques|Lindaraja|Marche écossaise
+      - En blanc et noir|Six épigraphes antiques|Lindaraja|Marche écossaise|Petite Suite
     orchestral:
       - La mer|Prélude à l'après-midi d'un faune|Nocturnes
   'Delibes, Léo':
@@ -500,7 +534,7 @@ composer_specific_rules:
       - Le roi s'amuse|Coppélia
   'Delius, Frederick':
     orchestral:
-      - Dance Rhapsody|Koanga|Over the Hills and Far Away|Two Aquarelles
+      - Dance Rhapsody|Koanga|Over the Hills and Far Away|Two Aquarelles|Florida Suite
   'Dett, R. Nathaniel':
     piano:
       - In the Bottoms
@@ -537,7 +571,7 @@ composer_specific_rules:
       - Sept Pièces, op\. 27
   'Duruflé, Maurice':
     solo: # Organ
-      - Chant donné|Méditation|Prelude sur l'introït|Scherzo
+      - Chant donné|Méditation|Prelude sur l'introït|Scherzo|Suite, op\. 5
     vocal:
       - Notre Père
   'Dutilleux, Henri':
@@ -553,17 +587,18 @@ composer_specific_rules:
       - Deux Sonnets
   'Dvořák, Antonín':
     chamber:
-      - Slavonic Dances, op\.\s(46|72)|American Quartet|Dumky Trio|From the Bohemian Forest
+      - Slavonic Dances, op\.\s(46|72)|Slawische Tänze|American Quartet|Dumky Trio|From the Bohemian Forest
     orchestral:
-      - Carnival Overture|Slavonic Fantasy
+      - Carnival Overture|Slavonic Fantasy|Czech Suite|American Suite|98b\b
     piano:
-      - Humoresques|Poetické nálady|Silhouettes|Dumka und Furiant|Waltzes, op\. 54
+      - Humoresques|Poetické nálady|Silhouettes|Dumka und Furiant|Waltzes, op\. 54|98\b
   'Eastman, Julius':
     piano:
       - The Nigger Series
   'Elgar, Edward':
     orchestral:
       - Pomp and Circumstance|Dream Children|Elegy, op\. 58|Sospiri|(Coronation|Imperial) March
+      - Crown of India|Nursery Suite|Wand of Youth
     piano:
       - Minuet, op\. 21
     vocal:
@@ -572,7 +607,9 @@ composer_specific_rules:
     orchestral:
       - Romanian Rhapsodies
     chamber:
-      - Légende
+      - Légende|Impressions.*enfance|
+    piano:
+      - Piano Suite
   'Ernst, Heinrich Wilhelm':
     solo:
       - Grand Caprice sur
@@ -581,24 +618,34 @@ composer_specific_rules:
       - Cuatro piezas españolas|Fantasía baetica|Nocturno|Serenata andaluza
     solo: # Guitar
       - Homenaje|Pour le tombeau de Paul Dukas
+    orchestral:
+      - Amor brujo|Three(-|\s)Cornered Hat
   'Fauré, Gabriel':
     vocal:
       - Requiem, op\. 48|Les Djinns|Tantum ergo|Vocalise-étude
     piano:
       - Nocturne|Barcarolle|Impromptu|romances sans paroles|Pièces, op\. 104|Préludes, op\. 103|pièces brèves|Mazurka.*op\. 32|Valse‐caprice
     chamber:
-      - Andante pour violon|Romance for Violin and Piano|Sonate pour violoncelle|Berceuse.*op\. 16|Morceau de concours
+      - Andante pour violon|Romance for Violin and Piano|Sonate pour violoncelle|Berceuse.*op\. 16|Morceau de concours|Dolly
     concerto:
       - Ballade en Fa dièse majeur
+    orchestral:
+      - Pelléas et Mélisande|Masques et bergamasques
   'Finzi, Gerald':
     chamber:
       - Five Bagatelles
+  'Fischer, Johann Caspar Ferdinand':
+    piano:
+      - Musicalischer Parnassus
   'Fletxa, Mateu':
     vocal:
       - Ríu, ríu, chíu
   'Fontana, Giovanni Battista':
     chamber:
       - Sonata no\. 16|Sonata seconda
+  'Forqueray, Antoine':
+    chamber:
+      - Pièces de Viole|Suite.*(minor|major)|suite
   'Françaix, Jean':
     chamber:
       - Quintette à vent
@@ -614,7 +661,7 @@ composer_specific_rules:
       - Il primo libro|Il secondo libro|Recercari
   'Froberger, Johann Jakob':
     piano: # Keyboard
-      - Lamentation|Libro di Capricci|Tombeau
+      - Lamentation|Libro di Capricci|Tombeau|Libro.*(Tocate|Capricci)|FbWV
   'Fučík, Julius':
     orchestral:
       - Entry of the Gladiators|Florentiner March|Children of the Regiment|The Old Grumbler
@@ -627,7 +674,7 @@ composer_specific_rules:
     concerto:
       - Rhapsody in Blue|Concerto in F
     orchestral:
-      - An American in Paris
+      - An American in Paris|Catfish Row
     piano:
       - Three Preludes|Rialto Ripples|Impromptu in Two Keys
   'Gesualdo, Carlo':
@@ -642,6 +689,8 @@ composer_specific_rules:
   'Ginastera, Alberto':
     piano:
       - Danzas argentinas|Twelve American Preludes
+    orchestral:
+      - Estancia
   'Glass, Philip':
     piano:
       - Glassworks|Metamorphosis|Mad Rush|Piano Etudes|Truman Sleeps|Wichita Vortex Sutra
@@ -650,6 +699,9 @@ composer_specific_rules:
   'Glazunov, Alexander':
     chamber:
       - Rêverie, op\. 24
+  'Glière, Reinhold':
+    orchestral:
+      - Red Poppy
   'Glinka, Mikhail':
     orchestral:
       - Kamarinskaya|Valse-fantaisie
@@ -679,11 +731,12 @@ composer_specific_rules:
   'Grainger, Percy':
     orchestral:
       - Blithe Bells|British Folk-Music|Children's March|Green Bushes|I'm Seventeen|Irish Tune|Mock Morris|Molly on the Shore|My Robin Is|Shepherd's Hey|Spoon River|Ye Banks and Braes
+      - Lincolnshire Posy|Danish Folk-Music
     chamber:
       - Duke of Marlborough Fanfare|Walking Tune
   'Granados, Enrique':
     piano:
-      - danzas españolas|Allegro de concierto|Cuentos de la juventud|El pelele|Escenas románticas|Seis piezas sobre cantos|Valses poéticos
+      - danzas españolas|Allegro de concierto|Cuentos de la juventud|El pelele|Escenas románticas|Seis piezas sobre cantos|Valses poéticos|Goyescas
     vocal:
       - tonadillas
   'Grasse, Edwin':
@@ -698,12 +751,15 @@ composer_specific_rules:
     concerto:
       - Piano Concerto in A minor
     orchestral:
-      - Peer Gynt Suite|Holberg Suite|Elegiac Melodies|Nordic Melodies|Bergliot
+      - Peer Gynt Suite|Holberg Suite|Elegiac Melodies|Nordic Melodies|Bergliot|Sigurd Jorsalfar
     vocal:
       - 4 Salmer|Landkjenning|Mountain Thrall
   'Griffes, Charles Tomlinson':
     piano:
       - 3 Tone-Pictures
+  'Grofé, Ferde':
+    orchestral:
+      - Grand Canyon
   'Grünfeld, Alfred':
     piano:
       - Soirée de Vienne
@@ -720,9 +776,6 @@ composer_specific_rules:
   'Guilmant, Alexandre':
     solo: # Organ
       - Pièces dans différents styles
-  'Gluck, Christoph Willibald':
-    opera:
-      - Orfeo ed Euridice|Orfeo.*Euridice|Orfeo, che fai\?|Wq\.\s?30
   'Hahn, Reynaldo':
     piano:
       - Le Rossignol éperdu|Nocturne
@@ -736,6 +789,8 @@ composer_specific_rules:
       - Music for the Royal Fireworks|Water Music
     chamber:
       - Sonatas for an Accompanied Solo Instrument, op\. 1|Recorder Sonata|Sonata.*HWV 580
+    piano:
+      - Keyboard Suite|Suites de Pièces|HWV\s?(42[6-9]|43\d|44\d|452)
   'Harris, William':
     vocal:
       - Faire is the Heaven
@@ -764,7 +819,7 @@ composer_specific_rules:
     solo:
       - Sonata for Cello Solo
     orchestral:
-      - Meditation from Nobilissima visione|Konzertmusik
+      - Meditation from Nobilissima visione|Konzertmusik|Nobilissima visione|Trauermusik
   'Hofmann, Józef':
     piano:
       - Charakterskizzen
@@ -773,7 +828,7 @@ composer_specific_rules:
       - Pavans, Galliards
   'Holst, Gustav':
     orchestral:
-      - Egdon Heath
+      - Egdon Heath|Moorside|Brook Green|The Planets
     vocal:
       - I Vow to Thee, My Country
   'Honegger, Arthur':
@@ -800,10 +855,13 @@ composer_specific_rules:
     piano:
       - Histoires
     orchestral:
-      - Entr'acte|Entracte|Entr'acte
+      - Entr'acte|Entracte|Entr'acte|Escales
   'Infante, Manuel':
     chamber:
       - Danses andalouses
+  'Ippolitov-Ivanov, Mikhail':
+    orchestral:
+      - Caucasian Sketches
   'Ireland, John':
     chamber:
       - The Holy Boy
@@ -816,9 +874,9 @@ composer_specific_rules:
     piano:
       - In the Mists|On an Overgrown Path|Sonata 1\. X\. 1905|Vzpomínka
     orchestral:
-      - Lachian Dances|Taras Bulba
+      - Lachian Dances|Taras Bulba|Suite.*JW
     chamber:
-      - Sonata for Violin & Piano
+      - Sonata for Violin & Piano|Mládí
   'Janequin, Clément':
     vocal:
       - Au joly jeu
@@ -840,6 +898,8 @@ composer_specific_rules:
   'Kabalevsky, Dmitri':
     piano:
       - 24 Preludes, op\. 38
+    orchestral:
+      - The Comedians
   'Kapustin, Nikolai':
     piano:
       - Eight Concert Études
@@ -849,6 +909,8 @@ composer_specific_rules:
   'Kats‐Chernin, Elena':
     piano:
       - Russian Rag
+    orchestral:
+      - Wild Swans
   'Kellner, David':
     solo:
       - Fantasia in D major
@@ -858,9 +920,14 @@ composer_specific_rules:
   'Khachaturian, Aram':
     piano:
       - Children's Album
+    orchestral:
+      - Masquerade
+  'Klami, Uuno':
+    orchestral:
+      - Kalevala
   'Kodály, Zoltán':
     orchestral:
-      - Dances of Marosszék
+      - Dances of Marosszék|Háry János
     chamber:
       - Adagio for violin
   'Kokkonen, Joonas':
@@ -869,6 +936,9 @@ composer_specific_rules:
   'Komzák II, Karel':
     orchestral:
       - Badner Madl'n Waltz|Erzherzog-Albrecht-Marsch
+  'Korngold, Erich Wolfgang':
+    chamber:
+      - Much Ado|Suite for Two Violins
   'Kraus, Joseph Martin':
     orchestral:
       - Incidental Music to.*Olympie
@@ -885,12 +955,18 @@ composer_specific_rules:
   'Lachenmann, Helmut':
     piano:
       - Wiegenmusik
+  'Lalo, Édouard':
+    orchestral:
+      - Namouna
   'Langlais, Jean':
     solo: # Organ
       - Trois paraphrases grégoriennes
   'Lanner, Josef':
     orchestral:
       - Die Schönbrunner|Steyrische Tänze
+  'Larsson, Lars‐Erik':
+    orchestral:
+      - Pastoral Suite
   'Lassus, Orlande de':
     vocal:
       - Chi chilichi?|Media vita|Resonet in laudibus|Timor et tremor|Tristis est anima mea
@@ -940,6 +1016,9 @@ composer_specific_rules:
   'Lobo, Alonso':
     vocal:
       - Versa est in luctum
+  'Lorenzo Fernández, Oscar':
+    orchestral:
+      - A Pastoral Epiphany
   'Lotti, Antonio':
     vocal:
       - Crucifixus
@@ -963,6 +1042,9 @@ composer_specific_rules:
   'Macque, Giovanni de':
     piano:
       - Capriccio sopra
+  'Madetoja, Leevi':
+    orchestral:
+      - Pohjalaisia
   'Marais, Marin':
     chamber:
       - Les Folies d'Espagne|Pièces de Viole|Sonnerie de Ste. Geneviève
@@ -1012,7 +1094,7 @@ composer_specific_rules:
       - Solo de concours
   'Messiaen, Olivier':
     piano:
-      - Catalogue d'oiseaux|Vingt regards sur l'enfant-Jésus|Huit préludes|Cantéyodjayâ|La Fauvette des jardins|Petites esquisses|Pièce pour le tombeau|Quatre Études de rythme
+      - Catalogue d'oiseaux|Vingt regards sur l.enfant|Huit préludes|Cantéyodjayâ|La Fauvette des jardins|Petites esquisses|Pièce pour le tombeau|Quatre Études de rythme
     solo: # Organ
       - La Nativité du Seigneur|Les Corps glorieux|L'Ascension|Livre d'orgue|Apparition de l'Église Éternelle|Le Banquet céleste|Livre du Saint Sacrement|Méditations sur le Mystère|Diptyque|Verset pour la Fête
     concerto:
@@ -1028,15 +1110,17 @@ composer_specific_rules:
       - Fantasia
   'Milhaud, Darius':
     chamber:
-      - Scaramouche
+      - Scaramouche|Suite, op\. 157b
   'Molinaro, Simone':
     solo:
       - Intavolatura
   'Mompou, Federico':
     piano:
-      - Cançó i dansa|Música callada|Paisajes|Preludi|Scènes d'enfants
+      - Cançó i dansa|Música callada|Paisajes|Preludi|Scènes d'enfants|Suburbis
     vocal:
       - El combat del somni
+    solo:
+      - Suite compostelana
   'Monte, Philippe de':
     vocal:
       - O suavitas et dulcedo|Super flumina Babylonis
@@ -1053,7 +1137,7 @@ composer_specific_rules:
       - Officium defunctorum
   'Moreno Torroba, Federico':
     solo: # Guitar
-      - Burgalesa|Castillos de España|Madroños|Nocturno|Piezas características|Preludio|Sonatina
+      - Burgalesa|Castillos de España|Madroños|Nocturno|Piezas características|Preludio|Sonatina|Suite castellana
   'Morley, Thomas':
     chamber:
       - Consort Lessons
@@ -1100,9 +1184,11 @@ composer_specific_rules:
       - Sonata no\.
   'Nielsen, Carl':
     piano:
-      - Chaconne.*op\. 32|Humoreske-bagateller|Tre Klaverstykker
+      - Chaconne.*op\. 32|Humoreske-bagateller|Tre Klaverstykker|Luciferiske
     vocal:
       - Mit hjerte altid vanker
+    orchestral:
+      - Aladdin
   'Nietzsche, Friedrich':
     piano:
       - Das Fragment an sich
@@ -1139,7 +1225,7 @@ composer_specific_rules:
       - Super flumina Babylonis
   'Palmgren, Selim':
     piano:
-      - Poppelit
+      - Poppelit|Spring
   'Paradisi, Pietro Domenico':
     piano:
       - Sonata no\. 6
@@ -1169,6 +1255,7 @@ composer_specific_rules:
   'Piazzolla, Astor':
     chamber:
       - Cinco piezas|Four for Tango|Fracanapa|La muerte del ángel|Le Grand Tango|Milonga del ángel|Oblivion|Regreso al amor|The Four Seasons of Buenos Aires
+      - Histoire du tango|Suite Troileana|Tangata|Tango Suite
     orchestral:
       - Tangazo
     solo:
@@ -1191,13 +1278,13 @@ composer_specific_rules:
       - Dance of the Hours
   'Poulenc, Francis':
     piano:
-      - Les Soirées de Nazelles|Trois mouvements perpétuels|3 Intermezzi|3 Novelettes|Mélancolie|Promenades|Nocturnes|Capriccio.*Bal masqué|Pièce brève|Sarabande
+      - Les Soirées de Nazelles|Trois mouvements perpétuels|3 Intermezzi|3 Novelettes|Mélancolie|Promenades|Nocturnes|Capriccio.*Bal masqué|Pièce brève|Sarabande|Animaux modèles
     vocal:
       - Gloria|Stabat Mater|Litanies à la Vierge noire|Ave verum corpus|Laudes de Saint Antoine|Quatre petites prières|Quatre poèmes
     chamber:
-      - "Sonata for (Flute|Oboe|Clarinet|Cello|2 clarinets)|L'Embarquement pour Cythère|Élégie"
+      - "Sonata for (Flute|Oboe|Clarinet|Cello|2 clarinets)|L'Embarquement pour Cythère|Élégie|Suite française"
     orchestral:
-      - Rapsodie nègre
+      - Rapsodie nègre|Les Biches
     concerto:
       - Aubade
     opera:
@@ -1215,6 +1302,7 @@ composer_specific_rules:
       - Sonata for Two Violins|Ballade.*cello and piano|Five Melodies for Violin
     orchestral:
       - Peter and the Wolf|Lieutenant Kijé Suite|Autumnal Sketch|March.*op\. 99
+      - Cinderella|Romeo and Juliet|Scythian|Love for Three Oranges|Waltz Suite
   'Pryor, Arthur':
     concerto:
       - Blue Bells of Scotland
@@ -1228,7 +1316,7 @@ composer_specific_rules:
       - 3 Spanish Dances|El abejorro
   'Purcell, Henry':
     piano:
-      - A New Scotch Tune|A new Irish tune|Ground|Hornpipe|Round O|Trumpet Tune|Minuet, Z\. 649|Sefuchi's Farewell|The Queen's Dolour
+      - A New Scotch Tune|A new Irish tune|Ground|Hornpipe|Round O|Trumpet Tune|Minuet, Z\. 649|Sefuchi's Farewell|The Queen's Dolour|Harpsichord Suite
     vocal:
       - Behold, I bring you|Celebrate This Festival|Hear My Prayer|I was glad|Jehova, quam multi|Lord, what is Man|My beloved spake|Rejoice in the Lord Always|Tell me, some pitying angel
       - My heart is inditing|O God, Thou hast|O dive custos|Remember not, Lord|The Fairy Queen|Tyrannic Love
@@ -1255,7 +1343,7 @@ composer_specific_rules:
     orchestral:
       - Symphonic Dances|The Isle of the Dead|Scherzo in D minor|Études-tableaux per orchestra
     chamber:
-      - 2 Pieces for 6 Hands|2 Pieces for Cello and Piano|Polka italienne|Six Morceaux, op\. 11|Russian Rhapsody
+      - 2 Pieces for 6 Hands|2 Pieces for Cello and Piano|Polka italienne|Six Morceaux, op\. 11|Russian Rhapsody|Suite no\.\s?[12]
     concerto:
       - Rhapsody on a Theme of Paganini
     vocal:
@@ -1267,11 +1355,14 @@ composer_specific_rules:
     opera:
       - Les Indes Galantes
     piano:
-      - Dauphine|Les Sauvages|L'Egyptienne|Petits marteaux|Menuet en Rondeau
+      - Dauphine|Les Sauvages|L'Egyptienne|Petits marteaux|Menuet en Rondeau|Suite in A minor
     orchestral:
       - Les Indes Galantes, Suites
     chamber:
       - Pieces de Clavecin en Concerts
+  'Rautavaara, Einojuhani':
+    vocal:
+      - Suite de Lorca
   'Ravel, Maurice':
     piano:
       - Miroirs|Gaspard de la nuit|Jeux d'eau|Pavane pour une infante défunte|Sonatine|Valses nobles et sentimentales|Le Tombeau de Couperin|Sérénade grotesque|Menuet (antique|C-sharp|sur le nom d'Haydn)|Prélude, M\. 65|Menuet in C-sharp minor, M. 42|À la manière
@@ -1310,7 +1401,7 @@ composer_specific_rules:
     piano:
       - Sei pezzi
     orchestral:
-      - Trittico botticelliano
+      - Trittico botticelliano|Ancient Airs|Belkis|Impressione brasiliane|Rossiniana|The Birds
   'Richards, David':
     vocal:
       - Cymru Fach
@@ -1319,10 +1410,10 @@ composer_specific_rules:
       - In C
   'Rimsky‐Korsakov, Nikolai':
     orchestral:
-      - Dubinushka
+      - Dubinushka|Capriccio espagnol|Mlada|Tsar Saltan|Kitezh|Snow Maiden
   'Rodrigo, Joaquín':
     solo: # Guitar
-      - Elogio de la guitarra|Por los campos de España|Serenata al alba|Tres piezas españolas|Zarabanda lejana
+      - Elogio de la guitarra|Por los campos de España|Serenata al alba|Tres piezas españolas|Zarabanda lejana|Invocation and Dance
     vocal:
       - Retablo de Navidad
   'Rorem, Ned':
@@ -1341,6 +1432,8 @@ composer_specific_rules:
       - Ségovia, op\. 29
     vocal:
       - Deux Poèmes de Ronsard
+    orchestral:
+      - Petite Suite|Suite in F
   'Rubinstein, Anton':
     piano:
       - 6 Pièces caractéristiques|Waltz-Caprice
@@ -1364,9 +1457,11 @@ composer_specific_rules:
       - Caprice sur des airs Danois|Cavatine|Prayer|Romance.*op\. 37|Septuor|Sonata no\. 2 for Cello|Berceuse, op\. 38
     concerto:
       - Cyprès et lauriers
+    orchestral:
+      - Suite algérienne|Carnival of the Animals
   'Sanz, Gaspar':
     solo: # Guitar
-      - Instrucción de música
+      - Instrucción de música|Suite Española
   'Sarasate, Pablo de':
     chamber:
       - Caprice basque|El canto del ruiseñor|Navarra|Serenata andaluza|Spanish Dances
@@ -1375,7 +1470,7 @@ composer_specific_rules:
       - Gymnopédie|Gnossienne|Sarabande|Pièces froide|Sports et divertissement|Avant-dernières pensées|Chapitres tournés|Croquis et agaceries|Danses gothiques|Descriptions automatiques|Embryons desséchés|Enfantillages pittoresques|Heures séculaires|Menus Propos|Musiques Intimes|Pages mystiques|Passacaille|Peccadilles importunes|Poudre d'or|Sonatine bureaucratique|Trois sonneries|Vieux Sequins
       - chorals|préludes flasques|Carnet d'esquisses|Nocturnes|Danse de travers|Fantaisie‐valse|Le Piccadilly|Leit-motiv|Valses distinguées|Les pantins dansent|Menuet|pensée Rose\+Croix|Prière|Prélude.*(porte héroïque|tapisserie)|Rêverie de L'enfance|Tendrement|The Dreamy Fish|nouvelles enfantines|Verset laïque|Ogives|Quatre préludes
     chamber:
-      - Choses vues à droite et à gauche|En habit de cheval
+      - Choses vues à droite et à gauche|En habit de cheval|morceaux en forme de poire
     orchestral:
       - Cinéma|Jack-in-the-Box|La Belle Excentrique|Cinq Grimaces
     vocal:
@@ -1395,18 +1490,20 @@ composer_specific_rules:
   'Schmitt, Florent':
     piano:
       - Mirages
+    orchestral:
+      - Tragédie de Salomé
   'Schnittke, Alfred':
     chamber:
-      - Canon in Memoriam|Musica nostalgica
+      - Canon in Memoriam|Musica nostalgica|Suite in the Old Style
     solo:
       - À Paganini
   'Schoenberg, Arnold':
     orchestral:
       - Accompaniment to a Cinematographic Scene|Five Orchestral Pieces
     piano:
-      - Drei Stücke
+      - Drei Stücke|Suite für Klavier
     chamber:
-      - Phantasy for Violin
+      - Phantasy for Violin|Suite, op\. 29
     vocal:
       - Friede auf Erden|Sechs Stücke für Männerchor
   'Schubert, Franz':
@@ -1439,7 +1536,7 @@ composer_specific_rules:
     solo: # Organ/Pedal Piano
       - Fugues on B\.A\.C\.H|Four Sketches, op\. 58|Six Etudes in Canonic Form
     chamber:
-      - Adagio und Allegro, op\. 70|Märchenbilder|Phantasiestücke, op\. 88
+      - Adagio und Allegro, op\. 70|Märchenbilder|Phantasiestücke, op\. 88|Bilder aus Osten
     vocal:
       - Dichterliebe|Frauenliebe und -leben|Ritornelle in canonischen Weisen
     concerto:
@@ -1472,16 +1569,19 @@ composer_specific_rules:
       - Now Ye Heavenly Powers
   'Shostakovich, Dmitri':
     piano:
-      - 24 Preludes and Fugues|op\. 87|24 Preludes, op\. 34|Detskaya tetrad|Three Fantastic Dances
+      - 24 Preludes and Fugues|op\. 87|24 Preludes, op\. 34|Detskaya tetrad|Three Fantastic Dances|Dances of the Dolls
     chamber:
       - Piano Trio No\. 2|String Quartet No\. 8
+    orchestral:
+      - Jazz|Variety|Age of Gold|Gadfly
   'Sibelius, Jean':
     piano:
-      - Bagatelles|Pensées lyriques|Pieces|Rondinos|Sonatinas|Impromptus|morceaux|Esquisses|Arioso|morceaux romantiques|Characteristic Impressions|Lyric Pieces|Spagnuolo|Till trånaden
+      - Bagatelles|Pensées lyriques|Pieces|Rondinos|Sonatinas|Impromptus|morceaux|Esquisses|Arioso|morceaux romantiques|Characteristic Impressions|Lyric Pieces|Spagnuolo|Till trånaden|Kyllikki
     chamber:
       - Sonatina in E major, op\. 80
     orchestral:
       - Kuolema|Lemminkäinen|Rakastava
+      - Belshazzar|Karelia|King Christian|Pelléas|Scènes historiques|Svanevit|The Tempest
     vocal:
       - Isänmaalle
   'Sinding, Christian':
@@ -1532,7 +1632,7 @@ composer_specific_rules:
   'Strauss, Richard':
     orchestral: # Tone Poems
       - Also sprach Zarathustra|Don Juan|Till Eulenspiegel|Ein Heldenleben|Tod und Verklärung
-      - Serenade for 13 Wind|Solemn Entry of the Knights|Vienna Philharmonic Fanfare
+      - Serenade for 13 Wind|Solemn Entry of the Knights|Vienna Philharmonic Fanfare|Suite for 13 wind|Bourgeois Gentleman
     chamber:
       - Sonatina no\. [12]
     opera:
@@ -1549,7 +1649,7 @@ composer_specific_rules:
     solo:
       - Three Pieces for Clarinet
     orchestral:
-      - Circus Polka|Greeting Prelude|Scherzo Fantastique
+      - Circus Polka|Greeting Prelude|Scherzo Fantastique|Firebird|Suite no\.\s?[12]
     piano:
       - Four Etudes, op\. 7|Les Cinq Doigts|Serenade in A|Tango|Piano-Rag-Music
     vocal:
@@ -1560,6 +1660,8 @@ composer_specific_rules:
   'Suk, Josef':
     chamber:
       - Elegie.*op\. 23
+    orchestral:
+      - Fairy Tale
   'Suppè, Franz von':
     vocal:
       - O du mein Österreich
@@ -1603,7 +1705,7 @@ composer_specific_rules:
       - The Nutcracker|Swan Lake|Sleeping Beauty
     orchestral:
       - 1812 Overture|Romeo and Juliet|Capriccio Italien|The Voyevoda|Dance of the Sugar Plum Fairy
-      - Capriccio, op\.\s?8
+      - Capriccio, op\.\s?8|Suite no\.\s?[123]
     piano:
       - The Seasons|Children's Album|Pieces, op|Deux morceaux|Dumka|Romance in F minor|Souvenir de Hapsal|Valse-scherzo
       - Six Pieces on a Single Theme|Six Pieces on a Single Theme, op\.\s?21|op\.\s?21
@@ -1631,6 +1733,9 @@ composer_specific_rules:
   'Tormis, Veljo':
     vocal:
       - Childhood Memory|Curse Upon Iron|Jaanilaulud|The Bishop and the Pagan
+  'Tournier, Marcel':
+    solo:
+      - Images, suite
   'Turina, Joaquín':
     piano:
       - Danzas gitanas|Sevillana|Tres danzas andaluzas
@@ -1664,6 +1769,7 @@ composer_specific_rules:
   'Vaughan Williams, Ralph':
     orchestral:
       - Fantasia on a Theme by Thomas Tallis|Fantasia on.*Greensleeves|The Lark Ascending|Norfolk Rhapsody|Partita for Double String Orchestra|The Running Set
+      - The Wasps|Flos campi
     vocal:
       - Fantasia on Christmas Carols|Serenade to Music|Come down, O love divine|O taste and see|For All the Saints|I Heard the Voice|Rest
   'Veracini, Francesco Maria':
@@ -1677,11 +1783,14 @@ composer_specific_rules:
   'Victoria, Tomás Luis de':
     vocal:
       - Popule meus
+  'Vierne, Louis':
+    solo:
+      - Pièces de fantaisie
   'Villa‐Lobos, Heitor':
     solo: # Guitar
-      - 12 estudos|Five Preludes|Choros nº 1
+      - 12 estudos|Five Preludes|Choros nº 1|Suite populaire
     piano:
-      - Prole do bebê|Rudepoêma|A lenda do caboclo|Choros nº 5|Ciclo brasileiro|Cirandas|Valsa da dor|Caixinha de música quebrada|New York Skyline Melody|Saudades das selvas
+      - Prole do bebê|Rudepoêma|A lenda do caboclo|Choros nº 5|Ciclo brasileiro|Cirandas|Valsa da dor|Caixinha de música quebrada|New York Skyline Melody|Saudades das selvas|Carnaval das crianças
     chamber:
       - Bachianas Brasileiras|Quinteto em forma de chôros|Assobio a játo|Choros nº (2|7)|Sexteto místico
     ballet:
@@ -1735,6 +1844,8 @@ composer_specific_rules:
   'Warlock, Peter':
     vocal:
       - Adam Lay y-Bounden|Balulalow|Bethlehem Down|I Saw a Fair Maiden
+    orchestral:
+      - Capriol Suite
   'Weber, Carl Maria von':
     piano:
       - Rondo Brillante
@@ -1773,7 +1884,7 @@ composer_specific_rules:
       - Vecchie letrose
   'Williams, John':
     orchestral:
-      - Marion's Theme|Suite From Jaws
+      - Marion's Theme|Suite From Jaws|Escapades|Schindler
   'Xenakis, Iannis':
     solo:
       - Nomos alpha|Rebonds

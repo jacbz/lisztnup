@@ -54,7 +54,7 @@
 	// Composer filter mode state
 	let composerFilterMode = $state<'include' | 'exclude' | 'notabilityRange'>('include');
 	let selectedComposers = $state<string[]>([]);
-	let notabilityRange = $state<[number, number]>([1, 400]); // Default to all composers (will be updated based on actual count)
+	let notabilityRange = $state<[number, number]>([1, COMPOSER_COUNT]); // Default to all composers (will be updated based on actual count)
 	let composerSearchTerm = $state('');
 
 	// Name filter state

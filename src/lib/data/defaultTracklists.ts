@@ -218,7 +218,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				ballet: -CATEGORY_ADJUSTMENT_DIFF,
 				solo: -CATEGORY_ADJUSTMENT_DIFF
 			},
-			workScoreRange: [3.5, MAX_WORK_SCORE_ROUNDED],
+			workScoreRange: [3.4, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
 		}
 	},
@@ -239,7 +239,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				ballet: -CATEGORY_ADJUSTMENT_DIFF,
 				solo: -CATEGORY_ADJUSTMENT_DIFF
 			},
-			workScoreRange: [3.5, MAX_WORK_SCORE_ROUNDED],
+			workScoreRange: [3.4, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
 		}
 	},
@@ -260,7 +260,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				ballet: -CATEGORY_ADJUSTMENT_DIFF,
 				solo: -CATEGORY_ADJUSTMENT_DIFF
 			},
-			workScoreRange: [3.5, MAX_WORK_SCORE_ROUNDED],
+			workScoreRange: [3.4, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
 		}
 	},
