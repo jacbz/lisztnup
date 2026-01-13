@@ -20,7 +20,7 @@ general_rules:
     - Anthem|Hymn|Madrigals?|Ode|Carol|Chorale\b|Choral\b|Choräl|Choralfantasie
     - Miserere|Crucifixus|Alleluia|Ave Virgo|Villancico
     # General choral terms.
-    - Coro\b|Chorus|Choralsatz|Liturgy|Vespers|Exequien|Symphoniæ Sacræ
+    - Coro\b|Chorus|Choralsatz|Liturgy|Vespers|Exequien|Symphoniæ Sacræ|Choralbearbeitung
     - for .* Voices?|pour .* voix|Männerchöre|Chants polonais
     - \b(Psalm|Salmo|Psaume)\b|\bSongs?\b
     # Core form identifiers for solo song. "Song" itself is too ambiguous.
@@ -68,6 +68,7 @@ general_rules:
     # Generic small ensemble forms.
     - \b(Serenade|Divertimento)\b for \d|\bKammermusik\b|Adagio und Allegro
     - Pieces for Clarinet, Viola and Piano
+    - Sonata.*(major|minor|Dur|moll).*BWV
 
   #=============================================================================
   # Solo Keyboard: Music for a single keyboard player (piano, harpsichord, clavichord).
@@ -84,7 +85,6 @@ general_rules:
   solo:
     # Organ works.
     - for Organ|for Pedal Piano|\b(Organ|Orgel|Orgue)\b
-    - Chorale Prelude|Praeludium|Toccata|Fugue|Fuga|Fiori Musicali
     # Solo instrumental works (non-keyboard).
     - for Solo (Violin|Viola|Cello|Flute|Clarinet|Guitar|Harp|Lute|Bayan|Accordion|Vihuela)
     - Sonata for (Cello|Viola|Violin) Solo|Partita for Flute
@@ -159,29 +159,54 @@ composer_specific_rules:
       - Viola da gamba Sonata
     vocal:
       - Aus der Tiefe rufe ich
+  'Bach, Wilhelm Friedemann':
+    piano:
+      - Huit fugues sans pédale
   'Bach, Johann Christian':
     piano:
       - March in F
   'Bach, Johann Sebastian':
-    concerto: # Includes Violin Concertos, Brandenburgs
+    concerto:
       - Concerto.*BWV\s?10(4[1-3]|[4-6]\d)
     chamber:
-      - Sonata.*(flute|violin|viola da gamba).*BWV\s?10(1[4-9]|2[0-9]|3\d)|Musical Offering|BWV\s1079|Quatorze Canons
-    solo: # Solo Cello, Violin, Organ, Lute
-      - (Cello|Violin) Suite|Sonatas and Partitas for Solo Violin|Partita for Flute|BWV\s?100[1-9]|BWV\s?1013
-      - Toccata and Fugue|Passacaglia and Fugue|Orgelbüchlein|Schübler Chorales
-      - BWV\s?[5-7]\d\d|BWV\s?999|BWV\s?1[01]\d\d|Fantasia.*BWV 1128|O Lamm Gottes
+      - Sonat[ae].*BWV\s?10(1[4-9]|[23]\d)
+      - Musical Offering|Quatorze Canons
     piano:
+      # Specific Collections
       - Goldberg Variations|Well-Tempered Clavier|Wohltemperierte Klavier
+      - Clavier-büchlein|Klavierbüchlein
+      - (English|French|Partita).*Suites?|Französische Suiten
+      - Italian Concerto|Italienisches Konzert|Ouvertüre nach französischer Art
+      # "Little Preludes" (Catching '6', 'Sechs', 'Zwölf', 'Kleine')
+      - (\d+|Sechs|Zwölf)?\s?kleine Präludien|Small Preludes
+      # Inventions & Sinfonias
+      - Invention|Inventio|Sinfonia.*BWV\s?[789]|Duetto.*BWV 8|Capriccio.*BWV 99
+      - Chromatische Fantasie|BWV\s9\d\d
+      # Generic Piano Suites (BWV 818, 819, 823, 832) - Anchored to start to avoid 'Cello Suite'
+      - ^Suites?\s[A-H][\w\-]+
+      # Anna Magdalena / Notebooks
+      - Marche.*BWV Anh|Minuet.*BWV Anh|Polonaise.*BWV Anh
+      # Generic Terms (Strict boundaries)
+      - \b(Präludium|Fughetta)\b
       - BWV\s?deest
-      - English Suites?|French Suites?|Französische Suiten|Partitas?.*BWV\s?8
-      - Invention.*BWV\s?7|Sinfonia.*BWV\s?[789]|kleine Präludien|Duetto.*BWV 8|Capriccio.*BWV 99|Chromatische Fantasie|BWV\s9\d\d
-      - Clavier-büchlein|Marche.*BWV Anh|Minuet.*BWV Anh|Polonaise.*BWV Anh
-      - \bPräludium\b|\bFughetta\b
-      - BWV\s?(818|819|823|831|832) # Specific keyboard suites/overtures
+      - \b(6 Partitas|Preludes and Fugues|The Art of Fugue)\b
+    solo:
+      # Cello/Violin/Flute solos
+      - (Cello|Violin) Suite|Sonatas and Partitas for Solo Violin|Partita for Flute
+      # Specific Organ Forms
+      - \b(Pedal-Exercitium|Pastorale|Pastorella|Canzona|Allabreve|Kleines harmonisches Labyrinth)\b
+      - \b(Canonische Veränderungen|Partite diverse|Sechs Sonaten)\b
+      # Organ Chorales and Preludes (Hymn Incipits).
+      # Anchored to start (^) to prevent matching inside other titles.
+      - ^(Ach|All(e(in)?|abreve)|Als|An\b|Aus|Christ([eu]m|us|e|\b)|Da Jesus|Das|Der Tag|Dies sind|Du Friedenfürst|Durch|Ehre|Erbarm|Erhalt|Erschienen|Erstanden|Es ist|Fantasia sur|Gelobet|Gott(es)?|Helft|Herr|Herzlich|Herzliebster|Heut|Ich|In (dich|dir|dulci)|Jesu|Jesus|Komm|Liebster|Lob[st]?|Mit Fried|Nun|O (Gott|Herre|Jesu|Lamm|Vater)|Puer|Sei gegrüßet|Valet|Vater unser|Vom Himmel|Wachet|Was Gott|Wenn|Wer nur|Werde|Wie|Wir|Wo)\b
+      # Generic Organ forms (Toccata, Fantasia, etc)
+      # Must be followed by "in [Key]" or "super" to distinguish from generic/piano works.
+      - (Toccata|Passacaglia|Fantasia|Fantasie|Prelude|Präludium|Fugue|Fuge).* (in|super|G-Dur|C-Dur|c-Moll|g-Moll|h-Moll)
+      - Orgelbüchlein|Schübler Chorales
+      - \b(Fuga super|Toccata und Fuge|Two Toccatas)\b
     vocal:
-      - Mass in B minor|St Matthew Passion|St John Passion|Christmas Oratorio|Magnificat in D major
-      - BWV\s(78|140|147)|BWV\s?2[34]\d|Sanctus|O Little One Sweet
+      - Mass in B minor|St Matthew Passion|St John Passion|Christmas Oratorio|Magnificat
+      - Sanctus|O Little One Sweet|Quodlibet
   'Bacheler, Daniel':
     solo:
       - Mounsier's Almaine
@@ -191,6 +216,7 @@ composer_specific_rules:
   'Balakirev, Mily':
     piano:
       - Fantasia on.*Glinka|Islamey
+      - \bToccata\b
   'Barber, Samuel':
     orchestral:
       - Medea's Dance of Vengeance|Music for a Scene From Shelley
@@ -258,6 +284,7 @@ composer_specific_rules:
   'Bernstein, Leonard':
     piano:
       - Seven Anniversaries
+      - \bPrelude, Fugue and Riffs\b
     vocal:
       - Chichester Psalms
     orchestral:
@@ -265,6 +292,9 @@ composer_specific_rules:
   'Biber, Heinrich Ignaz Franz von':
     chamber:
       - Battalia|Harmonia artificioso-ariosa|Mystery Sonatas|Sonatae tam aris|Sonata violino solo representativa
+  'Bruhns, Nicolaus':
+    solo:
+      - Praeludium
   'Binchois, Gilles':
     vocal:
       - Filles a marier
@@ -374,6 +404,8 @@ composer_specific_rules:
   'Böhm, Georg':
     piano:
       - Suite no\.\s?\d
+    solo:
+      - \bPrelude, Fugue and Postlude\b
   'Bądarzewska, Tekla':
     piano:
       - A Maiden's Prayer
@@ -436,6 +468,7 @@ composer_specific_rules:
   'Chopin, Frédéric':
     piano: # Almost everything is for piano
       - Ballade|Berceuse|Fantaisie|Nocturne|Polonaise|Scherzo|Waltz|Étude|Mazurka|Prélude|Impromptu|Bolero
+      - \bFugue in A minor\b
       - Chants polonais|Allegro de concert|Rondo|Largo|Tarantelle|Bourrée|Cantabile|Contredanse|Galop
     chamber:
       - for two pianos|Cello Sonata
@@ -569,9 +602,11 @@ composer_specific_rules:
   'Dupré, Marcel':
     solo: # Organ
       - Sept Pièces, op\. 27
+      - \bTrois préludes et fugues\b
   'Duruflé, Maurice':
     solo: # Organ
       - Chant donné|Méditation|Prelude sur l'introït|Scherzo|Suite, op\. 5
+      - \b(Fugue sur|Prélude et fugue)\b
     vocal:
       - Notre Père
   'Dutilleux, Henri':
@@ -659,6 +694,8 @@ composer_specific_rules:
   'Frescobaldi, Girolamo':
     piano: # Keyboard
       - Il primo libro|Il secondo libro|Recercari
+    solo:
+      - \bFiori Musicali\b
   'Froberger, Johann Jakob':
     piano: # Keyboard
       - Lamentation|Libro di Capricci|Tombeau|Libro.*(Tocate|Capricci)|FbWV
@@ -670,6 +707,8 @@ composer_specific_rules:
       - Canzoni et sonate
     vocal:
       - Timor et tremor
+    solo:
+      - \bFuga del nono tono\b
   'Gershwin, George':
     concerto:
       - Rhapsody in Blue|Concerto in F
@@ -791,6 +830,7 @@ composer_specific_rules:
       - Sonatas for an Accompanied Solo Instrument, op\. 1|Recorder Sonata|Sonata.*HWV 580
     piano:
       - Keyboard Suite|Suites de Pièces|HWV\s?(42[6-9]|43\d|44\d|452)
+      - \b6 Fugues\b
   'Harris, William':
     vocal:
       - Faire is the Heaven
@@ -820,6 +860,9 @@ composer_specific_rules:
       - Sonata for Cello Solo
     orchestral:
       - Meditation from Nobilissima visione|Konzertmusik|Nobilissima visione|Trauermusik
+  'Homilius, Gottfried August':
+    solo:
+      - Fugue in G major
   'Hofmann, Józef':
     piano:
       - Charakterskizzen
@@ -1006,6 +1049,7 @@ composer_specific_rules:
       - 'Réminiscences de|Paraphrase de concert sur|Stücke aus Tannhäuser|Ballade aus Der fliegende|Danza sacra.*Aida|Miserere du Trovatore|Pilgerchor'
       - Consolations|Grand galop chromatique|Rhapsodie espagnole|Soirées de Vienne|Weihnachtsbaum|Après une lecture du Dante
       - '(Csárdás|Polonaises|Vortragsstücke|Ballade|Berceuse|Légendes|exécution transcendante|études de Paganini|Konzertetüden|S\.\s?140|études de Paganini|Impromptu|gondola|Mephisto-Polka|Polonaise aus.*Onegin|Scherzo und Marsch|études de concert|Valse|Valses|Weinen, Klagen|Bagatelle|Elegy|En rêve|Epithalam|Resignazione|Schlaflos!|Trübe Wolken|Unstern!|R\. W\. - Venezia|Recueillement|Wish Liszt)'
+      - \bToccata\b
     solo: # Organ
       - Prelude and Fugue on .* BACH|Fantasia and Fugue on .* Ad nos
     vocal:
@@ -1078,6 +1122,7 @@ composer_specific_rules:
   'Mendelssohn, Felix':
     piano:
       - Album-Leaf|Capriccio.*(op\. 5|Brillant)|Fantasy|Rondo Brilliant|Scherzo a Capriccio|Kinderstücke|Sonata.*op\.\s(6|106)|Fantasies or Caprices, op\. 16|Preludes and.*Studies, op\. 104
+      - \bSix Preludes and Fugues\b
     vocal:
       - 3 Psalms, op\. 78|Die deutsche Liturgie|Kirchenmusik, op\. 23
   'Merikanto, Oskar':
@@ -1153,6 +1198,7 @@ composer_specific_rules:
     chamber:
       - 'Church Sonata|Divertimento .* K\.|(Violin|Horn|Clarinet).*(Quintet|Concerto).*K\.'
       - Sonata for 2 Pianos|Adagio for 2 Basset Horns
+      - \bAdagio and Fugue\b
     orchestral:
       - Serenade .* K\.|Eine kleine Nachtmusik|Marches, K\. 320a
     opera:
@@ -1212,6 +1258,7 @@ composer_specific_rules:
   'Pachelbel, Johann':
     piano: # Keyboard
       - Canon and Gigue|Chaconne|Christe, der du bist|Fantasia|Komm, Gott Schöpfer|Vom Himmel hoch|Was Gott tut
+      - \bToccata\b
   'Paderewski, Ignacy Jan':
     piano:
       - humoresques de concert|Miscellanea
@@ -1272,7 +1319,7 @@ composer_specific_rules:
       - Anna mater matris Christi
   'Ponce, Manuel María':
     solo: # Guitar
-      - Intermezzo|Scherzino mexicano|Sonata|Thème varié|Tres canciones populares
+      - Intermezzo|Scherzino mexicano|Sonata|Thème varié|Tres canciones populares|Diferencias sobre 'La Folía'
   'Ponchielli, Amilcare':
     ballet:
       - Dance of the Hours
@@ -1452,7 +1499,7 @@ composer_specific_rules:
     vocal:
       - Réquiem|Saltarelle
     solo: # Organ/Harp
-      - Fantaisie no\. [123]|Fantaisie, op\. 124
+      - Fantaisie no\. [123]|Fantaisie, op\. 124|3 Preludes and Fugues
     chamber:
       - Caprice sur des airs Danois|Cavatine|Prayer|Romance.*op\. 37|Septuor|Sonata no\. 2 for Cello|Berceuse, op\. 38
     concerto:
@@ -1533,6 +1580,7 @@ composer_specific_rules:
     piano:
       - Carnaval|Kinderszenen|Kreisleriana|Fantasiestücke|Papillons|Davidsbündlertänze|Symphonic Etudes|Album für die Jugend|Arabeske|Blumenstück|Bunte Blätter|Faschingsschwank aus Wien|Novelletten|Waldszenen|Symphonische Etüden|Symphonische Etüden.*Anhang|op\.\s?13
       - Albumblätter|Allegro, op\. 8|Concert études|Drei Romanzen.*op\. 28|Fantasy.*op\. 17|Impromptus.*op\. 5|Intermezzi|Klaviersonate|Nachtstücke|Sonate für Klavier|Vier Märsche
+      - \b(Fugues|Toccata)\b
     solo: # Organ/Pedal Piano
       - Fugues on B\.A\.C\.H|Four Sketches, op\. 58|Six Etudes in Canonic Form
     chamber:
@@ -1769,7 +1817,7 @@ composer_specific_rules:
   'Vaughan Williams, Ralph':
     orchestral:
       - Fantasia on a Theme by Thomas Tallis|Fantasia on.*Greensleeves|The Lark Ascending|Norfolk Rhapsody|Partita for Double String Orchestra|The Running Set
-      - The Wasps|Flos campi
+      - The Wasps|Flos campi|Toccata marziale
     vocal:
       - Fantasia on Christmas Carols|Serenade to Music|Come down, O love divine|O taste and see|For All the Saints|I Heard the Voice|Rest
   'Veracini, Francesco Maria':
