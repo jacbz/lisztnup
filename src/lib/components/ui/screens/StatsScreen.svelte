@@ -92,7 +92,7 @@
 			<svg width={chartWidth} height={chartHeight} class="mx-auto block w-full">
 				<!-- Grid lines -->
 				<g class="grid-lines">
-					{#each Array(5) as i (i)}
+					{#each Array(5) as _, i (i)}
 						{@const score = minScore + (scoreRange / 4) * i}
 						{@const y = getY(score)}
 						<line
@@ -112,7 +112,7 @@
 
 				<!-- X-axis labels (rounds) -->
 				<g class="x-axis">
-					{#each Array(rounds.length + 1) as i (i)}
+					{#each Array(rounds.length + 1) as _, i (i)}
 						{@const x = getX(i, rounds.length + 1)}
 						<text
 							{x}

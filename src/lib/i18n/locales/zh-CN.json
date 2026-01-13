@@ -4,7 +4,8 @@
 		"disabled": "已禁用",
 		"on": "开",
 		"off": "关",
-		"confirm": "确认"
+		"confirm": "确认",
+		"reportProblem": "报告问题"
 	},
 	"app": {
 		"title": "Liszt’n Up!",

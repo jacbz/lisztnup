@@ -4,7 +4,8 @@
 		"disabled": "無効",
 		"on": "オン",
 		"off": "オフ",
-		"confirm": "確定"
+		"confirm": "確定",
+		"reportProblem": "問題を報告"
 	},
 	"app": {
 		"title": "Liszt’n Up!",

@@ -10,6 +10,7 @@
 	import { deezerPlayer, playerState } from '$lib/services';
 	import deezer from '$lib/assets/icons/deezer.svg?raw';
 	import { _ } from 'svelte-i18n';
+	import { Flag } from 'lucide-svelte';
 
 	interface Props {
 		track: Track | null;
@@ -55,6 +56,38 @@
 		const era = getWorkEra(begin_year, end_year, track?.composer);
 		return $_(`eras.${era}`);
 	});
+
+	const reportProblemUrl = $derived.by(() => {
+		if (!track) return '';
+
+		const loadedId = $playerState.track?.id;
+		const deezerId = loadedId ?? track.part.deezer[0];
+
+		const title = encodeURIComponent(`[Data Issue] Problem with track: ${track.work.name}`);
+		const body = encodeURIComponent(
+			`**Describe the problem:**
+(Please describe what is incorrect or missing)
+
+**Expected behavior:**
+(What should be correct?)
+
+**Actual behavior:**
+(What is currently showing?)
+
+---
+
+**Debug Information:**
+- Deezer ID: [${deezerId}](https://www.deezer.com/track/${deezerId})
+- Composer: ${track.composer.name} ([\`${track.composer.gid}\`](https://musicbrainz.org/artist/${track.composer.gid}))
+- Work: ${track.work.name} ([\`${track.work.gid}\`](https://musicbrainz.org/work/${track.work.gid}))
+- Part: ${track.part.name}
+- Work Type: ${track.work.type}
+- Work Years: ${track.work.begin_year ?? 'null'} - ${track.work.end_year ?? 'null'}
+- User Agent: ${navigator.userAgent}`
+		);
+
+		return `https://github.com/jacbz/lisztnup/issues/new?title=${title}&body=${body}&labels=data`;
+	});
 </script>
 
 {#if track}
@@ -82,7 +115,7 @@
 		</div>
 	{/if}
 
-	<div class="flex flex-col gap-5">
+	<div class="flex h-full flex-col justify-center gap-5">
 		<!-- Composer -->
 		<div class="flex flex-col gap-1.5">
 			<p class="text-center text-3xl font-bold text-cyan-400">
@@ -145,5 +178,19 @@
 				{artists.join(', ')}
 			</a>
 		{/if}
+
+		<!-- Report a problem link -->
+		<a
+			href={reportProblemUrl}
+			target="_blank"
+			rel="noopener noreferrer external"
+			data-sveltekit-reload
+			data-sveltekit-noscroll
+			data-sveltekit-preload-data="false"
+			class="flex items-center justify-center gap-1.5 text-[0.65rem] text-slate-400 no-underline transition-all duration-300 hover:text-slate-300"
+		>
+			<Flag class="h-2 w-2" />
+			<span>{$_('common.reportProblem')}</span>
+		</a>
 	</div>
 {/if}

@@ -4,7 +4,8 @@
 		"disabled": "Désactivé",
 		"on": "On",
 		"off": "Off",
-		"confirm": "Confirmer"
+		"confirm": "Confirmer",
+		"reportProblem": "Signaler un problème"
 	},
 	"app": {
 		"title": "Liszt’n Up!",

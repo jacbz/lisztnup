@@ -4,7 +4,8 @@
 		"disabled": "Disabled",
 		"on": "On",
 		"off": "Off",
-		"confirm": "Confirm"
+		"confirm": "Confirm",
+		"reportProblem": "Report a problem"
 	},
 	"app": {
 		"title": "Liszt’n Up!",
