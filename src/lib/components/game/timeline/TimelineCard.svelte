@@ -27,7 +27,6 @@
 	}
 
 	let {
-		track = null,
 		state = 'face-down',
 		size = 'md',
 		borderVariant = 'neutral',
@@ -38,10 +37,12 @@
 		children
 	}: Props = $props();
 
+	const borderRadius = $derived.by(() => (size === 'xs' ? 'rounded-[6px]' : 'rounded-[10px]'));
+
 	const sizeClasses = $derived.by(() => {
 		switch (size) {
 			case 'xs':
-				return 'h-6 w-6 md:h-8 md:w-8';
+				return 'h-7 w-7 md:h-8 md:w-8';
 			case 'sm':
 				return 'h-14 w-14 md:h-16 md:w-16';
 			case 'md':
@@ -62,19 +63,6 @@
 		}
 	});
 
-	const textClasses = $derived.by(() => {
-		switch (size) {
-			case 'xs':
-				return 'text-xs md:text-[70%]';
-			case 'sm':
-				return 'text-base md:text-2xl';
-			case 'lg':
-				return 'text-3xl md:text-4xl';
-			default:
-				return 'text-xl md:text-2xl';
-		}
-	});
-
 	const isInteractive = $derived(state === 'interactive');
 	// In 'revealed' mode (year), we allow clicking if the parent asks (for inspection)
 	const isClickable = $derived(isInteractive || (state === 'revealed' && !draggable));
@@ -82,7 +70,8 @@
 
 <button
 	type="button"
-	class={`relative shrink-0 rounded-[10px] border-2 bg-slate-900 backdrop-blur-sm ${sizeClasses} ${borderClasses} transition-all`}
+	class={`relative shrink-0 ${borderRadius} border-2 bg-slate-900 backdrop-blur-sm ${sizeClasses} ${borderClasses} transition-all`}
+	style="container-type: size;"
 	class:cursor-pointer={isClickable || draggable}
 	class:cursor-grab={draggable}
 	class:touch-none={draggable}
@@ -91,7 +80,7 @@
 >
 	<!-- Subtle paper-ish highlight -->
 	<div
-		class="pointer-events-none absolute inset-0 rounded-[10px] bg-linear-to-br from-white/8 to-transparent"
+		class={`pointer-events-none absolute inset-0 ${borderRadius} bg-linear-to-br from-white/8 to-transparent`}
 	></div>
 
 	<div class="relative flex h-full w-full flex-col items-center justify-center overflow-hidden">
@@ -100,8 +89,8 @@
 				{@render children?.()}
 			</div>
 		{:else if state === 'revealed'}
-			<div class="px-1 text-center select-none">
-				<div class={`font-black tracking-wide text-slate-200 ${textClasses}`}>{yearText}</div>
+			<div class="font-black tracking-wide text-slate-200" style="font-size: 40cqw;">
+				{yearText}
 			</div>
 		{:else}
 			<!-- Face Down / Logo -->
