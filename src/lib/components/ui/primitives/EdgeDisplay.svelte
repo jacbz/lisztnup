@@ -11,7 +11,7 @@
 		/**
 		 * The content to display.
 		 */
-		children: Snippet;
+		children: Snippet<[{ rotation: number }]>;
 		/**
 		 * Whether to hide the top display.
 		 * @default false
@@ -45,24 +45,28 @@
 	const positions = [
 		{
 			name: 'top',
+			rotation: 180,
 			innerTransform: `translate(-50%, -50%) rotate(180deg) translateY(calc(50dvh - 50% - ${margin}))`,
 			hideOnNarrow: false,
 			flyParams: { y: -100, duration: 300 }
 		},
 		{
 			name: 'bottom',
+			rotation: 0,
 			innerTransform: `translate(-50%, -50%) translateY(calc(50dvh - 50% - ${margin}))`,
 			hideOnNarrow: false,
 			flyParams: { y: 100, duration: 300 }
 		},
 		{
 			name: 'left',
+			rotation: 90,
 			innerTransform: `translate(-50%, -50%) rotate(90deg) translateY(calc(50vw - 50% - ${margin}))`,
 			hideOnNarrow: true,
 			flyParams: { x: -100, duration: 300 }
 		},
 		{
 			name: 'right',
+			rotation: -90,
 			innerTransform: `translate(-50%, -50%) rotate(-90deg) translateY(calc(50vw - 50% - ${margin}))`,
 			hideOnNarrow: true,
 			flyParams: { x: 100, duration: 300 }
@@ -88,7 +92,7 @@
 			out:fly={position.flyParams}
 		>
 			<div style="transform: {position.innerTransform};">
-				{@render children()}
+				{@render children({ rotation: position.rotation })}
 			</div>
 		</div>
 	{/if}

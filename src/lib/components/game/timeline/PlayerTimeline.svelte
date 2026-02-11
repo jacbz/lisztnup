@@ -33,6 +33,7 @@
 		onConfirmedCardClick?: (entry: TimelineEntry) => void;
 		bindEl?: (el: HTMLDivElement | null) => void;
 		onPendingPointerDown?: (entryId: string, ev: PointerEvent) => void;
+		rotation?: number;
 	}
 
 	let {
@@ -54,7 +55,8 @@
 		onConfirm = () => {},
 		onConfirmedCardClick = () => {},
 		bindEl = () => {},
-		onPendingPointerDown = () => {}
+		onPendingPointerDown = () => {},
+		rotation = 0
 	}: Props = $props();
 
 	let el: HTMLDivElement | null = $state(null);
@@ -63,6 +65,18 @@
 	});
 
 	const cardSize = $derived(active && !compact ? 'sm' : 'xs');
+
+	function rotateVector(x: number, y: number, angleDeg: number) {
+		const rad = (-angleDeg * Math.PI) / 180;
+		const cos = Math.cos(rad);
+		const sin = Math.sin(rad);
+		return {
+			x: x * cos - y * sin,
+			y: x * sin + y * cos
+		};
+	}
+
+	const localDragTranslate = $derived(rotateVector(dragTranslate.x, dragTranslate.y, rotation));
 
 	// Custom transition to simulate flying from the stack (center screen)
 	function flyFromCenter(node: Element, { delay = 0, duration = 400, easing = quintOut }) {
@@ -78,12 +92,14 @@
 		const dx = centerX - targetX;
 		const dy = centerY - targetY;
 
+		const local = rotateVector(dx, dy, rotation);
+
 		return {
 			delay,
 			duration,
 			easing,
 			css: (t: number, u: number) => `
-				transform: translate(${u * dx}px, ${u * dy}px) scale(${0.2 + 0.8 * t});
+				transform: translate(${u * local.x}px, ${u * local.y}px) scale(${0.2 + 0.8 * t});
 				opacity: ${t};
 			`
 		};
@@ -98,6 +114,7 @@
 -->
 <div
 	class={`relative w-fit max-w-[92vw] transition-all duration-300 ease-out ${active || isDealing ? '' : 'opacity-60'}`}
+	data-rotation={rotation}
 >
 	<div
 		class={`pointer-events-none absolute top-0 right-full flex items-center gap-2 rounded-lg border border-slate-700/40 bg-slate-950/50 px-2 py-0.5 backdrop-blur-sm ${active ? 'text-xs text-slate-200' : 'text-[11px] text-slate-300'}`}
@@ -171,7 +188,7 @@
 						class:z-50={isPendingMove}
 						class:will-change-transform={isPendingMove}
 						style={isPendingMove
-							? `transform: translate3d(${dragTranslate.x}px, ${dragTranslate.y}px, 0);`
+							? `transform: translate3d(${localDragTranslate.x}px, ${localDragTranslate.y}px, 0);`
 							: ''}
 						in:flyFromCenter={{ duration: 600 }}
 					>

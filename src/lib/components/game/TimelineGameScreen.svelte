@@ -96,7 +96,6 @@
 
 	// --- Derived ---
 
-	let activeTimelineEl: HTMLDivElement | null = $state(null);
 	let isMdViewport = $state(false);
 
 	const activePlayer = $derived(gameState.timelines[gameState.activePlayerIndex]);
@@ -126,15 +125,8 @@
 
 	const centerDragScale = $derived.by(() => {
 		if (!dragState.active || dragState.kind !== 'center') return 1;
-		if (!activeTimelineEl) return 1;
-		const rect = activeTimelineEl.getBoundingClientRect();
-		const margin = 140;
-		const near =
-			dragState.current.x >= rect.left - margin &&
-			dragState.current.x <= rect.right + margin &&
-			dragState.current.y >= rect.top - margin &&
-			dragState.current.y <= rect.bottom + margin;
-		if (!near) return 1;
+		// Simplified scaling: if we are dragging, we assume we are moving towards a timeline
+		// Just return the smaller scale immediately to show it "detached" from the stack
 		return isMdViewport ? 16 / 38 : 14 / 32;
 	});
 
@@ -333,7 +325,13 @@
 		initDrag(ev, 'pending', entry.track);
 		dragState.previewEntryId = entryId;
 		dragState.previewInserted = true;
-		dragState.pendingStartRect = getActiveTimelineEntryRect(entryId);
+
+		// Find the element to get rect
+		// We can't rely on activeTimelineEl. Find by ID in document.
+		const el = document.querySelector(`[data-entry-id="${entryId}"]`);
+		if (el) {
+			dragState.pendingStartRect = el.getBoundingClientRect();
+		}
 	}
 
 	function initDrag(ev: PointerEvent, kind: 'center' | 'pending', track: Track) {
@@ -370,7 +368,7 @@
 		};
 
 		const within = isWithinTimeline(ev.clientX, ev.clientY);
-		const idx = within ? getInsertionIndex(ev.clientX) : null;
+		const idx = within ? getInsertionIndex(ev.clientX, ev.clientY) : null;
 
 		if (dragState.kind === 'center') {
 			if (idx == null) {
@@ -413,26 +411,64 @@
 	}
 
 	function isWithinTimeline(x: number, y: number): boolean {
-		if (!activeTimelineEl) return false;
-		const rect = activeTimelineEl.getBoundingClientRect();
-		return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+		if (typeof document === 'undefined') return false;
+		const elements = document.elementsFromPoint(x, y);
+		return elements.some((el) => el.hasAttribute('data-rotation'));
 	}
 
-	function getInsertionIndex(x: number): number {
-		if (!activeTimelineEl) return 0;
-		const cards = Array.from(activeTimelineEl.querySelectorAll('[data-timeline-entry]'));
+	function getInsertionIndex(x: number, y: number): number {
+		if (typeof document === 'undefined') return 0;
+		const elements = document.elementsFromPoint(x, y);
+		const container = elements.find((el) => el.hasAttribute('data-rotation')) as HTMLElement;
+		if (!container) return 0;
+
+		const rotation = parseInt(container.getAttribute('data-rotation') || '0', 10);
+		const cards = Array.from(container.querySelectorAll('[data-timeline-entry]'));
 		if (cards.length === 0) return 0;
+
+		const isVertical = Math.abs(rotation) === 90;
+		const isInvertedHorizontal = Math.abs(rotation) === 180;
+
 		for (let i = 0; i < cards.length; i++) {
 			const r = cards[i].getBoundingClientRect();
-			if (x < r.left + r.width / 2) return i;
+			if (isVertical) {
+				// Vertical (90/-90) is always Top->Bottom (Global Y+)
+				if (y < r.top + r.height / 2) return i;
+			} else {
+				// Horizontal
+				if (isInvertedHorizontal) {
+					// 180 deg: Global X- (Right to Left)
+					if (x > r.left + r.width / 2) return i;
+				} else {
+					// 0 deg: Global X+ (Left to Right)
+					if (x < r.left + r.width / 2) return i;
+				}
+			}
 		}
 		return cards.length;
 	}
 
 	function getActiveTimelineEntryRect(id: string): DOMRect | null {
-		return (
-			activeTimelineEl?.querySelector(`[data-entry-id="${id}"]`)?.getBoundingClientRect() ?? null
-		);
+		const candidates = Array.from(document.querySelectorAll(`[data-entry-id="${id}"]`));
+		if (candidates.length === 0) return null;
+
+		const mx = dragState.current.x;
+		const my = dragState.current.y;
+
+		let best = candidates[0];
+		let minDist = Infinity;
+
+		for (const el of candidates) {
+			const r = el.getBoundingClientRect();
+			const cx = r.left + r.width / 2;
+			const cy = r.top + r.height / 2;
+			const d = (mx - cx) ** 2 + (my - cy) ** 2;
+			if (d < minDist) {
+				minDist = d;
+				best = el;
+			}
+		}
+		return best.getBoundingClientRect();
 	}
 
 	function insertPreviewEntry(atIndex: number) {
@@ -683,8 +719,8 @@
 		</div>
 	</div>
 
-	<EdgeDisplay visible={true} hideTop={true} hideLeftRight={true} disablePointerEvents={false}>
-		{#snippet children()}
+	<EdgeDisplay visible={true} disablePointerEvents={false}>
+		{#snippet children({ rotation })}
 			<div class="mx-auto flex max-w-[900px] flex-col items-center gap-2 px-2 pb-4">
 				{#each rotatedTimelines as t (t.player.name)}
 					{@const isTurnOwner = t.player.name === activePlayerName}
@@ -702,7 +738,7 @@
 							active={isActive}
 							compact={!isActive}
 							acceptingDrop={isActive && canDragCenter}
-							bindEl={isActive ? (el) => (activeTimelineEl = el) : undefined}
+							{rotation}
 							draggingEntryId={isActive ? dragState.previewEntryId : null}
 							isDragging={isActive ? dragState.active : false}
 							dragKind={isActive ? dragState.kind : 'none'}
