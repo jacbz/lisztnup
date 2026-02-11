@@ -239,7 +239,7 @@
 				<button
 					type="button"
 					onclick={() => removePlayer(index)}
-					class="shrink-0 cursor-pointer rounded-md border-none bg-transparent p-1 text-red-400 transition-all duration-200 hover:bg-red-400/10 hover:text-red-300 disabled:cursor-not-allowed disabled:opacity-20 disabled:hover:bg-transparent"
+					class="shrink-0 cursor-pointer rounded-md border-none bg-slate-800 p-1 text-cyan-400 transition-all duration-200 hover:bg-cyan-400/10 hover:text-cyan-300 disabled:cursor-not-allowed disabled:opacity-20 disabled:hover:bg-transparent"
 					aria-label="Remove player"
 					disabled={players.length <= 1}
 				>
