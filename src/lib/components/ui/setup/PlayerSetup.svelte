@@ -107,6 +107,10 @@
 
 	// Get the edge with the least amount of players
 	function getDefaultEdge(): PlayerEdge {
+		if (players.length === 1 && players[0].edge === 'bottom') {
+			return 'top';
+		}
+
 		const edgeCounts = new Map<PlayerEdge, number>();
 		ALL_EDGES.forEach((edge) => edgeCounts.set(edge, 0));
 
