@@ -38,10 +38,7 @@
 	let players = $state<Array<{ name: string; color: string; edge: PlayerEdge }>>(
 		$settings.players.length > 0
 			? $settings.players.map((p) => ({ ...p, edge: p.edge || 'bottom' }))
-			: [
-					{ name: generateDefaultPlayerName(0), color: PLAYER_COLORS[0], edge: 'bottom' },
-					{ name: generateDefaultPlayerName(1), color: PLAYER_COLORS[1], edge: 'top' }
-				]
+			: [{ name: generateDefaultPlayerName(0), color: PLAYER_COLORS[0], edge: 'bottom' }]
 	);
 
 	// Initialize default names map

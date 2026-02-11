@@ -421,7 +421,7 @@
 		"home": "Start"
 	},
 	"timeline": {
-		"dealing": "Ausgeben an {name}",
+		"dealing": "Austeilen an {name}...",
 		"drag": "Ziehen",
 		"confirm": "Bestätigen",
 		"help": {
