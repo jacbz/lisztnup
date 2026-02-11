@@ -332,7 +332,7 @@
 	<!-- Header -->
 	<div class="absolute top-0 right-0 left-0 z-20 flex items-center justify-between p-6">
 		<div class="pr-4">
-			<Logo onClick={handleHomeClick} size="large" />
+			<Logo onClick={handleHomeClick} size="medium" />
 		</div>
 
 		<!-- Settings Button -->

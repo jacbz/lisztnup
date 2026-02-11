@@ -42,13 +42,13 @@
 	const sizeClasses = $derived.by(() => {
 		switch (size) {
 			case 'xs':
-				return 'h-7 w-7 md:h-8 md:w-8';
+				return 'h-7 w-7 md:h-8 md:w-8 max-w-[calc((90vmin-var(--gap)*(var(--entry-count)-1))/var(--entry-count))] max-h-[calc((90vmin-var(--gap)*(var(--entry-count)-1))/var(--entry-count))]';
 			case 'sm':
-				return 'h-14 w-14 md:h-16 md:w-16';
+				return 'h-14 w-14 md:h-16 md:w-16 max-w-[calc((90vmin-var(--gap)*(var(--entry-count)-1))/var(--entry-count))] max-h-[calc((90vmin-var(--gap)*(var(--entry-count)-1))/var(--entry-count))]';
 			case 'md':
-				return 'h-14 w-14 md:h-18 md:w-18';
+				return 'h-14 w-14 md:h-18 md:w-18 max-w-[calc((90vmin-var(--gap)*(var(--entry-count)-1))/var(--entry-count))] max-h-[calc((90vmin-var(--gap)*(var(--entry-count)-1))/var(--entry-count))]';
 			case 'lg':
-				return 'h-40 w-40 md:h-48 md:w-48';
+				return 'h-40 w-40 md:h-48 md:w-48 max-w-[calc((90vmin-var(--gap)*(var(--entry-count)-1))/var(--entry-count))] max-h-[calc((90vmin-var(--gap)*(var(--entry-count)-1))/var(--entry-count))]';
 		}
 	});
 
@@ -70,7 +70,7 @@
 
 <button
 	type="button"
-	class={`relative shrink-0 ${borderRadius} border-2 bg-slate-900 backdrop-blur-sm ${sizeClasses} ${borderClasses} transition-all`}
+	class={`relative shrink ${borderRadius} border-2 bg-slate-900 backdrop-blur-sm ${sizeClasses} ${borderClasses} transition-all`}
 	style="container-type: size;"
 	class:cursor-pointer={isClickable || draggable}
 	class:cursor-grab={draggable}
@@ -94,10 +94,10 @@
 			</div>
 		{:else}
 			<!-- Face Down / Logo -->
-			<div class="flex h-full w-full items-center justify-center opacity-80 select-none">
-				<div class="pointer-events-none -mr-4">
-					<Logo size={size === 'xs' || size === 'sm' ? 'tiny' : 'small'} onClick={() => {}} />
-				</div>
+			<div
+				class="pointer-events-none flex h-full w-full items-center justify-center opacity-80 select-none"
+			>
+				<Logo size="fit" onClick={() => {}} />
 			</div>
 		{/if}
 	</div>

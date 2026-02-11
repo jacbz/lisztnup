@@ -10,14 +10,13 @@
 		 * The size of the logo.
 		 * @default 'medium'
 		 */
-		size?: 'tiny' | 'small' | 'medium' | 'large';
+		size?: 'fit' | 'medium' | 'large';
 	}
 
 	let { onClick = () => {}, size = 'medium' }: Props = $props();
 
 	const sizeClasses = {
-		tiny: 'text-xs sm:text-xs',
-		small: 'text-2xl sm:text-3xl',
+		fit: 'text-[18cqw]',
 		medium: 'text-3xl sm:text-4xl',
 		large: 'text-4xl sm:text-5xl'
 	};
@@ -26,10 +25,10 @@
 <button
 	type="button"
 	onclick={onClick}
-	class="font-streamster text-cyan-400 transition-all select-none hover:scale-105 hover:text-cyan-300 active:scale-95 {sizeClasses[
+	class="h-full w-full font-streamster text-cyan-400 transition-all select-none hover:scale-105 hover:text-cyan-300 active:scale-95 {sizeClasses[
 		size
-	]} pr-4"
-	style="filter: drop-shadow(0 0 10px rgba(0, 246, 255, 0.7));"
+	]} text-nowrap"
+	style="filter: drop-shadow(0 0 10px rgba(0, 246, 255, 0.7)); container-type: size;"
 >
 	{$_('app.title')}
 </button>

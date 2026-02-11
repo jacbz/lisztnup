@@ -106,18 +106,12 @@
 	}
 </script>
 
-<!-- 
-	Opacity Logic:
-	- If active: Opacity 100%
-	- If dealing: Opacity 100% (everyone sees everything)
-	- If not active AND not dealing: Opacity 60% (inactive player dimming)
--->
 <div
-	class={`relative w-fit max-w-[92vw] transition-all duration-300 ease-out ${active || isDealing ? '' : 'opacity-60'}`}
+	class="relative w-fit max-w-[92vmin] transition-all duration-300 ease-out"
 	data-rotation={rotation}
 >
 	<div
-		class={`pointer-events-none absolute top-0 right-full flex items-center gap-2 rounded-lg border border-slate-700/40 bg-slate-950/50 px-2 py-0.5 backdrop-blur-sm ${active ? 'text-xs text-slate-200' : 'text-[11px] text-slate-300'}`}
+		class={`pointer-events-none absolute -top-5 z-100 flex items-center gap-2 rounded-lg border border-slate-700/40 bg-slate-950/50 px-2 py-0.5 backdrop-blur-sm ${active ? 'text-xs text-slate-200' : 'left-1/2 -translate-x-1/2 text-[11px] text-slate-300 '}`}
 	>
 		<div class="h-2 w-2 rounded-full" style="background-color: {playerColor};"></div>
 		<div class="max-w-[28ch] truncate font-semibold tracking-wide select-none">{playerName}</div>
@@ -145,8 +139,13 @@
 
 	<div
 		bind:this={el}
-		class={`relative flex items-center justify-center gap-1.5 rounded-xl border bg-slate-950/30 transition-all duration-300 ${helpText || showConfirm ? 'mt-6' : ''} ${active ? 'min-w-[300px] px-10 py-2' : 'min-w-[100px] px-1.5 py-1.5'} ${acceptingDrop ? 'border-cyan-400/40 shadow-[0_0_25px_rgba(34,211,238,0.35)]' : 'border-slate-700/40'}`}
-		style={active ? `box-shadow: 0 0 30px ${playerColor}55;` : ''}
+		class={`relative flex items-center justify-center gap-1.5 rounded-xl border bg-slate-950/30 transition-all duration-300 ${helpText || showConfirm ? 'mt-6' : ''} ${active ? 'min-w-[92vmin] py-2' : 'min-w-[100px] px-1.5 py-1.5'} ${acceptingDrop ? 'border-cyan-400/40 shadow-[0_0_25px_rgba(34,211,238,0.35)]' : 'border-slate-700/40'}`}
+		style="{active
+			? `box-shadow: 0 0 30px ${playerColor}55; `
+			: ''}container-type: inline-size; --entry-count: {Math.max(
+			entries.length,
+			1
+		)}; --gap: calc(var(--spacing) * 1.5);"
 	>
 		<div
 			class={`absolute ${active ? 'top-1 left-2 text-xs' : 'top-0.75 left-1 text-[10px]'} opacity-50`}
