@@ -197,6 +197,19 @@
 		);
 	});
 
+	// Map player edge to rotation (matching EdgeDisplay rotation logic)
+	const popupRotation = $derived.by(() => {
+		if (!activePlayer) return 0;
+		const edge = activePlayer.player.edge || 'bottom';
+		const rotationMap: Record<PlayerEdge, number> = {
+			bottom: 0,
+			top: 180,
+			left: 90,
+			right: -90
+		};
+		return rotationMap[edge];
+	});
+
 	// --- Lifecycle ---
 
 	onMount(() => {
@@ -896,6 +909,7 @@
 		: gameState.revealIsCorrect === false
 			? 'border-red-400'
 			: 'border-cyan-400'}
+	rotation={popupRotation}
 >
 	{#if gameState.revealTrack}
 		<div class="flex h-full w-full flex-col gap-5">

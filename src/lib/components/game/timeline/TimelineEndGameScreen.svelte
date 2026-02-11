@@ -61,7 +61,7 @@
 						playerName={t.player.name}
 						playerColor={t.player.color}
 						entries={t.entries}
-						active={true}
+						active={false}
 						compact={false}
 						acceptingDrop={false}
 						onConfirmedCardClick={(entry) => (inspectTrack = entry.track)}

@@ -48,6 +48,11 @@
 		 * @default true
 		 */
 		showCloseButton?: boolean;
+		/**
+		 * Rotation angle for the popup (in degrees).
+		 * @default 0
+		 */
+		rotation?: number;
 	}
 
 	let {
@@ -59,7 +64,8 @@
 		overflow = 'auto',
 		borderColor = 'border-cyan-400',
 		shadowColor = 'rgba(34,211,238,0.3)',
-		showCloseButton = true
+		showCloseButton = true,
+		rotation = 0
 	}: Props = $props();
 
 	function handleBackdropClick() {
@@ -158,6 +164,7 @@
 			tabindex="-1"
 			in:scale={{ duration: 300, easing: cubicOut, start: 0.9 }}
 			out:scale={{ duration: 200, easing: cubicOut, start: 0.9 }}
+			style="transform: rotate({rotation}deg);"
 		>
 			<div class={containerClasses} style={containerStyle}>
 				<!-- Close Button -->

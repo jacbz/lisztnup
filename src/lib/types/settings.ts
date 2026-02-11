@@ -120,7 +120,7 @@ const isWebKit =
  */
 export const DEFAULT_SETTINGS: GameSettings = {
 	numberOfTracks: 10,
-	timelineCardsToWin: 10,
+	timelineCardsToWin: 6,
 	selectedTracklist: 'tracklists.beginner.name',
 	trackLength: 30,
 	volume: 100,
