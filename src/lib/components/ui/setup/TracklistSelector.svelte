@@ -133,7 +133,8 @@
 
 	async function handleShare(tracklist: Tracklist) {
 		try {
-			const json = JSON.stringify(tracklist);
+			// Ignore null values in JSON to reduce size
+			const json = JSON.stringify(tracklist, (k, v) => v ?? undefined);
 			const compressed = await compress(json);
 			const baseUrl = window.location.origin + window.location.pathname;
 			shareUrl = `${baseUrl}?addTracklist=${encodeURIComponent(compressed)}`;
