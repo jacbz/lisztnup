@@ -112,13 +112,6 @@
 	class={`relative w-fit transition-all duration-300 ease-out ${isVertical ? 'max-w-[92dvh]' : 'max-w-[92vw]'}`}
 	data-rotation={rotation}
 >
-	<div
-		class={`pointer-events-none absolute flex items-center gap-2 rounded-lg border border-slate-700/50 bg-slate-950/50 px-2 py-0.5 ${active ? '-top-5 z-100 text-xs text-slate-200' : '-top-3 left-1/2 -translate-x-1/2 text-[11px] text-slate-300'}`}
-	>
-		<div class="h-2 w-2 rounded-full" style="background-color: {playerColor};"></div>
-		<div class="max-w-[28ch] truncate font-semibold tracking-wide select-none">{playerName}</div>
-	</div>
-
 	{#if helpText || showConfirm}
 		<div
 			class="absolute right-0 bottom-[calc(100%)] left-0 z-10 flex flex-col items-center justify-center gap-0.5 p-1 backdrop-blur-xs"
@@ -141,7 +134,7 @@
 
 	<div
 		bind:this={el}
-		class={`relative flex items-center justify-center gap-1.5 rounded-xl border bg-slate-950/30 transition-all duration-300 ${helpText || showConfirm ? 'mt-6' : ''} ${active ? `py-2` : 'min-w-[100px] px-1.5 py-1.5'} ${acceptingDrop ? 'border-cyan-400/40 shadow-[0_0_25px_rgba(34,211,238,0.35)]' : 'border-slate-700/40'}`}
+		class={`relative flex items-center justify-center gap-1.5 rounded-xl border bg-slate-950/30 transition-all duration-300 ${helpText || showConfirm ? 'mt-6' : ''} ${active ? `rounded-tl-none py-2` : 'min-w-[100px] px-1.5 py-1.5'} ${acceptingDrop ? 'border-cyan-400/40 shadow-[0_0_25px_rgba(34,211,238,0.35)]' : 'border-slate-700/40'}`}
 		style="{active
 			? `box-shadow: 0 0 30px ${playerColor}55; min-width: ${isVertical ? '92dvh' : '92vw'};`
 			: ''}container-type: inline-size; --entry-count: {Math.max(
@@ -149,6 +142,13 @@
 			1
 		)}; --gap: calc(var(--spacing) * 1.5);"
 	>
+		<div
+			class={`pointer-events-none absolute flex items-center gap-2 rounded-lg border border-slate-700/50 bg-slate-950/50 px-2 ${active ? 'top-0 left-0 z-100 -translate-y-full rounded-br-none rounded-bl-none py-0.5 text-xs text-slate-200' : '-top-2 left-1/2 -translate-x-1/2 text-[10px] text-slate-300'}`}
+		>
+			<div class="h-2 w-2 rounded-full" style="background-color: {playerColor};"></div>
+			<div class="max-w-[28ch] truncate font-semibold tracking-wide select-none">{playerName}</div>
+		</div>
+
 		<div
 			class={`absolute ${active ? 'top-1 left-2 text-xs' : 'top-0.75 left-1 text-[10px]'} opacity-50`}
 		>

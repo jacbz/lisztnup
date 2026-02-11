@@ -862,16 +862,16 @@
 		{/each}
 	{:else}
 		<!-- Compact horizontal layout for shorter screens -->
-		<div class="fixed top-32 right-48 z-200">
+		<div class="fixed top-42 right-48 left-48 z-200 md:left-auto">
 			{@render cardStackDisplay()}
 		</div>
 
-		<div class="fixed top-4 left-1/2 z-150 -translate-x-1/2">
+		<div class="fixed top-1/2 left-1/2 z-150 -translate-x-1/2">
 			{@render dealingOverlay()}
 		</div>
 
-		<div class="fixed inset-0 flex items-center px-4 pt-20">
-			<div class="flex w-full flex-col gap-3 overflow-y-auto">
+		<div class="fixed inset-0 flex items-end px-4 pt-20 pb-4">
+			<div class="flex w-full flex-col gap-3 overflow-visible">
 				{#each timelinesByEdge.get('bottom') || [] as timeline (timeline.player.name)}
 					<div animate:flip={{ duration: 500 }}>
 						{@render timelineDisplay(timeline, 0, 'bottom')}
