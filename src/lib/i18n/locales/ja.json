@@ -377,6 +377,13 @@
 		"startGame": "ゲーム開始",
 		"cancel": "キャンセル",
 		"minPlayers": "スコアありで遊ぶ場合、最低2人のプレイヤーが必要です。",
+		"edge": {
+			"toggle": "画面端を切り替え",
+			"bottom": "下",
+			"left": "左",
+			"top": "上",
+			"right": "右"
+		},
 		"errors": {
 			"nameRequired": "プレイヤー名を入力してください",
 			"duplicateName": "同じ名前のプレイヤーが既にいます"

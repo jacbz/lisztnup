@@ -377,6 +377,13 @@
 		"startGame": "Spiel starten",
 		"cancel": "Abbrechen",
 		"minPlayers": "Für diesen Modus (mit Punkten) sind mindestens zwei Spieler erforderlich.",
+		"edge": {
+			"toggle": "Bildschirmkante umschalten",
+			"bottom": "Unten",
+			"left": "Links",
+			"top": "Oben",
+			"right": "Rechts"
+		},
 		"errors": {
 			"nameRequired": "Ein Spieler muss einen Namen haben",
 			"duplicateName": "Ein Spieler mit diesem Namen existiert bereits"

@@ -8,6 +8,13 @@ export type GameMode = 'timeline' | 'bingo' | 'buzzer' | 'classic';
 
 export type GameState = 'loading' | 'home' | 'settings' | 'generating' | 'game';
 
+export type PlayerEdge = 'bottom' | 'left' | 'top' | 'right';
+
+/**
+ * All possible player edges in clockwise order.
+ */
+export const ALL_EDGES: PlayerEdge[] = ['bottom', 'left', 'top', 'right'];
+
 /**
  * A palette of colors to be used for players.
  */
@@ -48,6 +55,7 @@ export interface Player {
 	name: string; // name is now the unique identifier
 	color: string;
 	score: number;
+	edge: PlayerEdge; // Screen edge for Timeline mode display
 }
 
 export interface RoundState {

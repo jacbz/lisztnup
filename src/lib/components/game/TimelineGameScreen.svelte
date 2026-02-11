@@ -2,7 +2,8 @@
 	import { onMount, getContext } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import { fly } from 'svelte/transition';
-	import type { Player, Track } from '$lib/types';
+	import type { Player, Track, PlayerEdge } from '$lib/types';
+	import { ALL_EDGES } from '$lib/types';
 	import { currentRound, tracklist, resetGame, gameSession } from '$lib/stores';
 	import { _ } from 'svelte-i18n';
 	import { formatYearRange } from '$lib/utils';
@@ -130,13 +131,41 @@
 		return isMdViewport ? 16 / 38 : 14 / 32;
 	});
 
-	const rotatedTimelines = $derived.by(() => {
-		if (gameState.timelines.length === 0) return [];
-		if (uiState.isDealing) return gameState.timelines;
-		const idx = gameState.activePlayerIndex;
-		const before = gameState.timelines.slice(idx + 1);
-		const after = gameState.timelines.slice(0, idx + 1);
-		return [...before, ...after];
+	// Group timelines by edge, with rotation logic applied within each edge
+	const timelinesByEdge = $derived.by(() => {
+		const grouped = new Map<PlayerEdge, typeof gameState.timelines>();
+
+		// Initialize all edges
+		ALL_EDGES.forEach((edge) => grouped.set(edge, []));
+
+		// Group timelines by player edge
+		gameState.timelines.forEach((timeline) => {
+			const edge = timeline.player.edge || 'bottom';
+			const edgeTimelines = grouped.get(edge) || [];
+			edgeTimelines.push(timeline);
+			grouped.set(edge, edgeTimelines);
+		});
+
+		// Apply rotation logic within each edge during gameplay (not dealing)
+		if (!uiState.isDealing && gameState.timelines.length > 0) {
+			const idx = gameState.activePlayerIndex;
+			const activeTimeline = gameState.timelines[idx];
+			const activeEdge = activeTimeline.player.edge || 'bottom';
+
+			// Only rotate timelines on the active player's edge
+			const edgeTimelines = grouped.get(activeEdge) || [];
+			const activeIndexInEdge = edgeTimelines.findIndex(
+				(t) => t.player.name === activeTimeline.player.name
+			);
+
+			if (activeIndexInEdge !== -1) {
+				const before = edgeTimelines.slice(activeIndexInEdge + 1);
+				const after = edgeTimelines.slice(0, activeIndexInEdge + 1);
+				grouped.set(activeEdge, [...before, ...after]);
+			}
+		}
+
+		return grouped;
 	});
 
 	const revealYearText = $derived.by(() => {
@@ -719,55 +748,73 @@
 		</div>
 	</div>
 
-	<EdgeDisplay visible={true} disablePointerEvents={false}>
-		{#snippet children({ rotation })}
-			<div class="mx-auto flex max-w-[900px] flex-col items-center gap-2 px-2 pb-4">
-				{#each rotatedTimelines as t (t.player.name)}
-					{@const isTurnOwner = t.player.name === activePlayerName}
-					<!-- 
-						During dealing: isActive is FALSE for everyone.
-						After dealing: isActive is TRUE only for the turn owner.
-					-->
-					{@const isActive = !uiState.isDealing && isTurnOwner}
+	<!-- Render EdgeDisplay for each edge that has players -->
+	{#each ALL_EDGES as edge (edge)}
+		{@const edgeTimelines = timelinesByEdge.get(edge) || []}
+		{#if edgeTimelines.length > 0}
+			{@const hideTop = edge !== 'top'}
+			{@const hideLeftRight = edge !== 'left' && edge !== 'right'}
+			{@const hideBottom = edge !== 'bottom'}
+			<!-- EdgeDisplay shows all 4 positions by default, we hide the ones we don't want -->
+			<EdgeDisplay visible={true} disablePointerEvents={false} {hideTop} {hideLeftRight}>
+				{#snippet children({ rotation })}
+					<!-- Only render if this rotation matches our edge -->
+					{@const isCorrectRotation =
+						(edge === 'bottom' && rotation === 0) ||
+						(edge === 'top' && rotation === 180) ||
+						(edge === 'left' && rotation === 90) ||
+						(edge === 'right' && rotation === -90)}
+					{#if isCorrectRotation}
+						<div class="mx-auto flex max-w-[900px] flex-col items-center gap-2 px-2 pb-4">
+							{#each edgeTimelines as t (t.player.name)}
+								{@const isTurnOwner = t.player.name === activePlayerName}
+								<!-- 
+									During dealing: isActive is FALSE for everyone.
+									After dealing: isActive is TRUE only for the turn owner.
+								-->
+								{@const isActive = !uiState.isDealing && isTurnOwner}
 
-					<div animate:flip={{ duration: 500 }}>
-						<PlayerTimeline
-							playerName={t.player.name}
-							playerColor={t.player.color}
-							entries={t.entries}
-							active={isActive}
-							compact={!isActive}
-							acceptingDrop={isActive && canDragCenter}
-							{rotation}
-							draggingEntryId={isActive ? dragState.previewEntryId : null}
-							isDragging={isActive ? dragState.active : false}
-							dragKind={isActive ? dragState.kind : 'none'}
-							dragTranslate={isActive && dragState.kind === 'pending'
-								? {
-										x: dragState.translate.x - dragState.pendingLayoutOffset.x,
-										y: dragState.translate.y - dragState.pendingLayoutOffset.y
-									}
-								: dragState.translate}
-							isDealing={uiState.isDealing}
-							helpText={isActive
-								? gameState.pendingEntryId
-									? $_('timeline.help.reorder')
-									: hasPlaybackStarted
-										? $_('timeline.help.dragToPlace')
-										: $_('timeline.help.playFirst')
-								: ''}
-							showConfirm={isActive && !!gameState.pendingEntryId}
-							confirmDisabled={!canConfirm}
-							confirmLabel={$_('timeline.confirm')}
-							onConfirm={handleConfirmPlacement}
-							onConfirmedCardClick={(entry) => openInspectCard(entry.id, entry.track)}
-							onPendingPointerDown={startDragPending}
-						/>
-					</div>
-				{/each}
-			</div>
-		{/snippet}
-	</EdgeDisplay>
+								<div animate:flip={{ duration: 500 }}>
+									<PlayerTimeline
+										playerName={t.player.name}
+										playerColor={t.player.color}
+										entries={t.entries}
+										active={isActive}
+										compact={!isActive}
+										acceptingDrop={isActive && canDragCenter}
+										{rotation}
+										draggingEntryId={isActive ? dragState.previewEntryId : null}
+										isDragging={isActive ? dragState.active : false}
+										dragKind={isActive ? dragState.kind : 'none'}
+										dragTranslate={isActive && dragState.kind === 'pending'
+											? {
+													x: dragState.translate.x - dragState.pendingLayoutOffset.x,
+													y: dragState.translate.y - dragState.pendingLayoutOffset.y
+												}
+											: dragState.translate}
+										isDealing={uiState.isDealing}
+										helpText={isActive
+											? gameState.pendingEntryId
+												? $_('timeline.help.reorder')
+												: hasPlaybackStarted
+													? $_('timeline.help.dragToPlace')
+													: $_('timeline.help.playFirst')
+											: ''}
+										showConfirm={isActive && !!gameState.pendingEntryId}
+										confirmDisabled={!canConfirm}
+										confirmLabel={$_('timeline.confirm')}
+										onConfirm={handleConfirmPlacement}
+										onConfirmedCardClick={(entry) => openInspectCard(entry.id, entry.track)}
+										onPendingPointerDown={startDragPending}
+									/>
+								</div>
+							{/each}
+						</div>
+					{/if}
+				{/snippet}
+			</EdgeDisplay>
+		{/if}
+	{/each}
 </div>
 
 <Popup

@@ -377,6 +377,13 @@
 		"startGame": "Lancer la partie",
 		"cancel": "Annuler",
 		"minPlayers": "Au moins deux joueurs sont requis si le score est activé.",
+		"edge": {
+			"toggle": "Changer le bord de l'écran",
+			"bottom": "Bas",
+			"left": "Gauche",
+			"top": "Haut",
+			"right": "Droite"
+		},
 		"errors": {
 			"nameRequired": "Le joueur doit avoir un nom",
 			"duplicateName": "Un joueur avec ce nom existe déjà"

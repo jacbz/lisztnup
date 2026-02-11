@@ -53,7 +53,7 @@ export interface GameSettings {
 	trackLength: number; // Duration in seconds (5-30)
 	volume: number; // Volume level (0-100)
 	gameMode: 'timeline' | 'classic' | 'buzzer' | 'bingo'; // Game mode
-	players: Array<{ name: string; color: string }>; // Saved player configurations
+	players: Array<{ name: string; color: string; edge?: 'bottom' | 'left' | 'top' | 'right' }>; // Saved player configurations
 	enableScoring: boolean; // Whether scoring is enabled
 	bingoGrid?: BingoGridCell[][]; // 5x5 grid for Bingo mode
 	enableAudioNormalization: boolean; // Whether to use Web Audio API with LUFS normalization (defaults to false on WebKit)
@@ -124,7 +124,7 @@ export const DEFAULT_SETTINGS: GameSettings = {
 	selectedTracklist: 'tracklists.beginner.name',
 	trackLength: 30,
 	volume: 100,
-	gameMode: 'classic',
+	gameMode: 'timeline',
 	players: [],
 	enableScoring: true,
 	bingoGrid: undefined,

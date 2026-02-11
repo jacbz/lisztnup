@@ -377,6 +377,13 @@
 		"startGame": "開始遊戲",
 		"cancel": "取消",
 		"minPlayers": "開啟計分時，該模式至少需要兩名玩家。",
+		"edge": {
+			"toggle": "切換螢幕邊緣",
+			"bottom": "下",
+			"left": "左",
+			"top": "上",
+			"right": "右"
+		},
 		"errors": {
 			"nameRequired": "請輸入玩家名稱",
 			"duplicateName": "已存在同名玩家"

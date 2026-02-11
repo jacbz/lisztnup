@@ -319,6 +319,7 @@
 						<!-- Player Setup -->
 						<div class:opacity-40={!enableScoring} class:pointer-events-none={!enableScoring}>
 							<PlayerSetup
+								mode={selectedMode}
 								onPlayersChange={handlePlayersChange}
 								onAddPlayer={handleAddPlayer}
 								bind:this={playerSetupRef}

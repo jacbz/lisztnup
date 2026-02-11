@@ -1,17 +1,28 @@
 <script lang="ts">
 	import { _ } from 'svelte-i18n';
-	import { PLAYER_COLORS, type Player } from '$lib/types';
+	import {
+		PLAYER_COLORS,
+		ALL_EDGES,
+		type Player,
+		type PlayerEdge,
+		type GameMode
+	} from '$lib/types';
 	import { settings } from '$lib/stores';
 	import X from 'lucide-svelte/icons/x';
 	import Plus from 'lucide-svelte/icons/plus';
+	import PanelBottomClose from 'lucide-svelte/icons/panel-bottom-close';
+	import PanelLeftClose from 'lucide-svelte/icons/panel-left-close';
+	import PanelTopClose from 'lucide-svelte/icons/panel-top-close';
+	import PanelRightClose from 'lucide-svelte/icons/panel-right-close';
 	import { slide } from 'svelte/transition';
 
 	interface Props {
+		mode?: GameMode | null;
 		onPlayersChange?: (players: Player[], isSoloMode: boolean, isValid: boolean) => void;
 		onAddPlayer?: () => void;
 	}
 
-	let { onPlayersChange = () => {}, onAddPlayer }: Props = $props();
+	let { mode = null, onPlayersChange = () => {}, onAddPlayer }: Props = $props();
 
 	let nameErrors = $state<Map<number, string>>(new Map());
 
@@ -24,12 +35,12 @@
 	}
 
 	// Initialize players from settings (only once)
-	let players = $state<Array<{ name: string; color: string }>>(
+	let players = $state<Array<{ name: string; color: string; edge: PlayerEdge }>>(
 		$settings.players.length > 0
-			? $settings.players.map((p) => ({ ...p }))
+			? $settings.players.map((p) => ({ ...p, edge: p.edge || 'bottom' }))
 			: [
-					{ name: generateDefaultPlayerName(0), color: PLAYER_COLORS[0] },
-					{ name: generateDefaultPlayerName(1), color: PLAYER_COLORS[1] }
+					{ name: generateDefaultPlayerName(0), color: PLAYER_COLORS[0], edge: 'bottom' },
+					{ name: generateDefaultPlayerName(1), color: PLAYER_COLORS[1], edge: 'top' }
 				]
 	);
 
@@ -83,7 +94,7 @@
 		if (allValid) {
 			settings.update((s) => ({
 				...s,
-				players: players.map((p) => ({ name: p.name, color: p.color }))
+				players: players.map((p) => ({ name: p.name, color: p.color, edge: p.edge }))
 			}));
 		}
 
@@ -97,6 +108,51 @@
 		players = players.filter((_, i) => i !== index);
 	}
 
+	// Get the edge with the least amount of players
+	function getDefaultEdge(): PlayerEdge {
+		const edgeCounts = new Map<PlayerEdge, number>();
+		ALL_EDGES.forEach((edge) => edgeCounts.set(edge, 0));
+
+		players.forEach((p) => {
+			edgeCounts.set(p.edge, (edgeCounts.get(p.edge) || 0) + 1);
+		});
+
+		// Find edge with minimum count
+		let minEdge: PlayerEdge = 'bottom';
+		let minCount = Infinity;
+		ALL_EDGES.forEach((edge) => {
+			const count = edgeCounts.get(edge) || 0;
+			if (count < minCount) {
+				minCount = count;
+				minEdge = edge;
+			}
+		});
+
+		return minEdge;
+	}
+
+	// Toggle edge in clockwise order: bottom -> right -> top -> left -> bottom
+	function toggleEdge(index: number) {
+		const currentEdge = players[index].edge;
+		const currentIndex = ALL_EDGES.indexOf(currentEdge);
+		const nextIndex = (currentIndex + 1) % ALL_EDGES.length;
+		players[index].edge = ALL_EDGES[nextIndex];
+	}
+
+	// Get icon component for edge
+	function getEdgeIcon(edge: PlayerEdge) {
+		switch (edge) {
+			case 'bottom':
+				return PanelBottomClose;
+			case 'left':
+				return PanelLeftClose;
+			case 'top':
+				return PanelTopClose;
+			case 'right':
+				return PanelRightClose;
+		}
+	}
+
 	// Export addPlayer function for external use
 	export function addPlayer() {
 		if (players.length >= 10) return;
@@ -106,7 +162,8 @@
 
 		const newPlayer = {
 			name: defaultName,
-			color: PLAYER_COLORS[players.length % PLAYER_COLORS.length]
+			color: PLAYER_COLORS[players.length % PLAYER_COLORS.length],
+			edge: getDefaultEdge()
 		};
 		players = [...players, newPlayer];
 
@@ -141,6 +198,20 @@
 	{#each players as player, index (index)}
 		<div class="flex flex-col gap-1" transition:slide={{ duration: 300 }}>
 			<div class="flex items-center gap-2">
+				<!-- Edge Icon Button (Timeline mode only) -->
+				{#if mode === 'timeline'}
+					{@const EdgeIcon = getEdgeIcon(player.edge)}
+					<button
+						type="button"
+						onclick={() => toggleEdge(index)}
+						class="shrink-0 cursor-pointer rounded-md border-none bg-slate-800 p-1.5 text-cyan-400 transition-all duration-200 hover:bg-cyan-400/10 hover:text-cyan-300"
+						aria-label={$_('players.edge.toggle')}
+						title={$_(`players.edge.${player.edge}`)}
+					>
+						<EdgeIcon class="h-4 w-4" />
+					</button>
+				{/if}
+
 				<!-- Player Name Input -->
 				<input
 					type="text"
