@@ -23,6 +23,8 @@ export { default as PlayerSetup } from './setup/PlayerSetup.svelte';
 export { default as TracklistSelector } from './setup/TracklistSelector.svelte';
 export { default as TracklistEditor } from './setup/TracklistEditor.svelte';
 export { default as TracklistViewer } from './setup/TracklistViewer.svelte';
+export { default as LibraryViewer } from './setup/LibraryViewer.svelte';
+export { default as WorkSelectorPopup } from './setup/WorkSelectorPopup.svelte';
 export { default as BingoSetup } from './setup/BingoSetup.svelte';
 export { default as ShareLinkPopup } from './setup/ShareLinkPopup.svelte';
 

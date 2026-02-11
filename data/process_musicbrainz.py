@@ -1085,6 +1085,41 @@ def main() -> None:
     generate_markdown_report(final_output)
 
     processor.print_summary(final_output)
+    
+    # Check for short UUID collisions
+    check_short_uuid_collisions(final_output)
+
+
+def check_short_uuid_collisions(final_output: FinalOutput, short_length: int = 8) -> None:
+    """
+    Checks if any two works have colliding short UUIDs.
+    
+    :param final_output: The final output containing all works.
+    :param short_length: The length of the short UUID prefix to check (default: 8).
+    """
+    short_uuid_map = defaultdict(list)
+    
+    for work in final_output.works:
+        short_uuid = work.gid[:short_length]
+        short_uuid_map[short_uuid].append(work)
+    
+    collisions = {short: works for short, works in short_uuid_map.items() if len(works) > 1}
+    
+    if collisions:
+        print("\n" + "=" * 80)
+        print(f" " * 28 + "SHORT UUID COLLISIONS DETECTED!")
+        print("=" * 80)
+        print(f"\nFound {len(collisions)} short UUID collision(s) (length={short_length}):\n")
+        
+        for short_uuid, works in collisions.items():
+            print(f"Short UUID: {short_uuid}")
+            for work in works:
+                composer_name = next((c.name for c in final_output.composers if c.gid == work.composer), "Unknown")
+                print(f"  - {work.name} by {composer_name}")
+                print(f"    Full UUID: {work.gid}")
+            print()
+    else:
+        print(f"\n✓ No short UUID collisions detected (checked first {short_length} characters).")
 
 
 if __name__ == "__main__":

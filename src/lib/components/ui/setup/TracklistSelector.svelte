@@ -8,7 +8,7 @@
 	import Popup from '../primitives/Popup.svelte';
 	import Dialog from '../primitives/Dialog.svelte';
 	import TracklistEditor from './TracklistEditor.svelte';
-	import TracklistViewer from './TracklistViewer.svelte';
+	import LibraryViewer from './LibraryViewer.svelte';
 	import ShareLinkPopup from './ShareLinkPopup.svelte';
 	import { _ } from 'svelte-i18n';
 	import { compress } from '$lib/utils';
@@ -417,7 +417,7 @@
 />
 
 <!-- Tracklist Viewer -->
-<TracklistViewer visible={showViewer} tracklist={viewingTracklist} onClose={handleCloseViewer} />
+<LibraryViewer visible={showViewer} tracklist={viewingTracklist} onClose={handleCloseViewer} />
 
 <!-- Share Link Popup -->
 <ShareLinkPopup

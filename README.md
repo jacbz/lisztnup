@@ -101,7 +101,7 @@ Contributions are what make the open source community such an amazing place to l
 4.  Push to the Branch (`git push origin feature/AmazingFeature`)
 5.  Open a Pull Request
 
-[build-shield]: https://img.shields.io/github/actions/workflow/status/jacbz/lisztnup/client.yml?style=for-the-badge
+[build-shield]: https://img.shields.io/github/actions/workflow/status/jacbz/lisztnup/main.yml?style=for-the-badge
 [build-url]: https://github.com/jacbz/lisztnup/actions
 [contributors-shield]: https://img.shields.io/github/contributors/jacbz/lisztnup?style=for-the-badge
 [contributors-url]: https://github.com/jacbz/lisztnup/graphs/contributors
@@ -112,4 +112,4 @@ Contributions are what make the open source community such an amazing place to l
 [issues-shield]: https://img.shields.io/github/issues/jacbz/lisztnup?style=for-the-badge
 [issues-url]: https://github.com/jacbz/lisztnup/issues
 [license-shield]: https://img.shields.io/github/license/jacbz/lisztnup?style=for-the-badge
-[license-url]: https://github.com/jacbz/lisztnup/blob/master/LICENSE.txt
+[license-url]: https://github.com/jacbz/lisztnup/blob/master/LICENSE

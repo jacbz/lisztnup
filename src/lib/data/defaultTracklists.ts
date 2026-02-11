@@ -48,7 +48,19 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			},
 			limitWorksFromComposer: 0.075,
 			maxTracksFromSingleWork: 1,
-			enablePopularityWeighting: false
+			enablePopularityWeighting: false,
+			excludeWorks: [
+				'3c9a74de', // Beethoven 1
+				'273fea50', // Beethoven 4
+				'256f32ec' // Beethoven 8
+			],
+			includeWorks: [
+				'87281f3c', // Beethoven Kreutzer Sonata
+				'5983b48e', // Prokofiev 1
+				'0294f5e0', // Prokofiev Romeo and Juliet - Dance of the Knights,
+				'1c0cb34d', // Bruckner 7
+				'640d92c6' // Saint-Saens Danse macabre
+			]
 		}
 	},
 	{

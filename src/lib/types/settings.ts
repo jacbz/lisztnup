@@ -29,6 +29,9 @@ export interface TracklistConfig {
 	maxTracksFromSingleWork?: number; // Maximum tracks to sample from a single work
 	nameFilter?: string[]; // Filter works by name (supports regex when pattern starts and ends with /)
 	enablePopularityWeighting?: boolean; // Whether to use work/part scores for weighted sampling (default: true)
+	enableFilters?: boolean; // Whether filters are applied (default: true). When false, only manual curation is used.
+	includeWorks?: string[]; // Short UUIDs (first 8 chars) of works to always include
+	excludeWorks?: string[]; // Short UUIDs (first 8 chars) of works to always exclude
 }
 
 export interface Tracklist {

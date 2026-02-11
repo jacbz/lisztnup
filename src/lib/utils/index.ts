@@ -4,3 +4,4 @@ export * from './random';
 export * from './svg';
 export * from './compression';
 export * from './fontLoader';
+export * from './uuid';

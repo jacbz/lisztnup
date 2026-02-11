@@ -16,6 +16,14 @@ export function formatComposerName(sortName: string): string {
 }
 
 /**
+ * Extracts the last name from a composer sort name (e.g., "Bach, Johann Sebastian" -> "Bach")
+ */
+export function getComposerLastName(sortName: string): string {
+	const parts = sortName.split(',').map((part) => part.trim());
+	return parts[0] || '';
+}
+
+/**
  * Formats a year range for display
  */
 export function formatYearRange(
