@@ -42,7 +42,7 @@
 	const sizeClasses = $derived.by(() => {
 		switch (size) {
 			case 'xs':
-				return 'h-8 w-8 md:h-10 md:w-10 max-w-[calc((90cqw-var(--gap)*(var(--entry-count)-1))/var(--entry-count))] max-h-[calc((90cqw-var(--gap)*(var(--entry-count)-1))/var(--entry-count))]';
+				return 'h-8 w-8 md:h-12 md:w-12 max-w-[calc((90cqw-var(--gap)*(var(--entry-count)-1))/var(--entry-count))] max-h-[calc((90cqw-var(--gap)*(var(--entry-count)-1))/var(--entry-count))]';
 			case 'sm':
 				return 'h-14 w-14 md:h-16 md:w-16 max-w-[calc((90cqw-var(--gap)*(var(--entry-count)-1))/var(--entry-count))] max-h-[calc((90cqw-var(--gap)*(var(--entry-count)-1))/var(--entry-count))]';
 			case 'md':

@@ -493,8 +493,12 @@
 		for (let i = 0; i < cards.length; i++) {
 			const r = cards[i].getBoundingClientRect();
 			if (isVertical) {
-				// Vertical (90/-90) is always Top->Bottom (Global Y+)
-				if (y < r.top + r.height / 2) return i;
+				// Check for -90 vs 90 rotation
+				if (rotation === -90) {
+					if (y > r.top + r.height / 2) return i;
+				} else {
+					if (y < r.top + r.height / 2) return i;
+				}
 			} else {
 				// Horizontal
 				if (isInvertedHorizontal) {
