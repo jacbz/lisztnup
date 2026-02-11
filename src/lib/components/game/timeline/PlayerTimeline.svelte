@@ -136,6 +136,19 @@
 		>
 			{entries.length}
 		</div>
+		<!-- Dummy card to maintain spacing when empty -->
+		{#if entries.length === 0}
+			<div class="pointer-events-none opacity-0">
+				<TimelineCard
+					track={{ work: { begin_year: 0, end_year: 0 } } as Track}
+					state="face-down"
+					draggable={false}
+					size={cardSize}
+					borderVariant="neutral"
+					yearText=""
+				/>
+			</div>
+		{/if}
 		{#each entries as entry (entry.id)}
 			{@const yearText = formatYearRange(entry.track.work.begin_year, entry.track.work.end_year, {
 				preferEndYearWhenRange: true
