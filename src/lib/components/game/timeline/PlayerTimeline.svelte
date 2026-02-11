@@ -113,7 +113,7 @@
 	data-rotation={rotation}
 >
 	<div
-		class={`pointer-events-none absolute -top-5 z-100 flex items-center gap-2 rounded-lg border border-slate-700/40 bg-slate-950/50 px-2 py-0.5 backdrop-blur-sm ${active ? 'text-xs text-slate-200' : 'left-1/2 -translate-x-1/2 text-[11px] text-slate-300 '}`}
+		class={`pointer-events-none absolute flex items-center gap-2 rounded-lg border border-slate-700/50 bg-slate-950/50 px-2 py-0.5 ${active ? '-top-5 z-100 text-xs text-slate-200' : '-top-3 left-1/2 -translate-x-1/2 text-[11px] text-slate-300'}`}
 	>
 		<div class="h-2 w-2 rounded-full" style="background-color: {playerColor};"></div>
 		<div class="max-w-[28ch] truncate font-semibold tracking-wide select-none">{playerName}</div>

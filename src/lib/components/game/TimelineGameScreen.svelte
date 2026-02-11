@@ -98,6 +98,8 @@
 	// --- Derived ---
 
 	let isMdViewport = $state(false);
+	let isLgWidth = $state(false);
+	let isMdHeight = $state(false);
 
 	const activePlayer = $derived(gameState.timelines[gameState.activePlayerIndex]);
 	const activePlayerName = $derived(activePlayer?.player.name ?? '');
@@ -131,6 +133,22 @@
 		return isMdViewport ? 16 / 38 : 14 / 32;
 	});
 
+	// Map original edge to effective edge based on viewport constraints
+	function getEffectiveEdge(originalEdge: PlayerEdge): PlayerEdge {
+		// If height is smaller than md, override all edges to bottom
+		if (!isMdHeight) {
+			return 'bottom';
+		}
+
+		// If width is smaller than lg, override left/right
+		if (!isLgWidth) {
+			if (originalEdge === 'left') return 'top';
+			if (originalEdge === 'right') return 'bottom';
+		}
+
+		return originalEdge;
+	}
+
 	// Group timelines by edge, with rotation logic applied within each edge
 	const timelinesByEdge = $derived.by(() => {
 		const grouped = new Map<PlayerEdge, typeof gameState.timelines>();
@@ -138,19 +156,21 @@
 		// Initialize all edges
 		ALL_EDGES.forEach((edge) => grouped.set(edge, []));
 
-		// Group timelines by player edge
+		// Group timelines by player edge, applying viewport-based overrides
 		gameState.timelines.forEach((timeline) => {
-			const edge = timeline.player.edge || 'bottom';
-			const edgeTimelines = grouped.get(edge) || [];
+			const originalEdge = timeline.player.edge || 'bottom';
+			const effectiveEdge = getEffectiveEdge(originalEdge);
+			const edgeTimelines = grouped.get(effectiveEdge) || [];
 			edgeTimelines.push(timeline);
-			grouped.set(edge, edgeTimelines);
+			grouped.set(effectiveEdge, edgeTimelines);
 		});
 
 		// Apply rotation logic within each edge during gameplay (not dealing)
 		if (!uiState.isDealing && gameState.timelines.length > 0) {
 			const idx = gameState.activePlayerIndex;
 			const activeTimeline = gameState.timelines[idx];
-			const activeEdge = activeTimeline.player.edge || 'bottom';
+			const originalEdge = activeTimeline.player.edge || 'bottom';
+			const activeEdge = getEffectiveEdge(originalEdge);
 
 			// Only rotate timelines on the active player's edge
 			const edgeTimelines = grouped.get(activeEdge) || [];
@@ -180,15 +200,27 @@
 	// --- Lifecycle ---
 
 	onMount(() => {
-		const mq = window.matchMedia('(min-width: 768px)');
-		const updateMq = () => (isMdViewport = mq.matches);
+		const mqWidth = window.matchMedia('(min-width: 768px)');
+		const mqLgWidth = window.matchMedia('(min-width: 1024px)');
+		const mqMdHeight = window.matchMedia('(min-height: 768px)');
+
+		const updateMq = () => {
+			isMdViewport = mqWidth.matches;
+			isLgWidth = mqLgWidth.matches;
+			isMdHeight = mqMdHeight.matches;
+		};
+
 		updateMq();
-		mq.addEventListener('change', updateMq);
+		mqWidth.addEventListener('change', updateMq);
+		mqLgWidth.addEventListener('change', updateMq);
+		mqMdHeight.addEventListener('change', updateMq);
 
 		initGame();
 
 		return () => {
-			mq.removeEventListener('change', updateMq);
+			mqWidth.removeEventListener('change', updateMq);
+			mqLgWidth.removeEventListener('change', updateMq);
+			mqMdHeight.removeEventListener('change', updateMq);
 		};
 	});
 
@@ -669,153 +701,185 @@
 	}
 </script>
 
-<div class="fixed inset-0 overflow-hidden text-white">
-	<div
-		class="relative top-1/2 left-1/2 z-200 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
-	>
-		<!-- Dealing Text Overlay -->
-		{#if uiState.isDealing && uiState.dealingToName}
+{#snippet dealingOverlay()}
+	{#if uiState.isDealing && uiState.dealingToName}
+		<div
+			class="absolute left-1/2 z-50 -translate-x-1/2 whitespace-nowrap"
+			transition:fly={{ y: -20, duration: 300 }}
+		>
 			<div
-				class="absolute left-1/2 z-50 -translate-x-1/2 whitespace-nowrap"
-				transition:fly={{ y: -20, duration: 300 }}
+				class="rounded-full border border-cyan-400/30 bg-slate-900/80 px-4 py-1.5 text-sm font-bold text-cyan-400 shadow-lg backdrop-blur-md"
 			>
-				<div
-					class="rounded-full border border-cyan-400/30 bg-slate-900/80 px-4 py-1.5 text-sm font-bold text-cyan-400 shadow-lg backdrop-blur-md"
-				>
-					{$_('timeline.dealing', { values: { name: uiState.dealingToName } })}
-				</div>
+				{$_('timeline.dealing', { values: { name: uiState.dealingToName } })}
 			</div>
-		{/if}
+		</div>
+	{/if}
+{/snippet}
 
-		<div class="relative">
-			<CardStack
-				items={gameState.centerStack}
-				isTurnActive={isStackInteractive}
-				draggable={!uiState.isDealing && canDragCenter}
-				dragging={dragState.active && dragState.kind === 'center'}
-				dragTranslate={dragState.kind === 'center' ? dragState.translate : { x: 0, y: 0 }}
-				dragScale={centerDragScale}
-				dragOrigin={dragState.origin}
-				onPointerDown={startDragFromCenter}
-			>
-				{#snippet topCardContent(track: Track)}
-					<div class="absolute inset-0 flex flex-col items-center justify-center gap-4 p-4">
-						{#if !hasPlaybackStarted}
-							<!-- State 1: Fresh card, has not started -->
-							<!-- We force playbackEnded={false} here because a fresh card cannot be in 'ended' state.
-							     This fixes the bug where it gets stuck on 'Reveal' if the store hasn't updated yet. -->
-							<div class="relative h-[170px] w-[170px]">
-								<PlayerControl
-									visible={true}
-									isPlaying={false}
-									playbackEnded={false}
-									isRevealed={false}
-									progress={audioProgressValue}
-									{track}
-									playerSize={120}
-									onPlay={handlePlay}
-									onStop={handleStop}
-									onReveal={() => {}}
-									onReplay={handlePlay}
-								/>
-							</div>
-						{:else if !$currentRound.isPlaying}
-							<!-- State 2: Started, but now paused/stopped (Drag Prompt) -->
-							<div class="animate-pulse text-center text-3xl font-bold text-slate-300">
-								{$_('timeline.drag')}
-							</div>
-						{:else}
-							<!-- State 3: Playing -->
-							<div class="relative h-[170px] w-[170px]">
-								<PlayerControl
-									visible={true}
-									isPlaying={true}
-									playbackEnded={false}
-									isRevealed={false}
-									progress={audioProgressValue}
-									{track}
-									playerSize={120}
-									onPlay={() => {}}
-									onStop={handleStop}
-									onReveal={() => {}}
-									onReplay={() => {}}
-								/>
+{#snippet cardStackDisplay()}
+	<CardStack
+		items={gameState.centerStack}
+		isTurnActive={isStackInteractive}
+		draggable={!uiState.isDealing && canDragCenter}
+		dragging={dragState.active && dragState.kind === 'center'}
+		dragTranslate={dragState.kind === 'center' ? dragState.translate : { x: 0, y: 0 }}
+		dragScale={centerDragScale}
+		dragOrigin={dragState.origin}
+		onPointerDown={startDragFromCenter}
+	>
+		{#snippet topCardContent(track: Track)}
+			<div class="absolute inset-0 flex flex-col items-center justify-center gap-4 p-4">
+				{#if !hasPlaybackStarted}
+					<!-- State 1: Fresh card, has not started -->
+					<!-- We force playbackEnded={false} here because a fresh card cannot be in 'ended' state.
+					     This fixes the bug where it gets stuck on 'Reveal' if the store hasn't updated yet. -->
+					<div class="relative h-[170px] w-[170px]">
+						<PlayerControl
+							visible={true}
+							isPlaying={false}
+							playbackEnded={false}
+							isRevealed={false}
+							progress={audioProgressValue}
+							{track}
+							playerSize={120}
+							onPlay={handlePlay}
+							onStop={handleStop}
+							onReveal={() => {}}
+							onReplay={handlePlay}
+						/>
+					</div>
+				{:else if !$currentRound.isPlaying}
+					<!-- State 2: Started, but now paused/stopped (Drag Prompt) -->
+					<div class="animate-pulse text-center text-3xl font-bold text-slate-300">
+						{$_('timeline.drag')}
+					</div>
+				{:else}
+					<!-- State 3: Playing -->
+					<div class="relative h-[170px] w-[170px]">
+						<PlayerControl
+							visible={true}
+							isPlaying={true}
+							playbackEnded={false}
+							isRevealed={false}
+							progress={audioProgressValue}
+							{track}
+							playerSize={120}
+							onPlay={() => {}}
+							onStop={handleStop}
+							onReveal={() => {}}
+							onReplay={() => {}}
+						/>
+					</div>
+				{/if}
+			</div>
+		{/snippet}
+	</CardStack>
+{/snippet}
+
+{#snippet timelineDisplay(
+	timeline: (typeof gameState.timelines)[0],
+	rotation: number,
+	edge: PlayerEdge
+)}
+	{@const isTurnOwner = timeline.player.name === activePlayerName}
+	{@const isActive = !uiState.isDealing && isTurnOwner}
+
+	<PlayerTimeline
+		playerName={timeline.player.name}
+		playerColor={timeline.player.color}
+		entries={timeline.entries}
+		active={isActive}
+		compact={!isActive}
+		acceptingDrop={isActive && canDragCenter}
+		{rotation}
+		isVertical={edge === 'left' || edge === 'right'}
+		draggingEntryId={isActive ? dragState.previewEntryId : null}
+		isDragging={isActive ? dragState.active : false}
+		dragKind={isActive ? dragState.kind : 'none'}
+		dragTranslate={isActive && dragState.kind === 'pending'
+			? {
+					x: dragState.translate.x - dragState.pendingLayoutOffset.x,
+					y: dragState.translate.y - dragState.pendingLayoutOffset.y
+				}
+			: dragState.translate}
+		isDealing={uiState.isDealing}
+		helpText={isActive
+			? gameState.pendingEntryId
+				? $_('timeline.help.reorder')
+				: hasPlaybackStarted
+					? $_('timeline.help.dragToPlace')
+					: $_('timeline.help.playFirst')
+			: ''}
+		showConfirm={isActive && !!gameState.pendingEntryId}
+		confirmDisabled={!canConfirm}
+		confirmLabel={$_('timeline.confirm')}
+		onConfirm={handleConfirmPlacement}
+		onConfirmedCardClick={(entry) => openInspectCard(entry.id, entry.track)}
+		onPendingPointerDown={startDragPending}
+	/>
+{/snippet}
+
+<div class="fixed inset-0 overflow-hidden text-white">
+	{#if isMdHeight}
+		<!-- Standard centered layout for taller screens -->
+		<div
+			class="relative top-1/2 left-1/2 z-200 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
+		>
+			{@render dealingOverlay()}
+			<div class="relative">
+				{@render cardStackDisplay()}
+			</div>
+		</div>
+
+		<!-- Render EdgeDisplay for each edge that has players -->
+		{#each ALL_EDGES as edge (edge)}
+			{@const edgeTimelines = timelinesByEdge.get(edge) || []}
+			{#if edgeTimelines.length > 0}
+				{@const hideTop = edge !== 'top'}
+				{@const hideLeftRight = edge !== 'left' && edge !== 'right'}
+				{@const hideBottom = edge !== 'bottom'}
+				<!-- EdgeDisplay shows all 4 positions by default, we hide the ones we don't want -->
+				<EdgeDisplay visible={true} disablePointerEvents={false} {hideTop} {hideLeftRight}>
+					{#snippet children({ rotation })}
+						<!-- Only render if this rotation matches our edge -->
+						{@const isCorrectRotation =
+							(edge === 'bottom' && rotation === 0) ||
+							(edge === 'top' && rotation === 180) ||
+							(edge === 'left' && rotation === 90) ||
+							(edge === 'right' && rotation === -90)}
+						{#if isCorrectRotation}
+							<div class="mx-auto flex max-w-[900px] flex-col items-center gap-2 px-2 pb-4">
+								{#each edgeTimelines as t (t.player.name)}
+									<div animate:flip={{ duration: 500 }}>
+										{@render timelineDisplay(t, rotation, edge)}
+									</div>
+								{/each}
 							</div>
 						{/if}
-					</div>
-				{/snippet}
-			</CardStack>
+					{/snippet}
+				</EdgeDisplay>
+			{/if}
+		{/each}
+	{:else}
+		<!-- Compact horizontal layout for shorter screens -->
+		<div class="fixed top-32 right-48 z-200">
+			{@render cardStackDisplay()}
 		</div>
-	</div>
 
-	<!-- Render EdgeDisplay for each edge that has players -->
-	{#each ALL_EDGES as edge (edge)}
-		{@const edgeTimelines = timelinesByEdge.get(edge) || []}
-		{#if edgeTimelines.length > 0}
-			{@const hideTop = edge !== 'top'}
-			{@const hideLeftRight = edge !== 'left' && edge !== 'right'}
-			{@const hideBottom = edge !== 'bottom'}
-			<!-- EdgeDisplay shows all 4 positions by default, we hide the ones we don't want -->
-			<EdgeDisplay visible={true} disablePointerEvents={false} {hideTop} {hideLeftRight}>
-				{#snippet children({ rotation })}
-					<!-- Only render if this rotation matches our edge -->
-					{@const isCorrectRotation =
-						(edge === 'bottom' && rotation === 0) ||
-						(edge === 'top' && rotation === 180) ||
-						(edge === 'left' && rotation === 90) ||
-						(edge === 'right' && rotation === -90)}
-					{#if isCorrectRotation}
-						<div class="mx-auto flex max-w-[900px] flex-col items-center gap-2 px-2 pb-4">
-							{#each edgeTimelines as t (t.player.name)}
-								{@const isTurnOwner = t.player.name === activePlayerName}
-								<!-- 
-									During dealing: isActive is FALSE for everyone.
-									After dealing: isActive is TRUE only for the turn owner.
-								-->
-								{@const isActive = !uiState.isDealing && isTurnOwner}
+		<div class="fixed top-4 left-1/2 z-150 -translate-x-1/2">
+			{@render dealingOverlay()}
+		</div>
 
-								<div animate:flip={{ duration: 500 }}>
-									<PlayerTimeline
-										playerName={t.player.name}
-										playerColor={t.player.color}
-										entries={t.entries}
-										active={isActive}
-										compact={!isActive}
-										acceptingDrop={isActive && canDragCenter}
-										{rotation}
-										isVertical={edge === 'left' || edge === 'right'}
-										draggingEntryId={isActive ? dragState.previewEntryId : null}
-										isDragging={isActive ? dragState.active : false}
-										dragKind={isActive ? dragState.kind : 'none'}
-										dragTranslate={isActive && dragState.kind === 'pending'
-											? {
-													x: dragState.translate.x - dragState.pendingLayoutOffset.x,
-													y: dragState.translate.y - dragState.pendingLayoutOffset.y
-												}
-											: dragState.translate}
-										isDealing={uiState.isDealing}
-										helpText={isActive
-											? gameState.pendingEntryId
-												? $_('timeline.help.reorder')
-												: hasPlaybackStarted
-													? $_('timeline.help.dragToPlace')
-													: $_('timeline.help.playFirst')
-											: ''}
-										showConfirm={isActive && !!gameState.pendingEntryId}
-										confirmDisabled={!canConfirm}
-										confirmLabel={$_('timeline.confirm')}
-										onConfirm={handleConfirmPlacement}
-										onConfirmedCardClick={(entry) => openInspectCard(entry.id, entry.track)}
-										onPendingPointerDown={startDragPending}
-									/>
-								</div>
-							{/each}
-						</div>
-					{/if}
-				{/snippet}
-			</EdgeDisplay>
-		{/if}
-	{/each}
+		<div class="fixed inset-0 flex items-center px-4 pt-20">
+			<div class="flex w-full flex-col gap-3 overflow-y-auto">
+				{#each timelinesByEdge.get('bottom') || [] as timeline (timeline.player.name)}
+					<div animate:flip={{ duration: 500 }}>
+						{@render timelineDisplay(timeline, 0, 'bottom')}
+					</div>
+				{/each}
+			</div>
+		</div>
+	{/if}
 </div>
 
 <Popup
