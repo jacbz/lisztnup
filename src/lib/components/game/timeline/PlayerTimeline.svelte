@@ -34,6 +34,7 @@
 		bindEl?: (el: HTMLDivElement | null) => void;
 		onPendingPointerDown?: (entryId: string, ev: PointerEvent) => void;
 		rotation?: number;
+		isVertical?: boolean;
 	}
 
 	let {
@@ -56,7 +57,8 @@
 		onConfirmedCardClick = () => {},
 		bindEl = () => {},
 		onPendingPointerDown = () => {},
-		rotation = 0
+		rotation = 0,
+		isVertical = false
 	}: Props = $props();
 
 	let el: HTMLDivElement | null = $state(null);
@@ -107,7 +109,7 @@
 </script>
 
 <div
-	class="relative w-fit max-w-[92vmin] transition-all duration-300 ease-out"
+	class={`relative w-fit transition-all duration-300 ease-out ${isVertical ? 'max-w-[92dvh]' : 'max-w-[92vw]'}`}
 	data-rotation={rotation}
 >
 	<div
@@ -139,9 +141,9 @@
 
 	<div
 		bind:this={el}
-		class={`relative flex items-center justify-center gap-1.5 rounded-xl border bg-slate-950/30 transition-all duration-300 ${helpText || showConfirm ? 'mt-6' : ''} ${active ? 'min-w-[92vmin] py-2' : 'min-w-[100px] px-1.5 py-1.5'} ${acceptingDrop ? 'border-cyan-400/40 shadow-[0_0_25px_rgba(34,211,238,0.35)]' : 'border-slate-700/40'}`}
+		class={`relative flex items-center justify-center gap-1.5 rounded-xl border bg-slate-950/30 transition-all duration-300 ${helpText || showConfirm ? 'mt-6' : ''} ${active ? `py-2` : 'min-w-[100px] px-1.5 py-1.5'} ${acceptingDrop ? 'border-cyan-400/40 shadow-[0_0_25px_rgba(34,211,238,0.35)]' : 'border-slate-700/40'}`}
 		style="{active
-			? `box-shadow: 0 0 30px ${playerColor}55; `
+			? `box-shadow: 0 0 30px ${playerColor}55; min-width: ${isVertical ? '92dvh' : '92vw'};`
 			: ''}container-type: inline-size; --entry-count: {Math.max(
 			entries.length,
 			1

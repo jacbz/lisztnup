@@ -42,13 +42,13 @@
 	const sizeClasses = $derived.by(() => {
 		switch (size) {
 			case 'xs':
-				return 'h-7 w-7 md:h-8 md:w-8 max-w-[calc((90vmin-var(--gap)*(var(--entry-count)-1))/var(--entry-count))] max-h-[calc((90vmin-var(--gap)*(var(--entry-count)-1))/var(--entry-count))]';
+				return 'h-7 w-7 md:h-8 md:w-8 max-w-[calc((90cqw-var(--gap)*(var(--entry-count)-1))/var(--entry-count))] max-h-[calc((90cqw-var(--gap)*(var(--entry-count)-1))/var(--entry-count))]';
 			case 'sm':
-				return 'h-14 w-14 md:h-16 md:w-16 max-w-[calc((90vmin-var(--gap)*(var(--entry-count)-1))/var(--entry-count))] max-h-[calc((90vmin-var(--gap)*(var(--entry-count)-1))/var(--entry-count))]';
+				return 'h-14 w-14 md:h-16 md:w-16 max-w-[calc((90cqw-var(--gap)*(var(--entry-count)-1))/var(--entry-count))] max-h-[calc((90cqw-var(--gap)*(var(--entry-count)-1))/var(--entry-count))]';
 			case 'md':
-				return 'h-14 w-14 md:h-18 md:w-18 max-w-[calc((90vmin-var(--gap)*(var(--entry-count)-1))/var(--entry-count))] max-h-[calc((90vmin-var(--gap)*(var(--entry-count)-1))/var(--entry-count))]';
+				return 'h-14 w-14 md:h-18 md:w-18 max-w-[calc((90cqw-var(--gap)*(var(--entry-count)-1))/var(--entry-count))] max-h-[calc((90cqw-var(--gap)*(var(--entry-count)-1))/var(--entry-count))]';
 			case 'lg':
-				return 'h-40 w-40 md:h-48 md:w-48 max-w-[calc((90vmin-var(--gap)*(var(--entry-count)-1))/var(--entry-count))] max-h-[calc((90vmin-var(--gap)*(var(--entry-count)-1))/var(--entry-count))]';
+				return 'h-40 w-40 md:h-48 md:w-48 max-w-[calc((90cqw-var(--gap)*(var(--entry-count)-1))/var(--entry-count))] max-h-[calc((90cqw-var(--gap)*(var(--entry-count)-1))/var(--entry-count))]';
 		}
 	});
 

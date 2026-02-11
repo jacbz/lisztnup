@@ -783,6 +783,7 @@
 										compact={!isActive}
 										acceptingDrop={isActive && canDragCenter}
 										{rotation}
+										isVertical={edge === 'left' || edge === 'right'}
 										draggingEntryId={isActive ? dragState.previewEntryId : null}
 										isDragging={isActive ? dragState.active : false}
 										dragKind={isActive ? dragState.kind : 'none'}
