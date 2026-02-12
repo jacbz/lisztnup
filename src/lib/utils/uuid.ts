@@ -29,20 +29,14 @@ export function buildShortUuidMap(uuids: string[]): Map<string, string> {
  * Resolves a single short UUID to its full UUID using the prebuilt map.
  * Returns undefined if not found.
  */
-export function resolveShortUuid(
-	shortUuid: string,
-	map: Map<string, string>
-): string | undefined {
+export function resolveShortUuid(shortUuid: string, map: Map<string, string>): string | undefined {
 	return map.get(shortUuid);
 }
 
 /**
  * Resolves an array of short UUIDs to full UUIDs, filtering out any that can't be resolved.
  */
-export function resolveShortUuids(
-	shortUuids: string[],
-	map: Map<string, string>
-): string[] {
+export function resolveShortUuids(shortUuids: string[], map: Map<string, string>): string[] {
 	const result: string[] = [];
 	for (const short of shortUuids) {
 		const full = map.get(short);

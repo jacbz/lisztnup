@@ -11,9 +11,6 @@
 	import X from 'lucide-svelte/icons/x';
 	import Plus from 'lucide-svelte/icons/plus';
 	import PanelBottomClose from 'lucide-svelte/icons/panel-bottom-close';
-	import PanelLeftClose from 'lucide-svelte/icons/panel-left-close';
-	import PanelTopClose from 'lucide-svelte/icons/panel-top-close';
-	import PanelRightClose from 'lucide-svelte/icons/panel-right-close';
 	import { slide } from 'svelte/transition';
 
 	interface Props {
@@ -35,10 +32,20 @@
 	}
 
 	// Initialize players from settings (only once)
-	let players = $state<Array<{ name: string; color: string; edge: PlayerEdge }>>(
+	let players = $state<Array<{ name: string; color: string; edge: PlayerEdge; rotation: number }>>(
 		$settings.players.length > 0
-			? $settings.players.map((p) => ({ ...p, edge: p.edge || 'bottom' }))
-			: [{ name: generateDefaultPlayerName(0), color: PLAYER_COLORS[0], edge: 'bottom' }]
+			? $settings.players.map((p) => {
+					const edge = p.edge || 'bottom';
+					return { ...p, edge, rotation: ALL_EDGES.indexOf(edge) * 90 };
+				})
+			: [
+					{
+						name: generateDefaultPlayerName(0),
+						color: PLAYER_COLORS[0],
+						edge: 'bottom',
+						rotation: 0
+					}
+				]
 	);
 
 	// Initialize default names map
@@ -85,7 +92,12 @@
 		// Update the errors map to trigger reactivity
 		nameErrors = newErrors;
 
-		const playersWithScore: Player[] = players.map((p) => ({ ...p, score: 0 }));
+		const playersWithScore: Player[] = players.map((p) => ({
+			name: p.name,
+			color: p.color,
+			edge: p.edge,
+			score: 0
+		}));
 
 		// Save to settings only if all names are valid
 		if (allValid) {
@@ -132,26 +144,13 @@
 		return minEdge;
 	}
 
-	// Toggle edge in clockwise order: bottom -> right -> top -> left -> bottom
+	// Toggle edge in clockwise order: bottom -> left -> top -> right -> bottom
 	function toggleEdge(index: number) {
 		const currentEdge = players[index].edge;
 		const currentIndex = ALL_EDGES.indexOf(currentEdge);
 		const nextIndex = (currentIndex + 1) % ALL_EDGES.length;
 		players[index].edge = ALL_EDGES[nextIndex];
-	}
-
-	// Get icon component for edge
-	function getEdgeIcon(edge: PlayerEdge) {
-		switch (edge) {
-			case 'bottom':
-				return PanelBottomClose;
-			case 'left':
-				return PanelLeftClose;
-			case 'top':
-				return PanelTopClose;
-			case 'right':
-				return PanelRightClose;
-		}
+		players[index].rotation = (players[index].rotation ?? currentIndex * 90) + 90;
 	}
 
 	// Export addPlayer function for external use
@@ -160,13 +159,28 @@
 
 		// Generate a unique default name
 		const defaultName = generateDefaultPlayerName(players.length);
+		const edge = getDefaultEdge();
 
 		const newPlayer = {
 			name: defaultName,
 			color: PLAYER_COLORS[players.length % PLAYER_COLORS.length],
-			edge: getDefaultEdge()
+			edge,
+			rotation: ALL_EDGES.indexOf(edge) * 90
 		};
 		players = [...players, newPlayer];
+
+		// Edge-case: with 3 players, prefer bottom, left, top over bottom, top, left
+		if (
+			players.length === 3 &&
+			players[0].edge === 'bottom' &&
+			players[1].edge === 'top' &&
+			players[2].edge === 'left'
+		) {
+			players[1].edge = 'left';
+			players[2].edge = 'top';
+			players[1].rotation = ALL_EDGES.indexOf('left') * 90;
+			players[2].rotation = ALL_EDGES.indexOf('top') * 90;
+		}
 
 		// Mark this name as default
 		defaultNames.set(players.length - 1, defaultName);
@@ -201,7 +215,6 @@
 			<div class="flex items-center gap-2">
 				<!-- Edge Icon Button (Timeline mode only) -->
 				{#if mode === 'timeline'}
-					{@const EdgeIcon = getEdgeIcon(player.edge)}
 					<button
 						type="button"
 						onclick={() => toggleEdge(index)}
@@ -209,7 +222,10 @@
 						aria-label={$_('players.edge.toggle')}
 						title={$_(`players.edge.${player.edge}`)}
 					>
-						<EdgeIcon class="h-4 w-4" />
+						<PanelBottomClose
+							class="h-4 w-4 origin-center transition-transform duration-200 ease-in-out"
+							style={`transform: rotate(${player.rotation}deg);`}
+						/>
 					</button>
 				{/if}
 

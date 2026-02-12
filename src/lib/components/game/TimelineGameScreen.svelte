@@ -919,7 +919,10 @@
 			<div
 				class="min-h-0 flex-1 overflow-y-auto rounded-2xl border border-slate-700/50 bg-slate-950/30 p-4"
 			>
-				<TrackInfo track={gameState.revealTrack} />
+				<TrackInfo
+					track={gameState.revealTrack}
+					showUpsideDown={players.some((player) => player.edge === 'top')}
+				/>
 			</div>
 		</div>
 	{/if}
