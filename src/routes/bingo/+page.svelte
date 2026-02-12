@@ -355,7 +355,9 @@
 			class="absolute flex w-full items-center justify-between p-4 sm:p-6"
 			transition:fly={{ y: -100, duration: 500, delay: 300 }}
 		>
-			<Logo onClick={handleHomeClick} size="medium" />
+			<div>
+				<Logo onClick={handleHomeClick} size="medium" />
+			</div>
 			<div class="no-print flex gap-2">
 				<button
 					type="button"

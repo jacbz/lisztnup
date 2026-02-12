@@ -1,0 +1,500 @@
+{
+	"common": {
+		"enabled": "활성화됨",
+		"disabled": "비활성화됨",
+		"on": "켜기",
+		"off": "끄기",
+		"confirm": "확인",
+		"reportProblem": "문제 신고"
+	},
+	"app": {
+		"title": "Liszt’n Up!",
+		"subtitle": "클래식 음악 퀴즈 게임"
+	},
+	"loading": {
+		"progress": "음악을 불러오는 중..."
+	},
+	"home": {
+		"start": "시작",
+		"startGame": "게임 시작",
+		"settings": "설정",
+		"tracklist": "트랙 리스트",
+		"scoringOn": "점수 켜기",
+		"scoringOff": "점수 끄기"
+	},
+	"settings": {
+		"numberOfTracks": "트랙 수",
+		"cardsToWin": "승리 목표 카드 수",
+		"language": "언어",
+		"presetInfo": {
+			"default": "작곡가 {composers}명, 작품 {works}곡, 트랙 {tracks}개"
+		},
+		"categories": {
+			"vocal": "성악",
+			"chamber": "실내악",
+			"orchestral": "관현악",
+			"piano": "피아노",
+			"concerto": "협주곡",
+			"opera": "오페라",
+			"ballet": "발레",
+			"solo": "독주",
+			"other": "기타"
+		}
+	},
+	"tracklists": {
+		"beginner": {
+			"name": "입문자",
+			"description": "시대를 초월하여 사랑받는 불멸의 명곡들로 시작해보세요."
+		},
+		"intermediate": {
+			"name": "중급자",
+			"description": "친숙한 콘서트 레퍼토리로 음악적 지평을 넓혀보세요."
+		},
+		"skilled": {
+			"name": "숙련자",
+			"description": "대중적인 곡과 숨겨진 명곡의 조화로운 균형을 즐겨보세요."
+		},
+		"advanced": {
+			"name": "상급자",
+			"description": "더 깊고 복잡한 선율이 흐르는 정통 콘서트홀로 초대합니다."
+		},
+		"expert": {
+			"name": "전문가",
+			"description": "당신의 귀를 시험할 정교하고 낯선 작품들에 도전하세요."
+		},
+		"virtuoso": {
+			"name": "비르투오소",
+			"description": "아이콘부터 희귀작까지, 클래식의 모든 것을 망라한 완벽한 컬렉션."
+		},
+		"cadenza": {
+			"name": "카덴차",
+			"description": "진정한 감상자를 위한 극한의 도전. 유명한 히트곡은 없습니다. 오직 희귀하고 정제된 곡들뿐."
+		},
+		"obscure": {
+			"name": "숨겨진 작곡가들",
+			"description": "정규 레퍼토리 밖, 낯선 거장들의 보석 같은 곡들을 발견하세요."
+		},
+		"piano": {
+			"name": "피아노",
+			"description": "건반 위에서 펼쳐지는 피아노 레퍼토리."
+		},
+		"concerto": {
+			"name": "협주곡",
+			"description": "오케스트라와 독주자의 화려한 조화."
+		},
+		"orchestral": {
+			"name": "관현악",
+			"description": "웅장한 교향곡과 관현악 작품들."
+		},
+		"chamber": {
+			"name": "실내악",
+			"description": "소규모 앙상블이 빚어내는 친밀한 대화."
+		},
+		"ballet": {
+			"name": "발레",
+			"description": "무용을 위해 작곡된 아름다운 선율."
+		},
+		"opera": {
+			"name": "오페라",
+			"description": "극적인 서사가 있는 오페라와 유명 아리아."
+		},
+		"pianoconcerto": {
+			"name": "피아노 협주곡",
+			"description": "피아노와 오케스트라의 장대함을 담았습니다."
+		},
+		"violinconcerto": {
+			"name": "바이올린 협주곡",
+			"description": "바이올린의 기교와 서정성이 빛나는 협주곡."
+		},
+		"celloconcerto": {
+			"name": "첼로 협주곡",
+			"description": "첼로의 깊은 울림을 느낄 수 있는 작품들."
+		},
+		"liszt": {
+			"name": "Lisztomania",
+			"description": "피아노의 마술사, 리스트의 화려한 기교와 낭만에 빠져보세요."
+		},
+		"bach": {
+			"name": "Bach to the Future",
+			"description": "음악의 아버지, 바흐가 들려주는 완벽한 대위법의 우주."
+		},
+		"chopin": {
+			"name": "Chopin Spree",
+			"description": "피아노의 시인, 쇼팽이 건반 위에 써 내려간 서정시."
+		},
+		"mozart": {
+			"name": "Mozart in the Machine",
+			"description": "천재의 장난기 가득한 선율과 완벽한 균형미."
+		},
+		"tchaikovsky": {
+			"name": "Tchaik It Off",
+			"description": "백조의 호수에서 비창까지, 차이콥스키의 짙은 러시아 로망스."
+		},
+		"vivaldi": {
+			"name": "Viva la Vivaldi",
+			"description": "사계절 내내 시들지 않는, 붉은 사제의 정열적인 선율."
+		},
+		"renaissance": {
+			"name": "르네상스",
+			"description": "인간 중심의 문화가 꽃피던 시대의 음악 (1400-1600)."
+		},
+		"baroque": {
+			"name": "바로크",
+			"description": "화려하고 장식적인 표현의 시대 (1600-1750)."
+		},
+		"classical": {
+			"name": "고전파",
+			"description": "형식미와 균형을 중시한 고전주의 시대 (1750-1820)."
+		},
+		"romantic": {
+			"name": "낭만파",
+			"description": "감정과 개인의 표현을 중시한 낭만주의 (1820-1910)."
+		},
+		"20thcentury": {
+			"name": "20세기",
+			"description": "현대적이고 실험적인 시도들이 넘치는 시대."
+		}
+	},
+	"tracklistSelector": {
+		"title": "트랙 리스트 선택",
+		"done": "완료",
+		"view": "보기",
+		"clone": "복제",
+		"edit": "편집",
+		"share": "공유",
+		"delete": "삭제",
+		"createNew": "새 트랙 리스트 만들기",
+		"browseLibrary": "전체 라이브러리 탐색",
+		"deleteDialog": {
+			"title": "트랙 리스트 삭제",
+			"message": "정말로 '{name}'을(를) 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+			"confirm": "삭제",
+			"cancel": "취소"
+		}
+	},
+	"tracklistViewer": {
+		"loading": "로딩 중...",
+		"noData": "작품을 찾을 수 없습니다.",
+		"searchPlaceholder": "작곡가 또는 작품 검색...",
+		"library": "라이브러리",
+		"columns": {
+			"composer": "작곡가",
+			"work": "작품",
+			"popularity": "인기도",
+			"year": "연도"
+		}
+	},
+	"tracklistEditor": {
+		"editTitle": "트랙 리스트 편집",
+		"createTitle": "트랙 리스트 생성",
+		"name": "이름",
+		"description": "설명",
+		"filters": "필터",
+		"filtersDescription": "필터를 적용하여 전체 컬렉션에서 트랙을 구성합니다. 비활성화하면 수동으로 선택한 작품만 사용됩니다.",
+		"categoryAdjustments": "카테고리 가중치",
+		"categoryAdjustmentsDesc": "특정 음악 카테고리가 등장할 확률을 조정합니다.",
+		"composerFilter": "작곡가",
+		"composerFilterDesc": "트랙 리스트에 포함할 작곡가를 제어합니다.",
+		"includeMode": "포함 모드",
+		"excludeMode": "제외 모드",
+		"notabilityRangeMode": "인지도 순위",
+		"notabilityRange": "인지도 범위",
+		"notabilityRangeModeDesc": "인지도 순위 {start}위부터 {end}위까지의 작곡가를 포함합니다. (1위 = 바흐, 2위 = 모차르트 등)",
+		"searchComposers": "작곡가 검색...",
+		"selectAll": "모두 선택",
+		"selectNone": "선택 해제",
+		"composersSelected": "{count}명의 작곡가 선택됨",
+		"composerInclude": "포함할 작곡가",
+		"composerExclude": "제외할 작곡가",
+		"yearFilter": "작곡 연도",
+		"yearFilterDesc": "특정 시대의 작품으로 범위를 제한합니다.",
+		"yearStart": "시작 연도",
+		"yearEnd": "종료 연도",
+		"workScoreRange": "인기도 범위",
+		"workScoreRangeDesc": "인기도 점수에 따라 작품을 필터링합니다 (높을수록 더 많은 녹음이 존재하는 유명한 곡입니다).",
+		"limitWorksFromComposer": "작곡가별 작품 수 제한",
+		"limitWorksFromComposerDesc": "이 트랙 리스트에서 각 작곡가가 차지하는 비중을 제한합니다 (전체 곡 수 대비 퍼센트).",
+		"maxTracksFromSingleWork": "단일 작품 내 최대 트랙 수",
+		"maxTracksFromSingleWorkDesc": "교향곡 등 대규모 작품에서 몇 개의 악장(파트)까지 포함할지 제한합니다.",
+		"nameFilter": "작품명 필터",
+		"nameFilterDesc": "특정 단어나 문구가 포함된 작품만 남깁니다 (대소문자 무시). 슬래시(/)로 감싸면 정규식 패턴을 사용할 수 있습니다 (예: /symphony|concerto/는 둘 중 하나라도 포함되면 매칭).",
+		"nameFilterPlaceholder": "작품명 또는 /정규식/ 입력",
+		"nameFilterAdd": "추가",
+		"enablePopularityWeighting": "인기도 가중치 적용",
+		"enablePopularityWeightingDesc": "인기도에 따라 트랙이 선택될 확률을 높입니다. 켜두면 유명한 곡과 녹음이 더 자주 등장하며, 끄면 완전히 무작위로 선택됩니다.",
+		"filtersEnabled": "켜짐",
+		"filtersDisabled": "꺼짐",
+		"curation": {
+			"title": "직접 선택 (수동 큐레이션)",
+			"description": "필터와 관계없이 특정 작품을 직접 포함하거나 제외합니다.",
+			"includeWorks": "포함할 작품",
+			"includeDesc": "필터가 꺼져 있어도 이 작품들은 항상 포함됩니다.",
+			"excludeWorks": "제외할 작품",
+			"excludeDesc": "이 작품들은 어떤 경우에도 트랙 리스트에서 제외됩니다.",
+			"addWorks": "작품 추가",
+			"addWork": "작품 추가",
+			"alreadyInTracklist": "이미 트랙 리스트에 있음",
+			"excludeWork": "작품 제외",
+			"addExclusions": "제외할 작품 추가",
+			"removeWork": "작품 제거",
+			"removeExclusion": "제외 취소",
+			"noWorksIncluded": "직접 포함한 작품 없음",
+			"noWorksExcluded": "직접 제외한 작품 없음",
+			"selectWorksToInclude": "포함할 작품 선택",
+			"selectWorksToExclude": "제외할 작품 선택",
+			"selected": "선택됨"
+		},
+		"preview": "미리보기",
+		"trackList": "트랙 목록",
+		"previewComposers": "작곡가",
+		"previewWorks": "작품",
+		"previewTracks": "트랙",
+		"previewLoading": "계산 중...",
+		"save": "저장",
+		"cancel": "취소",
+		"errors": {
+			"nameRequired": "트랙 리스트 이름을 입력해야 합니다.",
+			"duplicateName": "이미 존재하는 이름입니다."
+		},
+		"enableFilter": "{filter} 필터 켜기",
+		"disableFilter": "{filter} 필터 끄기",
+		"categoryDifficulty": "난이도",
+		"categoryCategories": "카테고리",
+		"categoryComposers": "작곡가",
+		"categoryEras": "시대",
+		"categoryCustom": "사용자 정의"
+	},
+	"shareLink": {
+		"openLink": "열기",
+		"copyFailed": "클립보드 복사 실패",
+		"copy": "복사",
+		"copied": "복사됨!",
+		"share": "공유",
+		"tracklistTitle": "트랙 리스트 공유",
+		"tracklistText": "Liszt’n Up 트랙 리스트를 확인해보세요!"
+	},
+	"inGameSettings": {
+		"title": "설정",
+		"trackLength": "트랙 재생 시간",
+		"trackLengthHint": "게임 중 각 트랙이 재생되는 시간입니다. 다음 트랙부터 적용됩니다. 버저 모드에는 적용되지 않습니다.",
+		"audioNormalization": "오디오 평준화 (Normalization)",
+		"audioNormalizationHint": "모든 트랙의 볼륨을 균일하게 맞추고 비주얼라이저를 활성화합니다. Apple 기기 브라우저에서 재생 문제가 발생할 경우 끄고 플레이하세요. 다음 트랙부터 적용됩니다.",
+		"buzzerVolume": "버저 볼륨",
+		"buzzerVolumeHint": "버저 소리의 크기를 조절합니다."
+	},
+	"quitDialog": {
+		"title": "게임 종료",
+		"message": "정말로 게임을 종료하시겠습니까? 현재 진행 상황이 모두 사라집니다.",
+		"confirm": "종료",
+		"cancel": "계속하기"
+	},
+	"game": {
+		"round": "라운드 {current} / {total}",
+		"home": "홈",
+		"spin": "회전!",
+		"play": "재생",
+		"pause": "일시정지",
+		"guessCategory": "{category}",
+		"reveal": "정답 공개",
+		"nextRound": "다음 라운드",
+		"gameOver": "게임 종료!",
+		"playAgain": "다시 하기",
+		"quitTitle": "나가기",
+		"quitMessage": "정말로 나가시겠습니까? 빙고판 상태는 저장됩니다.",
+		"quitConfirm": "나가기",
+		"quitCancel": "머무르기",
+		"buzzer": {
+			"pressToStart": "시작",
+			"buzz": "버저!"
+		},
+		"loadingAudio": "오디오 분석 중...",
+		"categories": {
+			"composer": "작곡가",
+			"decade": "연대",
+			"era": "시대",
+			"work": "작품",
+			"type": "형식"
+		},
+		"categoriesShort": {
+			"composer": "작곡가",
+			"decade": "연대",
+			"era": "시대",
+			"work": "작품",
+			"type": "형식"
+		}
+	},
+	"modes": {
+		"timeline": {
+			"name": "타임라인",
+			"description": "음악의 역사를 재구성하세요. 카드를 올바른 연도 순서대로 배치하여 타임라인을 완성하는 모드입니다.",
+			"step1": {
+				"title": "카드 뽑기",
+				"desc": "자신의 차례가 되면 덱에서 카드를 한 장 뽑아 음악을 듣습니다."
+			},
+			"step2": {
+				"title": "타임라인에 배치",
+				"desc": "자신의 타임라인에서 해당 곡이 들어갈 올바른 연도 위치를 찾아 드래그한 후 확정합니다."
+			},
+			"step3": {
+				"title": "목표 달성",
+				"desc": "정확한 위치에 놓아야 카드가 등록됩니다. 설정된 카드 수를 가장 먼저 채우는 플레이어가 승리합니다."
+			}
+		},
+		"classic": {
+			"name": "클래식",
+			"description": "카테고리별로 점수를 얻는 정통 퀴즈. 어려운 문제를 맞힐수록 더 높은 점수를 얻습니다!",
+			"step1": {
+				"title": "음악 감상",
+				"desc": "재생되는 음악을 듣고 곡에 대한 단서를 찾아보세요. 정답을 종이에 적거나 기억해두세요."
+			},
+			"step2": {
+				"title": "카테고리 맞히기",
+				"desc": "작품명, 연대, 작곡가, 시대, 형식 등 더 구체적이고 어려운 카테고리를 맞힐수록 높은 점수를 받습니다."
+			},
+			"step3": {
+				"title": "최종 승자",
+				"desc": "가장 많은 점수를 획득한 플레이어가 승리합니다. 전략적으로 점수를 노려보세요!"
+			}
+		},
+		"buzzer": {
+			"name": "버저",
+			"description": "시간과의 싸움! 정답을 아는 순간 버저를 누르세요. 스피드가 생명입니다.",
+			"step1": {
+				"title": "버저 누르기",
+				"desc": "음악을 듣고 정답을 알면 화면의 버저나 키보드 키를 눌러 퀴즈를 멈추세요."
+			},
+			"step2": {
+				"title": "시간에 따른 카테고리 변화",
+				"desc": "시간이 지날수록 맞춰야 할 카테고리가 쉬워지지만, 획득 점수는 줄어듭니다. 빨리 맞힐수록 고득점 기회!"
+			},
+			"step3": {
+				"title": "승리를 향한 질주",
+				"desc": "틀리면 점수가 깎이니 신중해야 합니다. 가장 높은 점수를 얻은 플레이어가 승리합니다!"
+			}
+		},
+		"bingo": {
+			"name": "빙고",
+			"description": "휠을 돌려 카테고리를 정하고, 정답을 맞혀 빙고판을 채우세요!",
+			"step1": {
+				"title": "빙고판 준비",
+				"desc": "각 플레이어는 고유한 빙고판이 필요합니다. 기기에서 열거나 인쇄하여 준비하세요."
+			},
+			"step2": {
+				"title": "회전 및 추측",
+				"desc": "휠을 돌려 이번 라운드의 카테고리를 정합니다. 음악을 듣고 정답을 맞혔다면 빙고판의 해당 칸을 표시하세요."
+			},
+			"step3": {
+				"title": "5줄 완성",
+				"desc": "가로, 세로, 또는 대각선으로 5칸을 먼저 연결하는 사람이 승리합니다!"
+			}
+		}
+	},
+	"players": {
+		"setup": "플레이어 설정",
+		"playSolo": "혼자 하기",
+		"addPlayer": "플레이어 추가",
+		"playerName": "플레이어 {number}",
+		"nameLabel": "이름",
+		"colorLabel": "색상",
+		"removePlayer": "제거",
+		"startGame": "게임 시작",
+		"cancel": "취소",
+		"minPlayers": "점수 계산이 켜져 있을 땐 최소 2명의 플레이어가 필요합니다.",
+		"edge": {
+			"toggle": "화면 위치 변경",
+			"bottom": "하단",
+			"left": "좌측",
+			"top": "상단",
+			"right": "우측"
+		},
+		"errors": {
+			"nameRequired": "플레이어 이름을 입력해야 합니다.",
+			"duplicateName": "이미 사용 중인 이름입니다."
+		}
+	},
+	"scoring": {
+		"title": "이번 라운드 점수",
+		"player": "플레이어",
+		"selectCategory": "각 플레이어가 맞힌 카테고리를 선택하세요.",
+		"noGuess": "입력 없음",
+		"wrong": "오답",
+		"continue": "계속하기",
+		"correctGuess": "누가 정답을 맞혔나요?",
+		"wrongGuess": "누가 오답을 말했나요?",
+		"noOne": "없음",
+		"noPoints": "0점",
+		"pts": "{points}점",
+		"pointsAwarded": "+{points}점",
+		"pointsPenalty": "-{points}점",
+		"pointsPreview": "{current} ({delta})점"
+	},
+	"stats": {
+		"title": "통계",
+		"round": "라운드",
+		"score": "점수",
+		"noData": "아직 진행된 라운드가 없습니다."
+	},
+	"endGame": {
+		"title": "게임 종료!",
+		"winner": "{name} 승리!",
+		"tie": "무승부!",
+		"finalScores": "최종 점수",
+		"viewStats": "통계 보기",
+		"playAgain": "다시 하기",
+		"home": "홈으로"
+	},
+	"timeline": {
+		"dealing": "{name}에게 카드 배분 중",
+		"drag": "드래그",
+		"confirm": "확정",
+		"help": {
+			"playFirst": "먼저 카드를 재생하세요.",
+			"dragToPlace": "타임라인의 적절한 위치로 카드를 드래그하세요.",
+			"reorder": "위치를 조정한 뒤 확정 버튼을 누르세요."
+		},
+		"gameOver": "게임 종료",
+		"winner": "승자: {name}"
+	},
+	"bingo": {
+		"setupDescription": "각 플레이어는 자신만의 빙고판이 필요합니다.",
+		"reset": "초기화",
+		"resetTitle": "빙고판 초기화",
+		"resetMessage": "새로운 빙고판을 생성하고 표시된 내용을 모두 지웁니다. 계속하시겠습니까?",
+		"resetConfirm": "초기화",
+		"resetCancel": "취소",
+		"shareTitle": "빙고판 공유",
+		"shareText": "제 빙고 게임에 참여하세요!",
+		"guessPlaceholder": "정답을 입력하세요...",
+		"closeGuess": "입력 완료",
+		"reveal": "공개"
+	},
+	"footer": {
+		"madeBy": "A Game by Jacob Zhang",
+		"poweredBy": "Powered by {first} and {second}"
+	},
+	"eras": {
+		"ancient": "고대",
+		"medieval": "중세",
+		"earlyRenaissance": "르네상스 초기",
+		"middleRenaissance": "르네상스 중기",
+		"lateRenaissance": "르네상스 후기",
+		"lateRenaissanceEarlyBaroque": "르네상스 후기 / 바로크 초기",
+		"earlyBaroque": "바로크 초기",
+		"baroque": "바로크",
+		"lateBaroque": "바로크 후기",
+		"lateBaroqueEarlyClassical": "바로크 후기 / 고전파 초기",
+		"earlyClassical": "고전파 초기",
+		"classical": "고전파",
+		"lateClassical": "고전파 후기",
+		"earlyRomantic": "낭만파 초기",
+		"romantic": "낭만파",
+		"lateRomantic": "낭만파 후기",
+		"20thCentury": "20세기",
+		"contemporary": "현대",
+		"ragtime": "래그타임",
+		"impressionism": "인상주의",
+		"secondVienneseSchool": "제2빈 악파",
+		"modernism": "모더니즘",
+		"minimalism": "미니멀리즘"
+	}
+}

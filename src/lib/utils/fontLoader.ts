@@ -9,6 +9,10 @@ const FONT_CONFIGS = {
 		weights: [300, 400, 500, 700, 900],
 		url: 'https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@300;400;500;700;900&display=swap'
 	},
+	ko: {
+		family: 'Noto Sans KR',
+		url: 'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap'
+	},
 	'zh-CN': {
 		family: 'Noto Sans SC',
 		url: 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap'

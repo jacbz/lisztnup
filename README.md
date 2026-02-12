@@ -27,7 +27,7 @@
 
 ## About
 
-**Liszt’n Up!** is a web-based party game designed for classical music enthusiasts. Inspired by mechanics from board games like _Hitster_, players compete to guess composers, works, and eras, or place tracks on a timeline.
+**_Liszt’n Up!_** is a web-based party game designed for classical music enthusiasts. Inspired by mechanics from board games like _Hitster_, players compete to guess composers, works, and eras, or place tracks on a timeline.
 
 The game is built on a massive dataset of roughly **8,000 works** from over **600 composers** sourced from [MusicBrainz](https://musicbrainz.org/), totaling nearly **20,000 tracks**. Rather than manual curation, the system filters works based on the number of available recordings. Predefined tracklists are generated automatically, with only little manual tweaking to ensure a good mix of popular and lesser-known pieces. Users can also create custom tracklists from the entire library.
 
@@ -89,7 +89,7 @@ To get a local copy up and running, follow these steps.
 
 ### Dataset Generation
 
-Unlike many trivia games with manually curated lists, _Liszt’n Up!_ uses an algorithmic approach to generate its library. You can inspect the generation logic in the [`/data`](data) directory. The build process compiles this into a compressed `lisztnup.json` file served to the client.
+Unlike many trivia games with manually curated lists, _Liszt’n Up!_ uses an algorithmic approach to generate its library, with only little manual tweaking. You can inspect the generation logic in the [`/data`](data) directory. The build process compiles this into a compressed `lisztnup.json` file served to the client.
 
 ## Contributing
 

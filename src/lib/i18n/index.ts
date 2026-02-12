@@ -4,21 +4,25 @@ import { loadFontForLocale, resetToDefaultFont, requiresCustomFont } from '$lib/
 import en from './locales/en.json';
 import de from './locales/de.json';
 import fr from './locales/fr.json';
-// import es from './locales/es.json';
-// import pt from './locales/pt.json';
+import es from './locales/es.json';
+import pt from './locales/pt.json';
+import it from './locales/it.json';
 import zhCN from './locales/zh-CN.json';
 import zhTW from './locales/zh-TW.json';
 import ja from './locales/ja.json';
+import ko from './locales/ko.json';
 
 // Add all translation messages
 addMessages('en', en);
 addMessages('de', de);
 addMessages('fr', fr);
-// addMessages('es', es);
-// addMessages('pt', pt);
+addMessages('it', it);
+addMessages('es', es);
+addMessages('pt', pt);
 addMessages('zh-CN', zhCN);
 addMessages('zh-TW', zhTW);
 addMessages('ja', ja);
+addMessages('ko', ko);
 
 // Get saved locale from localStorage or use browser language
 const savedLocale = typeof window !== 'undefined' ? localStorage.getItem('locale') : null;
@@ -65,11 +69,13 @@ export const locales = [
 	{ code: 'en', name: 'English' },
 	{ code: 'de', name: 'Deutsch' },
 	{ code: 'fr', name: 'Français' },
-	// { code: 'es', name: 'Español' },
-	// { code: 'pt', name: 'Português' }
+	{ code: 'it', name: 'Italiano' },
+	{ code: 'es', name: 'Español' },
+	{ code: 'pt', name: 'Português' },
 	{ code: 'zh-CN', name: '简体中文' },
 	{ code: 'zh-TW', name: '繁體中文' },
-	{ code: 'ja', name: '日本語' }
+	{ code: 'ja', name: '日本語' },
+	{ code: 'ko', name: '한국어' }
 ];
 
 // Initialize with fallback chain
