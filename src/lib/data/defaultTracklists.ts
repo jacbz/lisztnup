@@ -22,6 +22,27 @@ import composerIcon from '$lib/assets/icons/composer.svg?raw';
 import eraIcon from '$lib/assets/icons/era.svg?raw';
 import { COMPOSER_COUNT } from '$lib/types/settings';
 
+// List of specific works to always include in tracklists, regardless of their score
+const WORKS_TO_INCLUDE = [
+	'87281f3c', // Beethoven - Kreutzer Sonata
+	'6ec79e92', // Bizet - L'Arlésienne Suite No. 1 - Farandole
+	'45efd8f4', // Bizet - Carmen
+	'3f13a790', // Brahms - Hungarian Dance No. 5
+	'1c0cb34d', // Bruckner 7
+	'f9ee7f5f', // Elgar - Pomp and Circumstance March No. 1
+	'2a3bf259', // Massenet - Meditation from Thais
+	'e208c5f5', // Mozart - Magic Flute
+	'19da23f4', // Puccini - O mio babbino caro
+	'1659508c', // Rachmaninoff - Vocalise
+	'1ce190e3', // Rossini - Guillaume Tell Overture
+	'640d92c6', // Saint-Saens - Danse macabre
+	'f8f24282', // Schubert - Auf dem Wasser zu singen
+	'd783dab0', // Schubert - Erlkönig
+	'fec1c6a5', // Strauss - Also sprach Zarathustra
+	'5983b48e', // Prokofiev 1
+	'0294f5e0' // Prokofiev - Romeo and Juliet - Dance of the Knights
+];
+
 /**
  * Default tracklist presets organized by categories
  */
@@ -49,17 +70,27 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			limitWorksFromComposer: 0.075,
 			maxTracksFromSingleWork: 1,
 			enablePopularityWeighting: false,
+			includeWorks: WORKS_TO_INCLUDE,
 			excludeWorks: [
+				'937fff7e', // Bach - Nun komm, der Heiden Heiland
+				'0a633962', // Bach - Violin Sonata in E major
+				'c324226d', // Bach - Violin Sonata in C minor
 				'3c9a74de', // Beethoven 1
 				'273fea50', // Beethoven 4
-				'256f32ec' // Beethoven 8
-			],
-			includeWorks: [
-				'87281f3c', // Beethoven Kreutzer Sonata
-				'5983b48e', // Prokofiev 1
-				'0294f5e0', // Prokofiev Romeo and Juliet - Dance of the Knights,
-				'1c0cb34d', // Bruckner 7
-				'640d92c6' // Saint-Saens Danse macabre
+				'256f32ec', // Beethoven 8
+				'8f8c2b3e', // Debussy - L'Isle joyeuse
+				'26ea58b3', // De Falla - El amor brujo
+				'085103a5', // Holst - In the Bleak Midwinter,
+				'4344e777', // Rodrigo - Concierto de Aranjuez
+				'676bdcd4', // Rossini - La gazza ladra Overture
+				'62308818', // Strauss - Annen-Polka
+				'a26cbcf8', // Strauss - Perpetuum mobile
+				'71f4fb64', // Strauss - Künstlerleben
+				'85be26e9', // Strauss - Unter Donner und Blitz
+				'2eb55386', // Strauss - Rosen aus dem Süden
+				'6237af8b', // Strauss - Wein, Weib und Gesang
+				'b42a2d27', // Strauss - Frühlingsstimmen
+				'9b1bd955' // Wagner - Tannhäuser Pilgerchor
 			]
 		}
 	},
@@ -83,7 +114,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			},
 			limitWorksFromComposer: 0.075,
 			maxTracksFromSingleWork: 1,
-			enablePopularityWeighting: false
+			enablePopularityWeighting: false,
+			includeWorks: WORKS_TO_INCLUDE
 		}
 	},
 	{
@@ -96,7 +128,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			workScoreRange: [3.9, MAX_WORK_SCORE_ROUNDED],
 			limitWorksFromComposer: 0.1,
 			maxTracksFromSingleWork: 1,
-			enablePopularityWeighting: false
+			enablePopularityWeighting: false,
+			includeWorks: WORKS_TO_INCLUDE
 		}
 	},
 	{
@@ -119,7 +152,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			},
 			limitWorksFromComposer: 0.15,
 			maxTracksFromSingleWork: 2,
-			enablePopularityWeighting: false
+			enablePopularityWeighting: false,
+			includeWorks: WORKS_TO_INCLUDE
 		}
 	},
 	{
@@ -141,7 +175,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				solo: 0
 			},
 			maxTracksFromSingleWork: 3,
-			enablePopularityWeighting: false
+			enablePopularityWeighting: false,
+			includeWorks: WORKS_TO_INCLUDE
 		}
 	},
 	{
@@ -151,7 +186,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: starIcon,
 		category: 'difficulty',
 		config: {
-			enablePopularityWeighting: false
+			enablePopularityWeighting: false,
+			includeWorks: WORKS_TO_INCLUDE
 		}
 	},
 	{

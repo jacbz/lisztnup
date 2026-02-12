@@ -1,4 +1,5 @@
-"""
+"""process_musicbrainz.py
+
 Transforms a hierarchical Musicbrainz JSON data extract into a flat, curated
 dataset of classical works suitable for applications.
 

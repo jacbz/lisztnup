@@ -1,3 +1,66 @@
+"""link_deezer.py
+
+Loads Deezer track mappings from a MusicBrainz pg_dump-style SQL file into a
+PostgreSQL table for fast lookup.
+
+What it does
+------------
+
+- Reads INSERT lines from deezer_track.sql (expected format:
+    "INSERT INTO public.deezer_track VALUES ...").
+- Extracts the Deezer track ID and ISRC.
+- Bulk-loads rows into an UNLOGGED temp table using COPY for speed.
+- Inserts into the final table (musicbrainz.deezer) with a primary-key
+    constraint on ISRC and ON CONFLICT DO NOTHING.
+
+Inputs / outputs
+----------------
+
+Input file:
+    - deezer_track.sql
+
+Progress tracking:
+    - load_progress.txt
+        Stores the last processed line number so the script can resume after an
+        interruption.
+
+Error logging:
+    - error_log.txt
+        Logs malformed lines / parsing problems without stopping the run.
+
+Database objects created
+------------------------
+
+Schema:
+    - musicbrainz (created if missing)
+
+Tables:
+    - musicbrainz.deezer
+            isrc TEXT PRIMARY KEY
+            track_id BIGINT NOT NULL
+    - musicbrainz.deezer_temp_load (UNLOGGED)
+            isrc TEXT
+            track_id BIGINT
+
+Performance notes
+-----------------
+
+- BATCH_SIZE controls how many parsed rows are buffered before each COPY.
+- PROGRESS_INTERVAL controls how often a status line is printed.
+- The temp table is truncated after each flush.
+
+Usage
+-----
+
+Run from the data/ directory (so relative paths resolve):
+
+    python link_deezer.py
+
+Requirements:
+- A running PostgreSQL instance matching DB_CONFIG.
+- psycopg2 installed.
+"""
+
 import psycopg2
 import io
 import time

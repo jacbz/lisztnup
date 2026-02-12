@@ -9,6 +9,7 @@ data/*.txt
 data/lisztnup.md
 data/musicbrainz.json
 data/processed_deezer_ids
+data/downloads
 
 # Output
 .output

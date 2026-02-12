@@ -1,3 +1,72 @@
+"""query_musicbrainz.py
+
+Builds a curated classical-work dataset from a local MusicBrainz PostgreSQL
+database and writes it to musicbrainz.json.
+
+Overview
+--------
+
+This script:
+
+1) Selects candidate composers and top-level works via SQL.
+2) Recursively traverses subworks (work-to-work "parts" links).
+3) Collects recordings for each work/subwork.
+4) Filters recordings and works to reduce non-classical / low-signal data.
+5) Infers missing high-level work types where possible.
+6) Emits final JSON plus console statistics.
+
+Main output
+-----------
+
+- musicbrainz.json
+    Array of composer objects, each with curated works, recordings, and nested
+    subworks.
+
+Data model highlights
+---------------------
+
+- Composer entries contain: gid, name, birth/death years, works[].
+- Work entries contain: gid, name, type, begin/end year, recordings[], subworks[].
+- Recording entries contain: gid, name, isrc, label, deezerId.
+
+Core filtering behavior
+-----------------------
+
+- Composer selection focuses on classical composers using comment/tag-based
+    heuristics in SQL.
+- Works are restricted by relationship and metadata constraints (single primary
+    composer, no disallowed parent/arrangement patterns, allowed tags, etc.).
+- Recordings are excluded when they look likely non-classical/cover/band-like,
+    including:
+    - forbidden artist comments,
+    - single-token artist credit names,
+    - disallowed attributes (medley/cover/karaoke).
+- Top-level works with <= 1 total recordings (including subtree) are dropped.
+
+Work type inference
+-------------------
+
+When a work has no MusicBrainz work type:
+
+1) Try mapping tags with TAG_TO_WORK_TYPE.
+2) If no mapping is possible, infer by majority type among descendant works.
+
+Composer post-filter
+--------------------
+
+Composers born after 1900 are removed unless their retained works contain at
+least two distinct work types (ignoring "Song").
+
+Operational notes
+-----------------
+
+- Requires a local PostgreSQL MusicBrainz database and psycopg2.
+- Uses server-side SQL plus Python recursion; runtime depends on DB size and
+    indexing.
+- Intended to run from data/ so relative paths and output location are
+    predictable.
+"""
+
 import psycopg2
 import psycopg2.extras
 import json

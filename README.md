@@ -29,9 +29,9 @@
 
 **Liszt’n Up!** is a web-based party game designed for classical music enthusiasts. Inspired by mechanics from board games like _Hitster_, players compete to guess composers, works, and eras, or place tracks on a timeline.
 
-The game is built on a massive dataset of roughly **8,000 works** from over **600 composers**, totaling nearly **20,000 distinct tracks**.
+The game is built on a massive dataset of roughly **8,000 works** from over **600 composers** sourced from [MusicBrainz](https://musicbrainz.org/), totaling nearly **20,000 tracks**. Rather than manual curation, the system filters works based on the number of available recordings. Predefined tracklists are generated automatically, with only little manual tweaking to ensure a good mix of popular and lesser-known pieces. Users can also create custom tracklists from the entire library.
 
-Designed as a modern Single Page Application, it runs entirely client-side without a backend database. It is optimized for tablet usage (ideal for placing in the center of a table during a game night) and includes a custom audio engine that performs real-time volume normalization (LUFS) for a consistent listening experience.
+Designed as a modern Single Page Application, _Liszt’n Up!_ runs entirely client-side without a backend database. It is optimized for tablet usage (ideal for placing in the center of a table during a game night) and includes a custom audio engine that performs real-time volume normalization for a consistent listening experience.
 
 ### Game Modes
 
@@ -112,4 +112,4 @@ Contributions are what make the open source community such an amazing place to l
 [issues-shield]: https://img.shields.io/github/issues/jacbz/lisztnup?style=for-the-badge
 [issues-url]: https://github.com/jacbz/lisztnup/issues
 [license-shield]: https://img.shields.io/github/license/jacbz/lisztnup?style=for-the-badge
-[license-url]: https://github.com/jacbz/lisztnup/blob/master/LICENSE
+[license-url]: https://github.com/jacbz/lisztnup/blob/main/LICENSE
