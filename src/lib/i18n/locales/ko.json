@@ -261,6 +261,12 @@
 			"nameRequired": "트랙 리스트 이름을 입력해야 합니다.",
 			"duplicateName": "이미 존재하는 이름입니다."
 		},
+		"closeDialog": {
+			"title": "변경 사항을 버릴까요?",
+			"message": "저장되지 않은 변경 사항이 있어요. 저장하지 않고 닫을까요?",
+			"confirm": "버리기",
+			"cancel": "계속 편집"
+		},
 		"enableFilter": "{filter} 필터 켜기",
 		"disableFilter": "{filter} 필터 끄기",
 		"categoryDifficulty": "난이도",

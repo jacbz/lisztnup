@@ -261,6 +261,12 @@
 			"nameRequired": "La liste doit avoir un nom",
 			"duplicateName": "Une liste avec ce nom existe déjà"
 		},
+		"closeDialog": {
+			"title": "Abandonner les modifications ?",
+			"message": "Tu as des modifications non enregistrées. Vraiment fermer sans sauvegarder ?",
+			"confirm": "Abandonner",
+			"cancel": "Continuer à modifier"
+		},
 		"enableFilter": "Activer {filter}",
 		"disableFilter": "Désactiver {filter}",
 		"categoryDifficulty": "Difficulté",

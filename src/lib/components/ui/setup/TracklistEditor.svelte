@@ -12,6 +12,7 @@
 	import { DEFAULT_TRACKLISTS } from '$lib/data/defaultTracklists';
 	import { get } from 'svelte/store';
 	import Popup from '../primitives/Popup.svelte';
+	import Dialog from '../primitives/Dialog.svelte';
 	import Slider from '../primitives/Slider.svelte';
 	import RangeSlider from '../primitives/RangeSlider.svelte';
 	import ToggleButton from '../primitives/ToggleButton.svelte';
@@ -88,6 +89,9 @@
 
 	// Error state
 	let nameError = $state<string | null>(null);
+
+	// Close confirmation state
+	let showCloseDialog = $state(false);
 
 	// Preview state
 	let previewInfo = $state<{ composers: number; works: number; tracks: number } | null>(null);
@@ -482,6 +486,36 @@
 		selectedComposers = [];
 	}
 
+	function hasUnsavedChanges(): boolean {
+		// Check if name or description changed
+		if (name !== (originalTracklist?.name || '')) return true;
+		if (description !== (originalTracklist?.description || '')) return true;
+
+		// Build current config and compare with original
+		const currentConfig = buildCurrentConfig();
+		const originalConfig = originalTracklist?.config || {};
+
+		// Deep comparison of configs
+		return JSON.stringify(currentConfig) !== JSON.stringify(originalConfig);
+	}
+
+	function handleCloseAttempt() {
+		if (hasUnsavedChanges()) {
+			showCloseDialog = true;
+		} else {
+			onCancel();
+		}
+	}
+
+	function confirmClose() {
+		showCloseDialog = false;
+		onCancel();
+	}
+
+	function cancelClose() {
+		showCloseDialog = false;
+	}
+
 	function handleSave() {
 		if (!name.trim()) {
 			nameError = 'tracklistEditor.errors.nameRequired';
@@ -575,7 +609,7 @@
 	});
 </script>
 
-<Popup {visible} onClose={onCancel} width="5xl">
+<Popup {visible} onClose={handleCloseAttempt} width="5xl">
 	<h2 class="mb-6 text-2xl font-bold text-cyan-400">
 		{originalTracklist ? $_('tracklistEditor.editTitle') : $_('tracklistEditor.createTitle')}
 	</h2>
@@ -1220,7 +1254,7 @@
 	<div class="mt-6 flex gap-3">
 		<button
 			type="button"
-			onclick={onCancel}
+			onclick={handleCloseAttempt}
 			class="flex-1 rounded-xl border-2 border-slate-700 bg-slate-800 px-6 py-3 font-semibold text-slate-300 transition-all hover:border-cyan-400/50 hover:bg-slate-700 active:scale-95"
 		>
 			{$_('tracklistEditor.cancel')}
@@ -1235,3 +1269,14 @@
 		</button>
 	</div>
 </Popup>
+
+<!-- Close Confirmation Dialog -->
+<Dialog
+	visible={showCloseDialog}
+	title={$_('tracklistEditor.closeDialog.title')}
+	message={$_('tracklistEditor.closeDialog.message')}
+	confirmText={$_('tracklistEditor.closeDialog.confirm')}
+	cancelText={$_('tracklistEditor.closeDialog.cancel')}
+	onConfirm={confirmClose}
+	onCancel={cancelClose}
+/>

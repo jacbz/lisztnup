@@ -261,6 +261,12 @@
 			"nameRequired": "请填写歌单名称",
 			"duplicateName": "已存在同名歌单"
 		},
+		"closeDialog": {
+			"title": "放弃更改？",
+			"message": "你有未保存的更改，确定不保存就关闭吗？",
+			"confirm": "放弃",
+			"cancel": "继续编辑"
+		},
 		"enableFilter": "启用 {filter}",
 		"disableFilter": "禁用 {filter}",
 		"categoryDifficulty": "难度",

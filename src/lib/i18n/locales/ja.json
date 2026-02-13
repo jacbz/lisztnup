@@ -261,6 +261,12 @@
 			"nameRequired": "トラックリスト名を入力してください",
 			"duplicateName": "同じ名前のトラックリストが既にあります"
 		},
+		"closeDialog": {
+			"title": "変更を破棄しますか？",
+			"message": "保存されていない変更があるよ。保存せずに閉じちゃう？",
+			"confirm": "破棄する",
+			"cancel": "編集を続ける"
+		},
 		"enableFilter": "{filter} を有効にする",
 		"disableFilter": "{filter} を無効にする",
 		"categoryDifficulty": "難易度",

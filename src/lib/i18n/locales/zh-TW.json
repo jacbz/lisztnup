@@ -261,6 +261,12 @@
 			"nameRequired": "請輸入歌單名稱",
 			"duplicateName": "已存在相同名稱的歌單"
 		},
+		"closeDialog": {
+			"title": "捨棄變更？",
+			"message": "你有未儲存的變更，確定不儲存就關閉嗎？",
+			"confirm": "捨棄",
+			"cancel": "繼續編輯"
+		},
 		"enableFilter": "啟用 {filter}",
 		"disableFilter": "停用 {filter}",
 		"categoryDifficulty": "難度",

@@ -261,6 +261,12 @@
 			"nameRequired": "La tracklist deve avere un nome",
 			"duplicateName": "Esiste già una tracklist con questo nome"
 		},
+		"closeDialog": {
+			"title": "Scartare le modifiche?",
+			"message": "Hai modifiche non salvate. Vuoi davvero chiudere senza salvare?",
+			"confirm": "Scarta",
+			"cancel": "Continua a modificare"
+		},
 		"enableFilter": "Abilita {filter}",
 		"disableFilter": "Disabilita {filter}",
 		"categoryDifficulty": "Difficoltà",

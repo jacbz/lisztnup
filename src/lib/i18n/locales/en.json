@@ -261,6 +261,12 @@
 			"nameRequired": "Tracklist must have a name",
 			"duplicateName": "A tracklist with this name already exists"
 		},
+		"closeDialog": {
+			"title": "Discard Changes?",
+			"message": "You have unsaved changes. Are you sure you want to close without saving?",
+			"confirm": "Discard",
+			"cancel": "Keep Editing"
+		},
 		"enableFilter": "Enable {filter}",
 		"disableFilter": "Disable {filter}",
 		"categoryDifficulty": "Difficulty",

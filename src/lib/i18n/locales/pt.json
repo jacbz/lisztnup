@@ -261,6 +261,12 @@
 			"nameRequired": "O repertório deve ter um nome",
 			"duplicateName": "Já existe um repertório com este nome"
 		},
+		"closeDialog": {
+			"title": "Descartar alterações?",
+			"message": "Você tem alterações não salvas. Tem certeza que quer fechar sem salvar?",
+			"confirm": "Descartar",
+			"cancel": "Continuar editando"
+		},
 		"enableFilter": "Ativar {filter}",
 		"disableFilter": "Desativar {filter}",
 		"categoryDifficulty": "Dificuldade",

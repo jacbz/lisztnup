@@ -261,6 +261,12 @@
 			"nameRequired": "La lista debe tener un nombre",
 			"duplicateName": "Ya existe una lista con este nombre"
 		},
+		"closeDialog": {
+			"title": "¿Descartar cambios?",
+			"message": "Tienes cambios sin guardar. ¿Seguro que quieres cerrar sin guardar?",
+			"confirm": "Descartar",
+			"cancel": "Seguir editando"
+		},
 		"enableFilter": "Habilitar {filter}",
 		"disableFilter": "Deshabilitar {filter}",
 		"categoryDifficulty": "Dificultad",
