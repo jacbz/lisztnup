@@ -1,6 +1,4 @@
 <script lang="ts">
-	import Play from 'lucide-svelte/icons/play';
-	import Square from 'lucide-svelte/icons/square';
 	import type { Track } from '$lib/types';
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';
 	import Popup from '../primitives/Popup.svelte';
@@ -9,6 +7,7 @@
 	import { onMount } from 'svelte';
 	import { playerState } from '$lib/services';
 	import Visualizer from './Visualizer.svelte';
+	import PlayStopIcon from './PlayStopIcon.svelte';
 
 	interface Props {
 		visible?: boolean;
@@ -219,18 +218,8 @@
 						<span class="font-bold tracking-widest text-cyan-400 uppercase"
 							>{$_('game.reveal')}</span
 						>
-					{:else if isPlaying}
-						<Square
-							class="text-cyan-400"
-							fill="currentColor"
-							size={progressPath.buttonSize * 0.41}
-						/>
 					{:else}
-						<Play
-							class="ml-2 text-cyan-400"
-							fill="currentColor"
-							size={progressPath.buttonSize * 0.41}
-						/>
+						<PlayStopIcon {isPlaying} size={progressPath.buttonSize * 0.41} />
 					{/if}
 				</div>
 			</button>

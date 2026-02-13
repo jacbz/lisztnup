@@ -9,7 +9,7 @@
   <h3 align="center">Liszt’n Up!</h3>
 
   <p align="center">
-    A classical music guessing game.
+    The Classical Music Guessing Game.
     <br />
     <a href="https://lisztnup.jacobzhang.de/"><strong>Play »</strong></a>
   </p>
@@ -24,7 +24,7 @@
 
 The game is built on a massive dataset of roughly **8,000 works** from over **600 composers** sourced from [MusicBrainz](https://musicbrainz.org/), totaling nearly **20,000 tracks**. Rather than manual curation, the system filters works based on the number of available recordings. Predefined tracklists are generated automatically, with only little manual tweaking to ensure a good mix of popular and lesser-known pieces. Users can also create custom tracklists from the entire library.
 
-Designed as a modern Single Page Application, _Liszt’n Up!_ runs entirely client-side without a backend database. It is optimized for tablet usage (ideal for placing in the center of a table during a game night) and includes a custom audio engine that performs real-time volume normalization for a consistent listening experience.
+Designed as a modern Single Page Application, _Liszt’n Up!_ is optimized for tablet usage (ideal for placing in the center of a table during a game night) and includes a custom audio engine that performs real-time volume normalization for a consistent listening experience.
 
 ### Game Modes
 
