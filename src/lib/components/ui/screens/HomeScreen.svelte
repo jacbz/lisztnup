@@ -305,9 +305,9 @@
 									<button
 										type="button"
 										onclick={() => playerSetupRef?.addPlayer()}
-										disabled={!enableScoring}
-										class:opacity-40={!enableScoring}
-										class:pointer-events-none={!enableScoring}
+										disabled={!enableScoring && selectedMode !== 'timeline'}
+										class:opacity-40={!enableScoring && selectedMode !== 'timeline'}
+										class:pointer-events-none={!enableScoring && selectedMode !== 'timeline'}
 										class="rounded-lg border-2 border-cyan-400/30 bg-slate-900 px-3 py-1.5 text-sm font-semibold text-cyan-400 transition-all duration-200 hover:border-cyan-400 hover:bg-slate-800"
 									>
 										<Plus class="inline h-4 w-4" />
@@ -317,7 +317,10 @@
 							</div>
 						</div>
 						<!-- Player Setup -->
-						<div class:opacity-40={!enableScoring} class:pointer-events-none={!enableScoring}>
+						<div
+							class:opacity-40={!enableScoring && selectedMode !== 'timeline'}
+							class:pointer-events-none={!enableScoring && selectedMode !== 'timeline'}
+						>
 							<PlayerSetup
 								mode={selectedMode}
 								onPlayersChange={handlePlayersChange}
