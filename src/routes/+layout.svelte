@@ -8,7 +8,7 @@
 </script>
 
 <svelte:head>
-	<title>{$_('app.title')} - {$_('app.subtitle')} (Hitster-inspired)</title>
+	<title>{$_('app.title')} - {$_('app.subtitle')} (inspired by Hitster)</title>
 	<meta name="description" content="A Hitster-inspired classical music game." />
 	<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />

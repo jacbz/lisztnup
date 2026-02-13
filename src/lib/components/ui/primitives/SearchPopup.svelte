@@ -133,7 +133,7 @@
 				>
 					<div class="flex items-center justify-center gap-2">
 						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-						<div class="flex h-8 w-8 items-center justify-center">
+						<div class="flex h-8 w-8">
 							{@html provider.icon}
 						</div>
 					</div>
