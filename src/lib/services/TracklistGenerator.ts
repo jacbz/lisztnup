@@ -63,11 +63,6 @@ export class TracklistGenerator {
 		} else {
 			works = [...this.data.works];
 
-			// Step 0: Optionally require explicit work year data (used by game modes that depend on years)
-			if (this.requireWorkYear) {
-				works = works.filter((work) => work.begin_year != null || work.end_year != null);
-			}
-
 			// Step 1: Apply category adjustments to work scores
 			if (config.categoryAdjustments) {
 				works = works.map((work) => ({
@@ -258,6 +253,11 @@ export class TracklistGenerator {
 
 				return { ...work, parts: topParts };
 			});
+		}
+
+		// In game modes that require work years, filter out works without any year data
+		if (this.requireWorkYear) {
+			works = works.filter((work) => work.begin_year != null || work.end_year != null);
 		}
 
 		// Rebuild composer set from final works list

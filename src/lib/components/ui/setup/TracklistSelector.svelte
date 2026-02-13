@@ -200,6 +200,18 @@
 	function isSameTracklist(a: Tracklist, b: Tracklist): boolean {
 		return a.name === b.name && a.isDefault === b.isDefault;
 	}
+
+	// Scroll to selected tracklist when popup opens
+	$effect(() => {
+		if (visible && !showEditor && !showViewer) {
+			setTimeout(() => {
+				const selectedCard = document.querySelector('[data-selected="true"]');
+				selectedCard?.scrollIntoView({
+					block: 'center'
+				});
+			}, 0);
+		}
+	});
 </script>
 
 <Popup visible={visible && !showEditor && !showViewer} {onClose} width="3xl">
@@ -303,6 +315,7 @@
 {#snippet tracklistCard(tracklist: Tracklist)}
 	{@const selected = isSameTracklist(tracklist, selectedTracklist)}
 	<div
+		data-selected={selected}
 		class="relative flex flex-col gap-2 rounded-xl p-4 transition-all {selected
 			? 'border-2 border-cyan-400 bg-slate-900 text-white shadow-[0_0_20px_rgba(34,211,238,0.4)]'
 			: 'border-2 border-slate-700 bg-slate-800 text-slate-300 hover:border-cyan-400/50 hover:bg-slate-700'}"
