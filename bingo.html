@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+		/>
+		
+		<link href="./_app/immutable/assets/0.BnwEOcn9.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/Logo.a0JxZiM1.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.DmZ0ABkG.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/B0NAqv8K.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/Cnc0drAn.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/CRhUktne.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.DGT-UyKj.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/DsnmJJEf.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/DMatXIJL.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/DE3sZzc3.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/cFXEhR4b.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.BpW0qMOP.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/ryWehfKG.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/DtAwGqXd.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/DSnbFVBB.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/3._V52ZH6r.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/edkJ7dHI.js"><!--[--><meta name="description" content="A Hitster-inspired classical music game."/> <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96"/> <link rel="icon" type="image/svg+xml" href="/favicon.svg"/> <link rel="shortcut icon" href="/favicon.ico"/> <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/> <meta name="apple-mobile-web-app-title" content="Liszt’n Up!"/> <link rel="manifest" href="/site.webmanifest"/> <link rel="preconnect" href="https://fonts.googleapis.com"/> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/><!--]--><!--[--><style>
+		@keyframes winningGlow {
+			0%,
+			100% {
+				box-shadow:
+					0 0 20px rgba(255, 255, 255, 0.4),
+					0 0 10px rgba(255, 255, 255, 0.3);
+				border-color: rgba(255, 255, 255, 0.8);
+			}
+			50% {
+				box-shadow:
+					0 0 40px rgba(255, 255, 255, 0.8),
+					0 0 20px rgba(255, 255, 255, 0.6),
+					0 0 10px rgba(255, 255, 255, 0.4);
+				border-color: rgba(255, 255, 255, 1);
+			}
+		}
+
+		.winning-cell {
+			animation: winningGlow 2s ease-in-out infinite;
+		}
+
+		@media print {
+			@page {
+				margin: 0;
+				size: auto;
+			}
+
+			body {
+				margin: 0;
+				padding: 0;
+			}
+
+			/* Hide buttons and guess box */
+			.no-print {
+				display: none !important;
+			}
+
+			/* Show footer only on print */
+			.print-only {
+				display: block !important;
+			}
+
+			.grid {
+				width: 100%;
+			}
+
+			/* Disable animations on print */
+			.winning-cell {
+				animation: none !important;
+			}
+		}
+
+		/* Hide footer on screen */
+		.print-only {
+			display: none;
+		}
+	</style><!--]--><title>Liszt’n Up! - Bingo</title>
+	</head>
+
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents"><!--[--><!--[--><!----><div class="min-h-full w-full"><!----><div class="fixed inset-0 flex flex-col text-white"><!--[!--><!--]--> <div class="print-only absolute bottom-4 w-full text-center text-slate-400"><span class="text-sm">A Game by Jacob Zhang</span></div></div> <!--[!--><!--]--><!----> <!--[!--><!--]--><!----><!----><!----> <div class="pointer-events-none fixed top-5 right-5 z-9999 flex max-w-[400px] flex-col gap-3"><!--[--><!--]--></div><!----></div><!----><!--]--> <!--[!--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_1wc27ss = {
+						base: new URL(".", location).pathname.slice(0, -1)
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("./_app/immutable/entry/start.DmZ0ABkG.js"),
+						import("./_app/immutable/entry/app.DGT-UyKj.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 3],
+							data: [null,null],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>
