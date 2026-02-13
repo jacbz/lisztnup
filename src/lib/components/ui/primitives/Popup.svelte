@@ -50,6 +50,7 @@
 		showCloseButton?: boolean;
 		/**
 		 * Rotation angle for the popup (in degrees).
+		 * Only applied at md breakpoint and above.
 		 * @default 0
 		 */
 		rotation?: number;
@@ -157,14 +158,14 @@
 		<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<div
-			class="pointer-events-auto"
+			class="popup-rotation pointer-events-auto"
 			onclick={(e) => e.stopPropagation()}
 			role="dialog"
 			aria-modal="true"
 			tabindex="-1"
 			in:scale={{ duration: 300, easing: cubicOut, start: 0.9 }}
 			out:scale={{ duration: 200, easing: cubicOut, start: 0.9 }}
-			style="transform: rotate({rotation}deg);"
+			style="--rotation: {rotation}deg;"
 		>
 			<div class={containerClasses} style={containerStyle}>
 				<!-- Close Button -->
@@ -184,3 +185,16 @@
 		</div>
 	</div>
 {/if}
+
+<style>
+	.popup-rotation {
+		/* Rotation only applies at md breakpoint and above */
+		transform: rotate(0deg);
+	}
+
+	@media (min-width: 768px) {
+		.popup-rotation {
+			transform: rotate(var(--rotation, 0deg));
+		}
+	}
+</style>
