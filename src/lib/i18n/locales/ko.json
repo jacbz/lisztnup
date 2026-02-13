@@ -449,6 +449,7 @@
 		"title": "게임 종료!",
 		"winner": "{name} 승리!",
 		"tie": "무승부!",
+		"noMoreTracks": "더 이상 재생할 곡이 없습니다.",
 		"finalScores": "최종 점수",
 		"viewStats": "통계 보기",
 		"playAgain": "다시 하기",
@@ -462,9 +463,7 @@
 			"playFirst": "먼저 카드를 재생하세요.",
 			"dragToPlace": "타임라인의 적절한 위치로 카드를 드래그하세요.",
 			"reorder": "위치를 조정한 뒤 확정 버튼을 누르세요."
-		},
-		"gameOver": "게임 종료",
-		"winner": "승자: {name}"
+		}
 	},
 	"bingo": {
 		"setupDescription": "각 플레이어는 자신만의 빙고판이 필요합니다.",

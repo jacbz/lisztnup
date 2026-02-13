@@ -449,6 +449,7 @@
 		"title": "¡Fin del juego!",
 		"winner": "¡{name} gana!",
 		"tie": "¡Empate!",
+		"noMoreTracks": "No quedan más tracks.",
 		"finalScores": "Puntuaciones finales",
 		"viewStats": "Ver estadísticas",
 		"playAgain": "Jugar de nuevo",
@@ -462,9 +463,7 @@
 			"playFirst": "Juega la carta para empezar tu turno.",
 			"dragToPlace": "Arrastra la carta a tu línea de tiempo.",
 			"reorder": "Reordena la carta en tu línea, luego confirma."
-		},
-		"gameOver": "Fin del juego",
-		"winner": "Ganador: {name}"
+		}
 	},
 	"bingo": {
 		"setupDescription": "Cada jugador necesita su propio cartón de bingo único.",

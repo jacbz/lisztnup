@@ -449,6 +449,7 @@
 		"title": "游戏结束！",
 		"winner": "{name} 获胜！",
 		"tie": "平局！",
+		"noMoreTracks": "没有更多曲目了。",
 		"finalScores": "最终得分",
 		"viewStats": "查看统计",
 		"playAgain": "再玩一次",
@@ -461,9 +462,7 @@
 			"playFirst": "播放卡牌以开始回合。",
 			"dragToPlace": "将卡牌拖入你的时间线。",
 			"reorder": "调整位置后再确认。"
-		},
-		"gameOver": "游戏结束",
-		"winner": "胜者：{name}"
+		}
 	},
 	"bingo": {
 		"setupDescription": "每位玩家需要拥有自己独特的宾果盘。",

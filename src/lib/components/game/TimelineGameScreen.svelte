@@ -38,6 +38,7 @@
 		sampleRawTrack: () => Track | null;
 		audioProgress: import('svelte/store').Readable<number>;
 		onHome: () => void;
+		get tracksExhausted(): boolean;
 	};
 
 	// --- Audio Progress Sync ---
@@ -265,6 +266,14 @@
 				// New card means reset local playback state
 				hasPlaybackStarted = false;
 			}
+		}
+	});
+
+	// Watch for track exhaustion from GameScreen
+	$effect(() => {
+		if (gameContext.tracksExhausted && !uiState.isDealing) {
+			gameContext.stopTrack();
+			uiState.showEndGame = true;
 		}
 	});
 
@@ -960,6 +969,7 @@
 	visible={uiState.showEndGame}
 	{cardsToWin}
 	timelines={gameState.timelines}
+	tracksExhausted={gameContext.tracksExhausted}
 	onHome={handleQuit}
 	onPlayAgain={handlePlayAgain}
 />

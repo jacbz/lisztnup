@@ -12,6 +12,7 @@
 		isSoloMode?: boolean;
 		mode?: GameMode;
 		enableScoring?: boolean;
+		tracksExhausted?: boolean;
 		onPlayAgain?: () => void;
 		onViewStats?: () => void;
 		onHome?: () => void;
@@ -22,6 +23,7 @@
 		players = [],
 		isSoloMode = false,
 		enableScoring = true,
+		tracksExhausted = false,
 		onViewStats = () => {},
 		onHome = () => {}
 	}: Props = $props();
@@ -56,6 +58,9 @@
 							{$_('endGame.winner', { values: { name: winner.name } })}
 						{/if}
 					</h1>
+					{#if tracksExhausted}
+						<p class="mt-1 text-sm text-slate-400">{$_('endGame.noMoreTracks')}</p>
+					{/if}
 				</div>
 			{:else if isSoloMode && enableScoring}
 				<div class="mb-10 text-center">
@@ -66,6 +71,9 @@
 					<h1 class="text-[40px] font-bold text-cyan-400 sm:text-[32px]">
 						{$_('game.gameOver')}
 					</h1>
+					{#if tracksExhausted}
+						<p class="mt-1 text-sm text-slate-400">{$_('endGame.noMoreTracks')}</p>
+					{/if}
 					{#if sortedPlayers.length > 0}
 						<p class="mt-4 text-3xl font-bold text-white">
 							{$_('scoring.pts', { values: { points: sortedPlayers[0].score } })}
@@ -81,6 +89,9 @@
 					<h1 class="text-[40px] font-bold text-cyan-400 sm:text-[32px]">
 						{$_('game.gameOver')}
 					</h1>
+					{#if tracksExhausted}
+						<p class="mt-1 text-sm text-slate-400">{$_('endGame.noMoreTracks')}</p>
+					{/if}
 				</div>
 			{/if}
 

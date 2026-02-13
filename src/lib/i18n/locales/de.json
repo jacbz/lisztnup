@@ -449,6 +449,7 @@
 		"title": "Spiel vorbei!",
 		"winner": "{name} gewinnt!",
 		"tie": "Unentschieden!",
+		"noMoreTracks": "Keine weiteren Tracks verfügbar.",
 		"finalScores": "Endstand",
 		"viewStats": "Statistik ansehen",
 		"playAgain": "Nochmal spielen",
@@ -462,9 +463,7 @@
 			"playFirst": "Spiele die Karte ab, um zu beginnen.",
 			"dragToPlace": "Ziehe die Karte in deine Timeline.",
 			"reorder": "Ordne die Karte um und bestätige."
-		},
-		"gameOver": "Spiel beendet",
-		"winner": "Gewinner: {name}"
+		}
 	},
 	"bingo": {
 		"setupDescription": "Jeder Spieler benötigt sein eigenes Bingo-Gitter.",

@@ -449,6 +449,7 @@
 		"title": "Game Over!",
 		"winner": "{name} Vince!",
 		"tie": "Pareggio!",
+		"noMoreTracks": "Nessuna altra traccia disponibile.",
 		"finalScores": "Punteggi Finali",
 		"viewStats": "Vedi Statistiche",
 		"playAgain": "Gioca Ancora",
@@ -462,9 +463,7 @@
 			"playFirst": "Gioca la carta per iniziare il turno.",
 			"dragToPlace": "Trascina la carta nella tua timeline.",
 			"reorder": "Riordina la carta nella timeline, poi conferma."
-		},
-		"gameOver": "Game Over",
-		"winner": "Vincitore: {name}"
+		}
 	},
 	"bingo": {
 		"setupDescription": "Ogni giocatore ha bisogno della propria cartella bingo unica.",

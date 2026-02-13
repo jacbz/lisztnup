@@ -80,6 +80,7 @@
 	let showEndGameScreen = $state(false);
 	let showInGameSettings = $state(false);
 	let showQuitDialog = $state(false);
+	let tracksExhausted = $state(false);
 
 	// Start game session on mount
 	onMount(() => {
@@ -129,8 +130,9 @@
 			const track = sampleNextTrack();
 			if (!track) {
 				// No more tracks available - end the game
-				if (mode !== 'timeline') {
-					toast.show('error', 'No more tracks available to sample');
+				if (mode === 'timeline') {
+					tracksExhausted = true;
+				} else {
 					showEndGameScreen = true;
 				}
 				return;
@@ -283,6 +285,7 @@
 
 	function handlePlayAgain(): void {
 		showEndGameScreen = false;
+		tracksExhausted = false;
 		resetGame();
 		gameSession.startSession(mode, players, isSoloMode);
 		sampleAndPreloadTrack();
@@ -323,6 +326,9 @@
 		},
 		get hasValidYears() {
 			return hasValidYears;
+		},
+		get tracksExhausted() {
+			return tracksExhausted;
 		},
 		enableScoring
 	});
@@ -498,6 +504,7 @@
 	{isSoloMode}
 	{mode}
 	{enableScoring}
+	{tracksExhausted}
 	onPlayAgain={handlePlayAgain}
 	onViewStats={handleViewStatsFromEndGame}
 	onHome={handleHome}

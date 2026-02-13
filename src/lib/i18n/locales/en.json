@@ -449,6 +449,7 @@
 		"title": "Game Over!",
 		"winner": "{name} Wins!",
 		"tie": "It's a Tie!",
+		"noMoreTracks": "No more tracks available.",
 		"finalScores": "Final Scores",
 		"viewStats": "View Statistics",
 		"playAgain": "Play Again",
@@ -462,9 +463,7 @@
 			"playFirst": "Play the card to begin your turn.",
 			"dragToPlace": "Drag the card into your timeline.",
 			"reorder": "Reorder the card in your timeline, then confirm."
-		},
-		"gameOver": "Game Over",
-		"winner": "Winner: {name}"
+		}
 	},
 	"bingo": {
 		"setupDescription": "Each player needs their own unique bingo grid.",

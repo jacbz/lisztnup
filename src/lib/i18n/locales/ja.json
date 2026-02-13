@@ -449,6 +449,7 @@
 		"title": "ゲーム終了！",
 		"winner": "{name} の勝利！",
 		"tie": "引き分け！",
+		"noMoreTracks": "再生できる曲がなくなりました。",
 		"finalScores": "最終スコア",
 		"viewStats": "詳細データを見る",
 		"playAgain": "もう一度遊ぶ",
@@ -462,9 +463,7 @@
 			"playFirst": "カードを再生して開始します。",
 			"dragToPlace": "カードをタイムラインにドラッグしてください。",
 			"reorder": "配置を調整してから確定してください。"
-		},
-		"gameOver": "ゲーム終了",
-		"winner": "勝者: {name}"
+		}
 	},
 	"bingo": {
 		"setupDescription": "各プレイヤーは自分の端末で専用のビンゴカードを開く必要があります。",

@@ -449,6 +449,7 @@
 		"title": "Partie terminée !",
 		"winner": "{name} a gagné !",
 		"tie": "Égalité parfaite !",
+		"noMoreTracks": "Plus de morceaux disponibles.",
 		"finalScores": "Scores finaux",
 		"viewStats": "Voir les stats",
 		"playAgain": "Rejouer",
@@ -462,9 +463,7 @@
 			"playFirst": "Jouez la carte pour commencer.",
 			"dragToPlace": "Glissez la carte dans votre timeline.",
 			"reorder": "Réorganisez la carte puis confirmez."
-		},
-		"gameOver": "Partie terminée",
-		"winner": "Gagnant : {name}"
+		}
 	},
 	"bingo": {
 		"setupDescription": "Chaque joueur a besoin de sa propre grille unique.",

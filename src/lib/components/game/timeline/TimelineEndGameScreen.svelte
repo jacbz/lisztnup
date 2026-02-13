@@ -15,6 +15,7 @@
 		visible?: boolean;
 		cardsToWin: number;
 		timelines: FinalTimeline[];
+		tracksExhausted?: boolean;
 		onHome?: () => void;
 		onPlayAgain?: () => void;
 	}
@@ -23,16 +24,41 @@
 		visible = false,
 		cardsToWin,
 		timelines,
+		tracksExhausted = false,
 		onHome = () => {},
 		onPlayAgain = () => {}
 	}: Props = $props();
 
 	let inspectTrack = $state<Track | null>(null);
 
-	const winner = $derived(
-		timelines
+	// Winner: player who reached cardsToWin, or if tracks exhausted, player with most cards
+	const winner = $derived.by(() => {
+		// First check for a player who reached the target
+		const targetWinner = timelines
 			.filter((t) => t.entries.length >= cardsToWin)
-			.sort((a, b) => b.entries.length - a.entries.length)[0]?.player ?? null
+			.sort((a, b) => b.entries.length - a.entries.length)[0]?.player;
+		if (targetWinner) return targetWinner;
+
+		// If tracks exhausted, find the leader(s)
+		if (tracksExhausted && timelines.length > 0) {
+			const sorted = [...timelines].sort((a, b) => b.entries.length - a.entries.length);
+			const maxCards = sorted[0].entries.length;
+			const leaders = sorted.filter((t) => t.entries.length === maxCards);
+			// Only declare a winner if there's a single leader
+			if (leaders.length === 1) return leaders[0].player;
+		}
+
+		return null;
+	});
+
+	const isDraw = $derived(
+		tracksExhausted &&
+			!winner &&
+			timelines.length > 1 &&
+			(() => {
+				const sorted = [...timelines].sort((a, b) => b.entries.length - a.entries.length);
+				return sorted.length >= 2 && sorted[0].entries.length === sorted[1].entries.length;
+			})()
 	);
 
 	const revealYearText = $derived.by(() => {
@@ -46,10 +72,17 @@
 <Popup {visible} onClose={() => {}} width="5xl" padding="lg" showCloseButton={false}>
 	<div class="flex flex-col gap-6">
 		<div class="text-center">
-			<h2 class="text-4xl font-bold text-cyan-400">{$_('timeline.gameOver')}</h2>
+			<h2 class="text-4xl font-bold text-cyan-400">{$_('endGame.title')}</h2>
+			{#if tracksExhausted}
+				<p class="mt-1 text-sm text-slate-400">{$_('endGame.noMoreTracks')}</p>
+			{/if}
 			{#if winner}
 				<p class="mt-2 text-lg text-slate-300">
-					{$_('timeline.winner', { values: { name: winner.name } })}
+					{$_('endGame.winner', { values: { name: winner.name } })}
+				</p>
+			{:else if isDraw}
+				<p class="mt-2 text-lg text-slate-300">
+					{$_('endGame.tie')}
 				</p>
 			{/if}
 		</div>
@@ -76,14 +109,14 @@
 				onclick={onPlayAgain}
 				class="rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3 font-bold text-cyan-400 transition-all hover:bg-slate-800 hover:shadow-[0_0_25px_rgba(34,211,238,0.5)] active:scale-95"
 			>
-				{$_('game.playAgain')}
+				{$_('endGame.playAgain')}
 			</button>
 			<button
 				type="button"
 				onclick={onHome}
 				class="rounded-xl border-2 border-slate-600 bg-slate-900 px-6 py-3 font-bold text-slate-200 transition-all hover:bg-slate-800 active:scale-95"
 			>
-				{$_('game.home')}
+				{$_('endGame.home')}
 			</button>
 		</div>
 	</div>
