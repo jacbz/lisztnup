@@ -60,7 +60,6 @@
 	let gameState = $state({
 		timelines: [] as { player: Player; entries: TimelineEntry[] }[],
 		activePlayerIndex: 0,
-		drawPile: [] as Track[], // Raw tracks for visuals/refill
 		centerStack: [] as { track: Track; id: string }[], // Visual stack
 
 		turnPhase: 'idle' as string,
@@ -275,22 +274,19 @@
 		return crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`;
 	}
 
-	function refillDrawPile(minCount: number) {
-		while (gameState.drawPile.length < minCount) {
-			const next = gameContext.sampleRawTrack();
-			if (!next) break;
-			gameState.drawPile.push(next);
-		}
-	}
-
+	/**
+	 * Ensures the center stack has enough entries for visual depth.
+	 * Sub-cards (below the top) are face-down and purely decorative,
+	 * so they reuse the top card's track as a placeholder.
+	 * This avoids consuming tracks from the generator for visual-only purposes,
+	 * which would exhaust small tracklists before audio can be loaded.
+	 */
 	function restockCenterStack() {
 		const targetDepth = 6;
+		if (gameState.centerStack.length === 0) return; // Need at least a top card
+		const placeholderTrack = gameState.centerStack[0].track;
 		while (gameState.centerStack.length < targetDepth) {
-			if (gameState.drawPile.length === 0) refillDrawPile(20);
-			if (gameState.drawPile.length === 0) break;
-
-			const next = gameState.drawPile.pop();
-			if (next) gameState.centerStack.push({ track: next, id: newId() });
+			gameState.centerStack.push({ track: placeholderTrack, id: newId() });
 		}
 	}
 
@@ -299,31 +295,38 @@
 
 		gameState.timelines = players.map((p) => ({ player: p, entries: [] }));
 		gameState.activePlayerIndex = 0;
-		gameState.drawPile = [];
-		refillDrawPile(20);
 
+		// Sample exactly the tracks we need for dealing (one per player).
+		const dealTracks: Track[] = [];
+		for (let i = 0; i < players.length; i++) {
+			const track = gameContext.sampleRawTrack();
+			if (track) dealTracks.push(track);
+		}
+
+		// Seed center stack with the first deal track (or a placeholder)
+		// so the visual card pile is visible during dealing animation.
 		gameState.centerStack = [];
-		// We fill the stack with raw cards first
-		restockCenterStack();
-
-		// The effect above will check $tracklist and replace the top card with the preloaded one
-		// shortly after this runs.
+		if (dealTracks.length > 0) {
+			gameState.centerStack.push({ track: dealTracks[0], id: newId() });
+			restockCenterStack();
+		}
 
 		// Wait a tick to let the empty timelines render in natural order
 		await new Promise((r) => setTimeout(r, 500));
 
-		// Deal cards
-		for (let i = 0; i < gameState.timelines.length; i++) {
+		// Deal cards from the pre-sampled deal tracks
+		for (let i = 0; i < dealTracks.length; i++) {
 			uiState.dealingToName = gameState.timelines[i].player.name;
 
-			const item = gameState.centerStack.shift();
-			restockCenterStack();
-
-			if (!item) break;
+			// Visually shift the top card off the stack
+			if (gameState.centerStack.length > 0) {
+				gameState.centerStack.shift();
+				restockCenterStack();
+			}
 
 			const entry: TimelineEntry = {
 				id: newId(),
-				track: item.track,
+				track: dealTracks[i],
 				confirmed: true,
 				correct: null,
 				isDiscarding: false
@@ -333,9 +336,15 @@
 			await new Promise((r) => setTimeout(r, 600));
 		}
 
-		// Ensure the top card is the verified one from tracklist if available
-		if (gameState.centerStack.length > 0 && loadedTrack) {
-			gameState.centerStack[0].track = loadedTrack;
+		// Ensure the top card is the audio-loaded track from the tracklist.
+		// GameScreen.sampleAndPreloadTrack() loaded this into $tracklist on mount.
+		if (loadedTrack) {
+			if (gameState.centerStack.length > 0) {
+				gameState.centerStack[0].track = loadedTrack;
+			} else {
+				gameState.centerStack.push({ track: loadedTrack, id: newId() });
+				restockCenterStack();
+			}
 		}
 
 		uiState.dealingToName = null;
@@ -682,6 +691,9 @@
 		});
 
 		rotateToNextPlayer();
+		// Visual depth is restocked after the $effect syncs the new top card
+		// from $tracklist (triggered by nextRound incrementing currentTrackIndex).
+		// restockCenterStack only fills face-down placeholder cards below the top.
 		restockCenterStack();
 		resetTurnState();
 	}
