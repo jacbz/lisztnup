@@ -5,7 +5,12 @@
 		"on": "开",
 		"off": "关",
 		"confirm": "确认",
-		"reportProblem": "报告问题"
+		"reportProblem": "报告问题",
+		"searchOn": "搜索..."
+	},
+	"search": {
+		"title": "搜索...",
+		"searchFor": "搜索："
 	},
 	"app": {
 		"title": "Liszt’n Up!",

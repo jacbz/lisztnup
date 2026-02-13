@@ -879,7 +879,7 @@
 		{/each}
 	{:else}
 		<!-- Compact horizontal layout for shorter screens -->
-		<div class="fixed top-42 right-48 left-48 z-200 md:left-auto">
+		<div class="fixed top-[33dvh] right-50 left-50 z-200 md:left-auto">
 			{@render cardStackDisplay()}
 		</div>
 

@@ -5,7 +5,12 @@
 		"on": "Sí",
 		"off": "No",
 		"confirm": "Confirmar",
-		"reportProblem": "Reportar un problema"
+		"reportProblem": "Reportar un problema",
+		"searchOn": "Buscar en..."
+	},
+	"search": {
+		"title": "Buscar en...",
+		"searchFor": "Buscar:"
 	},
 	"app": {
 		"title": "Liszt’n Up!",

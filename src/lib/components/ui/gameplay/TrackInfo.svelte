@@ -5,12 +5,15 @@
 		formatLifespan,
 		formatYearRange,
 		formatPartName,
-		getWorkEra
+		getWorkEra,
+		getComposerLastName
 	} from '$lib/utils';
 	import { deezerPlayer, playerState } from '$lib/services';
 	import deezer from '$lib/assets/icons/deezer.svg?raw';
 	import { _ } from 'svelte-i18n';
 	import { Flag } from 'lucide-svelte';
+	import Search from 'lucide-svelte/icons/search';
+	import SearchPopup from '../primitives/SearchPopup.svelte';
 
 	interface Props {
 		track: Track | null;
@@ -19,7 +22,10 @@
 
 	let { track = null, showUpsideDown = true }: Props = $props();
 
+	let showSearchPopup = $state(false);
+
 	const composerName = $derived(track ? formatComposerName(track.composer.name) : '');
+	const composerLastName = $derived(track ? getComposerLastName(track.composer.name) : '');
 	const lifespan = $derived(
 		track ? formatLifespan(track.composer.birth_year, track.composer.death_year) : ''
 	);
@@ -179,18 +185,36 @@
 			</a>
 		{/if}
 
-		<!-- Report a problem link -->
-		<a
-			href={reportProblemUrl}
-			target="_blank"
-			rel="noopener noreferrer external"
-			data-sveltekit-reload
-			data-sveltekit-noscroll
-			data-sveltekit-preload-data="false"
-			class="flex items-center justify-center gap-1.5 text-[0.65rem] text-slate-400 no-underline transition-all duration-300 hover:text-slate-300"
-		>
-			<Flag class="h-2 w-2" />
-			<span>{$_('common.reportProblem')}</span>
-		</a>
+		<!-- Report a problem and Search on... links -->
+		<div class="flex items-center justify-center gap-2 text-[0.8rem] text-slate-400">
+			<a
+				href={reportProblemUrl}
+				target="_blank"
+				rel="noopener noreferrer external"
+				data-sveltekit-reload
+				data-sveltekit-noscroll
+				data-sveltekit-preload-data="false"
+				class="flex items-center gap-1.5 no-underline transition-all duration-300 hover:text-slate-300"
+			>
+				<Flag class="h-2.5 w-2.5" />
+				<span>{$_('common.reportProblem')}</span>
+			</a>
+			<span class="text-slate-500">·</span>
+			<button
+				type="button"
+				onclick={() => (showSearchPopup = true)}
+				class="flex items-center gap-1.5 no-underline transition-all duration-300 hover:text-slate-300"
+			>
+				<Search class="h-2.5 w-2.5" />
+				<span>{$_('common.searchOn')}</span>
+			</button>
+		</div>
 	</div>
 {/if}
+
+<SearchPopup
+	visible={showSearchPopup}
+	{composerLastName}
+	workName={track?.work.name ?? ''}
+	onClose={() => (showSearchPopup = false)}
+/>

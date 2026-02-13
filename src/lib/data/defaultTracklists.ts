@@ -79,6 +79,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				'273fea50', // Beethoven 4
 				'256f32ec', // Beethoven 8
 				'8f8c2b3e', // Debussy - L'Isle joyeuse
+				'df86a927', // Debussy - Préludes Book II
+				'937f3282', // Debussy - Syrinx
 				'26ea58b3', // De Falla - El amor brujo
 				'085103a5', // Holst - In the Bleak Midwinter,
 				'4344e777', // Rodrigo - Concierto de Aranjuez

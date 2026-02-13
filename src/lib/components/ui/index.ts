@@ -15,6 +15,7 @@ export { default as ExternalLink } from './primitives/ExternalLink.svelte';
 export { default as QRCode } from './primitives/QRCode.svelte';
 export { default as Logo } from './primitives/Logo.svelte';
 export { default as ScoringCard } from './primitives/ScoringCard.svelte';
+export { default as SearchPopup } from './primitives/SearchPopup.svelte';
 
 // Setup - Game/player setup components
 export { default as ModeSelector } from './setup/ModeSelector.svelte';

@@ -2,11 +2,14 @@
 	import '../app.css';
 	import '$lib/i18n'; // Initialize i18n
 	import Toast from '$lib/components/ui/primitives/Toast.svelte';
+	import { _ } from 'svelte-i18n';
 
 	let { children } = $props();
 </script>
 
 <svelte:head>
+	<title>{$_('app.title')} - {$_('app.subtitle')} (Hitster-inspired)</title>
+	<meta name="description" content="A Hitster-inspired classical music game." />
 	<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 	<link rel="shortcut icon" href="/favicon.ico" />
@@ -16,7 +19,6 @@
 	<!-- Preconnect to Google Fonts for faster CJK font loading -->
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-	<title>Liszt’n Up!</title>
 </svelte:head>
 
 <div class="min-h-full w-full">

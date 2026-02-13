@@ -5,7 +5,12 @@
 		"on": "켜기",
 		"off": "끄기",
 		"confirm": "확인",
-		"reportProblem": "문제 신고"
+		"reportProblem": "문제 신고",
+		"searchOn": "검색..."
+	},
+	"search": {
+		"title": "검색...",
+		"searchFor": "검색 대상:"
 	},
 	"app": {
 		"title": "Liszt’n Up!",

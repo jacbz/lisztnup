@@ -5,9 +5,7 @@
 [![Contributors][contributors-shield]][contributors-url]
 [![Apache License][license-shield]][license-url]
 
-<br />
 <div align="center">
-
   <h3 align="center">Liszt’n Up!</h3>
 
   <p align="center">
@@ -16,13 +14,8 @@
     <a href="https://lisztnup.jacobzhang.de/"><strong>Play »</strong></a>
   </p>
   <a href="https://lisztnup.jacobzhang.de/">
-    <img src="https://i.imgur.com/YPbd1Lq.png" width="450px" alt="Liszt’n Up!"/>
+    <img src="https://i.imgur.com/YPbd1Lq.png" width="600px" alt="Liszt’n Up!"/>
   </a>
-  <p align="center">
-    <a href="https://github.com/jacbz/lisztnup/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/jacbz/lisztnup/issues">Request Feature</a>
-  </p>
 </div>
 
 ## About

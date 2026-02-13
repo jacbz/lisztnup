@@ -5,7 +5,12 @@
 		"on": "オン",
 		"off": "オフ",
 		"confirm": "確定",
-		"reportProblem": "問題を報告"
+		"reportProblem": "問題を報告",
+		"searchOn": "検索..."
+	},
+	"search": {
+		"title": "検索...",
+		"searchFor": "検索対象:"
 	},
 	"app": {
 		"title": "Liszt’n Up!",
