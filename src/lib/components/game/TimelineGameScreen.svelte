@@ -36,6 +36,7 @@
 		nextRound: () => Promise<void>;
 		handlePlaybackEnd: () => void;
 		sampleRawTrack: () => Track | null;
+		prepareNewGame: () => void;
 		audioProgress: import('svelte/store').Readable<number>;
 		onHome: () => void;
 		get tracksExhausted(): boolean;
@@ -240,7 +241,9 @@
 	// --- Track Synchronization ---
 	// GameScreen preloads tracks into $tracklist. We watch for the newest track
 	// and update the top of our center stack to match it.
-	let processedTrackIndex = -1;
+	// We compare by track object identity (not index) so replacements at the
+	// same index (e.g. after a Deezer load failure) are still picked up.
+	let lastSyncedTrack: Track | null = null;
 
 	$effect(() => {
 		// Prevent syncing while dealing to ensure the preloaded "Turn 1" track
@@ -251,9 +254,9 @@
 		if ($currentRound.currentTrackIndex < $tracklist.length) {
 			const track = $tracklist[$currentRound.currentTrackIndex];
 
-			// Only update if we haven't processed this specific round index yet
-			if ($currentRound.currentTrackIndex > processedTrackIndex) {
-				processedTrackIndex = $currentRound.currentTrackIndex;
+			// Only update if the track is new (identity check handles same-index replacements)
+			if (track && track !== lastSyncedTrack) {
+				lastSyncedTrack = track;
 
 				// If stack is empty (start of game), push it.
 				// If stack has items (gameplay), replace the top one.
@@ -301,6 +304,7 @@
 
 	async function initGame() {
 		uiState.isDealing = true;
+		lastSyncedTrack = null;
 
 		gameState.timelines = players.map((p) => ({ player: p, entries: [] }));
 		gameState.activePlayerIndex = 0;
@@ -734,7 +738,7 @@
 		uiState.showEndGame = false;
 		resetGame();
 		gameSession.startSession('timeline', players, false);
-		gameContext.nextRound(); // Reset game screen track index
+		gameContext.prepareNewGame(); // Preload first track at index 0 (no index increment)
 		initGame();
 	}
 </script>

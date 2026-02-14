@@ -298,6 +298,15 @@
 		onHome();
 	}
 
+	/**
+	 * Resets exhaustion state and preloads a fresh track at the current
+	 * (reset) index. Used by TimelineGameScreen on Play Again.
+	 */
+	function prepareNewGame(): void {
+		tracksExhausted = false;
+		sampleAndPreloadTrack();
+	}
+
 	function handleHomeClick(): void {
 		showQuitDialog = true;
 	}
@@ -316,6 +325,7 @@
 		nextRound,
 		handlePlaybackEnd,
 		sampleRawTrack,
+		prepareNewGame,
 		audioProgress: progress,
 		onHome: handleHome,
 		get activeCategories() {

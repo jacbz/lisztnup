@@ -124,7 +124,7 @@
 					type="button"
 					onclick={onConfirm}
 					disabled={confirmDisabled}
-					class="shrink-0 rounded-xl border-2 border-cyan-400 bg-slate-900 px-3 py-1 text-xs font-bold text-cyan-400 transition-all hover:bg-slate-800 hover:shadow-[0_0_18px_rgba(34,211,238,0.45)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-slate-900"
+					class="text-md my-1 shrink-0 rounded-xl border-2 border-cyan-400 bg-slate-900 px-8 py-1.5 font-bold text-cyan-400 transition-all hover:bg-slate-800 hover:shadow-[0_0_18px_rgba(34,211,238,0.45)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-slate-900"
 				>
 					{confirmLabel}
 				</button>
