@@ -4,7 +4,8 @@ import {
 	type Track,
 	type Composer,
 	type Work,
-	type CategoryAdjustments
+	type CategoryAdjustments,
+	MAX_WORK_SCORE_ROUNDED
 } from '$lib/types';
 import { weightedRandom } from '$lib/utils/random';
 import { buildShortUuidMap, resolveShortUuids } from '$lib/utils/uuid';
@@ -89,9 +90,15 @@ export class TracklistGenerator {
 
 			// Step 3: Filter by work score range
 			if (config.workScoreRange) {
-				const [minScore, maxScore] = config.workScoreRange;
+				// eslint-disable-next-line prefer-const
+				let [minScore, maxScore] = config.workScoreRange;
+				if (maxScore === MAX_WORK_SCORE_ROUNDED) {
+					maxScore = Infinity; // Treat max score as unbounded if set to the rounded max
+				}
 				works = works.filter((work) => work.score >= minScore && work.score <= maxScore);
 			}
+			// Ensure we only include works with positive score after adjustments
+			works = works.filter((work) => work.score > 0);
 
 			// Step 4: Filter by work name
 			if (config.nameFilter && config.nameFilter.length > 0) {

@@ -100,15 +100,10 @@ export const MIN_WORK_SCORE_ROUNDED = Math.floor(MIN_WORK_SCORE * 10) / 10;
 export const MAX_WORK_SCORE_ROUNDED = Math.ceil(MAX_WORK_SCORE * 10) / 10;
 
 /**
- * The difference between the maximum and minimum work scores, rounded to one decimal place.
- */
-export const CATEGORY_ADJUSTMENT_DIFF = MAX_WORK_SCORE_ROUNDED - MIN_WORK_SCORE_ROUNDED;
-
-/**
  * The default values for the tracklist configuration.
  */
 export const DEFAULT_TRACKLIST_CONFIG: TracklistConfig = {
-	workScoreRange: [MIN_WORK_SCORE_ROUNDED, MAX_WORK_SCORE_ROUNDED],
+	workScoreRange: [0, MAX_WORK_SCORE_ROUNDED],
 	enablePopularityWeighting: true
 };
 

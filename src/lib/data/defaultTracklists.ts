@@ -1,9 +1,4 @@
-import {
-	MAX_WORK_SCORE_ROUNDED,
-	MIN_WORK_SCORE,
-	CATEGORY_ADJUSTMENT_DIFF,
-	type Tracklist
-} from '$lib/types';
+import { MAX_WORK_SCORE_ROUNDED, type Tracklist } from '$lib/types';
 import difficultyVeryEasy from '$lib/assets/icons/difficulty-veryeasy.svg?raw';
 import difficultyEasy from '$lib/assets/icons/difficulty-easy.svg?raw';
 import difficultyMedium from '$lib/assets/icons/difficulty-medium.svg?raw';
@@ -199,7 +194,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: starIcon,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [MIN_WORK_SCORE, 3],
+			workScoreRange: [0, 3],
 			categoryAdjustments: {
 				vocal: -0.8,
 				chamber: 0,
@@ -220,7 +215,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: composerIcon,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [MIN_WORK_SCORE, 3.2],
+			workScoreRange: [0, 3.2],
 			composerFilter: {
 				mode: 'notabilityRange',
 				range: [201, COMPOSER_COUNT]
@@ -237,14 +232,14 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'categories',
 		config: {
 			categoryAdjustments: {
-				vocal: -CATEGORY_ADJUSTMENT_DIFF,
-				chamber: -CATEGORY_ADJUSTMENT_DIFF,
-				orchestral: -CATEGORY_ADJUSTMENT_DIFF,
+				vocal: -MAX_WORK_SCORE_ROUNDED,
+				chamber: -MAX_WORK_SCORE_ROUNDED,
+				orchestral: -MAX_WORK_SCORE_ROUNDED,
 				piano: 0,
-				concerto: -CATEGORY_ADJUSTMENT_DIFF,
-				opera: -CATEGORY_ADJUSTMENT_DIFF,
-				ballet: -CATEGORY_ADJUSTMENT_DIFF,
-				solo: -CATEGORY_ADJUSTMENT_DIFF
+				concerto: -MAX_WORK_SCORE_ROUNDED,
+				opera: -MAX_WORK_SCORE_ROUNDED,
+				ballet: -MAX_WORK_SCORE_ROUNDED,
+				solo: -MAX_WORK_SCORE_ROUNDED
 			},
 			yearFilter: [1800, 2000],
 			workScoreRange: [3, MAX_WORK_SCORE_ROUNDED],
@@ -259,14 +254,14 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'categories',
 		config: {
 			categoryAdjustments: {
-				vocal: -CATEGORY_ADJUSTMENT_DIFF,
-				chamber: -CATEGORY_ADJUSTMENT_DIFF,
-				orchestral: -CATEGORY_ADJUSTMENT_DIFF,
-				piano: -CATEGORY_ADJUSTMENT_DIFF,
+				vocal: -MAX_WORK_SCORE_ROUNDED,
+				chamber: -MAX_WORK_SCORE_ROUNDED,
+				orchestral: -MAX_WORK_SCORE_ROUNDED,
+				piano: -MAX_WORK_SCORE_ROUNDED,
 				concerto: 0,
-				opera: -CATEGORY_ADJUSTMENT_DIFF,
-				ballet: -CATEGORY_ADJUSTMENT_DIFF,
-				solo: -CATEGORY_ADJUSTMENT_DIFF
+				opera: -MAX_WORK_SCORE_ROUNDED,
+				ballet: -MAX_WORK_SCORE_ROUNDED,
+				solo: -MAX_WORK_SCORE_ROUNDED
 			},
 			workScoreRange: [3.4, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
@@ -280,14 +275,14 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'categories',
 		config: {
 			categoryAdjustments: {
-				vocal: -CATEGORY_ADJUSTMENT_DIFF,
-				chamber: -CATEGORY_ADJUSTMENT_DIFF,
+				vocal: -MAX_WORK_SCORE_ROUNDED,
+				chamber: -MAX_WORK_SCORE_ROUNDED,
 				orchestral: 0,
-				piano: -CATEGORY_ADJUSTMENT_DIFF,
-				concerto: -CATEGORY_ADJUSTMENT_DIFF,
-				opera: -CATEGORY_ADJUSTMENT_DIFF,
-				ballet: -CATEGORY_ADJUSTMENT_DIFF,
-				solo: -CATEGORY_ADJUSTMENT_DIFF
+				piano: -MAX_WORK_SCORE_ROUNDED,
+				concerto: -MAX_WORK_SCORE_ROUNDED,
+				opera: -MAX_WORK_SCORE_ROUNDED,
+				ballet: -MAX_WORK_SCORE_ROUNDED,
+				solo: -MAX_WORK_SCORE_ROUNDED
 			},
 			workScoreRange: [3.4, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
@@ -301,14 +296,14 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'categories',
 		config: {
 			categoryAdjustments: {
-				vocal: -CATEGORY_ADJUSTMENT_DIFF,
+				vocal: -MAX_WORK_SCORE_ROUNDED,
 				chamber: 0,
-				orchestral: -CATEGORY_ADJUSTMENT_DIFF,
-				piano: -CATEGORY_ADJUSTMENT_DIFF,
-				concerto: -CATEGORY_ADJUSTMENT_DIFF,
-				opera: -CATEGORY_ADJUSTMENT_DIFF,
-				ballet: -CATEGORY_ADJUSTMENT_DIFF,
-				solo: -CATEGORY_ADJUSTMENT_DIFF
+				orchestral: -MAX_WORK_SCORE_ROUNDED,
+				piano: -MAX_WORK_SCORE_ROUNDED,
+				concerto: -MAX_WORK_SCORE_ROUNDED,
+				opera: -MAX_WORK_SCORE_ROUNDED,
+				ballet: -MAX_WORK_SCORE_ROUNDED,
+				solo: -MAX_WORK_SCORE_ROUNDED
 			},
 			workScoreRange: [3.4, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
@@ -322,14 +317,14 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'categories',
 		config: {
 			categoryAdjustments: {
-				vocal: -CATEGORY_ADJUSTMENT_DIFF,
-				chamber: -CATEGORY_ADJUSTMENT_DIFF,
-				orchestral: -CATEGORY_ADJUSTMENT_DIFF,
-				piano: -CATEGORY_ADJUSTMENT_DIFF,
-				concerto: -CATEGORY_ADJUSTMENT_DIFF,
-				opera: -CATEGORY_ADJUSTMENT_DIFF,
+				vocal: -MAX_WORK_SCORE_ROUNDED,
+				chamber: -MAX_WORK_SCORE_ROUNDED,
+				orchestral: -MAX_WORK_SCORE_ROUNDED,
+				piano: -MAX_WORK_SCORE_ROUNDED,
+				concerto: -MAX_WORK_SCORE_ROUNDED,
+				opera: -MAX_WORK_SCORE_ROUNDED,
 				ballet: 0,
-				solo: -CATEGORY_ADJUSTMENT_DIFF
+				solo: -MAX_WORK_SCORE_ROUNDED
 			},
 			workScoreRange: [2.3, MAX_WORK_SCORE_ROUNDED]
 		}
@@ -342,14 +337,14 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'categories',
 		config: {
 			categoryAdjustments: {
-				vocal: -CATEGORY_ADJUSTMENT_DIFF,
-				chamber: -CATEGORY_ADJUSTMENT_DIFF,
-				orchestral: -CATEGORY_ADJUSTMENT_DIFF,
-				piano: -CATEGORY_ADJUSTMENT_DIFF,
-				concerto: -CATEGORY_ADJUSTMENT_DIFF,
+				vocal: -MAX_WORK_SCORE_ROUNDED,
+				chamber: -MAX_WORK_SCORE_ROUNDED,
+				orchestral: -MAX_WORK_SCORE_ROUNDED,
+				piano: -MAX_WORK_SCORE_ROUNDED,
+				concerto: -MAX_WORK_SCORE_ROUNDED,
 				opera: 0,
-				ballet: -CATEGORY_ADJUSTMENT_DIFF,
-				solo: -CATEGORY_ADJUSTMENT_DIFF
+				ballet: -MAX_WORK_SCORE_ROUNDED,
+				solo: -MAX_WORK_SCORE_ROUNDED
 			},
 			workScoreRange: [3.8, MAX_WORK_SCORE_ROUNDED]
 		}
@@ -362,15 +357,16 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: pianoIcon,
 		config: {
 			categoryAdjustments: {
-				vocal: -CATEGORY_ADJUSTMENT_DIFF,
-				chamber: -CATEGORY_ADJUSTMENT_DIFF,
-				orchestral: -CATEGORY_ADJUSTMENT_DIFF,
-				piano: -CATEGORY_ADJUSTMENT_DIFF,
+				vocal: -MAX_WORK_SCORE_ROUNDED,
+				chamber: -MAX_WORK_SCORE_ROUNDED,
+				orchestral: -MAX_WORK_SCORE_ROUNDED,
+				piano: -MAX_WORK_SCORE_ROUNDED,
 				concerto: 0,
-				opera: -CATEGORY_ADJUSTMENT_DIFF,
-				ballet: -CATEGORY_ADJUSTMENT_DIFF,
-				solo: -CATEGORY_ADJUSTMENT_DIFF
+				opera: -MAX_WORK_SCORE_ROUNDED,
+				ballet: -MAX_WORK_SCORE_ROUNDED,
+				solo: -MAX_WORK_SCORE_ROUNDED
 			},
+			limitWorksFromComposer: 0.1,
 			nameFilter: ['piano', 'klavier']
 		}
 	},
@@ -382,15 +378,16 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: violinIcon,
 		config: {
 			categoryAdjustments: {
-				vocal: -CATEGORY_ADJUSTMENT_DIFF,
-				chamber: -CATEGORY_ADJUSTMENT_DIFF,
-				orchestral: -CATEGORY_ADJUSTMENT_DIFF,
-				piano: -CATEGORY_ADJUSTMENT_DIFF,
+				vocal: -MAX_WORK_SCORE_ROUNDED,
+				chamber: -MAX_WORK_SCORE_ROUNDED,
+				orchestral: -MAX_WORK_SCORE_ROUNDED,
+				piano: -MAX_WORK_SCORE_ROUNDED,
 				concerto: 0,
-				opera: -CATEGORY_ADJUSTMENT_DIFF,
-				ballet: -CATEGORY_ADJUSTMENT_DIFF,
-				solo: -CATEGORY_ADJUSTMENT_DIFF
+				opera: -MAX_WORK_SCORE_ROUNDED,
+				ballet: -MAX_WORK_SCORE_ROUNDED,
+				solo: -MAX_WORK_SCORE_ROUNDED
 			},
+			limitWorksFromComposer: 0.1,
 			nameFilter: ['violin', 'violon']
 		}
 	},
@@ -402,15 +399,16 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: celloIcon,
 		config: {
 			categoryAdjustments: {
-				vocal: -CATEGORY_ADJUSTMENT_DIFF,
-				chamber: -CATEGORY_ADJUSTMENT_DIFF,
-				orchestral: -CATEGORY_ADJUSTMENT_DIFF,
-				piano: -CATEGORY_ADJUSTMENT_DIFF,
+				vocal: -MAX_WORK_SCORE_ROUNDED,
+				chamber: -MAX_WORK_SCORE_ROUNDED,
+				orchestral: -MAX_WORK_SCORE_ROUNDED,
+				piano: -MAX_WORK_SCORE_ROUNDED,
 				concerto: 0,
-				opera: -CATEGORY_ADJUSTMENT_DIFF,
-				ballet: -CATEGORY_ADJUSTMENT_DIFF,
-				solo: -CATEGORY_ADJUSTMENT_DIFF
+				opera: -MAX_WORK_SCORE_ROUNDED,
+				ballet: -MAX_WORK_SCORE_ROUNDED,
+				solo: -MAX_WORK_SCORE_ROUNDED
 			},
+			limitWorksFromComposer: 0.1,
 			nameFilter: ['cello'],
 			maxTracksFromSingleWork: 5
 		}
@@ -495,7 +493,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: eraIcon,
 		config: {
 			yearFilter: [1400, 1600],
-			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE_ROUNDED]
+			workScoreRange: [0, MAX_WORK_SCORE_ROUNDED]
 		}
 	},
 	{
@@ -506,7 +504,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: eraIcon,
 		config: {
 			yearFilter: [1600, 1750],
-			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE_ROUNDED]
+			workScoreRange: [0, MAX_WORK_SCORE_ROUNDED]
 		}
 	},
 	{
@@ -517,7 +515,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: eraIcon,
 		config: {
 			yearFilter: [1750, 1820],
-			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE_ROUNDED]
+			workScoreRange: [0, MAX_WORK_SCORE_ROUNDED]
 		}
 	},
 	{
@@ -528,7 +526,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: eraIcon,
 		config: {
 			yearFilter: [1820, 1910],
-			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE_ROUNDED]
+			workScoreRange: [0, MAX_WORK_SCORE_ROUNDED]
 		}
 	},
 	{
@@ -539,7 +537,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: eraIcon,
 		config: {
 			yearFilter: [1900, 1999],
-			workScoreRange: [MIN_WORK_SCORE, MAX_WORK_SCORE_ROUNDED]
+			workScoreRange: [0, MAX_WORK_SCORE_ROUNDED]
 		}
 	}
 ];

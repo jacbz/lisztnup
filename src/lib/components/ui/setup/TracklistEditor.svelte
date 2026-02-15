@@ -4,8 +4,7 @@
 		DEFAULT_CATEGORY_ADJUSTMENTS,
 		DEFAULT_TRACKLIST_CONFIG,
 		MIN_WORK_SCORE_ROUNDED,
-		MAX_WORK_SCORE_ROUNDED,
-		CATEGORY_ADJUSTMENT_DIFF
+		MAX_WORK_SCORE_ROUNDED
 	} from '$lib/types';
 	import { gameData } from '$lib/stores';
 	import { TracklistGenerator, SettingsService } from '$lib/services';
@@ -413,10 +412,7 @@
 	function toggleWorkScoreRange() {
 		workScoreRangeEnabled = !workScoreRangeEnabled;
 		if (workScoreRangeEnabled) {
-			config.workScoreRange = config.workScoreRange || [
-				MIN_WORK_SCORE_ROUNDED,
-				MAX_WORK_SCORE_ROUNDED
-			];
+			config.workScoreRange = config.workScoreRange || [0, MAX_WORK_SCORE_ROUNDED];
 		} else {
 			config.workScoreRange = undefined;
 		}
@@ -679,7 +675,7 @@
 						<RangeSlider
 							bind:valueMin={config.workScoreRange[0]}
 							bind:valueMax={config.workScoreRange[1]}
-							min={MIN_WORK_SCORE_ROUNDED}
+							min={0}
 							max={MAX_WORK_SCORE_ROUNDED}
 							step={0.1}
 							label=""
@@ -703,8 +699,8 @@
 							{#each Object.keys(config.categoryAdjustments) as category}
 								<Slider
 									value={config.categoryAdjustments[category as keyof CategoryAdjustments]}
-									min={-CATEGORY_ADJUSTMENT_DIFF}
-									max={CATEGORY_ADJUSTMENT_DIFF}
+									min={-MAX_WORK_SCORE_ROUNDED}
+									max={MAX_WORK_SCORE_ROUNDED}
 									step={0.1}
 									label={$_(`settings.categories.${category}`)}
 									showValue={true}
