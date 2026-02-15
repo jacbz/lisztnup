@@ -12,15 +12,24 @@
 	import deezer from '$lib/assets/icons/deezer.svg?raw';
 	import wikipedia from '$lib/assets/icons/wikipedia.svg?raw';
 	import imslp from '$lib/assets/icons/imslp.svg?raw';
+	import prestomusic from '$lib/assets/icons/prestomusic.svg?raw';
+	import musicbrainz from '$lib/assets/icons/musicbrainz.svg?raw';
 
 	interface Props {
 		visible?: boolean;
 		composerLastName: string;
 		workName: string;
+		workGid?: string;
 		onClose?: () => void;
 	}
 
-	let { visible = false, composerLastName, workName, onClose = () => {} }: Props = $props();
+	let {
+		visible = false,
+		composerLastName,
+		workName,
+		workGid,
+		onClose = () => {}
+	}: Props = $props();
 
 	const searchQuery = $derived.by(() => {
 		const query = `${composerLastName} ${workName}`;
@@ -87,10 +96,24 @@
 			icon: idagio
 		},
 		{
+			url: `https://www.prestomusic.com/classical/search?search_query=${encodeURIComponent(searchQuery)}`,
+			color: '#1E2851',
+			glowColor: 'rgba(30, 40, 81, 0.4)',
+			icon: prestomusic
+		},
+		{
 			url: `https://www.google.com/search?q=site:imslp.org+${encodeURIComponent(searchQuery)}`,
 			color: '#e5e7eb',
 			glowColor: 'rgba(229, 231, 235, 0.4)',
 			icon: imslp
+		},
+		{
+			url: workGid
+				? `https://musicbrainz.org/work/${workGid}`
+				: `https://musicbrainz.org/search?query=${encodeURIComponent(searchQuery)}&type=work`,
+			color: '#eb743b',
+			glowColor: 'rgba(235, 116, 59, 0.4)',
+			icon: musicbrainz
 		}
 	]);
 
@@ -133,7 +156,7 @@
 				>
 					<div class="flex items-center justify-center gap-2">
 						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-						<div class="flex h-8 max-w-12">
+						<div class="flex h-8 max-w-22">
 							{@html provider.icon}
 						</div>
 					</div>

@@ -274,7 +274,7 @@
 
 <!-- Add Player Button - Exported for external use -->
 {#if onAddPlayer === undefined}
-	{#if players.length < 10}
+	{#if players.length < 16}
 		<button
 			type="button"
 			onclick={addPlayer}

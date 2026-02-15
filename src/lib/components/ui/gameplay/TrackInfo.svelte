@@ -216,5 +216,6 @@
 	visible={showSearchPopup}
 	{composerLastName}
 	workName={track?.work.name ?? ''}
+	workGid={track?.work.gid}
 	onClose={() => (showSearchPopup = false)}
 />
