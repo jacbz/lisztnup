@@ -40,7 +40,7 @@
       "name": "Albinoni, Tomaso Giovanni",
       "birth_year": 1671,
       "death_year": 1751,
-      "score": 22.94
+      "score": 22.95
     },
     {
       "gid": "0a46cf2a-61bd-447d-b8fd-a2b32eb20282",
@@ -61,14 +61,14 @@
       "name": "Alfv\u00e9n, Hugo",
       "birth_year": 1872,
       "death_year": 1960,
-      "score": 25.02
+      "score": 25.03
     },
     {
       "gid": "62000bf9-9919-4dfb-9929-15f013fca57b",
       "name": "Alkan, Charles\u2010Valentin",
       "birth_year": 1813,
       "death_year": 1888,
-      "score": 27.7
+      "score": 27.71
     },
     {
       "gid": "720f3f3f-49a2-47ae-a9ba-0d150ba4ee7a",
@@ -138,7 +138,7 @@
       "name": "Arnold, Malcolm",
       "birth_year": 1921,
       "death_year": 2006,
-      "score": 21.14
+      "score": 21.15
     },
     {
       "gid": "ac840215-bb00-43ba-a110-04a19dee8523",
@@ -166,7 +166,7 @@
       "name": "Auber, Daniel Fran\u00e7ois Esprit",
       "birth_year": 1782,
       "death_year": 1871,
-      "score": 18.12
+      "score": 18.13
     },
     {
       "gid": "cff068af-84b6-4504-9d62-02347c7bda0e",
@@ -194,7 +194,7 @@
       "name": "Bach, Carl Philipp Emanuel",
       "birth_year": 1714,
       "death_year": 1788,
-      "score": 47.55
+      "score": 47.56
     },
     {
       "gid": "28a81bc7-7f1f-4c95-9f41-6100453760ea",
@@ -208,7 +208,14 @@
       "name": "Bach, Johann Christian",
       "birth_year": 1735,
       "death_year": 1782,
-      "score": 25.54
+      "score": 25.55
+    },
+    {
+      "gid": "fc366dc2-17d1-4679-9ee5-c750e7915145",
+      "name": "Bach, Johann Christoph",
+      "birth_year": 1642,
+      "death_year": 1703,
+      "score": 12.19
     },
     {
       "gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
@@ -271,7 +278,7 @@
       "name": "Barber, Samuel",
       "birth_year": 1910,
       "death_year": 1981,
-      "score": 43.87
+      "score": 43.88
     },
     {
       "gid": "b42c6b63-db44-4489-bdba-319e79b0f467",
@@ -292,7 +299,7 @@
       "name": "Bart\u00f3k, B\u00e9la",
       "birth_year": 1881,
       "death_year": 1945,
-      "score": 61.54
+      "score": 61.55
     },
     {
       "gid": "9138c4da-1959-445c-8ac8-ba917ec84b3a",
@@ -334,7 +341,7 @@
       "name": "Beethoven, Ludwig van",
       "birth_year": 1770,
       "death_year": 1827,
-      "score": 89.44
+      "score": 89.45
     },
     {
       "gid": "6f5bfd20-84cc-4879-8a40-05631ad576c7",
@@ -376,14 +383,14 @@
       "name": "Berio, Luciano",
       "birth_year": 1925,
       "death_year": 2003,
-      "score": 31.24
+      "score": 31.25
     },
     {
       "gid": "274774a7-1cde-486a-bc3d-375ec54d552d",
       "name": "Berlioz, Hector",
       "birth_year": 1803,
       "death_year": 1869,
-      "score": 54.39
+      "score": 54.4
     },
     {
       "gid": "fa39bc82-9b27-4bbb-9425-d719a72e09ac",
@@ -397,7 +404,7 @@
       "name": "Berwald, Franz",
       "birth_year": 1796,
       "death_year": 1868,
-      "score": 20.95
+      "score": 20.96
     },
     {
       "gid": "66197dbc-c16b-4c95-9e1b-cc617783cb8c",
@@ -467,14 +474,14 @@
       "name": "Bonis, Mel",
       "birth_year": 1858,
       "death_year": 1937,
-      "score": 18.48
+      "score": 18.49
     },
     {
       "gid": "560b5e65-8d53-41b4-9913-83368f4721a0",
       "name": "Borodin, Alexander",
       "birth_year": 1833,
       "death_year": 1887,
-      "score": 35.48
+      "score": 35.49
     },
     {
       "gid": "7eb3beec-1e34-4449-8bea-67928e665be2",
@@ -488,7 +495,7 @@
       "name": "Boulanger, Lili",
       "birth_year": 1893,
       "death_year": 1918,
-      "score": 23.69
+      "score": 23.7
     },
     {
       "gid": "b84d7c94-d171-4257-a57a-48dc5425323b",
@@ -516,7 +523,7 @@
       "name": "Boyce, William",
       "birth_year": 1711,
       "death_year": 1779,
-      "score": 25.2
+      "score": 25.21
     },
     {
       "gid": "1fe62603-9e6f-4af1-93b2-2b8025cfc58d",
@@ -530,14 +537,14 @@
       "name": "Bo\u00efeldieu, Fran\u00e7ois\u2010Adrien",
       "birth_year": 1775,
       "death_year": 1834,
-      "score": 12.66
+      "score": 12.67
     },
     {
       "gid": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
       "name": "Brahms, Johannes",
       "birth_year": 1833,
       "death_year": 1897,
-      "score": 78.45
+      "score": 78.46
     },
     {
       "gid": "9e42300c-959a-4f73-89cd-8003b71eb85a",
@@ -551,7 +558,7 @@
       "name": "Britten, Benjamin",
       "birth_year": 1913,
       "death_year": 1976,
-      "score": 59.92
+      "score": 59.93
     },
     {
       "gid": "55bcdfc0-dc50-4258-a96c-e20667f6b6f2",
@@ -565,21 +572,21 @@
       "name": "Bruch, Max",
       "birth_year": 1838,
       "death_year": 1920,
-      "score": 36.13
+      "score": 36.14
     },
     {
       "gid": "9debb4c3-dc10-440f-9c96-b777d51ea998",
       "name": "Bruckner, Anton",
       "birth_year": 1824,
       "death_year": 1896,
-      "score": 54.01
+      "score": 54.02
     },
     {
       "gid": "f8088921-5869-47a1-95f1-3aa4ed532f03",
       "name": "Bruhns, Nicolaus",
       "birth_year": 1665,
       "death_year": 1697,
-      "score": 22.0
+      "score": 22.01
     },
     {
       "gid": "0acc7d96-8aee-4df4-bad0-12c517a0e2b9",
@@ -600,7 +607,7 @@
       "name": "Bull, Ole",
       "birth_year": 1810,
       "death_year": 1880,
-      "score": 13.2
+      "score": 13.21
     },
     {
       "gid": "eb55a8d7-1664-409c-9f51-277c59f06d20",
@@ -628,14 +635,14 @@
       "name": "Buxtehude, Dieterich",
       "birth_year": 1637,
       "death_year": 1707,
-      "score": 62.91
+      "score": 62.92
     },
     {
       "gid": "d1cf7a39-f268-45e8-bbc0-6cea5c0272cf",
       "name": "Byrd, William",
       "birth_year": 1540,
       "death_year": 1623,
-      "score": 43.37
+      "score": 43.38
     },
     {
       "gid": "4b239732-7d25-46c0-8fc0-1aa0ce38d0b5",
@@ -677,7 +684,7 @@
       "name": "Cage, John",
       "birth_year": 1912,
       "death_year": 1992,
-      "score": 39.37
+      "score": 39.38
     },
     {
       "gid": "fb698413-0e4f-4e78-9ac2-f085bc4a2b2d",
@@ -719,14 +726,14 @@
       "name": "Cassad\u00f3, Gaspar",
       "birth_year": 1897,
       "death_year": 1966,
-      "score": 14.17
+      "score": 14.18
     },
     {
       "gid": "2085b44c-f939-41cc-8745-9f7d63868118",
       "name": "Castelnuovo\u2010Tedesco, Mario",
       "birth_year": 1895,
       "death_year": 1968,
-      "score": 23.78
+      "score": 23.79
     },
     {
       "gid": "eaac4e33-da89-4859-9201-c9e70bad086f",
@@ -768,14 +775,14 @@
       "name": "Charpentier, Marc\u2010Antoine",
       "birth_year": 1643,
       "death_year": 1704,
-      "score": 22.56
+      "score": 22.57
     },
     {
       "gid": "dbe921e2-a7a7-4d4c-b2f8-109da1cd1e3a",
       "name": "Chausson, Ernest",
       "birth_year": 1855,
       "death_year": 1899,
-      "score": 35.34
+      "score": 35.35
     },
     {
       "gid": "375d52ad-5b7a-4f96-80e2-6d9ad13f5160",
@@ -796,7 +803,7 @@
       "name": "Chopin, Fr\u00e9d\u00e9ric",
       "birth_year": 1810,
       "death_year": 1849,
-      "score": 80.94
+      "score": 80.95
     },
     {
       "gid": "402c8632-b27f-4f22-b96d-8bcaf309f1ad",
@@ -859,14 +866,14 @@
       "name": "Clementi, Muzio",
       "birth_year": 1752,
       "death_year": 1832,
-      "score": 21.78
+      "score": 21.79
     },
     {
       "gid": "2c5ffc6c-bbca-4839-8613-31b8fd178d3b",
       "name": "Cl\u00e9rambault, Louis\u2010Nicolas",
       "birth_year": 1676,
       "death_year": 1749,
-      "score": 15.57
+      "score": 15.58
     },
     {
       "gid": "76edf08f-d673-407c-9402-5552cc382f49",
@@ -887,14 +894,14 @@
       "name": "Copland, Aaron",
       "birth_year": 1900,
       "death_year": 1990,
-      "score": 47.65
+      "score": 47.66
     },
     {
       "gid": "a3546087-fe59-47d3-a3a8-42d58e2573c7",
       "name": "Corelli, Arcangelo",
       "birth_year": 1653,
       "death_year": 1713,
-      "score": 23.8
+      "score": 23.81
     },
     {
       "gid": "ead4efb5-f8d3-44d1-8a3f-a1cf24a0ccc9",
@@ -908,7 +915,14 @@
       "name": "Cornelius, Peter",
       "birth_year": 1824,
       "death_year": 1874,
-      "score": 6.57
+      "score": 16.83
+    },
+    {
+      "gid": "691b2e05-334b-42c9-b121-defae8f84cb3",
+      "name": "Cornysh, William",
+      "birth_year": 1470,
+      "death_year": 1523,
+      "score": 6.14
     },
     {
       "gid": "a8af98ec-7e27-4aa7-8395-537849340fc7",
@@ -936,14 +950,14 @@
       "name": "Couperin, Fran\u00e7ois",
       "birth_year": 1668,
       "death_year": 1733,
-      "score": 33.81
+      "score": 34.57
     },
     {
       "gid": "2efbc4db-a5fc-41e2-a46d-398654c3e55e",
       "name": "Couperin, Louis",
       "birth_year": 1626,
       "death_year": 1661,
-      "score": 52.35
+      "score": 52.37
     },
     {
       "gid": "4d250730-5e0c-4368-b3e6-df158a501ae3",
@@ -1027,7 +1041,7 @@
       "name": "Debussy, Claude",
       "birth_year": 1862,
       "death_year": 1918,
-      "score": 75.08
+      "score": 75.1
     },
     {
       "gid": "a56056f7-4e47-4209-abdc-171331ff1089",
@@ -1041,7 +1055,7 @@
       "name": "Delius, Frederick",
       "birth_year": 1862,
       "death_year": 1934,
-      "score": 40.92
+      "score": 41.47
     },
     {
       "gid": "934458b7-e019-42bd-ac6e-8df24a703798",
@@ -1062,7 +1076,7 @@
       "name": "Dohn\u00e1nyi, Ern\u0151",
       "birth_year": 1877,
       "death_year": 1960,
-      "score": 18.39
+      "score": 18.4
     },
     {
       "gid": "b8ecf204-6be8-4041-ab11-6d9971ea2711",
@@ -1090,7 +1104,7 @@
       "name": "Dowland, John",
       "birth_year": 1563,
       "death_year": 1626,
-      "score": 57.19
+      "score": 57.2
     },
     {
       "gid": "d1591eff-428d-44ed-b7f0-f9936f1ab656",
@@ -1139,21 +1153,21 @@
       "name": "Durufl\u00e9, Maurice",
       "birth_year": 1901,
       "death_year": 1986,
-      "score": 35.55
+      "score": 35.56
     },
     {
       "gid": "ee79471f-3ae5-426e-a469-d9f2aa312986",
       "name": "Dutilleux, Henri",
       "birth_year": 1916,
       "death_year": 2013,
-      "score": 31.31
+      "score": 31.32
     },
     {
       "gid": "819eaeb2-8dd8-48a5-ad07-0bcd137985ef",
       "name": "Dvo\u0159\u00e1k, Anton\u00edn",
       "birth_year": 1841,
       "death_year": 1904,
-      "score": 69.64
+      "score": 69.65
     },
     {
       "gid": "13f33e84-7305-4ba0-8c7f-39742dca43d0",
@@ -1195,7 +1209,7 @@
       "name": "Elgar, Edward",
       "birth_year": 1857,
       "death_year": 1934,
-      "score": 58.97
+      "score": 58.98
     },
     {
       "gid": "22af9fd9-c026-4bcd-9f6d-f7f6e851b366",
@@ -1209,7 +1223,7 @@
       "name": "Enescu, George",
       "birth_year": 1881,
       "death_year": 1955,
-      "score": 30.53
+      "score": 30.54
     },
     {
       "gid": "9777e544-cca0-45d7-b12a-eac58d8f38d7",
@@ -1244,7 +1258,7 @@
       "name": "Faur\u00e9, Gabriel",
       "birth_year": 1845,
       "death_year": 1924,
-      "score": 68.36
+      "score": 68.38
     },
     {
       "gid": "2ca0dc09-3a17-479c-a4db-4b8182f3726c",
@@ -1258,7 +1272,7 @@
       "name": "Field, John",
       "birth_year": 1782,
       "death_year": 1837,
-      "score": 36.95
+      "score": 36.96
     },
     {
       "gid": "bdc820cb-c7cf-4301-8f5d-ec9ae2f62f94",
@@ -1314,7 +1328,7 @@
       "name": "Franck, C\u00e9sar",
       "birth_year": 1822,
       "death_year": 1890,
-      "score": 51.27
+      "score": 51.28
     },
     {
       "gid": "19c224c6-33f2-4403-8971-14aa3eb599fe",
@@ -1356,7 +1370,7 @@
       "name": "Gabrieli, Giovanni",
       "birth_year": 1557,
       "death_year": 1612,
-      "score": 19.02
+      "score": 19.03
     },
     {
       "gid": "febe9df8-0058-459c-8327-a09c9a9e0aaa",
@@ -1364,6 +1378,13 @@
       "birth_year": 1651,
       "death_year": 1690,
       "score": 19.64
+    },
+    {
+      "gid": "0e3cc8e1-7bfe-4110-830e-dca6e8e6a999",
+      "name": "Gallus, Jacobus",
+      "birth_year": 1550,
+      "death_year": 1591,
+      "score": 3.13
     },
     {
       "gid": "3e2efdb0-cd07-40e2-a39f-277c670e1d72",
@@ -1391,14 +1412,14 @@
       "name": "Gershwin, George",
       "birth_year": 1898,
       "death_year": 1937,
-      "score": 40.89
+      "score": 41.22
     },
     {
       "gid": "c6c6f154-b3b8-4f82-a500-589373f41556",
       "name": "Gesualdo, Carlo",
       "birth_year": 1566,
       "death_year": 1613,
-      "score": 26.16
+      "score": 26.17
     },
     {
       "gid": "f8033aa6-bb76-4608-ac43-8bbe8808cad6",
@@ -1412,7 +1433,7 @@
       "name": "Gibbons, Orlando",
       "birth_year": 1583,
       "death_year": 1625,
-      "score": 35.9
+      "score": 35.91
     },
     {
       "gid": "5956b33d-f946-4312-ac2e-a548db21ba7d",
@@ -1433,35 +1454,35 @@
       "name": "Giordano, Umberto",
       "birth_year": 1867,
       "death_year": 1948,
-      "score": 26.47
+      "score": 26.48
     },
     {
       "gid": "fc6a0ffa-4780-4924-a263-0b41a1911057",
       "name": "Giuliani, Mauro",
       "birth_year": 1781,
       "death_year": 1829,
-      "score": 13.05
+      "score": 13.06
     },
     {
       "gid": "5ae54dee-4dba-49c0-802a-a3b3b3adfe9b",
       "name": "Glass, Philip",
       "birth_year": 1937,
       "death_year": null,
-      "score": 35.35
+      "score": 35.36
     },
     {
       "gid": "5a0988a4-695c-4bff-bc68-4f312427495e",
       "name": "Glazunov, Alexander",
       "birth_year": 1865,
       "death_year": 1936,
-      "score": 35.25
+      "score": 35.26
     },
     {
       "gid": "e539699a-5cb3-4f73-b60f-691b1499d0af",
       "name": "Glinka, Mikhail",
       "birth_year": 1804,
       "death_year": 1857,
-      "score": 27.49
+      "score": 27.5
     },
     {
       "gid": "8b008af7-cdb9-4abe-baed-ba737622e310",
@@ -1475,7 +1496,7 @@
       "name": "Gluck, Christoph Willibald",
       "birth_year": 1714,
       "death_year": 1787,
-      "score": 28.63
+      "score": 32.54
     },
     {
       "gid": "5b029178-02d1-4570-9391-be8617c6eae0",
@@ -1524,14 +1545,14 @@
       "name": "Gorecki, Henryk Mikolaj",
       "birth_year": 1933,
       "death_year": 2010,
-      "score": 20.18
+      "score": 20.19
     },
     {
       "gid": "f15ea9e1-7c1f-4259-a5c4-66b7c9b66a27",
       "name": "Gottschalk, Louis Moreau",
       "birth_year": 1829,
       "death_year": 1869,
-      "score": 23.78
+      "score": 23.79
     },
     {
       "gid": "4db4e744-3007-4386-b87d-9653acfe0464",
@@ -1545,7 +1566,7 @@
       "name": "Gounod, Charles",
       "birth_year": 1818,
       "death_year": 1893,
-      "score": 36.82
+      "score": 36.83
     },
     {
       "gid": "9d5a875f-9815-4384-9e4f-cd4ea4f2bc16",
@@ -1559,7 +1580,7 @@
       "name": "Granados, Enrique",
       "birth_year": 1867,
       "death_year": 1916,
-      "score": 36.7
+      "score": 36.71
     },
     {
       "gid": "ea7ea070-73d9-49ed-98a2-76ea955c72f4",
@@ -1573,7 +1594,7 @@
       "name": "Grieg, Edvard",
       "birth_year": 1843,
       "death_year": 1907,
-      "score": 63.49
+      "score": 63.5
     },
     {
       "gid": "44b8f10a-0523-4479-bd6d-a3828dc960ae",
@@ -1643,7 +1664,7 @@
       "name": "Hahn, Reynaldo",
       "birth_year": 1874,
       "death_year": 1947,
-      "score": 22.38
+      "score": 22.39
     },
     {
       "gid": "b0cba95f-2fd2-4d0e-82a8-2ba17bb3ac7d",
@@ -1664,7 +1685,7 @@
       "name": "Handel, George Frideric",
       "birth_year": 1685,
       "death_year": 1759,
-      "score": 64.55
+      "score": 64.57
     },
     {
       "gid": "ea21beac-3c76-40f5-85a4-0974ac5f3762",
@@ -1692,7 +1713,7 @@
       "name": "Hartmann, Karl Amadeus",
       "birth_year": 1905,
       "death_year": 1963,
-      "score": 11.11
+      "score": 11.12
     },
     {
       "gid": "ee697e05-ffdb-4f94-a280-5b0887287342",
@@ -1713,7 +1734,7 @@
       "name": "Haydn, Joseph",
       "birth_year": 1732,
       "death_year": 1809,
-      "score": 79.48
+      "score": 79.49
     },
     {
       "gid": "760357b4-37da-4271-8cb7-52786d335745",
@@ -1741,7 +1762,7 @@
       "name": "Hindemith, Paul",
       "birth_year": 1895,
       "death_year": 1963,
-      "score": 49.24
+      "score": 49.25
     },
     {
       "gid": "679d7a73-41ec-4ede-8176-b68b0e9a48fa",
@@ -1762,7 +1783,7 @@
       "name": "Holst, Gustav",
       "birth_year": 1874,
       "death_year": 1934,
-      "score": 43.4
+      "score": 43.41
     },
     {
       "gid": "faeb51c0-04e0-4d54-b8cd-5f7fc3e604c3",
@@ -1776,7 +1797,7 @@
       "name": "Honegger, Arthur",
       "birth_year": 1892,
       "death_year": 1955,
-      "score": 28.59
+      "score": 28.6
     },
     {
       "gid": "91171f3d-340b-4bfd-9fbc-e088abc9b1d3",
@@ -1832,7 +1853,7 @@
       "name": "Indy, Vincent d\u2019",
       "birth_year": 1851,
       "death_year": 1931,
-      "score": 10.41
+      "score": 10.42
     },
     {
       "gid": "ee926b94-5acc-4b69-8a3d-e9319c35e569",
@@ -1881,7 +1902,7 @@
       "name": "Jan\u00e1\u010dek, Leo\u0161",
       "birth_year": 1854,
       "death_year": 1928,
-      "score": 46.68
+      "score": 47.03
     },
     {
       "gid": "9c595c86-0041-4d62-950d-3e585c6ad7a6",
@@ -1895,7 +1916,7 @@
       "name": "Jenkins, Karl",
       "birth_year": 1944,
       "death_year": null,
-      "score": 11.38
+      "score": 11.39
     },
     {
       "gid": "6b1a62f4-a1a5-4e24-b40b-3c39d59062d7",
@@ -1916,14 +1937,14 @@
       "name": "Jolivet, Andr\u00e9",
       "birth_year": 1905,
       "death_year": 1974,
-      "score": 12.66
+      "score": 12.67
     },
     {
       "gid": "aec8a328-d2e8-4780-b2ea-318c7f8d6f75",
       "name": "Joplin, Scott",
       "birth_year": 1868,
       "death_year": 1917,
-      "score": 52.32
+      "score": 52.33
     },
     {
       "gid": "95309762-51f2-4e36-9c49-2709e7cf250e",
@@ -1952,6 +1973,13 @@
       "birth_year": 1886,
       "death_year": 1946,
       "score": 0.43
+    },
+    {
+      "gid": "5d0aee72-d7cf-4455-a95d-9eea556c960e",
+      "name": "Kapsberger, Johannes Hieronymus",
+      "birth_year": 1575,
+      "death_year": 1651,
+      "score": 9.45
     },
     {
       "gid": "642d73bc-cb3f-496e-94c0-70ae5a90cfb6",
@@ -2000,7 +2028,7 @@
       "name": "Khachaturian, Aram",
       "birth_year": 1903,
       "death_year": 1978,
-      "score": 36.64
+      "score": 36.65
     },
     {
       "gid": "ff17b5ac-312a-42dc-8d66-5c9245c0db19",
@@ -2028,7 +2056,7 @@
       "name": "Kod\u00e1ly, Zolt\u00e1n",
       "birth_year": 1882,
       "death_year": 1967,
-      "score": 33.15
+      "score": 33.16
     },
     {
       "gid": "59a1ef02-fd8b-4297-8fa5-875da633473b",
@@ -2056,7 +2084,7 @@
       "name": "Korngold, Erich Wolfgang",
       "birth_year": 1897,
       "death_year": 1957,
-      "score": 28.45
+      "score": 28.46
     },
     {
       "gid": "5af39af1-d187-4bf8-8da8-ae841f853ffe",
@@ -2077,7 +2105,7 @@
       "name": "Kreisler, Fritz",
       "birth_year": 1875,
       "death_year": 1962,
-      "score": 47.31
+      "score": 47.32
     },
     {
       "gid": "e36675f1-1a1f-4dda-b58f-7cf12a34f148",
@@ -2105,7 +2133,7 @@
       "name": "K\u00e1lm\u00e1n, Emmerich",
       "birth_year": 1882,
       "death_year": 1953,
-      "score": 18.3
+      "score": 18.31
     },
     {
       "gid": "845ce876-f754-490c-807d-c1664a22fe22",
@@ -2119,6 +2147,13 @@
       "name": "Lachenmann, Helmut",
       "birth_year": 1935,
       "death_year": null,
+      "score": 0.43
+    },
+    {
+      "gid": "923e8bce-8d31-48b0-8c65-5c8e1855713b",
+      "name": "Lacquemant, Jean",
+      "birth_year": 1622,
+      "death_year": 1680,
       "score": 0.43
     },
     {
@@ -2147,7 +2182,7 @@
       "name": "Lanner, Josef",
       "birth_year": 1801,
       "death_year": 1843,
-      "score": 15.53
+      "score": 15.54
     },
     {
       "gid": "c79a4d41-54e1-4be1-befd-1b2148228fc9",
@@ -2161,7 +2196,7 @@
       "name": "Lassus, Orlande de",
       "birth_year": 1532,
       "death_year": 1594,
-      "score": 24.12
+      "score": 24.13
     },
     {
       "gid": "9197f075-be71-49c0-b93b-4d71d1b8114d",
@@ -2231,14 +2266,21 @@
       "name": "Leoncavallo, Ruggero",
       "birth_year": 1857,
       "death_year": 1919,
-      "score": 22.05
+      "score": 22.06
+    },
+    {
+      "gid": "7ae4f30e-4182-4d4b-b64d-4e0db9dab186",
+      "name": "Levin, Robert",
+      "birth_year": 1947,
+      "death_year": null,
+      "score": 4.2
     },
     {
       "gid": "da5e774b-026a-4117-82a4-11d246c05a8b",
       "name": "Ligeti, Gy\u00f6rgy",
       "birth_year": 1923,
       "death_year": 2006,
-      "score": 43.04
+      "score": 43.05
     },
     {
       "gid": "8e9cdb13-a156-44cc-9a30-3e1c7b605ecc",
@@ -2252,7 +2294,7 @@
       "name": "Liszt, Franz",
       "birth_year": 1811,
       "death_year": 1886,
-      "score": 71.89
+      "score": 71.91
     },
     {
       "gid": "777583e5-7582-49c7-ad41-2679af41ef73",
@@ -2322,7 +2364,7 @@
       "name": "Lully, Jean\u2010Baptiste",
       "birth_year": 1632,
       "death_year": 1687,
-      "score": 10.47
+      "score": 10.48
     },
     {
       "gid": "e428063d-3640-48f1-bd02-ddbacb8a9022",
@@ -2336,7 +2378,7 @@
       "name": "Lutos\u0142awski, Witold",
       "birth_year": 1913,
       "death_year": 1994,
-      "score": 32.01
+      "score": 32.02
     },
     {
       "gid": "27870fb6-347c-48b1-adf4-c7bf0f71513e",
@@ -2385,7 +2427,7 @@
       "name": "Mahler, Gustav",
       "birth_year": 1860,
       "death_year": 1911,
-      "score": 58.69
+      "score": 58.7
     },
     {
       "gid": "573b8567-1a83-421e-b874-264cf2bdc34d",
@@ -2421,6 +2463,13 @@
       "birth_year": 1669,
       "death_year": 1732,
       "score": 1.29
+    },
+    {
+      "gid": "eb992578-1d17-45b2-ab23-1839d8b1b938",
+      "name": "Marie, Gabriel",
+      "birth_year": 1852,
+      "death_year": 1928,
+      "score": 6.14
     },
     {
       "gid": "79a0aee1-a05c-42e3-a3bd-43cc7046248b",
@@ -2462,7 +2511,7 @@
       "name": "Mascagni, Pietro",
       "birth_year": 1863,
       "death_year": 1945,
-      "score": 24.23
+      "score": 24.24
     },
     {
       "gid": "f422b99a-b48c-4bee-bc0c-f2e8cad82b6c",
@@ -2476,7 +2525,7 @@
       "name": "Massenet, Jules",
       "birth_year": 1842,
       "death_year": 1912,
-      "score": 35.11
+      "score": 35.12
     },
     {
       "gid": "326ae0f1-7208-4321-93fc-7ef3332ce1a5",
@@ -2504,7 +2553,7 @@
       "name": "Mendelssohn, Felix",
       "birth_year": 1809,
       "death_year": 1847,
-      "score": 72.29
+      "score": 72.3
     },
     {
       "gid": "f5509d70-5768-4701-bf6c-d1f91e0f24d4",
@@ -2588,7 +2637,7 @@
       "name": "Mompou, Federico",
       "birth_year": 1893,
       "death_year": 1987,
-      "score": 41.86
+      "score": 41.87
     },
     {
       "gid": "347cc398-b4de-48a2-b200-5d61784d53bc",
@@ -2609,7 +2658,7 @@
       "name": "Monteverdi, Claudio",
       "birth_year": 1567,
       "death_year": 1643,
-      "score": 44.1
+      "score": 44.11
     },
     {
       "gid": "730b87ad-1774-43a0-9a65-5ec9314c0cf1",
@@ -2665,7 +2714,7 @@
       "name": "Moszkowski, Moritz",
       "birth_year": 1854,
       "death_year": 1925,
-      "score": 25.61
+      "score": 25.62
     },
     {
       "gid": "0b2d03d6-5868-49ed-a841-b8aee954d398",
@@ -2686,14 +2735,14 @@
       "name": "Mozart, Leopold",
       "birth_year": 1719,
       "death_year": 1787,
-      "score": 16.72
+      "score": 16.73
     },
     {
       "gid": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Mozart, Wolfgang Amadeus",
       "birth_year": 1756,
       "death_year": 1791,
-      "score": 96.16
+      "score": 96.18
     },
     {
       "gid": "48bf8560-86af-4c8a-8f31-93a4c38feb09",
@@ -2735,7 +2784,7 @@
       "name": "Mussorgsky, Modest",
       "birth_year": 1839,
       "death_year": 1881,
-      "score": 49.05
+      "score": 49.06
     },
     {
       "gid": "2e3c82fd-fbab-4675-bc64-e57ebb40dcca",
@@ -2763,7 +2812,7 @@
       "name": "Nebra, Manuel Blasco de",
       "birth_year": 1750,
       "death_year": 1784,
-      "score": 13.54
+      "score": 13.55
     },
     {
       "gid": "d27b2780-01e8-4045-ac26-e6b672fecc63",
@@ -2791,7 +2840,7 @@
       "name": "Nielsen, Carl",
       "birth_year": 1865,
       "death_year": 1931,
-      "score": 43.53
+      "score": 43.54
     },
     {
       "gid": "d20d70cd-db2d-476c-80f5-87ebfda2a850",
@@ -2819,14 +2868,14 @@
       "name": "Ockeghem, Johannes",
       "birth_year": 1410,
       "death_year": 1497,
-      "score": 26.66
+      "score": 26.67
     },
     {
       "gid": "27bc8cf5-72e1-4888-87de-259fbcaac3ff",
       "name": "Offenbach, Jacques",
       "birth_year": 1819,
       "death_year": 1880,
-      "score": 38.32
+      "score": 38.33
     },
     {
       "gid": "8a04ad07-059a-4894-a535-1f91e26186b5",
@@ -2847,7 +2896,7 @@
       "name": "Pachelbel, Johann",
       "birth_year": 1653,
       "death_year": 1706,
-      "score": 33.85
+      "score": 33.86
     },
     {
       "gid": "4a2b8def-5a86-45fd-9c21-31c3356a3774",
@@ -2868,7 +2917,7 @@
       "name": "Paisiello, Giovanni",
       "birth_year": 1740,
       "death_year": 1816,
-      "score": 11.38
+      "score": 11.39
     },
     {
       "gid": "4daeb526-6c4c-4f77-bdf5-4a0fcb714bfe",
@@ -2882,7 +2931,7 @@
       "name": "Palmgren, Selim",
       "birth_year": 1878,
       "death_year": 1951,
-      "score": 6.26
+      "score": 6.27
     },
     {
       "gid": "46aa26e8-36cb-4e80-b543-261e8a9a094f",
@@ -2931,7 +2980,7 @@
       "name": "Penderecki, Krzysztof",
       "birth_year": 1933,
       "death_year": 2020,
-      "score": 29.65
+      "score": 29.66
     },
     {
       "gid": "a9c185d9-11fb-48df-8f19-72cfc84dc647",
@@ -2973,14 +3022,14 @@
       "name": "Piazzolla, Astor",
       "birth_year": 1921,
       "death_year": 1992,
-      "score": 48.81
+      "score": 48.82
     },
     {
       "gid": "4c1958b2-d09b-45ae-99b9-26047180ca28",
       "name": "Piern\u00e9, Gabriel",
       "birth_year": 1863,
       "death_year": 1937,
-      "score": 8.74
+      "score": 8.75
     },
     {
       "gid": "5692f969-1c27-4fd6-8a8c-a3dde8a8bef9",
@@ -3001,7 +3050,7 @@
       "name": "Ponce, Manuel Mar\u00eda",
       "birth_year": 1882,
       "death_year": 1948,
-      "score": 26.63
+      "score": 26.64
     },
     {
       "gid": "d8c01b12-f5bc-4365-848f-878c445cefe8",
@@ -3022,7 +3071,7 @@
       "name": "Poulenc, Francis",
       "birth_year": 1899,
       "death_year": 1963,
-      "score": 60.63
+      "score": 60.64
     },
     {
       "gid": "2f625459-d284-4e00-a3e8-3906b589a9b3",
@@ -3043,7 +3092,7 @@
       "name": "Prokofiev, Sergei",
       "birth_year": 1891,
       "death_year": 1953,
-      "score": 64.92
+      "score": 64.94
     },
     {
       "gid": "d710dc43-cf00-4351-b2ef-9b725f703836",
@@ -3057,7 +3106,7 @@
       "name": "Puccini, Giacomo",
       "birth_year": 1858,
       "death_year": 1924,
-      "score": 48.78
+      "score": 48.79
     },
     {
       "gid": "06597968-3771-4a0f-aaa6-652d2f04efd1",
@@ -3071,14 +3120,14 @@
       "name": "Purcell, Henry",
       "birth_year": 1659,
       "death_year": 1695,
-      "score": 64.39
+      "score": 64.4
     },
     {
       "gid": "ae0b2424-d4c5-4c54-82ac-fe3be5453270",
       "name": "P\u00e4rt, Arvo",
       "birth_year": 1935,
       "death_year": null,
-      "score": 50.26
+      "score": 50.27
     },
     {
       "gid": "aa968bcf-8c70-49eb-aae1-3b907b60d7e5",
@@ -3092,7 +3141,7 @@
       "name": "Rachmaninoff, Sergei",
       "birth_year": 1873,
       "death_year": 1943,
-      "score": 67.12
+      "score": 67.13
     },
     {
       "gid": "a3900392-471c-431f-95a9-35924c6ce154",
@@ -3106,7 +3155,7 @@
       "name": "Rameau, Jean\u2010Philippe",
       "birth_year": 1683,
       "death_year": 1764,
-      "score": 38.05
+      "score": 38.06
     },
     {
       "gid": "64deae0d-dbd9-49c5-9884-8e46ab31ef6f",
@@ -3127,14 +3176,14 @@
       "name": "Rautavaara, Einojuhani",
       "birth_year": 1928,
       "death_year": 2016,
-      "score": 17.97
+      "score": 17.98
     },
     {
       "gid": "6fdd3b3e-1ea6-4da9-8d6f-8f8de01c133a",
       "name": "Ravel, Maurice",
       "birth_year": 1875,
       "death_year": 1937,
-      "score": 67.87
+      "score": 67.88
     },
     {
       "gid": "174c5a97-bdf2-4b19-9882-73ca0d2fe477",
@@ -3148,14 +3197,14 @@
       "name": "Reger, Max",
       "birth_year": 1873,
       "death_year": 1916,
-      "score": 36.73
+      "score": 36.74
     },
     {
       "gid": "a3031680-c359-458f-a641-70ccbaec6a74",
       "name": "Reich, Steve",
       "birth_year": 1936,
       "death_year": null,
-      "score": 34.17
+      "score": 34.18
     },
     {
       "gid": "02883ac7-fb37-426d-8d38-8c960ed3bebb",
@@ -3176,7 +3225,7 @@
       "name": "Respighi, Ottorino",
       "birth_year": 1879,
       "death_year": 1936,
-      "score": 40.99
+      "score": 41.0
     },
     {
       "gid": "44271921-cfc6-41cb-b94f-9b5bf1ba4574",
@@ -3232,7 +3281,7 @@
       "name": "Rodrigo, Joaqu\u00edn",
       "birth_year": 1901,
       "death_year": 1999,
-      "score": 41.77
+      "score": 41.78
     },
     {
       "gid": "d2110a4f-20c0-4ae3-ab05-1f195b62ae22",
@@ -3267,7 +3316,7 @@
       "name": "Rossini, Gioachino",
       "birth_year": 1792,
       "death_year": 1868,
-      "score": 54.08
+      "score": 54.09
     },
     {
       "gid": "78f18fe2-569c-4a47-8084-c0b473455c1c",
@@ -3302,7 +3351,7 @@
       "name": "Rutter, John",
       "birth_year": 1945,
       "death_year": null,
-      "score": 28.81
+      "score": 28.82
     },
     {
       "gid": "595d5300-fed7-4f69-ae33-4f2a6d6ed6ee",
@@ -3330,7 +3379,7 @@
       "name": "Saint\u2010Sa\u00ebns, Camille",
       "birth_year": 1835,
       "death_year": 1921,
-      "score": 63.44
+      "score": 63.45
     },
     {
       "gid": "bb5329a8-8995-4f30-9f25-f7e7ce7b0183",
@@ -3372,7 +3421,7 @@
       "name": "Satie, Erik",
       "birth_year": 1866,
       "death_year": 1925,
-      "score": 66.77
+      "score": 66.78
     },
     {
       "gid": "131b73d6-049f-43d7-b072-8eb71bffc78d",
@@ -3393,7 +3442,7 @@
       "name": "Scarlatti, Domenico",
       "birth_year": 1685,
       "death_year": 1757,
-      "score": 83.19
+      "score": 83.21
     },
     {
       "gid": "72d5d447-2b23-4c1f-9df4-44e8d00dc377",
@@ -3428,14 +3477,14 @@
       "name": "Schnittke, Alfred",
       "birth_year": 1934,
       "death_year": 1998,
-      "score": 31.28
+      "score": 31.29
     },
     {
       "gid": "9b490b96-ad82-4d7b-9055-f0a196ad64cc",
       "name": "Schoenberg, Arnold",
       "birth_year": 1874,
       "death_year": 1951,
-      "score": 47.41
+      "score": 47.42
     },
     {
       "gid": "8363e991-3656-4cbd-b89e-60bf0dbadebc",
@@ -3449,14 +3498,14 @@
       "name": "Schubert, Franz",
       "birth_year": 1797,
       "death_year": 1828,
-      "score": 87.19
+      "score": 87.2
     },
     {
       "gid": "e2eb5293-00fb-40bb-92f4-3db07a229118",
       "name": "Schulhoff, Erwin",
       "birth_year": 1894,
       "death_year": 1942,
-      "score": 22.61
+      "score": 22.62
     },
     {
       "gid": "e3dffa9e-b757-47b5-8b2c-278ad1dbc6e5",
@@ -3477,14 +3526,14 @@
       "name": "Schumann, Robert",
       "birth_year": 1810,
       "death_year": 1856,
-      "score": 75.23
+      "score": 75.25
     },
     {
       "gid": "cbdcee87-59a0-4f05-929b-86a3d91b6dfa",
       "name": "Sch\u00fctz, Heinrich",
       "birth_year": 1585,
       "death_year": 1672,
-      "score": 34.3
+      "score": 34.31
     },
     {
       "gid": "64be8ba0-828e-4cfe-b02f-c564da1c33fa",
@@ -3498,7 +3547,7 @@
       "name": "Scriabin, Alexander",
       "birth_year": 1872,
       "death_year": 1915,
-      "score": 63.22
+      "score": 63.23
     },
     {
       "gid": "0b72a0b3-385f-4379-a92b-2962c87d4ac9",
@@ -3526,7 +3575,7 @@
       "name": "Sheppard, John",
       "birth_year": 1515,
       "death_year": 1558,
-      "score": 25.75
+      "score": 25.76
     },
     {
       "gid": "b1a704e8-eba7-4d04-a7a5-8ab15500c843",
@@ -3540,14 +3589,14 @@
       "name": "Shostakovich, Dmitri",
       "birth_year": 1906,
       "death_year": 1975,
-      "score": 66.02
+      "score": 66.03
     },
     {
       "gid": "691b0e9d-9e57-41cf-932d-a3d21b068e75",
       "name": "Sibelius, Jean",
       "birth_year": 1865,
       "death_year": 1957,
-      "score": 68.57
+      "score": 68.58
     },
     {
       "gid": "e83906a7-67b1-481c-831f-8d7409145cb4",
@@ -3575,7 +3624,7 @@
       "name": "Smetana, Bed\u0159ich",
       "birth_year": 1824,
       "death_year": 1884,
-      "score": 37.87
+      "score": 37.88
     },
     {
       "gid": "8ba1e180-e31d-4936-be7a-ff1257f3ff02",
@@ -3645,7 +3694,7 @@
       "name": "Stenhammar, Wilhelm",
       "birth_year": 1871,
       "death_year": 1927,
-      "score": 18.24
+      "score": 18.25
     },
     {
       "gid": "ca1ed31b-9acd-4d46-8016-e158b25cd4c8",
@@ -3659,7 +3708,7 @@
       "name": "Stolz, Robert",
       "birth_year": 1880,
       "death_year": 1975,
-      "score": 15.26
+      "score": 15.27
     },
     {
       "gid": "52773cf5-e25d-4865-841d-b8878c01c1fe",
@@ -3669,11 +3718,18 @@
       "score": 7.67
     },
     {
+      "gid": "725fb443-0a26-42f8-b4b7-5257b3a61eb5",
+      "name": "Strauss, Johann, I",
+      "birth_year": 1804,
+      "death_year": 1849,
+      "score": 28.8
+    },
+    {
       "gid": "8255db36-4902-4cf6-8612-0f2b4288bc9a",
       "name": "Strauss, Johann, II",
       "birth_year": 1825,
       "death_year": 1899,
-      "score": 71.94
+      "score": 71.96
     },
     {
       "gid": "9942ef92-91a2-46f7-aff4-32389df33c9e",
@@ -3687,21 +3743,21 @@
       "name": "Strauss, Richard",
       "birth_year": 1864,
       "death_year": 1949,
-      "score": 63.45
+      "score": 63.46
     },
     {
       "gid": "c278de2c-9696-4fdf-a919-0781cd945e2c",
       "name": "Stravinsky, Igor",
       "birth_year": 1882,
       "death_year": 1971,
-      "score": 61.7
+      "score": 62.07
     },
     {
       "gid": "cbb8b66c-dab8-43dc-918e-b1af27d20e6f",
       "name": "Strozzi, Barbara",
       "birth_year": 1619,
       "death_year": 1677,
-      "score": 14.17
+      "score": 14.18
     },
     {
       "gid": "38ed646d-8a2f-44b3-b69a-3904db4ba37b",
@@ -3715,21 +3771,21 @@
       "name": "Suk, Josef",
       "birth_year": 1874,
       "death_year": 1935,
-      "score": 28.91
+      "score": 28.92
     },
     {
       "gid": "4b466f5e-4620-4084-8841-3fe4ea38e689",
       "name": "Sullivan, Sir Arthur",
       "birth_year": 1842,
       "death_year": 1900,
-      "score": 31.07
+      "score": 31.97
     },
     {
       "gid": "3f23bb80-a2a1-4a7e-9458-447fd21b946a",
       "name": "Supp\u00e8, Franz von",
       "birth_year": 1819,
       "death_year": 1895,
-      "score": 38.08
+      "score": 38.09
     },
     {
       "gid": "6c6b0759-9af0-4a62-b1c8-6926432e63d2",
@@ -3750,14 +3806,14 @@
       "name": "Sweelinck, Jan Pieterszoon",
       "birth_year": 1562,
       "death_year": 1621,
-      "score": 35.62
+      "score": 35.63
     },
     {
       "gid": "e04ef24e-b64e-4ca5-a479-b6bc79042ff5",
       "name": "Szymanowski, Karol",
       "birth_year": 1882,
       "death_year": 1937,
-      "score": 41.09
+      "score": 41.1
     },
     {
       "gid": "56499953-dc43-4404-b643-868b6b2612da",
@@ -3778,14 +3834,14 @@
       "name": "Tallis, Thomas",
       "birth_year": 1505,
       "death_year": 1585,
-      "score": 46.91
+      "score": 46.92
     },
     {
       "gid": "e61ad00c-fbe8-4ca1-ac14-2e0872257057",
       "name": "Taneyev, Sergei",
       "birth_year": 1856,
       "death_year": 1915,
-      "score": 13.02
+      "score": 13.03
     },
     {
       "gid": "90c8118e-b5cc-4df8-80d3-8079879c9cef",
@@ -3806,21 +3862,21 @@
       "name": "Taverner, John",
       "birth_year": 1490,
       "death_year": 1545,
-      "score": 21.57
+      "score": 21.58
     },
     {
       "gid": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
       "name": "Tchaikovsky, Pyotr Ilyich",
       "birth_year": 1840,
       "death_year": 1893,
-      "score": 73.15
+      "score": 73.25
     },
     {
       "gid": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
       "name": "Telemann, Georg Philipp",
       "birth_year": 1681,
       "death_year": 1767,
-      "score": 50.21
+      "score": 50.22
     },
     {
       "gid": "c118d897-3e73-48e3-a307-b02ea1541e3f",
@@ -3904,7 +3960,7 @@
       "name": "Turina, Joaqu\u00edn",
       "birth_year": 1882,
       "death_year": 1949,
-      "score": 32.28
+      "score": 32.29
     },
     {
       "gid": "a2cf1521-af9a-4ecb-820c-882698901025",
@@ -3918,7 +3974,7 @@
       "name": "T\u00e1rrega, Francisco",
       "birth_year": 1852,
       "death_year": 1909,
-      "score": 43.71
+      "score": 43.72
     },
     {
       "gid": "8e1d66ff-5347-448d-995e-c8310f6b1a4b",
@@ -3953,14 +4009,14 @@
       "name": "Vasks, P\u0113teris",
       "birth_year": 1946,
       "death_year": null,
-      "score": 15.48
+      "score": 15.49
     },
     {
       "gid": "4f3b96ed-f1f1-4a68-be73-0e0657837096",
       "name": "Vaughan Williams, Ralph",
       "birth_year": 1872,
       "death_year": 1958,
-      "score": 56.18
+      "score": 56.19
     },
     {
       "gid": "db0087f3-7a6b-43cc-bde3-5da9e9ca6847",
@@ -3981,7 +4037,7 @@
       "name": "Verdi, Giuseppe",
       "birth_year": 1813,
       "death_year": 1901,
-      "score": 55.8
+      "score": 55.81
     },
     {
       "gid": "09170b4d-9a28-4d6a-9070-9c8c725826ec",
@@ -4009,7 +4065,7 @@
       "name": "Villa\u2010Lobos, Heitor",
       "birth_year": 1887,
       "death_year": 1959,
-      "score": 47.21
+      "score": 47.22
     },
     {
       "gid": "5d00bb84-ed75-4e4f-b1ec-39959f2814de",
@@ -4030,7 +4086,7 @@
       "name": "Vitali, Giovanni Battista",
       "birth_year": 1632,
       "death_year": 1692,
-      "score": 8.47
+      "score": 8.48
     },
     {
       "gid": "bcebeb78-84cc-45b3-9d65-942b20704ae5",
@@ -4044,7 +4100,7 @@
       "name": "Vivaldi, Antonio",
       "birth_year": 1678,
       "death_year": 1741,
-      "score": 80.64
+      "score": 80.65
     },
     {
       "gid": "f9af20a8-046e-4f9e-bf01-b4448995d14e",
@@ -4058,7 +4114,7 @@
       "name": "Vollenweider, Andreas",
       "birth_year": 1953,
       "death_year": null,
-      "score": 11.38
+      "score": 11.39
     },
     {
       "gid": "b699d5bc-7b1c-4de7-8747-974574ca4728",
@@ -4086,7 +4142,7 @@
       "name": "Waldteufel, \u00c9mile",
       "birth_year": 1837,
       "death_year": 1915,
-      "score": 23.86
+      "score": 23.87
     },
     {
       "gid": "383ce1fc-469e-4edf-a47a-8d9915934e8c",
@@ -4107,14 +4163,14 @@
       "name": "Walther, Johann Gottfried",
       "birth_year": 1684,
       "death_year": 1748,
-      "score": 8.47
+      "score": 8.48
     },
     {
       "gid": "d019a8cc-060f-4491-83d6-76e1211a1a08",
       "name": "Walton, William",
       "birth_year": 1902,
       "death_year": 1983,
-      "score": 42.9
+      "score": 42.91
     },
     {
       "gid": "f4c98151-1c63-4cbb-b95e-1a3f3f638e04",
@@ -4128,35 +4184,35 @@
       "name": "Wassenaer, Unico Wilhelm van",
       "birth_year": 1692,
       "death_year": 1766,
-      "score": 21.19
+      "score": 21.2
     },
     {
       "gid": "c2d17829-1424-435b-9386-c77d3a920abe",
       "name": "Weber, Carl Maria von",
       "birth_year": 1786,
       "death_year": 1826,
-      "score": 49.79
+      "score": 49.8
     },
     {
       "gid": "7be0b588-030c-4904-836f-71ff43a2dfec",
       "name": "Webern, Anton",
       "birth_year": 1883,
       "death_year": 1945,
-      "score": 42.5
+      "score": 42.51
     },
     {
       "gid": "a6d912fa-3a2c-401e-86fa-074a9d722402",
       "name": "Weelkes, Thomas",
       "birth_year": 1576,
       "death_year": 1623,
-      "score": 21.58
+      "score": 21.59
     },
     {
       "gid": "0e738f68-783c-4a6a-80ae-4f7500861060",
       "name": "Weill, Kurt",
       "birth_year": 1900,
       "death_year": 1950,
-      "score": 30.66
+      "score": 30.67
     },
     {
       "gid": "554fbabf-54f4-4640-8eb6-88693b6085c7",
@@ -4177,7 +4233,7 @@
       "name": "Wert, Giaches de",
       "birth_year": 1535,
       "death_year": 1596,
-      "score": 22.63
+      "score": 22.64
     },
     {
       "gid": "74878b6f-49ac-48a5-aaf4-f6c0711959e1",
@@ -4212,7 +4268,7 @@
       "name": "Wieniawski, Henryk",
       "birth_year": 1835,
       "death_year": 1880,
-      "score": 36.78
+      "score": 36.79
     },
     {
       "gid": "a846eec8-8b10-4352-bfba-f8235c0605e8",
@@ -4268,7 +4324,7 @@
       "name": "Xenakis, Iannis",
       "birth_year": 1922,
       "death_year": 2001,
-      "score": 17.42
+      "score": 17.43
     },
     {
       "gid": "6df14eaa-212b-4806-833e-4254fa0d6cb4",
@@ -4289,7 +4345,7 @@
       "name": "Zemlinsky, Alexander von",
       "birth_year": 1871,
       "death_year": 1942,
-      "score": 16.88
+      "score": 16.89
     },
     {
       "gid": "3de2d17d-ff03-476f-814b-d6f4d7e57cb5",
@@ -7227,6 +7283,38 @@
           "name": "Symphony in E-flat major, op. 18 no. 1: III. Allegro",
           "deezer": [71919658],
           "score": 92.66
+        }
+      ]
+    },
+    {
+      "gid": "420d0f44-59a5-425d-bfee-36d1b41087cf",
+      "composer": "fc366dc2-17d1-4679-9ee5-c750e7915145",
+      "name": "Ach, dass ich Wassers g\u2019nug h\u00e4tte",
+      "type": "vocal",
+      "begin_year": null,
+      "end_year": null,
+      "score": 3.14,
+      "parts": [
+        {
+          "name": "Ach, dass ich Wassers g\u2019nug h\u00e4tte",
+          "deezer": [2780780521, 1427183502, 63667671],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "123b908a-ed88-468b-9d0f-e69f8a789ef4",
+      "composer": "fc366dc2-17d1-4679-9ee5-c750e7915145",
+      "name": "F\u00fcrchte dich nicht",
+      "type": "vocal",
+      "begin_year": null,
+      "end_year": null,
+      "score": 1.95,
+      "parts": [
+        {
+          "name": "F\u00fcrchte dich nicht",
+          "deezer": [2798998062],
+          "score": 100.0
         }
       ]
     },
@@ -12875,22 +12963,6 @@
         {
           "name": "Ich hab mein Sach Gott heimgstellt, BWV 1113",
           "deezer": [138872187, 2542511421, 2800667242],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "1447d8d1-e37d-4f03-b2fd-97b4ab4959a1",
-      "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
-      "name": "Ich lasse dich nicht, du segnest mich denn, BWV 1165 / Anh. III 159",
-      "type": "vocal",
-      "begin_year": 1713,
-      "end_year": 1713,
-      "score": 3.09,
-      "parts": [
-        {
-          "name": "Ich lasse dich nicht, du segnest mich denn, BWV 1165 / Anh. III 159",
-          "deezer": [2802842932, 1509915452],
           "score": 100.0
         }
       ]
@@ -55516,6 +55588,22 @@
       ]
     },
     {
+      "gid": "e1351f6a-fb67-3511-a862-7529d755fcd2",
+      "composer": "d329a84d-c7af-458d-a037-405f52ca68a5",
+      "name": "The Three Kings (arr. Atkins)",
+      "type": "vocal",
+      "begin_year": null,
+      "end_year": null,
+      "score": 3.43,
+      "parts": [
+        {
+          "name": "The Three Kings (arr. Atkins)",
+          "deezer": [72517863, 2004646987, 3416524],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "44f13703-5665-43af-8848-99a50ef7314f",
       "composer": "d329a84d-c7af-458d-a037-405f52ca68a5",
       "name": "Weihnachtslieder, op. 8",
@@ -55527,6 +55615,22 @@
         {
           "name": "Weihnachtslieder, op. 8: III. Die K\u00f6nige",
           "deezer": [68280677, 3219772311],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "538a0e3a-e486-401c-bf41-023636b87bd2",
+      "composer": "691b2e05-334b-42c9-b121-defae8f84cb3",
+      "name": "Ave Maria, Mater Dei",
+      "type": "vocal",
+      "begin_year": null,
+      "end_year": null,
+      "score": 2.48,
+      "parts": [
+        {
+          "name": "Ave Maria, Mater Dei",
+          "deezer": [86102417],
           "score": 100.0
         }
       ]
@@ -56054,6 +56158,37 @@
         {
           "name": "Messe pour les Couvents: IV. Sanctus: Elevation. Tierce en Taille",
           "deezer": [1400615772, 912018272],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "15c082d9-159a-4ce4-ac9b-6d99001477f4",
+      "composer": "86523090-6085-42c1-80b7-772f1bc80472",
+      "name": "Pi\u00e8ces en Concert for Cello & Strings (arr. Bazelaire)",
+      "type": "concerto",
+      "begin_year": null,
+      "end_year": null,
+      "score": 2.16,
+      "parts": [
+        {
+          "name": "Pi\u00e8ces en Concert for Cello & Strings: I. Pr\u00e9lude",
+          "deezer": [983663792],
+          "score": 94.64
+        },
+        {
+          "name": "Pi\u00e8ces en Concert for Cello & Strings: II. Siciliene",
+          "deezer": [983663852],
+          "score": 100.0
+        },
+        {
+          "name": "Pi\u00e8ces en Concert for Cello & Strings: III. La Tromba",
+          "deezer": [983663262],
+          "score": 100.0
+        },
+        {
+          "name": "Pi\u00e8ces en Concert for Cello & Strings: V. Air de Diable",
+          "deezer": [983663352],
           "score": 100.0
         }
       ]
@@ -59514,8 +59649,8 @@
       "composer": "be50643c-0377-4968-b48c-47e06b2e2a3b",
       "name": "Trois chansons de Charles d\u2019Orl\u00e9ans, L. 92, CD 99",
       "type": "vocal",
-      "begin_year": 1898,
-      "end_year": 1898,
+      "begin_year": 1908,
+      "end_year": 1908,
       "score": 3.3,
       "parts": [
         {
@@ -59839,6 +59974,22 @@
           "name": "Florida Suite, RT vi/1: II. By the River",
           "deezer": [2803071562],
           "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "75d24542-9905-4f83-aa88-e06791e4efb3",
+      "composer": "2a006dfe-a7af-46d1-b38f-8c1d90dd230d",
+      "name": "Hassan Suite (arr. Beecham)",
+      "type": "orchestral",
+      "begin_year": null,
+      "end_year": null,
+      "score": 2.28,
+      "parts": [
+        {
+          "name": "Hassan Suite: Serenade",
+          "deezer": [1480507182],
+          "score": 95.42
         }
       ]
     },
@@ -70549,6 +70700,22 @@
       ]
     },
     {
+      "gid": "b6b1e9b2-ae7c-4030-86b0-e6f8848bc58c",
+      "composer": "0e3cc8e1-7bfe-4110-830e-dca6e8e6a999",
+      "name": "Mirabile mysterium",
+      "type": "vocal",
+      "begin_year": null,
+      "end_year": null,
+      "score": 2.2,
+      "parts": [
+        {
+          "name": "Mirabile mysterium",
+          "deezer": [89100205],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "7e1fce50-2bc2-43f3-9024-9e4299eb36fa",
       "composer": "3e2efdb0-cd07-40e2-a39f-277c670e1d72",
       "name": "Canciones espa\u00f1olas antiguas",
@@ -70765,6 +70932,22 @@
         {
           "name": "Rialto Ripples",
           "deezer": [1785697867],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "5b878193-32b8-4075-86ec-71a3822655cd",
+      "composer": "65744963-191a-44ef-a3c7-b693a808a158",
+      "name": "Short Story (arr. Dushkin)",
+      "type": "chamber",
+      "begin_year": 1925,
+      "end_year": 1925,
+      "score": 1.95,
+      "parts": [
+        {
+          "name": "Short Story (arr. Dushkin)",
+          "deezer": [122883378],
           "score": 100.0
         }
       ]
@@ -72449,11 +72632,6 @@
       "score": 3.47,
       "parts": [
         {
-          "name": "Orfeo ed Euridice, Wq. 30: Ballet in D minor \u201cDance of the Blessed Spirits\u201d",
-          "deezer": [2949644181, 1401241282, 2774610281, 1479214172],
-          "score": 100.0
-        },
-        {
           "name": "Orfeo ed Euridice, Wq. 30: Atto III. Aria \u201cChe far\u00f2 senza Euridice?\u201d (Orfeo)",
           "deezer": [113107738, 2683620082, 135874336, 67235823, 69125623],
           "score": 98.84
@@ -72472,6 +72650,22 @@
         {
           "name": "Orfeo ed Euridice, Wq.30: Atto III. Rectitativo: 'Orfeo, che fai?'",
           "deezer": [2683620102],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "e865b3c1-6955-4bdf-a568-1a3fc5d34013",
+      "composer": "22790383-30ea-4dcc-a8d6-882fb1eb4669",
+      "name": "Orpheus und Eurydike (arr. D\u00f6rffel)",
+      "type": "opera",
+      "begin_year": null,
+      "end_year": null,
+      "score": 4.17,
+      "parts": [
+        {
+          "name": "Orfeo ed Euridice, Wq. 30: Ballet in D minor \u201cDance of the Blessed Spirits\u201d",
+          "deezer": [2949644181, 1401241282, 2774610281, 1479214172],
           "score": 100.0
         }
       ]
@@ -85156,8 +85350,8 @@
       "composer": "c130b0fb-5dce-449d-9f40-1437f889f7fe",
       "name": "The Seven Last Words of Our Savior on the Cross, Hob XX:2",
       "type": "vocal",
-      "begin_year": 1785,
-      "end_year": 1785,
+      "begin_year": 1796,
+      "end_year": 1796,
       "score": 2.11,
       "parts": [
         {
@@ -88701,8 +88895,8 @@
       "composer": "edfced8a-01bc-4c22-96b2-da58edd6b8af",
       "name": "Lachian Dances, JW 6/17",
       "type": "orchestral",
-      "begin_year": 1889,
-      "end_year": 1889,
+      "begin_year": 1927,
+      "end_year": 1927,
       "score": 2.38,
       "parts": [
         {
@@ -89060,6 +89254,27 @@
           "name": "Tema con variazioni",
           "deezer": [2788917992],
           "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "6f3f461e-029a-42db-8500-3940bc398d2f",
+      "composer": "edfced8a-01bc-4c22-96b2-da58edd6b8af",
+      "name": "The Cunning Little Vixen Suite (arr. Talich)",
+      "type": "orchestral",
+      "begin_year": null,
+      "end_year": null,
+      "score": 2.17,
+      "parts": [
+        {
+          "name": "The Cunning Little Vixen Suite: I",
+          "deezer": [68288133],
+          "score": 100.0
+        },
+        {
+          "name": "The Cunning Little Vixen Suite: II",
+          "deezer": [68288134],
+          "score": 94.64
         }
       ]
     },
@@ -89957,6 +90172,38 @@
         {
           "name": "Drei Weihnachtliche Lieds\u00e4tze: Nr. 1. Maria durch ein Dornwald ging",
           "deezer": [3114457031],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "4a06764e-8d7a-4e72-b8fd-fd9111e6e450",
+      "composer": "5d0aee72-d7cf-4455-a95d-9eea556c960e",
+      "name": "Libro primo d'Intavolatura de Chitarrone",
+      "type": "solo",
+      "begin_year": 1604,
+      "end_year": 1604,
+      "score": 2.48,
+      "parts": [
+        {
+          "name": "Toccata arpeggiata for chitarrone",
+          "deezer": [2071478317],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "34899be1-56f1-43f8-a437-d3cd856974bb",
+      "composer": "5d0aee72-d7cf-4455-a95d-9eea556c960e",
+      "name": "Libro quarto d'intavolatura di chitarrone",
+      "type": "vocal",
+      "begin_year": 1640,
+      "end_year": 1640,
+      "score": 2.1,
+      "parts": [
+        {
+          "name": "Canario",
+          "deezer": [1400789842],
           "score": 100.0
         }
       ]
@@ -91633,6 +91880,22 @@
       ]
     },
     {
+      "gid": "78f2576c-19e9-4f6e-b8aa-3dddc255039d",
+      "composer": "923e8bce-8d31-48b0-8c65-5c8e1855713b",
+      "name": "Plainte sur la mort de Monsieur Lambert",
+      "type": "vocal",
+      "begin_year": null,
+      "end_year": null,
+      "score": 1.95,
+      "parts": [
+        {
+          "name": "Plainte sur la mort de Monsieur Lambert",
+          "deezer": [3471615],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "0aaff52f-248b-49ee-82c6-cadd917b66b0",
       "composer": "9736c049-7923-49a8-bfc8-73f71bcc77be",
       "name": "Concerto pour violoncelle et orchestre en r\u00e9 majeur",
@@ -92540,6 +92803,32 @@
           "name": "Pagliacci: Atto I. \u201cRecitar!\u201d \u2026 \u201cVesti la giubba\u201d (Canio)",
           "deezer": [709203, 4835872, 3518409, 2709317642, 66167041],
           "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "bdef67da-e132-4661-ab05-8ac16f4c26c0",
+      "composer": "7ae4f30e-4182-4d4b-b64d-4e0db9dab186",
+      "name": "Requiem in D minor, K. 626",
+      "type": "vocal",
+      "begin_year": null,
+      "end_year": null,
+      "score": 2.3,
+      "parts": [
+        {
+          "name": "Requiem in D minor, K. 626: I. Introitus: a. Kyrie eleison",
+          "deezer": [3009457341, 2798858332],
+          "score": 96.03
+        },
+        {
+          "name": "Requiem in D minor, K. 626: IV. Sanctus: a. Sanctus",
+          "deezer": [3009457151],
+          "score": 100.0
+        },
+        {
+          "name": "Requiem in D minor, K. 626: VI. Communio: b. Cum sanctis tuis",
+          "deezer": [3009457281, 2798858492],
+          "score": 96.03
         }
       ]
     },
@@ -97342,6 +97631,22 @@
         {
           "name": "Pi\u00e8ces de clavecin, livre 1 (Suite en r\u00e9): Chaconne",
           "deezer": [118060190],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "b903d8a3-b13c-469f-9e98-b14b314e7416",
+      "composer": "eb992578-1d17-45b2-ab23-1839d8b1b938",
+      "name": "2 Pieces for Cello and Piano",
+      "type": "chamber",
+      "begin_year": 1887,
+      "end_year": 1887,
+      "score": 2.48,
+      "parts": [
+        {
+          "name": "La Cinquantaine",
+          "deezer": [2618916382],
           "score": 100.0
         }
       ]
@@ -108342,6 +108647,22 @@
       ]
     },
     {
+      "gid": "23358c02-9d90-4a54-af48-48e5e24e5a8f",
+      "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
+      "name": "Horn Concerto no. 1 in D major, K. 386b / KV 412: II. Rondo. Allegro (arr. Tuckwell) (arr. Tuckwell)",
+      "type": "chamber",
+      "begin_year": null,
+      "end_year": null,
+      "score": 1.95,
+      "parts": [
+        {
+          "name": "Horn Concerto no. 1 in D major, K. 386b / KV 412: II. Rondo. Allegro (arr. Tuckwell) (arr. Tuckwell)",
+          "deezer": [66166652],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "13f62c9f-e9d3-4520-aa22-a8fd9158e79b",
       "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Idomeneo, K. 366: Atto Secondo: Recitativo: \u201cNon pi\u00f9. Tutto acoltai\u201d (Ilia, Idamante)",
@@ -111494,27 +111815,6 @@
           "name": "Sinfonia concertante for Violin, Viola and Orchestra in E-flat major, K. 364/320d: III. Presto",
           "deezer": [6957763, 67337411, 3266320721, 67344279, 2768621701],
           "score": 98.39
-        }
-      ]
-    },
-    {
-      "gid": "4d4a7532-3989-4b06-bc4b-df5f9921755d",
-      "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
-      "name": "Sinfonia concertante in E-flat major for Oboe, Flute, Horn, Bassoon & Orchestra, K. 297B/Anh 9",
-      "type": "orchestral",
-      "begin_year": null,
-      "end_year": null,
-      "score": 1.92,
-      "parts": [
-        {
-          "name": "Sinfonia concertante in E-flat major for Oboe, Flute, Horn, Bassoon & Orchestra, K. 297B/Anh 9: I. Allegro",
-          "deezer": [65584495],
-          "score": 100.0
-        },
-        {
-          "name": "Sinfonia concertante in E-flat major for Oboe, Flute, Horn, Bassoon & Orchestra, K. 297B/Anh 9: II. Adagio",
-          "deezer": [65584496],
-          "score": 100.0
         }
       ]
     },
@@ -122130,8 +122430,8 @@
       "composer": "0e43fe9d-c472-4b62-be9e-55f971a023e1",
       "name": "Piano Sonata no. 3 in A minor, op. 28",
       "type": "piano",
-      "begin_year": 1917,
-      "end_year": 1917,
+      "begin_year": 1907,
+      "end_year": 1907,
       "score": 3.61,
       "parts": [
         {
@@ -162822,6 +163122,54 @@
       ]
     },
     {
+      "gid": "a71f2d9b-15cc-3a73-84ab-5374e2327dcc",
+      "composer": "725fb443-0a26-42f8-b4b7-5257b3a61eb5",
+      "name": "Beliebte Annen-Polka, op. 137",
+      "type": "orchestral",
+      "begin_year": null,
+      "end_year": null,
+      "score": 2.3,
+      "parts": [
+        {
+          "name": "Beliebte Annen-Polka, op. 137",
+          "deezer": [2061620567],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "9c27d6e4-1a0d-4333-8e24-4f570dc35a54",
+      "composer": "725fb443-0a26-42f8-b4b7-5257b3a61eb5",
+      "name": "Loreley-Rhein-Kl\u00e4nge. Walzer, op. 154",
+      "type": "orchestral",
+      "begin_year": 1843,
+      "end_year": 1843,
+      "score": 2.83,
+      "parts": [
+        {
+          "name": "Loreley-Rhein-Kl\u00e4nge. Walzer, op. 154",
+          "deezer": [65342752],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "64e7a2e2-dc44-3488-9322-4fd2ff39153f",
+      "composer": "725fb443-0a26-42f8-b4b7-5257b3a61eb5",
+      "name": "Radetzky March, op. 228",
+      "type": "orchestral",
+      "begin_year": 1848,
+      "end_year": 1848,
+      "score": 6.07,
+      "parts": [
+        {
+          "name": "Radetzky March, op. 228",
+          "deezer": [2792714492, 6959006, 2061620617, 113107690, 1998434857],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "a9afb581-4f14-40ab-b9a3-0f5a821d3aea",
       "composer": "8255db36-4902-4cf6-8612-0f2b4288bc9a",
       "name": "A Night in Venice",
@@ -166789,6 +167137,47 @@
       ]
     },
     {
+      "gid": "b850c7e7-afb7-4690-93ad-8d4758d0bb5e",
+      "composer": "c278de2c-9696-4fdf-a919-0781cd945e2c",
+      "name": "Suite Italienne for Violin and Piano (arr. Dushkin)",
+      "type": "chamber",
+      "begin_year": 1919,
+      "end_year": 1920,
+      "score": 2.74,
+      "parts": [
+        {
+          "name": "Suite Italienne for Violin and Piano: I. Introduzione",
+          "deezer": [2777780931],
+          "score": 97.67
+        },
+        {
+          "name": "Suite Italienne for Violin and Piano: II. Serenata",
+          "deezer": [107297646, 857166222],
+          "score": 100.0
+        },
+        {
+          "name": "Suite Italienne for Violin and Piano: III. Tarantella",
+          "deezer": [857166232],
+          "score": 97.67
+        },
+        {
+          "name": "Suite Italienne for Violin and Piano: IV. Gavotte con due variazioni",
+          "deezer": [857166242],
+          "score": 97.67
+        },
+        {
+          "name": "Suite Italienne for Violin and Piano: V. Scherzino",
+          "deezer": [2777780971],
+          "score": 100.0
+        },
+        {
+          "name": "Suite Italienne for Violin and Piano: VI. Menuetto e Finale",
+          "deezer": [2777780981],
+          "score": 92.51
+        }
+      ]
+    },
+    {
       "gid": "4e58d3dd-97c3-484f-ae0f-972bcfbaec54",
       "composer": "c278de2c-9696-4fdf-a919-0781cd945e2c",
       "name": "Suite du ballet \u00ab L\u2019Oiseau de feu \u00bb",
@@ -166852,6 +167241,42 @@
           "name": "Suite from \"L'Histoire du soldat\": IX. Marche triomphale du diable",
           "deezer": [2899757451, 2788708022],
           "score": 97.19
+        }
+      ]
+    },
+    {
+      "gid": "1424df4e-93dd-4d55-9fb5-d0e8e1d460a5",
+      "composer": "c278de2c-9696-4fdf-a919-0781cd945e2c",
+      "name": "Suite italienne for Cello and Piano (arr. Piatigorsky)",
+      "type": "chamber",
+      "begin_year": 1919,
+      "end_year": 1920,
+      "score": 2.76,
+      "parts": [
+        {
+          "name": "Suite italienne for Cello and Piano: I. Introduzione. Allegro moderato",
+          "deezer": [1010507562, 2289061005, 2305812955],
+          "score": 100.0
+        },
+        {
+          "name": "Suite italienne for Cello and Piano: II. Serenata. Larghetto",
+          "deezer": [2289061015, 2305812965, 3186343],
+          "score": 100.0
+        },
+        {
+          "name": "Suite italienne for Cello and Piano: III. Aria",
+          "deezer": [983253912, 2289061025, 2305812975],
+          "score": 100.0
+        },
+        {
+          "name": "Suite italienne for Cello and Piano: IV. Tarantella. Vivace",
+          "deezer": [983253922, 2305812985, 2289061035],
+          "score": 100.0
+        },
+        {
+          "name": "Suite italienne for Cello and Piano: V. Minuetto. Finale",
+          "deezer": [983253932, 2289061045, 3186346],
+          "score": 95.18
         }
       ]
     },
@@ -167733,6 +168158,32 @@
         {
           "name": "Iolanthe: Act I, no. 6, Chorus, \u201cLoudly Let the Trumpets Bray\u201d (Peers)",
           "deezer": [103052430],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "23dfa559-0357-40c6-8e65-85b16a94b07b",
+      "composer": "4b466f5e-4620-4084-8841-3fe4ea38e689",
+      "name": "Pineapple Poll Suite (arr. Mackerras)",
+      "type": "ballet",
+      "begin_year": null,
+      "end_year": null,
+      "score": 2.15,
+      "parts": [
+        {
+          "name": "Pineapple Poll: Scene I. Opening Dance",
+          "deezer": [374784871, 2156951597],
+          "score": 95.42
+        },
+        {
+          "name": "Pineapple Poll: Scene III. Reconciliation",
+          "deezer": [374784961],
+          "score": 95.42
+        },
+        {
+          "name": "Pineapple Poll: Scene III. Grande Finale",
+          "deezer": [374784971, 2156951707],
           "score": 100.0
         }
       ]
@@ -170495,8 +170946,8 @@
       "composer": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
       "name": "Eugene Onegin, op. 24",
       "type": "opera",
-      "begin_year": 1885,
-      "end_year": 1885,
+      "begin_year": 1880,
+      "end_year": 1880,
       "score": 3.9,
       "parts": [
         {
@@ -170586,6 +171037,22 @@
         {
           "name": "Hamlet, op. 67",
           "deezer": [2674883692, 65797270, 66632506, 2792873662, 1470218992],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "3d35ba21-7e21-4fbf-ba63-8446686bb02f",
+      "composer": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
+      "name": "Klaviersuite aus \u201cNussknacker\u201d (arr. Pletnev)",
+      "type": "piano",
+      "begin_year": null,
+      "end_year": null,
+      "score": 2.48,
+      "parts": [
+        {
+          "name": "Klaviersuite aus \u201cNussknacker\u201d: VII. Adagio. Pas de deux",
+          "deezer": [1160969852],
           "score": 100.0
         }
       ]

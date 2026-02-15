@@ -313,7 +313,7 @@
 <Popup
 	visible={game.showRevealPopup && !!game.revealTrack}
 	onClose={() => game.handleCloseRevealPopup()}
-	width="6xl"
+	width="w-[480px] max-w-[90vw]"
 	padding="lg"
 	borderColor={game.revealIsCorrect === true
 		? 'border-green-400'

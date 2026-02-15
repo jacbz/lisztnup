@@ -189,7 +189,7 @@
 		{/if}
 
 		<!-- Artist/Performer (only if not unknown) -->
-		{#if shouldShowArtist}
+		{#if shouldShowArtist && !replayActive}
 			<a
 				href={deezerTrackUrl}
 				target="_blank"
@@ -205,6 +205,27 @@
 				</div>
 				{artists.join(', ')}
 			</a>
+		{/if}
+
+		<!-- Replay player -->
+		{#if replayActive}
+			<div in:slide={{ duration: 300 }} class="flex justify-center">
+				<div class="relative flex h-16 w-16 items-center justify-center">
+					<PlayerControl
+						visible={true}
+						isPlaying={previewPlayer.isPlaying}
+						playbackEnded={false}
+						isRevealed={false}
+						progress={previewPlayer.progress}
+						track={null}
+						playerSize={64}
+						onPlay={handlePlayAgain}
+						onStop={handleReplayStop}
+						onReveal={() => {}}
+						onNext={() => {}}
+					/>
+				</div>
+			</div>
 		{/if}
 
 		<!-- Report a problem and Search on... links -->
@@ -240,27 +261,6 @@
 				<span>{$_('common.playAgain')}</span>
 			</button>
 		</div>
-
-		<!-- Replay player -->
-		{#if replayActive}
-			<div in:slide={{ duration: 300 }} class="flex justify-center">
-				<div class="relative flex h-12 w-12 items-center justify-center">
-					<PlayerControl
-						visible={true}
-						isPlaying={previewPlayer.isPlaying}
-						playbackEnded={false}
-						isRevealed={false}
-						progress={previewPlayer.progress}
-						track={null}
-						playerSize={48}
-						onPlay={handlePlayAgain}
-						onStop={handleReplayStop}
-						onReveal={() => {}}
-						onNext={() => {}}
-					/>
-				</div>
-			</div>
-		{/if}
 	</div>
 {/if}
 

@@ -108,7 +108,9 @@ EXCLUDED_COMPOSERS: Set[str] = set([
     "Shankar, Ravi",
     "Williams, Charles",
     "Williams, Clarence",
-    "Wood, Arthur"
+    "Wood, Arthur",
+    "Bliss, Philip Paul",
+    "McLaughlin, John"
 
 ])
 

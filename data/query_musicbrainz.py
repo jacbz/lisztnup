@@ -159,49 +159,49 @@ patterns = [f"%{x}%" for x in forbidden_artist_comment]
 
 # --- SQL Queries ---
 GET_TOP_LEVEL_WORKS_SQL = """
-WITH classical_composers AS (
+WITH 
+-- 1. Get candidates via TAGS
+tagged_candidates AS (
+    SELECT artist AS id
+    FROM musicbrainz.artist_tag
+    WHERE tag IN (15, 670) -- classical, composer
+),
+-- 2. Get candidates via COMMENT TEXT
+comment_candidates AS (
+    SELECT id
+    FROM musicbrainz.artist
+    WHERE comment ~* 'composer'
+),
+-- 3. Combine them and apply Safety/Metadata Filters
+classical_composers AS (
   SELECT
-      id,
-      gid,
+      a.id,
+      a.gid,
       COALESCE(
         (SELECT sort_name
            FROM musicbrainz.artist_alias AS aa
-          WHERE aa.artist = artist.id
+          WHERE aa.artist = a.id
             AND aa.locale = 'en'
             AND aa.primary_for_locale = true
           ORDER BY CASE WHEN aa.type = 1 THEN 0 ELSE 1 END
           LIMIT 1),
-        sort_name
+        a.sort_name
       ) AS sort_name,
-      begin_date_year,
-      end_date_year,
-      comment
-    FROM musicbrainz.artist
+      a.begin_date_year,
+      a.end_date_year,
+      a.comment
+    FROM musicbrainz.artist AS a
+    JOIN (
+        SELECT id FROM tagged_candidates
+        UNION
+        SELECT id FROM comment_candidates
+    ) AS c ON a.id = c.id
     WHERE
-      -- These conditions apply to all artists we select
-    begin_date_year IS NOT NULL
-    AND sort_name ~ '^[A-Za-z]'
-      -- Now, we check for one of two valid scenarios
-      AND (
-        -- Artists with a comment: must contain 'composer' but not any forbidden terms
-        (
-          COALESCE(comment, '') <> ''
-          AND comment ~ 'composer'
-          AND comment NOT ILIKE ANY (%s)
-        )
-        OR
-        -- Artists with a null/empty comment: check for 'classical' or 'composer' tag instead
-        (
-          COALESCE(comment, '') = ''
-          AND EXISTS (
-            SELECT 1
-              FROM musicbrainz.artist_tag AS at
-              WHERE at.artist = artist.id
-              -- Tag ID 15 is 'classical', 670 is 'composer'
-              AND at.tag IN (15, 670)
-          )
-        )
-      )
+      a.begin_date_year IS NOT NULL
+      AND a.sort_name ~ '^[A-Za-z]'
+      
+      -- If comment exists, it must NOT contain forbidden terms.
+      AND (COALESCE(a.comment, '') NOT ILIKE ANY (%s))
 ),
 eligible_works AS (
   -- Count distinct composers per work and apply all work-level filters
@@ -211,11 +211,12 @@ eligible_works AS (
     musicbrainz.work AS w
     JOIN musicbrainz.l_artist_work AS law ON w.id = law.entity1
     JOIN musicbrainz.link AS l ON law.link = l.id
+    JOIN classical_composers cc ON law.entity0 = cc.id
   WHERE
     l.link_type = 168 -- 'composer' relationship
-    AND l.attribute_count = 0 -- Primary composer, not additional
-    AND law.entity0 IN (SELECT id FROM classical_composers)
-    -- Work-level filters (apply uniformly)
+    AND l.attribute_count = 0 -- Primary composer
+    
+    -- Work-level filters
     AND COALESCE(
       (SELECT wa.name 
        FROM musicbrainz.work_alias AS wa
@@ -227,18 +228,17 @@ eligible_works AS (
          wa.id
        LIMIT 1),
       w.name
-    ) ~* '^[A-Za-zÀ-ÿŒ0-9"“„‘'']'  -- Work name must start with letter, number, or quote
-    AND COALESCE(w.type, 17) NOT IN(19, 20, 21, 22, 23, 25, 26, 28, 29) -- Exclude non-classical work types
+    ) ~* '^[A-Za-zÀ-ÿŒ0-9"“„‘'']' -- Work name must start with letter, number, or quote
+    AND COALESCE(w.type, 17) NOT IN(19, 20, 21, 22, 23, 25, 26, 28, 29)
+    AND w.name NOT LIKE '[%%'
+    
+    -- Exclusions
     AND NOT EXISTS (
-      -- Exclude works that are parts or arrangements of other works
       SELECT 1 FROM musicbrainz.l_work_work lww 
       JOIN musicbrainz.link lww_link ON lww.link = lww_link.id
       WHERE lww.entity1 = w.id 
-        AND lww_link.link_type IN (
-          281,  -- parts
-          350   -- arrangement
-        )
-        AND lww.entity0 != 13641795  -- Exclude "Fantasia" as an exception, which erroneously has Beethoven 6 etc. as parts
+        AND lww_link.link_type IN (281, 350) -- parts, arrangement
+        AND lww.entity0 != 13641795 -- Exclude "Fantasia" as an exception, which erroneously has Beethoven 6 etc. as parts
     )
     AND NOT EXISTS (
       -- Exclude works that have an arranger relationship
@@ -248,10 +248,10 @@ eligible_works AS (
         AND l_arr.link_type = 293  -- 'arranger' relationship
         AND law_arr.entity0 NOT IN (SELECT id FROM classical_composers)
         AND law_arr.entity0 != 422300  -- Exception for Ralph Greaves (Fantasia on Greensleeves)
+        AND law_arr.entity0 != 1751198  -- Exception for Georg Sartorius (Mozart - Don Giovanni)
     )
-    AND w.name NOT LIKE '[%%'  -- Exclude works with names starting with '['
   GROUP BY w.id
-  HAVING COUNT(DISTINCT law.entity0) = 1  -- Only works with exactly one composer
+  HAVING COUNT(DISTINCT law.entity0) = 1
 ),
 allowed_tags AS (
   SELECT id FROM musicbrainz.tag

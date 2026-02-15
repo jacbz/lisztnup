@@ -492,7 +492,7 @@
 <Popup
 	visible={$currentRound.isRevealed && !enableScoring && mode !== 'buzzer' && mode !== 'timeline'}
 	onClose={() => {}}
-	width="w-[420px] max-w-[90vw]"
+	width="w-[480px] max-w-[90vw]"
 	padding="lg"
 	showCloseButton={false}
 >

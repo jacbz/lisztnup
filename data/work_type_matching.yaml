@@ -78,6 +78,7 @@ general_rules:
     - (Piano|Klavi(e|ä)r|Keyboard|Harpsichord|Cembalo) (Sonata|Sonate|Sonatina)
     - (for|pour) Piano|für (das|s) Klavier|Klavierstück|Pièces de Clavecin|for Keyboard|for Harpsichord|for Prepared Piano
     - Piano Suite|Suite for Piano
+    - Klaviersuite
 
   #=============================================================================
   # Solo: Solo works for non-piano instruments (including organ).
@@ -527,6 +528,8 @@ composer_specific_rules:
       - Concerts Royaux|L'Apothéose de Lully|Les Nations|Suite de viole|Pièces de violes
     vocal:
       - Leçons de ténèbres
+    concerto:
+      - Pièces en Concert for
   'Couperin, Louis':
     piano:
       - Allemande|Branle|Canarie|Chaconne|Courante|Gaillarde|Gavotte|Gigue|Pastourelle|Menuet|Passacaille|Pavanne|Pièces de trois sorts|Pr(e|é)lude|Sarabande|Suite.*a-Moll|Tombeau|Volte
@@ -567,7 +570,7 @@ composer_specific_rules:
       - Le roi s'amuse|Coppélia
   'Delius, Frederick':
     orchestral:
-      - Dance Rhapsody|Koanga|Over the Hills and Far Away|Two Aquarelles|Florida Suite
+      - Dance Rhapsody|Koanga|Over the Hills and Far Away|Two Aquarelles|Florida Suite|Hassan
   'Dett, R. Nathaniel':
     piano:
       - In the Bottoms
@@ -709,6 +712,9 @@ composer_specific_rules:
       - Timor et tremor
     solo:
       - \bFuga del nono tono\b
+  'Gallus, Jacobus':
+    vocal:
+      - Mirabile mysterium|Resonet in laudibus
   'Gershwin, George':
     concerto:
       - Rhapsody in Blue|Concerto in F
@@ -716,6 +722,8 @@ composer_specific_rules:
       - An American in Paris|Catfish Row
     piano:
       - Three Preludes|Rialto Ripples|Impromptu in Two Keys
+    chamber:
+      - Short Story
   'Gesualdo, Carlo':
     piano:
       - Canzon francese|Gagliarda
@@ -917,7 +925,7 @@ composer_specific_rules:
     piano:
       - In the Mists|On an Overgrown Path|Sonata 1\. X\. 1905|Vzpomínka
     orchestral:
-      - Lachian Dances|Taras Bulba|Suite.*JW
+      - Lachian Dances|Taras Bulba|Suite.*JW|Cunning Little Vixen Suite
     chamber:
       - Sonata for Violin & Piano|Mládí
   'Janequin, Clément':
@@ -946,6 +954,9 @@ composer_specific_rules:
   'Kapustin, Nikolai':
     piano:
       - Eight Concert Études
+  'Kapsberger, Johannes Hieronymus':
+    solo:
+      - Chitarrone
   'Kaski, Heino':
     piano:
       - Preludi
@@ -1671,6 +1682,9 @@ composer_specific_rules:
   'Strauss, Johann':
     orchestral:
       - \b(Waltz|Walzer|Polka|Galopp|Marsch|Quadrille)\b
+  'Strauss, Johann, I':
+    orchestral:
+      - Walzer|Polka
   'Strauss, Johann, II':
     orchestral:
       - \b(Waltz|Walzer|Polka|Galopp|Marsch|Quadrille)\b|Accelerationen|Morgenblätter|Rosen aus dem Süden|Tales From the Vienna Woods|Vienna Blood|Vienna Bonbons|Voices of Spring|Im Krapfenwaldl|Where the Citrons Bloom|Seid umschlungen, Millionen|Elektrophor|Schnellpolka|op\.\s?297|Leichtes Blut|op\.\s?319|Leichtes Blut Galop
