@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { onMount, getContext } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import { fly } from 'svelte/transition';
-	import type { Player, Track, PlayerEdge } from '$lib/types';
+	import type { Player, PlayerEdge, Track } from '$lib/types';
 	import { ALL_EDGES } from '$lib/types';
 	import { currentRound, tracklist, resetGame, gameSession } from '$lib/stores';
 	import { _ } from 'svelte-i18n';
-	import { formatYearRange } from '$lib/utils';
 
 	// Components
 	import EdgeDisplay from '$lib/components/ui/primitives/EdgeDisplay.svelte';
@@ -14,11 +13,15 @@
 	import PlayerControl from '$lib/components/ui/gameplay/PlayerControl.svelte';
 	import TrackInfo from '$lib/components/ui/gameplay/TrackInfo.svelte';
 	import CardStack from './timeline/CardStack.svelte';
-	import PlayerTimeline, { type TimelineEntry } from './timeline/PlayerTimeline.svelte';
+	import PlayerTimeline from './timeline/PlayerTimeline.svelte';
 	import TimelineEndGameScreen from './timeline/TimelineEndGameScreen.svelte';
-	import { GAME_SCREEN_CONTEXT } from './context';
-	import InGameSettings from '$lib/components/ui/gameplay/InGameSettings.svelte';
-	import Dialog from '$lib/components/ui/primitives/Dialog.svelte';
+
+	// Logic
+	import { getGameContext } from './context';
+	import { TimelineGame } from '$lib/logic/timelineGame.svelte';
+	import type { TimelineRow } from '$lib/logic/timelineTypes';
+
+	// ─── Props ─────────────────────────────────────────────
 
 	interface Props {
 		players: Player[];
@@ -28,190 +31,37 @@
 
 	let { players, cardsToWin, onHome = () => {} }: Props = $props();
 
-	// --- Context ---
-	const gameContext = getContext(GAME_SCREEN_CONTEXT) as {
-		playTrack: () => Promise<void>;
-		stopTrack: () => void;
-		replayTrack: () => Promise<void>;
-		nextRound: () => Promise<void>;
-		handlePlaybackEnd: () => void;
-		sampleRawTrack: () => Track | null;
-		prepareNewGame: () => void;
-		audioProgress: import('svelte/store').Readable<number>;
-		onHome: () => void;
-		get tracksExhausted(): boolean;
-	};
+	// ─── Context & Game Logic ──────────────────────────────
 
-	// --- Audio Progress Sync ---
+	const ctx = getGameContext();
+	const game = new TimelineGame(
+		players,
+		cardsToWin,
+		{
+			playTrack: ctx.playTrack,
+			stopTrack: ctx.stopTrack,
+			nextRound: ctx.nextRound,
+			sampleRawTrack: ctx.sampleRawTrack
+		},
+		() => loadedTrack
+	);
+
+	// ─── Audio Progress ────────────────────────────────────
+
 	let audioProgressValue = $state(0);
-	gameContext.audioProgress.subscribe((value) => {
+	const unsubAudioProgress = ctx.audioProgress.subscribe((value) => {
 		audioProgressValue = value;
 	});
-
-	// --- State Groups ---
-
-	let uiState = $state({
-		showInGameSettings: false,
-		showQuitDialog: false,
-		showEndGame: false,
-		showRevealPopup: false,
-		isDealing: true, // Start in dealing mode
-		dealingToName: null as string | null
+	onDestroy(() => {
+		unsubAudioProgress();
+		game.destroy();
 	});
 
-	let gameState = $state({
-		timelines: [] as { player: Player; entries: TimelineEntry[] }[],
-		activePlayerIndex: 0,
-		centerStack: [] as { track: Track; id: string }[], // Visual stack
+	// ─── Store-derived values ──────────────────────────────
 
-		turnPhase: 'idle' as string,
-		pendingEntryId: null as string | null,
-		resolvingTurn: false,
-
-		revealEntryId: null as string | null,
-		revealTrack: null as Track | null,
-		revealIsCorrect: null as boolean | null,
-		revealPurpose: 'turn' as 'turn' | 'inspect',
-		revealReachedWin: false
-	});
-
-	// Local state to track if the current card has been started at least once
-	// This drives the "Drag" UI state when playback is paused/stopped
-	let hasPlaybackStarted = $state(false);
-
-	let dragState = $state({
-		active: false,
-		kind: 'none' as 'none' | 'center' | 'pending',
-		track: null as Track | null,
-
-		start: { x: 0, y: 0 },
-		current: { x: 0, y: 0 },
-		translate: { x: 0, y: 0 },
-		origin: { x: 0, y: 0 },
-
-		previewEntryId: null as string | null,
-		previewInserted: false,
-
-		pendingStartRect: null as DOMRect | null,
-		pendingLayoutOffset: { x: 0, y: 0 }
-	});
-
-	// --- Derived ---
-
-	let isMdViewport = $state(false);
-	let isLgWidth = $state(false);
-	let isMdHeight = $state(false);
-
-	const activePlayer = $derived(gameState.timelines[gameState.activePlayerIndex]);
-	const activePlayerName = $derived(activePlayer?.player.name ?? '');
-
-	const topStackItem = $derived(gameState.centerStack[0] ?? null);
-	const topCard = $derived(topStackItem?.track ?? null);
-
-	// In Timeline with GameScreen wrapper, the current playable track is the one
-	// preloaded in $tracklist at currentRound.currentTrackIndex.
 	const loadedTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
 
-	const canDragCenter = $derived(
-		!uiState.isDealing &&
-			hasPlaybackStarted && // Must have started playback to drag
-			gameState.turnPhase !== 'locked' &&
-			!gameState.pendingEntryId
-	);
-
-	const canConfirm = $derived(
-		!!gameState.pendingEntryId && !gameState.resolvingTurn && !dragState.active
-	);
-
-	const isStackInteractive = $derived(
-		!uiState.isDealing && !gameState.pendingEntryId && gameState.turnPhase !== 'locked'
-	);
-
-	const centerDragScale = $derived.by(() => {
-		if (!dragState.active || dragState.kind !== 'center') return 1;
-		// Simplified scaling: if we are dragging, we assume we are moving towards a timeline
-		// Just return the smaller scale immediately to show it "detached" from the stack
-		return isMdViewport ? 16 / 38 : 14 / 32;
-	});
-
-	// Map original edge to effective edge based on viewport constraints
-	function getEffectiveEdge(originalEdge: PlayerEdge): PlayerEdge {
-		// If height is smaller than md, override all edges to bottom
-		if (!isMdHeight) {
-			return 'bottom';
-		}
-
-		// If width is smaller than lg, override left/right
-		if (!isLgWidth) {
-			if (originalEdge === 'left') return 'top';
-			if (originalEdge === 'right') return 'bottom';
-		}
-
-		return originalEdge;
-	}
-
-	// Group timelines by edge, with rotation logic applied within each edge
-	const timelinesByEdge = $derived.by(() => {
-		const grouped = new Map<PlayerEdge, typeof gameState.timelines>();
-
-		// Initialize all edges
-		ALL_EDGES.forEach((edge) => grouped.set(edge, []));
-
-		// Group timelines by player edge, applying viewport-based overrides
-		gameState.timelines.forEach((timeline) => {
-			const originalEdge = timeline.player.edge || 'bottom';
-			const effectiveEdge = getEffectiveEdge(originalEdge);
-			const edgeTimelines = grouped.get(effectiveEdge) || [];
-			edgeTimelines.push(timeline);
-			grouped.set(effectiveEdge, edgeTimelines);
-		});
-
-		// Apply rotation logic within each edge during gameplay (not dealing)
-		if (!uiState.isDealing && gameState.timelines.length > 0) {
-			const idx = gameState.activePlayerIndex;
-			const activeTimeline = gameState.timelines[idx];
-			const originalEdge = activeTimeline.player.edge || 'bottom';
-			const activeEdge = getEffectiveEdge(originalEdge);
-
-			// Only rotate timelines on the active player's edge
-			const edgeTimelines = grouped.get(activeEdge) || [];
-			const activeIndexInEdge = edgeTimelines.findIndex(
-				(t) => t.player.name === activeTimeline.player.name
-			);
-
-			if (activeIndexInEdge !== -1) {
-				const before = edgeTimelines.slice(activeIndexInEdge + 1);
-				const after = edgeTimelines.slice(0, activeIndexInEdge + 1);
-				grouped.set(activeEdge, [...before, ...after]);
-			}
-		}
-
-		return grouped;
-	});
-
-	const revealYearText = $derived.by(() => {
-		if (!gameState.revealTrack) return '';
-		return formatYearRange(
-			gameState.revealTrack.work.begin_year,
-			gameState.revealTrack.work.end_year,
-			{ preferEndYearWhenRange: true }
-		);
-	});
-
-	// Map player edge to rotation (matching EdgeDisplay rotation logic)
-	const popupRotation = $derived.by(() => {
-		if (!activePlayer) return 0;
-		const edge = activePlayer.player.edge || 'bottom';
-		const rotationMap: Record<PlayerEdge, number> = {
-			bottom: 0,
-			top: 180,
-			left: 90,
-			right: -90
-		};
-		return rotationMap[edge];
-	});
-
-	// --- Lifecycle ---
+	// ─── Lifecycle ─────────────────────────────────────────
 
 	onMount(() => {
 		const mqWidth = window.matchMedia('(min-width: 768px)');
@@ -219,9 +69,9 @@
 		const mqMdHeight = window.matchMedia('(min-height: 768px)');
 
 		const updateMq = () => {
-			isMdViewport = mqWidth.matches;
-			isLgWidth = mqLgWidth.matches;
-			isMdHeight = mqMdHeight.matches;
+			game.isMdViewport = mqWidth.matches;
+			game.isLgWidth = mqLgWidth.matches;
+			game.isMdHeight = mqMdHeight.matches;
 		};
 
 		updateMq();
@@ -229,7 +79,7 @@
 		mqLgWidth.addEventListener('change', updateMq);
 		mqMdHeight.addEventListener('change', updateMq);
 
-		initGame();
+		game.initGame();
 
 		return () => {
 			mqWidth.removeEventListener('change', updateMq);
@@ -238,545 +88,49 @@
 		};
 	});
 
-	// --- Track Synchronization ---
-	// GameScreen preloads tracks into $tracklist. We watch for the newest track
-	// and update the top of our center stack to match it.
-	// We compare by track object identity (not index) so replacements at the
-	// same index (e.g. after a Deezer load failure) are still picked up.
-	let lastSyncedTrack: Track | null = null;
+	// ─── Track Synchronisation ─────────────────────────────
 
 	$effect(() => {
-		// Prevent syncing while dealing to ensure the preloaded "Turn 1" track
-		// doesn't get dealt to a player by accident.
-		if (uiState.isDealing) return;
-
-		// If we have a track loaded that matches the current round index
+		if (game.isDealing) return;
 		if ($currentRound.currentTrackIndex < $tracklist.length) {
 			const track = $tracklist[$currentRound.currentTrackIndex];
-
-			// Only update if the track is new (identity check handles same-index replacements)
-			if (track && track !== lastSyncedTrack) {
-				lastSyncedTrack = track;
-
-				// If stack is empty (start of game), push it.
-				// If stack has items (gameplay), replace the top one.
-				if (gameState.centerStack.length === 0) {
-					gameState.centerStack.push({ track, id: newId() });
-				} else {
-					gameState.centerStack[0].track = track;
-				}
-
-				// New card means reset local playback state
-				hasPlaybackStarted = false;
-			}
+			if (track) game.syncTopCard(track);
 		}
 	});
 
-	// Watch for track exhaustion from GameScreen
+	// ─── Track Exhaustion ──────────────────────────────────
+
 	$effect(() => {
-		if (gameContext.tracksExhausted && !uiState.isDealing) {
-			gameContext.stopTrack();
-			uiState.showEndGame = true;
+		if (ctx.tracksExhausted && !game.isDealing) {
+			ctx.stopTrack();
+			game.showEndGame = true;
 		}
 	});
 
-	// --- Game Logic ---
-
-	function newId(): string {
-		return crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`;
-	}
-
-	/**
-	 * Ensures the center stack has enough entries for visual depth.
-	 * Sub-cards (below the top) are face-down and purely decorative,
-	 * so they reuse the top card's track as a placeholder.
-	 * This avoids consuming tracks from the generator for visual-only purposes,
-	 * which would exhaust small tracklists before audio can be loaded.
-	 */
-	function restockCenterStack() {
-		const targetDepth = 6;
-		if (gameState.centerStack.length === 0) return; // Need at least a top card
-		const placeholderTrack = gameState.centerStack[0].track;
-		while (gameState.centerStack.length < targetDepth) {
-			gameState.centerStack.push({ track: placeholderTrack, id: newId() });
-		}
-	}
-
-	async function initGame() {
-		uiState.isDealing = true;
-		lastSyncedTrack = null;
-
-		gameState.timelines = players.map((p) => ({ player: p, entries: [] }));
-		gameState.activePlayerIndex = 0;
-
-		// Sample exactly the tracks we need for dealing (one per player).
-		const dealTracks: Track[] = [];
-		for (let i = 0; i < players.length; i++) {
-			const track = gameContext.sampleRawTrack();
-			if (track) dealTracks.push(track);
-		}
-
-		// Seed center stack with the first deal track (or a placeholder)
-		// so the visual card pile is visible during dealing animation.
-		gameState.centerStack = [];
-		if (dealTracks.length > 0) {
-			gameState.centerStack.push({ track: dealTracks[0], id: newId() });
-			restockCenterStack();
-		}
-
-		// Wait a tick to let the empty timelines render in natural order
-		await new Promise((r) => setTimeout(r, 500));
-
-		// Deal cards from the pre-sampled deal tracks
-		for (let i = 0; i < dealTracks.length; i++) {
-			uiState.dealingToName = gameState.timelines[i].player.name;
-
-			// Visually shift the top card off the stack
-			if (gameState.centerStack.length > 0) {
-				gameState.centerStack.shift();
-				restockCenterStack();
-			}
-
-			const entry: TimelineEntry = {
-				id: newId(),
-				track: dealTracks[i],
-				confirmed: true,
-				correct: null,
-				isDiscarding: false
-			};
-			gameState.timelines[i].entries.push(entry);
-
-			await new Promise((r) => setTimeout(r, 600));
-		}
-
-		// Ensure the top card is the audio-loaded track from the tracklist.
-		// GameScreen.sampleAndPreloadTrack() loaded this into $tracklist on mount.
-		if (loadedTrack) {
-			if (gameState.centerStack.length > 0) {
-				gameState.centerStack[0].track = loadedTrack;
-			} else {
-				gameState.centerStack.push({ track: loadedTrack, id: newId() });
-				restockCenterStack();
-			}
-		}
-
-		uiState.dealingToName = null;
-		uiState.isDealing = false;
-		resetTurnState();
-	}
-
-	function resetTurnState() {
-		gameState.pendingEntryId = null;
-		gameState.resolvingTurn = false;
-		gameState.turnPhase = 'idle';
-		dragState.active = false;
-		dragState.kind = 'none';
-		dragState.track = null;
-		hasPlaybackStarted = false;
-	}
-
-	function rotateToNextPlayer() {
-		gameState.activePlayerIndex = (gameState.activePlayerIndex + 1) % gameState.timelines.length;
-	}
-
-	async function handlePlay() {
-		const track = topCard;
-		if (
-			!track ||
-			gameState.resolvingTurn ||
-			gameState.turnPhase === 'locked' ||
-			uiState.showRevealPopup
-		)
-			return;
-
-		gameState.turnPhase = 'playing';
-		hasPlaybackStarted = true;
-		await gameContext.playTrack();
-	}
-
-	function handleStop() {
-		gameContext.stopTrack();
-		// isPlaying becomes false via store, hasPlaybackStarted remains true
-		// This triggers the "Drag" UI state
-	}
-
-	// --- Drag ---
-
-	function startDragFromCenter(ev: PointerEvent) {
-		if (!canDragCenter || !topCard) return;
-
-		gameContext.stopTrack();
-		gameState.turnPhase = 'locked';
-
-		initDrag(ev, 'center', topCard);
-	}
-
-	function startDragPending(entryId: string, ev: PointerEvent) {
-		if (gameState.resolvingTurn || uiState.showRevealPopup) return;
-		if (gameState.pendingEntryId !== entryId) return;
-
-		const entry = activePlayer.entries.find((e) => e.id === entryId);
-		if (!entry) return;
-
-		initDrag(ev, 'pending', entry.track);
-		dragState.previewEntryId = entryId;
-		dragState.previewInserted = true;
-
-		// Find the element to get rect
-		// We can't rely on activeTimelineEl. Find by ID in document.
-		const el = document.querySelector(`[data-entry-id="${entryId}"]`);
-		if (el) {
-			dragState.pendingStartRect = el.getBoundingClientRect();
-		}
-	}
-
-	function initDrag(ev: PointerEvent, kind: 'center' | 'pending', track: Track) {
-		dragState.active = true;
-		dragState.kind = kind;
-		dragState.track = track;
-		dragState.start = { x: ev.clientX, y: ev.clientY };
-		dragState.current = { x: ev.clientX, y: ev.clientY };
-		dragState.translate = { x: 0, y: 0 };
-
-		const target = ev.currentTarget as HTMLElement | null;
-		if (target) {
-			const rect = target.getBoundingClientRect();
-			dragState.origin = { x: ev.clientX - rect.left, y: ev.clientY - rect.top };
-		}
-
-		if (kind === 'center') {
-			dragState.previewEntryId = newId();
-			dragState.previewInserted = false;
-		}
-
-		window.addEventListener('pointermove', onDragMove, { passive: false });
-		window.addEventListener('pointerup', onDragUp);
-		window.addEventListener('pointercancel', onDragUp);
-	}
-
-	function onDragMove(ev: PointerEvent) {
-		if (!dragState.active) return;
-		ev.preventDefault();
-		dragState.current = { x: ev.clientX, y: ev.clientY };
-		dragState.translate = {
-			x: ev.clientX - dragState.start.x,
-			y: ev.clientY - dragState.start.y
-		};
-
-		const within = isWithinTimeline(ev.clientX, ev.clientY);
-		const idx = within ? getInsertionIndex(ev.clientX, ev.clientY) : null;
-
-		if (dragState.kind === 'center') {
-			if (idx == null) {
-				removePreviewEntry();
-			} else {
-				if (!dragState.previewInserted) insertPreviewEntry(idx);
-				else updatePreviewPosition(idx);
-			}
-		} else if (dragState.kind === 'pending') {
-			if (idx != null) updatePendingPosition(idx);
-			measurePendingDragOffset();
-		}
-	}
-
-	function onDragUp(ev: PointerEvent) {
-		window.removeEventListener('pointermove', onDragMove);
-		window.removeEventListener('pointerup', onDragUp);
-		window.removeEventListener('pointercancel', onDragUp);
-		if (!dragState.active) return;
-
-		const success = dragState.kind === 'center' && dragState.previewInserted;
-		const droppedId = dragState.previewEntryId;
-		const droppedTrack = dragState.track;
-
-		if (dragState.kind === 'center' && !success) {
-			removePreviewEntry();
-			gameState.turnPhase = 'playing'; // Unlock if failed
-		}
-
-		if (success && droppedId && droppedTrack) {
-			gameState.pendingEntryId = droppedId;
-			gameState.centerStack.shift(); // Remove visual card
-		}
-
-		dragState.active = false;
-		dragState.kind = 'none';
-		dragState.track = null;
-		dragState.previewInserted = false;
-		dragState.previewEntryId = null;
-	}
-
-	function isWithinTimeline(x: number, y: number): boolean {
-		if (typeof document === 'undefined') return false;
-		const elements = document.elementsFromPoint(x, y);
-		return elements.some((el) => el.hasAttribute('data-rotation'));
-	}
-
-	function getInsertionIndex(x: number, y: number): number {
-		if (typeof document === 'undefined') return 0;
-		const elements = document.elementsFromPoint(x, y);
-		const container = elements.find((el) => el.hasAttribute('data-rotation')) as HTMLElement;
-		if (!container) return 0;
-
-		const rotation = parseInt(container.getAttribute('data-rotation') || '0', 10);
-		const cards = Array.from(container.querySelectorAll('[data-timeline-entry]'));
-		if (cards.length === 0) return 0;
-
-		const isVertical = Math.abs(rotation) === 90;
-		const isInvertedHorizontal = Math.abs(rotation) === 180;
-
-		for (let i = 0; i < cards.length; i++) {
-			const r = cards[i].getBoundingClientRect();
-			if (isVertical) {
-				// Check for -90 vs 90 rotation
-				if (rotation === -90) {
-					if (y > r.top + r.height / 2) return i;
-				} else {
-					if (y < r.top + r.height / 2) return i;
-				}
-			} else {
-				// Horizontal
-				if (isInvertedHorizontal) {
-					// 180 deg: Global X- (Right to Left)
-					if (x > r.left + r.width / 2) return i;
-				} else {
-					// 0 deg: Global X+ (Left to Right)
-					if (x < r.left + r.width / 2) return i;
-				}
-			}
-		}
-		return cards.length;
-	}
-
-	function getActiveTimelineEntryRect(id: string): DOMRect | null {
-		const candidates = Array.from(document.querySelectorAll(`[data-entry-id="${id}"]`));
-		if (candidates.length === 0) return null;
-
-		const mx = dragState.current.x;
-		const my = dragState.current.y;
-
-		let best = candidates[0];
-		let minDist = Infinity;
-
-		for (const el of candidates) {
-			const r = el.getBoundingClientRect();
-			const cx = r.left + r.width / 2;
-			const cy = r.top + r.height / 2;
-			const d = (mx - cx) ** 2 + (my - cy) ** 2;
-			if (d < minDist) {
-				minDist = d;
-				best = el;
-			}
-		}
-		return best.getBoundingClientRect();
-	}
-
-	function insertPreviewEntry(atIndex: number) {
-		if (!dragState.previewEntryId || !dragState.track) return;
-		const entry: TimelineEntry = {
-			id: dragState.previewEntryId,
-			track: dragState.track,
-			confirmed: false,
-			correct: null,
-			isDiscarding: false
-		};
-		activePlayer.entries.splice(atIndex, 0, entry);
-		dragState.previewInserted = true;
-	}
-
-	function removePreviewEntry() {
-		if (!dragState.previewEntryId) return;
-		activePlayer.entries = activePlayer.entries.filter((e) => e.id !== dragState.previewEntryId);
-		dragState.previewInserted = false;
-	}
-
-	function updatePreviewPosition(toIndex: number) {
-		moveEntryInList(dragState.previewEntryId!, toIndex);
-	}
-	function updatePendingPosition(toIndex: number) {
-		moveEntryInList(gameState.pendingEntryId!, toIndex);
-	}
-	function moveEntryInList(id: string, toIndex: number) {
-		const entries = activePlayer.entries;
-		const from = entries.findIndex((e) => e.id === id);
-		if (from < 0) return;
-		let to = toIndex;
-		if (to > from) to -= 1;
-		to = Math.max(0, Math.min(entries.length - 1, to));
-		if (from === to) return;
-		const [item] = entries.splice(from, 1);
-		entries.splice(to, 0, item);
-	}
-
-	function measurePendingDragOffset() {
-		if (!dragState.previewEntryId) return;
-		requestAnimationFrame(() => {
-			const rect = getActiveTimelineEntryRect(dragState.previewEntryId!);
-			if (rect && dragState.pendingStartRect) {
-				dragState.pendingLayoutOffset = {
-					x: rect.left - dragState.pendingStartRect.left,
-					y: rect.top - dragState.pendingStartRect.top
-				};
-			}
-		});
-	}
-
-	// --- Resolution ---
-
-	function getTimelineYear(track: Track): number {
-		return track.work.end_year ?? track.work.begin_year ?? 0;
-	}
-
-	async function handleConfirmPlacement() {
-		if (!gameState.pendingEntryId) return;
-		gameState.resolvingTurn = true;
-		gameContext.stopTrack();
-
-		const entries = activePlayer.entries;
-		const idx = entries.findIndex((e) => e.id === gameState.pendingEntryId);
-		if (idx < 0) return;
-
-		const track = entries[idx].track;
-		const year = getTimelineYear(track);
-
-		const prev = idx > 0 ? getTimelineYear(entries[idx - 1].track) : -Infinity;
-		const next = idx < entries.length - 1 ? getTimelineYear(entries[idx + 1].track) : Infinity;
-		const isCorrect = year >= prev && year <= next;
-
-		entries[idx].confirmed = true;
-		entries[idx].correct = isCorrect;
-
-		const audio = isCorrect ? new Audio('/correct.mp3') : new Audio('/wrong.mp3');
-		audio.play().catch(() => {});
-
-		gameState.revealEntryId = entries[idx].id;
-		gameState.revealTrack = track;
-		gameState.revealIsCorrect = isCorrect;
-		gameState.revealPurpose = 'turn';
-		gameState.revealReachedWin =
-			isCorrect && entries.filter((e) => e.correct !== false).length >= cardsToWin;
-		gameState.pendingEntryId = null;
-
-		uiState.showRevealPopup = true;
-	}
-
-	// Guard against re-entrant calls (e.g. mobile double-tap during transition)
-	let isClosingRevealPopup = false;
-
-	function handleCloseRevealPopup() {
-		if (isClosingRevealPopup) return;
-		isClosingRevealPopup = true;
-
-		uiState.showRevealPopup = false;
-
-		// Capture all reveal state upfront before async delays,
-		// so setTimeout callbacks don't read stale/reset reactive state.
-		const wasWrong = gameState.revealIsCorrect === false;
-		const entryId = gameState.revealEntryId;
-		const purpose = gameState.revealPurpose;
-		const reachedWin = gameState.revealReachedWin;
-
-		if (purpose === 'turn') {
-			gameContext.nextRound();
-		}
-
-		setTimeout(() => {
-			if (purpose === 'inspect') {
-				clearRevealState();
-				isClosingRevealPopup = false;
-				return;
-			}
-
-			if (reachedWin) {
-				clearRevealState();
-				uiState.showEndGame = true;
-				isClosingRevealPopup = false;
-				return;
-			}
-
-			if (wasWrong && entryId) {
-				const entry = activePlayer.entries.find((e) => e.id === entryId);
-				if (entry) {
-					entry.isDiscarding = true;
-					setTimeout(() => {
-						activePlayer.entries = activePlayer.entries.filter((e) => e.id !== entryId);
-						finalizeTurn();
-						isClosingRevealPopup = false;
-					}, 600);
-					clearRevealState();
-					return;
-				}
-			}
-
-			clearRevealState();
-			finalizeTurn();
-			isClosingRevealPopup = false;
-		}, 300);
-	}
-
-	function finalizeTurn() {
-		activePlayer.entries.forEach((e) => {
-			e.correct = null;
-		});
-
-		rotateToNextPlayer();
-
-		// Redundant safety-net sync: ensure centerStack[0] reflects the current
-		// track from $tracklist.  The $effect normally handles this, but if the
-		// identity guard (`track !== lastSyncedTrack`) was already satisfied by a
-		// prior run (e.g. timing edge-case on mobile), the effect won't fire again.
-		// Doing it here guarantees the visual card metadata stays in sync with audio.
-		const currentIdx = $currentRound.currentTrackIndex;
-		if (currentIdx < $tracklist.length) {
-			const track = $tracklist[currentIdx];
-			if (track) {
-				lastSyncedTrack = track;
-				if (gameState.centerStack.length > 0) {
-					gameState.centerStack[0].track = track;
-				} else {
-					gameState.centerStack.push({ track, id: newId() });
-				}
-			}
-		}
-
-		restockCenterStack();
-		resetTurnState();
-	}
-
-	function clearRevealState() {
-		gameState.revealEntryId = null;
-		gameState.revealTrack = null;
-		gameState.revealIsCorrect = null;
-		gameState.revealPurpose = 'turn';
-		gameState.revealReachedWin = false;
-	}
-
-	function openInspectCard(entryId: string, track: Track) {
-		if (dragState.active || gameState.resolvingTurn || gameState.pendingEntryId) return;
-		gameState.revealEntryId = entryId;
-		gameState.revealTrack = track;
-		gameState.revealPurpose = 'inspect';
-		uiState.showRevealPopup = true;
-	}
+	// ─── Orchestration Handlers ────────────────────────────
 
 	function handleQuit() {
-		gameContext.stopTrack();
+		ctx.stopTrack();
 		resetGame();
 		gameSession.reset();
 		onHome();
 	}
 
 	function handlePlayAgain() {
-		uiState.showEndGame = false;
+		game.showEndGame = false;
 		resetGame();
 		gameSession.startSession('timeline', players, false);
-		gameContext.prepareNewGame(); // Preload first track at index 0 (no index increment)
-		initGame();
+		ctx.prepareNewGame();
+		game.initGame();
 	}
 </script>
 
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SNIPPETS                                                -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
 {#snippet dealingOverlay()}
-	{#if uiState.isDealing && uiState.dealingToName}
+	{#if game.isDealing && game.dealingToName}
 		<div
 			class="absolute left-1/2 z-50 -translate-x-1/2 whitespace-nowrap"
 			transition:fly={{ y: -20, duration: 300 }}
@@ -784,7 +138,7 @@
 			<div
 				class="rounded-full border border-cyan-400/30 bg-slate-900/80 px-4 py-1.5 text-sm font-bold text-cyan-400 shadow-lg backdrop-blur-md"
 			>
-				{$_('timeline.dealing', { values: { name: uiState.dealingToName } })}
+				{$_('timeline.dealing', { values: { name: game.dealingToName } })}
 			</div>
 		</div>
 	{/if}
@@ -792,21 +146,19 @@
 
 {#snippet cardStackDisplay()}
 	<CardStack
-		items={gameState.centerStack}
-		isTurnActive={isStackInteractive}
-		draggable={!uiState.isDealing && canDragCenter}
-		dragging={dragState.active && dragState.kind === 'center'}
-		dragTranslate={dragState.kind === 'center' ? dragState.translate : { x: 0, y: 0 }}
-		dragScale={centerDragScale}
-		dragOrigin={dragState.origin}
-		onPointerDown={startDragFromCenter}
+		items={game.centerStack}
+		isTurnActive={game.isStackInteractive}
+		draggable={!game.isDealing && game.canDragCenter}
+		dragging={game.drag.active && game.drag.kind === 'center'}
+		dragTranslate={game.drag.kind === 'center' ? game.drag.translate : { x: 0, y: 0 }}
+		dragScale={game.centerDragScale}
+		dragOrigin={game.drag.origin}
+		onPointerDown={(ev) => game.startDragFromCenter(ev)}
 	>
 		{#snippet topCardContent(track: Track)}
 			<div class="absolute inset-0 flex flex-col items-center justify-center gap-4 p-4">
-				{#if !hasPlaybackStarted}
-					<!-- State 1: Fresh card, has not started -->
-					<!-- We force playbackEnded={false} here because a fresh card cannot be in 'ended' state.
-					     This fixes the bug where it gets stuck on 'Reveal' if the store hasn't updated yet. -->
+				{#if !game.hasPlaybackStarted}
+					<!-- Fresh card — show play button -->
 					<div class="relative h-[170px] w-[170px]">
 						<PlayerControl
 							visible={true}
@@ -816,19 +168,19 @@
 							progress={audioProgressValue}
 							{track}
 							playerSize={120}
-							onPlay={handlePlay}
-							onStop={handleStop}
+							onPlay={() => game.handlePlay()}
+							onStop={() => game.handleStop()}
 							onReveal={() => {}}
-							onReplay={handlePlay}
+							onReplay={() => game.handlePlay()}
 						/>
 					</div>
 				{:else if !$currentRound.isPlaying}
-					<!-- State 2: Started, but now paused/stopped (Drag Prompt) -->
+					<!-- Paused/stopped — show drag prompt -->
 					<div class="animate-pulse text-center text-3xl font-bold text-slate-300">
 						{$_('timeline.drag')}
 					</div>
 				{:else}
-					<!-- State 3: Playing -->
+					<!-- Playing -->
 					<div class="relative h-[170px] w-[170px]">
 						<PlayerControl
 							visible={true}
@@ -839,7 +191,7 @@
 							{track}
 							playerSize={120}
 							onPlay={() => {}}
-							onStop={handleStop}
+							onStop={() => game.handleStop()}
 							onReveal={() => {}}
 							onReplay={() => {}}
 						/>
@@ -850,13 +202,9 @@
 	</CardStack>
 {/snippet}
 
-{#snippet timelineDisplay(
-	timeline: (typeof gameState.timelines)[0],
-	rotation: number,
-	edge: PlayerEdge
-)}
-	{@const isTurnOwner = timeline.player.name === activePlayerName}
-	{@const isActive = !uiState.isDealing && isTurnOwner}
+{#snippet timelineDisplay(timeline: TimelineRow, rotation: number, edge: PlayerEdge)}
+	{@const isTurnOwner = timeline.player.name === game.activePlayerName}
+	{@const isActive = !game.isDealing && isTurnOwner}
 
 	<PlayerTimeline
 		playerName={timeline.player.name}
@@ -864,38 +212,42 @@
 		entries={timeline.entries}
 		active={isActive}
 		compact={!isActive}
-		acceptingDrop={isActive && canDragCenter}
+		acceptingDrop={isActive && game.canDragCenter}
 		{rotation}
 		isVertical={edge === 'left' || edge === 'right'}
-		draggingEntryId={isActive ? dragState.previewEntryId : null}
-		isDragging={isActive ? dragState.active : false}
-		dragKind={isActive ? dragState.kind : 'none'}
-		dragTranslate={isActive && dragState.kind === 'pending'
+		draggingEntryId={isActive ? game.drag.previewEntryId : null}
+		isDragging={isActive ? game.drag.active : false}
+		dragKind={isActive ? game.drag.kind : 'none'}
+		dragTranslate={isActive && game.drag.kind === 'pending'
 			? {
-					x: dragState.translate.x - dragState.pendingLayoutOffset.x,
-					y: dragState.translate.y - dragState.pendingLayoutOffset.y
+					x: game.drag.translate.x - game.drag.pendingLayoutOffset.x,
+					y: game.drag.translate.y - game.drag.pendingLayoutOffset.y
 				}
-			: dragState.translate}
-		isDealing={uiState.isDealing}
+			: game.drag.translate}
+		isDealing={game.isDealing}
 		helpText={isActive
-			? gameState.pendingEntryId
+			? game.pendingEntryId
 				? $_('timeline.help.reorder')
-				: hasPlaybackStarted
+				: game.hasPlaybackStarted
 					? $_('timeline.help.dragToPlace')
 					: $_('timeline.help.playFirst')
 			: ''}
-		showConfirm={isActive && !!gameState.pendingEntryId}
-		confirmDisabled={!canConfirm}
+		showConfirm={isActive && !!game.pendingEntryId}
+		confirmDisabled={!game.canConfirm}
 		confirmLabel={$_('timeline.confirm')}
-		onConfirm={handleConfirmPlacement}
-		onConfirmedCardClick={(entry) => openInspectCard(entry.id, entry.track)}
-		onPendingPointerDown={startDragPending}
+		onConfirm={() => game.handleConfirmPlacement()}
+		onConfirmedCardClick={(entry) => game.openInspectCard(entry.id, entry.track)}
+		onPendingPointerDown={(id, ev) => game.startDragPending(id, ev)}
 	/>
 {/snippet}
 
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- LAYOUT                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
 <div class="fixed inset-0 overflow-hidden text-white">
-	{#if isMdHeight}
-		<!-- Standard centered layout for taller screens -->
+	{#if game.isMdHeight}
+		<!-- Standard centred layout for taller screens -->
 		<div
 			class="relative top-1/2 left-1/2 z-200 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
 		>
@@ -907,15 +259,13 @@
 
 		<!-- Render EdgeDisplay for each edge that has players -->
 		{#each ALL_EDGES as edge (edge)}
-			{@const edgeTimelines = timelinesByEdge.get(edge) || []}
+			{@const edgeTimelines = game.timelinesByEdge.get(edge) || []}
 			{#if edgeTimelines.length > 0}
 				{@const hideTop = edge !== 'top'}
 				{@const hideLeftRight = edge !== 'left' && edge !== 'right'}
 				{@const hideBottom = edge !== 'bottom'}
-				<!-- EdgeDisplay shows all 4 positions by default, we hide the ones we don't want -->
 				<EdgeDisplay visible={true} disablePointerEvents={false} {hideTop} {hideLeftRight}>
 					{#snippet children({ rotation })}
-						<!-- Only render if this rotation matches our edge -->
 						{@const isCorrectRotation =
 							(edge === 'bottom' && rotation === 0) ||
 							(edge === 'top' && rotation === 180) ||
@@ -946,7 +296,7 @@
 
 		<div class="fixed inset-0 flex items-end px-4 pt-20 pb-4">
 			<div class="flex w-full flex-col gap-3 overflow-visible">
-				{#each timelinesByEdge.get('bottom') || [] as timeline (timeline.player.name)}
+				{#each game.timelinesByEdge.get('bottom') || [] as timeline (timeline.player.name)}
 					<div animate:flip={{ duration: 500 }}>
 						{@render timelineDisplay(timeline, 0, 'bottom')}
 					</div>
@@ -956,28 +306,32 @@
 	{/if}
 </div>
 
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- POPUPS & OVERLAYS                                       -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
 <Popup
-	visible={uiState.showRevealPopup && !!gameState.revealTrack}
-	onClose={handleCloseRevealPopup}
+	visible={game.showRevealPopup && !!game.revealTrack}
+	onClose={() => game.handleCloseRevealPopup()}
 	width="6xl"
 	padding="lg"
-	borderColor={gameState.revealIsCorrect === true
+	borderColor={game.revealIsCorrect === true
 		? 'border-green-400'
-		: gameState.revealIsCorrect === false
+		: game.revealIsCorrect === false
 			? 'border-red-400'
 			: 'border-cyan-400'}
-	rotation={popupRotation}
+	rotation={game.popupRotation}
 >
-	{#if gameState.revealTrack}
+	{#if game.revealTrack}
 		<div class="flex h-full w-full flex-col gap-5">
 			<div class="text-center text-5xl font-black tracking-wide text-slate-200">
-				{revealYearText}
+				{game.revealYearText}
 			</div>
 			<div
 				class="min-h-0 flex-1 overflow-y-auto rounded-2xl border border-slate-700/50 bg-slate-950/30 p-4"
 			>
 				<TrackInfo
-					track={gameState.revealTrack}
+					track={game.revealTrack}
 					showUpsideDown={players.some((player) => player.edge === 'top')}
 				/>
 			</div>
@@ -985,27 +339,11 @@
 	{/if}
 </Popup>
 
-<InGameSettings
-	visible={uiState.showInGameSettings}
-	onClose={() => (uiState.showInGameSettings = false)}
-	mode="timeline"
-/>
-
-<Dialog
-	visible={uiState.showQuitDialog}
-	title={$_('quitDialog.title')}
-	message={$_('quitDialog.message')}
-	confirmText={$_('quitDialog.confirm')}
-	cancelText={$_('quitDialog.cancel')}
-	onConfirm={handleQuit}
-	onCancel={() => (uiState.showQuitDialog = false)}
-/>
-
 <TimelineEndGameScreen
-	visible={uiState.showEndGame}
+	visible={game.showEndGame}
 	{cardsToWin}
-	timelines={gameState.timelines}
-	tracksExhausted={gameContext.tracksExhausted}
+	timelines={game.timelines}
+	tracksExhausted={ctx.tracksExhausted}
 	onHome={handleQuit}
 	onPlayAgain={handlePlayAgain}
 />

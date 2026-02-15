@@ -1,38 +1,26 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import { currentRound, tracklist, gameSession } from '$lib/stores';
 	import { getCategoryDefinition } from '$lib/data/categories';
 	import PlayerControl from '../ui/gameplay/PlayerControl.svelte';
 	import { _ } from 'svelte-i18n';
-	import { GAME_SCREEN_CONTEXT } from './context';
+	import { getGameContext } from './context';
 	import { CATEGORY_POINTS } from '$lib/types';
 	import EdgeDisplay from '../ui/primitives/EdgeDisplay.svelte';
 
 	const currentTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
 
-	// Get context from parent GameScreen
-	const gameContext = getContext(GAME_SCREEN_CONTEXT) as {
-		playTrack: () => Promise<void>;
-		stopTrack: () => void;
-		replayTrack: () => Promise<void>;
-		revealTrack: () => void;
-		nextRound: () => Promise<void>;
-		handlePlaybackEnd: () => void;
-		audioProgress: import('svelte/store').Readable<number>;
-		onHome: () => void;
-		activeCategories: readonly import('$lib/types').GuessCategory[];
-		disabledCategories: readonly import('$lib/types').GuessCategory[];
-		hasValidYears: boolean;
-	};
+	const ctx = getGameContext();
 
 	// Subscribe to audio progress
 	let audioProgressValue = $state(0);
-	gameContext.audioProgress.subscribe((value) => {
+	const unsubAudioProgress = ctx.audioProgress.subscribe((value) => {
 		audioProgressValue = value;
 	});
+	onDestroy(unsubAudioProgress);
 
 	// Get active categories from context
-	const activeCategories = $derived(gameContext.activeCategories);
+	const activeCategories = $derived(ctx.activeCategories);
 </script>
 
 <!-- Main Game Area -->
@@ -87,12 +75,12 @@
 			isRevealed={$currentRound.isRevealed}
 			progress={audioProgressValue}
 			track={currentTrack}
-			onPlay={gameContext.playTrack}
-			onStop={gameContext.stopTrack}
-			onReveal={gameContext.revealTrack}
-			onReplay={gameContext.replayTrack}
-			onNext={gameContext.nextRound}
-			onPlaybackEnd={gameContext.handlePlaybackEnd}
+			onPlay={ctx.playTrack}
+			onStop={ctx.stopTrack}
+			onReveal={ctx.revealTrack}
+			onReplay={ctx.replayTrack}
+			onNext={ctx.nextRound}
+			onPlaybackEnd={ctx.handlePlaybackEnd}
 			playerSize={240}
 		/>
 	</div>

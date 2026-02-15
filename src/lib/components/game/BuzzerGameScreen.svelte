@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, onDestroy, getContext } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import type { GuessCategory } from '$lib/types';
 	import { BUZZER_TIME_PERCENTAGES, CATEGORY_POINTS } from '$lib/types';
@@ -11,39 +11,25 @@
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';
 	import { _ } from 'svelte-i18n';
 	import { getCategoryDefinition } from '$lib/data/categories';
-	import { GAME_SCREEN_CONTEXT } from './context';
+	import { getGameContext } from './context';
 	import { shuffle } from '$lib/utils/random';
 	import { playerState } from '$lib/services';
 	import { gameSession, toast } from '$lib/stores';
 	import { deezerPlayer } from '$lib/services';
 	import { BUZZER_PREVIEW_COUNTDOWN } from '$lib/types/game';
 
-	// Get context from parent GameScreen
-	const gameContext = getContext(GAME_SCREEN_CONTEXT) as {
-		playTrack: () => Promise<void>;
-		stopTrack: () => void;
-		replayTrack: () => Promise<void>;
-		revealTrack: () => void;
-		nextRound: () => Promise<void>;
-		handlePlaybackEnd: () => void;
-		audioProgress: import('svelte/store').Readable<number>;
-		onHome: () => void;
-		activeCategories: readonly GuessCategory[];
-		disabledCategories: readonly GuessCategory[];
-		enableScoring: boolean;
-		hasValidYears: boolean;
-	};
+	const ctx = getGameContext();
 
 	const currentTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
 
 	// Get enableScoring from context
-	const enableScoring = $derived(gameContext.enableScoring);
+	const enableScoring = $derived(ctx.enableScoring);
 
 	// Get active categories from context
-	const activeCategories = $derived(gameContext.activeCategories);
+	const activeCategories = $derived(ctx.activeCategories);
 
 	// Get hasValidYears from context
-	const hasValidYears = $derived(gameContext.hasValidYears);
+	const hasValidYears = $derived(ctx.hasValidYears);
 
 	// Randomly select n categories from active categories and order by points (most valuable first)
 	// This is set once per round and stored in state to prevent changing mid-round
@@ -90,7 +76,7 @@
 
 	// Subscribe to audio progress from DeezerPlayer
 	let audioProgressValue = $state(0);
-	gameContext.audioProgress.subscribe((value) => {
+	const unsubAudioProgress = ctx.audioProgress.subscribe((value) => {
 		audioProgressValue = value;
 	});
 
@@ -312,7 +298,7 @@
 		showReveal = false;
 		trackDuration = 30; // Reset to default, will be updated when track plays
 
-		await gameContext.nextRound();
+		await ctx.nextRound();
 	}
 
 	// Buzzer-specific state
@@ -338,7 +324,11 @@
 	});
 
 	onDestroy(() => {
+		unsubAudioProgress();
 		window.removeEventListener('keydown', handleKeyDown);
+		audioContext?.close();
+		buzzerAudio?.pause();
+		buzzerAudio = null;
 	});
 </script>
 

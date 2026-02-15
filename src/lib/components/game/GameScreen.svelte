@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, onDestroy, setContext, tick } from 'svelte';
+	import { onMount, setContext } from 'svelte';
 	import type { TracklistGenerator } from '$lib/services';
 	import type { Player, GameMode, Track } from '$lib/types';
 	import {
@@ -25,7 +25,7 @@
 	import { _ } from 'svelte-i18n';
 
 	// Context for sharing functions with child components
-	import { GAME_SCREEN_CONTEXT } from './context';
+	import { GAME_SCREEN_CONTEXT, type GameScreenContext } from './context';
 	import { ALL_CATEGORIES, CATEGORY_POINTS } from '$lib/types/game';
 
 	interface Props {
@@ -109,10 +109,6 @@
 			window.removeEventListener('beforeunload', handleBeforeUnload);
 			deezerPlayer.destroy();
 		};
-	});
-
-	onDestroy(() => {
-		deezerPlayer.destroy();
 	});
 
 	function sampleNextTrack(): Track | null {
@@ -359,7 +355,7 @@
 			return tracksExhausted;
 		},
 		enableScoring
-	});
+	} satisfies GameScreenContext);
 </script>
 
 <div class="fixed inset-0 overflow-hidden text-white">
