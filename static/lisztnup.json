@@ -3869,7 +3869,7 @@
       "name": "Tchaikovsky, Pyotr Ilyich",
       "birth_year": 1840,
       "death_year": 1893,
-      "score": 73.25
+      "score": 73.01
     },
     {
       "gid": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
@@ -7323,8 +7323,8 @@
       "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "10 Choral Preludes, BV B 27",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1723,
+      "end_year": 1723,
       "score": 3.44,
       "parts": [
         {
@@ -15314,8 +15314,8 @@
       "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Kantate, BWV 151 \"S\u00fc\u00dfer Trost, mein Jesus k\u00f6mmt\"",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1725,
+      "end_year": 1725,
       "score": 2.87,
       "parts": [
         {
@@ -15645,8 +15645,8 @@
       "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Kantate, BWV 162 \"Ach! ich sehe, itzt, da ich zur Hochzeit gehe\"",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1715,
+      "end_year": 1716,
       "score": 2.06,
       "parts": [
         {
@@ -16961,8 +16961,8 @@
       "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Kantate, BWV 201 \"Geschwinde, ihr wirbelnden Winde\"",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1729,
+      "end_year": 1729,
       "score": 2.25,
       "parts": [
         {
@@ -17129,8 +17129,8 @@
       "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Kantate, BWV 204 \"Ich bin in mir vergn\u00fcgt\"",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1726,
+      "end_year": 1727,
       "score": 1.95,
       "parts": [
         {
@@ -17306,8 +17306,8 @@
       "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Kantate, BWV 212 \"Mer hahn en neue Oberkeet\"",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1742,
+      "end_year": 1742,
       "score": 3.01,
       "parts": [
         {
@@ -17437,8 +17437,8 @@
       "composer": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Kantate, BWV 213 \"La\u00dft uns sorgen, la\u00dft uns wachen\"",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1733,
+      "end_year": 1733,
       "score": 2.2,
       "parts": [
         {
@@ -38968,8 +38968,8 @@
       "composer": "9bd20e6a-b41d-4983-a5b6-c0ff849fa235",
       "name": "L\u2019Arl\u00e9sienne Suite no. 2 (arr. Guiraud)",
       "type": "orchestral",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1872,
+      "end_year": 1872,
       "score": 4.85,
       "parts": [
         {
@@ -41180,8 +41180,8 @@
       "composer": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
       "name": "5 Gedichte, op. 19",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1858,
+      "end_year": 1858,
       "score": 2.23,
       "parts": [
         {
@@ -41338,8 +41338,8 @@
       "composer": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
       "name": "5 Lieder, op. 71",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1877,
+      "end_year": 1877,
       "score": 2.49,
       "parts": [
         {
@@ -41475,8 +41475,8 @@
       "composer": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
       "name": "6 Lieder, op. 85",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1878,
+      "end_year": 1878,
       "score": 2.45,
       "parts": [
         {
@@ -41705,8 +41705,8 @@
       "composer": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
       "name": "8 Lieder und Ges\u00e4nge, op. 59",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1873,
+      "end_year": 1873,
       "score": 2.8,
       "parts": [
         {
@@ -52317,8 +52317,8 @@
       "composer": "09ff1fe8-d61c-4b98-bb82-18487c74d7b7",
       "name": "Ballades",
       "type": "piano",
-      "begin_year": 1842,
-      "end_year": 1842,
+      "begin_year": 1831,
+      "end_year": 1835,
       "score": 5.52,
       "parts": [
         {
@@ -53331,8 +53331,8 @@
       "composer": "09ff1fe8-d61c-4b98-bb82-18487c74d7b7",
       "name": "Polonaises",
       "type": "piano",
-      "begin_year": 1835,
-      "end_year": 1835,
+      "begin_year": 1838,
+      "end_year": 1838,
       "score": 4.5,
       "parts": [
         {
@@ -54256,8 +54256,8 @@
       "composer": "29ae32d0-7918-4484-b690-874b1c5994d4",
       "name": "L\u2019arlesiana",
       "type": "opera",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1897,
+      "end_year": 1897,
       "score": 4.26,
       "parts": [
         {
@@ -66847,8 +66847,8 @@
       "composer": "fa19a8b6-e7f4-40d4-af15-7a7c41ac7d8f",
       "name": "2 Songs, op. 1",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1861,
+      "end_year": 1861,
       "score": 3.08,
       "parts": [
         {
@@ -66863,8 +66863,8 @@
       "composer": "fa19a8b6-e7f4-40d4-af15-7a7c41ac7d8f",
       "name": "2 Songs, op. 2",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1865,
+      "end_year": 1865,
       "score": 1.91,
       "parts": [
         {
@@ -67001,8 +67001,8 @@
       "composer": "fa19a8b6-e7f4-40d4-af15-7a7c41ac7d8f",
       "name": "3 Songs, op. 5",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1864,
+      "end_year": 1864,
       "score": 2.27,
       "parts": [
         {
@@ -67038,8 +67038,8 @@
       "composer": "fa19a8b6-e7f4-40d4-af15-7a7c41ac7d8f",
       "name": "3 Songs, op. 8",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1875,
+      "end_year": 1875,
       "score": 3.03,
       "parts": [
         {
@@ -67436,8 +67436,8 @@
       "composer": "fa19a8b6-e7f4-40d4-af15-7a7c41ac7d8f",
       "name": "Deux M\u00e9lodies, op. 43",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1886,
+      "end_year": 1886,
       "score": 2.5,
       "parts": [
         {
@@ -68569,8 +68569,8 @@
       "composer": "fa19a8b6-e7f4-40d4-af15-7a7c41ac7d8f",
       "name": "Trois m\u00e9lodies, op. 7",
       "type": "vocal",
-      "begin_year": 1910,
-      "end_year": 1910,
+      "begin_year": 1877,
+      "end_year": 1877,
       "score": 3.36,
       "parts": [
         {
@@ -68585,8 +68585,8 @@
       "composer": "fa19a8b6-e7f4-40d4-af15-7a7c41ac7d8f",
       "name": "Trois m\u00e9lodies, op. 85",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1902,
+      "end_year": 1902,
       "score": 2.31,
       "parts": [
         {
@@ -69153,8 +69153,8 @@
       "composer": "bdc820cb-c7cf-4301-8f5d-ec9ae2f62f94",
       "name": "Let Us Garlands Bring, op. 18",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1938,
+      "end_year": 1940,
       "score": 2.41,
       "parts": [
         {
@@ -69920,8 +69920,8 @@
       "composer": "69802473-e361-4e15-bbd8-53fe83cd1587",
       "name": "Trois chorals pour orgue",
       "type": "solo",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1890,
+      "end_year": 1890,
       "score": 4.11,
       "parts": [
         {
@@ -71622,8 +71622,8 @@
       "composer": "e3d1c4a4-d64e-4afa-9fc7-264fb871d0e0",
       "name": "Fedora",
       "type": "opera",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1898,
+      "end_year": 1898,
       "score": 3.62,
       "parts": [
         {
@@ -77730,7 +77730,7 @@
       "composer": "27870d47-bb98-42d1-bf2b-c7e972e6befc",
       "name": "Rodelinda, regina de' Longobardi, HWV 19",
       "type": "opera",
-      "begin_year": null,
+      "begin_year": 1725,
       "end_year": 1725,
       "score": 2.56,
       "parts": [
@@ -87826,8 +87826,8 @@
       "composer": "17987101-f6c0-49e0-879e-fb3817fc8cbf",
       "name": "Three Carol-Anthems",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1919,
+      "end_year": 1919,
       "score": 3.63,
       "parts": [
         {
@@ -91788,8 +91788,8 @@
       "composer": "b448240c-4be0-4e4b-8e5e-923d672cf909",
       "name": "Seven Songs, op. 11",
       "type": "vocal",
-      "begin_year": 1904,
-      "end_year": 1904,
+      "begin_year": 1910,
+      "end_year": 1910,
       "score": 2.05,
       "parts": [
         {
@@ -92795,8 +92795,8 @@
       "composer": "9bfbcb17-bd72-444e-be7d-0129b6389ca1",
       "name": "Pagliacci",
       "type": "opera",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1892,
+      "end_year": 1892,
       "score": 4.48,
       "parts": [
         {
@@ -95885,8 +95885,8 @@
       "composer": "83c850eb-9f0d-49eb-b9fc-84674df83d7a",
       "name": "3 Balladen, op. 2",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1819,
+      "end_year": 1819,
       "score": 2.64,
       "parts": [
         {
@@ -98318,8 +98318,8 @@
       "composer": "95f7c24e-2879-4abb-ba35-906c467fc704",
       "name": "Cavalleria rusticana",
       "type": "opera",
-      "begin_year": 1888,
-      "end_year": 1888,
+      "begin_year": 1890,
+      "end_year": 1890,
       "score": 4.59,
       "parts": [
         {
@@ -98908,8 +98908,8 @@
       "composer": "cfb00fff-8895-484a-b459-f050d70abe2c",
       "name": "6 Lieder, op. 1",
       "type": "vocal",
-      "begin_year": 1842,
-      "end_year": 1842,
+      "begin_year": 1837,
+      "end_year": 1837,
       "score": 1.91,
       "parts": [
         {
@@ -99036,7 +99036,7 @@
       "name": "3 String Quartets, op. 44",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1838,
       "score": 3.17,
       "parts": [
         {
@@ -99118,8 +99118,8 @@
       "composer": "0e85eb79-1c05-44ba-827c-7b259a3d941a",
       "name": "6 Ges\u00e4nge, op. 34",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1836,
+      "end_year": 1836,
       "score": 3.29,
       "parts": [
         {
@@ -101443,8 +101443,8 @@
       "composer": "7d3968cf-a36a-402f-bcb2-4f967d39d642",
       "name": "Fortunio",
       "type": "opera",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1907,
+      "end_year": 1907,
       "score": 2.08,
       "parts": [
         {
@@ -107555,8 +107555,8 @@
       "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Der Schauspieldirektor, K. 486",
       "type": "opera",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1786,
+      "end_year": 1786,
       "score": 3.2,
       "parts": [
         {
@@ -123654,8 +123654,8 @@
       "composer": "a693df4a-8762-4a45-b7fd-6695b558385e",
       "name": "La boh\u00e8me",
       "type": "opera",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1896,
+      "end_year": 1896,
       "score": 4.74,
       "parts": [
         {
@@ -123837,8 +123837,8 @@
       "composer": "a693df4a-8762-4a45-b7fd-6695b558385e",
       "name": "Turandot",
       "type": "opera",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1921,
+      "end_year": 1924,
       "score": 4.72,
       "parts": [
         {
@@ -126364,8 +126364,8 @@
       "composer": "aa968bcf-8c70-49eb-aae1-3b907b60d7e5",
       "name": "3 Songs, op. 3",
       "type": "vocal",
-      "begin_year": 1908,
-      "end_year": 1908,
+      "begin_year": 1904,
+      "end_year": 1905,
       "score": 2.81,
       "parts": [
         {
@@ -126759,7 +126759,7 @@
       "composer": "44b16e44-da77-4580-b851-0d765904573e",
       "name": "6 Romances, op. 4",
       "type": "vocal",
-      "begin_year": 1891,
+      "begin_year": 1892,
       "end_year": 1892,
       "score": 3.21,
       "parts": [
@@ -130115,8 +130115,8 @@
       "composer": "51f5d4c3-c69a-4203-9281-d585e32aa7ef",
       "name": "Schlichte Weisen, op. 76",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1912,
+      "end_year": 1912,
       "score": 3.34,
       "parts": [
         {
@@ -149440,8 +149440,8 @@
       "composer": "f91e3a88-24ee-4563-8963-fab73d2765ed",
       "name": "Sechs Schubert\u2019sche Lieder (arr. Mertz)",
       "type": "vocal",
-      "begin_year": 1817,
-      "end_year": 1817,
+      "begin_year": 1827,
+      "end_year": 1827,
       "score": 2.4,
       "parts": [
         {
@@ -171169,22 +171169,6 @@
       ]
     },
     {
-      "gid": "6eba656c-cd03-303d-a3e6-dc62719ca429",
-      "composer": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
-      "name": "Nut Rocker",
-      "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
-      "score": 4.33,
-      "parts": [
-        {
-          "name": "Nut Rocker",
-          "deezer": [129309654, 129309620],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "4cd28af0-67d5-4d7d-ba06-6e33319b8fd5",
       "composer": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
       "name": "Pezzo capriccioso, op. 62",
@@ -175137,8 +175121,8 @@
       "composer": "4f3b96ed-f1f1-4a68-be73-0e0657837096",
       "name": "5 English Folk Songs",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1913,
+      "end_year": 1913,
       "score": 2.2,
       "parts": [
         {
@@ -176858,8 +176842,8 @@
       "composer": "f1bedf1f-4445-4651-9c35-f4a3f3860a13",
       "name": "Un ballo in maschera",
       "type": "opera",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1859,
+      "end_year": 1859,
       "score": 3.57,
       "parts": [
         {
@@ -185924,8 +185908,8 @@
       "composer": "d019a8cc-060f-4491-83d6-76e1211a1a08",
       "name": "Fa\u00e7ade: An Entertainment",
       "type": "chamber",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1932,
+      "end_year": 1932,
       "score": 2.61,
       "parts": [
         {
@@ -186841,8 +186825,8 @@
       "composer": "c2d17829-1424-435b-9386-c77d3a920abe",
       "name": "Oberon, J. 306",
       "type": "opera",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1825,
+      "end_year": 1826,
       "score": 3.6,
       "parts": [
         {

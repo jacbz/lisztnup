@@ -132,6 +132,7 @@ EXCLUDED_WORKS: Set[str] = set([
     "172693ca-7e2e-41d2-afa5-6e718f033d56", # Russian Rag
     "9b15b8ac-5e35-3fd6-910a-1f59f51aa0cc", # Pictures at an Exhibition: Promenade (duplicate)
     "ac469a24-9918-359b-8a95-54566968455c", # Promenade
+    "6eba656c-cd03-303d-a3e6-dc62719ca429", # Nut Rocker
 ])
 
 WSS_OVERRIDES: Dict[str, float] = {

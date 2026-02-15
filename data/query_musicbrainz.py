@@ -421,9 +421,10 @@ SELECT DISTINCT ON (lww.link_order, child_work.id, work_name)
 FROM musicbrainz.l_work_work AS lww
 JOIN musicbrainz.link AS l ON lww.link = l.id
 JOIN musicbrainz.work AS child_work ON lww.entity1 = child_work.id
-LEFT JOIN musicbrainz.l_artist_work AS law ON child_work.id = law.entity1
-LEFT JOIN musicbrainz.link AS composer_link
-  ON law.link = composer_link.id AND composer_link.link_type = 168
+LEFT JOIN musicbrainz.l_artist_work AS law
+  JOIN musicbrainz.link AS composer_link
+    ON law.link = composer_link.id AND composer_link.link_type = 168
+  ON child_work.id = law.entity1
 WHERE lww.entity0 = %(work_id)s AND l.link_type = 281
 ORDER BY lww.link_order, work_name;
 """
