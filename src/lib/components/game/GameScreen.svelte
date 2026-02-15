@@ -82,6 +82,10 @@
 	let showQuitDialog = $state(false);
 	let tracksExhausted = $state(false);
 
+	// Concurrency guard: prevents overlapping sampleAndPreloadTrack calls
+	// from corrupting the tracklist or fighting over the DeezerPlayer singleton.
+	let preloadInProgress = false;
+
 	// Start game session on mount
 	onMount(() => {
 		gameSession.startSession(mode, players, isSoloMode);
@@ -126,45 +130,57 @@
 	}
 
 	async function sampleAndPreloadTrack(): Promise<void> {
-		while (true) {
-			const track = sampleNextTrack();
-			if (!track) {
-				// No more tracks available - end the game
-				if (mode === 'timeline') {
-					tracksExhausted = true;
+		// Prevent concurrent calls from corrupting tracklist / DeezerPlayer state.
+		// If a preload is already running, skip — the in-progress call will
+		// populate the tracklist and load audio.
+		if (preloadInProgress) return;
+		preloadInProgress = true;
+
+		try {
+			while (true) {
+				const track = sampleNextTrack();
+				if (!track) {
+					// No more tracks available - end the game
+					if (mode === 'timeline') {
+						tracksExhausted = true;
+					} else {
+						showEndGameScreen = true;
+					}
+					return;
+				}
+
+				// Try each available deezer ID for this track
+				const availableDeezerIds = [...track.part.deezer]; // Create a copy to modify
+				let trackLoaded = false;
+
+				while (availableDeezerIds.length > 0) {
+					// Pick a random deezer ID from the available ones
+					const randomIndex = Math.floor(Math.random() * availableDeezerIds.length);
+					const deezerId = availableDeezerIds[randomIndex];
+
+					try {
+						await deezerPlayer.load(deezerId);
+						trackLoaded = true;
+						break; // Successfully loaded, exit the inner loop
+					} catch (error) {
+						// Remove this deezer ID from the available list
+						availableDeezerIds.splice(randomIndex, 1);
+					}
+				}
+
+				if (trackLoaded) {
+					// Successfully loaded a deezer ID for this track
+					return;
 				} else {
-					showEndGameScreen = true;
-				}
-				return;
-			}
-
-			// Try each available deezer ID for this track
-			const availableDeezerIds = [...track.part.deezer]; // Create a copy to modify
-			let trackLoaded = false;
-
-			while (availableDeezerIds.length > 0) {
-				// Pick a random deezer ID from the available ones
-				const randomIndex = Math.floor(Math.random() * availableDeezerIds.length);
-				const deezerId = availableDeezerIds[randomIndex];
-
-				try {
-					await deezerPlayer.load(deezerId);
-					trackLoaded = true;
-					break; // Successfully loaded, exit the inner loop
-				} catch (error) {
-					// Remove this deezer ID from the available list
-					availableDeezerIds.splice(randomIndex, 1);
+					// All deezer IDs failed — remove this specific track from the tracklist.
+					// We filter by identity (not index) so concurrent mutations can't
+					// accidentally remove the wrong track.
+					console.warn('All deezer IDs failed for track, sampling another:', track.work.name);
+					tracklist.update((t) => t.filter((item) => item !== track));
 				}
 			}
-
-			if (trackLoaded) {
-				// Successfully loaded a deezer ID for this track
-				return;
-			} else {
-				// All deezer IDs failed, remove this track and sample another
-				console.warn('All deezer IDs failed for track, sampling another:', track.work.name);
-				tracklist.update((t) => t.slice(0, -1));
-			}
+		} finally {
+			preloadInProgress = false;
 		}
 	}
 
@@ -286,6 +302,7 @@
 	function handlePlayAgain(): void {
 		showEndGameScreen = false;
 		tracksExhausted = false;
+		preloadInProgress = false;
 		resetGame();
 		gameSession.startSession(mode, players, isSoloMode);
 		sampleAndPreloadTrack();
@@ -304,6 +321,7 @@
 	 */
 	function prepareNewGame(): void {
 		tracksExhausted = false;
+		preloadInProgress = false;
 		sampleAndPreloadTrack();
 	}
 

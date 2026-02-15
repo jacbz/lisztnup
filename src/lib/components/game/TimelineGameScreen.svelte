@@ -660,23 +660,37 @@
 		uiState.showRevealPopup = true;
 	}
 
+	// Guard against re-entrant calls (e.g. mobile double-tap during transition)
+	let isClosingRevealPopup = false;
+
 	function handleCloseRevealPopup() {
+		if (isClosingRevealPopup) return;
+		isClosingRevealPopup = true;
+
 		uiState.showRevealPopup = false;
+
+		// Capture all reveal state upfront before async delays,
+		// so setTimeout callbacks don't read stale/reset reactive state.
 		const wasWrong = gameState.revealIsCorrect === false;
 		const entryId = gameState.revealEntryId;
+		const purpose = gameState.revealPurpose;
+		const reachedWin = gameState.revealReachedWin;
 
-		if (gameState.revealPurpose === 'turn') {
+		if (purpose === 'turn') {
 			gameContext.nextRound();
 		}
 
 		setTimeout(() => {
-			if (gameState.revealPurpose === 'inspect') {
+			if (purpose === 'inspect') {
 				clearRevealState();
+				isClosingRevealPopup = false;
 				return;
 			}
 
-			if (gameState.revealReachedWin) {
+			if (reachedWin) {
+				clearRevealState();
 				uiState.showEndGame = true;
+				isClosingRevealPopup = false;
 				return;
 			}
 
@@ -687,6 +701,7 @@
 					setTimeout(() => {
 						activePlayer.entries = activePlayer.entries.filter((e) => e.id !== entryId);
 						finalizeTurn();
+						isClosingRevealPopup = false;
 					}, 600);
 					clearRevealState();
 					return;
@@ -695,6 +710,7 @@
 
 			clearRevealState();
 			finalizeTurn();
+			isClosingRevealPopup = false;
 		}, 300);
 	}
 
@@ -704,9 +720,25 @@
 		});
 
 		rotateToNextPlayer();
-		// Visual depth is restocked after the $effect syncs the new top card
-		// from $tracklist (triggered by nextRound incrementing currentTrackIndex).
-		// restockCenterStack only fills face-down placeholder cards below the top.
+
+		// Redundant safety-net sync: ensure centerStack[0] reflects the current
+		// track from $tracklist.  The $effect normally handles this, but if the
+		// identity guard (`track !== lastSyncedTrack`) was already satisfied by a
+		// prior run (e.g. timing edge-case on mobile), the effect won't fire again.
+		// Doing it here guarantees the visual card metadata stays in sync with audio.
+		const currentIdx = $currentRound.currentTrackIndex;
+		if (currentIdx < $tracklist.length) {
+			const track = $tracklist[currentIdx];
+			if (track) {
+				lastSyncedTrack = track;
+				if (gameState.centerStack.length > 0) {
+					gameState.centerStack[0].track = track;
+				} else {
+					gameState.centerStack.push({ track, id: newId() });
+				}
+			}
+		}
+
 		restockCenterStack();
 		resetTurnState();
 	}

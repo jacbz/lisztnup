@@ -69,11 +69,25 @@
 		rotation = 0
 	}: Props = $props();
 
+	// Guard against double-fire during out-transition (e.g. mobile double-taps)
+	let closing = $state(false);
+
+	// Reset the closing guard whenever the popup becomes visible again
+	$effect(() => {
+		if (visible) {
+			closing = false;
+		}
+	});
+
 	function handleBackdropClick() {
+		if (closing) return;
+		closing = true;
 		onClose();
 	}
 
 	function handleCloseClick() {
+		if (closing) return;
+		closing = true;
 		onClose();
 	}
 
