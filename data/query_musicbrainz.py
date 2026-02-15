@@ -414,17 +414,22 @@ SELECT DISTINCT ON (lww.link_order, child_work.id, work_name)
     child_work.name
   ) AS work_name,
   child_work.type AS work_type,
-  l.begin_date_year AS work_begin_year,
-  l.end_date_year AS work_end_year
+  -- Composition dates live on the composer relationship (link_type 168),
+  -- not on the parent-child "parts" relationship.
+  composer_link.begin_date_year AS work_begin_year,
+  composer_link.end_date_year AS work_end_year
 FROM musicbrainz.l_work_work AS lww
 JOIN musicbrainz.link AS l ON lww.link = l.id
 JOIN musicbrainz.work AS child_work ON lww.entity1 = child_work.id
+LEFT JOIN musicbrainz.l_artist_work AS law ON child_work.id = law.entity1
+LEFT JOIN musicbrainz.link AS composer_link
+  ON law.link = composer_link.id AND composer_link.link_type = 168
 WHERE lww.entity0 = %(work_id)s AND l.link_type = 281
 ORDER BY lww.link_order, work_name;
 """
 
 def get_work_details_recursive(cursor, work_id, label_counter):
-    # Returns: subworks, recordings, total_recordings, descendant_types
+    # Returns: subworks, recordings, total_recordings, descendant_types, descendant_begin_years, descendant_end_years
     cursor.execute(GET_RECORDINGS_FOR_WORK_SQL, {"work_id": work_id})
     recordings_data = cursor.fetchall()
     recordings = []
@@ -468,6 +473,8 @@ def get_work_details_recursive(cursor, work_id, label_counter):
 
     total_recordings_in_tree = len(recordings)
     all_descendant_types = []
+    all_descendant_begin_years = []
+    all_descendant_end_years = []
 
     cursor.execute(GET_SUBWORKS_FOR_WORK_SQL, {"work_id": work_id})
     subworks_data = cursor.fetchall()
@@ -484,18 +491,20 @@ def get_work_details_recursive(cursor, work_id, label_counter):
             best_subwork_details = None
             max_recs = -1
             for subwork_row in duplicates:
-                sub, recs, count, types = get_work_details_recursive(
+                sub, recs, count, types, byears, eyears = get_work_details_recursive(
                     cursor, subwork_row["work_id"], label_counter
                 )
                 if count > max_recs:
                     max_recs = count
                     winner_row = subwork_row
-                    best_subwork_details = (sub, recs, count, types)
+                    best_subwork_details = (sub, recs, count, types, byears, eyears)
             (
                 child_subworks,
                 child_recordings,
                 child_rec_count,
                 child_descendant_types,
+                child_descendant_begin_years,
+                child_descendant_end_years,
             ) = best_subwork_details
         else:
             (
@@ -503,6 +512,8 @@ def get_work_details_recursive(cursor, work_id, label_counter):
                 child_recordings,
                 child_rec_count,
                 child_descendant_types,
+                child_descendant_begin_years,
+                child_descendant_end_years,
             ) = get_work_details_recursive(cursor, winner_row["work_id"], label_counter)
 
         # Add the winner's direct type to the list
@@ -510,6 +521,14 @@ def get_work_details_recursive(cursor, work_id, label_counter):
             all_descendant_types.append(winner_row["work_type"])
         # Add all types from its children
         all_descendant_types.extend(child_descendant_types)
+
+        # Collect composition dates from descendants
+        if winner_row["work_begin_year"] is not None:
+            all_descendant_begin_years.append(winner_row["work_begin_year"])
+        if winner_row["work_end_year"] is not None:
+            all_descendant_end_years.append(winner_row["work_end_year"])
+        all_descendant_begin_years.extend(child_descendant_begin_years)
+        all_descendant_end_years.extend(child_descendant_end_years)
 
         if child_rec_count > 0:
             total_recordings_in_tree += child_rec_count
@@ -524,7 +543,7 @@ def get_work_details_recursive(cursor, work_id, label_counter):
                 }
             )
 
-    return valid_subworks, recordings, total_recordings_in_tree, all_descendant_types
+    return valid_subworks, recordings, total_recordings_in_tree, all_descendant_types, all_descendant_begin_years, all_descendant_end_years
 
 
 def print_statistics(final_data, stats):
@@ -653,22 +672,24 @@ def main():
         for (composer_id, normalized_name), duplicates in grouped_works.items():
             winner_row = duplicates[0]
             descendant_types = []
+            descendant_begin_years = []
+            descendant_end_years = []
             if len(duplicates) > 1:
                 best_work_details = None
                 max_recs = -1
                 for work_row in duplicates:
-                    sub, recs, count, types = get_work_details_recursive(
+                    sub, recs, count, types, byears, eyears = get_work_details_recursive(
                         cursor, work_row["work_id"], stats["label_counter"]
                     )
                     if count > max_recs:
                         max_recs = count
                         winner_row = work_row
-                        best_work_details = (sub, recs, count, types)
-                subworks, recordings, total_recordings, descendant_types = (
+                        best_work_details = (sub, recs, count, types, byears, eyears)
+                subworks, recordings, total_recordings, descendant_types, descendant_begin_years, descendant_end_years = (
                     best_work_details
                 )
             else:
-                subworks, recordings, total_recordings, descendant_types = (
+                subworks, recordings, total_recordings, descendant_types, descendant_begin_years, descendant_end_years = (
                     get_work_details_recursive(
                         cursor, winner_row["work_id"], stats["label_counter"]
                     )
@@ -711,12 +732,20 @@ def main():
                         "works": [],
                     }
 
+                # Inherit composition dates from descendants by majority vote
+                work_begin_year = winner_row["work_begin_year"]
+                if work_begin_year is None and descendant_begin_years:
+                    work_begin_year = Counter(descendant_begin_years).most_common(1)[0][0]
+                work_end_year = winner_row["work_end_year"]
+                if work_end_year is None and descendant_end_years:
+                    work_end_year = Counter(descendant_end_years).most_common(1)[0][0]
+
                 work_obj = {
                     "gid": winner_row["work_gid"],
                     "name": final_work_name,
                     "type": work_type_str,
-                    "begin_year": winner_row["work_begin_year"],
-                    "end_year": winner_row["work_end_year"],
+                    "begin_year": work_begin_year,
+                    "end_year": work_end_year,
                     "recordings": recordings,
                     "subworks": subworks,
                 }
