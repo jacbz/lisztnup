@@ -6,7 +6,8 @@
 		"off": "Desligado",
 		"confirm": "Confirmar",
 		"reportProblem": "Reportar um problema",
-		"searchOn": "Pesquisar em..."
+		"searchOn": "Pesquisar em...",
+		"playAgain": "Ouvir de novo"
 	},
 	"search": {
 		"title": "Pesquisar em...",

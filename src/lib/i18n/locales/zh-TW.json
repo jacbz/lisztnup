@@ -6,7 +6,8 @@
 		"off": "關",
 		"confirm": "確認",
 		"reportProblem": "回報問題",
-		"searchOn": "搜尋..."
+		"searchOn": "搜尋...",
+		"playAgain": "再聽一次"
 	},
 	"search": {
 		"title": "搜尋...",

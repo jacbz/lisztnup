@@ -2,9 +2,9 @@
 	import type { Tracklist, Composer, Work, Part } from '$lib/types';
 	import { MIN_WORK_SCORE, MAX_WORK_SCORE } from '$lib/types';
 	import { gameData } from '$lib/stores';
-	import { TracklistGenerator, deezerPlayer, playerState, progress } from '$lib/services';
+	import { TracklistGenerator, PreviewPlayer } from '$lib/services';
 	import { get } from 'svelte/store';
-	import { onMount, onDestroy } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import ExternalLink from '../primitives/ExternalLink.svelte';
 	import PlayerControl from '../gameplay/PlayerControl.svelte';
 	import { filterWorks } from '$lib/utils/search';
@@ -73,15 +73,8 @@
 	// Scroll container reference to scroll to top on page change
 	let contentScrollEl: HTMLElement | null = null;
 
-	// Audio playback state
-	let currentlyPlayingDeezerId = $state<number | null>(null);
-
-	// Track the current round state for PlayerControl
-	const playbackState = $derived({
-		isPlaying: currentlyPlayingDeezerId !== null && $playerState.isPlaying,
-		playbackEnded: currentlyPlayingDeezerId !== null && !$playerState.isPlaying && $progress >= 1,
-		isRevealed: false // Never reveal in tracklist viewer
-	});
+	// Self-contained preview player — independent of the game's DeezerPlayer singleton
+	const previewPlayer = new PreviewPlayer();
 
 	// Load data when tracklist or visibility changes
 	$effect(() => {
@@ -104,29 +97,11 @@
 			sortColumn = 'composer';
 			sortDirection = 'asc';
 			// Stop any playing audio
-			if (currentlyPlayingDeezerId !== null) {
-				deezerPlayer.stop();
-				currentlyPlayingDeezerId = null;
-			}
+			previewPlayer.stop();
 		}
 	});
 
-	onMount(() => {
-		deezerPlayer.setIgnoreTrackLength(true);
-
-		return () => {
-			// Cleanup on unmount
-			if (currentlyPlayingDeezerId !== null) {
-				deezerPlayer.destroy();
-			}
-		};
-	});
-
-	onDestroy(() => {
-		if (currentlyPlayingDeezerId !== null) {
-			deezerPlayer.destroy();
-		}
-	});
+	onDestroy(() => previewPlayer.destroy());
 
 	const normalizeWorkName = (name: string): string => {
 		// Normalize work name for comparison, replace all punctuation
@@ -373,31 +348,13 @@
 
 	// Audio playback functions
 	async function handlePlayPart(deezerIds: number[]): Promise<void> {
-		try {
-			// Get random deezer ID from available IDs
-			const randomIndex = Math.floor(Math.random() * deezerIds.length);
-			const deezerId = deezerIds[randomIndex];
-
-			// If same track is playing, stop it
-			if (currentlyPlayingDeezerId === deezerId && $playerState.isPlaying) {
-				stopPlayback();
-				return;
-			}
-
-			// Load and play the track
-			await deezerPlayer.load(deezerId);
-			deezerPlayer.play();
-
-			currentlyPlayingDeezerId = deezerId;
-		} catch (error) {
-			console.error('Error playing part:', error);
-			currentlyPlayingDeezerId = null;
-		}
+		const randomIndex = Math.floor(Math.random() * deezerIds.length);
+		const deezerId = deezerIds[randomIndex];
+		await previewPlayer.play(deezerId);
 	}
 
 	function stopPlayback(): void {
-		deezerPlayer.stop();
-		currentlyPlayingDeezerId = null;
+		previewPlayer.stop();
 	}
 </script>
 
@@ -413,11 +370,11 @@
 		/>
 		<div class="relative flex h-12 w-12 shrink-0 items-center justify-center">
 			<PlayerControl
-				visible={currentlyPlayingDeezerId !== null && !playbackState.playbackEnded}
-				isPlaying={playbackState.isPlaying}
-				playbackEnded={playbackState.playbackEnded}
-				isRevealed={playbackState.isRevealed}
-				progress={$progress}
+				visible={previewPlayer.currentDeezerId !== null}
+				isPlaying={previewPlayer.isPlaying}
+				playbackEnded={false}
+				isRevealed={false}
+				progress={previewPlayer.progress}
 				track={null}
 				playerSize={48}
 				onStop={stopPlayback}
@@ -555,8 +512,8 @@
 												<button
 													type="button"
 													onclick={() => handlePlayPart(row.parts[0].deezerIds)}
-													class="cursor-pointer text-left transition-colors hover:text-cyan-400 {currentlyPlayingDeezerId &&
-													row.parts[0].deezerIds.includes(currentlyPlayingDeezerId)
+													class="cursor-pointer text-left transition-colors hover:text-cyan-400 {previewPlayer.currentDeezerId &&
+													row.parts[0].deezerIds.includes(previewPlayer.currentDeezerId)
 														? 'font-semibold text-cyan-400'
 														: ''}"
 												>
@@ -590,8 +547,8 @@
 														<button
 															type="button"
 															onclick={() => handlePlayPart(part.deezerIds)}
-															class="flex-1 cursor-pointer text-left transition-colors hover:text-cyan-400 {currentlyPlayingDeezerId &&
-															part.deezerIds.includes(currentlyPlayingDeezerId)
+															class="flex-1 cursor-pointer text-left transition-colors hover:text-cyan-400 {previewPlayer.currentDeezerId &&
+															part.deezerIds.includes(previewPlayer.currentDeezerId)
 																? 'font-semibold text-cyan-400'
 																: ''}"
 														>

@@ -1,4 +1,6 @@
 // Re-export all services
 export { TracklistGenerator } from './TracklistGenerator';
 export { SettingsService } from './SettingsService';
-export { deezerPlayer, playerState, progress } from './DeezerPlayer';
+export { deezerPlayer, playerState, progress, fetchDeezerTrackData } from './DeezerPlayer';
+export type { DeezerTrackData } from './DeezerPlayer';
+export { PreviewPlayer } from './PreviewPlayer.svelte';

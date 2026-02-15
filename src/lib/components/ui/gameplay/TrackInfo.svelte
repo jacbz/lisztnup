@@ -8,12 +8,16 @@
 		getWorkEra,
 		getComposerLastName
 	} from '$lib/utils';
-	import { deezerPlayer, playerState } from '$lib/services';
+	import { deezerPlayer, playerState, PreviewPlayer } from '$lib/services';
 	import deezer from '$lib/assets/icons/deezer.svg?raw';
 	import { _ } from 'svelte-i18n';
 	import { Flag } from 'lucide-svelte';
 	import Search from 'lucide-svelte/icons/search';
+	import Play from 'lucide-svelte/icons/play';
 	import SearchPopup from '../primitives/SearchPopup.svelte';
+	import PlayerControl from './PlayerControl.svelte';
+	import { slide } from 'svelte/transition';
+	import { onDestroy } from 'svelte';
 
 	interface Props {
 		track: Track | null;
@@ -23,6 +27,24 @@
 	let { track = null, showUpsideDown = true }: Props = $props();
 
 	let showSearchPopup = $state(false);
+	let replayActive = $state(false);
+
+	// Self-contained preview player — completely independent of the game's DeezerPlayer singleton
+	const previewPlayer = new PreviewPlayer();
+
+	onDestroy(() => previewPlayer.destroy());
+
+	async function handlePlayAgain() {
+		if (!track) return;
+		replayActive = true;
+		const deezerIds = track.part.deezer;
+		const deezerId = deezerIds[Math.floor(Math.random() * deezerIds.length)];
+		await previewPlayer.play(deezerId);
+	}
+
+	function handleReplayStop() {
+		previewPlayer.stop();
+	}
 
 	const composerName = $derived(track ? formatComposerName(track.composer.name) : '');
 	const composerLastName = $derived(track ? getComposerLastName(track.composer.name) : '');
@@ -208,7 +230,37 @@
 				<Search class="h-2.5 w-2.5" />
 				<span>{$_('common.searchOn')}</span>
 			</button>
+			<span class="text-slate-500">·</span>
+			<button
+				type="button"
+				onclick={handlePlayAgain}
+				class="flex items-center gap-1.5 no-underline transition-all duration-300 hover:text-slate-300"
+			>
+				<Play class="h-2.5 w-2.5" />
+				<span>{$_('common.playAgain')}</span>
+			</button>
 		</div>
+
+		<!-- Replay player -->
+		{#if replayActive}
+			<div in:slide={{ duration: 300 }} class="flex justify-center">
+				<div class="relative flex h-12 w-12 items-center justify-center">
+					<PlayerControl
+						visible={true}
+						isPlaying={previewPlayer.isPlaying}
+						playbackEnded={false}
+						isRevealed={false}
+						progress={previewPlayer.progress}
+						track={null}
+						playerSize={48}
+						onPlay={handlePlayAgain}
+						onStop={handleReplayStop}
+						onReveal={() => {}}
+						onNext={() => {}}
+					/>
+				</div>
+			</div>
+		{/if}
 	</div>
 {/if}
 

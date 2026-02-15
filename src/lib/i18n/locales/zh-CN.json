@@ -6,7 +6,8 @@
 		"off": "关",
 		"confirm": "确认",
 		"reportProblem": "报告问题",
-		"searchOn": "搜索..."
+		"searchOn": "搜索...",
+		"playAgain": "再听一次"
 	},
 	"search": {
 		"title": "搜索...",

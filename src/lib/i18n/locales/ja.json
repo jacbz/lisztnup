@@ -6,7 +6,8 @@
 		"off": "オフ",
 		"confirm": "確定",
 		"reportProblem": "問題を報告",
-		"searchOn": "検索..."
+		"searchOn": "検索...",
+		"playAgain": "もう一度聴く"
 	},
 	"search": {
 		"title": "検索...",

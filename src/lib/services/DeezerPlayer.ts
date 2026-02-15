@@ -5,7 +5,7 @@ const TARGET_LUFS = -23;
 const FADE_DURATION = 0.3;
 const MAX_GAIN = 2.5; // Maximum allowed gain to prevent excessive amplification
 
-interface DeezerTrackData {
+export interface DeezerTrackData {
 	id: number;
 	title: string;
 	preview: string;
@@ -25,6 +25,48 @@ export const playerState = writable({
 	track: null as DeezerTrackData | null,
 	analyserNode: null as AnalyserNode | null
 });
+
+/**
+ * Fetches track metadata from the Deezer API via JSONP.
+ * @param deezerId The Deezer track ID.
+ * @returns The track data, or null if the fetch fails.
+ */
+export async function fetchDeezerTrackData(deezerId: number): Promise<DeezerTrackData | null> {
+	return new Promise((resolve) => {
+		const callbackName = `deezerCallback_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+		const script = document.createElement('script');
+		const timeout = setTimeout(() => {
+			cleanup();
+			console.error(`DeezerPlayer: Timeout fetching track ${deezerId}`);
+			resolve(null);
+		}, 10000);
+
+		window[callbackName] = (data: DeezerTrackData) => {
+			cleanup();
+			if (data) {
+				resolve(data);
+			} else {
+				console.error(`DeezerPlayer: Error fetching track ${deezerId}`);
+				resolve(null);
+			}
+		};
+
+		const cleanup = () => {
+			clearTimeout(timeout);
+			delete window[callbackName];
+			script.parentNode?.removeChild(script);
+		};
+
+		script.onerror = () => {
+			cleanup();
+			console.error(`DeezerPlayer: Failed to fetch track ${deezerId}`);
+			resolve(null);
+		};
+
+		script.src = `https://api.deezer.com/track/${deezerId}?output=jsonp&callback=${callbackName}`;
+		document.head.appendChild(script);
+	});
+}
 
 class DeezerPlayer {
 	// Web Audio API properties (used when normalization is enabled)
@@ -103,40 +145,7 @@ class DeezerPlayer {
 	}
 
 	private async fetchTrackData(deezerId: number): Promise<DeezerTrackData | null> {
-		return new Promise((resolve) => {
-			const callbackName = `deezerCallback_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-			const script = document.createElement('script');
-			const timeout = setTimeout(() => {
-				cleanup();
-				console.error(`DeezerPlayer: Timeout fetching track ${deezerId}`);
-				resolve(null);
-			}, 10000);
-
-			window[callbackName] = (data: DeezerTrackData) => {
-				cleanup();
-				if (data) {
-					resolve(data);
-				} else {
-					console.error(`DeezerPlayer: Error fetching track ${deezerId}`);
-					resolve(null);
-				}
-			};
-
-			const cleanup = () => {
-				clearTimeout(timeout);
-				delete window[callbackName];
-				script.parentNode?.removeChild(script);
-			};
-
-			script.onerror = () => {
-				cleanup();
-				console.error(`DeezerPlayer: Failed to fetch track ${deezerId}`);
-				resolve(null);
-			};
-
-			script.src = `https://api.deezer.com/track/${deezerId}?output=jsonp&callback=${callbackName}`;
-			document.head.appendChild(script);
-		});
+		return fetchDeezerTrackData(deezerId);
 	}
 
 	/**

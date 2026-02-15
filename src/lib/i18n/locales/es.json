@@ -6,7 +6,8 @@
 		"off": "No",
 		"confirm": "Confirmar",
 		"reportProblem": "Reportar un problema",
-		"searchOn": "Buscar en..."
+		"searchOn": "Buscar en...",
+		"playAgain": "Escuchar de nuevo"
 	},
 	"search": {
 		"title": "Buscar en...",
