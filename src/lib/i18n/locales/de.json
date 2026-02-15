@@ -302,7 +302,7 @@
 	"game": {
 		"round": "Runde {current} von {total}",
 		"home": "Home",
-		"spin": "Dreh!",
+		"spin": "Drehen",
 		"play": "Play",
 		"pause": "Pause",
 		"guessCategory": "{category}",

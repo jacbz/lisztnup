@@ -302,7 +302,7 @@
 	"game": {
 		"round": "Manche {current} sur {total}",
 		"home": "Accueil",
-		"spin": "Tourner !",
+		"spin": "Tourner",
 		"play": "Lecture",
 		"pause": "Pause",
 		"guessCategory": "{category}",
