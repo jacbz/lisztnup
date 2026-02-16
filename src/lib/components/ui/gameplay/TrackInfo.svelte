@@ -249,7 +249,7 @@
 				<button
 					type="button"
 					onclick={handlePlayAgain}
-					class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-400 transition-all duration-200 hover:bg-white/5 hover:text-slate-200"
+					class="flex flex-col items-center justify-center gap-1 py-4 text-slate-400 transition-all duration-200 hover:bg-white/5 hover:text-slate-200 md:py-2.5"
 				>
 					<Play class="h-3.5 w-3.5" />
 					<span class="text-[0.65rem] leading-tight font-medium">{$_('common.playAgain')}</span>
@@ -257,7 +257,7 @@
 				<button
 					type="button"
 					onclick={() => (showSearchPopup = true)}
-					class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-400 transition-all duration-200 hover:bg-white/5 hover:text-slate-200"
+					class="flex flex-col items-center justify-center gap-1 py-4 text-slate-400 transition-all duration-200 hover:bg-white/5 hover:text-slate-200 md:py-2.5"
 				>
 					<Search class="h-3.5 w-3.5" />
 					<span class="text-[0.65rem] leading-tight font-medium">{$_('common.searchOn')}</span>
@@ -269,7 +269,7 @@
 					data-sveltekit-reload
 					data-sveltekit-noscroll
 					data-sveltekit-preload-data="false"
-					class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-400 no-underline transition-all duration-200 hover:bg-white/5 hover:text-slate-200"
+					class="flex flex-col items-center justify-center gap-1 py-4 text-slate-400 no-underline transition-all duration-200 hover:bg-white/5 hover:text-slate-200 md:py-2.5"
 				>
 					<Flag class="h-3.5 w-3.5" />
 					<span class="text-[0.65rem] leading-tight font-medium">{$_('common.reportProblem')}</span>
