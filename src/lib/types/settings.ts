@@ -98,6 +98,15 @@ export const MIN_WORK_SCORE_ROUNDED = Math.floor(MIN_WORK_SCORE * 10) / 10;
  * The maximum work score, rounded to one decimal place.
  */
 export const MAX_WORK_SCORE_ROUNDED = Math.ceil(MAX_WORK_SCORE * 10) / 10;
+/**
+ * The minimum work year in the database.
+ */
+export const MIN_WORK_YEAR = 1400;
+
+/**
+ * The maximum work year in the database.
+ */
+export const MAX_WORK_YEAR = 2020;
 
 /**
  * The default values for the tracklist configuration.

@@ -134,13 +134,20 @@
 					aVal = a.popularity;
 					bVal = b.popularity;
 					break;
-				case 'year':
+				case 'year': {
 					// Extract first year for sorting, be defensive in case year is missing
 					const ay = a.year ?? '-';
 					const by = b.year ?? '-';
-					aVal = ay === '-' ? 0 : parseInt(ay.split('-')[0]);
-					bVal = by === '-' ? 0 : parseInt(by.split('-')[0]);
+					const aHasYear = ay !== '-' && ay !== '';
+					const bHasYear = by !== '-' && by !== '';
+					// Always push works without years to the bottom regardless of sort direction
+					if (!aHasYear && !bHasYear) return 0;
+					if (!aHasYear) return 1;
+					if (!bHasYear) return -1;
+					aVal = parseInt(ay.split('-')[0]);
+					bVal = parseInt(by.split('-')[0]);
 					break;
+				}
 				default:
 					aVal = a.composerSortName + ' ' + normalizeWorkName(a.work);
 					bVal = b.composerSortName + ' ' + normalizeWorkName(b.work);

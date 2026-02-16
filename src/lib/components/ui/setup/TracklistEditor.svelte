@@ -31,7 +31,7 @@
 	import X from 'lucide-svelte/icons/x';
 	import Eye from 'lucide-svelte/icons/eye';
 	import ListMusic from 'lucide-svelte/icons/list-music';
-	import { COMPOSER_COUNT } from '$lib/types/settings';
+	import { COMPOSER_COUNT, MAX_WORK_YEAR, MIN_WORK_YEAR } from '$lib/types/settings';
 
 	interface Props {
 		visible?: boolean;
@@ -403,7 +403,7 @@
 	function toggleYearFilter() {
 		yearFilterEnabled = !yearFilterEnabled;
 		if (yearFilterEnabled) {
-			config.yearFilter = config.yearFilter || [1400, 2000];
+			config.yearFilter = config.yearFilter || [MIN_WORK_YEAR, MAX_WORK_YEAR];
 		} else {
 			config.yearFilter = undefined;
 		}
@@ -845,8 +845,8 @@
 						<RangeSlider
 							bind:valueMin={config.yearFilter[0]}
 							bind:valueMax={config.yearFilter[1]}
-							min={1400}
-							max={2000}
+							min={MIN_WORK_YEAR}
+							max={MAX_WORK_YEAR}
 							step={10}
 							label=""
 						/>
@@ -901,18 +901,7 @@
 												class="hover:text-white"
 												aria-label="Remove filter"
 											>
-												<svg
-													xmlns="http://www.w3.org/2000/svg"
-													class="h-4 w-4"
-													viewBox="0 0 20 20"
-													fill="currentColor"
-												>
-													<path
-														fill-rule="evenodd"
-														d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-														clip-rule="evenodd"
-													/>
-												</svg>
+												<X class="h-4 w-4" />
 											</button>
 										</div>
 									{/each}

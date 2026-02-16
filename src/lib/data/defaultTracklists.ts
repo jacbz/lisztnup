@@ -15,7 +15,7 @@ import celloIcon from '$lib/assets/icons/cello.svg?raw';
 import orchestraIcon from '$lib/assets/icons/orchestra.svg?raw';
 import composerIcon from '$lib/assets/icons/composer.svg?raw';
 import eraIcon from '$lib/assets/icons/era.svg?raw';
-import { COMPOSER_COUNT } from '$lib/types/settings';
+import { COMPOSER_COUNT, MAX_WORK_YEAR, MIN_WORK_YEAR } from '$lib/types/settings';
 
 // List of specific works to always include in tracklists, regardless of their score
 const WORKS_TO_INCLUDE = [
@@ -241,7 +241,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				ballet: -MAX_WORK_SCORE_ROUNDED,
 				solo: -MAX_WORK_SCORE_ROUNDED
 			},
-			yearFilter: [1800, 2000],
+			yearFilter: [1800, MAX_WORK_YEAR],
 			workScoreRange: [3, MAX_WORK_SCORE_ROUNDED],
 			maxTracksFromSingleWork: 5
 		}
@@ -492,7 +492,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'eras',
 		icon: eraIcon,
 		config: {
-			yearFilter: [1400, 1600],
+			yearFilter: [MIN_WORK_YEAR, 1600],
 			workScoreRange: [0, MAX_WORK_SCORE_ROUNDED]
 		}
 	},
