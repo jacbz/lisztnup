@@ -22,9 +22,11 @@
 	interface Props {
 		track: Track | null;
 		showUpsideDown?: boolean;
+		/** Controls horizontal bleed to break out of parent padding. */
+		bleed?: 'none' | 'sm' | 'md' | 'lg';
 	}
 
-	let { track = null, showUpsideDown = true }: Props = $props();
+	let { track = null, showUpsideDown = true, bleed = 'lg' }: Props = $props();
 
 	let showSearchPopup = $state(false);
 	let replayActive = $state(false);
@@ -115,6 +117,19 @@
 		);
 
 		return `https://github.com/jacbz/lisztnup/issues/new?title=${title}&body=${body}&labels=data`;
+	});
+
+	const bleedClasses = $derived.by(() => {
+		switch (bleed) {
+			case 'sm':
+				return '-mx-4 -mb-4';
+			case 'md':
+				return '-mx-5 -mb-5';
+			case 'lg':
+				return '-mx-8 -mb-8';
+			default:
+				return '';
+		}
 	});
 </script>
 
@@ -228,38 +243,38 @@
 			</div>
 		{/if}
 
-		<!-- Report a problem and Search on... links -->
-		<div class="flex items-center justify-center gap-2 text-[0.8rem] text-slate-400">
-			<a
-				href={reportProblemUrl}
-				target="_blank"
-				rel="noopener noreferrer external"
-				data-sveltekit-reload
-				data-sveltekit-noscroll
-				data-sveltekit-preload-data="false"
-				class="flex items-center gap-1.5 no-underline transition-all duration-300 hover:text-slate-300"
-			>
-				<Flag class="h-2.5 w-2.5" />
-				<span>{$_('common.reportProblem')}</span>
-			</a>
-			<span class="text-slate-500">·</span>
-			<button
-				type="button"
-				onclick={() => (showSearchPopup = true)}
-				class="flex items-center gap-1.5 no-underline transition-all duration-300 hover:text-slate-300"
-			>
-				<Search class="h-2.5 w-2.5" />
-				<span>{$_('common.searchOn')}</span>
-			</button>
-			<span class="text-slate-500">·</span>
-			<button
-				type="button"
-				onclick={handlePlayAgain}
-				class="flex items-center gap-1.5 no-underline transition-all duration-300 hover:text-slate-300"
-			>
-				<Play class="h-2.5 w-2.5" />
-				<span>{$_('common.playAgain')}</span>
-			</button>
+		<!-- Action tabs -->
+		<div class="{bleedClasses} overflow-hidden rounded-b-2xl border-t border-slate-600/30">
+			<div class="grid grid-cols-3 divide-x divide-slate-700/20 text-center">
+				<button
+					type="button"
+					onclick={handlePlayAgain}
+					class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-400 transition-all duration-200 hover:bg-white/5 hover:text-slate-200"
+				>
+					<Play class="h-3.5 w-3.5" />
+					<span class="text-[0.65rem] leading-tight font-medium">{$_('common.playAgain')}</span>
+				</button>
+				<button
+					type="button"
+					onclick={() => (showSearchPopup = true)}
+					class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-400 transition-all duration-200 hover:bg-white/5 hover:text-slate-200"
+				>
+					<Search class="h-3.5 w-3.5" />
+					<span class="text-[0.65rem] leading-tight font-medium">{$_('common.searchOn')}</span>
+				</button>
+				<a
+					href={reportProblemUrl}
+					target="_blank"
+					rel="noopener noreferrer external"
+					data-sveltekit-reload
+					data-sveltekit-noscroll
+					data-sveltekit-preload-data="false"
+					class="flex flex-col items-center justify-center gap-1 py-2.5 text-slate-400 no-underline transition-all duration-200 hover:bg-white/5 hover:text-slate-200"
+				>
+					<Flag class="h-3.5 w-3.5" />
+					<span class="text-[0.65rem] leading-tight font-medium">{$_('common.reportProblem')}</span>
+				</a>
+			</div>
 		</div>
 	</div>
 {/if}

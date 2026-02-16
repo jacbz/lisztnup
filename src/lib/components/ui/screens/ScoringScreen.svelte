@@ -91,7 +91,7 @@
 	<div class="mb-4 grid grid-cols-1 gap-8 md:grid-cols-[1fr_1fr]">
 		<!-- Left: Track Info -->
 		<div class="flex flex-col gap-3 rounded-2xl border border-slate-700 bg-slate-900 p-5">
-			<TrackInfo {track} />
+			<TrackInfo {track} bleed="md" />
 		</div>
 
 		<!-- Right: Scoring Section -->

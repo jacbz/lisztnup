@@ -333,6 +333,7 @@
 				<TrackInfo
 					track={game.revealTrack}
 					showUpsideDown={players.some((player) => player.edge === 'top')}
+					bleed="sm"
 				/>
 			</div>
 		</div>
