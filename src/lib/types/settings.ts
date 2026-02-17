@@ -28,7 +28,7 @@ export interface TracklistConfig {
 	limitWorksFromComposer?: number; // Limit works from each composer (0-1, as percentage, e.g., 0.3 = 30%)
 	maxTracksFromSingleWork?: number; // Maximum tracks to sample from a single work
 	nameFilter?: string[]; // Filter works by name (supports regex when pattern starts and ends with /)
-	enablePopularityWeighting?: boolean; // Whether to use work/part scores for weighted sampling (default: true)
+	enablePopularityWeighting?: boolean; // Whether to use work/part scores for weighted sampling (default: false)
 	enableFilters?: boolean; // Whether filters are applied (default: true). When false, only manual curation is used.
 	includeWorks?: string[]; // Short UUIDs (first 8 chars) of works to always include
 	excludeWorks?: string[]; // Short UUIDs (first 8 chars) of works to always exclude
@@ -113,7 +113,7 @@ export const MAX_WORK_YEAR = 2020;
  */
 export const DEFAULT_TRACKLIST_CONFIG: TracklistConfig = {
 	workScoreRange: [0, MAX_WORK_SCORE_ROUNDED],
-	enablePopularityWeighting: true
+	enablePopularityWeighting: false
 };
 
 // Detect WebKit-based browsers (Safari, iOS Safari, etc.)

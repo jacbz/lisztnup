@@ -61,7 +61,7 @@
 	let limitWorksFromComposerEnabled = $state(false);
 	let maxTracksFromSingleWorkEnabled = $state(false);
 	let nameFilterEnabled = $state(false);
-	let enablePopularityWeighting = $state(true);
+	let enablePopularityWeighting = $state(false);
 
 	// Filters toggle (enableFilters)
 	let enableFilters = $state(true);
@@ -133,7 +133,7 @@
 				maxTracksFromSingleWorkEnabled = config.maxTracksFromSingleWork !== undefined;
 				yearFilterEnabled = config.yearFilter !== undefined;
 				nameFilterEnabled = config.nameFilter !== undefined && config.nameFilter.length > 0;
-				enablePopularityWeighting = config.enablePopularityWeighting ?? true;
+				enablePopularityWeighting = config.enablePopularityWeighting ?? false;
 				enableFilters = config.enableFilters !== false;
 
 				// Manual curation: resolve short UUIDs to full GIDs
@@ -173,7 +173,7 @@
 				limitWorksFromComposerEnabled = false;
 				maxTracksFromSingleWorkEnabled = false;
 				nameFilterEnabled = false;
-				enablePopularityWeighting = true;
+				enablePopularityWeighting = false;
 				enableFilters = true;
 				composerFilterMode = 'include';
 				selectedComposers = [];
@@ -345,7 +345,7 @@
 			newConfig.nameFilter = nameFilters;
 		}
 
-		// Always include enablePopularityWeighting (defaults to true)
+		// Always include enablePopularityWeighting (defaults to false)
 		newConfig.enablePopularityWeighting = enablePopularityWeighting;
 
 		// Filters toggle (only stored when disabled)

@@ -97,9 +97,7 @@ general_rules:
 composer_specific_rules:
   'Adams, John':
     orchestral:
-      - Harmonielehre|Short Ride in a Fast Machine
-    concerto:
-      - Grand Pianola Music
+      - Harmonielehre|Short Ride in a Fast Machine|Grand Pianola Music
     chamber:
       - Shaker Loops
     piano:

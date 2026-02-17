@@ -287,7 +287,7 @@ export class TracklistGenerator {
 		}
 
 		// Step 1: Select work with optional score weighting
-		const usePopularityWeighting = this.tracklist.config.enablePopularityWeighting ?? true;
+		const usePopularityWeighting = this.tracklist.config.enablePopularityWeighting ?? false;
 		const work = weightedRandom(this.filteredWorks, (i) => (usePopularityWeighting ? i.score : 1));
 
 		// Step 2: Check if work has parts

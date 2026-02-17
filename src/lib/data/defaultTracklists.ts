@@ -64,7 +64,6 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			},
 			limitWorksFromComposer: 0.075,
 			maxTracksFromSingleWork: 1,
-			enablePopularityWeighting: false,
 			includeWorks: WORKS_TO_INCLUDE,
 			excludeWorks: [
 				'937fff7e', // Bach - Nun komm, der Heiden Heiland
@@ -111,7 +110,6 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			},
 			limitWorksFromComposer: 0.075,
 			maxTracksFromSingleWork: 1,
-			enablePopularityWeighting: false,
 			includeWorks: WORKS_TO_INCLUDE
 		}
 	},
@@ -125,7 +123,6 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			workScoreRange: [3.9, MAX_WORK_SCORE_ROUNDED],
 			limitWorksFromComposer: 0.1,
 			maxTracksFromSingleWork: 1,
-			enablePopularityWeighting: false,
 			includeWorks: WORKS_TO_INCLUDE
 		}
 	},
@@ -149,7 +146,6 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			},
 			limitWorksFromComposer: 0.15,
 			maxTracksFromSingleWork: 2,
-			enablePopularityWeighting: false,
 			includeWorks: WORKS_TO_INCLUDE
 		}
 	},
@@ -172,7 +168,6 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				solo: 0
 			},
 			maxTracksFromSingleWork: 3,
-			enablePopularityWeighting: false,
 			includeWorks: WORKS_TO_INCLUDE
 		}
 	},
@@ -183,7 +178,6 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: starIcon,
 		category: 'difficulty',
 		config: {
-			enablePopularityWeighting: false,
 			includeWorks: WORKS_TO_INCLUDE
 		}
 	},
@@ -204,8 +198,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				opera: 0,
 				ballet: 0,
 				solo: 0
-			},
-			enablePopularityWeighting: false
+			}
 		}
 	},
 	{
@@ -219,8 +212,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			composerFilter: {
 				mode: 'notabilityRange',
 				range: [201, COMPOSER_COUNT]
-			},
-			enablePopularityWeighting: false
+			}
 		}
 	},
 	// Category-based tracklists
@@ -241,8 +233,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				ballet: -MAX_WORK_SCORE_ROUNDED,
 				solo: -MAX_WORK_SCORE_ROUNDED
 			},
-			yearFilter: [1800, MAX_WORK_YEAR],
-			workScoreRange: [3, MAX_WORK_SCORE_ROUNDED],
+			yearFilter: [1780, MAX_WORK_YEAR],
+			limitWorksFromComposer: 0.1,
 			maxTracksFromSingleWork: 5
 		}
 	},
@@ -263,8 +255,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				ballet: -MAX_WORK_SCORE_ROUNDED,
 				solo: -MAX_WORK_SCORE_ROUNDED
 			},
-			workScoreRange: [3.4, MAX_WORK_SCORE_ROUNDED],
-			maxTracksFromSingleWork: 5
+			maxTracksFromSingleWork: 5,
+			limitWorksFromComposer: 0.1
 		}
 	},
 	{
@@ -284,8 +276,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				ballet: -MAX_WORK_SCORE_ROUNDED,
 				solo: -MAX_WORK_SCORE_ROUNDED
 			},
-			workScoreRange: [3.4, MAX_WORK_SCORE_ROUNDED],
-			maxTracksFromSingleWork: 5
+			maxTracksFromSingleWork: 5,
+			limitWorksFromComposer: 0.1
 		}
 	},
 	{
@@ -305,8 +297,8 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				ballet: -MAX_WORK_SCORE_ROUNDED,
 				solo: -MAX_WORK_SCORE_ROUNDED
 			},
-			workScoreRange: [3.4, MAX_WORK_SCORE_ROUNDED],
-			maxTracksFromSingleWork: 5
+			maxTracksFromSingleWork: 5,
+			limitWorksFromComposer: 0.1
 		}
 	},
 	{
@@ -326,7 +318,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				ballet: 0,
 				solo: -MAX_WORK_SCORE_ROUNDED
 			},
-			workScoreRange: [2.3, MAX_WORK_SCORE_ROUNDED]
+			limitWorksFromComposer: 0.1
 		}
 	},
 	{
@@ -346,7 +338,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				ballet: -MAX_WORK_SCORE_ROUNDED,
 				solo: -MAX_WORK_SCORE_ROUNDED
 			},
-			workScoreRange: [3.8, MAX_WORK_SCORE_ROUNDED]
+			limitWorksFromComposer: 0.1
 		}
 	},
 	{
