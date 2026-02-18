@@ -20,6 +20,8 @@ export interface GameScreenContext {
 	handlePlaybackEnd: () => void;
 	sampleRawTrack: () => Track | null;
 	prepareNewGame: () => void;
+	/** Manually trigger a preload retry after a network failure. */
+	retryPreload: () => void;
 	audioProgress: Readable<number>;
 	onHome: () => void;
 	readonly activeCategories: readonly GuessCategory[];
@@ -27,6 +29,10 @@ export interface GameScreenContext {
 	readonly hasValidYears: boolean;
 	readonly tracksExhausted: boolean;
 	readonly enableScoring: boolean;
+	/** True while sampleAndPreloadTrack is in-flight. */
+	readonly isPreloading: boolean;
+	/** True when the last preload attempt failed due to a network error (retries exhausted). */
+	readonly hasPreloadError: boolean;
 }
 
 /**

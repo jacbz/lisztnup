@@ -4,7 +4,7 @@
 	import { fly } from 'svelte/transition';
 	import type { Player, PlayerEdge, Track } from '$lib/types';
 	import { ALL_EDGES } from '$lib/types';
-	import { currentRound, tracklist, resetGame, gameSession } from '$lib/stores';
+	import { currentRound, tracklist, resetGame, gameSession, lastReconnectedAt } from '$lib/stores';
 	import { _ } from 'svelte-i18n';
 
 	// Components
@@ -104,6 +104,18 @@
 		if (ctx.tracksExhausted && !game.isDealing) {
 			ctx.stopTrack();
 			game.showEndGame = true;
+		}
+	});
+
+	// ─── Auto-retry on reconnection ────────────────────────
+	// When a preload error occurred (e.g. offline during turn transition),
+	// automatically retry once the browser comes back online.
+	$effect(() => {
+		// Reading $lastReconnectedAt makes this effect re-run on every
+		// offline→online transition.
+		const _reconnected = $lastReconnectedAt;
+		if (_reconnected > 0 && ctx.hasPreloadError && !ctx.isPreloading) {
+			ctx.retryPreload();
 		}
 	});
 

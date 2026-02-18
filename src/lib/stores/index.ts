@@ -5,3 +5,4 @@ export { gameState, tracklist, currentRound, resetRound, nextRound, resetGame } 
 export { toast } from './toast';
 export type { Toast, ToastType } from './toast';
 export { gameSession, currentLeader, sortedPlayers } from './gameSession';
+export { isOnline, isOffline, lastReconnectedAt, waitForOnline } from './networkStatus';

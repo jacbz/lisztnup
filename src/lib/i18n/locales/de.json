@@ -479,6 +479,18 @@
 		"closeGuess": "Einloggen",
 		"reveal": "Aufdecken"
 	},
+	"network": {
+		"offline": "Keine Internetverbindung",
+		"reconnecting": "Verbindung wird wiederhergestellt…",
+		"reconnected": "Wieder online!",
+		"loading": "Track wird geladen…",
+		"loadFailed": "Track konnte nicht geladen werden. Neuer Versuch…",
+		"loadFailedFinal": "Track konnte nicht geladen werden. Bitte Verbindung prüfen.",
+		"playFailed": "Track konnte nicht abgespielt werden.",
+		"replayFailed": "Track konnte nicht erneut abgespielt werden.",
+		"preloadTimeout": "Track-Laden dauert zu lange. Neuer Versuch…",
+		"retrying": "Verbindungsproblem — Versuch ({attempt}/{max})…"
+	},
 	"footer": {
 		"madeBy": "Ein Spiel von Jacob Zhang",
 		"poweredBy": "Powered by {first} und {second}"

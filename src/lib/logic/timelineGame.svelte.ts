@@ -348,7 +348,15 @@ export class TimelineGame {
 
 		this.turnPhase = 'playing';
 		this.hasPlaybackStarted = true;
-		await this.#ctx.playTrack();
+
+		try {
+			await this.#ctx.playTrack();
+		} catch (error) {
+			console.error('[TimelineGame] Error playing track:', error);
+			// Reset turn phase so the player can retry
+			this.turnPhase = 'idle';
+			this.hasPlaybackStarted = false;
+		}
 	}
 
 	handleStop() {
@@ -653,7 +661,9 @@ export class TimelineGame {
 		const reachedWin = this.revealReachedWin;
 
 		if (purpose === 'turn') {
-			this.#ctx.nextRound();
+			this.#ctx.nextRound().catch((error) => {
+				console.error('[TimelineGame] Error advancing to next round:', error);
+			});
 		}
 
 		setTimeout(() => {

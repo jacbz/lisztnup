@@ -1,9 +1,27 @@
 import { writable, type Readable, get } from 'svelte/store';
+import { waitForOnline } from '$lib/stores/networkStatus';
 
 // Target LUFS for normalization.
 const TARGET_LUFS = -23;
 const FADE_DURATION = 0.3;
 const MAX_GAIN = 2.5; // Maximum allowed gain to prevent excessive amplification
+const FETCH_TIMEOUT_MS = 15_000; // 15s timeout for audio data fetch
+const AUDIO_PRELOAD_TIMEOUT_MS = 15_000; // 15s timeout for HTML audio preload
+
+/**
+ * Error subclass for network-related failures.
+ * Allows callers to distinguish transient connectivity issues from
+ * permanent errors (e.g. track not found on Deezer).
+ */
+export class NetworkError extends Error {
+	constructor(
+		message: string,
+		public readonly cause?: unknown
+	) {
+		super(message);
+		this.name = 'NetworkError';
+	}
+}
 
 export interface DeezerTrackData {
 	id: number;
@@ -21,6 +39,7 @@ declare const window: WindowWithDeezerCallbacks;
 
 export const playerState = writable({
 	isPlaying: false,
+	isLoading: false,
 	progress: 0,
 	track: null as DeezerTrackData | null,
 	analyserNode: null as AnalyserNode | null
@@ -155,14 +174,79 @@ class DeezerPlayer {
 	 */
 	async load(deezerId: number): Promise<void> {
 		this.destroy();
-		const loadPromise = this._load(deezerId);
-		this.loadPromise = loadPromise;
-		await loadPromise;
-		this.loadPromise = null;
+		playerState.update((s) => ({ ...s, isLoading: true }));
+		try {
+			const loadPromise = this._load(deezerId);
+			this.loadPromise = loadPromise;
+			await loadPromise;
+			this.loadPromise = null;
+		} finally {
+			playerState.update((s) => ({ ...s, isLoading: false }));
+		}
+	}
+
+	/**
+	 * Fetches a URL with a timeout. Throws NetworkError on timeout or fetch failure.
+	 */
+	private async fetchWithTimeout(url: string, timeoutMs: number): Promise<Response> {
+		const controller = new AbortController();
+		const timer = setTimeout(() => controller.abort(), timeoutMs);
+		try {
+			const response = await fetch(url, { signal: controller.signal });
+			if (!response.ok) {
+				throw new NetworkError(`HTTP ${response.status} fetching ${url}`);
+			}
+			return response;
+		} catch (error) {
+			if (error instanceof NetworkError) throw error;
+			const msg =
+				error instanceof DOMException && error.name === 'AbortError'
+					? `Fetch timed out after ${timeoutMs}ms: ${url}`
+					: `Network error fetching ${url}`;
+			throw new NetworkError(msg, error);
+		} finally {
+			clearTimeout(timer);
+		}
+	}
+
+	/**
+	 * Preloads an HTMLAudioElement with a timeout.
+	 * Throws NetworkError if the audio cannot be loaded in time.
+	 */
+	private preloadAudioElement(audio: HTMLAudioElement, timeoutMs: number): Promise<void> {
+		return new Promise<void>((resolve, reject) => {
+			const timer = setTimeout(() => {
+				reject(new NetworkError(`Audio preload timed out after ${timeoutMs}ms`));
+			}, timeoutMs);
+
+			audio.addEventListener(
+				'canplaythrough',
+				() => {
+					clearTimeout(timer);
+					resolve();
+				},
+				{ once: true }
+			);
+			audio.addEventListener(
+				'error',
+				(e) => {
+					clearTimeout(timer);
+					reject(new NetworkError('Audio element failed to load', e));
+				},
+				{ once: true }
+			);
+			audio.load();
+		});
 	}
 
 	private async _load(deezerId: number): Promise<void> {
 		try {
+			// If offline, wait until back online before attempting load
+			if (typeof navigator !== 'undefined' && !navigator.onLine) {
+				console.log('[DeezerPlayer] Offline — waiting for connectivity…');
+				await waitForOnline();
+			}
+
 			this.currentTrackData = await this.fetchTrackData(deezerId);
 			if (!this.currentTrackData || !this.currentTrackData.preview) {
 				throw new Error('Track data or preview URL not available.');
@@ -172,7 +256,10 @@ class DeezerPlayer {
 
 			// Fetch and analyze audio for LUFS (when normalization is enabled or volume control is supported)
 			if (this.enableAudioNormalization || this.supportsVolumeControl()) {
-				const response = await fetch(this.currentTrackData.preview);
+				const response = await this.fetchWithTimeout(
+					this.currentTrackData.preview,
+					FETCH_TIMEOUT_MS
+				);
 				const arrayBuffer = await response.arrayBuffer();
 
 				// Decode audio data for analysis (and for Web Audio API playback if enabled)
@@ -207,17 +294,8 @@ class DeezerPlayer {
 					this.audioElement = new Audio(this.currentTrackData.preview);
 					this.audioElement.crossOrigin = 'anonymous';
 
-					// Preload the audio
-					await new Promise<void>((resolve, reject) => {
-						if (!this.audioElement) {
-							reject(new Error('Audio element not initialized'));
-							return;
-						}
-
-						this.audioElement.addEventListener('canplaythrough', () => resolve(), { once: true });
-						this.audioElement.addEventListener('error', (e) => reject(e), { once: true });
-						this.audioElement.load();
-					});
+					// Preload the audio with timeout
+					await this.preloadAudioElement(this.audioElement, AUDIO_PRELOAD_TIMEOUT_MS);
 
 					// Translate gain to volume: gain of 2 = volume 1.0, gain of 1 = volume 0.5
 					// Volume = min(1, gain / 2)
@@ -232,17 +310,8 @@ class DeezerPlayer {
 				this.audioElement = new Audio(this.currentTrackData.preview);
 				this.audioElement.crossOrigin = 'anonymous';
 
-				// Preload the audio
-				await new Promise<void>((resolve, reject) => {
-					if (!this.audioElement) {
-						reject(new Error('Audio element not initialized'));
-						return;
-					}
-
-					this.audioElement.addEventListener('canplaythrough', () => resolve(), { once: true });
-					this.audioElement.addEventListener('error', (e) => reject(e), { once: true });
-					this.audioElement.load();
-				});
+				// Preload the audio with timeout
+				await this.preloadAudioElement(this.audioElement, AUDIO_PRELOAD_TIMEOUT_MS);
 			}
 		} catch (error) {
 			console.error('DeezerPlayer: Error loading track', error);
@@ -388,6 +457,7 @@ class DeezerPlayer {
 		this.currentTrackData = null;
 		playerState.set({
 			isPlaying: false,
+			isLoading: false,
 			progress: 0,
 			track: null,
 			analyserNode: null

@@ -479,6 +479,18 @@
 		"closeGuess": "Valider",
 		"reveal": "Révéler"
 	},
+	"network": {
+		"offline": "Vous êtes hors ligne",
+		"reconnecting": "Reconnexion…",
+		"reconnected": "De retour en ligne !",
+		"loading": "Chargement de la piste…",
+		"loadFailed": "Échec du chargement de la piste. Nouvelle tentative…",
+		"loadFailedFinal": "Impossible de charger la piste. Veuillez vérifier votre connexion.",
+		"playFailed": "Échec de la lecture de la piste.",
+		"replayFailed": "Échec de la relecture de la piste.",
+		"preloadTimeout": "Le chargement de la piste prend trop de temps. Nouvelle tentative…",
+		"retrying": "Problème de connexion — nouvelle tentative ({attempt}/{max})…"
+	},
 	"footer": {
 		"madeBy": "Un jeu créé par Jacob Zhang",
 		"poweredBy": "Propulsé par {first} et {second}"

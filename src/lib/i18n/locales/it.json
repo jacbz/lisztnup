@@ -479,6 +479,18 @@
 		"closeGuess": "Conferma",
 		"reveal": "Svela"
 	},
+	"network": {
+		"offline": "Sei offline",
+		"reconnecting": "Riconnessione…",
+		"reconnected": "Di nuovo online!",
+		"loading": "Caricamento traccia…",
+		"loadFailed": "Caricamento della traccia fallito. Nuovo tentativo…",
+		"loadFailedFinal": "Impossibile caricare la traccia. Controlla la tua connessione.",
+		"playFailed": "Riproduzione della traccia fallita.",
+		"replayFailed": "Impossibile riprodurre nuovamente la traccia.",
+		"preloadTimeout": "Il caricamento della traccia sta impiegando troppo tempo. Nuovo tentativo…",
+		"retrying": "Problema di connessione — nuovo tentativo ({attempt}/{max})…"
+	},
 	"footer": {
 		"madeBy": "Un gioco di Jacob Zhang",
 		"poweredBy": "Realizzato con {first} e {second}"

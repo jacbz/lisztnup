@@ -8,13 +8,16 @@
 		tracklist,
 		nextRound as nextRoundFn,
 		resetGame,
-		toast
+		toast,
+		isOffline,
+		waitForOnline
 	} from '$lib/stores';
-	import { deezerPlayer, progress } from '$lib/services';
+	import { deezerPlayer, progress, NetworkError } from '$lib/services';
 	import ScoringScreen from '../ui/screens/ScoringScreen.svelte';
 	import StatsScreen from '../ui/screens/StatsScreen.svelte';
 	import EndGameScreen from '../ui/screens/EndGameScreen.svelte';
 	import InGameSettings from '../ui/gameplay/InGameSettings.svelte';
+	import NetworkStatusBanner from '../ui/gameplay/NetworkStatusBanner.svelte';
 	import Dialog from '../ui/primitives/Dialog.svelte';
 	import TrackInfo from '../ui/gameplay/TrackInfo.svelte';
 	import Popup from '../ui/primitives/Popup.svelte';
@@ -81,6 +84,11 @@
 	let showInGameSettings = $state(false);
 	let showQuitDialog = $state(false);
 	let tracksExhausted = $state(false);
+	let isPreloading = $state(false);
+	let hasPreloadError = $state(false);
+
+	// Maximum number of retry attempts for a single preload when network errors occur
+	const MAX_PRELOAD_RETRIES = 3;
 
 	// Concurrency guard: prevents overlapping sampleAndPreloadTrack calls
 	// from corrupting the tracklist or fighting over the DeezerPlayer singleton.
@@ -131,6 +139,8 @@
 		// populate the tracklist and load audio.
 		if (preloadInProgress) return;
 		preloadInProgress = true;
+		isPreloading = true;
+		hasPreloadError = false;
 
 		try {
 			while (true) {
@@ -145,7 +155,7 @@
 					return;
 				}
 
-				// Try each available deezer ID for this track
+				// Try each available deezer ID for this track, with network-aware retry
 				const availableDeezerIds = [...track.part.deezer]; // Create a copy to modify
 				let trackLoaded = false;
 
@@ -154,29 +164,62 @@
 					const randomIndex = Math.floor(Math.random() * availableDeezerIds.length);
 					const deezerId = availableDeezerIds[randomIndex];
 
-					try {
-						await deezerPlayer.load(deezerId);
-						trackLoaded = true;
-						break; // Successfully loaded, exit the inner loop
-					} catch (error) {
-						// Remove this deezer ID from the available list
-						availableDeezerIds.splice(randomIndex, 1);
+					// Retry loop for transient network errors on a single Deezer ID
+					for (let attempt = 1; attempt <= MAX_PRELOAD_RETRIES; attempt++) {
+						try {
+							await deezerPlayer.load(deezerId);
+							trackLoaded = true;
+							break; // Successfully loaded
+						} catch (error) {
+							const isNetworkErr = error instanceof NetworkError;
+
+							if (isNetworkErr && attempt < MAX_PRELOAD_RETRIES) {
+								// Transient network failure — wait and retry
+								console.warn(
+									`[GameScreen] Network error loading Deezer ID ${deezerId}, ` +
+										`attempt ${attempt}/${MAX_PRELOAD_RETRIES}. Retrying…`
+								);
+
+								// If offline, wait for connectivity before retrying
+								if (!navigator.onLine) {
+									await waitForOnline();
+								} else {
+									// Exponential backoff: 1s, 2s, 4s
+									await new Promise((r) => setTimeout(r, 1000 * Math.pow(2, attempt - 1)));
+								}
+								continue;
+							}
+
+							if (isNetworkErr && attempt === MAX_PRELOAD_RETRIES) {
+								// All retries exhausted for this Deezer ID due to network
+								console.error(`[GameScreen] Network retries exhausted for Deezer ID ${deezerId}`);
+								hasPreloadError = true;
+								toast.show('warning', $_('network.loadFailedFinal'), 5000);
+							}
+
+							// Non-network error or retries exhausted — remove this ID and try next
+							break;
+						}
 					}
+
+					if (trackLoaded) break;
+
+					// Remove this deezer ID from the available list
+					availableDeezerIds.splice(randomIndex, 1);
 				}
 
 				if (trackLoaded) {
-					// Successfully loaded a deezer ID for this track
+					hasPreloadError = false;
 					return;
 				} else {
 					// All deezer IDs failed — remove this specific track from the tracklist.
-					// We filter by identity (not index) so concurrent mutations can't
-					// accidentally remove the wrong track.
 					console.warn('All deezer IDs failed for track, sampling another:', track.work.name);
 					tracklist.update((t) => t.filter((item) => item !== track));
 				}
 			}
 		} finally {
 			preloadInProgress = false;
+			isPreloading = false;
 		}
 	}
 
@@ -192,7 +235,7 @@
 			}));
 		} catch (error) {
 			console.error('Error playing track:', error);
-			toast.show('error', 'Failed to play track.');
+			toast.error($_('network.playFailed'));
 		}
 	}
 
@@ -217,7 +260,7 @@
 			}));
 		} catch (error) {
 			console.error('Error replaying track:', error);
-			toast.show('error', 'Failed to replay track.');
+			toast.error($_('network.replayFailed'));
 		}
 	}
 
@@ -298,6 +341,7 @@
 	function handlePlayAgain(): void {
 		showEndGameScreen = false;
 		tracksExhausted = false;
+		hasPreloadError = false;
 		preloadInProgress = false;
 		resetGame();
 		gameSession.startSession(mode, players, isSoloMode);
@@ -317,6 +361,17 @@
 	 */
 	function prepareNewGame(): void {
 		tracksExhausted = false;
+		hasPreloadError = false;
+		preloadInProgress = false;
+		sampleAndPreloadTrack();
+	}
+
+	/**
+	 * Manually retry preloading after a network failure.
+	 * Resets error state and re-runs sampleAndPreloadTrack.
+	 */
+	function retryPreload(): void {
+		hasPreloadError = false;
 		preloadInProgress = false;
 		sampleAndPreloadTrack();
 	}
@@ -340,6 +395,7 @@
 		handlePlaybackEnd,
 		sampleRawTrack,
 		prepareNewGame,
+		retryPreload,
 		audioProgress: progress,
 		onHome: handleHome,
 		get activeCategories() {
@@ -354,11 +410,20 @@
 		get tracksExhausted() {
 			return tracksExhausted;
 		},
-		enableScoring
+		enableScoring,
+		get isPreloading() {
+			return isPreloading;
+		},
+		get hasPreloadError() {
+			return hasPreloadError;
+		}
 	} satisfies GameScreenContext);
 </script>
 
 <div class="fixed inset-0 overflow-hidden text-white">
+	<!-- Network Status Banner -->
+	<NetworkStatusBanner isLoading={isPreloading} hasError={hasPreloadError} />
+
 	<!-- Header -->
 	<div class="absolute top-0 right-0 left-0 z-20 flex items-center justify-between p-6">
 		<div class="pr-4">

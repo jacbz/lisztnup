@@ -479,6 +479,18 @@
 		"closeGuess": "Fijar",
 		"reveal": "Revelar"
 	},
+	"network": {
+		"offline": "Estás sin conexión",
+		"reconnecting": "Reconectando…",
+		"reconnected": "¡De vuelta en línea!",
+		"loading": "Cargando pista…",
+		"loadFailed": "Error al cargar la pista. Reintentando…",
+		"loadFailedFinal": "No se pudo cargar la pista. Comprueba tu conexión.",
+		"playFailed": "Error al reproducir la pista.",
+		"replayFailed": "Error al volver a reproducir la pista.",
+		"preloadTimeout": "La carga de la pista está tardando demasiado. Reintentando…",
+		"retrying": "Problema de conexión — reintentando ({attempt}/{max})…"
+	},
 	"footer": {
 		"madeBy": "Un juego de Jacob Zhang",
 		"poweredBy": "Con tecnología de {first} y {second}"

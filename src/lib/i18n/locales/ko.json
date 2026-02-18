@@ -479,6 +479,18 @@
 		"closeGuess": "입력 완료",
 		"reveal": "공개"
 	},
+	"network": {
+		"offline": "오프라인 상태입니다",
+		"reconnecting": "재연결 중…",
+		"reconnected": "다시 온라인입니다!",
+		"loading": "트랙 로딩 중…",
+		"loadFailed": "트랙 로드에 실패했습니다. 재시도 중…",
+		"loadFailedFinal": "트랙을 로드할 수 없습니다. 연결 상태를 확인해 주세요.",
+		"playFailed": "트랙 재생에 실패했습니다.",
+		"replayFailed": "트랙 다시 재생에 실패했습니다.",
+		"preloadTimeout": "트랙 로딩이 너무 오래 걸리고 있습니다. 재시도 중…",
+		"retrying": "연결 문제 — 재시도 중 ({attempt}/{max})…"
+	},
 	"footer": {
 		"madeBy": "A Game by Jacob Zhang",
 		"poweredBy": "Powered by {first} and {second}"

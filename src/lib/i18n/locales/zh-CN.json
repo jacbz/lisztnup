@@ -478,6 +478,18 @@
 		"closeGuess": "锁定答案",
 		"reveal": "显示答案"
 	},
+	"network": {
+		"offline": "您已离线",
+		"reconnecting": "正在重新连接…",
+		"reconnected": "已恢复在线！",
+		"loading": "正在加载曲目…",
+		"loadFailed": "加载曲目失败。正在重试…",
+		"loadFailedFinal": "无法加载曲目。请检查您的网络连接。",
+		"playFailed": "播放曲目失败。",
+		"replayFailed": "重新播放曲目失败。",
+		"preloadTimeout": "曲目加载时间过长。正在重试…",
+		"retrying": "连接问题 — 正在重试（{attempt}/{max}）…"
+	},
 	"footer": {
 		"madeBy": "A Game by Jacob Zhang",
 		"poweredBy": "数据与音频由 {first} 和 {second} 提供"

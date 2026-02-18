@@ -208,7 +208,7 @@
 				trackDuration = deezerPlayer.getDuration();
 			} catch (error) {
 				console.error('Error playing track:', error);
-				toast.show('error', 'Failed to play track.');
+				toast.error($_('network.playFailed'));
 			}
 		}
 	}
@@ -298,7 +298,12 @@
 		showReveal = false;
 		trackDuration = 30; // Reset to default, will be updated when track plays
 
-		await ctx.nextRound();
+		try {
+			await ctx.nextRound();
+		} catch (error) {
+			console.error('Error advancing round:', error);
+			toast.error($_('network.loadFailedFinal'));
+		}
 	}
 
 	// Buzzer-specific state

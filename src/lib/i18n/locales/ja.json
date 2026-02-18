@@ -479,6 +479,18 @@
 		"closeGuess": "決定",
 		"reveal": "答えを見る"
 	},
+	"network": {
+		"offline": "オフラインです",
+		"reconnecting": "再接続中…",
+		"reconnected": "オンラインに復帰しました！",
+		"loading": "トラックを読み込み中…",
+		"loadFailed": "トラックの読み込みに失敗しました。再試行中…",
+		"loadFailedFinal": "トラックを読み込めませんでした。接続を確認してください。",
+		"playFailed": "トラックの再生に失敗しました。",
+		"replayFailed": "トラックの再再生に失敗しました。",
+		"preloadTimeout": "トラックの読み込みに時間がかかっています。再試行中…",
+		"retrying": "接続の問題 — 再試行中（{attempt}/{max}）…"
+	},
 	"footer": {
 		"madeBy": "A Game by Jacob Zhang",
 		"poweredBy": "Powered by {first} & {second}"

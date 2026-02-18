@@ -33,6 +33,7 @@ export { default as ShareLinkPopup } from './setup/ShareLinkPopup.svelte';
 export { default as InGameSettings } from './gameplay/InGameSettings.svelte';
 export { default as PlayerControl } from './gameplay/PlayerControl.svelte';
 export { default as TrackInfo } from './gameplay/TrackInfo.svelte';
+export { default as NetworkStatusBanner } from './gameplay/NetworkStatusBanner.svelte';
 
 // Screens - Full screen components
 export { default as HomeScreen } from './screens/HomeScreen.svelte';

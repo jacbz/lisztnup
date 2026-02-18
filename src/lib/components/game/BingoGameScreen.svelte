@@ -54,7 +54,7 @@
 			await ctx.playTrack();
 		} catch (error) {
 			console.error('Error playing track:', error);
-			toast.show('error', 'Failed to play track.');
+			toast.error($_('network.playFailed'));
 		}
 	}
 
@@ -71,7 +71,7 @@
 			await ctx.replayTrack();
 		} catch (error) {
 			console.error('Error replaying track:', error);
-			toast.show('error', 'Failed to replay track.');
+			toast.error($_('network.replayFailed'));
 		}
 	}
 
@@ -79,7 +79,12 @@
 		// Reset hasSpunOnce for new round
 		hasSpunOnce = false;
 
-		await ctx.nextRound();
+		try {
+			await ctx.nextRound();
+		} catch (error) {
+			console.error('Error advancing round:', error);
+			toast.error($_('network.loadFailedFinal'));
+		}
 	}
 </script>
 

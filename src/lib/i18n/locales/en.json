@@ -479,6 +479,18 @@
 		"closeGuess": "Lock In",
 		"reveal": "Reveal"
 	},
+	"network": {
+		"offline": "You are offline",
+		"reconnecting": "Reconnecting…",
+		"reconnected": "Back online!",
+		"loading": "Loading track…",
+		"loadFailed": "Failed to load track. Retrying…",
+		"loadFailedFinal": "Could not load track. Please check your connection.",
+		"playFailed": "Failed to play track.",
+		"replayFailed": "Failed to replay track.",
+		"preloadTimeout": "Track loading is taking too long. Retrying…",
+		"retrying": "Connection issue — retrying ({attempt}/{max})…"
+	},
 	"footer": {
 		"madeBy": "A Game by Jacob Zhang",
 		"poweredBy": "Powered by {first} and {second}"

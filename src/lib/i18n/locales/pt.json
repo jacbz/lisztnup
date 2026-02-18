@@ -479,6 +479,18 @@
 		"closeGuess": "Salvar Palpite",
 		"reveal": "Revelar"
 	},
+	"network": {
+		"offline": "Você está offline",
+		"reconnecting": "Reconectando…",
+		"reconnected": "De volta online!",
+		"loading": "Carregando faixa…",
+		"loadFailed": "Falha ao carregar a faixa. Tentando novamente…",
+		"loadFailedFinal": "Não foi possível carregar a faixa. Verifique sua conexão.",
+		"playFailed": "Falha ao reproduzir a faixa.",
+		"replayFailed": "Falha ao reproduzir a faixa novamente.",
+		"preloadTimeout": "O carregamento da faixa está demorando muito. Tentando novamente…",
+		"retrying": "Problema de conexão — tentando novamente ({attempt}/{max})…"
+	},
 	"footer": {
 		"madeBy": "Um jogo por Jacob Zhang",
 		"poweredBy": "Desenvolvido com {first} e {second}"
