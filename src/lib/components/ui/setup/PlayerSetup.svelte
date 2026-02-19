@@ -236,7 +236,7 @@
 					onfocus={() => handleFocus(index)}
 					onblur={() => handleBlur(index)}
 					placeholder={$_('players.nameLabel')}
-					class="flex-1 rounded-lg border px-3 py-1.5 text-sm font-semibold text-white transition-colors duration-200 outline-none focus:border-cyan-400 {nameErrors.has(
+					class="w-full flex-1 rounded-lg border px-3 py-1.5 text-sm font-semibold text-white transition-colors duration-200 outline-none focus:border-cyan-400 {nameErrors.has(
 						index
 					)
 						? 'border-red-500!'
