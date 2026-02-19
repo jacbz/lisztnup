@@ -25,8 +25,8 @@
 		"startGame": "Empezar partida",
 		"settings": "Ajustes",
 		"tracklist": "Lista de pistas",
-		"scoringOn": "Puntuación Sí",
-		"scoringOff": "Puntuación No"
+		"scoringOn": "Con Puntuación",
+		"scoringOff": "Sin Puntuación"
 	},
 	"settings": {
 		"numberOfTracks": "Número de pistas",
@@ -50,71 +50,71 @@
 	"tracklists": {
 		"beginner": {
 			"name": "Principiante",
-			"description": "Una suave obertura con obras maestras atemporales."
+			"description": "Los clásicos que hasta tu vecino reconoce. ¡Empezar aquí es todo un acierto!"
 		},
 		"intermediate": {
 			"name": "Intermedio",
-			"description": "Amplía el repertorio con piezas de concierto muy queridas."
+			"description": "Un paso más allá del canon básico. Piezas que todo melómano debería tener en el oído."
 		},
 		"skilled": {
 			"name": "Hábil",
-			"description": "Una mezcla equilibrada de favoritos del público y obras refinadas."
+			"description": "Ni demasiado fácil ni imposible. El equilibrio perfecto entre aplausos del público y hallazgos de melómano."
 		},
 		"advanced": {
 			"name": "Avanzado",
-			"description": "Entra en la sala de conciertos con composiciones más profundas y complejas."
+			"description": "Aquí se pone serio. Composiciones profundas para oídos bien entrenados."
 		},
 		"expert": {
 			"name": "Experto",
-			"description": "Pon a prueba tu oído con obras sofisticadas y menos conocidas."
+			"description": "Solo para orejas afinadas. Rarezas sofisticadas que pondrán tu repertorio a prueba."
 		},
 		"virtuoso": {
 			"name": "Virtuoso",
-			"description": "La colección completa: desde lo icónico hasta lo oscuro."
+			"description": "Todo el catálogo, del éxito universal al misterio que solo conoce tu profesor de conservatorio."
 		},
 		"cadenza": {
 			"name": "Cadenza",
-			"description": "Para el verdadero conocedor que busca el desafío definitivo: sin éxitos populares, solo lo raro y refinado."
+			"description": "Olvida los grandes éxitos. Esto es para puristas: solo lo raro, lo exquisito y lo inclasificable."
 		},
 		"obscure": {
 			"name": "Compositores Desconocidos",
-			"description": "Descubre joyas ocultas de compositores fuera del repertorio habitual."
+			"description": "Compositores fuera del radar. Descubre nombres que ni la Wikipedia tiene bien documentados."
 		},
 		"piano": {
 			"name": "Piano",
-			"description": "Obras centradas en el repertorio pianístico."
+			"description": "88 teclas, mil emociones. De nocturnos susurrados a tempestades de virtuosismo."
 		},
 		"concerto": {
 			"name": "Concierto",
-			"description": "Conciertos que destacan a los solistas con orquesta."
+			"description": "Solista contra orquesta: el duelo más elegante de la historia de la música."
 		},
 		"orchestral": {
 			"name": "Orquestal",
-			"description": "Obras sinfónicas para orquesta."
+			"description": "Toda la potencia de la orquesta sinfónica. Prepárate para sentir el suelo temblar."
 		},
 		"chamber": {
 			"name": "Cámara",
-			"description": "Obras íntimas para conjuntos de cámara."
+			"description": "Música de salón para oídos privilegiados. Pocas voces, máxima intensidad."
 		},
 		"ballet": {
 			"name": "Ballet",
-			"description": "Música compuesta para ballets."
+			"description": "Tutús, zapatillas de punta y partituras inmortales. La música que hace bailar al mundo."
 		},
 		"opera": {
 			"name": "Ópera",
-			"description": "Obras operísticas famosas y arias conocidas."
+			"description": "Drama, pasión y agudos que rompen cristales. Bienvenido al gran teatro."
 		},
 		"pianoconcerto": {
 			"name": "Conciertos para Piano",
-			"description": "Presentando la grandeza de los conciertos para piano."
+			"description": "El piano se adueña del escenario con la orquesta como cómplice. Pura grandeza."
 		},
 		"violinconcerto": {
 			"name": "Conciertos para Violín",
-			"description": "Exhibiendo la brillantez de los conciertos para violín."
+			"description": "Cuerdas que cantan, arpegios que deslumbran. El violín en todo su esplendor."
 		},
 		"celloconcerto": {
 			"name": "Conciertos para Violonchelo",
-			"description": "Explorando la profundidad de los conciertos para violonchelo."
+			"description": "La voz más profunda de las cuerdas, capaz de conmover al más impasible."
 		},
 		"liszt": {
 			"name": "Lisztomania",
@@ -142,23 +142,23 @@
 		},
 		"renaissance": {
 			"name": "Renacimiento",
-			"description": "Música de la era del renacer (1400-1600)."
+			"description": "El despertar de la polifonía. Cortes, catedrales y el alba de un mundo nuevo (1400-1600)."
 		},
 		"baroque": {
 			"name": "Barroco",
-			"description": "Obras ornamentadas y expresivas (1600-1750)."
+			"description": "Trinos, ornamentos y drama a raudales. Todo es exceso, y nos encanta (1600-1750)."
 		},
 		"classical": {
 			"name": "Clásico",
-			"description": "Elegancia y claridad del periodo Clásico (1750-1820)."
+			"description": "Pelucas empolvadas y formas perfectas. La era de la elegancia y el buen gusto (1750-1820)."
 		},
 		"romantic": {
 			"name": "Romántico",
-			"description": "Obras apasionadas y expresivas (1820-1910)."
+			"description": "Corazones desbordados y melodías inmortales. Pura emoción a flor de piel (1820-1910)."
 		},
 		"20thcentury": {
 			"name": "Siglo XX",
-			"description": "Obras modernas y experimentales."
+			"description": "Reglas rotas, sonidos nuevos. La revolución musical del siglo pasado."
 		}
 	},
 	"tracklistSelector": {
@@ -224,7 +224,7 @@
 		"maxTracksFromSingleWorkDesc": "Limita cuántos movimientos/partes se incluyen de obras a gran escala",
 		"nameFilter": "Nombre de la obra",
 		"nameFilterDesc": "Incluir solo obras cuyos nombres contengan ciertas palabras. Usa barras para patrones avanzados (ej. /sinfonía|concierto/ coincide con cualquiera de las dos).",
-		"nameFilterPlaceholder": "Nombre u obra o /regex/",
+		"nameFilterPlaceholder": "Nombre de obra o /regex/",
 		"nameFilterAdd": "Añadir",
 		"enablePopularityWeighting": "Ponderación por popularidad",
 		"enablePopularityWeightingDesc": "Ponderar la selección de pistas por puntuación de popularidad. Si se activa, las obras más famosas tendrán más probabilidad de salir. Desactívalo para una selección totalmente aleatoria.",
@@ -450,7 +450,7 @@
 		"title": "¡Fin del juego!",
 		"winner": "¡{name} gana!",
 		"tie": "¡Empate!",
-		"noMoreTracks": "No quedan más tracks.",
+		"noMoreTracks": "No quedan más pistas.",
 		"finalScores": "Puntuaciones finales",
 		"viewStats": "Ver estadísticas",
 		"playAgain": "Jugar de nuevo",
@@ -476,7 +476,7 @@
 		"shareTitle": "Compartir cartón",
 		"shareText": "¡Únete a mi partida de Bingo!",
 		"guessPlaceholder": "Escribe tu respuesta...",
-		"closeGuess": "Fijar",
+		"lockIn": "Fijar",
 		"reveal": "Revelar"
 	},
 	"network": {

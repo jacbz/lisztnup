@@ -476,7 +476,7 @@
 		"shareTitle": "Share Bingo Grid",
 		"shareText": "Join my Bingo game!",
 		"guessPlaceholder": "Enter your guess...",
-		"closeGuess": "Lock In",
+		"lockIn": "Lock In",
 		"reveal": "Reveal"
 	},
 	"network": {

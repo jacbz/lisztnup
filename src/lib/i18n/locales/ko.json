@@ -25,8 +25,8 @@
 		"startGame": "게임 시작",
 		"settings": "설정",
 		"tracklist": "트랙 리스트",
-		"scoringOn": "점수 켜기",
-		"scoringOff": "점수 끄기"
+		"scoringOn": "점수 켜짐",
+		"scoringOff": "점수 꺼짐"
 	},
 	"settings": {
 		"numberOfTracks": "트랙 수",
@@ -50,71 +50,71 @@
 	"tracklists": {
 		"beginner": {
 			"name": "입문자",
-			"description": "시대를 초월하여 사랑받는 불멸의 명곡들로 시작해보세요."
+			"description": "클래식 초보도 흥얼거릴 수 있는 불후의 명곡들 — 귀가 먼저 반가워할 거예요!"
 		},
 		"intermediate": {
 			"name": "중급자",
-			"description": "친숙한 콘서트 레퍼토리로 음악적 지평을 넓혀보세요."
+			"description": "콘서트홀에서 들으면 '아, 이 곡!' 하게 되는 인기 레퍼토리."
 		},
 		"skilled": {
 			"name": "숙련자",
-			"description": "대중적인 곡과 숨겨진 명곡의 조화로운 균형을 즐겨보세요."
+			"description": "인기곡과 숨은 명곡이 절묘하게 만나는 황금 비율의 컬렉션."
 		},
 		"advanced": {
 			"name": "상급자",
-			"description": "더 깊고 복잡한 선율이 흐르는 정통 콘서트홀로 초대합니다."
+			"description": "여기서부턴 진짜입니다 — 레퍼토리의 심연에 오신 것을 환영합니다."
 		},
 		"expert": {
 			"name": "전문가",
-			"description": "당신의 귀를 시험할 정교하고 낯선 작품들에 도전하세요."
+			"description": "매 음표에 함정이 도사립니다. 자신 있는 귀만 입장 가능!"
 		},
 		"virtuoso": {
 			"name": "비르투오소",
-			"description": "아이콘부터 희귀작까지, 클래식의 모든 것을 망라한 완벽한 컬렉션."
+			"description": "전설의 히트곡부터 악보에 먼지 쌓인 희귀작까지 — 클래식의 완전판."
 		},
 		"cadenza": {
 			"name": "카덴차",
-			"description": "진정한 감상자를 위한 극한의 도전. 유명한 히트곡은 없습니다. 오직 희귀하고 정제된 곡들뿐."
+			"description": "히트곡은 없습니다. 익숙한 선율도 없습니다. 오직 진정한 마니아만이 살아남는 곳."
 		},
 		"obscure": {
 			"name": "숨겨진 작곡가들",
-			"description": "정규 레퍼토리 밖, 낯선 거장들의 보석 같은 곡들을 발견하세요."
+			"description": "음악 사전도 깜빡한 작곡가들의 숨겨진 보석 — 아는 사람만 아는 세계."
 		},
 		"piano": {
 			"name": "피아노",
-			"description": "건반 위에서 펼쳐지는 피아노 레퍼토리."
+			"description": "88개의 건반, 무한한 가능성 — 속삭이는 야상곡부터 폭풍의 소나타까지."
 		},
 		"concerto": {
 			"name": "협주곡",
-			"description": "오케스트라와 독주자의 화려한 조화."
+			"description": "독주자 vs 오케스트라 — 모두가 승리하는 음악의 화려한 결투."
 		},
 		"orchestral": {
 			"name": "관현악",
-			"description": "웅장한 교향곡과 관현악 작품들."
+			"description": "풀 오케스트라가 포효하면, 멀쩡한 귀는 없습니다."
 		},
 		"chamber": {
 			"name": "실내악",
-			"description": "소규모 앙상블이 빚어내는 친밀한 대화."
+			"description": "작은 무대, 큰 울림 — 음표 하나하나가 두 배로 빛나는 친밀한 공간."
 		},
 		"ballet": {
 			"name": "발레",
-			"description": "무용을 위해 작곡된 아름다운 선율."
+			"description": "발끝으로 춤추는 선율 — 귀로 감상하는 무대 위의 우아함."
 		},
 		"opera": {
 			"name": "오페라",
-			"description": "극적인 서사가 있는 오페라와 유명 아리아."
+			"description": "막이 오릅니다! 위대한 목소리, 뜨거운 감정, 영원을 위한 드라마."
 		},
 		"pianoconcerto": {
 			"name": "피아노 협주곡",
-			"description": "피아노와 오케스트라의 장대함을 담았습니다."
+			"description": "88개의 건반이 오케스트라와 맞붙는 순간 — 전율은 이미 예약됐습니다."
 		},
 		"violinconcerto": {
 			"name": "바이올린 협주곡",
-			"description": "바이올린의 기교와 서정성이 빛나는 협주곡."
+			"description": "바이올린이 노래하면 오케스트라가 화답합니다 — 기교와 서정의 극치."
 		},
 		"celloconcerto": {
 			"name": "첼로 협주곡",
-			"description": "첼로의 깊은 울림을 느낄 수 있는 작품들."
+			"description": "깊고, 따뜻하고, 영혼이 담긴 울림 — 첼로의 가장 찬란한 순간들."
 		},
 		"liszt": {
 			"name": "Lisztomania",
@@ -142,23 +142,23 @@
 		},
 		"renaissance": {
 			"name": "르네상스",
-			"description": "인간 중심의 문화가 꽃피던 시대의 음악 (1400-1600)."
+			"description": "다성음악과 양피지 — 서양 음악이 첫 숨을 쉰 요람 (1400–1600)."
 		},
 		"baroque": {
 			"name": "바로크",
-			"description": "화려하고 장식적인 표현의 시대 (1600-1750)."
+			"description": "가발, 장식음, 그리고 화려한 푸가 — 호화찬란한 바로크의 음향 세계 (1600–1750)."
 		},
 		"classical": {
 			"name": "고전파",
-			"description": "형식미와 균형을 중시한 고전주의 시대 (1750-1820)."
+			"description": "우아함, 명쾌함, 그리고 빈 커피하우스의 향기 (1750–1820)."
 		},
 		"romantic": {
 			"name": "낭만파",
-			"description": "감정과 개인의 표현을 중시한 낭만주의 (1820-1910)."
+			"description": "격정, 동경, 오케스트라의 거대한 파도 — 감정이 폭발하는 시대 (1820–1910)."
 		},
 		"20thcentury": {
 			"name": "20세기",
-			"description": "현대적이고 실험적인 시도들이 넘치는 시대."
+			"description": "규칙? 무슨 규칙? 여기서 클래식은 새로 태어납니다."
 		}
 	},
 	"tracklistSelector": {
@@ -404,7 +404,7 @@
 	"players": {
 		"setup": "플레이어 설정",
 		"playSolo": "혼자 하기",
-		"addPlayer": "플레이어 추가",
+		"addPlayer": "플레이어",
 		"playerName": "플레이어 {number}",
 		"nameLabel": "이름",
 		"colorLabel": "색상",
@@ -476,7 +476,7 @@
 		"shareTitle": "빙고판 공유",
 		"shareText": "제 빙고 게임에 참여하세요!",
 		"guessPlaceholder": "정답을 입력하세요...",
-		"closeGuess": "입력 완료",
+		"lockIn": "입력 완료",
 		"reveal": "공개"
 	},
 	"network": {
@@ -492,8 +492,8 @@
 		"retrying": "연결 문제 — 재시도 중 ({attempt}/{max})…"
 	},
 	"footer": {
-		"madeBy": "A Game by Jacob Zhang",
-		"poweredBy": "Powered by {first} and {second}"
+		"madeBy": "Jacob Zhang의 게임",
+		"poweredBy": "Powered by {first}와 {second}"
 	},
 	"eras": {
 		"ancient": "고대",

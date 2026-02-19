@@ -50,27 +50,27 @@
 	"tracklists": {
 		"beginner": {
 			"name": "入門",
-			"description": "耳熟能詳的永恆經典，古典樂新手的最佳起點。"
+			"description": "一聽就會哼的不朽旋律——古典樂的正確打開方式。"
 		},
 		"intermediate": {
 			"name": "進階",
-			"description": "音樂會常客的最愛，拓寬你的聽覺視野。"
+			"description": "不止入門——這裡的每一首，都能讓整座音樂廳為之屏息。"
 		},
 		"skilled": {
 			"name": "熟練",
-			"description": "大眾最愛與精緻小品的完美平衡。"
+			"description": "大眾寵兒與深藏不露的佳作——給懂行人的黃金配比。"
 		},
 		"advanced": {
 			"name": "專家",
-			"description": "步入音樂廳的深處，探索更複雜深邃的篇章。"
+			"description": "從這裡開始，真正的考驗才揭幕——歡迎來到曲庫深水區。"
 		},
 		"expert": {
 			"name": "大師",
-			"description": "挑戰你的耳朵，包含私房曲目與高深作品。"
+			"description": "每個音符背後都藏著驚喜——只為不滿足於「還好」的耳朵準備。"
 		},
 		"virtuoso": {
 			"name": "炫技",
-			"description": "全收錄挑戰——從家喻戶曉到鮮為人知，無所不包。"
+			"description": "從人盡皆知到聞所未聞，全面收錄，一網打盡。"
 		},
 		"cadenza": {
 			"name": "華彩",
@@ -78,43 +78,43 @@
 		},
 		"obscure": {
 			"name": "私房作曲家",
-			"description": "發掘那些被標準曲目庫遺忘的寶藏作曲家。"
+			"description": "連音樂辭典都未必記得住的名字——在這裡，冷門即主角。"
 		},
 		"piano": {
 			"name": "鋼琴",
-			"description": "黑白鍵上的無限世界。"
+			"description": "88個黑白鍵，從溫柔夜曲到雷鳴奏鳴曲——無限可能。"
 		},
 		"concerto": {
 			"name": "協奏曲",
-			"description": "獨奏家與樂團的精彩對話。"
+			"description": "獨奏家 vs. 樂團——一場沒有輸家的音樂對決。"
 		},
 		"orchestral": {
 			"name": "管弦樂",
-			"description": "氣勢恢宏的交響篇章。"
+			"description": "當整支樂團全力釋放，沒有一隻耳朵能保持淡定。"
 		},
 		"chamber": {
 			"name": "室內樂",
-			"description": "精緻親密的重奏作品。"
+			"description": "小編制，大能量——在這裡，每個音符都舉足輕重。"
 		},
 		"ballet": {
 			"name": "芭蕾",
-			"description": "為舞蹈而生的優美旋律。"
+			"description": "耳朵的足尖舞——那些讓人不由自主翩然起舞的不朽旋律。"
 		},
 		"opera": {
 			"name": "歌劇",
-			"description": "戲劇與歌唱的藝術巔峰。"
+			"description": "大幕拉開！絕世歌喉、磅礡情感與永恆的戲劇傳奇。"
 		},
 		"pianoconcerto": {
 			"name": "鋼琴協奏曲",
-			"description": "領略鋼琴作為樂器之王的王者風範。"
+			"description": "當88個琴鍵叫板整支樂團——一場史詩級碰撞。"
 		},
 		"violinconcerto": {
 			"name": "小提琴協奏曲",
-			"description": "弓弦之間流淌的輝煌樂章。"
+			"description": "小提琴歌唱，樂團應答——炫技之美，盡在弓弦之間。"
 		},
 		"celloconcerto": {
 			"name": "大提琴協奏曲",
-			"description": "深沉而深情的低音吟唱。"
+			"description": "深沉、溫暖、飽含靈魂——大提琴的深情告白。"
 		},
 		"liszt": {
 			"name": "Lisztomania",
@@ -142,23 +142,23 @@
 		},
 		"renaissance": {
 			"name": "文藝復興",
-			"description": "來自再生時代的古老回響 (1400-1600)。"
+			"description": "複調與羊皮紙的年代——西方音樂的搖籃 (1400–1600)。"
 		},
 		"baroque": {
 			"name": "巴洛克",
-			"description": "華麗、繁複且富有表現力的樂章 (1600-1750)。"
+			"description": "假髮、華服與輝煌賦格——巴洛克的聲色盛宴 (1600–1750)。"
 		},
 		"classical": {
 			"name": "古典主義",
-			"description": "崇尚優雅、平衡與清晰的黃金時代 (1750-1820)。"
+			"description": "優雅、清澈，配一杯維也納咖啡剛剛好 (1750–1820)。"
 		},
 		"romantic": {
 			"name": "浪漫主義",
-			"description": "情感爆發與個人表達的極致 (1820-1910)。"
+			"description": "大情懷、大手筆——用整個樂團傾訴愛與渴望 (1820–1910)。"
 		},
 		"20thcentury": {
 			"name": "20世紀",
-			"description": "打破常規的現代與實驗性作品。"
+			"description": "規則？什麼規則？在這裡，古典樂被重新定義。"
 		}
 	},
 	"tracklistSelector": {
@@ -476,23 +476,23 @@
 		"shareTitle": "分享賓果盤",
 		"shareText": "加入我的賓果遊戲！",
 		"guessPlaceholder": "輸入你的猜測...",
-		"closeGuess": "鎖定答案",
+		"lockIn": "鎖定答案",
 		"reveal": "顯示答案"
 	},
 	"network": {
-		"offline": "您已離線",
+		"offline": "你已離線",
 		"reconnecting": "正在重新連線…",
 		"reconnected": "已恢復上線！",
 		"loading": "正在載入曲目…",
 		"loadFailed": "載入曲目失敗。正在重試…",
-		"loadFailedFinal": "無法載入曲目。請檢查您的網路連線。",
+		"loadFailedFinal": "無法載入曲目。請檢查你的網路連線。",
 		"playFailed": "播放曲目失敗。",
 		"replayFailed": "重新播放曲目失敗。",
 		"preloadTimeout": "曲目載入時間過長。正在重試…",
 		"retrying": "連線問題 — 正在重試（{attempt}/{max}）…"
 	},
 	"footer": {
-		"madeBy": "A Game by Jacob Zhang",
+		"madeBy": "Jacob Zhang 出品",
 		"poweredBy": "數據與音訊由 {first} 和 {second} 提供"
 	},
 	"eras": {

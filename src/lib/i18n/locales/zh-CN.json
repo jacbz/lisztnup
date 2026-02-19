@@ -50,27 +50,27 @@
 	"tracklists": {
 		"beginner": {
 			"name": "入门",
-			"description": "耳熟能详的永恒经典，古典乐新手的最佳起点。"
+			"description": "一听就会哼的不朽旋律——古典乐的正确打开方式。"
 		},
 		"intermediate": {
 			"name": "进阶",
-			"description": "音乐会常客的最爱，拓宽你的听觉视野。"
+			"description": "不止入门——这里的每一首，都能让整个音乐厅为之屏息。"
 		},
 		"skilled": {
 			"name": "熟练",
-			"description": "大众最爱与精致小品的完美平衡。"
+			"description": "大众宠儿与深藏不露的佳作——给懂行人的黄金配比。"
 		},
 		"advanced": {
 			"name": "专家",
-			"description": "步入音乐厅的深处，探索更复杂深邃的篇章。"
+			"description": "从这里开始，真正的考验才揭幕——欢迎来到曲库深水区。"
 		},
 		"expert": {
 			"name": "大师",
-			"description": "挑战你的耳朵，包含冷门佳作与高深曲目。"
+			"description": "每个音符背后都藏着惊喜——只为不满足于「还行」的耳朵准备。"
 		},
 		"virtuoso": {
 			"name": "炫技",
-			"description": "全收录挑战——从家喻户晓到鲜为人知，无所不包。"
+			"description": "从人尽皆知到闻所未闻，全面收录，一网打尽。"
 		},
 		"cadenza": {
 			"name": "华彩",
@@ -78,43 +78,43 @@
 		},
 		"obscure": {
 			"name": "冷门作曲家",
-			"description": "发掘那些被标准曲目库遗忘的宝藏作曲家。"
+			"description": "连音乐辞典都未必记得住的名字——在这里，冷门即主角。"
 		},
 		"piano": {
 			"name": "钢琴",
-			"description": "黑白键上的无限世界。"
+			"description": "88个黑白键，从温柔夜曲到雷鸣奏鸣曲——无限可能。"
 		},
 		"concerto": {
 			"name": "协奏曲",
-			"description": "独奏家与乐队的精彩对话。"
+			"description": "独奏家 vs. 乐团——一场没有输家的音乐对决。"
 		},
 		"orchestral": {
 			"name": "管弦乐",
-			"description": "气势恢宏的交响篇章。"
+			"description": "当整支乐团全力释放，没有一只耳朵能保持淡定。"
 		},
 		"chamber": {
 			"name": "室内乐",
-			"description": "精致亲密的重奏作品。"
+			"description": "小编制，大能量——在这里，每个音符都举足轻重。"
 		},
 		"ballet": {
 			"name": "芭蕾",
-			"description": "为舞蹈而生的优美旋律。"
+			"description": "耳朵的足尖舞——那些让人不由自主翩翩起舞的不朽旋律。"
 		},
 		"opera": {
 			"name": "歌剧",
-			"description": "戏剧与歌唱的艺术巅峰。"
+			"description": "大幕拉开！绝世歌喉、磅礴情感与永恒的戏剧传奇。"
 		},
 		"pianoconcerto": {
 			"name": "钢琴协奏曲",
-			"description": "领略钢琴作为乐器之王的王者风范。"
+			"description": "当88个琴键叫板整支乐团——一场史诗级碰撞。"
 		},
 		"violinconcerto": {
 			"name": "小提琴协奏曲",
-			"description": "弓弦之间流淌的辉煌乐章。"
+			"description": "小提琴歌唱，乐团应答——炫技之美，尽在弓弦之间。"
 		},
 		"celloconcerto": {
 			"name": "大提琴协奏曲",
-			"description": "深沉而深情的低音吟唱。"
+			"description": "深沉、温暖、饱含灵魂——大提琴的深情告白。"
 		},
 		"liszt": {
 			"name": "Lisztomania",
@@ -142,23 +142,23 @@
 		},
 		"renaissance": {
 			"name": "文艺复兴",
-			"description": "来自再生时代的古老回响 (1400-1600)。"
+			"description": "复调与羊皮纸的年代——西方音乐的摇篮 (1400–1600)。"
 		},
 		"baroque": {
 			"name": "巴洛克",
-			"description": "华丽、繁复且富有表现力的乐章 (1600-1750)。"
+			"description": "假发、华服与辉煌赋格——巴洛克的声色盛宴 (1600–1750)。"
 		},
 		"classical": {
 			"name": "古典主义",
-			"description": "崇尚优雅、平衡与清晰的黄金时代 (1750-1820)。"
+			"description": "优雅、清澈，配一杯维也纳咖啡刚刚好 (1750–1820)。"
 		},
 		"romantic": {
 			"name": "浪漫主义",
-			"description": "情感爆发与个人表达的极致 (1820-1910)。"
+			"description": "大情怀、大手笔——用整个乐团倾诉爱与渴望 (1820–1910)。"
 		},
 		"20thcentury": {
 			"name": "20世纪",
-			"description": "打破常规的现代与实验性作品。"
+			"description": "规则？什么规则？在这里，古典乐被重新定义。"
 		}
 	},
 	"tracklistSelector": {
@@ -218,7 +218,7 @@
 		"yearEnd": "结束年份",
 		"workScoreRange": "热度范围",
 		"workScoreRangeDesc": "按热度评分筛选作品（分数越高代表该作品的录音版本越多）。",
-		"limitWorksFromComposer": "限制单位作曲家作品数",
+		"limitWorksFromComposer": "每位作曲家作品上限",
 		"limitWorksFromComposerDesc": "限制每位作曲家的作品占本歌单总作品数的百分比。",
 		"maxTracksFromSingleWork": "单部作品最大音轨数",
 		"maxTracksFromSingleWorkDesc": "限制从大型作品（如交响曲、歌剧）中选取的乐章/部分数量。",
@@ -457,6 +457,7 @@
 		"home": "返回主页"
 	},
 	"timeline": {
+		"dealing": "正在发牌给 {name}",
 		"drag": "拖动",
 		"confirm": "确认",
 		"help": {
@@ -475,23 +476,23 @@
 		"shareTitle": "分享宾果盘",
 		"shareText": "加入我的宾果游戏！",
 		"guessPlaceholder": "输入你的猜测...",
-		"closeGuess": "锁定答案",
+		"lockIn": "锁定答案",
 		"reveal": "显示答案"
 	},
 	"network": {
-		"offline": "您已离线",
+		"offline": "你已离线",
 		"reconnecting": "正在重新连接…",
 		"reconnected": "已恢复在线！",
 		"loading": "正在加载曲目…",
 		"loadFailed": "加载曲目失败。正在重试…",
-		"loadFailedFinal": "无法加载曲目。请检查您的网络连接。",
+		"loadFailedFinal": "无法加载曲目。请检查你的网络连接。",
 		"playFailed": "播放曲目失败。",
 		"replayFailed": "重新播放曲目失败。",
 		"preloadTimeout": "曲目加载时间过长。正在重试…",
 		"retrying": "连接问题 — 正在重试（{attempt}/{max}）…"
 	},
 	"footer": {
-		"madeBy": "A Game by Jacob Zhang",
+		"madeBy": "Jacob Zhang 出品",
 		"poweredBy": "数据与音频由 {first} 和 {second} 提供"
 	},
 	"eras": {

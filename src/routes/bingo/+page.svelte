@@ -455,7 +455,7 @@
 								disabled={!guessText.trim()}
 								class="shrink-0 bg-purple-500 px-4 py-2 font-semibold text-white transition-all hover:bg-purple-600 disabled:cursor-not-allowed disabled:opacity-50"
 							>
-								{$_('bingo.closeGuess')}
+								{$_('bingo.lockIn')}
 							</button>
 						</div>
 					{:else}

@@ -25,8 +25,8 @@
 		"startGame": "Inizia Gioco",
 		"settings": "Impostazioni",
 		"tracklist": "Tracklist",
-		"scoringOn": "Punteggio Attivo",
-		"scoringOff": "Punteggio Disattivo"
+		"scoringOn": "Con Punteggio",
+		"scoringOff": "Senza Punteggio"
 	},
 	"settings": {
 		"numberOfTracks": "Numero di tracce",
@@ -50,71 +50,71 @@
 	"tracklists": {
 		"beginner": {
 			"name": "Principiante",
-			"description": "Una dolce ouverture di capolavori senza tempo."
+			"description": "I grandi classici che anche il vicino riconosce. Un inizio col botto!"
 		},
 		"intermediate": {
 			"name": "Intermedio",
-			"description": "Amplia il repertorio con i favoriti delle sale da concerto."
+			"description": "Un passo oltre il canone. Brani imperdibili che ogni melomane dovrebbe conoscere."
 		},
 		"skilled": {
-			"name": "Esperto",
-			"description": "Un equilibrio perfetto tra hit del pubblico e perle raffinate."
+			"name": "Abile",
+			"description": "Né troppo facile, né troppo arduo. L'equilibrio perfetto tra successi e perle nascoste."
 		},
 		"advanced": {
 			"name": "Avanzato",
-			"description": "Entra nella sala da concerto con composizioni profonde e complesse."
+			"description": "Qui si fa sul serio. Composizioni profonde per orecchie ben allenate."
 		},
 		"expert": {
 			"name": "Maestro",
-			"description": "Metti alla prova il tuo orecchio con opere sofisticate e meno note."
+			"description": "Solo per intenditori. Rarità sofisticate che metteranno alla prova il tuo repertorio."
 		},
 		"virtuoso": {
 			"name": "Virtuoso",
-			"description": "La collezione completa: dalle icone alle rarità assolute."
+			"description": "L'intera collezione: dal capolavoro che tutti canticchiano all'enigma da conservatorio."
 		},
 		"cadenza": {
 			"name": "Cadenza",
-			"description": "Per i veri intenditori: niente hit, solo il raro e il raffinato."
+			"description": "Niente hit, niente pietà. Solo il raro, il raffinato e l'inclassificabile."
 		},
 		"obscure": {
 			"name": "Compositori Oscuri",
-			"description": "Scopri gemme nascoste fuori dal repertorio standard."
+			"description": "Compositori fuori dal radar. Preparati a scoprire nomi che neanche Wikipedia ricorda."
 		},
 		"piano": {
 			"name": "Pianoforte",
-			"description": "Opere incentrate sul repertorio pianistico."
+			"description": "88 tasti, mille emozioni. Dai notturni sussurrati alle tempeste di virtuosismo."
 		},
 		"concerto": {
 			"name": "Concerto",
-			"description": "Concerti che mettono in luce i solisti con l'orchestra."
+			"description": "Solista contro orchestra: il duello più elegante della storia della musica."
 		},
 		"orchestral": {
 			"name": "Sinfonica",
-			"description": "Opere sinfoniche per grande orchestra."
+			"description": "Tutta la potenza dell'orchestra sinfonica. Preparati a sentire il pavimento tremare."
 		},
 		"chamber": {
 			"name": "Da camera",
-			"description": "Musica intima per piccoli ensemble."
+			"description": "Poche voci, massima intensità. Musica da salotto per orecchie raffinate."
 		},
 		"ballet": {
 			"name": "Balletto",
-			"description": "Musica composta per il balletto."
+			"description": "Tutù, punte e partiture immortali. La musica che fa danzare il mondo."
 		},
 		"opera": {
 			"name": "Lirica",
-			"description": "Celebri opere liriche e arie famose."
+			"description": "Dramma, passione e acuti che infrangono cristalli. Benvenuti nel gran teatro."
 		},
 		"pianoconcerto": {
 			"name": "Concerti per Piano",
-			"description": "La grandiosità dei concerti per pianoforte."
+			"description": "Il pianoforte si prende il palco con l'orchestra complice. Pura grandiosità."
 		},
 		"violinconcerto": {
 			"name": "Concerti per Violino",
-			"description": "Il virtuosismo dei concerti per violino."
+			"description": "Corde che cantano, arpeggi che incantano. Il violino in tutto il suo splendore."
 		},
 		"celloconcerto": {
 			"name": "Concerti per Violoncello",
-			"description": "La profondità espressiva del violoncello."
+			"description": "La voce più profonda dell'orchestra, capace di commuovere anche i più stoici."
 		},
 		"liszt": {
 			"name": "Lisztomania",
@@ -142,23 +142,23 @@
 		},
 		"renaissance": {
 			"name": "Rinascimento",
-			"description": "Musica dall'età della rinascita (1400-1600)."
+			"description": "L'alba della polifonia. Corti, cattedrali e un mondo nuovo da scoprire (1400-1600)."
 		},
 		"baroque": {
 			"name": "Barocco",
-			"description": "Opere ornate ed espressive (1600-1750)."
+			"description": "Trilli, ornamenti e dramma a profusione. Tutto è eccesso, e ci piace così (1600-1750)."
 		},
 		"classical": {
 			"name": "Periodo Classico",
-			"description": "L'eleganza e la chiarezza del Classicismo (1750-1820)."
+			"description": "Parrucche incipriate e forme perfette. L'era dell'eleganza e del buon gusto (1750-1820)."
 		},
 		"romantic": {
 			"name": "Romanticismo",
-			"description": "Opere appassionate ed emotive (1820-1910)."
+			"description": "Cuori in tempesta e melodie immortali. L'era dei sentimenti a fior di pelle (1820-1910)."
 		},
 		"20thcentury": {
 			"name": "Novecento",
-			"description": "Opere moderne e sperimentali."
+			"description": "Regole infrante, suoni nuovi. La rivoluzione musicale del secolo scorso."
 		}
 	},
 	"tracklistSelector": {
@@ -476,7 +476,7 @@
 		"shareTitle": "Condividi Cartella",
 		"shareText": "Unisciti alla mia partita di Bingo!",
 		"guessPlaceholder": "La tua risposta...",
-		"closeGuess": "Conferma",
+		"lockIn": "Conferma",
 		"reveal": "Svela"
 	},
 	"network": {

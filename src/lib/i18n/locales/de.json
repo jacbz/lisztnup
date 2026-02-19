@@ -42,7 +42,7 @@
 			"piano": "Klavier",
 			"concerto": "Konzert",
 			"opera": "Oper",
-			"ballet": "Ballet",
+			"ballet": "Ballett",
 			"solo": "Solo",
 			"other": "Sonstiges"
 		}
@@ -50,27 +50,27 @@
 	"tracklists": {
 		"beginner": {
 			"name": "Einsteiger",
-			"description": "Eine sanfte Ouvertüre mit zeitlosen Meisterwerken."
+			"description": "Der perfekte Einstieg – hier summt jeder mit."
 		},
 		"intermediate": {
 			"name": "Fortgeschritten",
-			"description": "Erweitere dein Repertoire mit beliebten Konzertstücken."
+			"description": "Beliebte Konzertstücke, die im Saal für Gänsehaut sorgen."
 		},
 		"skilled": {
 			"name": "Kenner",
-			"description": "Eine ausgewogene Mischung aus Publikumslieblingen und feinen Werken."
+			"description": "Publikumslieblinge treffen auf versteckte Perlen – die goldene Mitte für Musikkenner."
 		},
 		"advanced": {
 			"name": "Experte",
-			"description": "Willkommen im Konzertsaal der tiefgründigen und komplexen Kompositionen."
+			"description": "Ab hier trennt sich die Spreu vom Weizen – willkommen in den Tiefen des Repertoires."
 		},
 		"expert": {
 			"name": "Maestro",
-			"description": "Teste dein Gehör mit anspruchsvollen und weniger bekannten Werken."
+			"description": "Nur für Ohren, die mehr wollen – hinter jeder Note lauert eine Überraschung."
 		},
 		"virtuoso": {
 			"name": "Virtuose",
-			"description": "Die komplette Sammlung – von ikonisch bis obskur."
+			"description": "Von den größten Hits bis zum letzten versteckten Juwel – alles drin, alles dran."
 		},
 		"cadenza": {
 			"name": "Kadenz",
@@ -78,43 +78,43 @@
 		},
 		"obscure": {
 			"name": "Obskure Komponisten",
-			"description": "Entdecke verborgene Schätze von Komponisten abseits des Standardrepertoires."
+			"description": "Abseits der ausgetretenen Pfade – hier spielen die Komponisten, die das Lexikon vergessen hat."
 		},
 		"piano": {
 			"name": "Klavier",
-			"description": "Werke mit Fokus auf das Klavier-Repertoire."
+			"description": "88 Tasten, unendliche Möglichkeiten – vom zarten Nocturne bis zur donnernden Sonate."
 		},
 		"concerto": {
 			"name": "Konzert",
-			"description": "Konzerte, die Solisten und Orchester ins Rampenlicht rücken."
+			"description": "Solist gegen Orchester – das musikalische Duell, bei dem alle gewinnen."
 		},
 		"orchestral": {
 			"name": "Orchester",
-			"description": "Symphonische Werke für das große Orchester."
+			"description": "Wenn das volle Orchester loslegt, bleibt kein Ohr trocken."
 		},
 		"chamber": {
 			"name": "Kammermusik",
-			"description": "Intime Werke für kleine Ensembles."
+			"description": "Große Musik im kleinen Kreis – hier zählt jede Note doppelt."
 		},
 		"ballet": {
 			"name": "Ballett",
-			"description": "Musik, die für das Ballett komponiert wurde."
+			"description": "Spitzentanz für die Ohren – die großen Ballettpartituren zum Schwelgen."
 		},
 		"opera": {
 			"name": "Oper",
-			"description": "Berühmte Opernwerke und bekannte Arien."
+			"description": "Vorhang auf! Große Stimmen, große Gefühle und Dramen für die Ewigkeit."
 		},
 		"pianoconcerto": {
 			"name": "Klavierkonzerte",
-			"description": "Der Glanz und die Virtuosität großer Klavierkonzerte."
+			"description": "Wenn 88 Tasten auf ein ganzes Orchester treffen – Gänsehaut vorprogrammiert."
 		},
 		"violinconcerto": {
 			"name": "Violinkonzerte",
-			"description": "Brillante Konzerte für Violine und Orchester."
+			"description": "Die Violine singt, das Orchester antwortet – Virtuosität in Reinform."
 		},
 		"celloconcerto": {
 			"name": "Cellokonzerte",
-			"description": "Die tiefe emotionale Kraft des Cellos."
+			"description": "Tief, warm und voller Seele – das Cello in seiner ganzen Pracht."
 		},
 		"liszt": {
 			"name": "Lisztomania",
@@ -142,23 +142,23 @@
 		},
 		"renaissance": {
 			"name": "Renaissance",
-			"description": "Musik aus dem Zeitalter der Wiedergeburt (1400-1600)."
+			"description": "Polyphonie und Pergament – die Wiege der abendländischen Musik (1400–1600)."
 		},
 		"baroque": {
 			"name": "Barock",
-			"description": "Kunstvolle und ausdrucksstarke Werke (1600-1750)."
+			"description": "Perücken, Prunk und Prachtfugen – die opulente Klangwelt des Barock (1600–1750)."
 		},
 		"classical": {
 			"name": "Wiener Klassik",
-			"description": "Die Eleganz und Klarheit der klassischen Periode (1750-1820)."
+			"description": "Eleganz, Klarheit und ein Hauch Wiener Kaffeehauskultur (1750–1820)."
 		},
 		"romantic": {
 			"name": "Romantik",
-			"description": "Leidenschaftliche und expressive Werke (1820-1910)."
+			"description": "Große Gefühle, große Gesten – Leidenschaft und Sehnsucht in orchestraler Wucht (1820–1910)."
 		},
 		"20thcentury": {
 			"name": "20. Jahrhundert",
-			"description": "Moderne und experimentelle Kompositionen."
+			"description": "Regeln? Welche Regeln? Hier wird die Klassik neu erfunden."
 		}
 	},
 	"tracklistSelector": {
@@ -223,7 +223,7 @@
 		"maxTracksFromSingleWork": "Max. Tracks pro Werk",
 		"maxTracksFromSingleWorkDesc": "Begrenze, wie viele Sätze/Teile aus großen Werken maximal enthalten sein dürfen.",
 		"nameFilter": "Werkname",
-		"nameFilterDesc": "Nur Werke einschließen, deren Namen bestimmte Wörter enthalten (Groß-/Kleinschreibung egal). Umschließe den Text mit Schrägstrichen für fortgeschrittene Muster (z.B. /symphonie|konzert/ matcht beide Wörter).",
+		"nameFilterDesc": "Nur Werke einschließen, deren Namen bestimmte Wörter enthalten (Groß-/Kleinschreibung egal). Umschließe den Text mit Schrägstrichen für fortgeschrittene Muster (z.B. /symphonie|konzert/ findet beide Wörter).",
 		"nameFilterPlaceholder": "Werkname oder /regex/ eingeben",
 		"nameFilterAdd": "Hinzufügen",
 		"enablePopularityWeighting": "Gewichtung nach Popularität",
@@ -312,7 +312,7 @@
 		"gameOver": "Spiel vorbei!",
 		"playAgain": "Nochmal spielen",
 		"quitTitle": "Spiel verlassen?",
-		"quitMessage": "Willst du wirklich gehen? Dein Bingo-Gitter wird gespeichert.",
+		"quitMessage": "Willst du wirklich gehen? Deine Bingo-Karte wird gespeichert.",
 		"quitConfirm": "Verlassen",
 		"quitCancel": "Bleiben",
 		"buzzer": {
@@ -349,12 +349,12 @@
 			},
 			"step3": {
 				"title": "Erster am Limit gewinnt",
-				"desc": "Wächst deine Timeline bis zum Karten-Limit, gewinnst du das Spiel."
+				"desc": "Richtige Platzierungen lassen deine Timeline wachsen. Wer zuerst das Karten-Limit erreicht, gewinnt!"
 			}
 		},
 		"classic": {
 			"name": "Klassisch",
-			"description": "Punkte basierend auf der Schwierigkeit der Kategorie. Je härter der Tipp, desto mehr Punkte!",
+			"description": "Sammle Punkte je nach Schwierigkeit der Kategorie. Je schwieriger die Kategorie, desto mehr Punkte!",
 			"step1": {
 				"title": "Hör genau hin",
 				"desc": "Lausche dem Ausschnitt und versuche, Details der Komposition zu erkennen. Notiere deinen Tipp."
@@ -373,7 +373,7 @@
 			"description": "Ein Wettlauf gegen die Zeit und deine Gegner! Hau auf den Buzzer, sobald du die Antwort weißt.",
 			"step1": {
 				"title": "Drück den Buzzer",
-				"desc": "Drück den riesigen Buzzer-Button, wenn du die Antwort weißt. Du kannst auch eine Taste auf deiner Tastatur drücken."
+				"desc": "Drück den Buzzer, wenn du die Antwort weißt. Du kannst auch eine Taste auf deiner Tastatur (oder externem Button) drücken."
 			},
 			"step2": {
 				"title": "Kategorien im Wandel",
@@ -388,8 +388,8 @@
 			"name": "Bingo",
 			"description": "Dreh das Rad für eine Kategorie und fülle deine Bingo-Karte durch richtiges Raten!",
 			"step1": {
-				"title": "Öffne dein Bingo-Gitter",
-				"desc": "Jeder Spieler braucht sein eigenes, einzigartiges Bingo-Gitter. Öffne es auf deinem Gerät oder drucke es aus."
+				"title": "Öffne deine Bingo-Karte",
+				"desc": "Jeder Spieler braucht seine eigene, einzigartige Bingo-Karte. Öffne sie auf deinem Gerät oder drucke sie aus."
 			},
 			"step2": {
 				"title": "Drehen und Raten",
@@ -463,20 +463,20 @@
 		"help": {
 			"playFirst": "Spiele die Karte ab, um zu beginnen.",
 			"dragToPlace": "Ziehe die Karte in deine Timeline.",
-			"reorder": "Ordne die Karte um und bestätige."
+			"reorder": "Verschiebe die Karte in deiner Timeline und bestätige."
 		}
 	},
 	"bingo": {
-		"setupDescription": "Jeder Spieler benötigt sein eigenes Bingo-Gitter.",
+		"setupDescription": "Jeder Spieler benötigt seine eigene Bingo-Karte.",
 		"reset": "Zurücksetzen",
-		"resetTitle": "Gitter zurücksetzen?",
-		"resetMessage": "Das generiert ein neues Gitter und löscht alle Markierungen. Bist du sicher?",
+		"resetTitle": "Karte zurücksetzen?",
+		"resetMessage": "Das generiert eine neue Karte und löscht alle Markierungen. Bist du sicher?",
 		"resetConfirm": "Reset",
 		"resetCancel": "Abbrechen",
-		"shareTitle": "Bingo-Gitter teilen",
+		"shareTitle": "Bingo-Karte teilen",
 		"shareText": "Mach bei meinem Bingo-Spiel mit!",
 		"guessPlaceholder": "Dein Tipp...",
-		"closeGuess": "Einloggen",
+		"lockIn": "Einloggen",
 		"reveal": "Aufdecken"
 	},
 	"network": {

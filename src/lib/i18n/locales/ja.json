@@ -50,11 +50,11 @@
 	"tracklists": {
 		"beginner": {
 			"name": "初級",
-			"description": "誰もが一度は耳にしたことがある、クラシック音楽の入門編。"
+			"description": "最初の一歩はここから──思わず口ずさむ、あの名曲たちがお出迎え。"
 		},
 		"intermediate": {
 			"name": "中級",
-			"description": "コンサートの定番曲を中心に、少しレパートリーを広げたい方へ。"
+			"description": "コンサートホールの常連曲がずらり。知ってるあの曲、何曲わかる？"
 		},
 		"skilled": {
 			"name": "上級",
@@ -62,27 +62,27 @@
 		},
 		"advanced": {
 			"name": "超上級",
-			"description": "より深く、より複雑な作品の世界へ。知識の深さが試されます。"
+			"description": "ここからが本番──レパートリーの深淵へ。知識と直感が問われる難関。"
 		},
 		"expert": {
 			"name": "達人",
-			"description": "洗練された耳を持つあなたへ。難解かつ美しい至高の難問集。"
+			"description": "一筋縄ではいかない珠玉の難問揃い。洗練された耳だけが聴き分ける領域。"
 		},
 		"virtuoso": {
 			"name": "マエストロ",
-			"description": "定番から知られざる名曲まで、すべてを網羅した完全版。"
+			"description": "超有名曲から最後の秘曲まで──クラシック完全制覇、その全貌がここに。"
 		},
 		"cadenza": {
 			"name": "カデンツァ",
-			"description": "真の愛好家のための究極の挑戦。有名な曲は一切含まれていません。"
+			"description": "有名曲は封印。真の愛好家だけが挑める、至高の腕試し。"
 		},
 		"obscure": {
-			"name": "隠れた名曲",
-			"description": "歴史に埋もれた作曲家たちの、知られざる傑作を発掘しましょう。"
+			"name": "知られざる巨匠",
+			"description": "教科書には載らない作曲家たちの傑作を発掘せよ──音楽史の宝探し。"
 		},
 		"piano": {
 			"name": "ピアノ曲",
-			"description": "鍵盤の魔術師たちが紡ぐ、ピアノ作品の数々。"
+			"description": "88鍵に秘められた無限の世界──夜想曲から大ソナタまで、鍵盤の魔術。"
 		},
 		"concerto": {
 			"name": "協奏曲",
@@ -90,23 +90,23 @@
 		},
 		"orchestral": {
 			"name": "管弦楽曲",
-			"description": "交響曲や管弦楽のための壮大な作品集。"
+			"description": "フルオーケストラの大迫力。耳が震える、壮大なシンフォニーの世界。"
 		},
 		"chamber": {
 			"name": "室内楽",
-			"description": "少人数アンサンブルによる、親密で繊細な響き。"
+			"description": "大ホールは要らない──少人数だからこそ際立つ、珠玉のハーモニー。"
 		},
 		"ballet": {
 			"name": "バレエ音楽",
-			"description": "物語を彩る、躍動感あふれる舞踊音楽。"
+			"description": "つま先が踊り、音符が舞う──華やかなバレエ音楽の世界へ。"
 		},
 		"opera": {
 			"name": "オペラ",
-			"description": "歌劇の名シーンや、心揺さぶるアリアの数々。"
+			"description": "幕が上がれば、そこはドラマの渦。大いなる歌声と大いなる感動を。"
 		},
 		"pianoconcerto": {
 			"name": "ピアノ協奏曲",
-			"description": "ピアノとオーケストラのダイナミックな対話。"
+			"description": "88の鍵盤 vs. フルオーケストラ──鳥肌必至の壮大な対決。"
 		},
 		"violinconcerto": {
 			"name": "ヴァイオリン協奏曲",
@@ -114,7 +114,7 @@
 		},
 		"celloconcerto": {
 			"name": "チェロ協奏曲",
-			"description": "チェロの深く豊かな音色を堪能するコレクション。"
+			"description": "深く、温かく、魂を揺さぶる──チェロの真骨頂をとくとご堪能あれ。"
 		},
 		"liszt": {
 			"name": "Lisztomania",
@@ -142,23 +142,23 @@
 		},
 		"renaissance": {
 			"name": "ルネサンス",
-			"description": "調和とポリフォニーの時代（1400-1600年頃）。"
+			"description": "羊皮紙に刻まれた多声音楽の夜明け──響きの原点へ（1400–1600年）。"
 		},
 		"baroque": {
 			"name": "バロック",
-			"description": "豪華絢爛、感情表現豊かな通奏低音の時代（1600-1750年頃）。"
+			"description": "かつらとフーガと豪華絢爛──音の宮殿へようこそ（1600–1750年）。"
 		},
 		"classical": {
 			"name": "古典派",
-			"description": "形式美と明晰さを追求した優雅な時代（1750-1820年頃）。"
+			"description": "優美にして明晰。ウィーンの香り漂う、形式美の極致（1750–1820年）。"
 		},
 		"romantic": {
 			"name": "ロマン派",
-			"description": "個人の感情と物語性を重視した情熱の時代（1820-1910年頃）。"
+			"description": "感情のうねりが音になる──情熱とドラマの黄金時代（1820–1910年）。"
 		},
 		"20thcentury": {
 			"name": "近現代",
-			"description": "伝統の打破、そして新たな音の探求へ。"
+			"description": "ルール？もう要らない──常識を超えた、音の大実験。"
 		}
 	},
 	"tracklistSelector": {
@@ -198,7 +198,7 @@
 		"filters": "フィルター",
 		"filtersDescription": "コレクション全体にフィルターを適用して、独自のトラックリストを作成します。手動で選んだ作品のみを使用するには無効にしてください。",
 		"categoryAdjustments": "カテゴリ調整",
-		"categoryAdjustmentsDesc": "ゲーム内ルーレットで、各カテゴリが選ばれる確率を調整します。",
+		"categoryAdjustmentsDesc": "各音楽カテゴリがどの程度優先されるかを調整します。",
 		"composerFilter": "作曲家フィルター",
 		"composerFilterDesc": "リストに含める作曲家を制御します",
 		"includeMode": "指定した作曲家を含める",
@@ -264,7 +264,7 @@
 		},
 		"closeDialog": {
 			"title": "変更を破棄しますか？",
-			"message": "保存されていない変更があるよ。保存せずに閉じちゃう？",
+			"message": "保存されていない変更があります。保存せずに閉じてもよろしいですか？",
 			"confirm": "破棄する",
 			"cancel": "編集を続ける"
 		},
@@ -404,7 +404,7 @@
 	"players": {
 		"setup": "プレイヤー設定",
 		"playSolo": "ソロプレイ",
-		"addPlayer": "1",
+		"addPlayer": "プレイヤー",
 		"playerName": "プレイヤー {number}",
 		"nameLabel": "名前",
 		"colorLabel": "色",
@@ -476,7 +476,7 @@
 		"shareTitle": "ビンゴカードを共有",
 		"shareText": "一緒にビンゴで遊ぼう！",
 		"guessPlaceholder": "答えを入力...",
-		"closeGuess": "決定",
+		"lockIn": "決定",
 		"reveal": "答えを見る"
 	},
 	"network": {

@@ -50,71 +50,71 @@
 	"tracklists": {
 		"beginner": {
 			"name": "Débutant",
-			"description": "Une douce introduction aux chefs-d'œuvre intemporels."
+			"description": "Les tubes des plus grands : une entrée en matière toute en douceur."
 		},
 		"intermediate": {
 			"name": "Intermédiaire",
-			"description": "Élargis ton répertoire avec les grands classiques du concert."
+			"description": "Au-delà des tubes, les perles qui font vibrer les salles de concert."
 		},
 		"skilled": {
 			"name": "Confirmé",
-			"description": "Un équilibre subtil entre favoris du public et œuvres raffinées."
+			"description": "Mi-star, mi-connaisseur : l’art du juste milieu musical."
 		},
 		"advanced": {
 			"name": "Avancé",
-			"description": "Entre dans la salle de concert des compositions complexes."
+			"description": "Les partitions s’épaississent… et les oreilles s’aiguisent."
 		},
 		"expert": {
 			"name": "Expert",
-			"description": "Teste ton oreille avec des œuvres sophistiquées et méconnues."
+			"description": "Des raretés qui feraient hésiter même un chef d’orchestre."
 		},
 		"virtuoso": {
 			"name": "Virtuose",
-			"description": "La collection complète — de l'iconique à l'obscur."
+			"description": "Tout le catalogue — du tube planétaire au manuscrit oublié."
 		},
 		"cadenza": {
 			"name": "Cadence",
-			"description": "Pour le vrai connaisseur cherchant le défi ultime – pas de tubes, seulement le rare et l'exquis."
+			"description": "Zéro tube, zéro filet : ici, seuls les vrais connaisseurs survivent."
 		},
 		"obscure": {
 			"name": "Compositeurs Oubliés",
-			"description": "Découvre des perles rares hors du répertoire standard."
+			"description": "L’histoire les a oubliés — sauras-tu les reconnaître ?"
 		},
 		"piano": {
 			"name": "Piano",
-			"description": "Œuvres centrées sur le répertoire pour piano."
+			"description": "88 touches, mille émotions : le piano sous toutes ses facettes."
 		},
 		"concerto": {
 			"name": "Concerto",
-			"description": "Concertos mettant en lumière les solistes avec orchestre."
+			"description": "Quand un soliste défie tout un orchestre, ça donne des frissons."
 		},
 		"orchestral": {
 			"name": "Orchestral",
-			"description": "Œuvres symphoniques pour grand orchestre."
+			"description": "La puissance du grand orchestre, de la symphonie au poème symphonique."
 		},
 		"chamber": {
 			"name": "Musique de Chambre",
-			"description": "Œuvres intimistes pour petits ensembles."
+			"description": "L’art de la conversation musicale, à quelques instruments près."
 		},
 		"ballet": {
 			"name": "Ballet",
-			"description": "Musique composée pour le ballet."
+			"description": "Des pointes et des notes : la musique qui fait danser les étoiles."
 		},
 		"opera": {
 			"name": "Opéra",
-			"description": "Célèbres œuvres lyriques et grands arias."
+			"description": "Du drame, des aigus, des passions : bienvenue à l’opéra !"
 		},
 		"pianoconcerto": {
 			"name": "Concertos pour Piano",
-			"description": "Toute la grandeur du piano concertant."
+			"description": "Le piano roi face à l’orchestre : duel au sommet."
 		},
 		"violinconcerto": {
 			"name": "Concertos pour Violon",
-			"description": "La brillance du violon sous les projecteurs."
+			"description": "L’archet en feu : quand le violon prend le pouvoir."
 		},
 		"celloconcerto": {
 			"name": "Concertos pour Violoncelle",
-			"description": "Explore la profondeur du violoncelle."
+			"description": "La voix grave qui fait vibrer l’âme : le violoncelle à l’honneur."
 		},
 		"liszt": {
 			"name": "Lisztomania",
@@ -122,7 +122,7 @@
 		},
 		"bach": {
 			"name": "Bach to the Future",
-			"description": "Là où l'on ne badine pas avec la fugue."
+			"description": "Là où l’on ne badine pas avec la fugue."
 		},
 		"chopin": {
 			"name": "Chopin Spree",
@@ -130,7 +130,7 @@
 		},
 		"mozart": {
 			"name": "Mozart in the Machine",
-			"description": "De la flûte enchantée au requiem, le génie à l'état pur."
+			"description": "De la flûte enchantée au requiem, le génie à l’état pur."
 		},
 		"tchaikovsky": {
 			"name": "Tchaik It Off",
@@ -142,23 +142,23 @@
 		},
 		"renaissance": {
 			"name": "Renaissance",
-			"description": "Musique de l'âge de la redécouverte (1400-1600)."
+			"description": "Polyphonies et madrigaux : aux sources de la musique occidentale (1400-1600)."
 		},
 		"baroque": {
 			"name": "Baroque",
-			"description": "Œuvres ornées et expressives (1600-1750)."
+			"description": "Ornements, trilles et basses continues : bienvenue dans la démesure (1600-1750)."
 		},
 		"classical": {
 			"name": "Classique",
-			"description": "Élégance et clarté de la période Classique (1750-1820)."
+			"description": "Quand élégance rimait avec perfection — l’âge d’or de la forme (1750-1820)."
 		},
 		"romantic": {
 			"name": "Romantique",
-			"description": "Œuvres passionnées et expressives (1820-1910)."
+			"description": "Grandes passions et élans du cœur — l’ère des frissons (1820-1910)."
 		},
 		"20thcentury": {
 			"name": "XXe Siècle",
-			"description": "Œuvres modernes et expérimentales."
+			"description": "Quand la musique a décidé de réinventer toutes les règles."
 		}
 	},
 	"tracklistSelector": {
@@ -172,8 +172,8 @@
 		"createNew": "Créer une nouvelle liste",
 		"browseLibrary": "Parcourir la bibliothèque",
 		"deleteDialog": {
-			"title": "Supprimer la liste ?",
-			"message": "Es-tu sûr de vouloir supprimer {name} ? Cette action est irréversible.",
+			"title": "Supprimer la liste ?",
+			"message": "Es-tu sûr de vouloir supprimer {name} ? Cette action est irréversible.",
 			"confirm": "Supprimer",
 			"cancel": "Annuler"
 		}
@@ -196,9 +196,9 @@
 		"name": "Nom",
 		"description": "Description",
 		"filters": "Filtres",
-		"filtersDescription": "Les listes sont construites en appliquant des filtres sur toute la collection. Désactivez pour utiliser uniquement les œuvres sélectionnées manuellement.",
+		"filtersDescription": "Les listes sont construites en appliquant des filtres sur toute la collection. Désactive pour utiliser uniquement les œuvres sélectionnées manuellement.",
 		"categoryAdjustments": "Catégories",
-		"categoryAdjustmentsDesc": "Ajuste la fréquence d'apparition de chaque catégorie musicale.",
+		"categoryAdjustmentsDesc": "Ajuste la fréquence d’apparition de chaque catégorie musicale.",
 		"composerFilter": "Compositeurs",
 		"composerFilterDesc": "Contrôle quels compositeurs sont inclus dans ta liste.",
 		"includeMode": "Inclure uniquement",
@@ -217,12 +217,12 @@
 		"yearStart": "Année de début",
 		"yearEnd": "Année de fin",
 		"workScoreRange": "Plage de popularité",
-		"workScoreRangeDesc": "Filtre les œuvres par score de popularité (plus haut = plus d'enregistrements existants).",
-		"limitWorksFromComposer": "Limite d'œuvres par compositeur",
+		"workScoreRangeDesc": "Filtre les œuvres par score de popularité (plus haut = plus d’enregistrements existants).",
+		"limitWorksFromComposer": "Limite d’œuvres par compositeur",
 		"limitWorksFromComposerDesc": "Limite chaque compositeur à un pourcentage du total des œuvres de cette liste.",
 		"maxTracksFromSingleWork": "Max pistes par œuvre unique",
 		"maxTracksFromSingleWorkDesc": "Limite le nombre de mouvements/parties inclus pour les œuvres de grande envergure.",
-		"nameFilter": "Nom de l'œuvre",
+		"nameFilter": "Nom de l’œuvre",
 		"nameFilterDesc": "Inclut uniquement les œuvres dont le nom contient certains mots (insensible à la casse). Entoure de barres obliques pour les motifs avancés (ex: /symphonie|concerto/).",
 		"nameFilterPlaceholder": "Entrer un nom ou une /regex/",
 		"nameFilterAdd": "Ajouter",
@@ -238,12 +238,12 @@
 			"excludeWorks": "Exclure des œuvres",
 			"excludeDesc": "Ces œuvres seront toujours exclues de la liste de pistes.",
 			"addWorks": "Ajouter des œuvres",
-			"addWork": "Ajouter l'œuvre",
+			"addWork": "Ajouter l’œuvre",
 			"alreadyInTracklist": "Déjà dans la liste",
-			"excludeWork": "Exclure l'œuvre",
+			"excludeWork": "Exclure l’œuvre",
 			"addExclusions": "Ajouter des exclusions",
-			"removeWork": "Retirer l'œuvre",
-			"removeExclusion": "Retirer l'exclusion",
+			"removeWork": "Retirer l’œuvre",
+			"removeExclusion": "Retirer l’exclusion",
 			"noWorksIncluded": "Aucune œuvre incluse manuellement",
 			"noWorksExcluded": "Aucune œuvre exclue manuellement",
 			"selectWorksToInclude": "Sélectionner des œuvres à inclure",
@@ -263,8 +263,8 @@
 			"duplicateName": "Une liste avec ce nom existe déjà"
 		},
 		"closeDialog": {
-			"title": "Abandonner les modifications ?",
-			"message": "Tu as des modifications non enregistrées. Vraiment fermer sans sauvegarder ?",
+			"title": "Abandonner les modifications ?",
+			"message": "Tu as des modifications non enregistrées. Vraiment fermer sans sauvegarder ?",
 			"confirm": "Abandonner",
 			"cancel": "Continuer à modifier"
 		},
@@ -280,44 +280,44 @@
 		"openLink": "Ouvrir",
 		"copyFailed": "Échec de la copie",
 		"copy": "Copier",
-		"copied": "Copié !",
+		"copied": "Copié !",
 		"share": "Partager",
 		"tracklistTitle": "Partager la liste",
-		"tracklistText": "Jette un œil à cette sélection Liszt’n Up !"
+		"tracklistText": "Jette un œil à cette sélection Liszt’n Up !"
 	},
 	"inGameSettings": {
 		"title": "Paramètres",
-		"trackLength": "Durée de l'extrait",
-		"trackLengthHint": "Durée de lecture de chaque piste. S'appliquera à la piste suivante. Ne s'applique pas au mode Buzzer.",
+		"trackLength": "Durée de l’extrait",
+		"trackLengthHint": "Durée de lecture de chaque piste. S’appliquera à la piste suivante. Ne s’applique pas au mode Buzzer.",
 		"audioNormalization": "Normalisation audio",
-		"audioNormalizationHint": "Utilise un traitement avancé pour égaliser le volume et alimenter le visualiseur. Peut causer des problèmes sur les appareils Apple ; désactive si tu rencontres des soucis. S'applique à la piste suivante.",
+		"audioNormalizationHint": "Utilise un traitement avancé pour égaliser le volume et animer le visualiseur. Peut causer des problèmes sur les appareils Apple ; désactive si tu rencontres des soucis. S’appliquera à la piste suivante.",
 		"buzzerVolume": "Volume du buzzer",
 		"buzzerVolumeHint": "Volume sonore du buzzer."
 	},
 	"quitDialog": {
-		"title": "Quitter la partie ?",
-		"message": "Es-tu sûr de vouloir quitter ? Ta progression actuelle sera perdue.",
+		"title": "Quitter la partie ?",
+		"message": "Es-tu sûr de vouloir quitter ? Ta progression actuelle sera perdue.",
 		"confirm": "Quitter",
 		"cancel": "Continuer à jouer"
 	},
 	"game": {
 		"round": "Manche {current} sur {total}",
 		"home": "Accueil",
-		"spin": "Tourner",
+		"spin": "Tourne !",
 		"play": "Lecture",
 		"pause": "Pause",
 		"guessCategory": "{category}",
 		"reveal": "Révéler",
 		"nextRound": "Manche suivante",
-		"gameOver": "Partie terminée !",
+		"gameOver": "Partie terminée !",
 		"playAgain": "Rejouer",
-		"quitTitle": "Quitter le jeu ?",
-		"quitMessage": "Es-tu sûr de vouloir partir ? Ta grille sera sauvegardée.",
+		"quitTitle": "Quitter le jeu ?",
+		"quitMessage": "Es-tu sûr de vouloir partir ? Ta grille sera sauvegardée.",
 		"quitConfirm": "Partir",
 		"quitCancel": "Rester",
 		"buzzer": {
 			"pressToStart": "Lancer",
-			"buzz": "Buzzer !"
+			"buzz": "Buzzer !"
 		},
 		"loadingAudio": "Analyse audio...",
 		"categories": {
@@ -338,26 +338,26 @@
 	"modes": {
 		"timeline": {
 			"name": "Timeline",
-			"description": "Construisez une frise chronologique en plaçant les morceaux au bon endroit.",
+			"description": "Construis une frise chronologique en plaçant les morceaux dans le bon ordre.",
 			"step1": {
 				"title": "Jouer la carte",
-				"desc": "Commencez votre tour en jouant la carte du dessus."
+				"desc": "Commence ton tour en jouant la carte du dessus."
 			},
 			"step2": {
-				"title": "Glisser dans votre frise",
-				"desc": "Faites glisser la carte dans votre timeline, puis confirmez votre placement."
+				"title": "Glisser dans ta frise",
+				"desc": "Fais glisser la carte dans ta frise, puis confirme ton placement."
 			},
 			"step3": {
-				"title": "Premier au seuil gagne",
+				"title": "Le premier au but l’emporte",
 				"desc": "Le premier joueur à atteindre la limite de cartes remporte la partie."
 			}
 		},
 		"classic": {
 			"name": "Classique",
-			"description": "Marque des points selon la difficulté. Plus la catégorie est dure, plus tu gagnes !",
+			"description": "Marque des points selon la difficulté. Plus la catégorie est dure, plus tu gagnes !",
 			"step1": {
-				"title": "Écoute l'extrait",
-				"desc": "Écoute l'extrait musical et essaie d'identifier les détails de la composition. Note ta proposition."
+				"title": "Écoute l’extrait",
+				"desc": "Écoute l’extrait musical et essaie d’identifier les détails de la composition. Note ta proposition."
 			},
 			"step2": {
 				"title": "Devine la catégorie",
@@ -365,15 +365,15 @@
 			},
 			"step3": {
 				"title": "Gagne la partie",
-				"desc": "Le joueur avec le plus de points à la fin l'emporte. Choisis tes combats et teste ta culture musicale !"
+				"desc": "Le joueur avec le plus de points à la fin l’emporte. Choisis tes combats et teste ta culture musicale !"
 			}
 		},
 		"buzzer": {
 			"name": "Buzzer",
-			"description": "Course contre la montre ! Sois le plus rapide à buzzer quand tu as la réponse.",
+			"description": "Course contre la montre ! Sois le plus rapide à buzzer quand tu as la réponse.",
 			"step1": {
 				"title": "Frappe le Buzzer",
-				"desc": "Appuie sur le bouton géant dès que tu as la réponse pour marquer. Tu peux aussi utiliser n'importe quelle touche du clavier."
+				"desc": "Appuie sur le bouton géant dès que tu as la réponse pour marquer. Tu peux aussi utiliser n’importe quelle touche du clavier."
 			},
 			"step2": {
 				"title": "Les catégories évoluent",
@@ -381,23 +381,23 @@
 			},
 			"step3": {
 				"title": "La course à la victoire",
-				"desc": "Les mauvaises réponses coûtent des points, alors attention ! Le joueur avec le plus de points gagne !"
+				"desc": "Les mauvaises réponses coûtent des points, alors attention ! Le joueur avec le plus de points gagne !"
 			}
 		},
 		"bingo": {
 			"name": "Bingo",
-			"description": "Tourne la roue pour choisir une catégorie, et remplis ta grille de bingo en devinant juste !",
+			"description": "Tourne la roue pour choisir une catégorie, et remplis ta grille de bingo en devinant juste !",
 			"step1": {
 				"title": "Ouvre ta grille",
 				"desc": "Chaque joueur a besoin de sa propre grille. Ouvre-la sur ton téléphone, ou imprime-la."
 			},
 			"step2": {
 				"title": "Tourne et devine",
-				"desc": "Tourne la roue pour choisir une catégorie. Écoute la piste et note ta réponse. Si c'est correct, coche la case correspondante sur ta grille."
+				"desc": "Tourne la roue pour choisir une catégorie. Écoute la piste et note ta réponse. Si c’est correct, coche la case correspondante sur ta grille."
 			},
 			"step3": {
 				"title": "Cinq à la suite",
-				"desc": "Sois le premier à aligner cinq cases cochées (horizontalement, verticalement ou en diagonale) pour gagner !"
+				"desc": "Sois le premier à aligner cinq cases cochées (horizontalement, verticalement ou en diagonale) pour gagner !"
 			}
 		}
 	},
@@ -413,7 +413,7 @@
 		"cancel": "Annuler",
 		"minPlayers": "Au moins deux joueurs sont requis si le score est activé.",
 		"edge": {
-			"toggle": "Changer le bord de l'écran",
+			"toggle": "Changer le bord de l’écran",
 			"bottom": "Bas",
 			"left": "Gauche",
 			"top": "Haut",
@@ -431,8 +431,8 @@
 		"noGuess": "Pas de réponse",
 		"wrong": "Faux",
 		"continue": "Continuer",
-		"correctGuess": "Qui a bien deviné ?",
-		"wrongGuess": "Qui s'est trompé ?",
+		"correctGuess": "Qui a bien deviné ?",
+		"wrongGuess": "Qui s’est trompé ?",
 		"noOne": "Personne",
 		"noPoints": "0 pts",
 		"pts": "{points} pts",
@@ -447,9 +447,9 @@
 		"noData": "Aucune manche jouée"
 	},
 	"endGame": {
-		"title": "Partie terminée !",
-		"winner": "{name} a gagné !",
-		"tie": "Égalité parfaite !",
+		"title": "Partie terminée !",
+		"winner": "{name} a gagné !",
+		"tie": "Égalité parfaite !",
 		"noMoreTracks": "Plus de morceaux disponibles.",
 		"finalScores": "Scores finaux",
 		"viewStats": "Voir les stats",
@@ -461,31 +461,31 @@
 		"drag": "Glisser",
 		"confirm": "Confirmer",
 		"help": {
-			"playFirst": "Jouez la carte pour commencer.",
-			"dragToPlace": "Glissez la carte dans votre timeline.",
-			"reorder": "Réorganisez la carte puis confirmez."
+			"playFirst": "Joue la carte pour commencer.",
+			"dragToPlace": "Glisse la carte dans ta frise.",
+			"reorder": "Réorganise la carte, puis confirme."
 		}
 	},
 	"bingo": {
 		"setupDescription": "Chaque joueur a besoin de sa propre grille unique.",
 		"reset": "Réinitialiser",
-		"resetTitle": "Nouvelle grille ?",
-		"resetMessage": "Ceci va générer une nouvelle grille aléatoire et effacer tes marques. Es-tu sûr ?",
+		"resetTitle": "Nouvelle grille ?",
+		"resetMessage": "Ceci va générer une nouvelle grille aléatoire et effacer tes marques. Es-tu sûr ?",
 		"resetConfirm": "Réinitialiser",
 		"resetCancel": "Annuler",
 		"shareTitle": "Partager la grille",
-		"shareText": "Rejoins ma partie de Bingo !",
+		"shareText": "Rejoins ma partie de Bingo !",
 		"guessPlaceholder": "Entre ta réponse...",
-		"closeGuess": "Valider",
+		"lockIn": "Valider",
 		"reveal": "Révéler"
 	},
 	"network": {
-		"offline": "Vous êtes hors ligne",
+		"offline": "Tu es hors ligne",
 		"reconnecting": "Reconnexion…",
-		"reconnected": "De retour en ligne !",
+		"reconnected": "De retour en ligne !",
 		"loading": "Chargement de la piste…",
 		"loadFailed": "Échec du chargement de la piste. Nouvelle tentative…",
-		"loadFailedFinal": "Impossible de charger la piste. Veuillez vérifier votre connexion.",
+		"loadFailedFinal": "Impossible de charger la piste. Vérifie ta connexion.",
 		"playFailed": "Échec de la lecture de la piste.",
 		"replayFailed": "Échec de la relecture de la piste.",
 		"preloadTimeout": "Le chargement de la piste prend trop de temps. Nouvelle tentative…",
@@ -499,7 +499,7 @@
 		"ancient": "Antiquité",
 		"medieval": "Médiéval",
 		"earlyRenaissance": "Première Renaissance",
-		"middleRenaissance": "Renaissance (moyen)",
+		"middleRenaissance": "Haute Renaissance",
 		"lateRenaissance": "Renaissance tardive",
 		"lateRenaissanceEarlyBaroque": "Renaissance tardive / Début Baroque",
 		"earlyBaroque": "Début Baroque",

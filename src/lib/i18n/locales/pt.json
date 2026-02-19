@@ -50,71 +50,71 @@
 	"tracklists": {
 		"beginner": {
 			"name": "Iniciante",
-			"description": "Uma abertura suave com obras-primas atemporais."
+			"description": "Os grandes clássicos que até o vizinho reconhece. Começar aqui é acertar em cheio!"
 		},
 		"intermediate": {
 			"name": "Intermediário",
-			"description": "Expanda o repertório com peças de concerto adoradas."
+			"description": "Um passo além do básico. Peças obrigatórias para quem quer alargar horizontes musicais."
 		},
 		"skilled": {
 			"name": "Habilidoso",
-			"description": "Um equilíbrio entre favoritas do público e obras refinadas."
+			"description": "Nem fácil demais, nem impossível. O equilíbrio perfeito entre hits e joias escondidas."
 		},
 		"advanced": {
 			"name": "Avançado",
-			"description": "Entre na sala de concerto com composições mais profundas e complexas."
+			"description": "Aqui a coisa fica séria. Composições profundas para ouvidos bem treinados."
 		},
 		"expert": {
-			"name": "Expert",
-			"description": "Teste seu ouvido com obras sofisticadas e menos conhecidas."
+			"name": "Especialista",
+			"description": "Só para ouvidos afinados. Raridades sofisticadas que vão testar seu repertório."
 		},
 		"virtuoso": {
 			"name": "Virtuoso",
-			"description": "A coleção completa — do icônico ao obscuro."
+			"description": "O catálogo completo: da obra-prima universal ao enigma que só seu professor de conservatório conhece."
 		},
 		"cadenza": {
 			"name": "Cadenza",
-			"description": "Para o verdadeiro conhecedor buscando o desafio final – sem sucessos populares, apenas o raro e refinado."
+			"description": "Esqueça os grandes sucessos. Aqui é para puristas: só o raro, o requintado e o inclassificável."
 		},
 		"obscure": {
 			"name": "Compositores Obscuros",
-			"description": "Descubra joias escondidas de compositores fora do repertório padrão."
+			"description": "Compositores fora do radar. Prepare-se para nomes que nem a Wikipédia conhece direito."
 		},
 		"piano": {
 			"name": "Piano",
-			"description": "Obras focadas no repertório pianístico."
+			"description": "88 teclas, mil emoções. De noturnos sussurrados a tempestades de virtuosismo."
 		},
 		"concerto": {
 			"name": "Concerto",
-			"description": "Concertos destacando solistas com orquestra."
+			"description": "Solista contra orquestra: o duelo mais elegante da história da música."
 		},
 		"orchestral": {
 			"name": "Orquestral",
-			"description": "Obras sinfônicas para orquestra."
+			"description": "Toda a potência da orquestra sinfônica. Prepare-se para sentir o chão tremer."
 		},
 		"chamber": {
 			"name": "Câmara",
-			"description": "Obras íntimas para conjunto de câmara."
+			"description": "Poucas vozes, intensidade máxima. Música de câmara para ouvidos refinados."
 		},
 		"ballet": {
 			"name": "Balé",
-			"description": "Música composta para balés."
+			"description": "Tutus, sapatilhas de ponta e partituras imortais. A música que faz o mundo dançar."
 		},
 		"opera": {
 			"name": "Ópera",
-			"description": "Obras operísticas famosas e árias conhecidas."
+			"description": "Drama, paixão e agudos que estilhaçam cristais. Bem-vindo ao grande teatro."
 		},
 		"pianoconcerto": {
 			"name": "Concertos para Piano",
-			"description": "A grandiosidade dos concertos para piano."
+			"description": "O piano domina o palco com a orquestra como cúmplice. Pura grandiosidade."
 		},
 		"violinconcerto": {
 			"name": "Concertos para Violino",
-			"description": "O brilho dos concertos para violino."
+			"description": "Cordas que cantam, arpejos que encantam. O violino em todo o seu esplendor."
 		},
 		"celloconcerto": {
 			"name": "Concertos para Violoncelo",
-			"description": "A profundidade dos concertos para violoncelo."
+			"description": "A voz mais profunda das cordas, capaz de emocionar até os mais impassíveis."
 		},
 		"liszt": {
 			"name": "Lisztomania",
@@ -142,23 +142,23 @@
 		},
 		"renaissance": {
 			"name": "Renascença",
-			"description": "Música da era do renascimento (1400-1600)."
+			"description": "O despertar da polifonia. Cortes, catedrais e a aurora de um mundo novo (1400-1600)."
 		},
 		"baroque": {
 			"name": "Barroco",
-			"description": "Obras ornamentadas e expressivas (1600-1750)."
+			"description": "Trinados, ornamentos e drama de sobra. Tudo é excesso, e adoramos assim (1600-1750)."
 		},
 		"classical": {
 			"name": "Clássico",
-			"description": "Elegância e clareza do período Clássico (1750-1820)."
+			"description": "Perucas empoadas e formas perfeitas. A era da elegância e do bom gosto (1750-1820)."
 		},
 		"romantic": {
 			"name": "Romântico",
-			"description": "Obras apaixonadas e expressivas (1820-1910)."
+			"description": "Corações transbordando e melodias imortais. Pura emoção à flor da pele (1820-1910)."
 		},
 		"20thcentury": {
 			"name": "Século XX",
-			"description": "Obras modernas e experimentais."
+			"description": "Regras quebradas, sons novos. A revolução musical do século passado."
 		}
 	},
 	"tracklistSelector": {
@@ -317,7 +317,7 @@
 		"quitCancel": "Ficar",
 		"buzzer": {
 			"pressToStart": "Começar",
-			"buzz": "Aperte!"
+			"buzz": "Buzz!"
 		},
 		"loadingAudio": "Analisando Áudio...",
 		"categories": {
@@ -476,7 +476,7 @@
 		"shareTitle": "Compartilhar Cartela",
 		"shareText": "Junte-se ao meu jogo de Bingo!",
 		"guessPlaceholder": "Digite seu palpite...",
-		"closeGuess": "Salvar Palpite",
+		"lockIn": "Confirmar",
 		"reveal": "Revelar"
 	},
 	"network": {
@@ -492,7 +492,7 @@
 		"retrying": "Problema de conexão — tentando novamente ({attempt}/{max})…"
 	},
 	"footer": {
-		"madeBy": "Um jogo por Jacob Zhang",
+		"madeBy": "Um jogo de Jacob Zhang",
 		"poweredBy": "Desenvolvido com {first} e {second}"
 	},
 	"eras": {
