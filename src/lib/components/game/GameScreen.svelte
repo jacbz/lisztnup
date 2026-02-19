@@ -28,7 +28,7 @@
 	import { _ } from 'svelte-i18n';
 
 	// Context for sharing functions with child components
-	import { GAME_SCREEN_CONTEXT, type GameScreenContext } from './context';
+	import { GAME_SCREEN_CONTEXT, type GameScreenContext, type RevealOptions } from './context';
 	import { ALL_CATEGORIES, CATEGORY_POINTS } from '$lib/types/game';
 
 	interface Props {
@@ -86,6 +86,9 @@
 	let tracksExhausted = $state(false);
 	let isPreloading = $state(false);
 	let hasPreloadError = $state(false);
+
+	// Options passed by the game mode via revealTrack(options)
+	let revealOptions = $state<RevealOptions>({});
 
 	// Maximum number of retry attempts for a single preload when network errors occur
 	const MAX_PRELOAD_RETRIES = 3;
@@ -264,14 +267,16 @@
 		}
 	}
 
-	function revealTrack(): void {
+	function revealTrack(options?: RevealOptions): void {
+		revealOptions = options ?? {};
 		currentRound.update((state) => ({
 			...state,
 			isRevealed: true
 		}));
 
-		// Show scoring screen only if scoring is enabled
-		if (enableScoring) {
+		// Show scoring screen: mode can override via options.showScoring
+		const shouldScore = options?.showScoring ?? enableScoring;
+		if (shouldScore) {
 			showScoringScreen = true;
 		}
 	}
@@ -308,17 +313,15 @@
 	function handleScoreSubmit(scores: Record<string, number>): void {
 		gameSession.recordRound($currentRound.currentTrackIndex, scores);
 		showScoringScreen = false;
+		handleAfterReveal();
+	}
 
-		// Check if game should end (skip for bingo/timeline)
-		if (
-			mode !== 'bingo' &&
-			mode !== 'timeline' &&
-			$currentRound.currentTrackIndex >= numberOfTracks - 1
-		) {
-			showEndGameScreen = true;
-		} else {
-			nextRound();
-		}
+	/** Unified continue handler: runs mode-specific cleanup, then advances. */
+	function handleAfterReveal(): void {
+		const beforeNext = revealOptions.beforeNextRound;
+		revealOptions = {};
+		beforeNext?.();
+		nextRound();
 	}
 
 	function handlePlaybackEnd(): void {
@@ -543,32 +546,35 @@
 	onCancel={() => (showQuitDialog = false)}
 />
 
-<!-- Scoring Screen -->
+<!-- Scoring Screen (Classic & Buzzer — mode-specific categories via revealOptions) -->
 <ScoringScreen
 	visible={showScoringScreen}
-	mode={mode === 'bingo' || mode === 'timeline' ? 'classic' : mode}
+	mode={mode === 'buzzer' ? 'buzzer' : 'classic'}
 	track={currentTrack}
 	players={$gameSession.players}
 	categories={activeCategories}
+	currentCategory={$currentRound.category}
+	revealedCategories={revealOptions.scoringCategories ?? []}
 	onScore={handleScoreSubmit}
 />
 
-<!-- Track Info Popup (when scoring is disabled, except for buzzer mode which handles its own) -->
+<!-- Track Info Popup (shown after reveal when scoring screen is not active, except Timeline) -->
 <Popup
-	visible={$currentRound.isRevealed && !enableScoring && mode !== 'buzzer' && mode !== 'timeline'}
+	visible={$currentRound.isRevealed && !showScoringScreen && mode !== 'timeline'}
 	onClose={() => {}}
 	width="w-[480px] max-w-[90vw]"
-	padding="lg"
 	showCloseButton={false}
 >
-	<div class="flex flex-col gap-5">
-		<TrackInfo track={currentTrack} />
+	<div class="flex flex-col">
+		<div class="min-h-0 flex-1 rounded-2xl border border-slate-700/50 bg-slate-950/30 p-4">
+			<TrackInfo track={currentTrack} showMirror={$gameSession.players.length > 1} bleed="sm" />
+		</div>
 
 		<!-- Continue button -->
 		<button
 			type="button"
-			onclick={() => nextRound()}
-			class="mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3 font-bold text-cyan-400 transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.6)]"
+			onclick={handleAfterReveal}
+			class="mt-4 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3 font-bold text-cyan-400 transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.6)]"
 		>
 			{$_('game.nextRound')}
 			<ArrowRight class="h-5 w-5" />

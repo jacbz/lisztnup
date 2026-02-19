@@ -63,28 +63,11 @@
 	}
 
 	function handleReveal() {
-		ctx.revealTrack();
-	}
-
-	async function handleReplay() {
-		try {
-			await ctx.replayTrack();
-		} catch (error) {
-			console.error('Error replaying track:', error);
-			toast.error($_('network.replayFailed'));
-		}
-	}
-
-	async function handleNextRound() {
-		// Reset hasSpunOnce for new round
-		hasSpunOnce = false;
-
-		try {
-			await ctx.nextRound();
-		} catch (error) {
-			console.error('Error advancing round:', error);
-			toast.error($_('network.loadFailedFinal'));
-		}
+		ctx.revealTrack({
+			beforeNextRound: () => {
+				hasSpunOnce = false;
+			}
+		});
 	}
 </script>
 
@@ -112,9 +95,7 @@
 			onPlay={handlePlay}
 			onStop={handleStop}
 			onReveal={handleReveal}
-			onReplay={handleReplay}
-			onNext={handleNextRound}
-			onPlaybackEnd={ctx.handlePlaybackEnd}
+			onReplay={ctx.replayTrack}
 		/>
 	</div>
 {/if}

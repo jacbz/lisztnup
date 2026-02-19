@@ -81,7 +81,7 @@
 	}
 </script>
 
-<Popup {visible} {onClose} width="w-[700px] max-w-[90vw]" padding="responsive">
+<Popup {visible} {onClose} width="w-[700px] max-w-[90vw]">
 	<h2 class="mb-4 text-center text-2xl font-bold text-cyan-400 md:mb-6 md:text-3xl">
 		{$_('stats.title')}
 	</h2>

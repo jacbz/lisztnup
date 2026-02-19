@@ -1,8 +1,5 @@
 <script lang="ts">
 	import type { Track } from '$lib/types';
-	import ArrowRight from 'lucide-svelte/icons/arrow-right';
-	import Popup from '../primitives/Popup.svelte';
-	import TrackInfo from './TrackInfo.svelte';
 	import { _ } from 'svelte-i18n';
 	import { onMount } from 'svelte';
 	import { playerState } from '$lib/services';
@@ -22,8 +19,6 @@
 		onStop?: () => void;
 		onReveal?: () => void;
 		onReplay?: () => void;
-		onNext?: () => void;
-		onPlaybackEnd?: () => void;
 	}
 
 	let {
@@ -37,9 +32,7 @@
 		onPlay = () => {},
 		onStop = () => {},
 		onReveal = () => {},
-		onReplay = () => {},
-		onNext = () => {},
-		onPlaybackEnd = () => {}
+		onReplay = () => {}
 	}: Props = $props();
 
 	let isHoldingReveal = $state(false);
@@ -134,34 +127,7 @@
 			buttonSize
 		};
 	});
-
-	function handleNext() {
-		onNext();
-	}
 </script>
-
-<!-- Backdrop (using Popup component) -->
-<Popup
-	visible={isRevealed}
-	onClose={() => {}}
-	width="w-[420px] max-w-[90vw]"
-	padding="lg"
-	showCloseButton={false}
->
-	<div class="flex flex-col gap-5">
-		<TrackInfo {track} />
-
-		<!-- Continue button -->
-		<button
-			type="button"
-			onclick={handleNext}
-			class="mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3 font-bold text-cyan-400 transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.6)]"
-		>
-			{$_('game.nextRound')}
-			<ArrowRight class="h-5 w-5" />
-		</button>
-	</div>
-</Popup>
 
 <div
 	class="absolute z-30 transition-opacity duration-30 md:mt-0"

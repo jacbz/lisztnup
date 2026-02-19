@@ -113,7 +113,6 @@
 	{visible}
 	{onClose}
 	width="3xl"
-	padding="lg"
 	borderColor={modeConfig?.color}
 	shadowColor={modeConfig?.color}
 >

@@ -25,9 +25,9 @@
 		width?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '5xl' | '6xl' | 'screen' | string;
 		/**
 		 * Padding.
-		 * @default 'md'
+		 * @default 'responsive'
 		 */
-		padding?: 'none' | 'sm' | 'md' | 'lg' | 'responsive';
+		padding?: 'none' | 'responsive';
 		/**
 		 * Overflow behavior.
 		 * @default 'auto'
@@ -61,7 +61,7 @@
 		onClose = () => {},
 		children,
 		width = 'md',
-		padding = 'md',
+		padding = 'responsive',
 		overflow = 'auto',
 		borderColor = 'border-cyan-400',
 		shadowColor = 'rgba(34,211,238,0.3)',

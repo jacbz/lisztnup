@@ -79,8 +79,6 @@
 			onStop={ctx.stopTrack}
 			onReveal={ctx.revealTrack}
 			onReplay={ctx.replayTrack}
-			onNext={ctx.nextRound}
-			onPlaybackEnd={ctx.handlePlaybackEnd}
 			playerSize={240}
 		/>
 	</div>

@@ -69,7 +69,7 @@
 	});
 </script>
 
-<Popup {visible} onClose={() => {}} width="5xl" padding="lg" showCloseButton={false}>
+<Popup {visible} onClose={() => {}} width="5xl" showCloseButton={false}>
 	<div class="flex flex-col gap-6">
 		<div class="text-center">
 			<h2 class="text-4xl font-bold text-cyan-400">{$_('endGame.title')}</h2>
@@ -126,7 +126,6 @@
 	visible={!!inspectTrack}
 	onClose={() => (inspectTrack = null)}
 	width="6xl"
-	padding="lg"
 	borderColor="border-cyan-400"
 >
 	{#if inspectTrack}
@@ -137,7 +136,7 @@
 			<div
 				class="min-h-0 flex-1 overflow-y-auto rounded-2xl border border-slate-700/50 bg-slate-950/30 p-4"
 			>
-				<TrackInfo track={inspectTrack} showUpsideDown={false} bleed="sm" />
+				<TrackInfo track={inspectTrack} showMirror={false} bleed="sm" />
 			</div>
 		</div>
 	{/if}

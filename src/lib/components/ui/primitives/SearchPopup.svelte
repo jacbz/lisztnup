@@ -116,11 +116,6 @@
 			icon: musicbrainz
 		}
 	]);
-
-	function handleProviderClick(url: string) {
-		window.open(url, '_blank', 'noopener,noreferrer');
-		onClose();
-	}
 </script>
 
 {#snippet children()}
@@ -142,9 +137,10 @@
 		<!-- Provider Grid -->
 		<div class="grid grid-cols-2 gap-3">
 			{#each searchProviders as provider}
-				<button
-					type="button"
-					onclick={() => handleProviderClick(provider.url)}
+				<a
+					href={provider.url}
+					target="_blank"
+					rel="noopener noreferrer"
 					class="group relative overflow-hidden rounded-xl border-2 bg-slate-900 p-4 font-semibold transition-all duration-300 hover:scale-105 hover:bg-slate-800 active:scale-95"
 					style="border-color: {provider.color}; color: {provider.color}; box-shadow: 0 0 20px {provider.glowColor};"
 					onmouseenter={(e) => {
@@ -160,12 +156,12 @@
 							{@html provider.icon}
 						</div>
 					</div>
-				</button>
+				</a>
 			{/each}
 		</div>
 	</div>
 {/snippet}
 
-<Popup {visible} {onClose} width="md" padding="md">
+<Popup {visible} {onClose} width="md">
 	{@render children()}
 </Popup>

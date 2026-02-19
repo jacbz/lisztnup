@@ -326,7 +326,6 @@
 	visible={game.showRevealPopup && !!game.revealTrack}
 	onClose={() => game.handleCloseRevealPopup()}
 	width="w-[480px] max-w-[90vw]"
-	padding="lg"
 	borderColor={game.revealIsCorrect === true
 		? 'border-green-400'
 		: game.revealIsCorrect === false
@@ -344,7 +343,7 @@
 			>
 				<TrackInfo
 					track={game.revealTrack}
-					showUpsideDown={players.some((player) => player.edge === 'top')}
+					showMirror={players.some((player) => player.edge === 'top')}
 					bleed="sm"
 				/>
 			</div>

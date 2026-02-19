@@ -21,12 +21,13 @@
 
 	interface Props {
 		track: Track | null;
-		showUpsideDown?: boolean;
+		/** If true, shows the upside-down compact info section above the main info, for players seated across from the screen. */
+		showMirror: boolean;
 		/** Controls horizontal bleed to break out of parent padding. */
 		bleed?: 'none' | 'sm' | 'md' | 'lg';
 	}
 
-	let { track = null, showUpsideDown = true, bleed = 'lg' }: Props = $props();
+	let { track = null, showMirror = true, bleed = 'lg' }: Props = $props();
 
 	let showSearchPopup = $state(false);
 	let replayActive = $state(false);
@@ -134,7 +135,7 @@
 </script>
 
 {#if track}
-	{#if showUpsideDown}
+	{#if showMirror}
 		<!-- Compact upside-down info -->
 		<div
 			class="mb-3 flex rotate-180 flex-col gap-1 border-t border-slate-600 pt-4 text-center text-sm font-semibold text-slate-300 opacity-90"
@@ -237,7 +238,6 @@
 						onPlay={handlePlayAgain}
 						onStop={handleReplayStop}
 						onReveal={() => {}}
-						onNext={() => {}}
 					/>
 				</div>
 			</div>

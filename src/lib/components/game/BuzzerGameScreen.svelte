@@ -4,11 +4,7 @@
 	import type { GuessCategory } from '$lib/types';
 	import { BUZZER_TIME_PERCENTAGES, CATEGORY_POINTS } from '$lib/types';
 	import { currentRound, tracklist, settings } from '$lib/stores';
-	import ScoringScreen from '../ui/screens/ScoringScreen.svelte';
-	import Popup from '../ui/primitives/Popup.svelte';
-	import TrackInfo from '../ui/gameplay/TrackInfo.svelte';
 	import EdgeDisplay from '../ui/primitives/EdgeDisplay.svelte';
-	import ArrowRight from 'lucide-svelte/icons/arrow-right';
 	import { _ } from 'svelte-i18n';
 	import { getCategoryDefinition } from '$lib/data/categories';
 	import { getGameContext } from './context';
@@ -93,16 +89,18 @@
 			// Time's up - auto-buzz and reveal immediately (but wasManuallyBuzzed stays false)
 			deezerPlayer.stop();
 			isBuzzerPressed = true;
-			wasManuallyBuzzed = false; // Explicitly set to false for timeout
-
-			// Set revealed categories to all categories that were shown
-			buzzerRevealedCategories = [...revealedCategories];
+			wasManuallyBuzzed = false;
 
 			currentRound.update((state) => ({
 				...state,
-				category: currentCategory,
-				isRevealed: true
+				category: currentCategory
 			}));
+
+			ctx.revealTrack({
+				showScoring: false,
+				scoringCategories: [...revealedCategories],
+				beforeNextRound: resetBuzzerState
+			});
 		}
 	});
 
@@ -225,8 +223,7 @@
 			wasManuallyBuzzed = true; // Mark that someone actually pressed the buzzer
 			showReveal = true;
 
-			// Set the current category in the round state and store revealed categories
-			buzzerRevealedCategories = [...revealedCategories];
+			// Set the current category in the round state
 			currentRound.update((state) => ({
 				...state,
 				category: currentCategory
@@ -262,53 +259,22 @@
 	}
 
 	function handleBuzzerReveal() {
-		currentRound.update((state) => ({
-			...state,
-			isRevealed: true
-		}));
 		showReveal = false;
-
-		// Show scoring screen only if scoring is enabled AND someone manually pressed the buzzer
-		// If no one pressed the buzzer (time ran out), treat it like scoring is disabled (just show track info)
-		if (enableScoring && wasManuallyBuzzed) {
-			showScoringScreen = true;
-		}
+		ctx.revealTrack({
+			showScoring: enableScoring && wasManuallyBuzzed,
+			scoringCategories: [...revealedCategories],
+			beforeNextRound: resetBuzzerState
+		});
 	}
 
-	function handleBuzzerNext() {
-		// Just proceed to next round; GameScreen will handle end game detection
-		handleBuzzerNextRound();
-	}
-
-	function handleBuzzerScoreSubmit(scores: Record<string, number>) {
-		gameSession.recordRound($currentRound.currentTrackIndex, scores);
-		showScoringScreen = false;
-
-		// GameScreen will handle end game detection
-		handleBuzzerNextRound();
-	}
-
-	async function handleBuzzerNextRound() {
-		deezerPlayer.stop();
-
-		// Reset state for next round
+	/** Reset buzzer-specific state before advancing to the next round. */
+	function resetBuzzerState() {
 		hasStartedPlaying = false;
 		isBuzzerPressed = false;
 		wasManuallyBuzzed = false;
 		showReveal = false;
-		trackDuration = 30; // Reset to default, will be updated when track plays
-
-		try {
-			await ctx.nextRound();
-		} catch (error) {
-			console.error('Error advancing round:', error);
-			toast.error($_('network.loadFailedFinal'));
-		}
+		trackDuration = 30;
 	}
-
-	// Buzzer-specific state
-	let showScoringScreen = $state(false);
-	let buzzerRevealedCategories = $state<GuessCategory[]>([]); // Categories revealed when buzzer was pressed
 
 	onMount(() => {
 		// Detect touch support
@@ -442,38 +408,3 @@
 		</div>
 	</div>
 {/if}
-
-<!-- Track Info Popup (when scoring is disabled OR no one manually pressed the buzzer) -->
-<Popup
-	visible={$currentRound.isRevealed && (!enableScoring || !wasManuallyBuzzed)}
-	onClose={() => {}}
-	width="w-[420px] max-w-[90vw]"
-	padding="lg"
-	showCloseButton={false}
->
-	<div class="flex flex-col gap-5">
-		<TrackInfo track={currentTrack} />
-
-		<!-- Continue button -->
-
-		<button
-			type="button"
-			onclick={handleBuzzerNext}
-			class="mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3 font-bold text-cyan-400 transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.6)]"
-		>
-			{$_('game.nextRound')}
-			<ArrowRight class="h-5 w-5" />
-		</button>
-	</div>
-</Popup>
-
-<!-- Scoring Screen -->
-<ScoringScreen
-	visible={showScoringScreen}
-	mode="buzzer"
-	track={currentTrack}
-	players={$gameSession.players}
-	{currentCategory}
-	revealedCategories={buzzerRevealedCategories}
-	onScore={handleBuzzerScoreSubmit}
-/>

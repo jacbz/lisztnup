@@ -386,7 +386,6 @@
 				playerSize={48}
 				onStop={stopPlayback}
 				onReveal={() => {}}
-				onNext={() => {}}
 			/>
 		</div>
 	</div>
