@@ -304,7 +304,7 @@ export class TimelineGame {
 			};
 			this.timelines[i].entries.push(entry);
 
-			await new Promise((r) => setTimeout(r, 600));
+			await new Promise((r) => setTimeout(r, 800));
 		}
 
 		// Sync top card with the audio-loaded track from the tracklist

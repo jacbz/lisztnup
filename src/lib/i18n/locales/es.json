@@ -337,7 +337,7 @@
 	},
 	"modes": {
 		"timeline": {
-			"name": "Línea de tiempo",
+			"name": "Timeline",
 			"description": "Construye una línea cronológica colocando las pistas en el orden correcto de años.",
 			"step1": {
 				"title": "Juega la carta",

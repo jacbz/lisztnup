@@ -42,6 +42,12 @@
 	let enableScoring = $state($settingsStore.enableScoring); // Load from settings
 	let playerSetupRef: any = $state();
 	let startAudio: HTMLAudioElement | null = null;
+	let startAudioSources = {
+		classic: '/start_classic.mp3',
+		buzzer: '/start_buzzer.mp3',
+		timeline: '/start_timeline.mp3',
+		bingo: '/start_bingo.mp3'
+	};
 
 	// Load custom tracklists
 	let customTracklists = $state(SettingsService.loadCustomTracklists());
@@ -93,6 +99,10 @@
 		} else {
 			// Restore from settings when switching from Bingo
 			enableScoring = $settingsStore.enableScoring;
+		}
+		// Update audio source when mode changes
+		if (startAudio && mode) {
+			startAudio.src = startAudioSources[mode];
 		}
 	}
 
@@ -148,8 +158,9 @@
 	}
 
 	onMount(() => {
-		// Create start audio element
-		startAudio = new Audio('/start.mp3');
+		// Create start audio element with initial mode
+		const initialMode = selectedMode || 'classic';
+		startAudio = new Audio(startAudioSources[initialMode]);
 
 		// Close locale dropdown when clicking outside
 		const handleClickOutside = (event: MouseEvent) => {
