@@ -4,7 +4,7 @@
 	import ScoringCard from '../primitives/ScoringCard.svelte';
 	import TrackInfo from '../gameplay/TrackInfo.svelte';
 	import { CATEGORY_POINTS, type GuessCategory, type Player, type Track } from '$lib/types';
-	import { getCategoryDefinition } from '$lib/data/categories';
+	import { ArrowRight } from 'lucide-svelte';
 
 	interface Props {
 		visible?: boolean;
@@ -122,17 +122,18 @@
 					{/each}
 				</div>
 			{/if}
-		</div>
-	</div>
 
-	<!-- Confirm Button -->
-	<div class="mt-6 flex justify-center">
-		<button
-			type="button"
-			class="rounded-xl bg-cyan-500 px-8 py-3 text-lg font-bold text-white shadow-lg transition-all duration-200 hover:bg-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.5)]"
-			onclick={handleContinue}
-		>
-			{$_('common.confirm')}
-		</button>
+			<!-- Confirm Button -->
+			<div class="mt-auto flex justify-center">
+				<button
+					type="button"
+					class="mt-6 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3 font-bold text-cyan-400 transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.6)]"
+					onclick={handleContinue}
+				>
+					{$_('common.confirm')}
+					<ArrowRight class="h-5 w-5" />
+				</button>
+			</div>
+		</div>
 	</div>
 </Popup>

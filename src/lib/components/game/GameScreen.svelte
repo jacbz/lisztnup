@@ -399,8 +399,13 @@
 		sampleRawTrack,
 		prepareNewGame,
 		retryPreload,
-		audioProgress: progress,
 		onHome: handleHome,
+		get currentTrack() {
+			return currentTrack;
+		},
+		get audioProgressValue() {
+			return $progress;
+		},
 		get activeCategories() {
 			return activeCategories;
 		},

@@ -3,7 +3,7 @@
 	import { fly } from 'svelte/transition';
 	import type { GuessCategory } from '$lib/types';
 	import { BUZZER_TIME_PERCENTAGES, CATEGORY_POINTS } from '$lib/types';
-	import { currentRound, tracklist, settings } from '$lib/stores';
+	import { currentRound, settings } from '$lib/stores';
 	import EdgeDisplay from '../ui/primitives/EdgeDisplay.svelte';
 	import { _ } from 'svelte-i18n';
 	import { getCategoryDefinition } from '$lib/data/categories';
@@ -16,17 +16,6 @@
 
 	const ctx = getGameContext();
 
-	const currentTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
-
-	// Get enableScoring from context
-	const enableScoring = $derived(ctx.enableScoring);
-
-	// Get active categories from context
-	const activeCategories = $derived(ctx.activeCategories);
-
-	// Get hasValidYears from context
-	const hasValidYears = $derived(ctx.hasValidYears);
-
 	// Randomly select n categories from active categories and order by points (most valuable first)
 	// This is set once per round and stored in state to prevent changing mid-round
 	// Filter out era/decade if track has no valid year data
@@ -35,9 +24,9 @@
 	// Initialize category progression when round changes
 	$effect(() => {
 		// Filter active categories based on year data availability
-		const validCategories = hasValidYears
-			? activeCategories
-			: activeCategories.filter((cat) => cat !== 'era' && cat !== 'decade');
+		const validCategories = ctx.hasValidYears
+			? ctx.activeCategories
+			: ctx.activeCategories.filter((cat) => cat !== 'era' && cat !== 'decade');
 
 		// Generate new category progression for this round
 		if (validCategories.length === 0) {
@@ -70,21 +59,15 @@
 	// Detect if device has touch capability
 	let hasTouch = $state(false);
 
-	// Subscribe to audio progress from DeezerPlayer
-	let audioProgressValue = $state(0);
-	const unsubAudioProgress = ctx.audioProgress.subscribe((value) => {
-		audioProgressValue = value;
-	});
-
 	// Calculate playback time from progress and duration
-	const playbackTime = $derived(audioProgressValue * trackDuration);
+	const playbackTime = $derived(ctx.audioProgressValue * trackDuration);
 
 	// Monitor playback to detect when time's up (auto-buzz)
 	$effect(() => {
 		if (
 			hasStartedPlaying &&
 			!isBuzzerPressed &&
-			(playbackTime >= trackDuration || (!$playerState.isPlaying && audioProgressValue >= 0.99))
+			(playbackTime >= trackDuration || (!$playerState.isPlaying && ctx.audioProgressValue >= 0.99))
 		) {
 			// Time's up - auto-buzz and reveal immediately (but wasManuallyBuzzed stays false)
 			deezerPlayer.stop();
@@ -261,7 +244,7 @@
 	function handleBuzzerReveal() {
 		showReveal = false;
 		ctx.revealTrack({
-			showScoring: enableScoring && wasManuallyBuzzed,
+			showScoring: ctx.enableScoring && wasManuallyBuzzed,
 			scoringCategories: [...revealedCategories],
 			beforeNextRound: resetBuzzerState
 		});
@@ -295,7 +278,6 @@
 	});
 
 	onDestroy(() => {
-		unsubAudioProgress();
 		window.removeEventListener('keydown', handleKeyDown);
 		audioContext?.close();
 		buzzerAudio?.pause();
@@ -304,7 +286,7 @@
 </script>
 
 <!-- Main Game Area -->
-{#if currentTrack}
+{#if ctx.currentTrack}
 	<div class="flex h-screen flex-col items-center justify-center">
 		<!-- Buzzer Button (always centered) with floating countdown -->
 		<!-- Category & Time Display -->

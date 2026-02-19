@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
-	import { currentRound, tracklist, gameSession } from '$lib/stores';
+	import { currentRound, gameSession } from '$lib/stores';
 	import { getCategoryDefinition } from '$lib/data/categories';
 	import PlayerControl from '../ui/gameplay/PlayerControl.svelte';
 	import { _ } from 'svelte-i18n';
@@ -8,23 +7,14 @@
 	import { CATEGORY_POINTS } from '$lib/types';
 	import EdgeDisplay from '../ui/primitives/EdgeDisplay.svelte';
 
-	const currentTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
-
 	const ctx = getGameContext();
-
-	// Subscribe to audio progress
-	let audioProgressValue = $state(0);
-	const unsubAudioProgress = ctx.audioProgress.subscribe((value) => {
-		audioProgressValue = value;
-	});
-	onDestroy(unsubAudioProgress);
 
 	// Get active categories from context
 	const activeCategories = $derived(ctx.activeCategories);
 </script>
 
 <!-- Main Game Area -->
-{#if currentTrack}
+{#if ctx.currentTrack}
 	<div class="flex h-screen items-center justify-center">
 		<!-- Floating Legend of Categories -->
 		<EdgeDisplay
@@ -73,8 +63,8 @@
 			isPlaying={$currentRound.isPlaying}
 			playbackEnded={$currentRound.playbackEnded}
 			isRevealed={$currentRound.isRevealed}
-			progress={audioProgressValue}
-			track={currentTrack}
+			progress={ctx.audioProgressValue}
+			track={ctx.currentTrack}
 			onPlay={ctx.playTrack}
 			onStop={ctx.stopTrack}
 			onReveal={ctx.revealTrack}

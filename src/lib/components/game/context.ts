@@ -1,5 +1,4 @@
 import { getContext } from 'svelte';
-import type { Readable } from 'svelte/store';
 import type { Track, GuessCategory } from '$lib/types';
 
 export const GAME_SCREEN_CONTEXT = Symbol('game-screen');
@@ -35,8 +34,11 @@ export interface GameScreenContext {
 	prepareNewGame: () => void;
 	/** Manually trigger a preload retry after a network failure. */
 	retryPreload: () => void;
-	audioProgress: Readable<number>;
 	onHome: () => void;
+	/** The track at the current round index, or null if not yet loaded. */
+	readonly currentTrack: Track | null;
+	/** Current playback progress (0–1), updated reactively by GameScreen. */
+	readonly audioProgressValue: number;
 	readonly activeCategories: readonly GuessCategory[];
 	readonly disabledCategories: readonly GuessCategory[];
 	readonly hasValidYears: boolean;

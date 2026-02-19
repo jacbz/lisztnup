@@ -4,7 +4,7 @@
 	import { fly } from 'svelte/transition';
 	import type { Player, PlayerEdge, Track } from '$lib/types';
 	import { ALL_EDGES } from '$lib/types';
-	import { currentRound, tracklist, resetGame, gameSession, lastReconnectedAt } from '$lib/stores';
+	import { currentRound, resetGame, gameSession, lastReconnectedAt } from '$lib/stores';
 	import { _ } from 'svelte-i18n';
 
 	// Components
@@ -43,23 +43,14 @@
 			nextRound: ctx.nextRound,
 			sampleRawTrack: ctx.sampleRawTrack
 		},
-		() => loadedTrack
+		() => ctx.currentTrack
 	);
 
 	// ─── Audio Progress ────────────────────────────────────
 
-	let audioProgressValue = $state(0);
-	const unsubAudioProgress = ctx.audioProgress.subscribe((value) => {
-		audioProgressValue = value;
-	});
 	onDestroy(() => {
-		unsubAudioProgress();
 		game.destroy();
 	});
-
-	// ─── Store-derived values ──────────────────────────────
-
-	const loadedTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
 
 	// ─── Lifecycle ─────────────────────────────────────────
 
@@ -92,10 +83,8 @@
 
 	$effect(() => {
 		if (game.isDealing) return;
-		if ($currentRound.currentTrackIndex < $tracklist.length) {
-			const track = $tracklist[$currentRound.currentTrackIndex];
-			if (track) game.syncTopCard(track);
-		}
+		const track = ctx.currentTrack;
+		if (track) game.syncTopCard(track);
 	});
 
 	// ─── Track Exhaustion ──────────────────────────────────
@@ -177,7 +166,7 @@
 							isPlaying={false}
 							playbackEnded={false}
 							isRevealed={false}
-							progress={audioProgressValue}
+							progress={ctx.audioProgressValue}
 							{track}
 							playerSize={120}
 							onPlay={() => game.handlePlay()}
@@ -199,7 +188,7 @@
 							isPlaying={true}
 							playbackEnded={false}
 							isRevealed={false}
-							progress={audioProgressValue}
+							progress={ctx.audioProgressValue}
 							{track}
 							playerSize={120}
 							onPlay={() => {}}

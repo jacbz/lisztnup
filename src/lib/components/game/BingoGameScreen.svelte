@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
 	import type { GuessCategory } from '$lib/types';
-	import { tracklist, currentRound, toast } from '$lib/stores';
+	import { currentRound } from '$lib/stores';
 	import SpinningWheel from './SpinningWheel.svelte';
 	import PlayerControl from '../ui/gameplay/PlayerControl.svelte';
 	import EdgeDisplay from '../ui/primitives/EdgeDisplay.svelte';
@@ -9,21 +8,12 @@
 	import { getCategoryDefinition } from '$lib/data/categories';
 	import { getGameContext } from './context';
 
-	const currentTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
-
-	let hasSpunOnce = $state(false); // Track if wheel has been spun in this round
-
 	const ctx = getGameContext();
 
 	// Get disabled categories from context
 	const disabledCategories = $derived(ctx.disabledCategories);
 
-	// Subscribe to audio progress
-	let audioProgressValue = $state(0);
-	const unsubAudioProgress = ctx.audioProgress.subscribe((value) => {
-		audioProgressValue = value;
-	});
-	onDestroy(unsubAudioProgress);
+	let hasSpunOnce = $state(false); // Track if wheel has been spun in this round
 
 	async function handleCategorySelected(category: GuessCategory) {
 		currentRound.update((state) => ({
@@ -47,21 +37,6 @@
 		}));
 	}
 
-	async function handlePlay() {
-		if (!currentTrack) return;
-
-		try {
-			await ctx.playTrack();
-		} catch (error) {
-			console.error('Error playing track:', error);
-			toast.error($_('network.playFailed'));
-		}
-	}
-
-	function handleStop() {
-		ctx.stopTrack();
-	}
-
 	function handleReveal() {
 		ctx.revealTrack({
 			beforeNextRound: () => {
@@ -72,7 +47,7 @@
 </script>
 
 <!-- Main Game Area -->
-{#if currentTrack}
+{#if ctx.currentTrack}
 	<div class="relative flex h-screen items-center justify-center">
 		<!-- Spinning Wheel (fills screen) - only in Bingo mode -->
 		<SpinningWheel
@@ -90,10 +65,10 @@
 			isPlaying={$currentRound.isPlaying}
 			playbackEnded={$currentRound.playbackEnded}
 			isRevealed={$currentRound.isRevealed}
-			progress={audioProgressValue}
-			track={currentTrack}
-			onPlay={handlePlay}
-			onStop={handleStop}
+			progress={ctx.audioProgressValue}
+			track={ctx.currentTrack}
+			onPlay={ctx.playTrack}
+			onStop={ctx.stopTrack}
 			onReveal={handleReveal}
 			onReplay={ctx.replayTrack}
 		/>
