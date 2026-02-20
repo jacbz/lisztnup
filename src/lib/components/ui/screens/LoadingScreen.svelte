@@ -3,9 +3,28 @@
 	import { loadGameData, dataLoadProgress } from '$lib/stores';
 	import { _ } from 'svelte-i18n';
 
+	const SOUND_FILES = [
+		'/correct.mp3',
+		'/wrong.mp3',
+		'/buzzer.mp3',
+		'/start_timeline.mp3',
+		'/start_classic.mp3',
+		'/start_buzzer.mp3',
+		'/start_bingo.mp3'
+	];
+
 	let error = $state<string | null>(null);
 
 	onMount(async () => {
+		// Preload all sound effects into the browser HTTP cache in parallel.
+		// Runs concurrently with the JSON load; failures are silently ignored so a
+		// missing audio file never blocks the game from starting.
+		SOUND_FILES.forEach((url) =>
+			fetch(url)
+				.then((r) => r.blob())
+				.catch(() => {})
+		);
+
 		try {
 			await loadGameData();
 		} catch (err) {
