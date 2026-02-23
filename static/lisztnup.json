@@ -1762,7 +1762,7 @@
       "name": "Hindemith, Paul",
       "birth_year": 1895,
       "death_year": 1963,
-      "score": 49.25
+      "score": 48.97
     },
     {
       "gid": "679d7a73-41ec-4ede-8176-b68b0e9a48fa",
@@ -35843,7 +35843,7 @@
       "parts": [
         {
           "name": "The Creatures of Prometheus, op. 43: Introduction. Allegro non troppo",
-          "deezer": [2800937852, 1324515292],
+          "deezer": [2800937852],
           "score": 100.0
         }
       ]
@@ -42209,7 +42209,7 @@
       "gid": "4a310308-fee1-40de-a8d2-ba5570b8d914",
       "composer": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
       "name": "Fest- und Gedenkspr\u00fcche, op. 109",
-      "type": "piano",
+      "type": "vocal",
       "begin_year": null,
       "end_year": null,
       "score": 2.98,
@@ -43264,7 +43264,7 @@
       "gid": "3b44283a-f6e0-4258-959d-0c31b99965eb",
       "composer": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
       "name": "Sonata for Piano and Violin no. 3 in D minor, op. 108",
-      "type": "piano",
+      "type": "chamber",
       "begin_year": 1886,
       "end_year": 1888,
       "score": 4.8,
@@ -43393,7 +43393,7 @@
       "gid": "5f772c89-4c72-404d-ad11-85b143cf1c8f",
       "composer": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
       "name": "Sonata for Violin and Piano no. 2 in A major, op. 100 \"Thun\"",
-      "type": "piano",
+      "type": "chamber",
       "begin_year": 1886,
       "end_year": 1886,
       "score": 4.58,
@@ -43720,7 +43720,7 @@
       "gid": "5effd88b-5c94-4e17-984b-dffbdda4e274",
       "composer": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
       "name": "Trio for Horn, Violin & Piano in E-flat major, op. 40",
-      "type": "piano",
+      "type": "chamber",
       "begin_year": 1865,
       "end_year": 1865,
       "score": 4.2,
@@ -43844,7 +43844,7 @@
       "gid": "b7c96bb8-3875-4c62-ad0e-4e8ba798ce06",
       "composer": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
       "name": "Trio for Piano, Violin, and Cello no. 3 in C minor, op. 101",
-      "type": "piano",
+      "type": "chamber",
       "begin_year": null,
       "end_year": null,
       "score": 3.77,
@@ -51546,7 +51546,7 @@
       "gid": "8c7bf42a-259b-4bb1-a82b-5bb6794e1e17",
       "composer": "3d217bc1-cc90-4261-a230-46c0f6b7492c",
       "name": "Habanera",
-      "type": "piano",
+      "type": "orchestral",
       "begin_year": 1885,
       "end_year": 1885,
       "score": 2.3,
@@ -86154,37 +86154,6 @@
         {
           "name": "Konzertmusik f\u00fcr Streichorchester und Blechbl\u00e4ser, op. 50: II. Lebhaft \u2013 Langsam \u2013 Im ersten Zeitmass (Fast \u2013 Slow \u2013 Tempo primo)",
           "deezer": [2372053135],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "41f04f3d-ea8f-42d8-985f-af2e3e0922c7",
-      "composer": "4068eaba-ca03-4c34-9172-2b709b8050e6",
-      "name": "Ludus tonalis",
-      "type": "piano",
-      "begin_year": 1942,
-      "end_year": 1942,
-      "score": 2.26,
-      "parts": [
-        {
-          "name": "Ludus tonalis: No. 4. Fuga secunda in G",
-          "deezer": [2769165581],
-          "score": 95.42
-        },
-        {
-          "name": "Ludus tonalis: No. 8. Fuga quarta in A",
-          "deezer": [2769165601],
-          "score": 95.42
-        },
-        {
-          "name": "Ludus tonalis: No. 10. Fuga quinta in E",
-          "deezer": [2769165611],
-          "score": 95.42
-        },
-        {
-          "name": "Ludus tonalis: No. 18. Fuga nona in B-flat",
-          "deezer": [2769165591],
           "score": 100.0
         }
       ]

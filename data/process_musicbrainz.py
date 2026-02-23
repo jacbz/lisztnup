@@ -117,6 +117,9 @@ EXCLUDED_COMPOSERS: Set[str] = set([
 # Deezer IDs without preview mp3s, loaded from 'excluded_deezer_ids' file
 EXCLUDED_DEEZER_IDS: Set[int] = set([])
 
+# Deezer IDs that are hand-curated bans (e.g. wrong track in dataset), loaded from 'banned_deezer_ids' file
+BANNED_DEEZER_IDS: Set[int] = set([])
+
 EXCLUDED_WORKS: Set[str] = set([
     "bf57c435-6ce0-3d57-ab04-e2a9179b178c", # O Holy Night
     "0e587c69-8ec2-3c66-ae73-c7ed79956af7", # O Holy Night
@@ -829,7 +832,7 @@ class MusicbrainzProcessor:
             return []
         
         # Filter out excluded IDs
-        recordings = [r for r in recordings if r.deezerId is not None and r.deezerId not in EXCLUDED_DEEZER_IDS]
+        recordings = [r for r in recordings if r.deezerId is not None and r.deezerId not in EXCLUDED_DEEZER_IDS and r.deezerId not in BANNED_DEEZER_IDS]
         if not recordings:
             return []
         
@@ -1055,6 +1058,14 @@ def load_excluded_deezer_ids() -> set[int]:
     return set()
 
 
+def load_banned_deezer_ids() -> set[int]:
+    """Load hand-curated banned Deezer IDs from file."""
+    path = Path("banned_deezer_ids")
+    if path.exists():
+        return set(int(line.strip()) for line in path.read_text().splitlines() if line.strip())
+    return set()
+
+
 def main() -> None:
     """
     Main execution function: loads data, runs the processor, saves the results,
@@ -1073,6 +1084,11 @@ def main() -> None:
     global EXCLUDED_DEEZER_IDS
     EXCLUDED_DEEZER_IDS = load_excluded_deezer_ids()
     print(f"Loaded {len(EXCLUDED_DEEZER_IDS)} excluded Deezer IDs.")
+
+    # Load hand-curated banned Deezer IDs from file
+    global BANNED_DEEZER_IDS
+    BANNED_DEEZER_IDS = load_banned_deezer_ids()
+    print(f"Loaded {len(BANNED_DEEZER_IDS)} banned Deezer IDs.")
 
     print(
         f"Loaded {len(composers_data)} composers from 'musicbrainz.json'. Starting processing..."

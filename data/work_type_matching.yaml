@@ -345,13 +345,13 @@ composer_specific_rules:
       - Old Hundredth
   'Brahms, Johannes':
     piano:
-      - op\.\s(4|10|39|76|79|116|117|118|119) # Scherzo, Ballades, Waltzes, Klavierstücke, Rhapsodien, Fantasien, Intermezzi
+      - op\.\s(4|10|39|76|79|116|117|118|119)\b # Scherzo, Ballades, Waltzes, Klavierstücke, Rhapsodien, Fantasien, Intermezzi
     chamber:
       - Clarinet Quintet|Horn Trio|Sonata for 2 Pianos
     orchestral:
       - Academic Festival Overture|Tragic Overture|Variations on a Theme by Haydn|Serenade no\. 2
     vocal:
-      - Ein deutsches Requiem|Alto Rhapsody|Gesang der Parzen|Nänie|Quartette.*op\. 64|Balladen und Romanzen.*op\. 75
+      - Ein deutsches Requiem|Alto Rhapsody|Gesang der Parzen|Nänie|Quartette.*op\. 64|Balladen und Romanzen.*op\. 75|Fest- und Gedenksprüche
   'Bridge, Frank':
     chamber:
       - Sir Roger de Coverley|Sonata.*Violoncello
@@ -452,9 +452,9 @@ composer_specific_rules:
       - Danzas cubanas
   'Chabrier, Emmanuel':
     orchestral:
-      - España|Joyeuse marche|Suite pastorale
+      - España|Joyeuse marche|Suite pastorale|Habanera
     piano:
-      - Bourrée fantasque|Haba[nñ]era|Impromptu|Pièces Pittoresques
+      - Bourrée fantasque|Habañera|Impromptu|Pièces Pittoresques
   'Chaminade, Cécile':
     piano:
       - Études de concert
