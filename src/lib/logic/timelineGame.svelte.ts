@@ -75,6 +75,7 @@ export class TimelineGame {
 	revealIsCorrect = $state<boolean | null>(null);
 	revealPurpose = $state<'turn' | 'inspect'>('turn');
 	revealReachedWin = $state(false);
+	popupRotation = $state(0);
 
 	// ═══════════════════════════════════════════════════════
 	// DRAG STATE  (grouped — many coordinate fields travel together)
@@ -136,18 +137,6 @@ export class TimelineGame {
 		return formatYearRange(this.revealTrack.work.begin_year, this.revealTrack.work.end_year, {
 			preferEndYearWhenRange: true
 		});
-	});
-
-	popupRotation = $derived.by(() => {
-		if (!this.activePlayer) return 0;
-		const edge = this.activePlayer.player.edge || 'bottom';
-		const rotationMap: Record<PlayerEdge, number> = {
-			bottom: 0,
-			top: 180,
-			left: 90,
-			right: -90
-		};
-		return rotationMap[edge];
 	});
 
 	/** Timelines grouped by effective screen edge, with active-player rotation applied. */
@@ -213,6 +202,18 @@ export class TimelineGame {
 			if (originalEdge === 'right') return 'bottom';
 		}
 		return originalEdge;
+	}
+
+	static readonly #EDGE_ROTATION: Record<PlayerEdge, number> = {
+		bottom: 0,
+		top: 180,
+		left: 90,
+		right: -90
+	};
+
+	#getRotationForPlayer(player: Player): number {
+		const edge = this.#getEffectiveEdge(player.edge || 'bottom');
+		return TimelineGame.#EDGE_ROTATION[edge];
 	}
 
 	/**
@@ -637,6 +638,7 @@ export class TimelineGame {
 		this.revealReachedWin =
 			isCorrect && entries.filter((e) => e.correct !== false).length >= this.#cardsToWin;
 		this.pendingEntryId = null;
+		this.popupRotation = this.#getRotationForPlayer(this.activePlayer.player);
 
 		this.showRevealPopup = true;
 	}
@@ -733,11 +735,12 @@ export class TimelineGame {
 		this.revealReachedWin = false;
 	}
 
-	openInspectCard(entryId: string, track: Track) {
+	openInspectCard(entryId: string, track: Track, rotation: number = 0) {
 		if (this.drag.active || this.resolvingTurn || this.pendingEntryId) return;
 		this.revealEntryId = entryId;
 		this.revealTrack = track;
 		this.revealPurpose = 'inspect';
+		this.popupRotation = rotation;
 		this.showRevealPopup = true;
 	}
 

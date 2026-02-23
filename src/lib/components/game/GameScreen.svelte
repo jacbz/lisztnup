@@ -432,22 +432,20 @@
 	<!-- Network Status Banner -->
 	<NetworkStatusBanner isLoading={isPreloading} hasError={hasPreloadError} />
 
-	<!-- Header -->
-	<div class="absolute top-0 right-0 left-0 z-20 flex items-center justify-between p-6">
-		<div class="pr-4">
-			<Logo onClick={handleHomeClick} size="medium" />
-		</div>
-
-		<!-- Settings Button -->
-		<button
-			type="button"
-			onclick={() => (showInGameSettings = true)}
-			class="flex items-center gap-2 rounded-lg bg-slate-800/80 px-4 py-2 text-cyan-400 backdrop-blur-sm
-                 transition-colors hover:bg-slate-700/80"
-		>
-			<SettingsIcon class="h-5 w-5" />
-		</button>
+	<!-- Logo -->
+	<div class="absolute top-6 left-6 z-20">
+		<Logo onClick={handleHomeClick} size="medium" />
 	</div>
+
+	<!-- Settings -->
+	<button
+		type="button"
+		onclick={() => (showInGameSettings = true)}
+		class="absolute top-6 right-6 z-20 flex items-center gap-2 rounded-lg bg-slate-800/80 px-4 py-2 text-cyan-400 backdrop-blur-sm
+                 transition-colors hover:bg-slate-700/80"
+	>
+		<SettingsIcon class="h-5 w-5" />
+	</button>
 
 	<!-- Round Indicator (Standard Modes) -->
 	{#if !isGameOver && mode !== 'bingo' && mode !== 'timeline'}

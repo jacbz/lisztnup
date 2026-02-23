@@ -65,7 +65,7 @@
 
 {#if showBanner}
 	<div
-		class="pointer-events-none fixed top-20 right-0 left-0 z-50 flex justify-center"
+		class="pointer-events-none fixed top-20 right-0 left-0 z-1000 flex justify-center"
 		transition:fly={{ y: -20, duration: 300 }}
 	>
 		<div

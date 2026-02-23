@@ -70,6 +70,7 @@
 				z-index: ${maxDepth - depth}; 
 				transform: translate3d(${x + activeX}px, ${y + activeY}px, 0) rotate(${rot}deg);
 				box-shadow: 0 ${depth * 2}px ${depth * 10}px rgba(0,0,0,0.35);
+				${isTop && dragging ? 'filter: drop-shadow(0 12px 24px rgba(0,0,0,0.6));' : ''}
 			`}
 			onpointerdown={(e) => isTop && draggable && onPointerDown(e)}
 		>

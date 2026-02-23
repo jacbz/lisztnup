@@ -253,6 +253,7 @@
 			works.forEach((work) => {
 				const composer = composerMap.get(work.composer);
 				if (!composer) return;
+				if (!work.parts || work.parts.length === 0) return;
 
 				// Format year
 				const yearStr = formatYearRange(work.begin_year, work.end_year);
@@ -543,7 +544,7 @@
 												/>
 											{/if}
 										</div>
-										{#if row.parts.length > 1 || row.work !== row.parts[0].name}
+										{#if row.parts.length > 1 || (row.parts.length === 1 && row.work !== row.parts[0].name)}
 											<ul class="mt-1 space-y-0.5 pl-2 text-slate-400 md:pl-4">
 												{#each row.parts as part}
 													<li class="flex items-center gap-2">

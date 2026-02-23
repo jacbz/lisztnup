@@ -237,7 +237,7 @@
 		confirmDisabled={!game.canConfirm}
 		confirmLabel={$_('timeline.confirm')}
 		onConfirm={() => game.handleConfirmPlacement()}
-		onConfirmedCardClick={(entry) => game.openInspectCard(entry.id, entry.track)}
+		onConfirmedCardClick={(entry) => game.openInspectCard(entry.id, entry.track, rotation)}
 		onPendingPointerDown={(id, ev) => game.startDragPending(id, ev)}
 	/>
 {/snippet}

@@ -54,18 +54,22 @@
 	const lifespan = $derived(
 		track ? formatLifespan(track.composer.birth_year, track.composer.death_year) : ''
 	);
+	// Check whether the DeezerPlayer's loaded track matches *this* card
+	const isLoadedTrack = $derived.by(() => {
+		if (!track) return false;
+		const loadedId = $playerState.track?.id;
+		return !!loadedId && track.part.deezer.includes(loadedId);
+	});
 	const artists = $derived.by(() => {
-		// create a dependency on `track`
-		if (!track) return [];
+		if (!track || !isLoadedTrack) return [];
 		return deezerPlayer.getArtists().filter((name: string) => name !== composerName);
 	});
 	const shouldShowArtist = $derived(artists.length);
 	const shouldShowPart = $derived(track && track.work.name !== track.part.name);
-	// Use the currently loaded deezer ID from playerState, or fall back to first ID in array
 	const deezerTrackUrl = $derived.by(() => {
 		if (!track) return '';
 		const loadedId = $playerState.track?.id;
-		const deezerId = loadedId ?? track.part.deezer[0];
+		const deezerId = isLoadedTrack && loadedId ? loadedId : track.part.deezer[0];
 		return `https://www.deezer.com/track/${deezerId}`;
 	});
 
@@ -92,7 +96,7 @@
 		if (!track) return '';
 
 		const loadedId = $playerState.track?.id;
-		const deezerId = loadedId ?? track.part.deezer[0];
+		const deezerId = isLoadedTrack && loadedId ? loadedId : track.part.deezer[0];
 
 		const title = encodeURIComponent(`[Data Issue] Problem with track: ${track.work.name}`);
 		const body = encodeURIComponent(
