@@ -23,6 +23,7 @@
 	"home": {
 		"start": "JOUER",
 		"startGame": "Lancer la partie",
+		"donate": "Faire un don",
 		"settings": "Paramètres",
 		"tracklist": "Sélection",
 		"scoringOn": "Score activé",
@@ -302,7 +303,7 @@
 	},
 	"game": {
 		"round": "Manche {current} sur {total}",
-		"home": "Accueil",
+		"startGame": "Démarrer la partie",
 		"spin": "Tourne !",
 		"play": "Lecture",
 		"pause": "Pause",
@@ -468,6 +469,7 @@
 	},
 	"bingo": {
 		"setupDescription": "Chaque joueur a besoin de sa propre grille unique.",
+		"print": "Imprimer",
 		"reset": "Réinitialiser",
 		"resetTitle": "Nouvelle grille ?",
 		"resetMessage": "Ceci va générer une nouvelle grille aléatoire et effacer tes marques. Es-tu sûr ?",

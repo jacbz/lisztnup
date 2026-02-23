@@ -23,6 +23,7 @@
 	"home": {
 		"start": "開始",
 		"startGame": "開始遊戲",
+		"donate": "捐款",
 		"settings": "設定",
 		"tracklist": "歌單",
 		"scoringOn": "計分已開",
@@ -302,7 +303,7 @@
 	},
 	"game": {
 		"round": "第 {current} 輪 / 共 {total} 輪",
-		"home": "首頁",
+		"startGame": "開始遊戲",
 		"spin": "旋轉！",
 		"play": "播放",
 		"pause": "暫停",
@@ -468,6 +469,7 @@
 	},
 	"bingo": {
 		"setupDescription": "每位玩家需要擁有自己獨特的賓果盤。",
+		"print": "列印",
 		"reset": "重置",
 		"resetTitle": "重置賓果盤？",
 		"resetMessage": "這將生成一個新的隨機盤面並清除所有標記。確定嗎？",

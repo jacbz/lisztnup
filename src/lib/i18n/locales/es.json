@@ -23,6 +23,7 @@
 	"home": {
 		"start": "INICIO",
 		"startGame": "Empezar partida",
+		"donate": "Donar",
 		"settings": "Ajustes",
 		"tracklist": "Lista de pistas",
 		"scoringOn": "Con Puntuación",
@@ -468,6 +469,7 @@
 	},
 	"bingo": {
 		"setupDescription": "Cada jugador necesita su propio cartón de bingo único.",
+		"print": "Imprimir",
 		"reset": "Reiniciar",
 		"resetTitle": "¿Reiniciar cartón?",
 		"resetMessage": "Esto generará un nuevo cartón aleatorio y borrará todas las marcas. ¿Estás seguro?",

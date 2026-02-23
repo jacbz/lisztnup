@@ -22,7 +22,8 @@
 	},
 	"home": {
 		"start": "VIA",
-		"startGame": "Inizia Gioco",
+		"startGame": "Avvia partita",
+		"donate": "Dona",
 		"settings": "Impostazioni",
 		"tracklist": "Tracklist",
 		"scoringOn": "Con Punteggio",
@@ -468,6 +469,7 @@
 	},
 	"bingo": {
 		"setupDescription": "Ogni giocatore ha bisogno della propria cartella bingo unica.",
+		"print": "Stampa",
 		"reset": "Reset",
 		"resetTitle": "Resettare Cartella?",
 		"resetMessage": "Verrà generata una nuova griglia casuale e i segni verranno cancellati. Sei sicuro?",

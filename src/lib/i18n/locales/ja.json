@@ -23,6 +23,7 @@
 	"home": {
 		"start": "スタート",
 		"startGame": "ゲーム開始",
+		"donate": "寄付する",
 		"settings": "設定",
 		"tracklist": "トラックリスト",
 		"scoringOn": "スコアあり",
@@ -302,7 +303,7 @@
 	},
 	"game": {
 		"round": "ラウンド {current} / {total}",
-		"home": "ホーム",
+		"startGame": "ゲーム開始",
 		"spin": "回す！",
 		"play": "再生",
 		"pause": "一時停止",
@@ -468,6 +469,7 @@
 	},
 	"bingo": {
 		"setupDescription": "各プレイヤーは自分の端末で専用のビンゴカードを開く必要があります。",
+		"print": "印刷",
 		"reset": "リセット",
 		"resetTitle": "グリッドをリセット？",
 		"resetMessage": "新しいグリッドを生成し、マークをすべて消去します。よろしいですか？",

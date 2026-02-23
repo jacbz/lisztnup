@@ -23,6 +23,7 @@
 	"home": {
 		"start": "시작",
 		"startGame": "게임 시작",
+		"donate": "후원하기",
 		"settings": "설정",
 		"tracklist": "트랙 리스트",
 		"scoringOn": "점수 켜짐",
@@ -302,7 +303,7 @@
 	},
 	"game": {
 		"round": "라운드 {current} / {total}",
-		"home": "홈",
+		"startGame": "게임 시작",
 		"spin": "회전!",
 		"play": "재생",
 		"pause": "일시정지",
@@ -468,6 +469,7 @@
 	},
 	"bingo": {
 		"setupDescription": "각 플레이어는 자신만의 빙고판이 필요합니다.",
+		"print": "인쇄",
 		"reset": "초기화",
 		"resetTitle": "빙고판 초기화",
 		"resetMessage": "새로운 빙고판을 생성하고 표시된 내용을 모두 지웁니다. 계속하시겠습니까?",

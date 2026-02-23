@@ -23,6 +23,7 @@
 	"home": {
 		"start": "开始",
 		"startGame": "开始游戏",
+		"donate": "捐助",
 		"settings": "设置",
 		"tracklist": "歌单",
 		"scoringOn": "计分已开",
@@ -302,7 +303,7 @@
 	},
 	"game": {
 		"round": "第 {current} 轮 / 共 {total} 轮",
-		"home": "主页",
+		"startGame": "开始游戏",
 		"spin": "旋转！",
 		"play": "播放",
 		"pause": "暂停",
@@ -468,6 +469,7 @@
 	},
 	"bingo": {
 		"setupDescription": "每位玩家需要拥有自己独特的宾果盘。",
+		"print": "打印",
 		"reset": "重置",
 		"resetTitle": "重置宾果盘？",
 		"resetMessage": "这将生成一个新的随机盘面并清除所有标记。确定吗？",

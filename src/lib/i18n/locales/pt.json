@@ -26,7 +26,8 @@
 		"settings": "Configurações",
 		"tracklist": "Repertório",
 		"scoringOn": "Pontuação Ativada",
-		"scoringOff": "Pontuação Desativada"
+		"scoringOff": "Pontuação Desativada",
+		"donate": "Doar"
 	},
 	"settings": {
 		"numberOfTracks": "Número de Faixas",
@@ -302,7 +303,7 @@
 	},
 	"game": {
 		"round": "Rodada {current} de {total}",
-		"home": "Início",
+		"startGame": "Iniciar Jogo",
 		"spin": "Girar!",
 		"play": "Tocar",
 		"pause": "Pausar",
@@ -468,6 +469,7 @@
 	},
 	"bingo": {
 		"setupDescription": "Cada jogador precisa de sua própria cartela de bingo única.",
+		"print": "Imprimir",
 		"reset": "Redefinir",
 		"resetTitle": "Redefinir Cartela?",
 		"resetMessage": "Isso gerará uma nova cartela aleatória e limpará todas as marcas. Tem certeza?",

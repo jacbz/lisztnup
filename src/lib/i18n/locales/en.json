@@ -23,6 +23,7 @@
 	"home": {
 		"start": "START",
 		"startGame": "Start Game",
+		"donate": "Donate",
 		"settings": "Settings",
 		"tracklist": "Tracklist",
 		"scoringOn": "Scoring On",
@@ -468,6 +469,7 @@
 	},
 	"bingo": {
 		"setupDescription": "Each player needs their own unique bingo grid.",
+		"print": "Print",
 		"reset": "Reset",
 		"resetTitle": "Reset Grid?",
 		"resetMessage": "This will generate a new random grid and clear all marks. Are you sure?",
