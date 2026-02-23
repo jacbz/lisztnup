@@ -423,6 +423,11 @@
 				})}
 			</div>
 		</div>
+
+		<!-- Build timestamp -->
+		<div class="fixed right-2 bottom-1 text-[10px] text-slate-600 select-none">
+			{__BUILD_DATE__}
+		</div>
 	</div>
 </div>
 <TracklistSelector
