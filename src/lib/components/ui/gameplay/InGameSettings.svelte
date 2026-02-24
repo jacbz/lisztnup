@@ -5,6 +5,7 @@
 	import Popup from '../primitives/Popup.svelte';
 	import Slider from '../primitives/Slider.svelte';
 	import ToggleButton from '../primitives/ToggleButton.svelte';
+	import AppFooter from '../primitives/AppFooter.svelte';
 	import { _ } from 'svelte-i18n';
 	import type { GameMode } from '$lib/types';
 
@@ -99,5 +100,10 @@
 			</div>
 			<p class="mt-2 text-sm text-slate-400">{$_('inGameSettings.audioNormalizationHint')}</p>
 		</div>
+	</div>
+
+	<!-- Footer -->
+	<div class="mt-8 border-t border-slate-700 pt-6">
+		<AppFooter />
 	</div>
 </Popup>

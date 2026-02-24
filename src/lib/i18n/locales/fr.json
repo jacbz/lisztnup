@@ -23,7 +23,6 @@
 	"home": {
 		"start": "JOUER",
 		"startGame": "Lancer la partie",
-		"donate": "Faire un don",
 		"settings": "Paramètres",
 		"tracklist": "Sélection",
 		"scoringOn": "Score activé",
@@ -494,8 +493,14 @@
 		"retrying": "Problème de connexion — nouvelle tentative ({attempt}/{max})…"
 	},
 	"footer": {
-		"madeBy": "Un jeu créé par Jacob Zhang",
+		"madeBy": "Un jeu créé par {name}",
 		"poweredBy": "Propulsé par {first} et {second}"
+	},
+	"about": {
+		"description": "<em>Liszt\u2019n Up!</em> est un projet perso né d\u2019une passion pour la musique classique. C\u2019est un peu comme Hitster, mais pour les mordus de classique. Je l\u2019ai créé pour voir si mes amis et moi connaissons vraiment le répertoire qu\u2019on prétend adorer.",
+		"donateHint": "C\u2019est gratuit et ça le restera. Mais si le c\u0153ur t\u2019en dit, un petit café fait toujours plaisir.",
+		"donateButton": "Offrir un café",
+		"viewOnGithub": "Voir sur GitHub"
 	},
 	"eras": {
 		"ancient": "Antiquité",

@@ -23,7 +23,6 @@
 	"home": {
 		"start": "START",
 		"startGame": "Start Game",
-		"donate": "Donate",
 		"settings": "Settings",
 		"tracklist": "Tracklist",
 		"scoringOn": "Scoring On",
@@ -494,8 +493,14 @@
 		"retrying": "Connection issue — retrying ({attempt}/{max})…"
 	},
 	"footer": {
-		"madeBy": "A Game by Jacob Zhang",
+		"madeBy": "A Game by {name}",
 		"poweredBy": "Powered by {first} and {second}"
+	},
+	"about": {
+		"description": "<em>Liszt\u2019n Up!</em> is a passion project born from a love of classical music. Think of it as Hitster, but for classical music nerds. I built it because I wanted a fun way to test how well my friends and I actually know the repertoire we claim to love.",
+		"donateHint": "This is and always will be free. But if you're feeling generous, a coffee never hurts.",
+		"donateButton": "Buy me a coffee",
+		"viewOnGithub": "View on GitHub"
 	},
 	"eras": {
 		"ancient": "Ancient",

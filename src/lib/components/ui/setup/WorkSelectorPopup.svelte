@@ -3,9 +3,9 @@
 	import TracklistViewer from './TracklistViewer.svelte';
 	import { _ } from 'svelte-i18n';
 	import Plus from 'lucide-svelte/icons/plus';
-	import Ban from 'lucide-svelte/icons/ban';
 
 	import type { Tracklist } from '$lib/types';
+	import { ListMusic } from 'lucide-svelte';
 
 	interface Props {
 		visible?: boolean;
@@ -44,9 +44,9 @@
 				{#if mode === 'include'}
 					<Plus class="h-6 w-6 text-cyan-400" />
 				{:else}
-					<Ban class="h-6 w-6 text-red-400" />
+					<ListMusic class="h-6 w-6 text-cyan-400" />
 				{/if}
-				<h2 class="text-2xl font-bold {mode === 'include' ? 'text-cyan-400' : 'text-red-400'}">
+				<h2 class="text-2xl font-bold text-cyan-400">
 					{title ||
 						(mode === 'include'
 							? $_('tracklistEditor.curation.selectWorksToInclude')

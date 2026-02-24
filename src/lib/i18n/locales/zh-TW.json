@@ -23,7 +23,6 @@
 	"home": {
 		"start": "開始",
 		"startGame": "開始遊戲",
-		"donate": "捐款",
 		"settings": "設定",
 		"tracklist": "歌單",
 		"scoringOn": "計分已開",
@@ -494,8 +493,14 @@
 		"retrying": "連線問題 — 正在重試（{attempt}/{max}）…"
 	},
 	"footer": {
-		"madeBy": "Jacob Zhang 出品",
+		"madeBy": "{name} 出品",
 		"poweredBy": "數據與音訊由 {first} 和 {second} 提供"
+	},
+	"about": {
+		"description": "<em>Liszt\u2019n Up!</em> 是一個出於對古典音樂的熱愛而做的個人專案。簡單來說就是古典音樂版的 Hitster。想看看自己和朋友們對古典曲目到底了解多少，所以做了這個小遊戲。",
+		"donateHint": "這個應用永遠免費。但如果你願意請我喝杯咖啡，也非常感謝。",
+		"donateButton": "請我喝咖啡",
+		"viewOnGithub": "在 GitHub 上查看"
 	},
 	"eras": {
 		"ancient": "遠古時期",

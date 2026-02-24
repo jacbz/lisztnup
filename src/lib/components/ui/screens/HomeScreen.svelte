@@ -14,10 +14,7 @@
 	import { SettingsService } from '$lib/services';
 	import type { Tracklist, GameMode, Player } from '$lib/types';
 	import Plus from 'lucide-svelte/icons/plus';
-	import deezer from '$lib/assets/icons/deezer.svg?raw';
-	import github from '$lib/assets/icons/github.svg?raw';
-	import paypal from '$lib/assets/icons/paypal.svg?raw';
-	import musicbrainzIcon from '$lib/assets/icons/musicbrainz-icon.svg?raw';
+	import AppFooter from '../primitives/AppFooter.svelte';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 
@@ -384,49 +381,8 @@
 		{/if}
 
 		<!-- Footer -->
-		<div class="mt-16 mb-6 text-center text-slate-400">
-			<div class="flex items-center justify-center gap-2 text-sm">
-				<span>{$_('footer.madeBy')}</span>
-				<span>|</span>
-				<a
-					href="https://github.com/jacbz/lisztnup"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="inline-flex items-center gap-1.5 text-cyan-400 transition-colors hover:text-cyan-300"
-				>
-					{@html github}
-					<span>GitHub</span>
-				</a>
-				<span>|</span>
-				<a
-					href="https://paypal.me/jacbz"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="inline-flex items-center gap-1.5 text-cyan-400 transition-colors hover:text-cyan-300"
-				>
-					{@html paypal}
-					<span>{$_('home.donate', { default: 'Donate' })}</span>
-				</a>
-			</div>
-			<div class="inline-flex gap-1 text-xs">
-				{@html $_('footer.poweredBy', {
-					values: {
-						first: `<a href="https://musicbrainz.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-cyan-400 transition-colors hover:text-cyan-300">
-								${musicbrainzIcon}
-							<span>MusicBrainz</span>
-						</a>`,
-						second: `<a href="http://deezer.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-cyan-400 transition-colors hover:text-cyan-300">
-							<div class="w-3">${deezer}</div>
-							<span>Deezer</span>
-						</a>`
-					}
-				})}
-			</div>
-		</div>
-
-		<!-- Build timestamp -->
-		<div class="fixed right-2 bottom-1 text-[10px] text-slate-600 select-none">
-			{__BUILD_DATE__}
+		<div class="mt-16 mb-6">
+			<AppFooter />
 		</div>
 	</div>
 </div>

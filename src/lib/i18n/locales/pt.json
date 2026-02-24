@@ -26,8 +26,7 @@
 		"settings": "Configurações",
 		"tracklist": "Repertório",
 		"scoringOn": "Pontuação Ativada",
-		"scoringOff": "Pontuação Desativada",
-		"donate": "Doar"
+		"scoringOff": "Pontuação Desativada"
 	},
 	"settings": {
 		"numberOfTracks": "Número de Faixas",
@@ -494,8 +493,14 @@
 		"retrying": "Problema de conexão — tentando novamente ({attempt}/{max})…"
 	},
 	"footer": {
-		"madeBy": "Um jogo de Jacob Zhang",
+		"madeBy": "Um jogo de {name}",
 		"poweredBy": "Desenvolvido com {first} e {second}"
+	},
+	"about": {
+		"description": "<em>Liszt\u2019n Up!</em> é um projeto pessoal que nasceu do amor pela música clássica. É basicamente um Hitster para nerds de clássica. Criei pra ver se eu e meus amigos realmente conhecemos o repertório que a gente diz adorar.",
+		"donateHint": "Isso aqui é e sempre vai ser de graça. Mas se quiser me pagar um café, aceito com prazer.",
+		"donateButton": "Me pagar um café",
+		"viewOnGithub": "Ver no GitHub"
 	},
 	"eras": {
 		"ancient": "Antiga",
