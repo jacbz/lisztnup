@@ -743,7 +743,7 @@ composer_specific_rules:
       - How Now|Two Pages
   'Glazunov, Alexander':
     chamber:
-      - Rêverie, op\. 24
+      - Rêverie, op\. 24|Élégie, op. 44
   'Glière, Reinhold':
     orchestral:
       - Red Poppy
@@ -1472,6 +1472,9 @@ composer_specific_rules:
       - Elogio de la guitarra|Por los campos de España|Serenata al alba|Tres piezas españolas|Zarabanda lejana|Invocation and Dance
     vocal:
       - Retablo de Navidad
+  'Rore, Cipriano de':
+    vocal:
+      - Anchor que col partire
   'Rorem, Ned':
     vocal:
       - Early in the Morning
@@ -1954,7 +1957,7 @@ composer_specific_rules:
     solo:
       - Sonatas for Solo Violin
     concerto:
-      - Poème élégiaque
+      - Poème élégiaque|Amitié, op. 26
     chamber:
       - Caprice d'après l'étude en forme de valse
   'Zelenka, Jan Dismas':

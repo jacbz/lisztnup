@@ -359,7 +359,13 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				solo: -MAX_WORK_SCORE_ROUNDED
 			},
 			limitWorksFromComposer: 0.1,
-			nameFilter: ['piano', 'klavier']
+			nameFilter: ['piano', 'klavier'],
+			composerFilter: {
+				mode: 'exclude',
+				composers: [
+					'a65d57ec-36a7-49ad-b99d-79f01cd45478' // Wieniawski
+				]
+			}
 		}
 	},
 	{
@@ -380,7 +386,10 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				solo: -MAX_WORK_SCORE_ROUNDED
 			},
 			limitWorksFromComposer: 0.1,
-			nameFilter: ['violin', 'violon']
+			nameFilter: ['/viol(i|o)n\\b/'],
+			includeWorks: [
+				'24c323a3' // Ysaÿe - Amitié
+			]
 		}
 	},
 	{
@@ -402,7 +411,12 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			},
 			limitWorksFromComposer: 0.1,
 			nameFilter: ['cello'],
-			maxTracksFromSingleWork: 5
+			maxTracksFromSingleWork: 5,
+			includeWorks: [
+				'0e9d27ec', // Bloch - Schemolo
+				'514024f4', // Bruch - Kol Nidrei
+				'942499a7' // Tchaikovsky - Variations on a Rococo Theme
+			]
 		}
 	},
 

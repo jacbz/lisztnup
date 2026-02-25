@@ -359,7 +359,9 @@ SELECT r.gid AS recording_gid,
        r.name AS recording_name, 
        i.isrc,
        STRING_AGG(DISTINCT label.name, ', ') AS recording_labels, 
-       d.track_id AS deezer_id,
+       -- Primary: Deezer ID from direct recording-URL link
+       -- Fallback: Deezer ID via ISRC lookup
+       COALESCE(deezer_url.deezer_url_id, d.track_id) AS deezer_id,
        STRING_AGG(DISTINCT at.name, ', ') AS attributes,
        STRING_AGG(DISTINCT artist.name, '; ') AS artist_name,
        STRING_AGG(DISTINCT artist.comment, '; ') AS artist_comment,
@@ -375,6 +377,15 @@ LEFT JOIN musicbrainz.link_attribute_type AS at ON la.attribute_type = at.id
 LEFT JOIN musicbrainz.isrc AS i ON r.id = i.recording
 -- Get Deezer track ID via ISRC
 LEFT JOIN musicbrainz.deezer AS d ON i.isrc = d.isrc
+-- Get Deezer track ID via direct URL link (primary source)
+LEFT JOIN LATERAL (
+    SELECT (regexp_match(u.url, 'https://www.deezer.com/track/(\d+)'))[1]::bigint AS deezer_url_id
+    FROM musicbrainz.l_recording_url lru
+    JOIN musicbrainz.url u ON lru.entity1 = u.id
+    WHERE lru.entity0 = r.id
+      AND u.url LIKE 'https://www.deezer.com/track/%%'
+    LIMIT 1
+) deezer_url ON true
 -- Get labels associated with the recording
 LEFT JOIN musicbrainz.l_label_recording AS llr ON r.id = llr.entity1
 LEFT JOIN musicbrainz.label AS label ON llr.entity0 = label.id
@@ -390,7 +401,7 @@ LEFT JOIN musicbrainz.artist_credit_name AS acn ON r.artist_credit = acn.artist_
 -- Join artist table for both sources
 LEFT JOIN musicbrainz.artist AS artist ON (acn.artist = artist.id OR lar.entity0 = artist.id)
 WHERE lrw.entity1 = %(work_id)s
-GROUP BY r.gid, r.name, i.isrc, d.track_id
+GROUP BY r.gid, r.name, i.isrc, d.track_id, deezer_url.deezer_url_id
 -- Exclude partial recordings
 HAVING STRING_AGG(DISTINCT at.name, ', ') IS NULL 
     OR STRING_AGG(DISTINCT at.name, ', ') NOT ILIKE '%%partial%%'

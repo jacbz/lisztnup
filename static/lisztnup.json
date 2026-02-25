@@ -341,7 +341,7 @@
       "name": "Beethoven, Ludwig van",
       "birth_year": 1770,
       "death_year": 1827,
-      "score": 89.45
+      "score": 89.46
     },
     {
       "gid": "6f5bfd20-84cc-4879-8a40-05631ad576c7",
@@ -544,7 +544,7 @@
       "name": "Brahms, Johannes",
       "birth_year": 1833,
       "death_year": 1897,
-      "score": 78.46
+      "score": 78.57
     },
     {
       "gid": "9e42300c-959a-4f73-89cd-8003b71eb85a",
@@ -558,7 +558,7 @@
       "name": "Britten, Benjamin",
       "birth_year": 1913,
       "death_year": 1976,
-      "score": 59.93
+      "score": 60.1
     },
     {
       "gid": "55bcdfc0-dc50-4258-a96c-e20667f6b6f2",
@@ -1475,7 +1475,7 @@
       "name": "Glazunov, Alexander",
       "birth_year": 1865,
       "death_year": 1936,
-      "score": 35.26
+      "score": 35.8
     },
     {
       "gid": "e539699a-5cb3-4f73-b60f-691b1499d0af",
@@ -3284,6 +3284,13 @@
       "score": 41.78
     },
     {
+      "gid": "93c2bc6b-6161-430a-af73-fbe12d61791a",
+      "name": "Rore, Cipriano de",
+      "birth_year": 1515,
+      "death_year": 1565,
+      "score": 12.18
+    },
+    {
       "gid": "d2110a4f-20c0-4ae3-ab05-1f195b62ae22",
       "name": "Rorem, Ned",
       "birth_year": 1923,
@@ -4331,7 +4338,7 @@
       "name": "Ysa\u00ffe, Eug\u00e8ne",
       "birth_year": 1858,
       "death_year": 1931,
-      "score": 20.82
+      "score": 21.85
     },
     {
       "gid": "34a4fc02-82fb-4168-9787-ab5e10a662f2",
@@ -4366,7 +4373,7 @@
       "name": "des Prez, Josquin",
       "birth_year": 1450,
       "death_year": 1521,
-      "score": 40.02
+      "score": 40.5
     },
     {
       "gid": "86009788-f0ee-47dc-a4d4-4025198bb4f9",
@@ -4592,7 +4599,7 @@
       "parts": [
         {
           "name": "Short Ride in a Fast Machine",
-          "deezer": [3922023, 3145628, 2899208311, 660748532],
+          "deezer": [3922023, 672644, 3145628, 2899208311],
           "score": 100.0
         }
       ]
@@ -4608,7 +4615,7 @@
       "parts": [
         {
           "name": "The Chairman Dances: Foxtrot for Orchestra",
-          "deezer": [6343337],
+          "deezer": [672635],
           "score": 100.0
         }
       ]
@@ -8218,7 +8225,7 @@
       "parts": [
         {
           "name": "Allein Gott in der H\u00f6h sei Ehr, BWV 711",
-          "deezer": [7791024, 1400642972, 1741710567, 3032206661],
+          "deezer": [7791024, 3314432521, 1400642972, 1741710567],
           "score": 100.0
         }
       ]
@@ -10920,7 +10927,7 @@
       "parts": [
         {
           "name": "Durch Adams Fall ist ganz verderbt, BWV 705",
-          "deezer": [2788218452, 7791018],
+          "deezer": [2788218452, 7791018, 3314432611],
           "score": 100.0
         }
       ]
@@ -11390,12 +11397,12 @@
       "parts": [
         {
           "name": "Fantasie (Praeludium) und Fuge g-Moll, BWV 542: I. Fantasie",
-          "deezer": [74354084, 525293522, 65687400, 1401779632, 66147615],
+          "deezer": [74354084, 525293522, 65687400, 1401779632, 3238243811],
           "score": 97.89
         },
         {
           "name": "Fantasie (Praeludium) und Fuge g-Moll, BWV 542: II. Fuge",
-          "deezer": [74354085, 525293532, 1401779642, 66147616, 65687401],
+          "deezer": [74354085, 525293532, 1401779642, 3238243821, 66147616],
           "score": 100.0
         }
       ]
@@ -12592,7 +12599,7 @@
       "parts": [
         {
           "name": "Gottes Sohn ist kommen, BWV 703",
-          "deezer": [7791016, 1741711087, 3030780101, 1526168582],
+          "deezer": [7791016, 1741711087, 3030780101, 3314432501],
           "score": 100.0
         }
       ]
@@ -13058,7 +13065,7 @@
       "parts": [
         {
           "name": "In dulci jubilo, BWV 729",
-          "deezer": [7791042, 1526168712, 3032206611, 133584610],
+          "deezer": [7791042, 1526168712, 3314432591, 3032206611, 133584610],
           "score": 100.0
         }
       ]
@@ -20677,7 +20684,7 @@
       "parts": [
         {
           "name": "Orgelchoral, BWV 706 \"Liebster Jesu, wir sind hier\": I. Choral",
-          "deezer": [2792097902],
+          "deezer": [2792097902, 3314432491],
           "score": 100.0
         }
       ]
@@ -20773,7 +20780,7 @@
       "parts": [
         {
           "name": "Lobt Gott, ihr Christen, allzugleich, BWV 732",
-          "deezer": [7791045, 1526168702, 3030759911, 1741710657],
+          "deezer": [7791045, 1526168702, 3314432531, 3030759911, 1741710657],
           "score": 100.0
         }
       ]
@@ -21281,7 +21288,7 @@
       "parts": [
         {
           "name": "Nun freut euch, lieben Christen g\u2019mein, BWV 734",
-          "deezer": [66319010, 1741710847, 7791047, 2769692171, 2769692161],
+          "deezer": [66319010, 1741710847, 7791047, 3314432621, 2769692171],
           "score": 100.0
         }
       ]
@@ -26038,17 +26045,17 @@
       "parts": [
         {
           "name": "Toccata, Adagio and Fugue in C major, BWV 564, BV B 29 no. 1: I. Prelude",
-          "deezer": [68258903, 610753, 71953384, 2795079192],
+          "deezer": [68258903, 2804780282, 610753, 71953384, 2795079192],
           "score": 96.24
         },
         {
           "name": "Toccata, Adagio and Fugue in C major, BWV 564, BV B 29 no. 1: II. Intermezzo (Adagio)",
-          "deezer": [71953386, 4219728, 2795079202, 68258904],
+          "deezer": [71953386, 4219728, 2795079202, 68258904, 78315260],
           "score": 100.0
         },
         {
           "name": "Toccata, Adagio and Fugue in C major, BWV 564, BV B 29 no. 1: III. Fugue",
-          "deezer": [610757, 68258905, 71953387, 2899206161],
+          "deezer": [610757, 68258905, 2804780302, 71953387, 2899206161],
           "score": 93.44
         }
       ]
@@ -26326,7 +26333,7 @@
       "parts": [
         {
           "name": "Vom Himmel hoch, da komm ich her, BWV 700",
-          "deezer": [6946120, 7791013, 65687569],
+          "deezer": [6946120, 7791013, 3314432581],
           "score": 100.0
         }
       ]
@@ -29962,7 +29969,7 @@
       "parts": [
         {
           "name": "Romance for Violin and Piano, op. 23",
-          "deezer": [1728085937],
+          "deezer": [2572320362],
           "score": 100.0
         }
       ]
@@ -30442,11 +30449,16 @@
       "type": "vocal",
       "begin_year": 1810,
       "end_year": 1815,
-      "score": 2.01,
+      "score": 2.03,
       "parts": [
         {
           "name": "Twelve Various Folksongs, WoO 157: No. 8, \"By the Side of the Shannon\"",
-          "deezer": [2816462562],
+          "deezer": [2816462562, 1519760722],
+          "score": 100.0
+        },
+        {
+          "name": "Twelve Various Folksongs, WoO 157: No. 12, \"La Gondoletta\"",
+          "deezer": [1232092272],
           "score": 100.0
         }
       ]
@@ -30658,7 +30670,7 @@
       "parts": [
         {
           "name": "20 Irish Songs WoO 153: No. 20 \"Thy ship must sail, my Henry dear\"",
-          "deezer": [2777803831],
+          "deezer": [2777803831, 1232092262],
           "score": 100.0
         }
       ]
@@ -30670,8 +30682,13 @@
       "type": "vocal",
       "begin_year": null,
       "end_year": null,
-      "score": 1.91,
+      "score": 1.92,
       "parts": [
+        {
+          "name": "\u0410\u0445, \u0440\u0435\u0447\u0435\u043d\u044c\u043a\u0438, \u0440\u0435\u0447\u0435\u043d\u044c\u043a\u0438, WoO 158a no. 14",
+          "deezer": [1232092312],
+          "score": 100.0
+        },
         {
           "name": "Lilla Carl, WoO 158a no. 17",
           "deezer": [1519760682],
@@ -31073,7 +31090,7 @@
         },
         {
           "name": "32 Variations for Piano in C minor on an Original Theme, WoO 80: Variation 23",
-          "deezer": [1359643352, 1057357932],
+          "deezer": [1359645632, 1057357932],
           "score": 96.03
         },
         {
@@ -31214,7 +31231,7 @@
         },
         {
           "name": "33 Variations for Piano in C major on a Waltz by Anton Diabelli, op. 120: Var. XVIII. Poco moderato",
-          "deezer": [3355764291, 107688198, 2775682021, 2745588671, 83378674],
+          "deezer": [3355764291, 107688198, 66399452, 2775682021, 2745588671],
           "score": 98.87
         },
         {
@@ -31234,7 +31251,7 @@
         },
         {
           "name": "33 Variations for Piano in C major on a Waltz by Anton Diabelli, op. 120: Var. XXII. Allegro molto",
-          "deezer": [2775682061, 2745588711, 83378682, 1401725802, 2981133231],
+          "deezer": [2775682061, 2745588711, 83378682, 1401725802, 3220841591],
           "score": 99.44
         },
         {
@@ -31289,7 +31306,7 @@
         },
         {
           "name": "33 Variations for Piano in C major on a Waltz by Anton Diabelli, op. 120: Var. XXXIII. Tempo di Menuetto moderato",
-          "deezer": [3355764441, 3398560001, 2745588821, 107688228, 2981133341],
+          "deezer": [3355764441, 3398560001, 2745588821, 107688228, 3220841701],
           "score": 99.72
         }
       ]
@@ -31493,122 +31510,122 @@
       "parts": [
         {
           "name": "String Quartet no. 1 in F major, op. 18 no. 1: I. Allegro con brio",
-          "deezer": [2642364042, 870986012, 67330001, 1574063432, 68279750],
+          "deezer": [2642364042, 870986012, 3251090161, 67330001, 1574063432],
           "score": 98.38
         },
         {
           "name": "String Quartet no. 1 in F major, op. 18 no. 1: II. Adagio affettuoso ed appassionato",
-          "deezer": [3303800981, 870986232, 67330002, 66742630, 1667949172],
+          "deezer": [3303800981, 870986232, 3251090171, 67330002, 66742630],
           "score": 98.93
         },
         {
           "name": "String Quartet no. 1 in F major, op. 18 no. 1: III. Scherzo. Allegro molto",
-          "deezer": [69089053, 128893356, 2990608681, 2652738792, 1574063452],
+          "deezer": [69089053, 128893356, 3251090181, 2990608681, 2652738792],
           "score": 98.09
         },
         {
           "name": "String Quartet no. 1 in F major, op. 18 no. 1: IV. Allegro",
-          "deezer": [69089054, 128893358, 1574063462, 2778235211],
+          "deezer": [69089054, 128893358, 3251090191, 1574063462],
           "score": 98.09
         },
         {
           "name": "String Quartet no. 2 in G major, op. 18 no. 2: I. Allegro",
-          "deezer": [2747758511, 67330005, 1539214862, 1574063472, 68279754],
+          "deezer": [2747758511, 3251090281, 67330005, 1539214862, 1574063472],
           "score": 95.06
         },
         {
           "name": "String Quartet no. 2 in G major, op. 18 no. 2: II. Adagio cantabile - Allegro - Tempo I",
-          "deezer": [69089060, 67330006, 1539214872, 68279755, 2778235231],
+          "deezer": [69089060, 3251090291, 67330006, 1539214872, 68279755],
           "score": 94.73
         },
         {
           "name": "String Quartet no. 2 in G major, op. 18 no. 2: III. Scherzo. Allegro",
-          "deezer": [69089061, 67330007, 2982795841, 1539214882, 2792865382],
+          "deezer": [69089061, 3251090301, 67330007, 2982795841, 1539214882],
           "score": 95.38
         },
         {
           "name": "String Quartet no. 2 in G major, op. 18 no. 2: IV. Allegro molto, quasi Presto",
-          "deezer": [2747758521, 1539214892, 1574063502, 1400550632],
+          "deezer": [2747758521, 3251090311, 1539214892, 1574063502],
           "score": 95.06
         },
         {
           "name": "String Quartet no. 3 in D major, op. 18 no. 3: I. Allegro",
-          "deezer": [67330009, 1667949202, 1400550872, 68279746, 2778235261],
+          "deezer": [3251090201, 67330009, 1667949202, 1400550872, 68279746],
           "score": 96.63
         },
         {
           "name": "String Quartet no. 3 in D major, op. 18 no. 3: II. Andante con moto",
-          "deezer": [67330010, 1400550882, 68279747, 2778235271, 1667949212],
+          "deezer": [3251090211, 67330010, 1400550882, 68279747, 2778235271],
           "score": 96.32
         },
         {
           "name": "String Quartet no. 3 in D major, op. 18 no. 3: III. Allegro",
-          "deezer": [67330011, 2682014242, 2778235281, 68279748, 1400550892],
+          "deezer": [3251090221, 67330011, 2682014242, 2778235281, 68279748],
           "score": 96.01
         },
         {
           "name": "String Quartet no. 3 in D major, op. 18 no. 3: IV. Presto",
-          "deezer": [67330012, 68279749, 1400550902, 2778235291, 1667949242],
+          "deezer": [3251090231, 67330012, 68279749, 1400550902, 2778235291],
           "score": 96.32
         },
         {
           "name": "Quartet for 2 Violins, Viola, Cello no. 4 in C minor, op. 18 no. 4: I. Allegro ma non tanto",
-          "deezer": [128893360, 67330013, 1400550832, 1667949252, 2778235301],
+          "deezer": [3251090321, 128893360, 67330013, 1400550832, 1667949252],
           "score": 99.2
         },
         {
           "name": "Quartet for 2 Violins, Viola, Cello no. 4 in C minor, op. 18 no. 4: II. Andante scherzoso quasi allegretto",
-          "deezer": [128893362, 67330014, 943694522, 69089084, 1400550842],
+          "deezer": [3251090331, 128893362, 67330014, 943694522, 69089084],
           "score": 99.2
         },
         {
           "name": "Quartet for 2 Violins, Viola, Cello no. 4 in C minor, op. 18 no. 4: III. Menuetto. Allegretto",
-          "deezer": [128893364, 61249075, 3386534, 943694532],
+          "deezer": [3251090341, 128893364, 61249075, 3386534],
           "score": 99.2
         },
         {
           "name": "Quartet for 2 Violins, Viola, Cello no. 4 in C minor, op. 18 no. 4: IV. Allegro - Prestissimo",
-          "deezer": [128893366, 2990608881, 2682014162, 68279761, 2778235331],
+          "deezer": [128893366, 3251090351, 2990608881, 2682014162, 68279761],
           "score": 100.0
         },
         {
           "name": "Quartet for 2 Violins, Viola, Cello no. 5 in A major, op. 18 no. 5: I. Allegro",
-          "deezer": [69089075, 67330017, 2778235341, 1400550912, 943740442],
+          "deezer": [69089075, 3251090361, 67330017, 2778235341, 1400550912],
           "score": 96.32
         },
         {
           "name": "Quartet for 2 Violins, Viola, Cello no. 5 in A major, op. 18 no. 5: II. Menuetto",
-          "deezer": [69089076, 67330018, 2982795941, 943740452, 1400550922],
+          "deezer": [69089076, 3251090371, 67330018, 2982795941, 943740452],
           "score": 97.22
         },
         {
           "name": "Quartet for 2 Violins, Viola, Cello no. 5 in A major, op. 18 no. 5: III. Andante cantabile",
-          "deezer": [69089077, 2982795951, 67330019, 943740462, 1400550932],
+          "deezer": [69089077, 3251090381, 2982795951, 67330019, 943740462],
           "score": 96.01
         },
         {
           "name": "Quartet for 2 Violins, Viola, Cello no. 5 in A major, op. 18 no. 5: IV. Allegro",
-          "deezer": [69089078, 67330020, 1400550942, 68279765, 2778235371],
+          "deezer": [69089078, 3251090391, 67330020, 1400550942, 68279765],
           "score": 96.32
         },
         {
           "name": "Quartet for 2 Violins, Viola, Cello no. 6 in B-flat major, op. 18 no. 6: I. Allegro con brio",
-          "deezer": [2747758481, 67330021, 943740482, 68279766, 1400550512],
+          "deezer": [2747758481, 3251090241, 67330021, 943740482, 68279766],
           "score": 97.22
         },
         {
           "name": "Quartet for 2 Violins, Viola, Cello no. 6 in B-flat major, op. 18 no. 6: II. Adagio ma non troppo",
-          "deezer": [69089064, 67330022, 1400550522, 68279767, 943740492],
+          "deezer": [69089064, 3251090251, 67330022, 1400550522, 68279767],
           "score": 97.52
         },
         {
           "name": "Quartet for 2 Violins, Viola, Cello no. 6 in B-flat major, op. 18 no. 6: III. Scherzo. Allegro",
-          "deezer": [69089065, 2990608861, 2652739142, 943740502, 68279768],
+          "deezer": [69089065, 3251090261, 2990608861, 2652739142, 943740502],
           "score": 98.09
         },
         {
           "name": "Quartet for 2 Violins, Viola, Cello no. 6 in B-flat major, op. 18 no. 6: IV. Adagio \"La malinconia\" - Allegretto quasi allegro",
-          "deezer": [69089066, 67330024, 68279769, 2792865552],
+          "deezer": [69089066, 3251090271, 67330024, 68279769],
           "score": 95.38
         }
       ]
@@ -31640,32 +31657,32 @@
       "parts": [
         {
           "name": "6 Variations for Piano in D major on an Original Theme, op. 76: Theme. Allegro risoluto",
-          "deezer": [1359642782],
+          "deezer": [1359644402],
           "score": 100.0
         },
         {
           "name": "6 Variations for Piano in D major on an Original Theme, op. 76: Variation 1",
-          "deezer": [1359642792],
+          "deezer": [1359644412],
           "score": 97.19
         },
         {
           "name": "6 Variations for Piano in D major on an Original Theme, op. 76: Variation 2",
-          "deezer": [1359642802],
+          "deezer": [1359644422],
           "score": 97.19
         },
         {
           "name": "6 Variations for Piano in D major on an Original Theme, op. 76: Variation 3",
-          "deezer": [1359642812],
+          "deezer": [1359644432],
           "score": 97.19
         },
         {
           "name": "6 Variations for Piano in D major on an Original Theme, op. 76: Variation 4",
-          "deezer": [1359642822],
+          "deezer": [1359644442],
           "score": 97.19
         },
         {
           "name": "6 Variations for Piano in D major on an Original Theme, op. 76: Variation 5",
-          "deezer": [1359642832],
+          "deezer": [1359644452],
           "score": 97.19
         }
       ]
@@ -31912,7 +31929,7 @@
       "parts": [
         {
           "name": "Allegretto for Piano, Violin, and Cello in B-flat major, WoO 39",
-          "deezer": [2770363911],
+          "deezer": [3252866, 2770363911],
           "score": 100.0
         }
       ]
@@ -32578,7 +32595,7 @@
       "parts": [
         {
           "name": "Concerto for Piano, Violin, Cello and Orchestra in C major, op. 56 \u201cTriple Concerto\u201d: I. Allegro",
-          "deezer": [916244512, 739412382, 2816462462, 3285497891, 2777518271],
+          "deezer": [916244512, 739412382, 2816462462, 3285497891, 4154038],
           "score": 95.88
         },
         {
@@ -33482,7 +33499,7 @@
         },
         {
           "name": "Sonata for Piano no. 5 in C minor, op. 10 no. 1: II. Adagio molto",
-          "deezer": [2805801952, 2789916302, 3397862091, 2537034451, 95941070],
+          "deezer": [2805801952, 2789916302, 2896284991, 2537034451, 95941070],
           "score": 94.25
         },
         {
@@ -33492,7 +33509,7 @@
         },
         {
           "name": "Sonata for Piano no. 6 in F major, op. 10 no. 2: I. Allegro",
-          "deezer": [3397861601, 2537034471, 95941074, 962612232, 1761060997],
+          "deezer": [2896285071, 2537034471, 95941074, 962612232, 1761060997],
           "score": 95.25
         },
         {
@@ -33507,22 +33524,22 @@
         },
         {
           "name": "Sonata for Piano no. 7 in D major, op. 10 no. 3: I. Presto",
-          "deezer": [3397862271, 2537034501, 95941080, 971424712, 1761060917],
+          "deezer": [1519429402, 2896285081, 2537034501, 95941080, 971424712],
           "score": 98.95
         },
         {
           "name": "Sonata for Piano no. 7 in D major, op. 10 no. 3: II. Largo e mesto",
-          "deezer": [3397861741, 2537034511, 95941082, 971424722, 961226562],
+          "deezer": [1519429412, 2896285101, 2537034511, 95941082, 971424722],
           "score": 98.81
         },
         {
           "name": "Sonata for Piano no. 7 in D major, op. 10 no. 3: III. Menuetto. Allegro",
-          "deezer": [3036405071, 853460962, 522263082, 971424732, 712588322],
+          "deezer": [1519429422, 3036405071, 853460962, 522263082, 971424732],
           "score": 100.0
         },
         {
           "name": "Sonata for Piano no. 7 in D major, op. 10 no. 3: IV. Rondo. Allegro",
-          "deezer": [3036405261, 2537034531, 355136851, 95941086, 1761060947],
+          "deezer": [1519429432, 3036405261, 2537034531, 355136851, 95941086],
           "score": 98.95
         }
       ]
@@ -33563,7 +33580,7 @@
         },
         {
           "name": "Sonata for Piano no. 10 in G major, op. 14 no. 2: III. Scherzo. Allegro assai",
-          "deezer": [2537034661, 95941104, 1605917692, 67332556, 2106871837],
+          "deezer": [2537034661, 95941104, 1605917692, 1519429522, 2106871837],
           "score": 99.64
         }
       ]
@@ -33579,62 +33596,62 @@
       "parts": [
         {
           "name": "Sonata for Piano no. 1 in F minor, op. 2 no. 1: I. Allegro",
-          "deezer": [2537034281, 95941036, 961207122, 1761060957, 3017653051],
+          "deezer": [1519429262, 2537034281, 95941036, 961207122, 1761060957],
           "score": 96.59
         },
         {
           "name": "Sonata for Piano no. 1 in F minor, op. 2 no. 1: II. Adagio",
-          "deezer": [2537034291, 68245732, 1761060967, 961207132, 2795054362],
+          "deezer": [1519429272, 2537034291, 68245732, 1761060967, 961207132],
           "score": 97.07
         },
         {
           "name": "Sonata for Piano no. 1 in F minor, op. 2 no. 1: III. Menuetto. Allegretto",
-          "deezer": [712588102, 2537034301, 853460742, 963642352, 3358689781],
+          "deezer": [1519429282, 712588102, 2537034301, 853460742, 963642352],
           "score": 96.59
         },
         {
           "name": "Sonata for Piano no. 1 in F minor, op. 2 no. 1: IV. Prestissimo",
-          "deezer": [2537034311, 95941042, 1761060987, 961207152, 2794548942],
+          "deezer": [1519429292, 2537034311, 95941042, 1761060987, 961207152],
           "score": 96.43
         },
         {
           "name": "Sonata for Piano no. 2 in A major, op. 2 no. 2: I. Allegro vivace",
-          "deezer": [65797081, 2537034321, 95941044, 961207162, 853460762],
+          "deezer": [65797081, 1519429182, 2537034321, 95941044, 961207162],
           "score": 94.91
         },
         {
           "name": "Sonata for Piano no. 2 in A major, op. 2 no. 2: II. Largo appassionato",
-          "deezer": [65797082, 2537034331, 95941046, 961207172, 853460772],
+          "deezer": [65797082, 1519429192, 2537034331, 95941046, 961207172],
           "score": 94.55
         },
         {
           "name": "Sonata for Piano no. 2 in A major, op. 2 no. 2: III. Scherzo. Allegretto",
-          "deezer": [65797083, 963642432, 712588142, 2537034341, 2795054412],
+          "deezer": [65797083, 1519429202, 963642432, 712588142, 2537034341],
           "score": 94.55
         },
         {
           "name": "Sonata for Piano no. 2 in A major, op. 2 no. 2: IV. Rondo. Grazioso",
-          "deezer": [65797084, 3039467541, 2537034351, 95941050, 2435155605],
+          "deezer": [65797084, 1519429212, 3039467541, 2537034351, 95941050],
           "score": 95.25
         },
         {
           "name": "Sonata for Piano no. 3 in C major, op. 2 no. 3: I. Allegro con brio",
-          "deezer": [2214205897, 2537034361, 95941060, 961207202, 2789916212],
+          "deezer": [2214205897, 1519429222, 2537034361, 95941060, 961207202],
           "score": 99.31
         },
         {
           "name": "Sonata for Piano no. 3 in C major, op. 2 no. 3: II. Adagio",
-          "deezer": [2214205907, 2537034371, 95941062, 961207212, 2789916222],
+          "deezer": [2214205907, 1519429232, 2537034371, 95941062, 961207212],
           "score": 99.45
         },
         {
           "name": "Sonata for Piano no. 3 in C major, op. 2 no. 3: III. Scherzo. Allegro",
-          "deezer": [2214205917, 2537034381, 853460822, 963642522, 2804938732],
+          "deezer": [2214205917, 1519429242, 2537034381, 853460822, 963642522],
           "score": 99.45
         },
         {
           "name": "Sonata for Piano no. 3 in C major, op. 2 no. 3: IV. Allegro assai",
-          "deezer": [2214205927, 2537034391, 95941066, 961207232, 853598092],
+          "deezer": [2214205927, 1519429252, 2537034391, 95941066, 961207232],
           "score": 100.0
         }
       ]
@@ -33680,22 +33697,22 @@
         },
         {
           "name": "Sonata for Piano no. 18 in E-flat major, op. 31 no. 3: I. Allegro",
-          "deezer": [2635341582, 961140492, 355137201, 2779425681, 712588682],
+          "deezer": [2635341582, 1519429982, 961140492, 355137201, 2779425681],
           "score": 93.85
         },
         {
           "name": "Sonata for Piano no. 18 in E-flat major, op. 31 no. 3: II. Scherzo. Allegretto vivace",
-          "deezer": [2635341592, 961140502, 2779425691, 355137211, 712588692],
+          "deezer": [2635341592, 1519429992, 961140502, 2779425691, 355137211],
           "score": 94.38
         },
         {
           "name": "Sonata for Piano no. 18 in E-flat major, op. 31 no. 3: III. Minuetto. Moderato e grazioso",
-          "deezer": [2635341602, 961140512, 3397861491, 712588702, 2798660302],
+          "deezer": [2635341602, 961140512, 3397861491, 712588702, 1519430002],
           "score": 94.9
         },
         {
           "name": "Sonata for Piano no. 18 in E-flat major, op. 31 no. 3: IV. Presto con fuoco",
-          "deezer": [2635341612, 3397861811, 961140522, 355137231, 2779425721],
+          "deezer": [2635341612, 2896285011, 1519430012, 961140522, 355137231],
           "score": 93.85
         }
       ]
@@ -33742,22 +33759,22 @@
       "parts": [
         {
           "name": "Trio for Piano, Violin, and Cello no. 1 in E-flat major, op. 1 no. 1: I. Allegro",
-          "deezer": [3418702, 2779291361],
+          "deezer": [3418702, 3252848, 2779291361],
           "score": 93.82
         },
         {
           "name": "Trio for Piano, Violin, and Cello no. 1 in E-flat major, op. 1 no. 1: II. Adagio cantabile",
-          "deezer": [3418703, 1114875452],
+          "deezer": [3418703, 3252849, 1114875452],
           "score": 95.66
         },
         {
           "name": "Trio for Piano, Violin, and Cello no. 1 in E-flat major, op. 1 no. 1: III. Scherzo. Allegro assai - Trio",
-          "deezer": [3418704, 1114875462],
+          "deezer": [3418704, 1114875462, 2779291381],
           "score": 95.06
         },
         {
           "name": "Trio for Piano, Violin, and Cello no. 1 in E-flat major, op. 1 no. 1: IV. Finale. Presto",
-          "deezer": [3418705, 2779291391],
+          "deezer": [3418705, 3252851, 2779291391],
           "score": 95.06
         },
         {
@@ -33767,22 +33784,22 @@
         },
         {
           "name": "Trio for Piano, Violin, and Cello no. 2 in G major, op. 1 no. 2: II. Largo con espressione",
-          "deezer": [1114875492],
+          "deezer": [1114875492, 2770363881],
           "score": 91.84
         },
         {
           "name": "Trio for Piano, Violin, and Cello no. 2 in G major, op. 1 no. 2: III. Scherzo. Allegro - Trio",
-          "deezer": [794997532, 2968205621],
+          "deezer": [794997532, 2968205621, 1114875502],
           "score": 93.18
         },
         {
           "name": "Trio for Piano, Violin, and Cello no. 2 in G major, op. 1 no. 2: IV. Finale. Presto",
-          "deezer": [1114875512],
+          "deezer": [1114875512, 3342982621],
           "score": 91.84
         },
         {
           "name": "Trio for Piano, Violin, and Cello no. 3 in C minor, op. 1 no. 3: I. Allegro con brio",
-          "deezer": [1921195927],
+          "deezer": [1921195927, 3252856],
           "score": 98.98
         },
         {
@@ -33792,12 +33809,12 @@
         },
         {
           "name": "Trio for Piano, Violin, and Cello no. 3 in C minor, op. 1 no. 3: III. Menuetto. Quasi allegro",
-          "deezer": [1921195947],
+          "deezer": [1921195947, 1114875542],
           "score": 98.98
         },
         {
           "name": "Trio for Piano, Violin, and Cello no. 3 in C minor, op. 1 no. 3: IV. Finale. Prestissimo",
-          "deezer": [1921195957],
+          "deezer": [1921195957, 3252859],
           "score": 98.98
         }
       ]
@@ -33813,17 +33830,17 @@
       "parts": [
         {
           "name": "Trio for Piano, Violin, and Cello no. 5 in D major, op. 70 no. 1 \u201cGhost\u201d: I. Allegro vivace e con brio",
-          "deezer": [3429253, 68292768, 1873275687, 852005322, 1148256892],
+          "deezer": [3429253, 3450335501, 68292768, 1873275687, 852005322],
           "score": 99.15
         },
         {
           "name": "Trio for Piano, Violin, and Cello no. 5 in D major, op. 70 no. 1 \u201cGhost\u201d: II. Largo assai e espressivo",
-          "deezer": [3429254, 68292769, 1873275697, 852005332, 3241120141],
+          "deezer": [3429254, 3450335511, 68292769, 1873275697, 852005332],
           "score": 100.0
         },
         {
           "name": "Trio for Piano, Violin, and Cello no. 5 in D major, op. 70 no. 1 \u201cGhost\u201d: III. Presto",
-          "deezer": [3429255, 68292770, 1873275707, 852005342, 1148256912],
+          "deezer": [3429255, 3450335521, 68292770, 1873275707, 852005342],
           "score": 99.44
         },
         {
@@ -34295,7 +34312,7 @@
         },
         {
           "name": "7 Variations in E-flat major on Mozart's The Magic Flute: Duet \"Bei M\u00e4nnern, welche Liebe f\u00fchlen\", WoO 46 no. 2: Variation II",
-          "deezer": [3133167331, 3071137421],
+          "deezer": [3133167331, 601146082],
           "score": 98.8
         },
         {
@@ -34419,7 +34436,7 @@
         },
         {
           "name": "Sonata for Horn and Piano in F major, op. 17: II. Poco adagio, quasi andante",
-          "deezer": [2981133481],
+          "deezer": [3220842141],
           "score": 95.98
         },
         {
@@ -34471,17 +34488,17 @@
       "parts": [
         {
           "name": "Sonata for Piano no. 12 in A\u2010flat major, op. 26 \u201cFuneral March\u201d: II. Scherzo. Allegro molto",
-          "deezer": [3036405241, 853460492, 65370549, 2435155745, 2788453302],
+          "deezer": [1519429712, 3036405241, 853460492, 65370549, 2435155745],
           "score": 99.57
         },
         {
           "name": "Sonata for Piano no. 12 in A-flat major, op. 26 \"Funeral March\": III. Marcia funebre sulla morte d'un Eroe",
-          "deezer": [65370550, 853460502, 1915354627, 949544572, 712588492],
+          "deezer": [1519429722, 65370550, 853460502, 1915354627, 1519429642],
           "score": 100.0
         },
         {
           "name": "Sonata for Piano no. 12 in A-flat major, op. 26 \"Funeral March\": IV. Allegro",
-          "deezer": [3036405101, 65370551, 853460512, 2788453322, 2789916552],
+          "deezer": [1519429732, 3036405101, 65370551, 853460512, 2788453322],
           "score": 99.57
         }
       ]
@@ -34512,7 +34529,7 @@
         },
         {
           "name": "Sonata for Piano no. 15 in D major, op. 28 \"Pastorale\": IV. Rondo. Allegro ma non troppo",
-          "deezer": [811021182, 712588612, 2537034851, 95941142, 853447112],
+          "deezer": [811021182, 712588612, 2537034851, 95941142, 1519429802],
           "score": 99.83
         }
       ]
@@ -34554,12 +34571,12 @@
       "parts": [
         {
           "name": "Sonata for Piano no. 22 in F major, op. 54: I. Tempo di menuetto",
-          "deezer": [2537035001, 67338052, 67332593, 998808352, 2794549622],
+          "deezer": [1519430052, 2537035001, 67338052, 67332593, 998808352],
           "score": 100.0
         },
         {
           "name": "Sonata for Piano no. 22 in F major, op. 54: II. Allegretto - Pi\u00f9 allegro",
-          "deezer": [67338053, 853461492, 2794549632, 3132706741, 2789916852],
+          "deezer": [1519430062, 67338053, 853461492, 2794549632, 3132706741],
           "score": 100.0
         }
       ]
@@ -34575,17 +34592,17 @@
       "parts": [
         {
           "name": "Sonata for Piano no. 23 in F minor, op. 57 \u201cAppassionata\u201d: I. Allegro assai",
-          "deezer": [2782620712, 2794549642, 3272219291, 767325542, 3231427131],
+          "deezer": [2782620712, 2794549642, 3272219291, 1519430072, 1519430242],
           "score": 100.0
         },
         {
           "name": "Sonata for Piano no. 23 in F minor, op. 57 \u201cAppassionata\u201d: II. Andante con moto",
-          "deezer": [128181693, 2782620722, 3272219301, 2794549652, 1187219812],
+          "deezer": [128181693, 2782620722, 3272219301, 2794549652, 1519430082],
           "score": 99.65
         },
         {
           "name": "Sonata for Piano no. 23 in F minor, op. 57 \u201cAppassionata\u201d: III. Allegro ma non troppo",
-          "deezer": [2805321042, 2782620732, 3272219311, 2537035041, 609737],
+          "deezer": [2805321042, 2782620732, 3272219311, 1519430092, 1519430262],
           "score": 99.71
         }
       ]
@@ -34679,7 +34696,7 @@
         },
         {
           "name": "Sonata for Piano no. 27 in E minor, op. 90: II. Nicht zu geschwind und sehr singbar vorzutragen",
-          "deezer": [2537035151, 67338066, 68245737, 1359643672, 951251252],
+          "deezer": [2537035151, 67338066, 68245737, 1359650472, 951251252],
           "score": 100.0
         }
       ]
@@ -34726,17 +34743,17 @@
       "parts": [
         {
           "name": "Sonata for Piano no. 29 in B-flat major, op. 106 \"Hammer-Klavier\": I. Allegro",
-          "deezer": [3278043161, 3186582831, 2634540932, 377415501, 3256145141],
+          "deezer": [3278043161, 3186582831, 2634540932, 377415501, 1519430392],
           "score": 99.75
         },
         {
           "name": "Sonata for Piano no. 29 in B-flat major, op. 106 \"Hammer-Klavier\": II. Scherzo. Assai vivace",
-          "deezer": [3278043171, 3186582841, 2991582001, 2540903011, 2840524622],
+          "deezer": [3278043171, 3186582841, 2991582001, 1519430402, 2540903011],
           "score": 100.0
         },
         {
           "name": "Sonata for Piano no. 29 in B-flat major, op. 106 \"Hammer-Klavier\": III. Adagio sostenuto. Appassionato e molto con sentimento",
-          "deezer": [3278043181, 3186582851, 2634540952, 3256145161, 2540903021],
+          "deezer": [3278043181, 3186582851, 2634540952, 1519430412, 3256145161],
           "score": 99.25
         },
         {
@@ -34762,7 +34779,7 @@
         },
         {
           "name": "Sonata for Piano no. 30 in E major, op. 109: II. Prestissimo",
-          "deezer": [3264279641, 106707776, 2537035251],
+          "deezer": [3264279641, 106707776, 1519430352],
           "score": 99.11
         }
       ]
@@ -34804,12 +34821,12 @@
       "parts": [
         {
           "name": "Sonata for Piano no. 32 in C minor, op. 111: I. Maestoso \u2013 Allegro con brio ed appassionato",
-          "deezer": [2537035311, 106707786, 949544742, 67338081, 95941236],
+          "deezer": [1519430522, 2537035311, 106707786, 1519430502, 67338081],
           "score": 99.92
         },
         {
           "name": "Sonata for Piano no. 32 in C minor, op. 111: II. Arietta. Adagio molto semplice e cantabile",
-          "deezer": [1539458592, 2537035321, 106707788, 949544752, 95941238],
+          "deezer": [1539458592, 1519430532, 2537035321, 106707788, 1519430512],
           "score": 100.0
         }
       ]
@@ -34825,22 +34842,22 @@
       "parts": [
         {
           "name": "Sonata for Piano no. 4 in E-flat major, op. 7: I. Allegro molto e con brio",
-          "deezer": [2537034401, 355136751, 355136721, 2106870787, 2435155655],
+          "deezer": [2537034401, 355136751, 1519429302, 355136721, 2106870787],
           "score": 99.44
         },
         {
           "name": "Sonata for Piano no. 4 in E-flat major, op. 7: II. Largo, con gran espressione",
-          "deezer": [2537034411, 2106870797, 2435155665, 355136731, 2805801912],
+          "deezer": [2537034411, 1519429312, 2106870797, 2435155665, 355136731],
           "score": 100.0
         },
         {
           "name": "Sonata for Piano no. 4 in E-flat major, op. 7: III. Allegro",
-          "deezer": [2537034421, 2106870807, 2331108605, 355136741, 2435155675],
+          "deezer": [2537034421, 1519429322, 2106870807, 2331108605, 355136741],
           "score": 99.63
         },
         {
           "name": "Sonata for Piano no. 4 in E-flat major, op. 7: IV. Rondo. Poco allegretto e grazioso",
-          "deezer": [2537034431, 2435155685, 2106870817, 2805801932, 2805771692],
+          "deezer": [2537034431, 1519429332, 2435155685, 2106870817, 2805801932],
           "score": 99.25
         }
       ]
@@ -34866,7 +34883,7 @@
         },
         {
           "name": "Sonata for Piano no. 8 in C minor, op. 13 \u201cPath\u00e9tique\u201d: III. Rondo. Allegro",
-          "deezer": [66146179, 2794549192, 355136881, 2537034601, 67230129],
+          "deezer": [66146179, 2794549192, 1519429572, 355136881, 2537034601],
           "score": 92.1
         }
       ]
@@ -34939,7 +34956,7 @@
       "parts": [
         {
           "name": "Sonata for Violin and Piano no. 5 in F major, op. 24 \"Spring\": I. Allegro",
-          "deezer": [68247937, 4183874, 1794251077, 961311962, 2804994912],
+          "deezer": [68247937, 4183874, 1794251077, 961311962, 2768575211],
           "score": 100.0
         },
         {
@@ -35765,7 +35782,7 @@
       "parts": [
         {
           "name": "Symphony no. 8 in F major, op. 93: I. Allegro vivace e con brio",
-          "deezer": [66435406, 2790428512, 3408087551, 3016347551, 129593142],
+          "deezer": [66435406, 2790428512, 3409551, 129593142, 1633319532],
           "score": 98.4
         },
         {
@@ -35972,17 +35989,17 @@
       "parts": [
         {
           "name": "Trio for Piano, Clarinet [or Violin], and Cello no. 4 in B-flat major, op. 11: I. Allegro con brio",
-          "deezer": [3241120161, 66399326, 1401721862, 2511599191],
+          "deezer": [3450335531, 3241120161, 66399326, 1401721862, 2511599191],
           "score": 98.64
         },
         {
           "name": "Trio for Piano, Clarinet [or Violin], and Cello no. 4 in B-flat major, op. 11: II. Adagio",
-          "deezer": [3241120171, 66399327, 1401721872, 2511599201, 142742666],
+          "deezer": [3450335541, 3241120171, 66399327, 1401721872, 2511599201],
           "score": 100.0
         },
         {
           "name": "Trio for Piano, Clarinet [or Violin], and Cello no. 4 in B-flat major, op. 11: III. Allegretto con variazioni",
-          "deezer": [66399328, 3241120181, 2511599211, 1401721882],
+          "deezer": [3450335551, 66399328, 3241120181, 2511599211, 1401721882],
           "score": 97.2
         }
       ]
@@ -36024,17 +36041,17 @@
       "parts": [
         {
           "name": "Trio for Piano, Violin, and Cello in E-flat major, WoO 38: I. Allegro moderato",
-          "deezer": [1456091322],
+          "deezer": [1456091322, 3429261],
           "score": 98.58
         },
         {
           "name": "Trio for Piano, Violin, and Cello in E-flat major, WoO 38: II. Scherzo. Allegro ma non troppo",
-          "deezer": [3429262],
+          "deezer": [3429262, 3252864],
           "score": 100.0
         },
         {
           "name": "Trio for Piano, Violin, and Cello in E-flat major, WoO 38: III. Rondo. Allegretto",
-          "deezer": [1456091342],
+          "deezer": [1456091342, 3429263],
           "score": 98.58
         }
       ]
@@ -36190,7 +36207,7 @@
       "parts": [
         {
           "name": "Twenty-Five Scottish Songs, op. 108: No. 20, \"Faithfu' Johnie\"",
-          "deezer": [2816462512, 120226720, 120226686],
+          "deezer": [2816462512, 120226720, 120226686, 1207882142],
           "score": 100.0
         }
       ]
@@ -39157,7 +39174,7 @@
       "parts": [
         {
           "name": "Variations chromatiques de concert, WD 54",
-          "deezer": [2804274582],
+          "deezer": [2804274582, 3177057821],
           "score": 100.0
         }
       ]
@@ -39169,16 +39186,16 @@
       "type": "vocal",
       "begin_year": 1868,
       "end_year": 1868,
-      "score": 2.25,
+      "score": 2.23,
       "parts": [
         {
           "name": "Adieux de l'h\u00f4tesse arabe, op. 21 no. 4",
-          "deezer": [1785051057],
+          "deezer": [3177057991, 1785051057],
           "score": 100.0
         },
         {
           "name": "La Coccinelle, op. 21 no. 16",
-          "deezer": [2790024582, 1785051087, 65858904],
+          "deezer": [2790024582, 3177057971, 1785051087],
           "score": 96.88
         }
       ]
@@ -39283,7 +39300,7 @@
       "parts": [
         {
           "name": "Schelomo",
-          "deezer": [2879132222, 4183659, 2630864962],
+          "deezer": [2879132222, 4183659, 2630864962, 3325656961],
           "score": 100.0
         }
       ]
@@ -40986,7 +41003,7 @@
         },
         {
           "name": "3 Ges\u00e4nge, op. 42: Nr. 3. Darthulas Grabgesang",
-          "deezer": [65020266],
+          "deezer": [65020266, 3529286],
           "score": 91.07
         }
       ]
@@ -41161,7 +41178,7 @@
       "type": "vocal",
       "begin_year": null,
       "end_year": null,
-      "score": 2.76,
+      "score": 2.71,
       "parts": [
         {
           "name": "49 Deutsche Volkslieder, WoO 33: Book I, no. 6 \"Da unten im Tale\"",
@@ -41203,12 +41220,17 @@
       "type": "vocal",
       "begin_year": null,
       "end_year": null,
-      "score": 3.0,
+      "score": 2.98,
       "parts": [
         {
           "name": "5 Ges\u00e4nge, op. 104: Nr. 1. Nachtwache I",
           "deezer": [2789860682],
           "score": 100.0
+        },
+        {
+          "name": "5 Ges\u00e4nge, op. 104: Nr. 2. Nachtwache II",
+          "deezer": [61557188],
+          "score": 98.29
         }
       ]
     },
@@ -41780,6 +41802,22 @@
           "name": "8 Klavierst\u00fccke, op. 76: Nr. 8. Capriccio in C major: Grazioso ed un poco vivace",
           "deezer": [422351472, 1104603472, 547924602, 396733372],
           "score": 89.04
+        }
+      ]
+    },
+    {
+      "gid": "be64eff8-ef10-4fc4-8f33-8efbdd5ce90a",
+      "composer": "c70d12a2-24fe-4f83-a6e6-57d84f8efb51",
+      "name": "8 deutsche Volkslieder, WoO 36",
+      "type": "vocal",
+      "begin_year": null,
+      "end_year": null,
+      "score": 3.37,
+      "parts": [
+        {
+          "name": "Ich hab die Nacht getr\u00e4umet",
+          "deezer": [61557181],
+          "score": 100.0
         }
       ]
     },
@@ -43302,22 +43340,22 @@
       "parts": [
         {
           "name": "Sonata for Piano no. 1 in C major, op. 1: I. Allegro",
-          "deezer": [70248641, 2872837912],
+          "deezer": [70248641, 3397452921, 2872837912],
           "score": 97.66
         },
         {
           "name": "Sonata for Piano no. 1 in C major, op. 1: II. Andante (nach einem altdeutschen Minneliede)",
-          "deezer": [2775251621, 1174547742],
+          "deezer": [2775251621, 1174547742, 2872837922],
           "score": 98.85
         },
         {
           "name": "Sonata for Piano no. 1 in C major, op. 1: III. Scherzo. Allegro molto e con fuoco - Pi\u00f9 mosso",
-          "deezer": [2872837932, 70248643],
+          "deezer": [2872837932, 70248643, 2749235741],
           "score": 100.0
         },
         {
           "name": "Sonata for Piano no. 1 in C major, op. 1: IV. Finale. Allegro con fuoco",
-          "deezer": [2872837942, 2775251641],
+          "deezer": [2872837942, 2775251641, 2749235751],
           "score": 100.0
         }
       ]
@@ -43727,22 +43765,22 @@
       "parts": [
         {
           "name": "Trio f\u00fcr Klavier, Violine und Horn Es-Dur, op. 40: I. Andante \u2013 Poco pi\u00f9 animato",
-          "deezer": [3015598031, 2800933452, 2675832752, 65583955],
+          "deezer": [3015598031, 3283668721, 2800933452, 2675832752, 65583955],
           "score": 98.93
         },
         {
           "name": "Trio f\u00fcr Klavier, Violine und Horn Es-Dur, op. 40: II. Scherzo. Allegro \u2013 Molto meno allegro",
-          "deezer": [3015598041, 2800933462, 2792475182, 65583956],
+          "deezer": [3015598041, 3283668731, 2800933462, 2792475182, 65583956],
           "score": 99.29
         },
         {
           "name": "Trio f\u00fcr Klavier, Violine und Horn Es-Dur, op. 40: III. Adagio mesto",
-          "deezer": [3015598051, 2800933472, 2675832772, 2792475192],
+          "deezer": [3015598051, 3283668751, 2800933472, 2675832772, 2792475192],
           "score": 98.93
         },
         {
           "name": "Trio f\u00fcr Klavier, Violine und Horn Es-Dur, op. 40: IV. Finale. Allegro con brio",
-          "deezer": [3015598061, 2800933482, 65583958, 68281688],
+          "deezer": [3015598061, 3283668761, 2800933482, 65583958, 68281688],
           "score": 100.0
         }
       ]
@@ -43758,22 +43796,22 @@
       "parts": [
         {
           "name": "Trio for Piano, Clarinet, and Cello in A minor, op. 114: I. Allegro",
-          "deezer": [65583904, 134033550, 2632276292, 2140779],
+          "deezer": [3283668891, 65583904, 134033550, 2632276292],
           "score": 100.0
         },
         {
           "name": "Trio for Piano, Clarinet, and Cello in A minor, op. 114: II. Adagio",
-          "deezer": [65583905, 134033552, 2632276302, 2140780],
+          "deezer": [3283668901, 65583905, 134033552, 2632276302],
           "score": 98.63
         },
         {
           "name": "Trio for Piano, Clarinet, and Cello in A minor, op. 114: III. Andante grazioso",
-          "deezer": [134033554, 65583906, 2632276312],
+          "deezer": [3283668911, 134033554, 65583906, 2632276312],
           "score": 99.55
         },
         {
           "name": "Trio for Piano, Clarinet, and Cello in A minor, op. 114: IV. Allegro",
-          "deezer": [65583907, 134033556, 2632276322],
+          "deezer": [3283668921, 65583907, 134033556, 2632276322],
           "score": 98.16
         }
       ]
@@ -43820,22 +43858,22 @@
       "parts": [
         {
           "name": "Trio for Piano, Violin, and Cello no. 2 in C major, op. 87: I. Allegro - Animato",
-          "deezer": [65583912, 2803792262, 1915358097],
+          "deezer": [65583912, 3283668771, 2803792262, 1915358097],
           "score": 99.46
         },
         {
           "name": "Trio for Piano, Violin, and Cello no. 2 in C major, op. 87: II. Andante con moto",
-          "deezer": [65583913, 2803792272, 1540025972],
+          "deezer": [65583913, 3283668781, 2803792272, 1540025972],
           "score": 100.0
         },
         {
           "name": "Trio for Piano, Violin, and Cello no. 2 in C major, op. 87: III. Scherzo. Presto - Poco meno presto",
-          "deezer": [65583914, 2803792282, 1915358117],
+          "deezer": [65583914, 2803792282, 3283668791, 1915358117],
           "score": 98.9
         },
         {
           "name": "Trio for Piano, Violin, and Cello no. 2 in C major, op. 87: IV. Finale. Allegro giocoso",
-          "deezer": [65583915, 2803792292, 1915358127],
+          "deezer": [65583915, 3283668801, 2803792292, 1915358127],
           "score": 98.9
         }
       ]
@@ -43851,22 +43889,22 @@
       "parts": [
         {
           "name": "Trio for Piano, Violin, and Cello no. 3 in C minor, op. 101: I. Allegro energico",
-          "deezer": [2803792302, 65583916, 1540026002],
+          "deezer": [3283668811, 2803792302, 65583916],
           "score": 99.39
         },
         {
           "name": "Trio for Piano, Violin, and Cello no. 3 in C minor, op. 101: II. Presto non assai",
-          "deezer": [2803792312, 65583917, 1540026012],
+          "deezer": [2803792312, 3283668821, 65583917],
           "score": 98.77
         },
         {
           "name": "Trio for Piano, Violin, and Cello no. 3 in C minor, op. 101: III. Andante grazioso",
-          "deezer": [2803792322, 65583918, 2675832732],
+          "deezer": [3283668831, 2803792322, 65583918],
           "score": 100.0
         },
         {
           "name": "Trio for Piano, Violin, and Cello no. 3 in C minor, op. 101: IV. Allegro molto",
-          "deezer": [2803792332, 65583919, 1540026032],
+          "deezer": [3283668841, 2803792332, 65583919],
           "score": 98.77
         }
       ]
@@ -44313,7 +44351,7 @@
       "parts": [
         {
           "name": "Variations on a Theme by Joseph Haydn, op. 56b: Chorale St. Antoni. Andante",
-          "deezer": [2841009272, 3241119861],
+          "deezer": [11220740, 3241119861],
           "score": 94.16
         },
         {
@@ -44996,7 +45034,7 @@
         },
         {
           "name": "Cello Sonata in C major, op. 65: II. Scherzo: pizzicato",
-          "deezer": [3309842721, 71841613],
+          "deezer": [3348998481, 71841613],
           "score": 98.91
         },
         {
@@ -45800,6 +45838,22 @@
         {
           "name": "Rejoice in the Lamb, op. 30: IX. \u201cHallelujah from the heart of God\u201d",
           "deezer": [2775372231],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "820fe25e-8a02-42ef-b59a-c70219da7c62",
+      "composer": "49ae5227-605a-47a8-9b8e-cd89bf01a97c",
+      "name": "Sacred and Profane, op. 91",
+      "type": "vocal",
+      "begin_year": 1974,
+      "end_year": 1975,
+      "score": 2.48,
+      "parts": [
+        {
+          "name": "Sacred and Profane, op. 91: No. 4. The long night",
+          "deezer": [61557190],
           "score": 100.0
         }
       ]
@@ -47013,7 +47067,7 @@
       "parts": [
         {
           "name": "Romance in F major, op. 85",
-          "deezer": [6961895, 139508709],
+          "deezer": [6961895, 2717122492],
           "score": 100.0
         }
       ]
@@ -48043,7 +48097,7 @@
         },
         {
           "name": "Berceuse, (Elegies no. 7), BV 252",
-          "deezer": [2899206121, 533264962, 3341855131],
+          "deezer": [2899206121, 533264962, 2770532771],
           "score": 95.18
         }
       ]
@@ -48075,7 +48129,7 @@
       "parts": [
         {
           "name": "Fantasia nach J.S. Bach, BV 253",
-          "deezer": [2506622601, 533264872],
+          "deezer": [2506622601, 533264872, 2899064721],
           "score": 100.0
         }
       ]
@@ -48270,7 +48324,7 @@
       "parts": [
         {
           "name": "Sonatina no. 6 \"Kammer-Fantasie \u00fcber Carmen\", BV 284",
-          "deezer": [2506721861, 2776157691, 2444664235, 2775480811],
+          "deezer": [2506721861, 2776157691, 2899064671, 2444664235],
           "score": 100.0
         }
       ]
@@ -55567,22 +55621,22 @@
       "parts": [
         {
           "name": "Sonata for Violin and Piano: I. Allegro",
-          "deezer": [82566172],
+          "deezer": [82566172, 2572320372],
           "score": 100.0
         },
         {
           "name": "Sonata for Violin and Piano: II. Andantino",
-          "deezer": [82566174],
+          "deezer": [2572320382, 82566174],
           "score": 100.0
         },
         {
           "name": "Sonata for Violin and Piano: III. Lento",
-          "deezer": [82566176],
+          "deezer": [2572320392, 82566176],
           "score": 100.0
         },
         {
           "name": "Sonata for Violin and Piano: IV. Allegro",
-          "deezer": [82566178],
+          "deezer": [2572320402, 82566178],
           "score": 100.0
         }
       ]
@@ -64118,22 +64172,22 @@
       "parts": [
         {
           "name": "String Quartet no. 1 in A major, op. 2, B. 8: I. Andante \u2013 Allegro",
-          "deezer": [68246560, 1727777317],
+          "deezer": [68246560, 3104386541, 1727777317],
           "score": 100.0
         },
         {
           "name": "String Quartet no. 1 in A major, op. 2, B. 8: II. Adagio affettuoso ed appassionato",
-          "deezer": [68246561, 1727777327],
+          "deezer": [68246561, 3104386551, 1727777327],
           "score": 100.0
         },
         {
           "name": "String Quartet no. 1 in A major, op. 2, B. 8: III. Allegro scherzando \u2013 Trio",
-          "deezer": [68246562, 1727777337],
+          "deezer": [68246562, 3104386561, 1727777337],
           "score": 100.0
         },
         {
           "name": "String Quartet no. 1 in A major, op. 2, B. 8: IV. Finale: Allegro animato",
-          "deezer": [68246563, 1727777347],
+          "deezer": [68246563, 1727777347, 3104386571],
           "score": 100.0
         }
       ]
@@ -64180,22 +64234,22 @@
       "parts": [
         {
           "name": "String Quartet no. 11 in C major, op. 61, B. 121: I. Allegro",
-          "deezer": [68246601, 532425512],
+          "deezer": [68246601, 3104386581],
           "score": 100.0
         },
         {
           "name": "String Quartet no. 11 in C major, op. 61, B. 121: II. Poco adagio e molto cantabile",
-          "deezer": [68246602, 532425522],
+          "deezer": [68246602, 3104386591],
           "score": 100.0
         },
         {
           "name": "String Quartet no. 11 in C major, op. 61, B. 121: III. Scherzo: Allegro vivo - Trio: L'istesso tempo",
-          "deezer": [68246603, 532425532],
+          "deezer": [68246603, 3104386601],
           "score": 100.0
         },
         {
           "name": "String Quartet no. 11 in C major, op. 61, B. 121: IV. Finale: vivace",
-          "deezer": [68246604, 532425542],
+          "deezer": [68246604, 3104386611],
           "score": 100.0
         }
       ]
@@ -64362,22 +64416,22 @@
       "parts": [
         {
           "name": "String Quartet no. 7 in A minor, op. 16, B. 45: I. Allegro ma non troppo",
-          "deezer": [1727777387, 68246585],
+          "deezer": [1727777387, 68246585, 3104386501],
           "score": 100.0
         },
         {
           "name": "String Quartet no. 7 in A minor, op. 16, B. 45: II. Andante cantabile",
-          "deezer": [1727777397, 68246586],
+          "deezer": [1727777397, 68246586, 3104386511],
           "score": 100.0
         },
         {
           "name": "String Quartet no. 7 in A minor, op. 16, B. 45: III. Allegro scherzando \u2013 Trio",
-          "deezer": [68246587, 1727777407],
+          "deezer": [68246587, 3104386521, 1727777407],
           "score": 100.0
         },
         {
           "name": "String Quartet no. 7 in A minor, op. 16, B. 45: IV. Allegro ma non troppo",
-          "deezer": [1727777417, 68246588],
+          "deezer": [1727777417, 68246588, 3104386531],
           "score": 100.0
         }
       ]
@@ -65349,7 +65403,7 @@
       "parts": [
         {
           "name": "In the South (Alassio), op. 50",
-          "deezer": [6984661, 3380805, 1126183642],
+          "deezer": [6984661, 3380805, 2851060552],
           "score": 100.0
         }
       ]
@@ -65970,12 +66024,12 @@
         },
         {
           "name": "Variations on an Original Theme (\u2018Enigma\u2019), op. 36: IX. Nimrod (Adagio)",
-          "deezer": [3185834421, 3358886331, 100386498, 67606412, 65861037],
+          "deezer": [3185834421, 3358886331, 100386498, 4967026, 65861037],
           "score": 100.0
         },
         {
           "name": "Variations on an Original Theme (\u2018Enigma\u2019), op. 36: X. Intermezzo: Dorabella (Allegretto)",
-          "deezer": [3185834431, 67606413, 2800531262, 2991570601, 2608727892],
+          "deezer": [3185834431, 4967027, 2800531262, 2991570601, 2608727892],
           "score": 81.84
         },
         {
@@ -66727,7 +66781,7 @@
       "parts": [
         {
           "name": "Lute Concerto in D minor, FaWV L:d1: I.",
-          "deezer": [3208289761],
+          "deezer": [3208296351],
           "score": 100.0
         },
         {
@@ -68263,7 +68317,7 @@
         },
         {
           "name": "Requiem, op. 48: IV. Pie Jesu",
-          "deezer": [5317343, 1183116252, 2377630155, 13529903, 2775477721],
+          "deezer": [5317343, 1183116252, 2377630155, 13529903, 2798843782],
           "score": 100.0
         },
         {
@@ -68809,7 +68863,7 @@
       "parts": [
         {
           "name": "Nocturne for piano no. 11 in E-flat major, H. 56",
-          "deezer": [3118415131, 3031353301, 1484287492],
+          "deezer": [3118415131, 2896285051, 1484287492],
           "score": 100.0
         }
       ]
@@ -71702,7 +71756,7 @@
       "parts": [
         {
           "name": "Glassworks: I. Opening",
-          "deezer": [978442722, 137726173, 2448690245],
+          "deezer": [978442722, 137726173, 140852563],
           "score": 100.0
         }
       ]
@@ -72368,6 +72422,22 @@
       ]
     },
     {
+      "gid": "e0424683-8b7d-4bc3-bb0e-51db8f32160b",
+      "composer": "5a0988a4-695c-4bff-bc68-4f312427495e",
+      "name": "\u00c9l\u00e9gie, op. 44",
+      "type": "chamber",
+      "begin_year": null,
+      "end_year": null,
+      "score": 1.95,
+      "parts": [
+        {
+          "name": "\u00c9l\u00e9gie, op. 44",
+          "deezer": [3282013371],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "d4b74cd2-0b57-4ddf-bf46-0a528dad8559",
       "composer": "e539699a-5cb3-4f73-b60f-691b1499d0af",
       "name": "Do Not Tempt Me Needlessly",
@@ -72697,7 +72767,7 @@
       "parts": [
         {
           "name": "Paride ed Elena, Wq. 39: Act I. Aria \u201cO del mio dolce ardor\u201d",
-          "deezer": [68288528, 67235813],
+          "deezer": [68288528, 67235813, 7572098],
           "score": 100.0
         }
       ]
@@ -72750,7 +72820,7 @@
         },
         {
           "name": "\u00c9tude no. 5, op. 10 no. 3 D\u2010flat major (left hand)",
-          "deezer": [2377564785, 3306348791],
+          "deezer": [2377564785, 3302853181],
           "score": 100.0
         },
         {
@@ -74267,17 +74337,17 @@
       "parts": [
         {
           "name": "Concerto in A minor for Piano and Orchestra, op. 16: I. Allegro molto moderato",
-          "deezer": [658845802, 1416057052, 3247849031, 2791423152, 728282112],
+          "deezer": [3531278, 1416057052, 3247849031, 2791423152, 728282112],
           "score": 100.0
         },
         {
           "name": "Concerto in A minor for Piano and Orchestra, op. 16: II. Adagio",
-          "deezer": [658845812, 355721271, 3247849051, 2791422982, 101036464],
+          "deezer": [3531279, 355721271, 3247849051, 2791422982, 101036464],
           "score": 99.84
         },
         {
           "name": "Concerto in A minor for Piano and Orchestra, op. 16: III. Allegro moderato molto e marcato",
-          "deezer": [658845822, 1416057072, 3247849061, 2795047662, 101036466],
+          "deezer": [3531280, 1416057072, 3247849061, 2795047662, 101036466],
           "score": 96.17
         }
       ]
@@ -75045,12 +75115,12 @@
       "parts": [
         {
           "name": "Sonate for Piano i e-moll, op. 7: I. Allegro moderato",
-          "deezer": [2791423132, 2779870461, 2395147225, 658845412],
+          "deezer": [2791423132, 2779870461, 2395147225, 3531281],
           "score": 100.0
         },
         {
           "name": "Sonate for Piano i e-moll, op. 7: II. Andante molto",
-          "deezer": [2781994712, 2395147195, 2779870471, 658845422],
+          "deezer": [2781994712, 2395147195, 2779870471, 3531282],
           "score": 100.0
         },
         {
@@ -78627,7 +78697,7 @@
       "parts": [
         {
           "name": "Concerto funebre: I. Introduktion. Largo",
-          "deezer": [3132658711],
+          "deezer": [3132658711, 2717122452],
           "score": 97.86
         },
         {
@@ -78642,7 +78712,7 @@
         },
         {
           "name": "Concerto funebre: IV. Choral. Langsamer Marsch",
-          "deezer": [3132658741],
+          "deezer": [3132658741, 2717122482],
           "score": 100.0
         }
       ]
@@ -88604,7 +88674,7 @@
       "parts": [
         {
           "name": "Variations on \"America\", S. 140 (orch. Schuman)",
-          "deezer": [6981304, 1121818502],
+          "deezer": [6981304, 4967009],
           "score": 100.0
         }
       ]
@@ -95007,7 +95077,7 @@
       "parts": [
         {
           "name": "R\u00e9miniscences de Norma, S. 394",
-          "deezer": [1241616472, 2506621111],
+          "deezer": [1241616472, 2506621111, 3172236851],
           "score": 100.0
         }
       ]
@@ -97141,27 +97211,27 @@
       "parts": [
         {
           "name": "Symphony no. 5 in C-sharp minor: I. Trauermarsch (In gemessenem Schritt. Streng. Wie ein Kondukt)",
-          "deezer": [2164423227, 141741559, 68288925, 1915287347, 90759253],
+          "deezer": [67343162, 141741559, 68288925, 1915287347, 90759253],
           "score": 86.56
         },
         {
           "name": "Symphony no. 5 in C-sharp minor: II. St\u00fcrmisch bewegt. Mit gr\u00f6\u00dfter Vehemenz",
-          "deezer": [2164423247, 141741561, 68288926, 1915287357, 90759257],
+          "deezer": [67343163, 141741561, 68288926, 1915287357, 90759257],
           "score": 85.39
         },
         {
           "name": "Symphony no. 5 in C-sharp minor: III. Scherzo. Kr\u00e4ftig, nicht zu schnell",
-          "deezer": [2164423257, 141741563, 1915287367, 68288927, 90759261],
+          "deezer": [67343164, 141741563, 1915287367, 68288927, 90759261],
           "score": 85.25
         },
         {
           "name": "Symphony no. 5 in C-sharp minor: IV. Adagietto. Sehr langsam",
-          "deezer": [2164423277, 3048476491, 65817139, 141741565, 68294348],
+          "deezer": [67343165, 3048476491, 65817139, 141741565, 68294348],
           "score": 100.0
         },
         {
           "name": "Symphony no. 5 in C-sharp minor: V. Rondo-Finale. Allegro - Allegro giocoso. Frisch",
-          "deezer": [2164423297, 141741567, 1915287387, 90759269, 68288929],
+          "deezer": [67343166, 141741567, 1915287387, 90759269, 68288929],
           "score": 85.52
         }
       ]
@@ -101020,7 +101090,7 @@
         },
         {
           "name": "Symphony no. 4 in A major, op. 90 \u201cItalian\u201d: II. Andante con moto",
-          "deezer": [77662895, 2174200397, 2192961457, 3465398, 506687652],
+          "deezer": [77662895, 2174200397, 2192961457, 3465398, 777273542],
           "score": 96.77
         },
         {
@@ -101030,7 +101100,7 @@
         },
         {
           "name": "Symphony no. 4 in A major, op. 90 \u201cItalian\u201d: IV. Saltarello. Presto",
-          "deezer": [77662897, 2174200417, 2192961477, 119360888, 65505519],
+          "deezer": [77662897, 2174200417, 2192961477, 119360888, 777273562],
           "score": 98.25
         }
       ]
@@ -103830,7 +103900,7 @@
       "parts": [
         {
           "name": "Lamento d'Arianna: I. Lasciatemi morire",
-          "deezer": [507993302],
+          "deezer": [3353139411, 507993302],
           "score": 100.0
         }
       ]
@@ -103846,7 +103916,7 @@
       "parts": [
         {
           "name": "L\u2019Orfeo: Toccata",
-          "deezer": [3187182851, 2631335912, 66419764],
+          "deezer": [3187182851, 2631335912, 2830924162, 66419764],
           "score": 100.0
         },
         {
@@ -103968,7 +104038,7 @@
       "type": "vocal",
       "begin_year": 1624,
       "end_year": 1624,
-      "score": 2.52,
+      "score": 2.49,
       "parts": [
         {
           "name": "Ardo e scoprir, ahi lasso, io non ardisco",
@@ -104020,7 +104090,7 @@
       "type": "vocal",
       "begin_year": null,
       "end_year": null,
-      "score": 2.89,
+      "score": 2.74,
       "parts": [
         {
           "name": "S\u00ec, ch' io vorrei morire, SV 89",
@@ -104036,11 +104106,11 @@
       "type": "vocal",
       "begin_year": null,
       "end_year": null,
-      "score": 2.4,
+      "score": 2.58,
       "parts": [
         {
-          "name": "Questi vaghi concenti, SV 106",
-          "deezer": [68247852],
+          "name": "Cruda Amarilli, SV 94",
+          "deezer": [2830924012],
           "score": 100.0
         }
       ]
@@ -104571,7 +104641,7 @@
       "parts": [
         {
           "name": "La Jongleuse, op. 52 no. 4",
-          "deezer": [915300792, 2802851322, 919958582],
+          "deezer": [915300792, 2802851322],
           "score": 100.0
         }
       ]
@@ -111509,17 +111579,17 @@
         },
         {
           "name": "Serenade no. 13 for Strings in G major, K. 525 \u201eEine kleine Nachtmusik\u201c: II. Romance. Andante",
-          "deezer": [4667670, 3293157491, 391433022, 1742622467, 66243514],
+          "deezer": [4667670, 3293157491, 391433022, 1742622467, 2877061132],
           "score": 95.92
         },
         {
           "name": "Serenade no. 13 for Strings in G major, K. 525 \u201eEine kleine Nachtmusik\u201c: III. Minuetto. Allegretto & Trio",
-          "deezer": [4667671, 391433032, 1742622477, 66243515, 2877061142],
+          "deezer": [4667671, 391433032, 1742622477, 2877061142, 3082415141],
           "score": 90.44
         },
         {
           "name": "Serenade no. 13 for Strings in G major, K. 525 \u201eEine kleine Nachtmusik\u201c: IV. Rondo. Allegro",
-          "deezer": [66419796, 391433042, 1742622487, 983327092, 66243516],
+          "deezer": [66419796, 391433042, 1742622487, 983327092, 2877061152],
           "score": 93.78
         }
       ]
@@ -111623,17 +111693,17 @@
       "parts": [
         {
           "name": "Serenade no. 6 in D major, K. 239 \u201cSerenata notturna\u201d: I. Marcia. Maestoso",
-          "deezer": [391433082, 69123619, 2652146972, 66612548, 2788743542],
+          "deezer": [391433082, 69123619, 2652146972, 2788743542, 66343668],
           "score": 100.0
         },
         {
           "name": "Serenade no. 6 in D major, K. 239 \u201cSerenata notturna\u201d: II. Menuetto",
-          "deezer": [391433092, 69123620, 2652146992, 990550672, 66343669],
+          "deezer": [391433092, 69123620, 2652146992, 66343669, 2788743552],
           "score": 98.3
         },
         {
           "name": "Serenade no. 6 in D major, K. 239 \u201cSerenata notturna\u201d: III. Rondeau. Allegretto",
-          "deezer": [391433102, 69123621, 66612550, 2652147012, 1641848372],
+          "deezer": [391433102, 69123621, 2652147012, 1641848372, 2788743562],
           "score": 98.04
         }
       ]
@@ -111726,37 +111796,37 @@
       "parts": [
         {
           "name": "Serenade no. 9 in D major, K. 320 \"Posthorn\": I. Adagio maestoso - allegro con spirito",
-          "deezer": [66243517, 68301409, 3082415041, 70154045, 2631409532],
+          "deezer": [68301409, 3082415041, 70154045, 2631409532, 1622515682],
           "score": 92.08
         },
         {
           "name": "Serenade no. 9 in D major, K. 320 \"Posthorn\": II. Menuetto. Allegretto",
-          "deezer": [66243518, 68301410, 3082415051, 3318904761, 2421591095],
+          "deezer": [68301410, 3082415051, 3318904761, 2421591095, 73998564],
           "score": 89.05
         },
         {
           "name": "Serenade no. 9 in D major, K. 320 \"Posthorn\": III. Concertante. Andante grazioso",
-          "deezer": [1057355142, 1762387597, 3082415061, 2421591105, 2631409552],
+          "deezer": [1762387597, 3082415061, 2421591105, 2631409552, 1622515702],
           "score": 92.08
         },
         {
           "name": "Serenade no. 9 in D major, K. 320 \"Posthorn\": IV. Rondeau. Allegro ma non troppo",
-          "deezer": [1057355152, 68301412, 3082415071, 2631409562, 1622515712],
+          "deezer": [68301412, 3082415071, 2631409562, 1622515712, 73998566],
           "score": 94.13
         },
         {
           "name": "Serenade no. 9 in D major, K. 320 \"Posthorn\": V. Andantino",
-          "deezer": [66243521, 68301413, 3082415081, 70154046, 2631409572],
+          "deezer": [68301413, 3082415081, 70154046, 2631409572, 1622515722],
           "score": 90.61
         },
         {
           "name": "Serenade no. 9 in D major, K. 320 \"Posthorn\": VI. Menuetto - Trio I/II",
-          "deezer": [66243522, 68301414, 374146511, 3082415091, 2421591135],
+          "deezer": [68301414, 374146511, 3082415091, 2421591135, 1622515732],
           "score": 100.0
         },
         {
           "name": "Serenade no. 9 in D major, K. 320 \"Posthorn\": VII. Finale. Presto",
-          "deezer": [66243523, 68301415, 3082415101, 78619907, 2631409592],
+          "deezer": [68301415, 3082415101, 78619907, 2631409592, 1622515742],
           "score": 92.78
         }
       ]
@@ -117959,7 +118029,7 @@
         },
         {
           "name": "24 Caprices for Solo Violin, MS 25, op. 1 no. 24 in A minor: Tema con variazioni. Quasi presto",
-          "deezer": [3061456591, 3351537581, 67330149, 1057339092, 2427124095],
+          "deezer": [3061456591, 2780060501, 67330149, 1057339092, 2427124095],
           "score": 100.0
         }
       ]
@@ -119249,7 +119319,7 @@
       "parts": [
         {
           "name": "Libertango",
-          "deezer": [141162343, 2788990642, 3161593351, 3301076351, 141166951],
+          "deezer": [141162343, 2788990642, 11220796, 3301076351, 141166951],
           "score": 100.0
         }
       ]
@@ -119302,7 +119372,7 @@
       "parts": [
         {
           "name": "Oblivion",
-          "deezer": [1107353052, 2788990582, 601148812, 1161389362, 1479247182],
+          "deezer": [1107353052, 2788990582, 11220795, 1161389362, 1479247182],
           "score": 100.0
         }
       ]
@@ -119450,7 +119520,7 @@
       "parts": [
         {
           "name": "Tres minutos con la realidad",
-          "deezer": [601148802],
+          "deezer": [11220794],
           "score": 100.0
         }
       ]
@@ -120897,7 +120967,7 @@
       "parts": [
         {
           "name": "Quatre po\u00e8mes de Max Jacob: I. Est-il un coin plus solitaire",
-          "deezer": [66399834],
+          "deezer": [2700516412],
           "score": 100.0
         },
         {
@@ -121420,37 +121490,37 @@
       "parts": [
         {
           "name": "Suite fran\u00e7aise, FP 80: 1. Bransle de Bourgogne",
-          "deezer": [2768677591],
+          "deezer": [2700516452, 2768677591],
           "score": 100.0
         },
         {
           "name": "Suite fran\u00e7aise, FP 80: 2. Pavane",
-          "deezer": [2768677601],
+          "deezer": [2700516462, 2768677601],
           "score": 100.0
         },
         {
           "name": "Suite fran\u00e7aise, FP 80: 3. Petite marche militaire",
-          "deezer": [2768677611],
+          "deezer": [2700516472, 2768677611],
           "score": 100.0
         },
         {
           "name": "Suite fran\u00e7aise, FP 80: 4. Complainte",
-          "deezer": [2768677621],
+          "deezer": [2700516482, 2768677621],
           "score": 100.0
         },
         {
           "name": "Suite fran\u00e7aise, FP 80: 5. Bransle de Champagne",
-          "deezer": [2768677631],
+          "deezer": [2700516492, 2768677631],
           "score": 96.03
         },
         {
           "name": "Suite fran\u00e7aise, FP 80: 6. Sicilienne",
-          "deezer": [2768677641],
+          "deezer": [2700516502, 2768677641],
           "score": 100.0
         },
         {
           "name": "Suite fran\u00e7aise, FP 80: 7. Carillon",
-          "deezer": [2768677651],
+          "deezer": [2700516512, 2768677651],
           "score": 100.0
         }
       ]
@@ -122239,7 +122309,7 @@
       "parts": [
         {
           "name": "Piano Concerto no. 2 in G minor, op. 16: I. Andantino \u2013 Allegretto",
-          "deezer": [1332121892, 66151918, 2768464761, 3205011831, 73820872],
+          "deezer": [1332121892, 66685266, 2768464761, 3205011831, 73820872],
           "score": 100.0
         },
         {
@@ -122254,7 +122324,7 @@
         },
         {
           "name": "Piano Concerto no. 2 in G minor, op. 16: IV. Finale. Allegro tempestoso",
-          "deezer": [1332121922, 2768464791, 4153100, 73820875, 2895987011],
+          "deezer": [1332121922, 2768464791, 3397452521, 4153100, 73820875],
           "score": 98.77
         }
       ]
@@ -126387,7 +126457,7 @@
       "parts": [
         {
           "name": "Come Away Death, op. 6 no. 1",
-          "deezer": [65414505, 1477639682],
+          "deezer": [65414505, 1477726112],
           "score": 100.0
         }
       ]
@@ -126565,7 +126635,7 @@
       "parts": [
         {
           "name": "2 Pieces for 6 Hands, TN ii/22: 2. Romance in A major",
-          "deezer": [133581718, 62649000, 946959832],
+          "deezer": [2201086727, 62649000, 946959832],
           "score": 100.0
         }
       ]
@@ -126618,12 +126688,12 @@
       "parts": [
         {
           "name": "Nocturne No. 1 in F-sharp minor, TN ii/13/1: Andante cantabile - Allegro - Allegro vivave - Andante cantabile",
-          "deezer": [3098794161, 62648956],
+          "deezer": [3098794161, 74577991],
           "score": 96.03
         },
         {
           "name": "Nocturne No. 2 in F, TN ii/13/2: Andante maestoso - Allegro assai",
-          "deezer": [3098794171, 62648957],
+          "deezer": [3098794171, 74577989],
           "score": 100.0
         },
         {
@@ -126649,7 +126719,7 @@
         },
         {
           "name": "Oriental Sketch, TN ii/19/2",
-          "deezer": [1849338757, 2022713607, 62648963],
+          "deezer": [1849338757, 2022713607, 3098794151],
           "score": 100.0
         },
         {
@@ -126670,7 +126740,7 @@
       "parts": [
         {
           "name": "4 Pieces, TN ii/12: no. 3 M\u00e9lodie in E major",
-          "deezer": [74577997, 62648943],
+          "deezer": [74577997, 3098367391],
           "score": 100.0
         }
       ]
@@ -126812,7 +126882,7 @@
       "parts": [
         {
           "name": "Aleko, TN ii/70: 5. Women's Dance",
-          "deezer": [1352115972, 3379101],
+          "deezer": [2201086827, 968831162],
           "score": 100.0
         },
         {
@@ -126838,7 +126908,7 @@
       "parts": [
         {
           "name": "All-Night Vigil, op. 37: I. Come, Let Us Worship",
-          "deezer": [2377591775, 2899197761, 2898893901, 396968872, 2475688271],
+          "deezer": [2377591775, 2899197761, 2898893901, 2771041741, 396968872],
           "score": 84.23
         },
         {
@@ -126927,7 +126997,7 @@
       "parts": [
         {
           "name": "Morceaux de fantaisie, op. 3: No. 3. M\u00e9lodie in E major",
-          "deezer": [2577332992, 62648930],
+          "deezer": [2577332992, 3098362071],
           "score": 100.0
         }
       ]
@@ -126943,7 +127013,7 @@
       "parts": [
         {
           "name": "Morceaux de salon, op. 10: no. 3 Barcarolle in G minor",
-          "deezer": [1977603017, 3098362141, 62648950, 1501853012],
+          "deezer": [1977603017, 3098362141, 1501853012, 74577984],
           "score": 100.0
         }
       ]
@@ -127011,17 +127081,17 @@
       "parts": [
         {
           "name": "Piano Concerto no. 3 in D minor, op. 30: I. Allegro ma non tanto",
-          "deezer": [1478833882, 74683859, 143778890, 2076418207, 122882844],
+          "deezer": [1478833882, 3359133071, 74683859, 143778890, 2076418207],
           "score": 99.42
         },
         {
           "name": "Piano Concerto no. 3 in D minor, op. 30: II. Intermezzo. Adagio",
-          "deezer": [112393784, 2076418217, 2794159192, 122882848, 2129787887],
+          "deezer": [112393784, 3359133081, 2076418217, 2794159192, 117299598],
           "score": 99.66
         },
         {
           "name": "Piano Concerto no. 3 in D minor, op. 30: III. Finale. Alla breve",
-          "deezer": [112393786, 74683861, 143778900, 2791134482, 2076418227],
+          "deezer": [112393786, 74683861, 3359133091, 143778900, 2791134482],
           "score": 100.0
         }
       ]
@@ -127063,17 +127133,17 @@
       "parts": [
         {
           "name": "Piano Sonata no. 1 in D minor, op. 28: I. Allegro moderato",
-          "deezer": [2421910175, 3253907181, 3098801501, 62648973, 2608729312],
+          "deezer": [2421910175, 3253907181, 3098801501, 2608729312, 3075735611],
           "score": 100.0
         },
         {
           "name": "Piano Sonata no. 1 in D minor, op. 28: II. Lento",
-          "deezer": [2421910185, 62648974, 3075735621, 2608729322, 3098801511],
+          "deezer": [2421910185, 3098801511, 3075735621, 2608729322, 377415451],
           "score": 98.06
         },
         {
           "name": "Piano Sonata no. 1 in D minor, op. 28: III. Allegro molto",
-          "deezer": [2421910195, 3075735631, 3253907201, 3098801521, 62648975],
+          "deezer": [2421910195, 3075735631, 3253907201, 3098801521, 377415461],
           "score": 97.04
         }
       ]
@@ -127089,17 +127159,17 @@
       "parts": [
         {
           "name": "Piano Sonata no. 2 in B-flat minor, op. 36: I. Allegro agitato",
-          "deezer": [2444674775, 66612421, 374564801, 2256035117, 62648979],
+          "deezer": [2444674775, 66612421, 374564801, 2201087107, 3098801531],
           "score": 98.46
         },
         {
           "name": "Piano Sonata no. 2 in B-flat minor, op. 36: II. Non allegro - Lento",
-          "deezer": [2444674785, 66612422, 374564811, 2256035127, 62648980],
+          "deezer": [2444674785, 66612422, 374564811, 2201087117, 3098801541],
           "score": 97.92
         },
         {
           "name": "Piano Sonata no. 2 in B-flat minor, op. 36: III. L\u2019istesso tempo; Allegro molto",
-          "deezer": [2444674795, 66612423, 374564821, 62648981, 3098801551],
+          "deezer": [2444674795, 66612423, 374564821, 3098801551, 2201087127],
           "score": 100.0
         }
       ]
@@ -127147,7 +127217,7 @@
       "parts": [
         {
           "name": "Prelude in F major, TN ii/15: Commodo",
-          "deezer": [3092627231, 62648945],
+          "deezer": [3092627231, 74577999],
           "score": 100.0
         }
       ]
@@ -127184,7 +127254,7 @@
         },
         {
           "name": "Rhapsody on a Theme of Paganini, op. 43: Variation I: (Precedente)",
-          "deezer": [2693727932, 1401567242, 1713097717, 2701182742, 2315933295],
+          "deezer": [2693727932, 1401567242, 2201086297, 2701182742, 2315933295],
           "score": 83.59
         },
         {
@@ -127194,7 +127264,7 @@
         },
         {
           "name": "Rhapsody on a Theme of Paganini, op. 43: Variation II: L\u2019istesso tempo",
-          "deezer": [2693727962, 3102759761, 1713097727, 1784900807, 884521412],
+          "deezer": [2693727962, 3102759761, 2201086307, 1784900807, 884521412],
           "score": 83.59
         },
         {
@@ -127234,7 +127304,7 @@
         },
         {
           "name": "Rhapsody on a Theme of Paganini, op. 43: Variation X: Poco marcato",
-          "deezer": [2693728042, 1784900887, 1713097807, 884521512, 71896020],
+          "deezer": [2693728042, 1784900887, 2201086387, 884521512, 71896020],
           "score": 82.53
         },
         {
@@ -127274,7 +127344,7 @@
         },
         {
           "name": "Rhapsody on a Theme of Paganini, op. 43: Variation XVIII: Andante cantabile",
-          "deezer": [1737045917, 100386494, 3232263301, 2206546657, 1784900967],
+          "deezer": [1737045917, 2201086467, 3031352881, 2206546657, 1784900967],
           "score": 100.0
         },
         {
@@ -127304,7 +127374,7 @@
         },
         {
           "name": "Rhapsody on a Theme of Paganini, op. 43: Variation XXIV: A tempo un poco meno mosso",
-          "deezer": [2693728182, 1713097947, 1784901037, 884521652, 71896034],
+          "deezer": [2693728182, 2201086527, 1784901037, 884521652, 71896034],
           "score": 83.33
         }
       ]
@@ -127336,7 +127406,7 @@
       "parts": [
         {
           "name": "Scherzo in D minor, TN ii/40",
-          "deezer": [3345248],
+          "deezer": [2201086537],
           "score": 100.0
         }
       ]
@@ -127393,22 +127463,22 @@
       "parts": [
         {
           "name": "Sonata for Cello and Piano in G minor, op. 19: I. Lento - Allegro moderato",
-          "deezer": [1883684467, 3110559, 639759692, 3186329, 2040726507],
+          "deezer": [1883684467, 2201086597, 639759692, 3186329, 2040726507],
           "score": 95.17
         },
         {
           "name": "Sonata for Cello and Piano in G minor, op. 19: II. Allegro scherzando",
-          "deezer": [1883684477, 3110560, 639759702, 2801193502, 2018889477],
+          "deezer": [1883684477, 2201086607, 639759702, 2801193502, 2018889477],
           "score": 95.45
         },
         {
           "name": "Sonata for Cello and Piano in G minor, op. 19: III. Andante",
-          "deezer": [1883684487, 3110561, 2018889097, 639759712, 1565321342],
+          "deezer": [1883684487, 2201086617, 2018889097, 639759712, 1565321342],
           "score": 100.0
         },
         {
           "name": "Sonata for Cello and Piano in G minor, op. 19: IV. Allegro mosso",
-          "deezer": [1883684497, 3110562, 639759722, 77526636, 2801193522],
+          "deezer": [1883684497, 2201086627, 639759722, 77526636, 2801193522],
           "score": 94.88
         }
       ]
@@ -127440,7 +127510,7 @@
       "parts": [
         {
           "name": "String Quartet no. 1, TN ii/30: II. Romance in G minor",
-          "deezer": [818395],
+          "deezer": [2201086947],
           "score": 100.0
         }
       ]
@@ -127570,7 +127640,7 @@
         },
         {
           "name": "Symphony no. 1 in D minor, op. 13: III. Larghetto",
-          "deezer": [1649048072, 3307316581, 2777540761, 2898704441, 1752443427],
+          "deezer": [1649048072, 3307316581, 2777540761, 2898704441, 379700881],
           "score": 100.0
         },
         {
@@ -127622,12 +127692,12 @@
       "parts": [
         {
           "name": "Symphony no. 3 in A minor, op. 44: I. Lento - Allegro moderato",
-          "deezer": [2777540891, 2338645745, 15441728, 3345250, 2631324342],
+          "deezer": [2777540891, 2338645745, 15441728, 2201086917, 2631324342],
           "score": 99.08
         },
         {
           "name": "Symphony no. 3 in A minor, op. 44: II. Adagio ma non troppo - Allegro vivace",
-          "deezer": [2777540911, 2338645755, 1352115942, 2631324352, 15441729],
+          "deezer": [2777540911, 2338645755, 539143552, 1352115942, 2631324352],
           "score": 99.54
         },
         {
@@ -127648,22 +127718,22 @@
       "parts": [
         {
           "name": "The Bells, op. 35: I. Allegro ma non tanto",
-          "deezer": [3296270041, 3321341671, 68259853, 65443473],
+          "deezer": [3296270041, 2201087047, 68259853, 65443473],
           "score": 98.21
         },
         {
           "name": "The Bells, op. 35: II. Lento",
-          "deezer": [3296270051, 95595308, 2461295285, 68259855],
+          "deezer": [3296270051, 2201087057, 2461295285, 68259855],
           "score": 97.27
         },
         {
           "name": "The Bells, op. 35: III. Presto",
-          "deezer": [3296270061, 2738806621, 2461295295, 68259856],
+          "deezer": [3296270061, 2201087067, 2461295295, 68259856],
           "score": 100.0
         },
         {
           "name": "The Bells, op. 35: IV. Lento lugubre",
-          "deezer": [3296270071, 95595312, 2461295305, 68259857],
+          "deezer": [3296270071, 2201087077, 2461295305, 68259857],
           "score": 98.21
         }
       ]
@@ -127769,17 +127839,17 @@
       "parts": [
         {
           "name": "Trio \u00e9l\u00e9giaque no. 2 in D minor, op. 9: I. Moderato",
-          "deezer": [29198631],
+          "deezer": [2201086877],
           "score": 100.0
         },
         {
           "name": "Trio \u00e9l\u00e9giaque no. 2 in D minor, op. 9: II. Quasi variazione",
-          "deezer": [29198641],
+          "deezer": [2201086887],
           "score": 98.66
         },
         {
           "name": "Trio \u00e9l\u00e9giaque no. 2 in D minor, op. 9: III. Allegro risoluto",
-          "deezer": [29198651],
+          "deezer": [2201086897],
           "score": 98.66
         }
       ]
@@ -127795,7 +127865,7 @@
       "parts": [
         {
           "name": "Variations on a Theme of Chopin, op. 22: Theme. Largo",
-          "deezer": [3310851471, 2957234751, 74577899, 2577333032],
+          "deezer": [3310851471, 2957234751, 68885253, 2577333032],
           "score": 98.5
         },
         {
@@ -127875,7 +127945,7 @@
         },
         {
           "name": "Variations on a Theme of Chopin, op. 22: Variation XVI. Lento",
-          "deezer": [1074165222, 2957234851, 74577915, 3588641],
+          "deezer": [1074165222, 2957234851, 68885270, 3588641],
           "score": 98.5
         },
         {
@@ -127905,7 +127975,7 @@
         },
         {
           "name": "Variations on a Theme of Chopin, op. 22: Variation XXII. Maestoso",
-          "deezer": [3275732331, 2957234911, 2577333252, 74577921],
+          "deezer": [3275732331, 2957234911, 2577333252, 68885276],
           "score": 100.0
         }
       ]
@@ -128139,7 +128209,7 @@
         },
         {
           "name": "\u00c9tudes-tableaux, op. 39: No. 6 in A minor: Allegro",
-          "deezer": [2018890007, 3098367251, 62648911, 74578011, 2022713557],
+          "deezer": [2018890007, 3098367251, 74578011, 2022713557, 2631690032],
           "score": 92.66
         },
         {
@@ -131089,7 +131159,7 @@
       "parts": [
         {
           "name": "Abendlied, op. 69 nr. 3",
-          "deezer": [1284542572],
+          "deezer": [1284542572, 959956722],
           "score": 100.0
         }
       ]
@@ -131279,7 +131349,7 @@
       "parts": [
         {
           "name": "Mlada Suite: V. Cort\u00e8ge",
-          "deezer": [3387959241],
+          "deezer": [2771989601],
           "score": 100.0
         }
       ]
@@ -131824,6 +131894,22 @@
         {
           "name": "Zarabanda lejana",
           "deezer": [983258692],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "574d482e-2202-402c-b356-c4160e2ddc51",
+      "composer": "93c2bc6b-6161-430a-af73-fbe12d61791a",
+      "name": "Anchor que col partire",
+      "type": "vocal",
+      "begin_year": null,
+      "end_year": null,
+      "score": 3.04,
+      "parts": [
+        {
+          "name": "Anchor que col partire",
+          "deezer": [2830924032],
           "score": 100.0
         }
       ]
@@ -132904,7 +132990,7 @@
       "parts": [
         {
           "name": "Candlelight Carol",
-          "deezer": [113414158],
+          "deezer": [113414158, 1479832612],
           "score": 100.0
         }
       ]
@@ -133296,7 +133382,7 @@
       "parts": [
         {
           "name": "Petals",
-          "deezer": [2778137711, 14501388],
+          "deezer": [2768713671, 14501388],
           "score": 100.0
         }
       ]
@@ -133459,7 +133545,7 @@
       "parts": [
         {
           "name": "Berceuse, op. 38",
-          "deezer": [1582263042],
+          "deezer": [3247964141],
           "score": 100.0
         }
       ]
@@ -134182,7 +134268,7 @@
       "parts": [
         {
           "name": "Romance in D-flat major, op. 37",
-          "deezer": [2297578885, 1401423432, 2371916575],
+          "deezer": [3247964361, 1401423432, 2371916575],
           "score": 100.0
         }
       ]
@@ -134383,7 +134469,7 @@
       "parts": [
         {
           "name": "Sonata for Clarinet and Piano in E-flat major, op. 167: I. Allegretto",
-          "deezer": [2714019692, 5655705],
+          "deezer": [3247964371, 5655705],
           "score": 97.54
         },
         {
@@ -134414,22 +134500,22 @@
       "parts": [
         {
           "name": "Sonata for Violin and Piano no. 2 in E-flat major, op. 102: I. Poco Allegro pi\u00f9 tosto moderato",
-          "deezer": [1582263052],
+          "deezer": [3247964151],
           "score": 100.0
         },
         {
           "name": "Sonata for Violin and Piano no. 2 in E-flat major, op. 102: II. Scherzo vivace",
-          "deezer": [1582263062],
+          "deezer": [3247964161],
           "score": 100.0
         },
         {
           "name": "Sonata for Violin and Piano no. 2 in E-flat major, op. 102: III. Andante",
-          "deezer": [1582263072],
+          "deezer": [3247964171],
           "score": 96.03
         },
         {
           "name": "Sonata for Violin and Piano no. 2 in E-flat major, op. 102: IV. Allegro grazioso, non presto",
-          "deezer": [1582263082],
+          "deezer": [3247964181],
           "score": 100.0
         }
       ]
@@ -135398,17 +135484,17 @@
       "parts": [
         {
           "name": "Chapitres tourn\u00e9s en tous sens : I. Celle qui parle trop",
-          "deezer": [2772687141, 124996434],
+          "deezer": [2772810661, 124996434],
           "score": 100.0
         },
         {
           "name": "Chapitres tourn\u00e9s en tous sens : II. Le Porteur de grosses pierres",
-          "deezer": [2772687151],
+          "deezer": [2772810671],
           "score": 93.91
         },
         {
           "name": "Chapitres tourn\u00e9s en tous sens : III. Regrets des enferm\u00e9s",
-          "deezer": [2772687161],
+          "deezer": [2772810681],
           "score": 95.54
         }
       ]
@@ -135533,17 +135619,17 @@
       "parts": [
         {
           "name": "Croquis et agaceries d'un gros bonhomme en bois : I. Tyrolienne turque",
-          "deezer": [2772687111, 71879291, 3372433],
+          "deezer": [2772810631, 71879291, 3372433],
           "score": 100.0
         },
         {
           "name": "Croquis et agaceries d'un gros bonhomme en bois : II. Danse maigre (\u00e0 la mani\u00e8re de ces messieurs)",
-          "deezer": [2772687121, 71879292, 3372434],
+          "deezer": [2772810641, 71879292, 3372434],
           "score": 96.76
         },
         {
           "name": "Croquis et agaceries d'un gros bonhomme en bois : III. Espa\u00f1ana",
-          "deezer": [2772687131, 71879293, 3372435],
+          "deezer": [2772810651, 71879293, 3372435],
           "score": 98.96
         }
       ]
@@ -135631,17 +135717,17 @@
       "parts": [
         {
           "name": "Descriptions automatiques : I. Sur un vaisseau",
-          "deezer": [2772687171, 3275833361, 71879288, 2444350205],
+          "deezer": [2772810691, 3275833361, 71879288, 2444350205],
           "score": 100.0
         },
         {
           "name": "Descriptions automatiques : II. Sur une lanterne",
-          "deezer": [2772687181, 3275833371, 71879289],
+          "deezer": [2772810701, 3275833371, 71879289],
           "score": 99.05
         },
         {
           "name": "Descriptions automatiques : III. Sur un casque",
-          "deezer": [2772687191, 3275833381, 71879290, 2586581262],
+          "deezer": [2772810711, 3275833381, 71879290, 2586581262],
           "score": 98.06
         }
       ]
@@ -135678,17 +135764,17 @@
       "parts": [
         {
           "name": "Embryons dess\u00e9ch\u00e9s : I. d\u2019Holothurie",
-          "deezer": [2772687201, 92774190],
+          "deezer": [2772810721, 92774190],
           "score": 99.18
         },
         {
           "name": "Embryons dess\u00e9ch\u00e9s : II. d\u2019Edriopthalma",
-          "deezer": [2772687211, 71879283, 3372437, 997479752],
+          "deezer": [2772810731, 71879283, 3372437, 997479752],
           "score": 100.0
         },
         {
           "name": "Embryons dess\u00e9ch\u00e9s : III. de Podophthalma",
-          "deezer": [2772687221, 71879284, 3372438],
+          "deezer": [2772810741, 71879284, 3372438],
           "score": 99.18
         }
       ]
@@ -135735,17 +135821,17 @@
       "parts": [
         {
           "name": "Enfantillages pittoresques : I. Petit Pr\u00e9lude \u00e0 la journ\u00e9e (mod\u00e9r\u00e9)",
-          "deezer": [2772687081],
+          "deezer": [2772810601],
           "score": 94.16
         },
         {
           "name": "Enfantillages pittoresques : II. Berceuse (lent)",
-          "deezer": [3343645821],
+          "deezer": [2772810611],
           "score": 100.0
         },
         {
           "name": "Enfantillages pittoresques : III. Marche du grand escalier",
-          "deezer": [2772687101],
+          "deezer": [2772810621],
           "score": 94.16
         }
       ]
@@ -135777,7 +135863,7 @@
       "parts": [
         {
           "name": "Gnossienne no. 4",
-          "deezer": [555637902, 3297320101, 3188937821, 2815715382, 2803566092],
+          "deezer": [555637902, 2772810541, 3188937821, 2815715382, 2803566092],
           "score": 100.0
         }
       ]
@@ -135793,7 +135879,7 @@
       "parts": [
         {
           "name": "Gnossienne no. 5",
-          "deezer": [2777404121, 3188938031, 2815715392, 2815715332, 2793804822],
+          "deezer": [2772810551, 3188938031, 2815715392, 2815715332, 2793804822],
           "score": 100.0
         }
       ]
@@ -135809,7 +135895,7 @@
       "parts": [
         {
           "name": "Gnossienne no. 6",
-          "deezer": [3188937201, 2777404141, 2815715402, 2815715342, 2793804832],
+          "deezer": [3188937201, 2772810561, 2815715402, 2815715342, 2793804832],
           "score": 100.0
         }
       ]
@@ -135841,17 +135927,17 @@
       "parts": [
         {
           "name": "Gymnop\u00e9die no. 1",
-          "deezer": [1010507972, 1626843772, 355720971, 3343622081, 1506254902],
+          "deezer": [1010507972, 1626843772, 355720971, 2772810751, 1506254902],
           "score": 100.0
         },
         {
           "name": "Gymnop\u00e9die no. 2",
-          "deezer": [511464622, 799610, 2060024837, 124996196, 3372425],
+          "deezer": [2772810771, 799610, 2060024837, 124996196, 3372425],
           "score": 85.08
         },
         {
           "name": "Gymnop\u00e9die no. 3",
-          "deezer": [3275292911, 71485985, 3358886001, 3372426, 124996198],
+          "deezer": [2772810781, 71485985, 3358886001, 3372426, 124996198],
           "score": 90.23
         }
       ]
@@ -136107,17 +136193,17 @@
       "parts": [
         {
           "name": "Menus Propos Enfantins: I. Chant guerrier du roi des haricots (mouvement de marche)",
-          "deezer": [2772687051],
+          "deezer": [2772810571],
           "score": 94.16
         },
         {
           "name": "Menus Propos Enfantins: II. Ce que dit la petite princesse des tulipes (tr\u00e8s lent)",
-          "deezer": [2772687061],
+          "deezer": [2772810581],
           "score": 100.0
         },
         {
           "name": "Menus Propos Enfantins: III. Valse du chocolat aux amandes (valse)",
-          "deezer": [2772687071],
+          "deezer": [2772810591],
           "score": 94.16
         }
       ]
@@ -136299,7 +136385,7 @@
       "parts": [
         {
           "name": "Passacaille (pas trop vif)",
-          "deezer": [2795366112],
+          "deezer": [2772810791],
           "score": 100.0
         }
       ]
@@ -136633,12 +136719,12 @@
       "parts": [
         {
           "name": "Six Pi\u00e8ces de la p\u00e9riode 1906\u20131913 : I. D\u00e9sespoir agr\u00e9able",
-          "deezer": [2772687231, 124996576],
+          "deezer": [2772810801, 124996576],
           "score": 96.22
         },
         {
           "name": "Six Pi\u00e8ces de la p\u00e9riode 1906\u20131913 : VI. Songe Creux",
-          "deezer": [2772687281, 66748676],
+          "deezer": [2772810851, 66748676],
           "score": 100.0
         }
       ]
@@ -136828,17 +136914,17 @@
       "parts": [
         {
           "name": "Gnossienne no. 1",
-          "deezer": [543131702, 3050875381, 636757852, 3338673601, 3188937951],
+          "deezer": [543131702, 3050875381, 636757852, 2772810511, 3188937951],
           "score": 100.0
         },
         {
           "name": "Gnossienne no. 2",
-          "deezer": [2777404051, 3188937551, 2815715362, 124996204, 2060024937],
+          "deezer": [2772810521, 3188937551, 2815715362, 124996204, 2060024937],
           "score": 90.9
         },
         {
           "name": "Gnossienne no. 3",
-          "deezer": [1010507832, 511464282, 3188937921, 636678852, 2815715372],
+          "deezer": [1010507832, 2772810531, 3188937921, 636678852, 2815715372],
           "score": 94.12
         }
       ]
@@ -149958,17 +150044,17 @@
       "parts": [
         {
           "name": "Sonata for Piano no. 4 in A minor, op. 164, D. 537: I. Allegro ma non troppo",
-          "deezer": [65500617, 2805692542, 2803635252, 2791402492, 2899247761],
+          "deezer": [65500617, 2805692542, 2769780431, 2791402492, 2899247761],
           "score": 100.0
         },
         {
           "name": "Sonata for Piano no. 4 in A minor, op. 164, D. 537: II. Allegretto quasi andantino",
-          "deezer": [65500618, 2805692552, 2803635262, 2791402502, 2899247771],
+          "deezer": [65500618, 2805692552, 2769780441, 2791402502, 2899247771],
           "score": 100.0
         },
         {
           "name": "Sonata for Piano no. 4 in A minor, op. 164, D. 537: III. Allegro vivace",
-          "deezer": [65500619, 2805692562, 2803635272, 2791402512, 2899247781],
+          "deezer": [65500619, 2805692562, 2769780451, 2791402512, 2899247781],
           "score": 98.61
         }
       ]
@@ -155309,7 +155395,7 @@
         },
         {
           "name": "Symphonic Etudes for Piano, op. 13: XIII. Etude no. 12 (Finale) - Allegro brillante",
-          "deezer": [1470735922, 66597628, 1550799312, 66399424],
+          "deezer": [1470735922, 66597628, 66399543, 66399424],
           "score": 99.68
         }
       ]
@@ -158328,22 +158414,22 @@
       "parts": [
         {
           "name": "Cello Concerto no. 1 in E-flat major, op. 107: I. Allegretto",
-          "deezer": [3152434181, 2643883452, 71882370, 71726387, 2788690832],
+          "deezer": [3230695171, 2643883452, 71882370, 71726387, 2788690832],
           "score": 100.0
         },
         {
           "name": "Cello Concerto no. 1 in E-flat major, op. 107: II. Moderato",
-          "deezer": [3152434191, 2643883462, 71882371, 2788690842],
+          "deezer": [3230695181, 2643883462, 71882371, 2788690842],
           "score": 98.66
         },
         {
           "name": "Cello Concerto no. 1 in E-flat major, op. 107: III. Cadenza",
-          "deezer": [3152434201, 2643883472, 71882372, 71726388, 2788690852],
+          "deezer": [3230695191, 2643883472, 71882372, 71726388, 2788690852],
           "score": 99.0
         },
         {
           "name": "Cello Concerto no. 1 in E-flat major, op. 107: IV. Allegro con moto",
-          "deezer": [3152434211, 2643883482, 71882373, 2788690862],
+          "deezer": [3230695201, 2643883482, 71882373, 2788690862],
           "score": 99.0
         }
       ]
@@ -158359,17 +158445,17 @@
       "parts": [
         {
           "name": "Cello Concerto no. 2 in G minor, op. 126: I. Largo",
-          "deezer": [3152434221, 3348998441, 973777502, 2788690872, 2927907821],
+          "deezer": [3230695211, 3348998441, 973777502, 2788690872, 2927907821],
           "score": 99.24
         },
         {
           "name": "Cello Concerto no. 2 in G minor, op. 126: II. Scherzo: Allegretto",
-          "deezer": [3152434231, 3348998451, 973777512, 2788690882, 2927907831],
+          "deezer": [3230695221, 3348998451, 973777512, 2788690882, 2927907831],
           "score": 100.0
         },
         {
           "name": "Cello Concerto no. 2 in G minor, op. 126: III. Finale: Allegretto",
-          "deezer": [3152434241, 3348998461, 973777522, 2788690892, 2927907841],
+          "deezer": [3230695231, 3348998461, 973777522, 2788690892, 2927907841],
           "score": 99.24
         }
       ]
@@ -158400,7 +158486,7 @@
         },
         {
           "name": "Cello Sonata in D minor, op. 40: IV. Allegro",
-          "deezer": [3266942461, 570795, 3186341, 65624578, 134033472],
+          "deezer": [3348998551, 570795, 3186341, 65624578, 134033472],
           "score": 98.16
         }
       ]
@@ -158681,7 +158767,7 @@
       "parts": [
         {
           "name": "Piano Concerto no. 2 in F major, op. 102: I. Allegro",
-          "deezer": [396587362, 1401527002, 2506647181, 2804004922, 3152434081],
+          "deezer": [396587362, 1401527002, 2506647181, 2804004922, 3237916811],
           "score": 89.63
         },
         {
@@ -158894,17 +158980,17 @@
       "parts": [
         {
           "name": "Sonata for Viola and Piano, op. 147: I. Moderato",
-          "deezer": [2779954831],
+          "deezer": [3282013381, 2779954831],
           "score": 98.96
         },
         {
           "name": "Sonata for Viola and Piano, op. 147: II. Allegretto",
-          "deezer": [1401384812],
+          "deezer": [3282013391, 1401384812],
           "score": 98.96
         },
         {
           "name": "Sonata for Viola and Piano, op. 147: III. Adagio",
-          "deezer": [1401384822],
+          "deezer": [3282013401, 1401384822],
           "score": 100.0
         }
       ]
@@ -167116,32 +167202,32 @@
       "parts": [
         {
           "name": "Suite Italienne for Violin and Piano: I. Introduzione",
-          "deezer": [2777780931],
+          "deezer": [3282013311, 2777780931],
           "score": 97.67
         },
         {
           "name": "Suite Italienne for Violin and Piano: II. Serenata",
-          "deezer": [107297646, 857166222],
+          "deezer": [3282013321, 107297646],
           "score": 100.0
         },
         {
           "name": "Suite Italienne for Violin and Piano: III. Tarantella",
-          "deezer": [857166232],
+          "deezer": [3282013331, 857166232],
           "score": 97.67
         },
         {
           "name": "Suite Italienne for Violin and Piano: IV. Gavotte con due variazioni",
-          "deezer": [857166242],
+          "deezer": [3282013341, 857166242],
           "score": 97.67
         },
         {
           "name": "Suite Italienne for Violin and Piano: V. Scherzino",
-          "deezer": [2777780971],
+          "deezer": [3282013351, 2777780971],
           "score": 100.0
         },
         {
           "name": "Suite Italienne for Violin and Piano: VI. Menuetto e Finale",
-          "deezer": [2777780981],
+          "deezer": [3282013361, 2777780981],
           "score": 92.51
         }
       ]
@@ -171819,22 +171905,22 @@
       "parts": [
         {
           "name": "Symphony no. 6 in B minor, op. 74 \"Path\u00e9tique\": I. Adagio - Allegro non troppo",
-          "deezer": [66317726, 2238188487, 2767036531, 71127058, 66635342],
+          "deezer": [66317726, 2238188487, 2767036531, 521627682, 71127058],
           "score": 97.74
         },
         {
           "name": "Symphony no. 6 in B minor, op. 74 \"Path\u00e9tique\": II. Allegro con grazia",
-          "deezer": [66317727, 2238188507, 2767036541, 71822517, 739423882],
+          "deezer": [66317727, 2238188507, 2767036541, 71822517, 521627692],
           "score": 98.75
         },
         {
           "name": "Symphony no. 6 in B minor, op. 74 \"Path\u00e9tique\": III. Allegro molto vivace",
-          "deezer": [66317728, 2767036551, 2238188527, 71822518, 739423892],
+          "deezer": [66317728, 2767036551, 2238188527, 71822518, 521627702],
           "score": 98.53
         },
         {
           "name": "Symphony no. 6 in B minor, op. 74 \"Path\u00e9tique\": IV. Finale. Adagio lamentoso",
-          "deezer": [66317729, 2238188547, 2767036561, 2800531852, 739423902],
+          "deezer": [66317729, 2238188547, 2767036561, 2800531852, 521627712],
           "score": 100.0
         }
       ]
@@ -172292,7 +172378,7 @@
         },
         {
           "name": "Variations on a Rococo Theme for Cello and Orchestra, op. 33: Tema. Moderato semplice",
-          "deezer": [2129493087, 990459322, 144945984, 71491446],
+          "deezer": [2129493087, 990459322, 144945984, 71491446, 1612990002],
           "score": 93.73
         },
         {
@@ -175667,7 +175753,7 @@
       "parts": [
         {
           "name": "Songs of Travel: I. The Vagabond",
-          "deezer": [2401780085, 1477639702, 1624648682],
+          "deezer": [2401780085, 1477726222, 1624648682],
           "score": 100.0
         },
         {
@@ -177935,62 +178021,62 @@
       "parts": [
         {
           "name": "Cello Sonata no. 3 in A minor, RV 43: I. Largo",
-          "deezer": [530767521, 70142820, 2830959662],
+          "deezer": [3373927751, 70142820, 2830959662],
           "score": 92.88
         },
         {
           "name": "Cello Sonata no. 3 in A minor, RV 43: II. Allegro",
-          "deezer": [530767531, 70142821, 2830959672],
+          "deezer": [3373927761, 70142821, 2830959672],
           "score": 92.88
         },
         {
           "name": "Cello Sonata no. 3 in A minor, RV 43: III. Largo",
-          "deezer": [530767541, 70142822, 2830959682],
+          "deezer": [3373927771, 70142822, 2830959682],
           "score": 92.88
         },
         {
           "name": "Cello Sonata no. 3 in A minor, RV 43: IV. Allegro",
-          "deezer": [530767551, 70142823, 2830959692],
+          "deezer": [3373927781, 70142823, 2830959692],
           "score": 92.88
         },
         {
           "name": "Cello Sonata no. 5 in E minor, RV 40: I. Largo",
-          "deezer": [983253682, 530767561, 70142828],
+          "deezer": [983253682, 3373927791, 70142828],
           "score": 99.08
         },
         {
           "name": "Cello Sonata no. 5 in E minor, RV 40: II. Allegro",
-          "deezer": [983253692, 530767571, 70142829],
+          "deezer": [983253692, 3373927801, 70142829],
           "score": 99.08
         },
         {
           "name": "Cello Sonata no. 5 in E minor, RV 40: III. Largo",
-          "deezer": [983253702, 530767581, 70142830, 131623422],
+          "deezer": [983253702, 3373927811, 70142830, 131623422],
           "score": 100.0
         },
         {
           "name": "Cello Sonata no. 5 in E minor, RV 40: IV. Allegro",
-          "deezer": [1010507052, 530767591, 70142831],
+          "deezer": [1010507052, 3373927821, 70142831],
           "score": 99.08
         },
         {
           "name": "Sonata for Cello and Continuo in B-flat major, RV 46: I. Preludio. Largo",
-          "deezer": [530767721, 70142832, 2830960022, 1401799402],
+          "deezer": [3373927951, 70142832, 2830960022, 1401799402],
           "score": 97.16
         },
         {
           "name": "Sonata for Cello and Continuo in B-flat major, RV 46: II. Allemande. Allegro",
-          "deezer": [530767731, 70142833, 2830960042, 1401799412],
+          "deezer": [3373927961, 70142833, 2830960042, 1401799412],
           "score": 97.16
         },
         {
           "name": "Sonata for Cello and Continuo in B-flat major, RV 46: III. Largo",
-          "deezer": [530767741, 70142834, 2830960052, 1401799422],
+          "deezer": [3373927971, 70142834, 2830960052, 1401799422],
           "score": 96.15
         },
         {
           "name": "Sonata for Cello and Continuo in B-flat major, RV 46: IV. Corrente. Allegro",
-          "deezer": [530767751, 70142835, 2830960062, 1401799432],
+          "deezer": [3373927981, 70142835, 2830960062, 1401799432],
           "score": 97.16
         }
       ]
@@ -178950,22 +179036,22 @@
       "parts": [
         {
           "name": "Cello Sonata in A minor, RV 44: I. Largo",
-          "deezer": [530767681],
+          "deezer": [3373927911],
           "score": 100.0
         },
         {
           "name": "Cello Sonata in A minor, RV 44: II. Allegro poco",
-          "deezer": [530767691],
+          "deezer": [3373927921],
           "score": 100.0
         },
         {
           "name": "Cello Sonata in A minor, RV 44: III. Largo",
-          "deezer": [530767701],
+          "deezer": [3373927931],
           "score": 100.0
         },
         {
           "name": "Cello Sonata in A minor, RV 44: IV. Allegro",
-          "deezer": [530767711],
+          "deezer": [3373927941],
           "score": 100.0
         }
       ]
@@ -184434,22 +184520,22 @@
       "parts": [
         {
           "name": "Sonata for Cello and Continuo in E-flat major, RV 39: I. Larghetto",
-          "deezer": [530767841, 1401799562],
+          "deezer": [3373928071, 1401799562],
           "score": 100.0
         },
         {
           "name": "Sonata for Cello and Continuo in E-flat major, RV 39: II. Allegro",
-          "deezer": [530767851, 1401799572],
+          "deezer": [3373928081, 1401799572],
           "score": 100.0
         },
         {
           "name": "Sonata for Cello and Continuo in E-flat major, RV 39: III. Andante",
-          "deezer": [530767861, 1401799582],
+          "deezer": [3373928091, 1401799582],
           "score": 100.0
         },
         {
           "name": "Sonata for Cello and Continuo in E-flat major, RV 39: IV. Allegro",
-          "deezer": [530767871, 1401799592],
+          "deezer": [3373928101, 1401799592],
           "score": 100.0
         }
       ]
@@ -184786,22 +184872,22 @@
       "parts": [
         {
           "name": "Sonata in G minor, RV 42: I. Preludio. Allegro",
-          "deezer": [71834893, 530767601],
+          "deezer": [71834893, 3373927831],
           "score": 100.0
         },
         {
           "name": "Sonata in G minor, RV 42: II. Allemanda. Andante",
-          "deezer": [71834894, 530767611],
+          "deezer": [71834894, 3373927841],
           "score": 100.0
         },
         {
           "name": "Sonata in G minor, RV 42: III. Sarabanda. Largo",
-          "deezer": [71834895, 530767621],
+          "deezer": [71834895, 3373927851],
           "score": 100.0
         },
         {
           "name": "Sonata in G minor, RV 42: IV. Giga. Allegro",
-          "deezer": [71834897, 530767631],
+          "deezer": [71834897, 3373927861],
           "score": 100.0
         }
       ]
@@ -185138,7 +185224,7 @@
       "parts": [
         {
           "name": "Micro-Macro",
-          "deezer": [2937642081],
+          "deezer": [7681838],
           "score": 100.0
         }
       ]
@@ -186527,17 +186613,17 @@
       "parts": [
         {
           "name": "Konzert f\u00fcr Klarinette und Orchester Nr. 1 in f-Moll, op. 73: I. Allegro",
-          "deezer": [2618940552, 3384636, 642701992],
+          "deezer": [2618940552, 3384636, 642701992, 3359354451],
           "score": 97.62
         },
         {
           "name": "Konzert f\u00fcr Klarinette und Orchester Nr. 1 in f-Moll, op. 73: II. Adagio ma non troppo",
-          "deezer": [2618940562, 3384637, 642702002],
+          "deezer": [2618940562, 3384637, 783629372, 642702002],
           "score": 100.0
         },
         {
           "name": "Konzert f\u00fcr Klarinette und Orchester Nr. 1 in f-Moll, op. 73: III. Rondo. Allegretto",
-          "deezer": [2618940572, 3384638, 62112800],
+          "deezer": [2618940572, 3384638, 783629382, 62112800],
           "score": 98.84
         }
       ]
@@ -189188,6 +189274,22 @@
       ]
     },
     {
+      "gid": "24c323a3-77b7-4192-836b-b907bce37c51",
+      "composer": "6df14eaa-212b-4806-833e-4254fa0d6cb4",
+      "name": "Amiti\u00e9, op. 26",
+      "type": "concerto",
+      "begin_year": null,
+      "end_year": null,
+      "score": 2.08,
+      "parts": [
+        {
+          "name": "Amiti\u00e9, op. 26",
+          "deezer": [2717122502],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "dee06110-02c7-4d62-a097-7f7e455d1c3a",
       "composer": "6df14eaa-212b-4806-833e-4254fa0d6cb4",
       "name": "Caprice d\u2019apr\u00e8s l\u2019\u00e9tude en forme de valse de Camille Saint\u2010Sa\u00ebns, op. 52",
@@ -189466,7 +189568,7 @@
       "parts": [
         {
           "name": "Absalon, fili mi",
-          "deezer": [4226650, 3111743381],
+          "deezer": [4226650, 2787554482],
           "score": 100.0
         }
       ]
@@ -189584,6 +189686,22 @@
       ]
     },
     {
+      "gid": "3d912b50-5880-4fa4-9cf3-73c03a98e732",
+      "composer": "bd941ba5-703b-44ec-8f56-1028cb0e30b3",
+      "name": "Faulte d'argent",
+      "type": "vocal",
+      "begin_year": null,
+      "end_year": null,
+      "score": 2.08,
+      "parts": [
+        {
+          "name": "Faulte d'argent",
+          "deezer": [2787554352],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "84f7ab01-edcd-4bc9-8717-dc52a0f8c795",
       "composer": "bd941ba5-703b-44ec-8f56-1028cb0e30b3",
       "name": "Inviolata, integra et casta es",
@@ -189610,7 +189728,7 @@
       "parts": [
         {
           "name": "Mille regretz",
-          "deezer": [135008962, 2799048222],
+          "deezer": [135008962, 2799048222, 61261385],
           "score": 100.0
         }
       ]
@@ -189658,7 +189776,7 @@
       "parts": [
         {
           "name": "Missa L\u2019homme arm\u00e9 sexti toni: Agnus Dei",
-          "deezer": [3111743371],
+          "deezer": [2787554512],
           "score": 100.0
         }
       ]
