@@ -141,6 +141,8 @@ EXCLUDED_WORKS: Set[str] = set([
     "ac469a24-9918-359b-8a95-54566968455c", # Promenade
     "6eba656c-cd03-303d-a3e6-dc62719ca429", # Nut Rocker
     "23577ad8-1b8c-4666-9ea0-c9a49cadb4ec", # Marion's Theme
+    "f3281e81-eea2-409f-88b8-9e1e1de5ca10", # Nutcracker (full ballet - suite is already included)
+    "570f3852-ca39-4db2-aafd-4e818af725fd", # Swan Lake Suite
 ])
 
 WSS_OVERRIDES: Dict[str, float] = {
@@ -150,6 +152,8 @@ WSS_OVERRIDES: Dict[str, float] = {
     "15649d4e-2dd2-4211-84bc-f5d2d316203a": 4.0, # Messe solennelle en la majeur, op. 12
 }
 
+MANUAL_CLASSIFICATION_OVERRIDES: Dict[str, str] = {
+}
 # ==============================================================================
 # --- Data Class Definitions ---
 # ==============================================================================
@@ -837,16 +841,22 @@ class MusicbrainzProcessor:
 
         work_name_normalized = work.name.replace("’", "'").replace("“", '"').replace("”", '"')
 
-        if "Piano Sonata" in work_name_normalized and work.type == "Sonata":
-            return "piano"
-                
-        if work.type in TYPE_MAPPING:
-            type_map = TYPE_MAPPING[work.type]
-            if type_map != "other":
-                return type_map
+        # Respect any manual classification overrides first
+        if work.gid in MANUAL_CLASSIFICATION_OVERRIDES:
+            forced_type = MANUAL_CLASSIFICATION_OVERRIDES[work.gid]
+            log.info("MANUAL OVERRIDE CLASSIFIED | %s | %s -> %s | manual override",
+                     work.name, work.gid, forced_type)
+            return forced_type
 
-        if "orch." in work_name_normalized:
-            return "orchestral"
+        if "Piano Sonata" in work_name_normalized and work.type == "Sonata":
+            log.info("CLASSIFIED | %s | %s -> %s | rule: name contains 'Piano Sonata' and type == Sonata",
+                     work.name, work.gid, "piano")
+            return "piano"
+
+        if "ballet" in work_name_normalized.lower():
+            log.info("CLASSIFIED | %s | %s -> %s | keyword 'ballet' found in name",
+                     work.name, work.gid, "ballet")
+            return "ballet"
         
         # Composer specific rules
         try:
@@ -856,11 +866,20 @@ class MusicbrainzProcessor:
                         for pattern in patterns:
                             if isinstance(pattern, str):
                                 if re.search(pattern, work_name_normalized, re.IGNORECASE):
+                                    log.info("CLASSIFIED | %s | %s -> %s | rule: composer_specific %s matches '%s'",
+                                             work.name, work.gid, rule_type, composer_name, pattern)
                                     return rule_type
                             else:
                                 print(f"Invalid pattern type: {type(pattern)} for {pattern}")
                     else:
                         print(f"Invalid patterns type for {composer_name} {rule_type}: {type(patterns)}")
+
+            if work.type in TYPE_MAPPING:
+                type_map = TYPE_MAPPING[work.type]
+                if type_map != "other":
+                    log.info("CLASSIFIED | %s | %s -> %s | rule: TYPE_MAPPING[%s]",
+                            work.name, work.gid, type_map, work.type)
+                    return type_map
 
             # General rules
             for rule_type, patterns in self.general_rules.items():
@@ -868,14 +887,20 @@ class MusicbrainzProcessor:
                     for pattern in patterns:
                         if isinstance(pattern, str):
                             if re.search(pattern, work_name_normalized, re.IGNORECASE):
+                                log.info("CLASSIFIED | %s | %s -> %s | rule: general pattern '%s' matched",
+                                         work.name, work.gid, rule_type, pattern)
                                 return rule_type
                         else:
                             print(f"Invalid pattern type: {type(pattern)} for {pattern}")
                 else:
                     print(f"Invalid patterns type for general {rule_type}: {type(patterns)}")
         except (re.error, TypeError) as e:
-            print(f"Error processing pattern: {e}, pattern: {pattern}")
+            log.error("Error processing pattern for work %s (%s): %s | last pattern: %s",
+                      work.name, work.gid, e, locals().get('pattern', None))
 
+        # Log unresolved classification and record candidate for later inspection
+        log.info("UNRESOLVED CLASSIFICATION | %s | %s -> other | original type: %s",
+                 work.name, work.gid, work.type)
         self.unresolved_work_candidates[composer.gid].append((work.name, work.type))
         return "other"
 

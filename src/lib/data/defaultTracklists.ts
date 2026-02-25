@@ -362,6 +362,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			limitWorksFromComposer: 0.1,
 			nameFilter: ['piano', 'klavier'],
 			includeWorks: [
+				'60b22df4', // Gershwin - Rhapsody in Blue
 				'21560c8d' // Schumann - Konzertstück
 			],
 			composerFilter: {

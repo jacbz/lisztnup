@@ -38,7 +38,7 @@ from tqdm.asyncio import tqdm
 # --- Configuration & Tuning ---
 
 # Similarity Check Tuning
-SIMILARITY_THRESHOLD = 55.0
+SIMILARITY_THRESHOLD = 60.0
 AUTO_REJECT_THRESHOLD = 45.0
 
 # Toggle: Set to True to recheck previously excluded IDs
