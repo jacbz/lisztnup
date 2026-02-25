@@ -178,7 +178,7 @@
 			"cancel": "Annulla"
 		}
 	},
-	"tracklistViewer": {
+	"trackTable": {
 		"loading": "Caricamento...",
 		"noData": "Nessun brano trovato.",
 		"searchPlaceholder": "Cerca opera o compositore...",

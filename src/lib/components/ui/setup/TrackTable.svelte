@@ -400,7 +400,7 @@
 			type="search"
 			bind:value={searchQuery}
 			oninput={() => (page = 1)}
-			placeholder={$_('tracklistViewer.searchPlaceholder') || 'Search composer, title or works'}
+			placeholder={$_('trackTable.searchPlaceholder') || 'Search composer, title or works'}
 			class="min-w-0 flex-1 rounded border border-slate-700 bg-slate-800/60 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-500 focus:ring-2 focus:ring-cyan-400 focus:outline-none"
 		/>
 		<div class="relative flex h-12 w-12 shrink-0 items-center justify-center">
@@ -443,14 +443,14 @@
 					<div
 						class="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-cyan-400 border-t-transparent"
 					></div>
-					<p class="mt-4 text-slate-400">{$_('tracklistViewer.loading')}</p>
+					<p class="mt-4 text-slate-400">{$_('trackTable.loading')}</p>
 				</div>
 			</div>
 		{:else}
 			{@render paginationControls()}
 
 			{#if tableData.length === 0}
-				<p class="text-center text-slate-400">{$_('tracklistViewer.noData')}</p>
+				<p class="text-center text-slate-400">{$_('trackTable.noData')}</p>
 			{:else}
 				<div class="overflow-y-auto">
 					<table class="w-full border-collapse">
@@ -464,7 +464,7 @@
 										class="cell cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
 										onclick={() => handleSort('composer')}
 									>
-										{$_('tracklistViewer.columns.composer')}
+										{$_('trackTable.columns.composer')}
 										{#if sortColumn === 'composer' && (!searchQuery.trim() || hasManualSort)}
 											<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
 										{/if}
@@ -474,7 +474,7 @@
 									class="cell cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
 									onclick={() => handleSort('work')}
 								>
-									{$_('tracklistViewer.columns.work')}
+									{$_('trackTable.columns.work')}
 									{#if sortColumn === 'work' && (!searchQuery.trim() || hasManualSort)}
 										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
 									{/if}
@@ -483,7 +483,7 @@
 									class="cell cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
 									onclick={() => handleSort('popularity')}
 								>
-									{$_('tracklistViewer.columns.popularity')}
+									{$_('trackTable.columns.popularity')}
 									{#if sortColumn === 'popularity' && (!searchQuery.trim() || hasManualSort)}
 										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
 									{/if}
@@ -492,7 +492,7 @@
 									class="cell hidden cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300 md:table-cell"
 									onclick={() => handleSort('year')}
 								>
-									{$_('tracklistViewer.columns.year')}
+									{$_('trackTable.columns.year')}
 									{#if sortColumn === 'year' && (!searchQuery.trim() || hasManualSort)}
 										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
 									{/if}

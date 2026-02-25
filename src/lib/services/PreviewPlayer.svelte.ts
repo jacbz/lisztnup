@@ -6,7 +6,7 @@ import { fetchDeezerTrackData } from './DeezerPlayer';
  *
  * Used by:
  * - **TrackInfo**: replay the revealed track
- * - **TracklistViewer**: preview tracks while browsing the library
+ * - **TrackTable**: preview tracks while browsing the library
  *
  * Uses a generation counter to safely cancel in-flight async operations
  * when stop()/destroy() is called during a pending play().

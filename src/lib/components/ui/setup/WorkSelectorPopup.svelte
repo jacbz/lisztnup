@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Popup from '../primitives/Popup.svelte';
-	import TracklistViewer from './TracklistViewer.svelte';
+	import TrackTable from './TrackTable.svelte';
 	import { _ } from 'svelte-i18n';
 	import Plus from 'lucide-svelte/icons/plus';
 
@@ -62,7 +62,7 @@
 		</div>
 
 		<div class="flex-1 overflow-hidden">
-			<TracklistViewer
+			<TrackTable
 				{visible}
 				{tracklist}
 				showActions={true}

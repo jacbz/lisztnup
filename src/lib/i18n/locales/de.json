@@ -178,7 +178,7 @@
 			"cancel": "Abbrechen"
 		}
 	},
-	"tracklistViewer": {
+	"trackTable": {
 		"loading": "Laden...",
 		"noData": "Keine Werke gefunden.",
 		"searchPlaceholder": "Suche nach Werk oder Komponist...",

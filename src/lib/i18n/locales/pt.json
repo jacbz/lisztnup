@@ -178,7 +178,7 @@
 			"cancel": "Cancelar"
 		}
 	},
-	"tracklistViewer": {
+	"trackTable": {
 		"loading": "Carregando...",
 		"noData": "Nenhuma obra encontrada.",
 		"searchPlaceholder": "Buscar obra ou compositor...",

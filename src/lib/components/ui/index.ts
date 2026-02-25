@@ -25,7 +25,7 @@ export { default as ModeRulesPopup } from './setup/ModeRulesPopup.svelte';
 export { default as PlayerSetup } from './setup/PlayerSetup.svelte';
 export { default as TracklistSelector } from './setup/TracklistSelector.svelte';
 export { default as TracklistEditor } from './setup/TracklistEditor.svelte';
-export { default as TracklistViewer } from './setup/TracklistViewer.svelte';
+export { default as TrackTable } from './setup/TrackTable.svelte';
 export { default as LibraryViewer } from './setup/LibraryViewer.svelte';
 export { default as ComposerCloud } from './setup/ComposerCloud.svelte';
 export { default as WorkSelectorPopup } from './setup/WorkSelectorPopup.svelte';

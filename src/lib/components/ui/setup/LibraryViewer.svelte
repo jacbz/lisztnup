@@ -4,7 +4,7 @@
 	import { get } from 'svelte/store';
 	import { formatComposerName, formatLifespan } from '$lib/utils';
 	import Popup from '../primitives/Popup.svelte';
-	import TracklistViewer from './TracklistViewer.svelte';
+	import TrackTable from './TrackTable.svelte';
 	import ComposerCloud from './ComposerCloud.svelte';
 	import { TracklistGenerator } from '$lib/services';
 	import { _ } from 'svelte-i18n';
@@ -121,7 +121,7 @@
 						{$_('libraryViewer.allWorks')}
 					{:else}
 						<Library class="h-5 w-5 md:h-6 md:w-6" />
-						{$_('tracklistViewer.library')}
+						{$_('trackTable.library')}
 					{/if}
 				</h2>
 
@@ -150,7 +150,7 @@
 				</div>
 			{:else}
 				<!-- Table view (all works or single composer) -->
-				<TracklistViewer
+				<TrackTable
 					{visible}
 					{tracklist}
 					selectedComposerGid={viewMode === 'composer' ? selectedComposerGid : null}

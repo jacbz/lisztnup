@@ -178,7 +178,7 @@
 			"cancel": "取消"
 		}
 	},
-	"tracklistViewer": {
+	"trackTable": {
 		"loading": "加载中...",
 		"noData": "未找到作品。",
 		"searchPlaceholder": "搜索作品或作曲家...",

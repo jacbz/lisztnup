@@ -178,7 +178,7 @@
 			"cancel": "Annuler"
 		}
 	},
-	"tracklistViewer": {
+	"trackTable": {
 		"loading": "Chargement...",
 		"noData": "Aucune œuvre trouvée.",
 		"searchPlaceholder": "Chercher une œuvre ou un compositeur...",

@@ -178,7 +178,7 @@
 			"cancel": "취소"
 		}
 	},
-	"tracklistViewer": {
+	"trackTable": {
 		"loading": "로딩 중...",
 		"noData": "작품을 찾을 수 없습니다.",
 		"searchPlaceholder": "작곡가 또는 작품 검색...",

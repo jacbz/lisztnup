@@ -275,6 +275,6 @@
 	{/each}
 
 	{#if filteredEntries.length === 0 && hasActiveFilters}
-		<p class="py-8 text-slate-500">{$_('tracklistViewer.noData')}</p>
+		<p class="py-8 text-slate-500">{$_('trackTable.noData')}</p>
 	{/if}
 </div>
