@@ -29,6 +29,7 @@ This script executes a multi-stage data processing pipeline:
 """
 
 import json
+import logging
 import math
 import re
 from collections import Counter, defaultdict
@@ -36,6 +37,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Any, Tuple
 import yaml
+
+# Module-level logger – writes to processing.log (configured in main)
+log = logging.getLogger("lisztnup")
 
 # ==============================================================================
 # --- Configuration Constants ---
@@ -264,6 +268,7 @@ class MusicbrainzProcessor:
         :param composers_data: A list of composer dictionaries from the raw JSON file.
         """
         self.composers = self._parse_input_data(composers_data)
+        self._composer_names: Dict[str, str] = {c.gid: c.name for c in self.composers}
         self.unresolved_work_candidates: Dict[str, List[Tuple[str, str]]] = defaultdict(list)
         with open("work_type_matching.yaml", "r", encoding="utf-8") as f:
             rules = yaml.safe_load(f)
@@ -326,15 +331,26 @@ class MusicbrainzProcessor:
         self.stats["initial_composers"] = len(self.composers)
 
         # Stage 1: Initial filtering and candidate generation (includes dynamic part filtering)
+        log.info("=" * 60)
+        log.info("STAGE 1: Filter composers & generate work candidates")
+        log.info("=" * 60)
         composers_by_birth_year = self._filter_composers_by_birth_year(self.composers)
         work_candidates = self._generate_work_candidates(composers_by_birth_year)
 
         # Stage 2: Group and filter works by their absolute significance score (WSS)
+        log.info("")
+        log.info("=" * 60)
+        log.info("STAGE 2: Filter works by WSS & cleanup")
+        log.info("=" * 60)
         works_by_type = self._group_works_by_type(work_candidates)
         works_after_wss = self._filter_works_by_wss(works_by_type)
         works_after_wss = self._filter_works_cleanup(works_after_wss)
 
         # Stage 3: Finalize the composer list based on who has works remaining
+        log.info("")
+        log.info("=" * 60)
+        log.info("STAGE 3: Finalize composer list")
+        log.info("=" * 60)
         all_works_for_scores = [w for works in works_after_wss.values() for w in works]
         final_composers = self._filter_final_composers(
             composers_by_birth_year, works_after_wss, all_works_for_scores
@@ -363,10 +379,14 @@ class MusicbrainzProcessor:
         self, composers: List[MBComposer]
     ) -> List[MBComposer]:
         """Filters out composers born before the configured MIN_BIRTH_YEAR."""
-        filtered = [
-            c for c in composers if c.birth_year and c.birth_year >= MIN_BIRTH_YEAR
-        ]
-        self.stats["composers_dropped_birth_year"] = len(composers) - len(filtered)
+        filtered = []
+        for c in composers:
+            if c.birth_year and c.birth_year >= MIN_BIRTH_YEAR:
+                filtered.append(c)
+            else:
+                log.info("COMPOSER DROPPED (birth year) | %s | born %s < %d",
+                         c.name, c.birth_year or "unknown", MIN_BIRTH_YEAR)
+                self.stats["composers_dropped_birth_year"] += 1
         return filtered
 
     def _get_dynamic_part_score_threshold(self, work_wss: float) -> float:
@@ -412,8 +432,14 @@ class MusicbrainzProcessor:
                 if not leaf_parts:
                     continue
 
+                # When the root work has its own recordings alongside subworks (e.g. whole-work
+                # recordings exist in addition to per-movement recordings), those recordings are
+                # evidence of the work's overall significance. Distribute them evenly across all
+                # leaf parts so they contribute to WSS. This only applies when subworks exist;
+                # for single-part works the leaf IS the root, so no boost is needed.
+                root_shared_recs = len(root_work.recordings) / len(leaf_parts) if root_work.subworks else 0
                 parts_with_pss = [
-                    (part, math.log(1 + len(part.recordings))) for part in leaf_parts
+                    (part, math.log(1 + len(part.recordings) + root_shared_recs)) for part in leaf_parts
                 ]
                 if not parts_with_pss:
                     continue
@@ -440,18 +466,26 @@ class MusicbrainzProcessor:
                         )
                     else:
                         self.stats["parts_dropped_no_deezerid"] += 1
+                        log.debug("PART DROPPED (no Deezer ID) | %s | work: %s (%s)",
+                                  part.name, root_work.name, composer.name)
 
                 # Filter parts based on the calculated dynamic threshold
-                final_parts = [
-                    p for p in potential_parts if p.score >= dynamic_threshold
-                ]
-                self.stats["parts_dropped_by_dynamic_score"] += len(
-                    potential_parts
-                ) - len(final_parts)
+                final_parts = []
+                for p in potential_parts:
+                    if p.score >= dynamic_threshold:
+                        final_parts.append(p)
+                    else:
+                        self.stats["parts_dropped_by_dynamic_score"] += 1
+                        log.debug("PART DROPPED (score below threshold) | %s | "
+                                  "score %.1f < threshold %.1f | work: %s (%s)",
+                                  p.name, p.score, dynamic_threshold,
+                                  root_work.name, composer.name)
 
                 if not final_parts:
                     if potential_parts:
                         self.stats["works_dropped_became_empty"] += 1
+                        log.info("WORK DROPPED (all parts filtered) | %s | %s",
+                                 root_work.name, composer.name)
                     continue
 
                 if root_work.gid in WSS_OVERRIDES:
@@ -487,8 +521,16 @@ class MusicbrainzProcessor:
         filtered_map: Dict[str, List[FinalWork]] = {}
         for work_type, works in works_by_type.items():
             initial_count = len(works)
-            filtered_list = [work for work in works if work.score >= MINIMUM_WSS and work.gid not in EXCLUDED_WORKS]
-            self.stats["works_dropped_by_min_wss"] += initial_count - len(filtered_list)
+            filtered_list = []
+            for work in works:
+                if work.score >= MINIMUM_WSS and work.gid not in EXCLUDED_WORKS:
+                    filtered_list.append(work)
+                else:
+                    self.stats["works_dropped_by_min_wss"] += 1
+                    reason = "excluded" if work.gid in EXCLUDED_WORKS else f"WSS {work.score:.2f} < {MINIMUM_WSS}"
+                    log.info("WORK DROPPED (%s) | %s | %s",
+                             reason, work.name,
+                             self._composer_names.get(work.composer, work.composer))
 
             filtered_list.sort(key=lambda w: w.score, reverse=True)
             if filtered_list:
@@ -523,6 +565,13 @@ class MusicbrainzProcessor:
                 )
             elif composer.gid in composer_work_counts:
                 self.stats["composers_dropped_min_works"] += 1
+                if composer.name in EXCLUDED_COMPOSERS:
+                    log.info("COMPOSER DROPPED (excluded) | %s | %d works",
+                             composer.name, composer_work_counts[composer.gid])
+                else:
+                    log.info("COMPOSER DROPPED (< %d works) | %s | %d works",
+                             MIN_WORKS_PER_COMPOSER, composer.name,
+                             composer_work_counts[composer.gid])
         
         # Calculate raw scores
         # First, find the maximum work count across all composers
@@ -656,6 +705,9 @@ class MusicbrainzProcessor:
         gids_with_multiple_composers = {
             gid for gid, composers in gid_to_composers.items() if len(composers) > 1
         }
+        for gid in gids_with_multiple_composers:
+            w = gid_to_first_work[gid]
+            log.info("WORK DROPPED (multiple composers) | %s", w.name)
 
         # Assign each deezer ID to the first work that contains it
         deezer_to_work_gid = {}
@@ -681,6 +733,7 @@ class MusicbrainzProcessor:
                 # Skip duplicate gids (keep only first occurrence)
                 if work.gid in seen_gids:
                     duplicates_removed += 1
+                    log.debug("WORK DROPPED (duplicate GID) | %s", work.name)
                     continue
                 seen_gids.add(work.gid)
 
@@ -697,6 +750,8 @@ class MusicbrainzProcessor:
                         filtered_parts.append(part)
                     else:
                         self.stats["parts_dropped_cross_work_duplicate"] += 1
+                        log.debug("PART DROPPED (cross-work duplicate) | %s | work: %s",
+                                  part.name, work.name)
 
                 # Filter duplicate parts within work by checking for overlapping deezer IDs
                 # Keep the part with the highest score for each Deezer ID
@@ -719,10 +774,13 @@ class MusicbrainzProcessor:
                     else:
                         # This part lost all its Deezer IDs to higher-scoring parts
                         self.stats["parts_dropped_duplicate_deezer"] += 1
+                        log.debug("PART DROPPED (duplicate Deezer ID) | %s | work: %s",
+                                  part.name, work.name)
                 work.parts = final_parts
 
                 if not work.parts:
                     self.stats["works_dropped_empty_after_deezer_dedup"] += 1
+                    log.info("WORK DROPPED (empty after Deezer dedup) | %s", work.name)
                     continue
 
                 filtered_list.append(work)
@@ -759,6 +817,8 @@ class MusicbrainzProcessor:
             if len(work.recordings) >= MIN_RECORDINGS_PER_PART:
                 return [work]
             self.stats["parts_dropped_min_recordings"] += 1
+            log.debug("PART DROPPED (few recordings) | %s | %d recordings < %d required",
+                       work.name, len(work.recordings), MIN_RECORDINGS_PER_PART)
             return []
 
         filtered_leafs = [
@@ -1035,7 +1095,7 @@ def generate_markdown_report(final_output: FinalOutput) -> None:
 def compact_json_dumps(data, indent=2):
     """Pretty print JSON with indent, but keep number arrays on one line."""
     # First, do normal pretty printing
-    pretty = json.dumps(data, indent=indent)
+    pretty = json.dumps(data, indent=indent, ensure_ascii=False)
     
     # Find all number arrays that span multiple lines
     def compress_array(match):
@@ -1090,6 +1150,12 @@ def main() -> None:
     BANNED_DEEZER_IDS = load_banned_deezer_ids()
     print(f"Loaded {len(BANNED_DEEZER_IDS)} banned Deezer IDs.")
 
+    # Configure processing log
+    log.setLevel(logging.DEBUG)
+    _fh = logging.FileHandler("processing.log", mode="w", encoding="utf-8")
+    _fh.setFormatter(logging.Formatter("%(message)s"))
+    log.addHandler(_fh)
+
     print(
         f"Loaded {len(composers_data)} composers from 'musicbrainz.json'. Starting processing..."
     )
@@ -1105,6 +1171,11 @@ def main() -> None:
     generate_markdown_report(final_output)
 
     processor.print_summary(final_output)
+
+    log.info("")
+    log.info("Processing complete. %d composers, %d works in final output.",
+             len(final_output.composers), len(final_output.works))
+    print("Processing log written to 'processing.log'.")
     
     # Check for short UUID collisions
     check_short_uuid_collisions(final_output)

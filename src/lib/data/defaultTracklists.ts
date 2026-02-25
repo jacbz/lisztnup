@@ -77,6 +77,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				'937f3282', // Debussy - Syrinx
 				'26ea58b3', // De Falla - El amor brujo
 				'085103a5', // Holst - In the Bleak Midwinter,
+				'1dd56ba3', // Parry - Jerusalem
 				'4344e777', // Rodrigo - Concierto de Aranjuez
 				'676bdcd4', // Rossini - La gazza ladra Overture
 				'62308818', // Strauss - Annen-Polka
@@ -360,6 +361,9 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 			},
 			limitWorksFromComposer: 0.1,
 			nameFilter: ['piano', 'klavier'],
+			includeWorks: [
+				'21560c8d' // Schumann - Konzertstück
+			],
 			composerFilter: {
 				mode: 'exclude',
 				composers: [

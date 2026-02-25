@@ -386,7 +386,7 @@ composer_specific_rules:
       - A Mountain Vision
   'Busoni, Ferruccio':
     piano:
-      - Bagatellen|Albumblätter|Elegien|Fantasia contrappuntistica|Fantasia nach J\.S\. Bach|Indianisches Tagebuch|Nuit de Noël|Sonatina no\.|Tanzwalzer
+      - Bagatellen|Albumblätter|Elegien|Fantasia contrappuntistica|Fantasia nach J\.S\. Bach|Indianisches Tagebuch|Nuit de Noël|Sonatina no\.|Tanzwalzer|Toccata, BV 287
   'Butterworth, George':
     orchestral:
       - A Shropshire Lad|The Banks of Green Willow
@@ -523,7 +523,7 @@ composer_specific_rules:
     piano:
       - L'art de toucher le clavecin|Rondeau, BWV Anh
     chamber:
-      - Concerts Royaux|L'Apothéose de Lully|Les Nations|Suite de viole|Pièces de violes
+      - Concerts Royaux|L'Apothéose de Lully|Les Nations|Suite de viole|Pièces de violes|La Superbe|La Sultane
     vocal:
       - Leçons de ténèbres
     concerto:
@@ -845,7 +845,7 @@ composer_specific_rules:
       - Polonaise, BWV Anh\. 130
   'Haydn, Joseph':
     piano:
-      - Hob\.\sXVI|Hob\.\sXVII
+      - Hob\.\sXVI|Hob\.\sXVII|Zwölf Deutsche Tänze
     chamber:
       - Hob\.\sIV
       - Divertimento.*Hob\.\s?IV:?10|Divertimento.*Hob\.\s?IV:?8|Hob\.\s?IV:?10|Hob\.\s?IV:?8
@@ -1273,7 +1273,7 @@ composer_specific_rules:
       - humoresques de concert|Miscellanea
   'Paganini, Niccolò':
     chamber:
-      - Cantabile for Violin|Grand Sonata|Sei sonate per violino|Sonata concertata
+      - Cantabile for Violin|Grand Sonata|Sei sonate per violino|Sonata concertata|Sonata a Preghiera
     solo:
       - Capriccio.*Nel cor più
   'Palestrina, Giovanni Pierluigi da':
@@ -1440,7 +1440,7 @@ composer_specific_rules:
       - Introduction und Passacaglia|Phantasie und Fuge.*B-A-C-H
   'Reich, Steve':
     chamber:
-      - Clapping Music|Music for Pieces of Wood|Drumming|Piano Phase|Six Pianos|Different Trains|Eight Lines|Nagoya Marimbas
+      - Clapping Music|Music for Pieces of Wood|Drumming|Piano Phase|Six Pianos|Different Trains|Eight Lines|Nagoya Marimbas|Cello Counterpoint
     solo:
       - Electric Counterpoint|New York Counterpoint|Vermont Counterpoint
     orchestral:
@@ -1570,7 +1570,7 @@ composer_specific_rules:
       # Liszt arrangements
       - Sechs Melodien von Franz Schubert|arr. Liszt
       - Impromptus|Moments Musicaux|Wanderer|Fantasy in C major, D\.\s?760|D\.\s?760|12 Ländler|12 Valses Nobles|16 German Dances|2 Scherzos|Allegretto in C minor
-      - (Valses sentimentales|Waltzes, Ländler and Ecossaises|Deutsche Tänze|Ländler, D\. 814|Polonaises, op\. 75|Adagio.*D\. 505|Allegretto.*D\. 346|Galopp und.*Ecossaisen|Menuet|Menuette und Deutsche|Sonata.*D\. 613|Ungarische Melodie|Waltz.*D\. 844)
+      - (Valses sentimentales|Waltzes, Ländler and Ecossaises|Deutsche Tänze|Ländler, D\. 814|Polonaises, op\. 75|Adagio.*D\. 505|Allegretto.*D\. 346|Galopp und.*Ecossaisen|Menuet|Menuette und Deutsche|Sonata.*D\. 613|Ungarische Melodie|Waltz.*D\. 844)|Letzte Walzer
     chamber:
       - Fantasia in F minor, .* D\. 940|Marches militaires|Arpeggione Sonata|Trout Quintet|Death and the Maiden|Allegro.*Lebensstürme|Divertissement.*D\. 8|Grand Rondeau
     vocal:

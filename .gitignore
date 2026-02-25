@@ -6,6 +6,7 @@ IMPLEMENTATION.md
 .mypy_cache
 data/*.sql
 data/*.txt
+data/*.log
 data/lisztnup.md
 data/musicbrainz.json
 data/processed_deezer_ids
