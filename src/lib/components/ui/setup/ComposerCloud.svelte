@@ -22,6 +22,15 @@
 	let deathYearTo = $state('');
 	let showFilters = $state(false);
 
+	// Normalize strings for search: strip diacritics and collapse to lower-case
+	function normalizeString(s: string | null | undefined): string {
+		if (!s) return '';
+		return s
+			.normalize('NFKD')
+			.replace(/\p{M}/gu, '') // remove diacritic marks
+			.toLowerCase();
+	}
+
 	// Build composer entries with work counts
 	const entries = $derived.by(() => {
 		const workCountMap = new Map<string, number>();
@@ -37,6 +46,8 @@
 				lastName: getComposerLastName(c.name),
 				fullName: formatComposerName(c.name),
 				sortName: c.name,
+				normalizedName: normalizeString(getComposerLastName(c.name)),
+				normalizedSortName: normalizeString(c.name),
 				score: c.score,
 				workCount: workCountMap.get(c.gid) || 0,
 				birthYear: c.birth_year,
@@ -102,10 +113,11 @@
 		let result = entries;
 
 		// Search filter
-		const query = searchQuery.trim().toLowerCase();
+		const rawQuery = searchQuery.trim();
+		const query = normalizeString(rawQuery);
 		if (query) {
 			result = result.filter(
-				(e) => e.name.toLowerCase().includes(query) || e.sortName.toLowerCase().includes(query)
+				(e) => e.normalizedName.includes(query) || e.normalizedSortName.includes(query)
 			);
 		}
 
