@@ -103,7 +103,7 @@ composer_specific_rules:
     orchestral:
       - Harmonielehre|Short Ride in a Fast Machine|Grand Pianola Music
     chamber:
-      - Shaker Loops
+      - Shaker Loops|Hallelujah Junction
     piano:
       - Phrygian Gates|China Gates
     vocal:
@@ -115,10 +115,10 @@ composer_specific_rules:
     solo:
       - Fantasia prima
   'Albéniz, Isaac':
-    orchestra:
+    orchestral:
       - orch\.
     piano:
-      - Iberia|España|Cantos de España|Suite Española|Recuerdos de viaje
+      - Iberia|España|Cantos de España|Suite Española|Recuerdos de viaje|piezas características
       - La Vega|Mallorca, op. 202|Navarra, B. 49|Pavana-capricho|Sonata para piano
   'Albéniz, Mateo':
     piano:
@@ -274,6 +274,9 @@ composer_specific_rules:
   'Bennett, Richard Rodney, Sir':
     vocal:
       - A Good-Night
+  'Bennett, Robert Russell':
+    orchestral:
+      - Suite of Old American Dances
   'Berg, Alban':
     chamber:
       - Vier Stücke für Klarinette und Klavier
@@ -295,7 +298,7 @@ composer_specific_rules:
       - The Shepherds' Farewell|Tristia
   'Bernstein, Leonard':
     piano:
-      - Seven Anniversaries
+      - Seven Anniversaries|Four Anniversaries
       - \bPrelude, Fugue and Riffs\b
     vocal:
       - Chichester Psalms
@@ -399,7 +402,7 @@ composer_specific_rules:
       - A Mountain Vision
   'Busoni, Ferruccio':
     piano:
-      - Bagatellen|Albumblätter|Elegien|Fantasia contrappuntistica|Fantasia nach J\.S\. Bach|Indianisches Tagebuch|Nuit de Noël|Sonatina no\.|Tanzwalzer|Toccata, BV 287
+      - Bagatellen|Albumblätter|Elegien|Fantasia contrappuntistica|Fantasia nach J\.S\. Bach|Indianisches Tagebuch|Nuit de Noël|Sonatina no\.|Tanzwalzer|Toccata, BV 287|An die Jugend
   'Butterworth, George':
     orchestral:
       - A Shropshire Lad|The Banks of Green Willow
@@ -644,7 +647,7 @@ composer_specific_rules:
     orchestral:
       - Carnival Overture|Slavonic Fantasy|Czech Suite|American Suite|98b\b
     piano:
-      - Humoresques|Poetické nálady|Silhouettes|Dumka und Furiant|Waltzes, op\. 54|98\b
+      - Humoresques|Poetické nálady|Silhouettes|Dumka und Furiant|Waltzes, op\. 54|98\b|6 Mazurkas
   'Eastman, Julius':
     piano:
       - The Nigger Series
@@ -722,6 +725,9 @@ composer_specific_rules:
   'Fučík, Julius':
     orchestral:
       - Entry of the Gladiators|Florentiner March|Children of the Regiment|The Old Grumbler
+  'Gabrieli, Andrea':
+    organ:
+      - Intonationi
   'Gabrieli, Giovanni':
     chamber:
       - Canzoni et sonate
@@ -729,6 +735,9 @@ composer_specific_rules:
       - Timor et tremor
     organ:
       - \bFuga del nono tono\b
+  'Gade, Niels Wilhelm':
+    organ:
+      - Tre tonestykker
   'Gallus, Jacobus':
     vocal:
       - Mirabile mysterium|Resonet in laudibus
@@ -776,7 +785,7 @@ composer_specific_rules:
       - Orfeo ed Euridice|Orfeo.*Euridice|Orfeo, che fai\?|Wq\.\s?30
   'Godowsky, Leopold':
     piano:
-      - Studies on Chopin's Études|Symphonische Metamorphosen|Triakontameron
+      - Studies on Chopin's Études|Symphonische Metamorphosen|Triakontameron|Java Suite
   'Gombert, Nicolas':
     vocal:
       - Media vita in morte sumus
@@ -801,7 +810,7 @@ composer_specific_rules:
       - Duke of Marlborough Fanfare|Walking Tune
   'Granados, Enrique':
     piano:
-      - danzas españolas|Allegro de concierto|Cuentos de la juventud|El pelele|Escenas románticas|Seis piezas sobre cantos|Valses poéticos|H.64
+      - danzas españolas|Allegro de concierto|Cuentos de la juventud|El pelele|Escenas románticas|Seis piezas sobre cantos|Valses poéticos|Escenas poéticas|H.64
     vocal:
       - tonadillas
     opera:
@@ -870,7 +879,7 @@ composer_specific_rules:
       - Hob\.\sXVI\b|Hob\.\sXVII\b|Zwölf Deutsche Tänze
     chamber:
       - Hob\.\sIV\b
-      - Divertimento.*Hob\.\s?IV:?10\b|Divertimento.*Hob\.\s?IV:?8\b|Hob\.\s?IV:?10\b|Hob\.\s?IV:?8\b
+      - Divertimento.*Hob\.\s?IV:?10\b|Divertimento.*Hob\.\s?IV:?8\b|Hob\.\s?IV:?10\b|Hob\.\s?IV:?8\b|Divertimento in D major
     orchestral:
       - Septem Verba Christi|Seven Last Words
     vocal:
@@ -901,7 +910,7 @@ composer_specific_rules:
     orchestral:
       - Egdon Heath|Moorside|Brook Green|The Planets|Songs Without Words
     vocal:
-      - I Vow to Thee, My Country
+      - I Vow to Thee, My Country|Two Psalms
   'Honegger, Arthur':
     chamber:
       - Intrada
@@ -938,7 +947,7 @@ composer_specific_rules:
       - The Holy Boy
   'Ives, Charles':
     orchestral:
-      - Set No. 1|orch\.
+      - Set .*|orch\.
     piano:
       - Three-Page Sonata
   'Janáček, Leoš':
@@ -973,7 +982,7 @@ composer_specific_rules:
       - The Comedians
   'Kapustin, Nikolai':
     piano:
-      - Eight Concert Études
+      - Eight Concert Études|Preludes
   'Kapsberger, Johannes Hieronymus':
     solo:
       - Chitarrone
@@ -1013,6 +1022,8 @@ composer_specific_rules:
   'Korngold, Erich Wolfgang':
     chamber:
       - Much Ado|Suite for Two Violins
+    orchestral:
+      - Symphonic Serenade
   'Kraus, Joseph Martin':
     orchestral:
       - Incidental Music to.*Olympie
@@ -1023,6 +1034,11 @@ composer_specific_rules:
     chamber:
       - Allegretto.*Boccherini|Andantino.*Martini|Aubade provencale|Caprice viennois|La Précieuse|Polichinelle|Scherzo.*Dittersdorf|Sicilienne et Rigaudon|Syncopation
       - Marche miniature|Menuet.*Porpora|Prélude et Allegro.*Pugnani|Toy Soldier's March
+  'Kurtág, György':
+    piano:
+      - Játékok
+    chamber:
+      - Kafka-Fragmente
   'Kuula, Toivo':
     piano:
       - 3 Piano Pieces|Lampaanpolska
@@ -1152,9 +1168,14 @@ composer_specific_rules:
   'Medtner, Nikolai':
     piano:
       - Fairy Tales|Morceaux|Forgotten Melodies|Sonata
+    chamber:
+      - Three Nocturnes
+  'Mendelssohn, Fanny':
+    piano:
+      - Das Jahr
   'Mendelssohn, Felix':
     piano:
-      - Album-Leaf|Capriccio.*(op\. 5\b|Brillant)|Fantasy|Rondo Brilliant|Scherzo a Capriccio|Kinderstücke|Sonata.*op\.\s(6|106)\b|Fantasies or Caprices, op\. 16\b|Preludes and.*Studies, op\. 104\b
+      - Album-Leaf|Capriccio.*(op\. 5\b|Brillant)|Three Caprices|Fantasy|Rondo Brilliant|Scherzo a Capriccio|Kinderstücke|Sonata.*op\.\s(6|106)\b|Fantasies or Caprices, op\. 16\b|Preludes and.*Studies, op\. 104\b
       - \bSix Preludes and Fugues\b
       - Songs? Without Words
     vocal:
@@ -1195,7 +1216,7 @@ composer_specific_rules:
       - Intavolatura
   'Mompou, Federico':
     piano:
-      - Cançó i dansa|Música callada|Paisajes|Preludi|Scènes d'enfants|Suburbis
+      - Cançó i dansa|Música callada|Paisajes|Preludi|Scènes d'enfants|Suburbis|Charmes
     vocal:
       - El combat del somni
     solo:
@@ -1265,7 +1286,7 @@ composer_specific_rules:
     orchestral:
       - Night on Bald Mountain|orch\. Ravel
     piano:
-      - Pictures at an Exhibition|Memories of Childhood|Méditation|Rêverie|Scherzo in C-sharp|Une larme|Promenade|The Old Castle
+      - Pictures at an Exhibition|Memories of Childhood|Méditation|Rêverie|Scherzo in C-sharp|Une larme|Promenade|The Old Castle|On the Southern Shore of the Crimea
     opera:
       - Khovanshchina|The Fair at Sorochintsï
   'Nebra, Manuel Blasco de':
@@ -1317,13 +1338,15 @@ composer_specific_rules:
       - Super flumina Babylonis
   'Palmgren, Selim':
     piano:
-      - Poppelit|Spring
+      - Poppelit|Spring|The Preludes
   'Paradisi, Pietro Domenico':
     piano:
       - Sonata no\. 6
   'Parry, Hubert':
     vocal:
       - I was glad|Jerusalem
+    orchestral:
+      - An English Suite
   'Paulus, Stephen':
     vocal:
       - The Road Home
@@ -1332,7 +1355,7 @@ composer_specific_rules:
       - Lay a Garland
   'Penderecki, Krzysztof':
     orchestral:
-      - Anaklasis|De natura sonoris|Polymorphia|The Dream of Jacob|Threnody
+      - Anaklasis|De natura sonoris|Polymorphia|The Dream of Jacob|Threnody|Three Pieces in Old Style
   'Peterson‐Berger, Wilhelm':
     piano:
       - Frösöblomster
@@ -1367,6 +1390,9 @@ composer_specific_rules:
   'Ponchielli, Amilcare':
     ballet:
       - Dance of the Hours
+  'Popper, David':
+    orchestral:
+      - Im Walde
   'Poulenc, Francis':
     piano:
       - Les Soirées de Nazelles|Trois mouvements perpétuels|3 Intermezzi|3 Novelettes|Mélancolie|Promenades|Nocturnes|Capriccio.*Bal masqué|Pièce brève|Sarabande|Animaux modèles
@@ -1388,7 +1414,7 @@ composer_specific_rules:
       - Fantasie nègre
   'Prokofiev, Sergei':
     piano:
-      - Visions fugitives|Sarcasms|Toccata in D minor|Pieces from Romeo and Juliet|Music for Children|Tales of an Old Grandmother|Pieces from Cinderella|Four Pieces, op\. 4|Ten Small Pieces, op\. 12|Things in Themselves
+      - Visions fugitives|Sarcasms|Toccata in D minor|Pieces from Romeo and Juliet|Music for Children|Tales of an Old Grandmother|Pieces from Cinderella|Four Pieces, op\. 4|Ten Small Pieces, op\. 12|Things in Themselves|Pensées
     chamber:
       - Sonata for Two Violins|Ballade.*cello and piano|Five Melodies for Violin
     orchestral:
@@ -1421,7 +1447,7 @@ composer_specific_rules:
     orchestral:
       - After the Victory|Collage sur B-A-C-H|Festina lente|Silouans Song
     piano:
-      - Für Alina|Two sonatinas
+      - Für Alina|Two sonatinas|Partita
     organ:
       - Pari intervallo|Trivium
     chamber:
@@ -1449,7 +1475,7 @@ composer_specific_rules:
     piano:
       - Dauphine|Les Sauvages|L'Egyptienne|Petits marteaux|Menuet en Rondeau|Suite in A minor
     orchestral:
-      - Les Indes Galantes, Suites
+      - Les Indes Galantes, Suites|Dardanus Suite|Suite Les Boréades
     chamber:
       - Pieces de Clavecin en Concerts
   'Rautavaara, Einojuhani':
@@ -1482,7 +1508,7 @@ composer_specific_rules:
     orchestral:
       - City Life
     vocal:
-      - Tehillim
+      - Tehillim|Desert Music
   'Reincken, Johann Adam':
     piano:
       - Sonata a-Moll
@@ -1535,6 +1561,8 @@ composer_specific_rules:
   'Rutter, John':
     vocal:
       - A Clare Benediction|All bells in paradise|Jesus Child|The Gift of Life|The Lord Bless You|The Very Best Time of Year|There Is a Flower
+    concerto:
+      - Suite Antique
   'Rzewski, Frederic':
     piano:
       - Four North American Ballads|The People United
@@ -1543,7 +1571,7 @@ composer_specific_rules:
       - Sept Papillons
   'Saint‐Saëns, Camille':
     piano:
-      - Études.*(main gauche|op\. 111|op\. 52)
+      - Études.*(main gauche|op\. 111|op\. 52)|Douze transcriptions pour le piano
     vocal:
       - Réquiem|Saltarelle
     organ:
@@ -1581,7 +1609,7 @@ composer_specific_rules:
       - Sonata in .* K|Essercizi per gravicembalo
   'Scheidt, Samuel':
     chamber:
-      - Galliard Battaglia
+      - Galliard Battaglia|Ludi musici I
     vocal:
       - A Child Is Born|In Dulci Jubilo
   'Schmelzer, Johann Heinrich':
@@ -1597,6 +1625,8 @@ composer_specific_rules:
       - Canon in Memoriam|Musica nostalgica|Suite in the Old Style
     solo:
       - À Paganini
+    vocal:
+      - Psalms of Repentance
   'Schoenberg, Arnold':
     orchestral:
       - Accompaniment to a Cinematographic Scene|Five Orchestral Pieces
@@ -1607,13 +1637,13 @@ composer_specific_rules:
     vocal:
       - Friede auf Erden|Sechs Stücke für Männerchor
   'Schubert, Franz':
+    orchestral:
+      - orch\.
     piano:
       # Liszt arrangements
-      - Sechs Melodien von Franz Schubert|arr. Liszt
+      - Sechs Melodien von Franz Schubert|arr\. Liszt
       - Impromptus|Moments Musicaux|Fantasy in C major, D\.\s?760|D\.\s?760|12 Ländler|12 Valses Nobles|16 German Dances|2 Scherzos|Allegretto in C minor
       - (Valses sentimentales|Waltzes, Ländler and Ecossaises|Deutsche Tänze|Ländler, D\. 814|Polonaises, op\. 75|Adagio.*D\. 505|Allegretto.*D\. 346|Galopp und.*Ecossaisen|Menuet|Menuette und Deutsche|Sonata.*D\. 613|Ungarische Melodie|Waltz.*D\. 844)|Letzte Walzer
-    orchestral:
-      - orch\. Mahler
     chamber:
       - Fantasia in F minor, .* D\. 940|Marches militaires|Arpeggione Sonata|Trout Quintet|Death and the Maiden|Allegro.*Lebensstürme|Divertissement.*D\. 8|Grand Rondeau
     vocal:
@@ -1623,6 +1653,8 @@ composer_specific_rules:
   'Schulhoff, Erwin':
     chamber:
       - Hot Sonate
+    piano:
+      - Suite no. 3 for the Left Hand
   'Schulz-Evler, Adolf':
     piano:
       - Arabesques on
@@ -1644,11 +1676,12 @@ composer_specific_rules:
       - Carnaval|Kinderszenen|Kreisleriana|Fantasiestücke|Papillons|Davidsbündlertänze|Symphonic Etudes|Album für die Jugend|Arabeske|Blumenstück|Bunte Blätter|Faschingsschwank aus Wien|Novelletten|Waldszenen|Symphonische Etüden|Symphonische Etüden.*Anhang|op\.\s?13
       - Albumblätter|Allegro, op\. 8|Concert études|Drei Romanzen.*op\. 28|Fantasy.*op\. 17|Impromptus.*op\. 5|Intermezzi|Klaviersonate|Nachtstücke|Sonate für Klavier|Vier Märsche
       - \b(Fugues|Toccata)\b
+      - Drei Sonaten für die Jugend|Etudes after Caprices of Paganini
     organ:
       - Fugues on B\.A\.C\.H|Four Sketches, op\. 58|Six Etudes in Canonic Form
   'Schütz, Heinrich':
     vocal:
-      - Bringt her dem Herren|Eile mich, Gott|Erbarm dich mein|Historia der Auferstehung|O süßer, o freundlicher|Weihnachts-Historie
+      - Bringt her dem Herren|Eile mich, Gott|Erbarm dich mein|Historia der Auferstehung|O süßer, o freundlicher|Weihnachts-Historie|Symphoniae sacrae
   'Scott, Cyril':
     piano:
       - Lotus Land
@@ -1676,9 +1709,9 @@ composer_specific_rules:
     piano:
       - 24 Preludes and Fugues|op\. 87|24 Preludes, op\. 34|Detskaya tetrad|Three Fantastic Dances|Dances of the Dolls
     chamber:
-      - Piano Trio No\. 2|String Quartet No\. 8
+      - Piano Trio No\. 2|String Quartet No\. 8|Five Pieces for Two Violins and Piano
     orchestral:
-      - Jazz|Variety|Age of Gold|Gadfly
+      - Jazz|Variety|Age of Gold|Gadfly|Hamlet Suite
   'Sibelius, Jean':
     piano:
       - Bagatelles|Pensées lyriques|Pieces|Rondinos|Sonatinas|Impromptus|morceaux|Esquisses|Arioso|morceaux romantiques|Characteristic Impressions|Lyric Pieces|Spagnuolo|Till trånaden|Kyllikki
@@ -1754,6 +1787,7 @@ composer_specific_rules:
       - Petrushka|The Rite of Spring|Le Sacre du printemps|The Firebird|L'Oiseau de feu|Pulcinella
     chamber:
       - L'Histoire du soldat|Ragtime for 11 Instruments|Divertimento|Epitaphium|Trois pièces faciles|Ragtime
+      - Five Easy Pieces
     solo:
       - Three Pieces for Clarinet
     orchestral:
@@ -1761,7 +1795,7 @@ composer_specific_rules:
     piano:
       - Four Etudes, op\. 7|Les Cinq Doigts|Serenade in A|Tango|Piano-Rag-Music
     vocal:
-      - Symphony of Psalms|Pater Noster|Three Songs from William Shakespeare|Two Poems of Konstantin Balmont
+      - Symphony of Psalms|Pater Noster|Three Songs from William Shakespeare|Two Poems of Konstantin Balmont|Three Little Songs
   'Strozzi, Barbara':
     vocal:
       - Arie, op\. 8|Cantate, ariette, e duetti
@@ -1850,7 +1884,7 @@ composer_specific_rules:
     solo: # Guitar
       - Fandanguillo|Homenaje a Tárrega|Ráfaga|Sonata.*op\. 61
     chamber:
-      - Trío nº 2
+      - Trío nº 2|El poema de una sanluqueña
     concerto:
       - Rapsodia sinfónica
   'Tye, Christopher':
@@ -1894,11 +1928,14 @@ composer_specific_rules:
   'Vierne, Louis':
     organ:
       - Pièces de fantaisie
+  'Vieuxtemps, Henri':
+    chamber:
+      - Trois romances sans paroles
   'Villa‐Lobos, Heitor':
     solo: # Guitar
       - 12 estudos|Five Preludes|Choros nº 1|Suite populaire
     piano:
-      - Prole do bebê|Rudepoêma|A lenda do caboclo|Choros nº 5|Ciclo brasileiro|Cirandas|Valsa da dor|Caixinha de música quebrada|New York Skyline Melody|Saudades das selvas|Carnaval das crianças
+      - Prole do bebê|Rudepoêma|A lenda do caboclo|Choros nº 5|Ciclo brasileiro|Cirandas|Valsa da dor|Caixinha de música quebrada|New York Skyline Melody|Saudades das selvas|Carnaval das crianças|Cirandinhas|Suíte floral
     chamber:
       - Bachianas Brasileiras|Quinteto em forma de chôros|Assobio a játo|Choros nº (2|7)|Sexteto místico
     ballet:

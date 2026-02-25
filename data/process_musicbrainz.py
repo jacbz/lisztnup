@@ -49,7 +49,7 @@ log = logging.getLogger("lisztnup")
 MIN_WORKS_PER_COMPOSER = 1      # Composers with fewer final works than this will be dropped.
 MIN_BIRTH_YEAR = 1400           # Composers born before this year will be dropped.
 MIN_RECORDINGS_PER_PART = 3     # Leaf works (parts) with fewer recordings will be dropped at the start.
-MINIMUM_WSS = 1.9               # The absolute minimum Work Significance Score for a work to be considered.
+MINIMUM_WSS = 1.8               # The absolute minimum Work Significance Score for a work to be considered.
 
 # --- Popularity Scoring Parameters ---
 POPULARITY_ALPHA = 0.5          # Balances peak vs. average part popularity in the WSS formula.
@@ -623,7 +623,7 @@ class MusicbrainzProcessor:
              while still emphasizing standout works.
            - Normalization: (avg_top_3 - MINIMUM_WSS) / (max_wss - MINIMUM_WSS)
              - Uses the dataset's actual maximum WSS as the upper bound for fair comparison across composers.
-             - MINIMUM_WSS (1.9) is the threshold below which works are filtered out.
+             - MINIMUM_WSS is the threshold below which works are filtered out.
         
         2. Depth Component (0-1 scale):
            - Measures the average quality across all of the composer's works.

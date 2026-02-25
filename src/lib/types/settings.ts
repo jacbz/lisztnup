@@ -82,7 +82,7 @@ export const DEFAULT_CATEGORY_ADJUSTMENTS: CategoryAdjustments = {
 /**
  * The minimum work score.
  */
-export const MIN_WORK_SCORE = 1.9;
+export const MIN_WORK_SCORE = 1.8;
 /**
  * The maximum work score outputted by process_musicbrainz.py
  */
