@@ -172,7 +172,7 @@
 		<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<div
-			class="popup-rotation pointer-events-auto"
+			class="popup-rotation pointer-events-auto relative"
 			onclick={(e) => e.stopPropagation()}
 			role="dialog"
 			aria-modal="true"
@@ -181,19 +181,18 @@
 			out:scale={{ duration: 200, easing: cubicOut, start: 0.9 }}
 			style="--rotation: {rotation}deg;"
 		>
-			<div class={containerClasses} style={containerStyle}>
-				<!-- Close Button -->
-				{#if showCloseButton}
-					<button
-						type="button"
-						class="absolute top-4 right-4 z-10 rounded-full p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
-						onclick={handleCloseClick}
-						aria-label="Close"
-					>
-						<X class="h-6 w-6" />
-					</button>
-				{/if}
+			{#if showCloseButton}
+				<button
+					type="button"
+					class="absolute top-4 right-4 z-10 rounded-full p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+					onclick={handleCloseClick}
+					aria-label="Close"
+				>
+					<X class="h-6 w-6" />
+				</button>
+			{/if}
 
+			<div class={containerClasses} style={containerStyle}>
 				{@render children?.()}
 			</div>
 		</div>
