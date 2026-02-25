@@ -226,6 +226,8 @@
 		"yearEnd": "Endjahr",
 		"workScoreRange": "Popularitätsbereich",
 		"workScoreRangeDesc": "Filtere Werke nach Popularität (höher = mehr existierende Aufnahmen).",
+		"topWorksCount": "Top-Werke-Limit",
+		"topWorksCountDesc": "Nur die N beliebtesten Werke einbeziehen, sortiert nach (angepasstem) Popularitätswert.",
 		"limitWorksFromComposer": "Limit: Werke pro Komponist",
 		"limitWorksFromComposerDesc": "Begrenze jeden Komponisten auf einen prozentualen Anteil der Gesamtwerke in dieser Liste.",
 		"maxTracksFromSingleWork": "Max. Tracks pro Werk",

@@ -51,10 +51,10 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyVeryEasy,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [4.7, MAX_WORK_SCORE_ROUNDED],
+			topWorksCount: 250,
 			categoryAdjustments: {
 				vocal: 0,
-				chamber: 0.3,
+				chamber: 0.4,
 				orchestral: -0.2,
 				piano: -0.1,
 				concerto: 0,
@@ -99,14 +99,14 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyEasy,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [4.3, MAX_WORK_SCORE_ROUNDED],
+			topWorksCount: 500,
 			categoryAdjustments: {
 				vocal: -0.2,
-				chamber: 0,
+				chamber: 0.2,
 				orchestral: 0,
 				piano: 0,
 				concerto: 0,
-				opera: 0,
+				opera: 0.1,
 				ballet: 0.3,
 				organ: -0.3,
 				solo: 0
@@ -123,14 +123,14 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyMedium,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [3.9, MAX_WORK_SCORE_ROUNDED],
+			topWorksCount: 1000,
 			categoryAdjustments: {
 				vocal: -0.2,
-				chamber: 0,
+				chamber: 0.1,
 				orchestral: 0,
-				piano: 0,
+				piano: -0.1,
 				concerto: 0,
-				opera: 0,
+				opera: 0.1,
 				ballet: 0.3,
 				organ: -0.3,
 				solo: 0
@@ -147,21 +147,20 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyHard,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [3.6, MAX_WORK_SCORE_ROUNDED],
+			topWorksCount: 1750,
 			categoryAdjustments: {
 				vocal: -0.2,
-				chamber: 0,
+				chamber: 0.1,
 				orchestral: 0,
-				piano: 0,
+				piano: -0.1,
 				concerto: 0,
-				opera: 0,
+				opera: 0.1,
 				ballet: 0,
 				organ: -0.5,
 				solo: 0
 			},
 			limitWorksFromComposer: 0.15,
-			maxTracksFromSingleWork: 2,
-			includeWorks: WORKS_TO_INCLUDE
+			maxTracksFromSingleWork: 2
 		}
 	},
 	{
@@ -171,20 +170,19 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: difficultyExtreme,
 		category: 'difficulty',
 		config: {
-			workScoreRange: [3, MAX_WORK_SCORE_ROUNDED],
+			topWorksCount: 3000,
 			categoryAdjustments: {
 				vocal: -0.3,
 				chamber: 0,
 				orchestral: 0,
-				piano: 0,
+				piano: -0.1,
 				concerto: 0,
-				opera: 0,
+				opera: 0.1,
 				ballet: 0,
 				organ: -0.7,
 				solo: 0
 			},
-			maxTracksFromSingleWork: 3,
-			includeWorks: WORKS_TO_INCLUDE
+			maxTracksFromSingleWork: 3
 		}
 	},
 	{

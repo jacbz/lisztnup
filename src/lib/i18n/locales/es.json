@@ -226,6 +226,8 @@
 		"yearEnd": "Año fin",
 		"workScoreRange": "Rango de popularidad",
 		"workScoreRangeDesc": "Filtrar obras por puntuación de popularidad (mayor = existen más grabaciones de esta obra)",
+		"topWorksCount": "Límite de obras top",
+		"topWorksCountDesc": "Incluir solo las N obras más populares, ordenadas por puntuación de popularidad (ajustada).",
 		"limitWorksFromComposer": "Límite de obras por compositor",
 		"limitWorksFromComposerDesc": "Limita a cada compositor a un porcentaje del total de obras en esta lista.",
 		"maxTracksFromSingleWork": "Máx. pistas de una misma obra",

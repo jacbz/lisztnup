@@ -226,6 +226,8 @@
 		"yearEnd": "结束年份",
 		"workScoreRange": "热度范围",
 		"workScoreRangeDesc": "按热度评分筛选作品（分数越高代表该作品的录音版本越多）。",
+		"topWorksCount": "热门作品数量上限",
+		"topWorksCountDesc": "仅包含按（调整后的）热度评分排序的前 N 部作品。",
 		"limitWorksFromComposer": "每位作曲家作品上限",
 		"limitWorksFromComposerDesc": "限制每位作曲家的作品占本歌单总作品数的百分比。",
 		"maxTracksFromSingleWork": "单部作品最大音轨数",

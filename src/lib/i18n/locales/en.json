@@ -226,6 +226,8 @@
 		"yearEnd": "End Year",
 		"workScoreRange": "Popularity Range",
 		"workScoreRangeDesc": "Filter works by popularity score (higher = more recordings of this work exist)",
+		"topWorksCount": "Top Works Limit",
+		"topWorksCountDesc": "Only include the top N most popular works, sorted by (adjusted) popularity score.",
 		"limitWorksFromComposer": "Limit Works per Composer",
 		"limitWorksFromComposerDesc": "Limit each composer to a percentage of total works in this tracklist.",
 		"maxTracksFromSingleWork": "Max Tracks from Single Work",

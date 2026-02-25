@@ -226,6 +226,8 @@
 		"yearEnd": "종료 연도",
 		"workScoreRange": "인기도 범위",
 		"workScoreRangeDesc": "인기도 점수에 따라 작품을 필터링합니다 (높을수록 더 많은 녹음이 존재하는 유명한 곡입니다).",
+		"topWorksCount": "상위 작품 수 제한",
+		"topWorksCountDesc": "(조정된) 인기도 점수 기준으로 상위 N개 작품만 포함합니다.",
 		"limitWorksFromComposer": "작곡가별 작품 수 제한",
 		"limitWorksFromComposerDesc": "이 트랙 리스트에서 각 작곡가가 차지하는 비중을 제한합니다 (전체 곡 수 대비 퍼센트).",
 		"maxTracksFromSingleWork": "단일 작품 내 최대 트랙 수",

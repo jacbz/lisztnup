@@ -213,7 +213,7 @@ export class TracklistGenerator {
 				works = limitedWorksArray;
 			}
 
-			// Step 10: Merge manually included works (add any not already in filtered set)
+			// Step 9: Merge manually included works (add any not already in filtered set)
 			if (includeWorkGids.size > 0) {
 				const existingGids = new Set(works.map((w) => w.gid));
 				const additionalWorks = this.data.works.filter(
@@ -223,14 +223,22 @@ export class TracklistGenerator {
 			}
 		}
 
-		// Step 11: Remove manually excluded works (always applied regardless of enableFilters)
+		// Step 10: Remove manually excluded works (always applied regardless of enableFilters)
 		if (excludeWorkGids.size > 0) {
 			works = works.filter((w) => !excludeWorkGids.has(w.gid));
 		}
 
+		// Step 11: Limit to top N works by (adjusted) score, excluding manually included works
+		if (enableFilters && config.topWorksCount !== undefined && config.topWorksCount > 0) {
+			works = [...works].sort((a, b) =>
+				includeWorkGids.has(b.gid) ? 1 : includeWorkGids.has(a.gid) ? -1 : b.score - a.score
+			); // Sort by score, but keep included works at the top
+			works = works.slice(0, config.topWorksCount);
+		}
+
 		// Step 12: Filter parts within each work by maxTracksFromSingleWork
 		// Applied after all inclusion/exclusion to ensure ALL works respect the limit
-		if (config.maxTracksFromSingleWork !== undefined) {
+		if (enableFilters && config.maxTracksFromSingleWork !== undefined) {
 			works = works.map((work) => {
 				if (work.parts.length <= config.maxTracksFromSingleWork!) {
 					return work;

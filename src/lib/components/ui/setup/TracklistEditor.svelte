@@ -58,6 +58,7 @@
 	let composerFilterEnabled = $state(false);
 	let yearFilterEnabled = $state(false);
 	let workScoreRangeEnabled = $state(true);
+	let topWorksCountEnabled = $state(false);
 	let limitWorksFromComposerEnabled = $state(false);
 	let maxTracksFromSingleWorkEnabled = $state(false);
 	let nameFilterEnabled = $state(false);
@@ -129,6 +130,7 @@
 				// Set enabled flags
 				categoryAdjustmentsEnabled = config.categoryAdjustments !== undefined;
 				workScoreRangeEnabled = config.workScoreRange !== undefined;
+				topWorksCountEnabled = config.topWorksCount !== undefined;
 				limitWorksFromComposerEnabled = config.limitWorksFromComposer !== undefined;
 				maxTracksFromSingleWorkEnabled = config.maxTracksFromSingleWork !== undefined;
 				yearFilterEnabled = config.yearFilter !== undefined;
@@ -170,6 +172,7 @@
 				composerFilterEnabled = false;
 				yearFilterEnabled = false;
 				workScoreRangeEnabled = true;
+				topWorksCountEnabled = false;
 				limitWorksFromComposerEnabled = false;
 				maxTracksFromSingleWorkEnabled = false;
 				nameFilterEnabled = false;
@@ -196,6 +199,7 @@
 			composerFilterEnabled,
 			yearFilterEnabled,
 			workScoreRangeEnabled,
+			topWorksCountEnabled,
 			limitWorksFromComposerEnabled,
 			maxTracksFromSingleWorkEnabled,
 			nameFilterEnabled,
@@ -333,6 +337,10 @@
 			newConfig.workScoreRange = config.workScoreRange;
 		}
 
+		if (topWorksCountEnabled && config.topWorksCount !== undefined) {
+			newConfig.topWorksCount = config.topWorksCount;
+		}
+
 		if (limitWorksFromComposerEnabled && config.limitWorksFromComposer !== undefined) {
 			newConfig.limitWorksFromComposer = config.limitWorksFromComposer;
 		}
@@ -415,6 +423,15 @@
 			config.workScoreRange = config.workScoreRange || [0, MAX_WORK_SCORE_ROUNDED];
 		} else {
 			config.workScoreRange = undefined;
+		}
+	}
+
+	function toggleTopWorksCount() {
+		topWorksCountEnabled = !topWorksCountEnabled;
+		if (topWorksCountEnabled) {
+			config.topWorksCount = config.topWorksCount ?? 500;
+		} else {
+			config.topWorksCount = undefined;
 		}
 	}
 
@@ -679,6 +696,28 @@
 							max={MAX_WORK_SCORE_ROUNDED}
 							step={0.1}
 							label=""
+						/>
+					{/if}
+				</div>
+
+				<!-- Top Works Count -->
+				<div class="rounded-lg border-2 border-slate-700 bg-slate-800/50 p-4">
+					<div class="mb-3 flex items-center justify-between">
+						<div>
+							<span class="font-semibold text-cyan-300">{$_('tracklistEditor.topWorksCount')}</span>
+							<p class="text-xs text-slate-400">{$_('tracklistEditor.topWorksCountDesc')}</p>
+						</div>
+						<ToggleButton value={topWorksCountEnabled} onToggle={toggleTopWorksCount} />
+					</div>
+					{#if topWorksCountEnabled && config.topWorksCount !== undefined}
+						<Slider
+							value={config.topWorksCount}
+							min={10}
+							max={10000}
+							step={10}
+							label=""
+							showValue={true}
+							onChange={(val) => (config.topWorksCount = val)}
 						/>
 					{/if}
 				</div>

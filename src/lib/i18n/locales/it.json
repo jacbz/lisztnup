@@ -226,6 +226,8 @@
 		"yearEnd": "Anno Fine",
 		"workScoreRange": "Intervallo Popolarità",
 		"workScoreRangeDesc": "Filtra opere per punteggio di popolarità (più alto = esistono più registrazioni)",
+		"topWorksCount": "Limite opere più popolari",
+		"topWorksCountDesc": "Includi solo le N opere più popolari, ordinate per punteggio di popolarità (aggiustato).",
 		"limitWorksFromComposer": "Limite Opere per Compositore",
 		"limitWorksFromComposerDesc": "Limita ogni compositore a una percentuale del totale delle opere in questa tracklist.",
 		"maxTracksFromSingleWork": "Max Tracce da Singola Opera",

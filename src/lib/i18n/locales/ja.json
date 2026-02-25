@@ -226,6 +226,8 @@
 		"yearEnd": "終了年",
 		"workScoreRange": "人気度範囲",
 		"workScoreRangeDesc": "作品の人気度スコアでフィルタリングします（高いほど録音数が多い有名な作品です）",
+		"topWorksCount": "上位作品数の制限",
+		"topWorksCountDesc": "人気度スコア（調整後）の上位N作品のみを含めます。",
 		"limitWorksFromComposer": "作曲家ごとの選出制限",
 		"limitWorksFromComposerDesc": "このトラックリスト内で、1人の作曲家の作品が占める割合の上限を設定します。",
 		"maxTracksFromSingleWork": "同一作品からの最大トラック数",
