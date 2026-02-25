@@ -228,7 +228,7 @@
 				class="flex items-center gap-2 rounded-lg bg-purple-600 px-3 py-2 text-sm text-white transition-all hover:bg-purple-500 focus:ring-2 focus:ring-purple-400 focus:outline-none"
 			>
 				<Library class="h-4 w-4" />
-				<span>{$_('tracklistSelector.browseLibrary')}</span>
+				<span>{$_('trackTable.library')}</span>
 			</button>
 		</div>
 	</div>

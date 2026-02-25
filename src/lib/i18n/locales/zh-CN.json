@@ -170,7 +170,6 @@
 		"share": "分享",
 		"delete": "删除",
 		"createNew": "创建新歌单",
-		"browseLibrary": "浏览完整乐库",
 		"deleteDialog": {
 			"title": "删除歌单？",
 			"message": "确定要删除 {name} 吗？此操作无法撤销。",

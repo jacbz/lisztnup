@@ -170,7 +170,6 @@
 		"share": "Share",
 		"delete": "Delete",
 		"createNew": "Create New Tracklist",
-		"browseLibrary": "Browse Library",
 		"deleteDialog": {
 			"title": "Delete Tracklist?",
 			"message": "Are you sure you want to delete {name}? This cannot be undone.",

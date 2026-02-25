@@ -170,7 +170,6 @@
 		"share": "Condividi",
 		"delete": "Elimina",
 		"createNew": "Crea Nuova Tracklist",
-		"browseLibrary": "Esplora Libreria",
 		"deleteDialog": {
 			"title": "Eliminare Tracklist?",
 			"message": "Sei sicuro di voler eliminare {name}? L'operazione non può essere annullata.",

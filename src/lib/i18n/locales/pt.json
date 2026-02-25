@@ -170,7 +170,6 @@
 		"share": "Compartilhar",
 		"delete": "Excluir",
 		"createNew": "Criar Novo Repertório",
-		"browseLibrary": "Navegar na Biblioteca",
 		"deleteDialog": {
 			"title": "Excluir Repertório?",
 			"message": "Tem certeza de que deseja excluir {name}? Isso não pode ser desfeito.",

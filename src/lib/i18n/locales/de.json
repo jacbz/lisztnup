@@ -170,7 +170,6 @@
 		"share": "Teilen",
 		"delete": "Löschen",
 		"createNew": "Neue Tracklist erstellen",
-		"browseLibrary": "Bibliothek durchsuchen",
 		"deleteDialog": {
 			"title": "Tracklist löschen?",
 			"message": "Möchtest du {name} wirklich löschen? Dies kann nicht rückgängig gemacht werden.",

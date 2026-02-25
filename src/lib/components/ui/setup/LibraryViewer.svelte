@@ -92,7 +92,7 @@
 </script>
 
 <Popup {visible} {onClose} width="screen" overflow="hidden" padding="none">
-	<div class="flex h-full flex-col">
+	<div class="flex h-full flex-col text-left">
 		<!-- Header -->
 		<div class="border-b-2 border-cyan-400/30 bg-slate-800/50 p-4 md:p-6">
 			<div class="flex items-center gap-3">

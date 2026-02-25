@@ -170,7 +170,6 @@
 		"share": "分享",
 		"delete": "刪除",
 		"createNew": "建立新歌單",
-		"browseLibrary": "瀏覽完整樂庫",
 		"deleteDialog": {
 			"title": "刪除歌單？",
 			"message": "確定要刪除 {name} 嗎？此動作無法復原。",

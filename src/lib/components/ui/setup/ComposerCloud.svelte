@@ -281,14 +281,14 @@
 
 <!-- Word cloud -->
 <div
-	class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 px-4 py-6 md:gap-x-4 md:gap-y-2 md:px-8 md:py-8"
+	class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 px-4 py-6 md:px-8 md:py-8"
 	in:fade={{ duration: 200 }}
 >
 	{#each cloudItems as item, i}
 		<button
 			type="button"
 			onclick={() => onSelectComposer(item.gid)}
-			class="inline-block cursor-pointer rounded-md px-1 py-0.5 whitespace-nowrap transition-all duration-200 hover:scale-110 hover:bg-cyan-400/10 focus:outline-none active:scale-95 {getColor(
+			class="inline-block cursor-pointer rounded-md px-1.5 py-0.5 whitespace-nowrap transition-all duration-200 hover:scale-110 hover:bg-cyan-400/10 focus:outline-none active:scale-95 {getColor(
 				item.score,
 				minScore,
 				maxScore

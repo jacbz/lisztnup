@@ -4,8 +4,11 @@
 	import github from '$lib/assets/icons/github.svg?raw';
 	import musicbrainzIcon from '$lib/assets/icons/musicbrainz-icon.svg?raw';
 	import AboutPopup from './AboutPopup.svelte';
+	import LibraryViewer from '../setup/LibraryViewer.svelte';
+	import Library from 'lucide-svelte/icons/library';
 
 	let showAboutPopup = $state(false);
+	let showLibraryViewer = $state(false);
 </script>
 
 <div class="text-center text-slate-400">
@@ -19,6 +22,15 @@
 				}
 			})}
 		</span>
+		<span>|</span>
+		<button
+			type="button"
+			onclick={() => (showLibraryViewer = true)}
+			class="inline-flex items-center gap-1.5 text-cyan-400 transition-colors hover:text-cyan-300"
+		>
+			<Library class="h-4 w-4" />
+			<span>{$_('trackTable.library')}</span>
+		</button>
 		<span>|</span>
 		<a
 			href="https://github.com/jacbz/lisztnup"
@@ -49,5 +61,7 @@
 <div class="fixed right-2 bottom-1 text-[10px] text-slate-600 select-none">
 	v{__BUILD_DATE__}
 </div>
+
+<LibraryViewer visible={showLibraryViewer} tracklist={null} onClose={() => (showLibraryViewer = false)} />
 
 <AboutPopup visible={showAboutPopup} onClose={() => (showAboutPopup = false)} />

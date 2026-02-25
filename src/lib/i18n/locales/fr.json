@@ -170,7 +170,6 @@
 		"share": "Partager",
 		"delete": "Supprimer",
 		"createNew": "Créer une nouvelle liste",
-		"browseLibrary": "Parcourir la bibliothèque",
 		"deleteDialog": {
 			"title": "Supprimer la liste ?",
 			"message": "Es-tu sûr de vouloir supprimer {name} ? Cette action est irréversible.",

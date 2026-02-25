@@ -170,7 +170,6 @@
 		"share": "Compartir",
 		"delete": "Borrar",
 		"createNew": "Crear nueva lista",
-		"browseLibrary": "Explorar biblioteca",
 		"deleteDialog": {
 			"title": "¿Borrar lista?",
 			"message": "¿Seguro que quieres borrar {name}? Esta acción no se puede deshacer.",
