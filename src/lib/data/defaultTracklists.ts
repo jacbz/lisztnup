@@ -60,6 +60,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: 0,
 				opera: 0.1,
 				ballet: 0.5,
+				organ: -0.3,
 				solo: 0
 			},
 			limitWorksFromComposer: 0.075,
@@ -100,13 +101,14 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		config: {
 			workScoreRange: [4.3, MAX_WORK_SCORE_ROUNDED],
 			categoryAdjustments: {
-				vocal: 0,
+				vocal: -0.2,
 				chamber: 0,
 				orchestral: 0,
 				piano: 0,
 				concerto: 0,
 				opera: 0,
 				ballet: 0.3,
+				organ: -0.3,
 				solo: 0
 			},
 			limitWorksFromComposer: 0.075,
@@ -122,6 +124,17 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'difficulty',
 		config: {
 			workScoreRange: [3.9, MAX_WORK_SCORE_ROUNDED],
+			categoryAdjustments: {
+				vocal: -0.2,
+				chamber: 0,
+				orchestral: 0,
+				piano: 0,
+				concerto: 0,
+				opera: 0,
+				ballet: 0.3,
+				organ: -0.3,
+				solo: 0
+			},
 			limitWorksFromComposer: 0.1,
 			maxTracksFromSingleWork: 1,
 			includeWorks: WORKS_TO_INCLUDE
@@ -143,6 +156,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: 0,
 				opera: 0,
 				ballet: 0,
+				organ: -0.5,
 				solo: 0
 			},
 			limitWorksFromComposer: 0.15,
@@ -166,6 +180,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: 0,
 				opera: 0,
 				ballet: 0,
+				organ: -0.7,
 				solo: 0
 			},
 			maxTracksFromSingleWork: 3,
@@ -198,6 +213,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: 0,
 				opera: 0,
 				ballet: 0,
+				organ: 0,
 				solo: 0
 			}
 		}
@@ -232,6 +248,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: -MAX_WORK_SCORE_ROUNDED,
 				opera: -MAX_WORK_SCORE_ROUNDED,
 				ballet: -MAX_WORK_SCORE_ROUNDED,
+				organ: -MAX_WORK_SCORE_ROUNDED,
 				solo: -MAX_WORK_SCORE_ROUNDED
 			},
 			yearFilter: [1780, MAX_WORK_YEAR],
@@ -254,6 +271,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: 0,
 				opera: -MAX_WORK_SCORE_ROUNDED,
 				ballet: -MAX_WORK_SCORE_ROUNDED,
+				organ: -MAX_WORK_SCORE_ROUNDED,
 				solo: -MAX_WORK_SCORE_ROUNDED
 			},
 			maxTracksFromSingleWork: 5,
@@ -275,6 +293,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: -MAX_WORK_SCORE_ROUNDED,
 				opera: -MAX_WORK_SCORE_ROUNDED,
 				ballet: -MAX_WORK_SCORE_ROUNDED,
+				organ: -MAX_WORK_SCORE_ROUNDED,
 				solo: -MAX_WORK_SCORE_ROUNDED
 			},
 			maxTracksFromSingleWork: 5,
@@ -296,6 +315,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: -MAX_WORK_SCORE_ROUNDED,
 				opera: -MAX_WORK_SCORE_ROUNDED,
 				ballet: -MAX_WORK_SCORE_ROUNDED,
+				organ: -MAX_WORK_SCORE_ROUNDED,
 				solo: -MAX_WORK_SCORE_ROUNDED
 			},
 			maxTracksFromSingleWork: 5,
@@ -317,6 +337,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: -MAX_WORK_SCORE_ROUNDED,
 				opera: -MAX_WORK_SCORE_ROUNDED,
 				ballet: 0,
+				organ: -MAX_WORK_SCORE_ROUNDED,
 				solo: -MAX_WORK_SCORE_ROUNDED
 			},
 			limitWorksFromComposer: 0.1
@@ -337,6 +358,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: -MAX_WORK_SCORE_ROUNDED,
 				opera: 0,
 				ballet: -MAX_WORK_SCORE_ROUNDED,
+				organ: -MAX_WORK_SCORE_ROUNDED,
 				solo: -MAX_WORK_SCORE_ROUNDED
 			},
 			limitWorksFromComposer: 0.1
@@ -357,6 +379,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: 0,
 				opera: -MAX_WORK_SCORE_ROUNDED,
 				ballet: -MAX_WORK_SCORE_ROUNDED,
+				organ: -MAX_WORK_SCORE_ROUNDED,
 				solo: -MAX_WORK_SCORE_ROUNDED
 			},
 			limitWorksFromComposer: 0.1,
@@ -388,6 +411,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: 0,
 				opera: -MAX_WORK_SCORE_ROUNDED,
 				ballet: -MAX_WORK_SCORE_ROUNDED,
+				organ: -MAX_WORK_SCORE_ROUNDED,
 				solo: -MAX_WORK_SCORE_ROUNDED
 			},
 			limitWorksFromComposer: 0.1,
@@ -412,6 +436,7 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 				concerto: 0,
 				opera: -MAX_WORK_SCORE_ROUNDED,
 				ballet: -MAX_WORK_SCORE_ROUNDED,
+				organ: -MAX_WORK_SCORE_ROUNDED,
 				solo: -MAX_WORK_SCORE_ROUNDED
 			},
 			limitWorksFromComposer: 0.1,

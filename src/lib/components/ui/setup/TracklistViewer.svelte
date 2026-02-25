@@ -18,7 +18,6 @@
 	import Check from 'lucide-svelte/icons/check';
 	import Ban from 'lucide-svelte/icons/ban';
 	import { ALL_WORK_CATEGORIES } from '$lib/types/work';
-	import { categories } from '$lib/data/categories';
 
 	interface Props {
 		visible?: boolean;
@@ -119,23 +118,11 @@
 	onDestroy(() => previewPlayer.destroy());
 
 	const normalizeWorkName = (name: string): string => {
-		// Normalize work name for comparison:
-		// - Trim & lowercase
-		// - If it starts with a leading number (1- or 2-digit) followed by separators, drop it (ignore up to 99)
-		// - Remove punctuation for final comparison
-		let s = name.trim().toLowerCase();
-
-		// Match a leading 1- or 2-digit number followed by punctuation/whitespace separators
-		const m = s.match(/^(\d{1,2})(?:[\.\)\-:\/\s]+)(.*)$/u);
-		if (m) {
-			const num = parseInt(m[1], 10);
-			if (num <= 99) {
-				s = m[2].trim();
-			}
-		}
-
-		// Remove remaining punctuation characters
-		return s.replaceAll(/\p{P}+/gu, '');
+		// Normalize work name for comparison, replace all punctuation
+		return name
+			.trim()
+			.toLowerCase()
+			.replaceAll(/\p{P}+/gu, '');
 	};
 
 	// Computed sorted data
@@ -212,15 +199,13 @@
 			_searchTimeout = null;
 		}
 
-		const currentPreFiltered = preFilteredData;
-
 		// If there is no query, set immediately (but still defer briefly to avoid layout thrash)
 		if (!searchQuery || !searchQuery.trim()) {
 			// No search query: populate immediately to avoid showing an empty table on open
 			// Do NOT toggle `isLoading` here — keep the loading indicator controlled by
 			// the data loader so the spinner remains visible until `loadTracklistData`
 			// finishes and clears `isLoading`.
-			filteredRawData = currentPreFiltered;
+			filteredRawData = preFilteredData;
 			hasManualSort = false;
 			page = 1;
 			return;
@@ -231,7 +216,7 @@
 		const DEBOUNCE_MS = 120;
 		_searchTimeout = setTimeout(() => {
 			try {
-				filteredRawData = filterWorks<TableRow>(currentPreFiltered, searchQuery);
+				filteredRawData = filterWorks<TableRow>(preFilteredData, searchQuery);
 			} catch (err) {
 				console.error('Error filtering works:', err);
 				filteredRawData = [];
@@ -415,7 +400,7 @@
 			type="search"
 			bind:value={searchQuery}
 			oninput={() => (page = 1)}
-			placeholder={$_('trackTable.searchPlaceholder') || 'Search composer, title or works'}
+			placeholder={$_('tracklistViewer.searchPlaceholder') || 'Search composer, title or works'}
 			class="min-w-0 flex-1 rounded border border-slate-700 bg-slate-800/60 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-500 focus:ring-2 focus:ring-cyan-400 focus:outline-none"
 		/>
 		<div class="relative flex h-12 w-12 shrink-0 items-center justify-center">
@@ -458,14 +443,14 @@
 					<div
 						class="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-cyan-400 border-t-transparent"
 					></div>
-					<p class="mt-4 text-slate-400">{$_('trackTable.loading')}</p>
+					<p class="mt-4 text-slate-400">{$_('tracklistViewer.loading')}</p>
 				</div>
 			</div>
 		{:else}
 			{@render paginationControls()}
 
 			{#if tableData.length === 0}
-				<p class="text-center text-slate-400">{$_('trackTable.noData')}</p>
+				<p class="text-center text-slate-400">{$_('tracklistViewer.noData')}</p>
 			{:else}
 				<div class="overflow-y-auto">
 					<table class="w-full border-collapse">
@@ -479,7 +464,7 @@
 										class="cell cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
 										onclick={() => handleSort('composer')}
 									>
-										{$_('trackTable.columns.composer')}
+										{$_('tracklistViewer.columns.composer')}
 										{#if sortColumn === 'composer' && (!searchQuery.trim() || hasManualSort)}
 											<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
 										{/if}
@@ -489,7 +474,7 @@
 									class="cell cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
 									onclick={() => handleSort('work')}
 								>
-									{$_('trackTable.columns.work')}
+									{$_('tracklistViewer.columns.work')}
 									{#if sortColumn === 'work' && (!searchQuery.trim() || hasManualSort)}
 										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
 									{/if}
@@ -498,7 +483,7 @@
 									class="cell cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
 									onclick={() => handleSort('popularity')}
 								>
-									{$_('trackTable.columns.popularity')}
+									{$_('tracklistViewer.columns.popularity')}
 									{#if sortColumn === 'popularity' && (!searchQuery.trim() || hasManualSort)}
 										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
 									{/if}
@@ -507,7 +492,7 @@
 									class="cell hidden cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300 md:table-cell"
 									onclick={() => handleSort('year')}
 								>
-									{$_('trackTable.columns.year')}
+									{$_('tracklistViewer.columns.year')}
 									{#if sortColumn === 'year' && (!searchQuery.trim() || hasManualSort)}
 										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
 									{/if}
@@ -587,7 +572,6 @@
 													row.parts[0].deezerIds.includes(previewPlayer.currentDeezerId)
 														? 'font-semibold text-cyan-400'
 														: ''}"
-													title={$_('settings.categories.' + row.type)}
 												>
 													{row.work}
 													{#if row.year}
@@ -599,7 +583,7 @@
 													/>
 												</button>
 											{:else}
-												<span title={$_('settings.categories.' + row.type)}>{row.work}</span>
+												<span>{row.work}</span>
 												{#if row.year}
 													<span class="text-xs opacity-80 md:hidden"> ({row.year})</span>
 												{/if}

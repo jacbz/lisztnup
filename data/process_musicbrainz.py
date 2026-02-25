@@ -140,9 +140,12 @@ EXCLUDED_WORKS: Set[str] = set([
     "9b15b8ac-5e35-3fd6-910a-1f59f51aa0cc", # Pictures at an Exhibition: Promenade (duplicate)
     "ac469a24-9918-359b-8a95-54566968455c", # Promenade
     "6eba656c-cd03-303d-a3e6-dc62719ca429", # Nut Rocker
+    "6f68b550-d2b2-30fd-932c-a3a1db6b60c9", # Wish Liszt
     "23577ad8-1b8c-4666-9ea0-c9a49cadb4ec", # Marion's Theme
     "f3281e81-eea2-409f-88b8-9e1e1de5ca10", # Nutcracker (full ballet - suite is already included)
     "570f3852-ca39-4db2-aafd-4e818af725fd", # Swan Lake Suite
+    "17f624e2-97da-45c3-ab54-c3b2daf2ba68", # Sleeping Beauty
+    "968b9db7-ccc6-3402-9f6c-a436db9ee0c3", # Dance of the Little Swans (duplicate)
 ])
 
 WSS_OVERRIDES: Dict[str, float] = {

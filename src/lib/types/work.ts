@@ -23,6 +23,7 @@ export type WorkCategory =
 	| 'concerto'
 	| 'opera'
 	| 'ballet'
+	| 'organ'
 	| 'solo';
 
 export const ALL_WORK_CATEGORIES: WorkCategory[] = [
@@ -32,6 +33,7 @@ export const ALL_WORK_CATEGORIES: WorkCategory[] = [
 	'chamber',
 	'ballet',
 	'solo',
+	'organ',
 	'opera',
 	'vocal'
 ];

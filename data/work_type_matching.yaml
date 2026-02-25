@@ -81,11 +81,15 @@ general_rules:
     - Klaviersuite
 
   #=============================================================================
-  # Solo: Solo works for non-piano instruments (including organ).
+  # Organ: Solo works for the organ.
+  #=============================================================================
+  organ:
+    - for Organ|for Pedal Piano|\b(Organ|Orgel|Orgue)\b
+
+  #=============================================================================
+  # Solo: Solo works for non-keyboard instruments.
   #=============================================================================
   solo:
-    # Organ works.
-    - for Organ|for Pedal Piano|\b(Organ|Orgel|Orgue)\b
     # Solo instrumental works (non-keyboard).
     - for Solo (Violin|Viola|Cello|Flute|Clarinet|Guitar|Harp|Lute|Bayan|Accordion|Vihuela)
     - Sonata for (Cello|Viola|Violin) Solo|Partita for Flute
@@ -111,6 +115,8 @@ composer_specific_rules:
     solo:
       - Fantasia prima
   'Albéniz, Isaac':
+    orchestra:
+      - orch\.
     piano:
       - Iberia|España|Cantos de España|Suite Española|Recuerdos de viaje
       - La Vega|Mallorca, op. 202|Navarra, B. 49|Pavana-capricho|Sonata para piano
@@ -149,8 +155,9 @@ composer_specific_rules:
     vocal:
       - Chi passa per'sta strada
   'Bach, Carl Philipp Emanuel':
-    solo: # Organ
+    organ:
       - Organ Sonatas, Wq\. 70
+    solo:
       - Sonata in A minor for Solo Flute
     piano:
       - Preußische Sonaten|Württembergische Sonaten|für Kenner und Liebhaber|Wq\.\s(66|67|118)|H\.\s(1|272|300|542)
@@ -197,6 +204,7 @@ composer_specific_rules:
     solo:
       # Cello/Violin/Flute solos
       - (Cello|Violin) Suite|Sonatas and Partitas for Solo Violin|Partita for Flute
+    organ:
       # Specific Organ Forms
       - \b(Pedal-Exercitium|Pastorale|Pastorella|Canzona|Allabreve|Kleines harmonisches Labyrinth)\b
       - \b(Canonische Veränderungen|Partite diverse|Sechs Sonaten)\b
@@ -297,7 +305,7 @@ composer_specific_rules:
     chamber:
       - Battalia|Harmonia artificioso-ariosa|Mystery Sonatas|Sonatae tam aris|Sonata violino solo representativa
   'Bruhns, Nicolaus':
-    solo:
+    organ:
       - Praeludium
   'Binchois, Gilles':
     vocal:
@@ -329,7 +337,7 @@ composer_specific_rules:
     chamber:
       - Capriccio di Bravura|Elegy
   'Boëllmann, Léon':
-    solo: # Organ
+    organ:
       - Suite Gothique
   'Boulanger, Lili':
     orchestral:
@@ -398,7 +406,7 @@ composer_specific_rules:
   'Buxtehude, Dieterich':
     vocal: # Cantatas generally have low BuxWV numbers
       - BuxWV\s?([1-9]|\d\d|1[0-2]\d)
-    solo: # Organ works generally have higher BuxWV numbers
+    organ: # Organ works generally have higher BuxWV numbers
       - BuxWV\s?(1[3-9]\d|2[0-2]\d)|(Prae|Præ)ludium|Toccata|Canzona|Fugue
   'Byrd, William':
     piano:
@@ -408,7 +416,7 @@ composer_specific_rules:
   'Böhm, Georg':
     piano:
       - Suite no\.\s?\d
-    solo:
+    organ:
       - \bPrelude, Fugue and Postlude\b
   'Bądarzewska, Tekla':
     piano:
@@ -486,7 +494,7 @@ composer_specific_rules:
   'Clarke, Jeremiah':
     orchestral:
       - Prince of Denmark's March
-    solo:
+    organ:
       - Trumpet Tune
   'Clarke, Rebecca':
     chamber:
@@ -610,11 +618,11 @@ composer_specific_rules:
     piano:
       - La Maison dans les dunes
   'Dupré, Marcel':
-    solo: # Organ
+    organ:
       - Sept Pièces, op\. 27
       - \bTrois préludes et fugues\b
   'Duruflé, Maurice':
-    solo: # Organ
+    organ:
       - Chant donné|Méditation|Prelude sur l'introït|Scherzo|Suite, op\. 5
       - \b(Fugue sur|Prélude et fugue)\b
     vocal:
@@ -699,14 +707,14 @@ composer_specific_rules:
   'Franck, César':
     piano:
       - Danse lente|Les Plaintes d'une poupée
-    solo: # Organ
+    organ:
       - L'Organiste|Andantino.*FWV 25
     chamber:
       - Andantino quietoso|Mélancolie for Violin and Piano
   'Frescobaldi, Girolamo':
     piano: # Keyboard
       - Il primo libro|Il secondo libro|Recercari
-    solo:
+    organ:
       - \bFiori Musicali\b
   'Froberger, Johann Jakob':
     piano: # Keyboard
@@ -719,7 +727,7 @@ composer_specific_rules:
       - Canzoni et sonate
     vocal:
       - Timor et tremor
-    solo:
+    organ:
       - \bFuga del nono tono\b
   'Gallus, Jacobus':
     vocal:
@@ -740,7 +748,7 @@ composer_specific_rules:
     vocal:
       - Almighty and Everlasting God|Hosanna to the Son of David|O Lord, in Thy Wrath|O clap your hands|See, See, The Word Is Incarnate|This is the record of John
   'Gigout, Eugène':
-    solo: # Organ
+    organ:
       - Grand chœur dialogué
   'Ginastera, Alberto':
     piano:
@@ -750,7 +758,7 @@ composer_specific_rules:
   'Glass, Philip':
     piano:
       - Glassworks|Metamorphosis|Mad Rush|Piano Etudes|Truman Sleeps|Wichita Vortex Sutra
-    solo: # Organ
+    organ:
       - How Now|Two Pages
   'Glazunov, Alexander':
     chamber:
@@ -833,7 +841,7 @@ composer_specific_rules:
     vocal:
       - Ave Virgo sanctissima
   'Guilmant, Alexandre':
-    solo: # Organ
+    organ:
       - Pièces dans différents styles
   'Hahn, Reynaldo':
     piano:
@@ -881,7 +889,7 @@ composer_specific_rules:
     orchestral:
       - Meditation from Nobilissima visione|Konzertmusik|Nobilissima visione|Trauermusik
   'Homilius, Gottfried August':
-    solo:
+    organ:
       - Fugue in G major
   'Hofmann, Józef':
     piano:
@@ -997,7 +1005,7 @@ composer_specific_rules:
     chamber:
       - Adagio for violin
   'Kokkonen, Joonas':
-    solo:
+    organ:
       - Lux aeterna
   'Komzák II, Karel':
     orchestral:
@@ -1009,7 +1017,7 @@ composer_specific_rules:
     orchestral:
       - Incidental Music to.*Olympie
   'Krebs, Johann Ludwig':
-    solo: # Organ
+    organ:
       - Auf meinen lieben Gott|Prelude.*BWV 567|Wir glauben all
   'Kreisler, Fritz':
     chamber:
@@ -1025,7 +1033,7 @@ composer_specific_rules:
     orchestral:
       - Namouna
   'Langlais, Jean':
-    solo: # Organ
+    organ:
       - Trois paraphrases grégoriennes
   'Lanner, Josef':
     orchestral:
@@ -1054,14 +1062,16 @@ composer_specific_rules:
   'Ligeti, György':
     piano:
       - Musica ricercata|Études|Continuum|Due Capricci|Invention|Three Pieces
+    organ:
+      - Volumina
     solo:
-      - Volumina|Sonata for (Cello|Viola) Solo|Passacaglia ungherese
+      - Sonata for (Cello|Viola) Solo|Passacaglia ungherese
     orchestral:
       - Lontano|Atmosphères|Ramifications|San Francisco Polyphony|Artikulation
     vocal:
       - Aventures|Requiem|Lux aeterna|Mysteries of the Macabre
   'Lindberg, Oskar':
-    solo:
+    organ:
       - Gammal fäbodpsalm
   'Liszt, Franz':
     concerto:
@@ -1071,10 +1081,10 @@ composer_specific_rules:
       - Feierlicher Marsch|Feierlicher Marsch zum heiligen Gral|S\.\s?450
       - 'Réminiscences de|Paraphrase de concert sur|Stücke aus Tannhäuser|Ballade aus Der fliegende|Danza sacra.*Aida|Miserere du Trovatore|Pilgerchor'
       - Consolations|Grand galop chromatique|Rhapsodie espagnole|Soirées de Vienne|Weihnachtsbaum|Après une lecture du Dante
-      - '(Csárdás|Polonaises|Vortragsstücke|Ballade|Berceuse|Légendes|exécution transcendante|études de Paganini|Konzertetüden|S\.\s?140|études de Paganini|Impromptu|gondola|Mephisto-Polka|Polonaise aus.*Onegin|Scherzo und Marsch|études de concert|Valse|Valses|Weinen, Klagen|Bagatelle|Elegy|En rêve|Epithalam|Resignazione|Schlaflos!|Trübe Wolken|Unstern!|R\. W\. - Venezia|Recueillement|Wish Liszt)'
+      - '(Csárdás|Polonaises|Vortragsstücke|Ballade|Berceuse|Légendes|exécution transcendante|études de Paganini|Konzertetüden|S\.\s?140|études de Paganini|Impromptu|gondola|Mephisto-Polka|Polonaise aus.*Onegin|Scherzo und Marsch|études de concert|Valse|Valses|Weinen, Klagen|Bagatelle|Elegy|En rêve|Epithalam|Schlaflos!|Trübe Wolken|Unstern!|R\. W\. - Venezia|Recueillement|Wish Liszt)'
       - \bToccata\b
-    solo: # Organ
-      - Prelude and Fugue on .* BACH|Fantasia and Fugue on .* Ad nos
+    organ:
+      - Prelude and Fugue on .* BACH|Fantasia and Fugue on .* Ad nos|Resignazione
     vocal:
       - Via Crucis|In festo transfigurationis|Die Fischerstochter|Die Zelle in Nonnenwerth|O du mein holder Abendstern
   'Llobet Solés, Miguel':
@@ -1144,11 +1154,11 @@ composer_specific_rules:
       - Fairy Tales|Morceaux|Forgotten Melodies|Sonata
   'Mendelssohn, Felix':
     piano:
-      - Album-Leaf|Capriccio.*(op\. 5|Brillant)|Fantasy|Rondo Brilliant|Scherzo a Capriccio|Kinderstücke|Sonata.*op\.\s(6|106)|Fantasies or Caprices, op\. 16|Preludes and.*Studies, op\. 104
+      - Album-Leaf|Capriccio.*(op\. 5\b|Brillant)|Fantasy|Rondo Brilliant|Scherzo a Capriccio|Kinderstücke|Sonata.*op\.\s(6|106)\b|Fantasies or Caprices, op\. 16\b|Preludes and.*Studies, op\. 104\b
       - \bSix Preludes and Fugues\b
       - Songs? Without Words
     vocal:
-      - 3 Psalms, op\. 78|Die deutsche Liturgie|Kirchenmusik, op\. 23
+      - 3 Psalms, op\. 78\b|Die deutsche Liturgie|Kirchenmusik, op\. 23\b
   'Merikanto, Oskar':
     piano:
       - Kesäilta|Valse Lente
@@ -1164,7 +1174,7 @@ composer_specific_rules:
   'Messiaen, Olivier':
     piano:
       - Catalogue d'oiseaux|Vingt regards sur l.enfant|Huit préludes|Cantéyodjayâ|La Fauvette des jardins|Petites esquisses|Pièce pour le tombeau|Quatre Études de rythme
-    solo: # Organ
+    organ:
       - La Nativité du Seigneur|Les Corps glorieux|L'Ascension|Livre d'orgue|Apparition de l'Église Éternelle|Le Banquet céleste|Livre du Saint Sacrement|Méditations sur le Mystère|Diptyque|Verset pour la Fête
     concerto:
       - Turangalîla-Symphonie|Oiseaux exotiques|Des canyons aux étoiles|Awakening of the Birds|Couleurs de la cité céleste|Chronochromie
@@ -1217,8 +1227,14 @@ composer_specific_rules:
     piano:
       - études de virtuosité|Phantasiestücke|Caprice espagnol|morceaux caractèristiques
   'Mozart, Wolfgang Amadeus':
+    organ:
+      - Mechanical Organ
+    concerto:
+      - Andante in C major for Flute and Orchestra
     piano:
       - Piano Sonata .* K\.\s?\d+|Fantasia .* K\.\s?\d+|Adagio.*K\.\s(617a|356)|Präludium.*K\.|Piano piece|for Keyboard|Rondo no\.?\s?2|The London Sketchbook|(Allegro|Andante|Menuett|Minuet) in . major|Romanze in A-flat major|Rondo D-Dur, KV 485
+    orchestral:
+      - Serenade .* K\.|Eine kleine Nachtmusik|Marches, K\. 320a|Church Sonata .* for Orchestra
     chamber:
       - Andante and Variations for Piano with 4 Hands
       - Glass Harmonica
@@ -1226,8 +1242,6 @@ composer_specific_rules:
       - Sonata for 2 Pianos|Adagio for 2 Basset Horns
       - \bAdagio and Fugue\b
       - Allegro assai in B major for 2 Clarinets
-    orchestral:
-      - Serenade .* K\.|Eine kleine Nachtmusik|Marches, K\. 320a
     opera:
       - The Magic Flute|Die Zauberflöte|Don Giovanni|The Marriage of Figaro|Le nozze di Figaro|Così fan tutte
     vocal:
@@ -1239,19 +1253,19 @@ composer_specific_rules:
     solo: # Vihuela
       - Diferencias sobre Conde claros|Fantasía que contrahaza|Tres libros de música
   'Muffat, Georg':
-    solo:
+    organ:
       - Apparatus musico-organisticus
   'Mulet, Henri':
-    solo:
+    organ:
       - Esquisses byzantines
   'Mundy, William':
     vocal:
       - Sive vigilem|Vox Patris caelestis
   'Mussorgsky, Modest':
+    orchestral:
+      - Night on Bald Mountain|orch\. Ravel
     piano:
       - Pictures at an Exhibition|Memories of Childhood|Méditation|Rêverie|Scherzo in C-sharp|Une larme|Promenade|The Old Castle
-    orchestral:
-      - Night on Bald Mountain
     opera:
       - Khovanshchina|The Fair at Sorochintsï
   'Nebra, Manuel Blasco de':
@@ -1285,8 +1299,10 @@ composer_specific_rules:
     vocal:
       - Adam lay ybounden
   'Pachelbel, Johann':
+    chamber:
+      - Canon and Gigue
     piano: # Keyboard
-      - Canon and Gigue|Chaconne|Christe, der du bist|Fantasia|Komm, Gott Schöpfer|Vom Himmel hoch|Was Gott tut
+      - Chaconne|Christe, der du bist|Fantasia|Komm, Gott Schöpfer|Vom Himmel hoch|Was Gott tut
       - \bToccata\b
   'Paderewski, Ignacy Jan':
     piano:
@@ -1332,12 +1348,11 @@ composer_specific_rules:
     chamber:
       - Cinco piezas|Four for Tango|Fracanapa|La muerte del ángel|Le Grand Tango|Milonga del ángel|Oblivion|Regreso al amor|The Four Seasons of Buenos Aires
       - Histoire du tango|Suite Troileana|Tangata|Tango Suite
+      - Libertango
     orchestral:
       - Tangazo
     solo:
       - Tango Études
-    concerto:
-      - Libertango
     vocal:
       - Tres minutos con la realidad
   'Pierné, Gabriel':
@@ -1407,7 +1422,7 @@ composer_specific_rules:
       - After the Victory|Collage sur B-A-C-H|Festina lente|Silouans Song
     piano:
       - Für Alina|Two sonatinas
-    solo: # Organ
+    organ:
       - Pari intervallo|Trivium
     chamber:
       - Spiegel im Spiegel|Mozart - Adagio
@@ -1457,7 +1472,7 @@ composer_specific_rules:
     ballet:
       - Les Élémens
   'Reger, Max':
-    solo: # Organ
+    organ:
       - Introduction und Passacaglia|Phantasie und Fuge.*B-A-C-H
   'Reich, Steve':
     chamber:
@@ -1531,8 +1546,10 @@ composer_specific_rules:
       - Études.*(main gauche|op\. 111|op\. 52)
     vocal:
       - Réquiem|Saltarelle
-    solo: # Organ/Harp
-      - Fantaisie no\. [123]|Fantaisie, op\. 124|3 Preludes and Fugues
+    organ:
+      - Fantaisie no\. [123]|3 Preludes and Fugues
+    solo: # Harp
+      - Fantaisie, op\. 124
     chamber:
       - Caprice sur des airs Danois|Cavatine|Prayer|Romance.*op\. 37|Septuor|Sonata no\. 2 for Cello|Berceuse, op\. 38
     concerto:
@@ -1546,13 +1563,14 @@ composer_specific_rules:
     chamber:
       - Caprice basque|El canto del ruiseñor|Navarra|Serenata andaluza|Spanish Dances
   'Satie, Erik':
+    orchestral:
+      - orch\.|La Belle Excentrique|Cinq Grimaces
     piano:
       - Gymnopédie|Gnossienne|Sarabande|Pièces froide|Sports et divertissement|Avant-dernières pensées|Chapitres tournés|Croquis et agaceries|Danses gothiques|Descriptions automatiques|Embryons desséchés|Enfantillages pittoresques|Heures séculaires|Menus Propos|Musiques Intimes|Pages mystiques|Passacaille|Peccadilles importunes|Poudre d'or|Sonatine bureaucratique|Trois sonneries|Vieux Sequins
       - chorals|préludes flasques|Carnet d'esquisses|Nocturnes|Danse de travers|Fantaisie‐valse|Le Piccadilly|Leit-motiv|Valses distinguées|Les pantins dansent|Menuet|pensée Rose\+Croix|Prière|Prélude.*(porte héroïque|tapisserie)|Rêverie de L'enfance|Tendrement|The Dreamy Fish|nouvelles enfantines|Verset laïque|Ogives|Quatre préludes
+      - Cinéma|Jack-in-the-Box
     chamber:
       - Choses vues à droite et à gauche|En habit de cheval|morceaux en forme de poire
-    orchestral:
-      - Cinéma|Jack-in-the-Box|La Belle Excentrique|Cinq Grimaces
     vocal:
       - Messe des pauvres
   'Say, Fazıl':
@@ -1562,8 +1580,10 @@ composer_specific_rules:
     piano:
       - Sonata in .* K|Essercizi per gravicembalo
   'Scheidt, Samuel':
-    piano: # Keyboard
-      - A Child Is Born|Galliard Battaglia|In Dulci Jubilo
+    chamber:
+      - Galliard Battaglia
+    vocal:
+      - A Child Is Born|In Dulci Jubilo
   'Schmelzer, Johann Heinrich':
     chamber:
       - Lamento sopra
@@ -1592,6 +1612,8 @@ composer_specific_rules:
       - Sechs Melodien von Franz Schubert|arr. Liszt
       - Impromptus|Moments Musicaux|Fantasy in C major, D\.\s?760|D\.\s?760|12 Ländler|12 Valses Nobles|16 German Dances|2 Scherzos|Allegretto in C minor
       - (Valses sentimentales|Waltzes, Ländler and Ecossaises|Deutsche Tänze|Ländler, D\. 814|Polonaises, op\. 75|Adagio.*D\. 505|Allegretto.*D\. 346|Galopp und.*Ecossaisen|Menuet|Menuette und Deutsche|Sonata.*D\. 613|Ungarische Melodie|Waltz.*D\. 844)|Letzte Walzer
+    orchestral:
+      - orch\. Mahler
     chamber:
       - Fantasia in F minor, .* D\. 940|Marches militaires|Arpeggione Sonata|Trout Quintet|Death and the Maiden|Allegro.*Lebensstürme|Divertissement.*D\. 8|Grand Rondeau
     vocal:
@@ -1611,7 +1633,7 @@ composer_specific_rules:
       - Romanzen.*(op\. 21|op\. 22)
   'Schumann, Robert':
     chamber:
-      - Adagio und Allegro, op\. 70|Märchenbilder|Phantasiestücke, op\. 88|Bilder aus Osten|Fantasiestücke für .* und Klavier|Märchenerzählungen
+      - Adagio und Allegro, op\. 70|Märchenbilder|Phantasiestücke, op\. 88|Bilder aus Osten|Fantasiestücke für .* und Klavier|Märchenerzählungen|vierhändig
     concerto:
       - Konzertstück|Fantasie für Violine und Orchester
     vocal:
@@ -1622,7 +1644,7 @@ composer_specific_rules:
       - Carnaval|Kinderszenen|Kreisleriana|Fantasiestücke|Papillons|Davidsbündlertänze|Symphonic Etudes|Album für die Jugend|Arabeske|Blumenstück|Bunte Blätter|Faschingsschwank aus Wien|Novelletten|Waldszenen|Symphonische Etüden|Symphonische Etüden.*Anhang|op\.\s?13
       - Albumblätter|Allegro, op\. 8|Concert études|Drei Romanzen.*op\. 28|Fantasy.*op\. 17|Impromptus.*op\. 5|Intermezzi|Klaviersonate|Nachtstücke|Sonate für Klavier|Vier Märsche
       - \b(Fugues|Toccata)\b
-    solo:
+    organ:
       - Fugues on B\.A\.C\.H|Four Sketches, op\. 58|Six Etudes in Canonic Form
   'Schütz, Heinrich':
     vocal:
@@ -1683,7 +1705,7 @@ composer_specific_rules:
       - Fandango in D minor
   'Sor, Ferdinand':
     solo: # Guitar
-      - Les Adieux|estudios|Progressive Lessons|Short Pieces|Sonata.*op\. 15b|Twenty Studies
+      - Les Adieux|estudios|Progressive Lessons|Short Pieces|Sonata.*op\. 15b|Twenty Studies|Introduction and Variations
       - 24 Exercises|op\.\s?35
   'Sorabji, Kaikhosru Shapurji':
     piano:
@@ -1773,9 +1795,9 @@ composer_specific_rules:
   'Tallis, Thomas':
     vocal:
       - Spem in alium|Lamentations of Jeremiah|A new commandment|Gaude gloriosa|Hear the voice and prayer|O Lord|Salvator mundi
-      - Jam lucis orto|O salutaris hostia|Sancte Deus|Te lucis ante|Verily, verily|When Shall My Sorrowful
-    piano:
-      - A Solfing Song|O Ye Tender Babes
+      - Jam lucis orto|O salutaris hostia|Sancte Deus|Te lucis ante|Verily, verily|When Shall My Sorrowful|O Ye Tender Babes
+    chamber:
+      - A Solfing Song
   'Tavener, John':
     orchestral:
       - 3rd Earth|The Protecting Veil
@@ -1870,7 +1892,7 @@ composer_specific_rules:
     vocal:
       - Popule meus
   'Vierne, Louis':
-    solo:
+    organ:
       - Pièces de fantaisie
   'Villa‐Lobos, Heitor':
     solo: # Guitar
@@ -1916,7 +1938,7 @@ composer_specific_rules:
     orchestral:
       - Amour et Printemps|España, op\. 236|Estudiantina|The Skaters
   'Walther, Johann Gottfried':
-    solo: # Organ
+    organ:
       - Ach Gott und Herr
   'Walton, William':
     solo: # Guitar
