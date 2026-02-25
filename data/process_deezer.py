@@ -1,67 +1,47 @@
 """process_deezer.py
 
-Checks Deezer track IDs referenced by ../static/lisztnup.json and maintains two
-flat text files in the current working directory:
+Validates Deezer track IDs referenced by ../static/lisztnup.json, verifies their
+availability, and strictly compares the Deezer track title against the expected
+composer and part name.
 
-- excluded_deezer_ids
-    Deezer IDs that should be ignored by the app/tools because they have no
-    preview or are otherwise unusable.
-- processed_deezer_ids
-    Deezer IDs that have already been checked so subsequent runs can resume
-    quickly.
+Pipeline Architecture
+-------------------
+Phase 1 (Concurrent I/O): 
+    Fetches JSON metadata and MP3 previews concurrently. Handles rate limits, 
+    caching, and immediately excludes tracks with permanent API errors.
+Phase 2 (Scoring): 
+    Calculates similarity scores for all successfully fetched tracks.
+Phase 3 (Interactive): 
+    Presents tracks scoring below SIMILARITY_THRESHOLD to the user sequentially, 
+    ensuring terminal output is clean and progress metrics are clear.
 
-The script queries Deezer's public API endpoint:
-
-    https://api.deezer.com/track/<id>
-
-For each ID, it decides whether to exclude it based on the API response:
-
-- If the response contains an "error":
-    - "DataException" is treated as a permanent failure => exclude.
-    - Other errors are queued for a single retry pass.
-- If there is no error but the track has no "preview" URL => exclude.
-
-Modes
------
-
-Normal mode (RECHECK_EXCLUDED = False)
-    Checks IDs found in lisztnup.json that are not in excluded/processed yet.
-
-Recheck mode (RECHECK_EXCLUDED = True)
-    Re-validates all IDs currently in excluded_deezer_ids and removes any that
-    now have a preview available.
-
-Optional downloads
-------------------
-
-If DOWNLOAD_TRACKS is enabled, the script additionally writes a flat cache of
-API responses and preview MP3s into DOWNLOAD_LOCATION:
-
-- <DOWNLOAD_LOCATION>/<id>.json   (full Deezer API response)
-- <DOWNLOAD_LOCATION>/<id>.mp3    (preview audio, if available)
-
-These downloads are best-effort: failures to write JSON or download MP3 will be
-printed but will not change the exclude/processed decision.
-
-Notes
------
-
-- Paths are relative to the process working directory. This script is typically
-    run from the data/ folder so that ../static/lisztnup.json resolves correctly.
-- CONCURRENCY controls in-flight requests; API_THROTTLE_SECONDS adds an
-    additional delay per request to reduce rate-limit pressure.
+Classical Title Matching
+------------------------
+1. Unicode Normalization: Accents are safely flattened (e.g., 'ö' -> 'o').
+2. Normalization: Standardizes catalogs (KV -> K), converts Roman numerals.
+3. Catalog Bonus: Perfectly matching catalogs (Op., BWV) grant +20 points.
+4. Arrangement Penalty: Unrequested arrangements ("arr.") subtract 40 points.
 """
 
 import json
-import os
-from pathlib import Path
 import asyncio
+import re
+import unicodedata
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Optional, Tuple, List
+
 import aiohttp
+from rapidfuzz import fuzz
 from tqdm.asyncio import tqdm
 
+# --- Configuration & Tuning ---
 
+# Similarity Check Tuning
+SIMILARITY_THRESHOLD = 55.0
+AUTO_REJECT_THRESHOLD = 45.0
 
-# Toggle: Set to True to recheck previously excluded IDs and remove them if they now have previews
+# Toggle: Set to True to recheck previously excluded IDs
 RECHECK_EXCLUDED = False
 
 # Network tuning
@@ -70,243 +50,381 @@ API_THROTTLE_SECONDS = 1  # Sleep after each Deezer API call
 
 # Optional: download Deezer JSON + preview MP3 to a flat folder
 DOWNLOAD_TRACKS = True
-DOWNLOAD_LOCATION = Path("downloads")  # e.g. downloads/123213.json and downloads/123213.mp3
+DOWNLOAD_LOCATION = Path("downloads")
 
+
+# --- Data Structures ---
+
+@dataclass
+class TrackEvaluation:
+    deezer_id: int
+    expected_original: str
+    deezer_original: str
+    expected_clean: str
+    deezer_clean: str
+    base_score: float
+    bonus: float
+    penalty: float
+    final_score: float
+
+
+# --- Domain-Specific Text Normalization ---
+
+def clean_classical_title(title: str) -> str:
+    """Cleans and standardizes classical music metadata text."""
+    s = str(title)
+    
+    # 1. Flatten unicode accents safely
+    s = unicodedata.normalize('NFKD', s).encode('ASCII', 'ignore').decode('utf-8')
+    s = s.lower().replace('’', "'")  # Normalize apostrophes
+    
+    # 2. Replace connecting punctuation with spaces
+    for char in ['-', '.', ',', ':', '(', ')', '[', ']']:
+        s = s.replace(char, ' ')
+    s = s.replace('&', ' and ')
+    
+    # 3. Standardize common classical music catalog/abbreviation synonyms
+    s = re.sub(r'\bkv\b', 'k', s)
+    s = re.sub(r'\bopus\b', 'op', s)
+    s = re.sub(r'\bnumber\b', 'no', s)
+    s = re.sub(r'\bnr\b', 'no', s)
+    s = re.sub(r'\bdur\b', 'major', s)
+    s = re.sub(r'\bmoll\b', 'minor', s)
+    
+    # 4. Remove certain words
+    stop_words = {'for', 'in', 'the', 'a', 'an', 'movement', 'mvmt', 'remastered'}
+    
+    roman_to_arabic = {
+        'i': '1', 'ii': '2', 'iii': '3', 'iv': '4', 'v': '5',
+        'vi': '6', 'vii': '7', 'viii': '8', 'ix': '9', 'x': '10',
+        'xi': '11', 'xii': '12', 'xiii': '13', 'xiv': '14', 'xv': '15', 'xvi': '16',
+        'xvii': '17', 'xviii': '18', 'xix': '19', 'xx': '20',
+        'xxi': '21', 'xxii': '22', 'xxiii': '23', 'xxiv': '24', 'xxv': '25',
+        'xxvi': '26', 'xxvii': '27', 'xxviii': '28', 'xxix': '29', 'xxx': '30'
+    }
+    
+    tokens = []
+    for t in re.split(r'[^\w]+', s):
+        if not t: continue
+        
+        # Strip ordinal suffixes (1st -> 1)
+        t = re.sub(r'^(\d+)(st|nd|rd|th)$', r'\1', t)
+        
+        # Map roman numerals to arabic
+        if t in roman_to_arabic:
+            t = roman_to_arabic[t]
+            
+        if t not in stop_words:
+            tokens.append(t)
+            
+    return " ".join(tokens)
+
+
+def evaluate_track(deezer_id: int, expected_title: str, deezer_title: str) -> TrackEvaluation:
+    """Calculates similarity score, catalog bonuses, and arrangement penalties."""
+    clean_expected = clean_classical_title(expected_title)
+    clean_deezer = clean_classical_title(deezer_title)
+    
+    base_score = fuzz.token_set_ratio(clean_expected, clean_deezer)
+    
+    # Extract identifiers (e.g., "op 102", "bwv 815", "no 1")
+    cat_pattern = r'\b(?:op|bwv|rv|hwv|k|d|hob|s|l|woo|swv|buxwv|fbwv|js)\s*\d+[a-z]?\b'
+    num_pattern = r'\bno\s*\d+\b'
+    
+    cat_exp = set(re.findall(cat_pattern, clean_expected))
+    cat_dez = set(re.findall(cat_pattern, clean_deezer))
+    num_exp = set(re.findall(num_pattern, clean_expected))
+    num_dez = set(re.findall(num_pattern, clean_deezer))
+    
+    bonus = 0.0
+    if cat_exp and (cat_exp & cat_dez):
+        bonus += 20.0
+    if num_exp and (num_exp & num_dez):
+        bonus += 10.0
+        
+    # Arrangement Penalty
+    arr_keywords = {"arr", "arranged", "arrangement", "transcription"}
+    exp_tokens = set(clean_expected.split())
+    dez_tokens = set(clean_deezer.split())
+    
+    penalty = 0.0
+    if bool(dez_tokens & arr_keywords) and not bool(exp_tokens & arr_keywords):
+        penalty = 75.0
+        
+    final_score = max(0.0, min(100.0, base_score + bonus) - penalty)
+    
+    return TrackEvaluation(
+        deezer_id=deezer_id,
+        expected_original=expected_title,
+        deezer_original=deezer_title,
+        expected_clean=clean_expected,
+        deezer_clean=clean_deezer,
+        base_score=base_score,
+        bonus=bonus,
+        penalty=penalty,
+        final_score=final_score
+    )
+
+
+# --- File I/O Helpers ---
+
+def load_id_set(filename: str) -> set[int]:
+    path = Path(filename)
+    if path.exists():
+        return {int(line.strip()) for line in path.read_text().splitlines() if line.strip()}
+    path.write_text("")
+    return set()
+
+def save_id_set(filename: str, ids: set[int]) -> None:
+    Path(filename).write_text("\n".join(map(str, sorted(ids))) + "\n")
 
 def _ensure_download_location() -> None:
     if DOWNLOAD_TRACKS:
         DOWNLOAD_LOCATION.mkdir(parents=True, exist_ok=True)
 
 
-def _write_json_flat(deezer_id: int, payload: dict) -> None:
-    """Write Deezer response JSON to <DOWNLOAD_LOCATION>/<id>.json (flat)."""
-    out_path = DOWNLOAD_LOCATION / f"{deezer_id}.json"
-    out_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+# --- Phase 1: Async Fetching ---
 
-
-async def _download_preview_mp3(session: aiohttp.ClientSession, deezer_id: int, preview_url: str) -> None:
-    """Download preview MP3 to <DOWNLOAD_LOCATION>/<id>.mp3 (flat)."""
-    out_path = DOWNLOAD_LOCATION / f"{deezer_id}.mp3"
-    if out_path.exists() and out_path.stat().st_size > 0:
-        return
-
-    async with session.get(preview_url) as resp:
-        resp.raise_for_status()
-        out_path.write_bytes(await resp.read())
-
-
-async def fetch_deezer(
-    semaphore: asyncio.Semaphore,
-    session: aiohttp.ClientSession,
+async def fetch_and_prepare_track(
     deezer_id: int,
-) -> tuple[int, dict]:
+    expected_title: str,
+    session: aiohttp.ClientSession,
+    semaphore: asyncio.Semaphore
+) -> Tuple[str, int, Optional[str]]:
     """
-    Fetch Deezer track info asynchronously with concurrency limit.
+    Fetches JSON and MP3. 
+    Returns: (status, deezer_id, actual_deezer_title)
+    status is one of: "success", "excluded", "retry"
+    """
+    json_path = DOWNLOAD_LOCATION / f"{deezer_id}.json"
+    res = None
 
-    Returns (deezer_id, response_dict).
-    """
-    async with semaphore:
+    # 1. Check Local Cache
+    if json_path.exists():
         try:
-            async with session.get(f"https://api.deezer.com/track/{deezer_id}") as resp:
-                res = await resp.json()
+            res = json.loads(json_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            pass 
 
-            # Check for quota or service busy
-            error = res.get("error")
-            if error and error.get("code") in [4, 700]:
-                print(f"Rate limit hit for {deezer_id}, sleeping 5 seconds...")
-                await asyncio.sleep(5)
+    # 2. Fetch from Network if needed
+    if not res:
+        async with semaphore:
+            try:
+                async with session.get(f"https://api.deezer.com/track/{deezer_id}") as resp:
+                    res = await resp.json()
 
-            # Optional downloads
-            if DOWNLOAD_TRACKS:
-                try:
-                    _write_json_flat(deezer_id, res)
-                except Exception as e:
-                    print(f"Failed to write JSON for {deezer_id}: {e}")
+                if res.get("error", {}).get("code") in [4, 700]:
+                    await asyncio.sleep(5)
 
-                preview_url = res.get("preview")
-                if preview_url:
+                if DOWNLOAD_TRACKS:
                     try:
-                        await _download_preview_mp3(session, deezer_id, preview_url)
-                    except Exception as e:
-                        print(f"Failed to download MP3 for {deezer_id}: {e}")
+                        json_path.write_text(json.dumps(res, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                    except Exception:
+                        pass
 
-            await asyncio.sleep(API_THROTTLE_SECONDS)  # Throttle after each API call
-            return deezer_id, res
-        except Exception as e:
-            # Throttle even on exception
-            await asyncio.sleep(API_THROTTLE_SECONDS)
-            err_res = {"error": {"type": "Exception", "message": str(e), "code": 0}}
-            if DOWNLOAD_TRACKS:
+                await asyncio.sleep(API_THROTTLE_SECONDS)
+            except Exception as e:
+                await asyncio.sleep(API_THROTTLE_SECONDS)
+                return "retry", deezer_id, None
+
+    # 3. Analyze Response
+    error = res.get("error")
+    if error:
+        return "excluded" if error.get("type") == "DataException" else "retry", deezer_id, None
+
+    preview_url = res.get("preview")
+    if not preview_url:
+        return "excluded", deezer_id, None
+
+    # 4. Download MP3
+    if DOWNLOAD_TRACKS:
+        mp3_path = DOWNLOAD_LOCATION / f"{deezer_id}.mp3"
+        if not (mp3_path.exists() and mp3_path.stat().st_size > 0):
+            async with semaphore:
                 try:
-                    _write_json_flat(deezer_id, err_res)
+                    async with session.get(preview_url) as resp:
+                        resp.raise_for_status()
+                        mp3_path.write_bytes(await resp.read())
                 except Exception:
-                    pass
-            return deezer_id, err_res
+                    pass  # MP3 failure is non-fatal
+
+    deezer_title = res.get("title", "")
+    return "success", deezer_id, deezer_title
 
 
-def load_excluded() -> set[int]:
-    """Load excluded Deezer IDs from file, create empty file if not exists."""
-    path = Path("excluded_deezer_ids")
-    if path.exists():
-        return set(int(line.strip()) for line in path.read_text().splitlines() if line.strip())
-    else:
-        path.write_text("")
-        return set()
+async def run_fetch_phase(
+    ids_list: List[int], 
+    expected_titles: dict[int, str]
+) -> Tuple[List[Tuple[int, Optional[str]]], set[int], set[int]]:
+    """Executes Phase 1 with retries. Returns (successful_tracks, excluded_ids, retry_ids)"""
+    successful_tracks = []
+    excluded = set()
+    retry_ids = set()
+    
+    semaphore = asyncio.Semaphore(CONCURRENCY)
+    
+    async with aiohttp.ClientSession() as session:
+        # Primary Pass
+        tasks = [
+            fetch_and_prepare_track(did, expected_titles.get(did, ""), session, semaphore)
+            for did in ids_list
+        ]
+        
+        for coro in tqdm(asyncio.as_completed(tasks), total=len(ids_list), desc="Downloading Data"):
+            status, did, dez_title = await coro
+            if status == "success":
+                successful_tracks.append((did, dez_title))
+            elif status == "excluded":
+                excluded.add(did)
+            elif status == "retry":
+                retry_ids.add(did)
+
+        # Retry Pass
+        if retry_ids:
+            print(f"\nRetrying {len(retry_ids)} failed requests...")
+            retry_tasks = [
+                fetch_and_prepare_track(did, expected_titles.get(did, ""), session, semaphore)
+                for did in retry_ids
+            ]
+            for coro in tqdm(asyncio.as_completed(retry_tasks), total=len(retry_tasks), desc="Retrying"):
+                status, did, dez_title = await coro
+                if status == "success":
+                    successful_tracks.append((did, dez_title))
+                else:
+                    # Anything failing twice is permanently excluded
+                    excluded.add(did)
+    
+    return successful_tracks, excluded, retry_ids
 
 
-def load_processed() -> set[int]:
-    """Load processed Deezer IDs from file, create empty file if not exists."""
-    path = Path("processed_deezer_ids")
-    if path.exists():
-        return set(int(line.strip()) for line in path.read_text().splitlines() if line.strip())
-    else:
-        path.write_text("")
-        return set()
+# --- Main Orchestrator ---
+
+def build_expected_titles(data: dict) -> dict[int, str]:
+    """Parses lisztnup.json to map every Deezer ID to its expected comparison title."""
+    composer_last_names = {
+        c["gid"]: c["name"].split(",")[0].strip() 
+        for c in data.get("composers", [])
+    }
+
+    expected_titles = {}
+    for work in data.get("works", []):
+        composer_name = composer_last_names.get(work.get("composer"), "Unknown")
+        for part in work.get("parts", []):
+            target_title = f"{composer_name} {part.get('name', '')}"
+            for deezer_id in part.get("deezer", []):
+                expected_titles[deezer_id] = target_title
+
+    return expected_titles
 
 
-def save_processed(processed: set[int]) -> None:
-    """Save processed Deezer IDs to file."""
-    Path("processed_deezer_ids").write_text("\n".join(map(str, sorted(processed))) + "\n")
-
-
-async def main() -> None:
-    """
-    Main function to check Deezer IDs for validity.
-    """
+def main():
+    print("--- Setting Up ---")
     _ensure_download_location()
     
-    # Load data
-    excluded = load_excluded()
-    processed = load_processed()
-    print(f"Loaded {len(excluded)} excluded and {len(processed)} processed Deezer IDs.")
-
-    # Load JSON data
-    json_path = Path("../static/lisztnup.json")
-    with json_path.open("r", encoding="utf-8") as f:
+    excluded = load_id_set("excluded_deezer_ids")
+    processed = load_id_set("processed_deezer_ids")
+    banned = load_id_set("banned_deezer_ids")
+    
+    with Path("../static/lisztnup.json").open("r", encoding="utf-8") as f:
         data = json.load(f)
 
-    # Collect all Deezer IDs to check
-    ids_to_check = set()
+    expected_titles = build_expected_titles(data)
     
     if RECHECK_EXCLUDED:
-        # Recheck mode: check all previously excluded IDs
-        ids_to_check = excluded.copy()
-        print(f"Recheck mode: will verify {len(ids_to_check)} previously excluded IDs.")
+        ids_to_check = list(excluded)
+        print(f"Recheck mode: verifying {len(ids_to_check)} previously excluded IDs.")
     else:
-        # Normal mode: check IDs not excluded or processed
-        for work in data["works"]:
-            for part in work["parts"]:
-                for deezer_id in part["deezer"]:
-                    if deezer_id not in excluded and deezer_id not in processed:
-                        ids_to_check.add(deezer_id)
+        ids_to_check = list(set(expected_titles.keys()) - excluded - processed - banned)
+        print(f"Normal mode: {len(ids_to_check)} IDs left to process.")
 
-    ids_list = list(ids_to_check)
-    print(f"Found {len(ids_list)} Deezer IDs to check.")
-
-    if not ids_list:
-        print("No IDs to check. Exiting.")
+    if not ids_to_check:
+        print("Everything is up to date! Exiting.")
         return
 
-    semaphore = asyncio.Semaphore(CONCURRENCY)
-    new_excluded = 0
-    removed_from_excluded = 0  # Track IDs removed from excluded list in recheck mode
-    retry_ids = set()
-
-    async with aiohttp.ClientSession() as session:
-        # Create tasks
-        tasks = [fetch_deezer(semaphore, session, did) for did in ids_list]
-
-        with tqdm(total=len(ids_list), desc="Checking IDs") as pbar:
-            for coro in asyncio.as_completed(tasks):
-                deezer_id, res = await coro
-                processed.add(deezer_id)
-                error = res.get("error")
-
-                if RECHECK_EXCLUDED:
-                    # Recheck mode: remove from excluded if preview is now available
-                    if not error and res.get("preview"):
-                        excluded.discard(deezer_id)
-                        removed_from_excluded += 1
-                        Path("excluded_deezer_ids").write_text("\n".join(map(str, sorted(excluded))) + "\n")
-                        print(f"Removed {deezer_id} from excluded (preview now available)")
-                    # If still no preview or error, keep it in excluded (do nothing)
-                else:
-                    # Normal mode: add to excluded if no preview or error
-                    if error:
-                        error_type = error.get("type")
-                        error_code = error.get("code", 0)
-                        if error_type == "DataException":
-                            # Treat as failure
-                            excluded.add(deezer_id)
-                            with Path("excluded_deezer_ids").open("a", encoding="utf-8") as f:
-                                f.write(f"{deezer_id}\n")
-                            new_excluded += 1
-                            print(f"Excluded {deezer_id} (DataException)")
-                        else:
-                            retry_ids.add(deezer_id)
-                            print(f"Retrying later: {deezer_id} (code {error_code})")
-                    elif not res.get("preview"):
-                        # No preview, exclude
-                        excluded.add(deezer_id)
-                        with Path("excluded_deezer_ids").open("a", encoding="utf-8") as f:
-                            f.write(f"{deezer_id}\n")
-                        new_excluded += 1
-                        print(f"Excluded {deezer_id} (no preview)")
-
-                pbar.update(1)
-                if len(processed) % 100 == 0:
-                    save_processed(processed)
-
-    # Save progress
-    save_processed(processed)
+    # Phase 1: Concurrent Data Fetching
+    print("\n--- Phase 1: Fetching Metadata & MP3s ---")
+    successful_fetches, new_excluded, _ = asyncio.run(run_fetch_phase(ids_to_check, expected_titles))
     
+    # Update state with newly excluded items
+    excluded.update(new_excluded)
     if RECHECK_EXCLUDED:
-        print(f"Recheck complete. Removed {removed_from_excluded} IDs from excluded list. Total excluded: {len(excluded)}")
-    else:
-        # Normal mode
-        print(f"Progress saved. Newly excluded: {new_excluded}, Total excluded: {len(excluded)}")
+        for did in [t[0] for t in successful_fetches]:
+            excluded.discard(did)
+    save_id_set("excluded_deezer_ids", excluded)
 
-    # Handle retries
-    if retry_ids:
-        print(f"Retrying {len(retry_ids)} IDs...")
-        # Add back to ids_list and process once more
-        retry_list = list(retry_ids - processed)  # Avoid duplicates
-        if retry_list:
-            async with aiohttp.ClientSession() as session:
-                retry_tasks = [fetch_deezer(semaphore, session, did) for did in retry_list]
-                for coro in asyncio.as_completed(retry_tasks):
-                    deezer_id, res = await coro
-                    processed.add(deezer_id)
-                    error = res.get("error")
-                    if error:
-                        error_type = error.get("type")
-                        if error_type == "DataException":
-                            excluded.add(deezer_id)
-                            with Path("excluded_deezer_ids").open("a", encoding="utf-8") as f:
-                                f.write(f"{deezer_id}\n")
-                            new_excluded += 1
-                            print(f"Excluded {deezer_id} (DataException on retry)")
-                        else:
-                            # Still error, exclude
-                            excluded.add(deezer_id)
-                            with Path("excluded_deezer_ids").open("a", encoding="utf-8") as f:
-                                f.write(f"{deezer_id}\n")
-                            new_excluded += 1
-                            print(f"Excluded {deezer_id} (error on retry: {error_type})")
-                    elif not res.get("preview"):
-                        excluded.add(deezer_id)
-                        with Path("excluded_deezer_ids").open("a", encoding="utf-8") as f:
-                            f.write(f"{deezer_id}\n")
-                        new_excluded += 1
-                        print(f"Excluded {deezer_id} (no preview on retry)")
+    if not successful_fetches:
+        print("No valid tracks retrieved. Exiting.")
+        return
 
-                if len(processed) % 100 == 0:
-                    save_processed(processed)
-                save_processed(processed)
-                print(f"Retry complete. Total newly excluded: {new_excluded}")
+    # Phase 2: Similarity Evaluation
+    print("\n--- Phase 2: Scoring Metadata ---")
+    auto_accepted = []
+    needs_review = []
 
+    for did, dez_title in successful_fetches:
+        exp_title = expected_titles.get(did, "")
+        eval_data = evaluate_track(did, exp_title, dez_title)
+        
+        if eval_data.final_score >= SIMILARITY_THRESHOLD:
+            auto_accepted.append(did)
+        elif eval_data.final_score < AUTO_REJECT_THRESHOLD:
+            banned.add(did)
+        else:
+            needs_review.append(eval_data)
+    # Sort reviews by the expected original title for deterministic review order
+    needs_review.sort(key=lambda e: e.expected_original.lower())
+
+    print(f"Auto-accepted : {len(auto_accepted)} tracks.")
+    print(f"Needs review  : {len(needs_review)} tracks.")
+    
+    processed.update(auto_accepted)
+    save_id_set("processed_deezer_ids", processed)
+
+    # Phase 3: Interactive Review (Sequential)
+    if needs_review:
+        print("\n--- Phase 3: Manual Review ---")
+        
+        for idx, eval_data in enumerate(needs_review, 1):
+            print(f"\n=======================================================")
+            print(f" [Reviewing {idx} of {len(needs_review)}] - Deezer ID: https://www.deezer.com/track/{eval_data.deezer_id}")
+            print(f"=======================================================")
+            print(f" Expected : {eval_data.expected_original}")
+            print(f" Deezer   : {eval_data.deezer_original}")
+            print(f" ---")
+            print(f" Expected (Clean) : {eval_data.expected_clean}")
+            print(f" Deezer   (Clean) : {eval_data.deezer_clean}")
+            print(f" ---")
+            print(f" Base Score : {eval_data.base_score:.1f}")
+            if eval_data.bonus > 0:
+                print(f" Catalog +  : +{eval_data.bonus:.1f}")
+            if eval_data.penalty > 0:
+                print(f" Arr. Penal : -{eval_data.penalty:.1f}")
+            print(f" Final      : {eval_data.final_score:.1f} (Threshold: {SIMILARITY_THRESHOLD})")
+            
+            while True:
+                ans = input("\n Accept this track? [y/n]: ").strip().lower()
+                if ans in ['y', 'yes', '']:
+                    processed.add(eval_data.deezer_id)
+                    break
+                elif ans in ['n', 'no']:
+                    banned.add(eval_data.deezer_id)
+                    break
+                else:
+                    print(" Please answer 'y' or 'n'.")
+                    
+            # Save incrementally in case user exits early
+            save_id_set("processed_deezer_ids", processed)
+            save_id_set("banned_deezer_ids", banned)
+
+    print("\n--- Summary ---")
+    print(f"Total Processed: {len(processed)}")
+    print(f"Total Excluded : {len(excluded)}")
+    print(f"Total Banned   : {len(banned)}")
     print("Done.")
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\nProcess interrupted by user. Saved state safely. Exiting...")

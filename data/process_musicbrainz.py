@@ -140,6 +140,7 @@ EXCLUDED_WORKS: Set[str] = set([
     "9b15b8ac-5e35-3fd6-910a-1f59f51aa0cc", # Pictures at an Exhibition: Promenade (duplicate)
     "ac469a24-9918-359b-8a95-54566968455c", # Promenade
     "6eba656c-cd03-303d-a3e6-dc62719ca429", # Nut Rocker
+    "23577ad8-1b8c-4666-9ea0-c9a49cadb4ec", # Marion's Theme
 ])
 
 WSS_OVERRIDES: Dict[str, float] = {
