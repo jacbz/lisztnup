@@ -118,11 +118,23 @@
 	onDestroy(() => previewPlayer.destroy());
 
 	const normalizeWorkName = (name: string): string => {
-		// Normalize work name for comparison, replace all punctuation
-		return name
-			.trim()
-			.toLowerCase()
-			.replaceAll(/\p{P}+/gu, '');
+		// Normalize work name for comparison:
+		// - Trim & lowercase
+		// - If it starts with a leading number (1- or 2-digit) followed by separators, drop it (ignore up to 99)
+		// - Remove punctuation for final comparison
+		let s = name.trim().toLowerCase();
+
+		// Match a leading 1- or 2-digit number followed by punctuation/whitespace separators
+		const m = s.match(/^(\d{1,2})(?:[\.\)\-:\/\s]+)(.*)$/u);
+		if (m) {
+			const num = parseInt(m[1], 10);
+			if (num <= 99) {
+				s = m[2].trim();
+			}
+		}
+
+		// Remove remaining punctuation characters
+		return s.replaceAll(/\p{P}+/gu, '');
 	};
 
 	// Computed sorted data
