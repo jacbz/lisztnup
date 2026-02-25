@@ -190,6 +190,14 @@
 			"year": "Año"
 		}
 	},
+	"libraryViewer": {
+		"allWorks": "Todas las obras",
+		"searchComposers": "Buscar compositores...",
+		"yearFilters": "Años",
+		"clearFilters": "Borrar",
+		"born": "Nac.",
+		"died": "Fall."
+	},
 	"tracklistEditor": {
 		"editTitle": "Editar lista",
 		"createTitle": "Crear lista",

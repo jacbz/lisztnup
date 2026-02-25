@@ -190,6 +190,14 @@
 			"year": "Jahr"
 		}
 	},
+	"libraryViewer": {
+		"allWorks": "Alle Werke",
+		"searchComposers": "Komponisten suchen...",
+		"yearFilters": "Jahre",
+		"clearFilters": "Löschen",
+		"born": "Geb.",
+		"died": "Gest."
+	},
 	"tracklistEditor": {
 		"editTitle": "Tracklist bearbeiten",
 		"createTitle": "Tracklist erstellen",

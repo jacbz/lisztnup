@@ -190,6 +190,14 @@
 			"year": "Anno"
 		}
 	},
+	"libraryViewer": {
+		"allWorks": "Tutte le opere",
+		"searchComposers": "Cerca compositori...",
+		"yearFilters": "Anni",
+		"clearFilters": "Cancella",
+		"born": "Nato",
+		"died": "Morto"
+	},
 	"tracklistEditor": {
 		"editTitle": "Modifica Tracklist",
 		"createTitle": "Crea Tracklist",

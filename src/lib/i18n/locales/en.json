@@ -190,6 +190,14 @@
 			"year": "Year"
 		}
 	},
+	"libraryViewer": {
+		"allWorks": "All Works",
+		"searchComposers": "Search composers...",
+		"yearFilters": "Years",
+		"clearFilters": "Clear",
+		"born": "Born",
+		"died": "Died"
+	},
 	"tracklistEditor": {
 		"editTitle": "Edit Tracklist",
 		"createTitle": "Create Tracklist",

@@ -190,6 +190,14 @@
 			"year": "Ano"
 		}
 	},
+	"libraryViewer": {
+		"allWorks": "Todas as obras",
+		"searchComposers": "Pesquisar compositores...",
+		"yearFilters": "Anos",
+		"clearFilters": "Limpar",
+		"born": "Nasc.",
+		"died": "Falec."
+	},
 	"tracklistEditor": {
 		"editTitle": "Editar Repertório",
 		"createTitle": "Criar Repertório",

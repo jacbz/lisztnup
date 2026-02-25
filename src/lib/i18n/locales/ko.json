@@ -190,6 +190,14 @@
 			"year": "연도"
 		}
 	},
+	"libraryViewer": {
+		"allWorks": "모든 작품",
+		"searchComposers": "작곡가 검색...",
+		"yearFilters": "연도",
+		"clearFilters": "초기화",
+		"born": "출생",
+		"died": "사망"
+	},
 	"tracklistEditor": {
 		"editTitle": "트랙 리스트 편집",
 		"createTitle": "트랙 리스트 생성",

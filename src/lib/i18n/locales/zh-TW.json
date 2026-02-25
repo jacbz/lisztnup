@@ -190,6 +190,14 @@
 			"year": "年份"
 		}
 	},
+	"libraryViewer": {
+		"allWorks": "所有作品",
+		"searchComposers": "搜尋作曲家...",
+		"yearFilters": "年份",
+		"clearFilters": "清除",
+		"born": "出生",
+		"died": "逝世"
+	},
 	"tracklistEditor": {
 		"editTitle": "編輯歌單",
 		"createTitle": "建立歌單",

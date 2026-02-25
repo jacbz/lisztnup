@@ -190,6 +190,14 @@
 			"year": "作曲年"
 		}
 	},
+	"libraryViewer": {
+		"allWorks": "すべての作品",
+		"searchComposers": "作曲家を検索...",
+		"yearFilters": "年代",
+		"clearFilters": "クリア",
+		"born": "生年",
+		"died": "没年"
+	},
 	"tracklistEditor": {
 		"editTitle": "トラックリスト編集",
 		"createTitle": "トラックリスト作成",

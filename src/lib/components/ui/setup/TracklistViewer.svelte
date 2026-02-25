@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Tracklist, Composer, Work, Part } from '$lib/types';
+	import type { Tracklist, Composer, Work, Part, WorkCategory } from '$lib/types';
 	import { MIN_WORK_SCORE, MAX_WORK_SCORE } from '$lib/types';
 	import { gameData } from '$lib/stores';
 	import { TracklistGenerator, PreviewPlayer } from '$lib/services';
@@ -17,6 +17,7 @@
 	import Plus from 'lucide-svelte/icons/plus';
 	import Check from 'lucide-svelte/icons/check';
 	import Ban from 'lucide-svelte/icons/ban';
+	import { ALL_WORK_CATEGORIES } from '$lib/types/work';
 
 	interface Props {
 		visible?: boolean;
@@ -33,6 +34,14 @@
 		onRemoveWork?: (workGid: string) => void;
 		/** Action mode: 'include' shows Add/Added, 'exclude' shows Exclude/Excluded */
 		actionMode?: 'include' | 'exclude';
+		/** When set, only show works by this composer */
+		selectedComposerGid?: string | null;
+		/** When set, only show works of these categories */
+		selectedCategories?: Set<WorkCategory>;
+		/** Callback when user toggles a category filter */
+		onToggleCategory?: (category: WorkCategory) => void;
+		/** Whether to show category filter chips */
+		showCategoryFilter?: boolean;
 	}
 
 	let {
@@ -43,7 +52,11 @@
 		tracklistWorkGids = new Set<string>(),
 		onAddWork = () => {},
 		onRemoveWork = () => {},
-		actionMode = 'include'
+		actionMode = 'include',
+		selectedComposerGid = null,
+		selectedCategories = new Set<WorkCategory>(),
+		onToggleCategory = () => {},
+		showCategoryFilter = false
 	}: Props = $props();
 
 	// Table data
@@ -54,6 +67,7 @@
 		composerLifespan: string;
 		workGid: string;
 		work: string;
+		type: WorkCategory;
 		parts: { name: string; score: number; deezerIds: number[] }[];
 		popularity: number; // Work score
 		year: string;
@@ -191,7 +205,7 @@
 			// Do NOT toggle `isLoading` here — keep the loading indicator controlled by
 			// the data loader so the spinner remains visible until `loadTracklistData`
 			// finishes and clears `isLoading`.
-			filteredRawData = rawTableData;
+			filteredRawData = preFilteredData;
 			hasManualSort = false;
 			page = 1;
 			return;
@@ -202,7 +216,7 @@
 		const DEBOUNCE_MS = 120;
 		_searchTimeout = setTimeout(() => {
 			try {
-				filteredRawData = filterWorks<TableRow>(rawTableData, searchQuery);
+				filteredRawData = filterWorks<TableRow>(preFilteredData, searchQuery);
 			} catch (err) {
 				console.error('Error filtering works:', err);
 				filteredRawData = [];
@@ -219,6 +233,18 @@
 				_searchTimeout = null;
 			}
 		};
+	});
+
+	// Pre-filter by composer and/or categories before search/sort pipeline
+	const preFilteredData = $derived.by(() => {
+		let data = rawTableData;
+		if (selectedComposerGid) {
+			data = data.filter((row) => row.composerGid === selectedComposerGid);
+		}
+		if (selectedCategories.size > 0) {
+			data = data.filter((row) => selectedCategories.has(row.type));
+		}
+		return data;
 	});
 
 	const totalPages = $derived.by(() => Math.max(1, Math.ceil(filteredRawData.length / PAGE_SIZE)));
@@ -266,6 +292,7 @@
 					composerLifespan: formatLifespan(composer.birth_year, composer.death_year),
 					workGid: work.gid,
 					work: work.name,
+					type: work.type,
 					parts: work.parts.map((p: Part) => ({
 						name: p.name,
 						score: p.score,
@@ -368,13 +395,13 @@
 
 <div class="flex h-full flex-col">
 	<!-- Search bar and player control -->
-	<div class="flex items-center gap-3 px-4 py-3">
+	<div class="flex flex-wrap items-center gap-3 px-4 py-3">
 		<input
 			type="search"
 			bind:value={searchQuery}
 			oninput={() => (page = 1)}
 			placeholder={$_('tracklistViewer.searchPlaceholder') || 'Search composer, title or works'}
-			class="flex-1 rounded border border-slate-700 bg-slate-800/60 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-500 focus:ring-2 focus:ring-cyan-400 focus:outline-none"
+			class="min-w-0 flex-1 rounded border border-slate-700 bg-slate-800/60 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-500 focus:ring-2 focus:ring-cyan-400 focus:outline-none"
 		/>
 		<div class="relative flex h-12 w-12 shrink-0 items-center justify-center">
 			<PlayerControl
@@ -389,6 +416,24 @@
 				onReveal={() => {}}
 			/>
 		</div>
+
+		<!-- Category filter chips -->
+		{#if showCategoryFilter}
+			<div class="flex w-full flex-wrap gap-1.5">
+				{#each ALL_WORK_CATEGORIES as cat}
+					{@const isActive = selectedCategories.has(cat)}
+					<button
+						type="button"
+						onclick={() => onToggleCategory(cat)}
+						class="rounded-full px-2.5 py-0.5 text-xs font-medium transition-all duration-150 {isActive
+							? 'bg-cyan-400/20 text-cyan-300 ring-1 ring-cyan-400/50'
+							: 'bg-slate-700/50 text-slate-400 hover:bg-slate-700 hover:text-slate-300'}"
+					>
+						{$_('settings.categories.' + cat)}
+					</button>
+				{/each}
+			</div>
+		{/if}
 	</div>
 
 	<div class="flex-1 overflow-y-auto" bind:this={contentScrollEl}>
@@ -414,15 +459,17 @@
 								{#if showActions}
 									<th class="cell w-16 text-center text-sm font-semibold text-cyan-400"></th>
 								{/if}
-								<th
-									class="cell cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
-									onclick={() => handleSort('composer')}
-								>
-									{$_('tracklistViewer.columns.composer')}
-									{#if sortColumn === 'composer' && (!searchQuery.trim() || hasManualSort)}
-										<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
-									{/if}
-								</th>
+								{#if !selectedComposerGid}
+									<th
+										class="cell cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
+										onclick={() => handleSort('composer')}
+									>
+										{$_('tracklistViewer.columns.composer')}
+										{#if sortColumn === 'composer' && (!searchQuery.trim() || hasManualSort)}
+											<span class="ml-1">{sortDirection === 'asc' ? '↑' : '↓'}</span>
+										{/if}
+									</th>
+								{/if}
 								<th
 									class="cell cursor-pointer text-left text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
 									onclick={() => handleSort('work')}
@@ -501,18 +548,20 @@
 											{/if}
 										</td>
 									{/if}
-									<td class="cell text-sm">
-										<div class="text-slate-300">
-											<span>{row.composer}</span>
-											<ExternalLink
-												href="https://musicbrainz.org/artist/{row.composerGid}"
-												hideOnMobile={true}
-											/>
-										</div>
-										{#if row.composerLifespan}
-											<div class="text-xs text-slate-400">({row.composerLifespan})</div>
-										{/if}
-									</td>
+									{#if !selectedComposerGid}
+										<td class="cell text-sm">
+											<div class="text-slate-300">
+												<span>{row.composer}</span>
+												<ExternalLink
+													href="https://musicbrainz.org/artist/{row.composerGid}"
+													hideOnMobile={true}
+												/>
+											</div>
+											{#if row.composerLifespan}
+												<div class="text-xs text-slate-400">({row.composerLifespan})</div>
+											{/if}
+										</td>
+									{/if}
 									<td class="cell text-sm">
 										<div class="text-slate-300">
 											{#if row.parts.length === 1}

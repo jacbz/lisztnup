@@ -25,3 +25,15 @@ export type WorkCategory =
 	| 'ballet'
 	| 'solo'
 	| 'other';
+
+export const ALL_WORK_CATEGORIES: WorkCategory[] = [
+	'vocal',
+	'chamber',
+	'orchestral',
+	'piano',
+	'concerto',
+	'opera',
+	'ballet',
+	'solo',
+	'other'
+];
