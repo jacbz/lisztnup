@@ -34,6 +34,7 @@
 			.map((c) => ({
 				gid: c.gid,
 				name: getComposerLastName(c.name),
+				lastName: getComposerLastName(c.name),
 				fullName: formatComposerName(c.name),
 				sortName: c.name,
 				score: c.score,
@@ -64,6 +65,29 @@
 			deathYearFrom !== '' ||
 			deathYearTo !== ''
 	);
+
+	// Build a display-name map: for each last name group, the highest-scored composer
+	// keeps the short last-name display; subsequent composers with the same last
+	// name get their full name shown. Efficient: single linear pass over `entries`.
+	function buildDisplayNameMap(entries: Array<any>): Map<string, string> {
+		const map = new Map<string, string>();
+		const seen = new Set<string>();
+
+		for (let i = 0; i < entries.length; i++) {
+			const e = entries[i];
+			const last = e.lastName ?? e.name;
+			if (!seen.has(last)) {
+				map.set(e.gid, last);
+				seen.add(last);
+			} else {
+				map.set(e.gid, e.fullName);
+			}
+		}
+
+		return map;
+	}
+
+	const displayNameMap = $derived.by(() => buildDisplayNameMap(entries));
 
 	function clearFilters() {
 		searchQuery = '';
@@ -134,6 +158,9 @@
 
 			return {
 				...e,
+				// prefer the computed display name (last-name for top of a last-name group,
+				// full name for subsequent composers with the same last name)
+				name: displayNameMap.get(e.gid) || e.name,
 				size,
 				fontWeight,
 				opacity
@@ -261,7 +288,7 @@
 		<button
 			type="button"
 			onclick={() => onSelectComposer(item.gid)}
-			class="inline-block cursor-pointer rounded-md px-1 py-0.5 whitespace-nowrap transition-all duration-200 hover:scale-110 hover:bg-cyan-400/10 hover:text-white focus:text-white focus:outline-none active:scale-95 {getColor(
+			class="inline-block cursor-pointer rounded-md px-1 py-0.5 whitespace-nowrap transition-all duration-200 hover:scale-110 hover:bg-cyan-400/10 focus:outline-none active:scale-95 {getColor(
 				item.score,
 				minScore,
 				maxScore
