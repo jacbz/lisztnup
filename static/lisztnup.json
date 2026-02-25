@@ -3589,7 +3589,7 @@
       "name": "Shostakovich, Dmitri",
       "birth_year": 1906,
       "death_year": 1975,
-      "score": 66.14
+      "score": 66.1
     },
     {
       "gid": "691b0e9d-9e57-41cf-932d-a3d21b068e75",
@@ -3750,7 +3750,7 @@
       "name": "Stravinsky, Igor",
       "birth_year": 1882,
       "death_year": 1971,
-      "score": 62.39
+      "score": 62.3
     },
     {
       "gid": "cbb8b66c-dab8-43dc-918e-b1af27d20e6f",
@@ -4568,7 +4568,7 @@
       "parts": [
         {
           "name": "China Gates",
-          "deezer": [2071478117, 2777267901],
+          "deezer": [2071478117],
           "score": 100.0
         }
       ]
@@ -4831,7 +4831,7 @@
       "parts": [
         {
           "name": "12 piezas características, op. 92, no. 7: Zambra",
-          "deezer": [71120077, 983258562],
+          "deezer": [983258562],
           "score": 100.0
         }
       ]
@@ -41061,7 +41061,7 @@
         },
         {
           "name": "3 Pieces for Cello and Piano: No. 2 in A minor. Sans vitesse et à l'aise",
-          "deezer": [3239524961, 1784890507, 2181196187],
+          "deezer": [3239524961, 1401382792],
           "score": 90.53
         },
         {
@@ -53062,17 +53062,17 @@
         },
         {
           "name": "Prélude no. 22 in G minor, op. 28: Molto agitato",
-          "deezer": [68284098, 4638575, 1442667272],
+          "deezer": [68284098, 4638575, 1442667272, 3286900631],
           "score": 81.16
         },
         {
           "name": "Prélude no. 23 in F major, op. 28: Moderato",
-          "deezer": [68284100, 4638576, 1442667292, 3299613211],
+          "deezer": [68284100, 4638576, 1442667292, 3286900641, 587744602],
           "score": 84.08
         },
         {
           "name": "Prélude no. 24 in D minor, op. 28: Allegro appassionato",
-          "deezer": [68284101, 4638577, 1442667302, 3299613221, 3299613231],
+          "deezer": [68284101, 4638577, 1442667302, 3299613231, 3286900651],
           "score": 84.66
         }
       ]
@@ -88620,7 +88620,7 @@
       "parts": [
         {
           "name": "Two Psalms: Lord, Who Hast Made Us for Thine Own (Psalm 148)",
-          "deezer": [2768877871, 2804017512],
+          "deezer": [2804017512],
           "score": 100.0
         }
       ]
@@ -97417,7 +97417,7 @@
         },
         {
           "name": "Violin Concerto in D major \"The Labyrinth\", op. 3 no. 12: III. Allegro - Capriccio",
-          "deezer": [2772181511],
+          "deezer": [2608680802],
           "score": 92.66
         }
       ]
@@ -101968,7 +101968,7 @@
       "parts": [
         {
           "name": "Song Without Words in E major, Op. 30 No. 3",
-          "deezer": [632132952, 2580874722, 1273754952, 3356880201],
+          "deezer": [632132952, 2580874722, 1273754952],
           "score": 85.11
         },
         {
@@ -120905,11 +120905,6 @@
           "name": "Three Pieces in Old Style: No. 1. Aria",
           "deezer": [1911082297],
           "score": 100.0
-        },
-        {
-          "name": "Three Pieces in Old Style: No. 3. Menuetto 2",
-          "deezer": [1148635622],
-          "score": 100.0
         }
       ]
     },
@@ -121813,7 +121808,7 @@
       "parts": [
         {
           "name": "Im Walde, op. 50: No. 2. Gnomentanz",
-          "deezer": [2790531902],
+          "deezer": [1498457492],
           "score": 100.0
         }
       ]
@@ -122550,7 +122545,7 @@
       "gid": "e72546d7-5463-4a26-8ec7-ba6b0484c344",
       "composer": "5e1ef22b-310a-46ad-885b-4897b8c9c85a",
       "name": "Les Animaux modèles",
-      "type": "piano",
+      "type": "ballet",
       "begin_year": null,
       "end_year": null,
       "score": 2.07,
@@ -138713,11 +138708,6 @@
       "end_year": 1917,
       "score": 2.98,
       "parts": [
-        {
-          "name": "Parade: Choral",
-          "deezer": [3036346431],
-          "score": 89.7
-        },
         {
           "name": "Parade: Prélude du rideau rouge",
           "deezer": [8061313],
@@ -161339,22 +161329,6 @@
       ]
     },
     {
-      "gid": "11e2f630-b0c4-47af-a5d6-cbef85793824",
-      "composer": "519dd32e-8f30-4380-8826-7aa99169e1bb",
-      "name": "Five Pieces for Two Violins and Piano (arr. Atovmian)",
-      "type": "chamber",
-      "begin_year": 1933,
-      "end_year": 1955,
-      "score": 1.83,
-      "parts": [
-        {
-          "name": "Five Pieces for Two Violins and Piano: I. Prelude",
-          "deezer": [59793831],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "70771984-4b6e-4290-937c-b6b432ddf4df",
       "composer": "519dd32e-8f30-4380-8826-7aa99169e1bb",
       "name": "From Jewish Folk-Poetry, op. 79a",
@@ -168973,22 +168947,6 @@
         {
           "name": "Fireworks, op. 4",
           "deezer": [65726547, 65501629, 3308842671],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "725d01fe-2a2c-4eda-a17e-45f6f15602c1",
-      "composer": "c278de2c-9696-4fdf-a919-0781cd945e2c",
-      "name": "Five Easy Pieces",
-      "type": "chamber",
-      "begin_year": 1917,
-      "end_year": 1917,
-      "score": 1.87,
-      "parts": [
-        {
-          "name": "Cinq pièces faciles: n° 1. Andante",
-          "deezer": [3104082661],
           "score": 100.0
         }
       ]

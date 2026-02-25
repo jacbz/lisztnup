@@ -1394,8 +1394,10 @@ composer_specific_rules:
     orchestral:
       - Im Walde
   'Poulenc, Francis':
+    ballet:
+      - Animaux modèles
     piano:
-      - Les Soirées de Nazelles|Trois mouvements perpétuels|3 Intermezzi|3 Novelettes|Mélancolie|Promenades|Nocturnes|Capriccio.*Bal masqué|Pièce brève|Sarabande|Animaux modèles
+      - Les Soirées de Nazelles|Trois mouvements perpétuels|3 Intermezzi|3 Novelettes|Mélancolie|Promenades|Nocturnes|Capriccio.*Bal masqué|Pièce brève|Sarabande
     vocal:
       - Gloria|Stabat Mater|Litanies à la Vierge noire|Ave verum corpus|Laudes de Saint Antoine|Quatre petites prières|Quatre poèmes
     chamber:

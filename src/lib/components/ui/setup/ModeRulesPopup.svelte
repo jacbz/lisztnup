@@ -21,7 +21,7 @@
 		const configs = {
 			timeline: {
 				icon: History,
-				color: '#22d3ee',
+				color: '#a855f7',
 				steps: [
 					{
 						image: '/screenshots/timeline-1.jpg',

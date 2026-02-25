@@ -39,7 +39,7 @@ from tqdm.asyncio import tqdm
 
 # Similarity Check Tuning
 SIMILARITY_THRESHOLD = 60.0
-AUTO_REJECT_THRESHOLD = 45.0
+AUTO_REJECT_THRESHOLD = 30.0
 
 # Toggle: Set to True to recheck previously excluded IDs
 RECHECK_EXCLUDED = False
@@ -324,6 +324,7 @@ def main():
     excluded = load_id_set("excluded_deezer_ids")
     processed = load_id_set("processed_deezer_ids")
     banned = load_id_set("banned_deezer_ids")
+    banned_count = len(banned)
     
     with Path("../static/lisztnup.json").open("r", encoding="utf-8") as f:
         data = json.load(f)
@@ -375,6 +376,7 @@ def main():
     needs_review.sort(key=lambda e: e.expected_original.lower())
 
     print(f"Auto-accepted : {len(auto_accepted)} tracks.")
+    print(f"Auto-rejected : {len(banned) - banned_count} tracks.")
     print(f"Needs review  : {len(needs_review)} tracks.")
     
     processed.update(auto_accepted)
@@ -416,6 +418,9 @@ def main():
             save_id_set("processed_deezer_ids", processed)
             save_id_set("banned_deezer_ids", banned)
 
+    save_id_set("processed_deezer_ids", processed)
+    save_id_set("banned_deezer_ids", banned)
+    
     print("\n--- Summary ---")
     print(f"Total Processed: {len(processed)}")
     print(f"Total Excluded : {len(excluded)}")

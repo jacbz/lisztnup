@@ -94,6 +94,12 @@
 	// Load data when tracklist or visibility changes
 	$effect(() => {
 		if (visible) {
+			// If viewing a single composer and user hasn't manually sorted and
+			// there's no active search, default to sorting by popularity descending.
+			if (selectedComposerGid && !hasManualSort && (!searchQuery || !searchQuery.trim())) {
+				sortColumn = 'popularity';
+				sortDirection = 'desc';
+			}
 			isLoading = true;
 			// Use setTimeout to defer heavy computation and prevent UI freeze
 			setTimeout(() => {
