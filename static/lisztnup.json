@@ -3589,7 +3589,7 @@
       "name": "Shostakovich, Dmitri",
       "birth_year": 1906,
       "death_year": 1975,
-      "score": 66.1
+      "score": 66.14
     },
     {
       "gid": "691b0e9d-9e57-41cf-932d-a3d21b068e75",
@@ -161329,6 +161329,22 @@
       ]
     },
     {
+      "gid": "11e2f630-b0c4-47af-a5d6-cbef85793824",
+      "composer": "519dd32e-8f30-4380-8826-7aa99169e1bb",
+      "name": "Five Pieces for Two Violins and Piano (arr. Atovmian)",
+      "type": "chamber",
+      "begin_year": 1933,
+      "end_year": 1955,
+      "score": 1.83,
+      "parts": [
+        {
+          "name": "Five Pieces for Two Violins and Piano: I. Prelude",
+          "deezer": [59793831],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "70771984-4b6e-4290-937c-b6b432ddf4df",
       "composer": "519dd32e-8f30-4380-8826-7aa99169e1bb",
       "name": "From Jewish Folk-Poetry, op. 79a",
@@ -161414,7 +161430,7 @@
       "gid": "ee339048-b8f2-3cf6-8224-509e0b194eac",
       "composer": "519dd32e-8f30-4380-8826-7aa99169e1bb",
       "name": "Moderato for Cello and Piano, op. 40b",
-      "type": "vocal",
+      "type": "chamber",
       "begin_year": null,
       "end_year": null,
       "score": 1.95,

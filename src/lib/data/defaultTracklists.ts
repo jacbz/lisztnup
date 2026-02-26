@@ -33,6 +33,7 @@ const WORKS_TO_INCLUDE = [
 	'640d92c6', // Saint-Saens - Danse macabre
 	'f8f24282', // Schubert - Auf dem Wasser zu singen
 	'd783dab0', // Schubert - Erlkönig
+	'd3229859', // Shostakovich - Waltz No. 2
 	'fec1c6a5', // Strauss - Also sprach Zarathustra
 	'5983b48e', // Prokofiev 1
 	'0294f5e0' // Prokofiev - Romeo and Juliet - Dance of the Knights
