@@ -183,6 +183,8 @@
 		"noData": "作品が見つかりません。",
 		"searchPlaceholder": "作品名または作曲家で検索...",
 		"library": "ライブラリ",
+		"copyMarkdown": "Markdownとしてコピー",
+		"clipboardSuccess": "クリップボードにコピーしたよ！",
 		"columns": {
 			"composer": "作曲家",
 			"work": "作品名",

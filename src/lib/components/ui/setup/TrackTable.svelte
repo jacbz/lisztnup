@@ -8,7 +8,13 @@
 	import ExternalLink from '../primitives/ExternalLink.svelte';
 	import PlayerControl from '../gameplay/PlayerControl.svelte';
 	import { filterWorks } from '$lib/utils/search';
-	import { formatComposerName, formatLifespan, formatPartName, formatYearRange } from '$lib/utils';
+	import {
+		formatComposerName,
+		formatLifespan,
+		formatPartName,
+		formatYearRange,
+		formatWorksAsMarkdown
+	} from '$lib/utils';
 	import { _ } from 'svelte-i18n';
 	import ChevronRight from 'lucide-svelte/icons/chevron-right';
 	import ChevronLeft from 'lucide-svelte/icons/chevron-left';
@@ -18,7 +24,8 @@
 	import Check from 'lucide-svelte/icons/check';
 	import Ban from 'lucide-svelte/icons/ban';
 	import { ALL_WORK_CATEGORIES } from '$lib/types/work';
-	import { categories } from '$lib/data/categories';
+	import { ClipboardCopy } from 'lucide-svelte';
+	import { toast } from '$lib/stores/toast';
 
 	interface Props {
 		visible?: boolean;
@@ -75,6 +82,8 @@
 	}
 
 	let rawTableData = $state<TableRow[]>([]);
+	let filteredWorks = $state<Work[]>([]);
+	let filteredComposers = $state<Composer[]>([]);
 	let searchQuery = $state('');
 	let sortColumn = $state<'composer' | 'work' | 'popularity' | 'year'>('composer');
 	let sortDirection = $state<'asc' | 'desc'>('asc');
@@ -103,6 +112,8 @@
 			// Reset data and loading state when popup closes
 			rawTableData = [];
 			filteredRawData = [];
+			filteredWorks = [];
+			filteredComposers = [];
 			isLoading = false;
 			// Clear search and pagination when closing
 			searchQuery = '';
@@ -269,29 +280,26 @@
 		if (!data) return;
 
 		try {
-			let composers: Composer[];
-			let works: Work[];
-
 			if (tracklist) {
 				// Use tracklist filtering
 				const generator = new TracklistGenerator(data, tracklist);
 				const filteredData = generator.getFilteredData();
-				composers = filteredData.composers;
-				works = filteredData.works;
+				filteredComposers = filteredData.composers;
+				filteredWorks = filteredData.works;
 			} else {
 				// Show whole library - no filtering
-				composers = data.composers;
-				works = data.works;
+				filteredComposers = data.composers;
+				filteredWorks = data.works;
 			}
 
 			// Create a map of composer GIDs to composer objects
 			const composerMap = new Map<string, Composer>();
-			composers.forEach((c) => composerMap.set(c.gid, c));
+			filteredComposers.forEach((c) => composerMap.set(c.gid, c));
 
 			// Build table rows
 			const rows: TableRow[] = [];
 
-			works.forEach((work) => {
+			filteredWorks.forEach((work) => {
 				const composer = composerMap.get(work.composer);
 				if (!composer) return;
 				if (!work.parts || work.parts.length === 0) return;
@@ -406,6 +414,22 @@
 	function stopPlayback(): void {
 		previewPlayer.stop();
 	}
+
+	async function copyMarkdownToClipboard() {
+		// Respect current UI state (search and manual column filtering)
+		const workGids = new Set(filteredRawData.map((r) => r.workGid));
+		const works = filteredWorks.filter((w) => workGids.has(w.gid));
+
+		const markdown = formatWorksAsMarkdown(works, filteredComposers);
+
+		try {
+			await navigator.clipboard.writeText(markdown);
+			toast.success($_('trackTable.clipboardSuccess') || 'Copied to clipboard');
+		} catch (err) {
+			console.error('Failed to copy: ', err);
+			toast.error('Failed to copy to clipboard');
+		}
+	}
 </script>
 
 <div class="flex h-full flex-col">
@@ -462,7 +486,7 @@
 				</div>
 			</div>
 		{:else}
-			{@render paginationControls()}
+			{@render paginationControls(false)}
 
 			{#if tableData.length === 0}
 				<p class="text-center text-slate-400">{$_('trackTable.noData')}</p>
@@ -642,50 +666,72 @@
 				</div>
 			{/if}
 
-			{@render paginationControls()}
+			<div class="py-2">
+				{@render paginationControls(true)}
+			</div>
 		{/if}
 	</div>
 </div>
 
-{#snippet paginationControls()}
-	{#if filteredRawData.length > PAGE_SIZE}
-		<div class="flex items-center justify-center px-4 py-1">
-			<div class="flex items-center space-x-2">
-				<button
-					type="button"
-					onclick={() => gotoPage(1)}
-					class="rounded bg-slate-700 px-2 py-1 text-slate-200 disabled:opacity-50"
-					disabled={page <= 1}
-				>
-					<ChevronsLeft class="h-5" />
-				</button>
-				<button
-					type="button"
-					onclick={() => prevPage()}
-					class="rounded bg-slate-700 px-2 py-1 text-slate-200 disabled:opacity-50"
-					disabled={page <= 1}
-					title="Previous page"
-				>
-					<ChevronLeft class="h-5" />
-				</button>
-				<div class="px-2 text-slate-300">{page} / {totalPages}</div>
-				<button
-					type="button"
-					onclick={() => nextPage()}
-					class="rounded bg-slate-700 px-2 py-1 text-slate-200 disabled:opacity-50"
-					disabled={page >= totalPages}
-					title="Next page"
-				>
-					<ChevronRight class="h-5" />
-				</button>
-				<button
-					type="button"
-					onclick={() => gotoPage(totalPages)}
-					class="rounded bg-slate-700 px-2 py-1 text-slate-200 disabled:opacity-50"
-					disabled={page >= totalPages}
-				>
-					<ChevronsRight class="h-5" />
-				</button>
+{#snippet paginationControls(showCopy: boolean)}
+	{#if filteredRawData.length > PAGE_SIZE || showCopy}
+		<div class="px-4 py-1">
+			<div class="flex items-center">
+				<div class="flex-1"></div>
+
+				{#if filteredRawData.length > PAGE_SIZE}
+					<div class="flex items-center space-x-2">
+						<button
+							type="button"
+							onclick={() => gotoPage(1)}
+							class="rounded bg-slate-700 px-2 py-1 text-slate-200 disabled:opacity-50"
+							disabled={page <= 1}
+						>
+							<ChevronsLeft class="h-5" />
+						</button>
+						<button
+							type="button"
+							onclick={() => prevPage()}
+							class="rounded bg-slate-700 px-2 py-1 text-slate-200 disabled:opacity-50"
+							disabled={page <= 1}
+							title="Previous page"
+						>
+							<ChevronLeft class="h-5" />
+						</button>
+						<div class="px-2 text-slate-300">{page} / {totalPages}</div>
+						<button
+							type="button"
+							onclick={() => nextPage()}
+							class="rounded bg-slate-700 px-2 py-1 text-slate-200 disabled:opacity-50"
+							disabled={page >= totalPages}
+							title="Next page"
+						>
+							<ChevronRight class="h-5" />
+						</button>
+						<button
+							type="button"
+							onclick={() => gotoPage(totalPages)}
+							class="rounded bg-slate-700 px-2 py-1 text-slate-200"
+							disabled={page >= totalPages}
+						>
+							<ChevronsRight class="h-5" />
+						</button>
+					</div>
+				{/if}
+
+				<!-- Right area: copy button stays to the far right -->
+				<div class="flex flex-1 justify-end">
+					{#if showCopy && filteredRawData.length > 0}
+						<button
+							type="button"
+							onclick={copyMarkdownToClipboard}
+							class="hidden rounded bg-slate-700 px-2 py-1 text-slate-200 disabled:opacity-50 md:block"
+							title={$_('trackTable.copyMarkdown') || 'Copy as Markdown'}
+						>
+							<ClipboardCopy class="h-5" />
+						</button>
+					{/if}
+				</div>
 			</div>
 		</div>
 	{/if}

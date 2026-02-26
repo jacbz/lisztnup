@@ -17,7 +17,7 @@ import composerIcon from '$lib/assets/icons/composer.svg?raw';
 import eraIcon from '$lib/assets/icons/era.svg?raw';
 import { COMPOSER_COUNT, MAX_WORK_YEAR, MIN_WORK_YEAR } from '$lib/types/settings';
 
-// List of specific works to always include in tracklists, regardless of their score
+// List of manually curated works to always include in tracklists, regardless of their score
 const WORKS_TO_INCLUDE = [
 	'87281f3c', // Beethoven - Kreutzer Sonata
 	'6ec79e92', // Bizet - L'Arlésienne Suite No. 1 - Farandole
@@ -33,6 +33,7 @@ const WORKS_TO_INCLUDE = [
 	'640d92c6', // Saint-Saens - Danse macabre
 	'f8f24282', // Schubert - Auf dem Wasser zu singen
 	'd783dab0', // Schubert - Erlkönig
+	'c3b8d09b', // Shostakovich 5
 	'd3229859', // Shostakovich - Waltz No. 2
 	'fec1c6a5', // Strauss - Also sprach Zarathustra
 	'5983b48e', // Prokofiev 1

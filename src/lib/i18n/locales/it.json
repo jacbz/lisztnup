@@ -183,6 +183,8 @@
 		"noData": "Nessun brano trovato.",
 		"searchPlaceholder": "Cerca opera o compositore...",
 		"library": "Libreria",
+		"copyMarkdown": "Copia come Markdown",
+		"clipboardSuccess": "Copiato negli appunti!",
 		"columns": {
 			"composer": "Compositore",
 			"work": "Opera",

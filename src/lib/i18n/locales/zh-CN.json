@@ -183,6 +183,8 @@
 		"noData": "未找到作品。",
 		"searchPlaceholder": "搜索作品或作曲家...",
 		"library": "乐库",
+		"copyMarkdown": "复制为 Markdown",
+		"clipboardSuccess": "已复制到剪贴板！",
 		"columns": {
 			"composer": "作曲家",
 			"work": "作品",

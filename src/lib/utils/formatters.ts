@@ -1,4 +1,4 @@
-import type { Composer } from '$lib/types';
+import type { Composer, Work } from '$lib/types';
 
 /**
  * Formats a composer sort name (e.g., "Bach, Johann Sebastian" or "Strauss, Johann, II")
@@ -269,4 +269,27 @@ export function getWorkEra(
 	}
 
 	return era;
+}
+
+/**
+ * Formats a list of works as a Markdown table.
+ * Includes columns for No., ID, Composer - Work, and Parts (as a bullet list).
+ */
+export function formatWorksAsMarkdown(works: Work[], composers: Composer[]): string {
+	const composerMap = new Map(composers.map((c) => [c.gid, c]));
+
+	const rows = works.map((work, idx) => {
+		const composer = composerMap.get(work.composer);
+		const composerLastName = composer ? getComposerLastName(composer.name) : 'Unknown Composer';
+		const gidPrefix = work.gid.split('-')[0];
+		const composerWork = `${composerLastName} – ${work.name}`;
+		const partsList = work.parts
+			.map((part) => `* ${formatPartName(part.name, work.name)}`)
+			.join('<br>');
+
+		return `| ${idx + 1} | \`${gidPrefix}\` | ${composerWork} | ${partsList} |`;
+	});
+
+	const header = '| No. | ID | Work | Parts |\n| :--- | :--- | :--- | :--- |';
+	return [header, ...rows].join('\n');
 }

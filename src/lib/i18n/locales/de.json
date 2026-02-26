@@ -183,6 +183,8 @@
 		"noData": "Keine Werke gefunden.",
 		"searchPlaceholder": "Suche nach Werk oder Komponist...",
 		"library": "Bibliothek",
+		"copyMarkdown": "Als Markdown kopieren",
+		"clipboardSuccess": "In die Zwischenablage kopiert",
 		"columns": {
 			"composer": "Komponist",
 			"work": "Werk",

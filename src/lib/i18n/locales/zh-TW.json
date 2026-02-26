@@ -183,6 +183,8 @@
 		"noData": "未找到作品。",
 		"searchPlaceholder": "搜尋作品或作曲家...",
 		"library": "樂庫",
+		"copyMarkdown": "複製為 Markdown",
+		"clipboardSuccess": "已複製到剪貼簿！",
 		"columns": {
 			"composer": "作曲家",
 			"work": "作品",

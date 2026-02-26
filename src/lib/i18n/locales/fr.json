@@ -183,6 +183,8 @@
 		"noData": "Aucune œuvre trouvée.",
 		"searchPlaceholder": "Chercher une œuvre ou un compositeur...",
 		"library": "Bibliothèque",
+		"copyMarkdown": "Copier en Markdown",
+		"clipboardSuccess": "Copié dans le presse-papier !",
 		"columns": {
 			"composer": "Compositeur",
 			"work": "Œuvre",

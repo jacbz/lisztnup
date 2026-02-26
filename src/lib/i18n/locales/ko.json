@@ -183,6 +183,8 @@
 		"noData": "작품을 찾을 수 없습니다.",
 		"searchPlaceholder": "작곡가 또는 작품 검색...",
 		"library": "라이브러리",
+		"copyMarkdown": "Markdown으로 복사",
+		"clipboardSuccess": "클립보드에 복사됐어요!",
 		"columns": {
 			"composer": "작곡가",
 			"work": "작품",

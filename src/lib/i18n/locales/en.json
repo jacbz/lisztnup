@@ -183,6 +183,8 @@
 		"noData": "No works found.",
 		"searchPlaceholder": "Search for a work or composer...",
 		"library": "Library",
+		"copyMarkdown": "Copy as Markdown",
+		"clipboardSuccess": "Copied to clipboard",
 		"columns": {
 			"composer": "Composer",
 			"work": "Work",
