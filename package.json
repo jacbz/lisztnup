@@ -5,7 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev --host",
-		"build": "vite build && yarn minify-json",
+		"build": "yarn sync:playlist && vite build && yarn minify-json",
+		"sync:playlist": "tsx scripts/sync-playlist-md.ts",
 		"minify-json": "node -e \"const fs=require('fs');const data=JSON.parse(fs.readFileSync('build/lisztnup.json','utf8'));fs.writeFileSync('build/lisztnup.json',JSON.stringify(data))\"",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
@@ -35,6 +36,7 @@
 		"svelte": "^5.39.5",
 		"svelte-check": "^4.3.2",
 		"tailwindcss": "^4.1.13",
+		"tsx": "^4.21.0",
 		"typescript": "^5.9.2",
 		"typescript-eslint": "^8.44.1",
 		"vite": "^7.1.7"

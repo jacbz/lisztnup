@@ -273,7 +273,7 @@ export function getWorkEra(
 
 /**
  * Formats a list of works as a Markdown table.
- * Includes columns for No., ID, Composer - Work, and Parts (as a bullet list).
+ * Includes columns for No., ID, Composer - Work, Parts (as a bullet list), and Year.
  */
 export function formatWorksAsMarkdown(works: Work[], composers: Composer[]): string {
 	const composerMap = new Map(composers.map((c) => [c.gid, c]));
@@ -286,10 +286,14 @@ export function formatWorksAsMarkdown(works: Work[], composers: Composer[]): str
 		const partsList = work.parts
 			.map((part) => `* ${formatPartName(part.name, work.name)}`)
 			.join('<br>');
+		let year = formatYearRange(work.begin_year, work.end_year);
+		if (year.length === 0) {
+			year = '?';
+		}
 
-		return `| ${idx + 1} | \`${gidPrefix}\` | ${composerWork} | ${partsList} |`;
+		return `| ${idx + 1} | \`${gidPrefix}\` | ${composerWork} | ${partsList} | ${year} |`;
 	});
 
-	const header = '| No. | ID | Work | Parts |\n| :--- | :--- | :--- | :--- |';
+	const header = '| No. | ID | Work | Parts | Year |\n| :--- | :--- | :--- | :--- | :--- |';
 	return [header, ...rows].join('\n');
 }
