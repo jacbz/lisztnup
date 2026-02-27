@@ -286,7 +286,10 @@
 		"categoryCategories": "分類",
 		"categoryComposers": "作曲家",
 		"categoryEras": "時期",
-		"categoryCustom": "自訂"
+		"categoryCustom": "自訂",
+		"options": {
+			"title": "選項"
+		}
 	},
 	"shareLink": {
 		"openLink": "開啟",

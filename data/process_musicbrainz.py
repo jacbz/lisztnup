@@ -38,7 +38,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Set, Any, Tuple
 import yaml
 
-# Module-level logger – writes to processing.log (configured in main)
+# Module-level logger – writes to process_musicbrainz.log (configured in main)
 log = logging.getLogger("lisztnup")
 
 # ==============================================================================
@@ -85,78 +85,20 @@ LABEL_PREFERENCE = [
     "Deutsche Grammophon", "EMI", "Decca", "Hyperion", "Chandos", "Universal", "Philips"
 ]
 
-# --- Excluded Composers ---
-EXCLUDED_COMPOSERS: Set[str] = set([
-    "Gruber, Franz Xaver",
-    "Pierpont, James Lord",
-    "Foster, Stephen",
-    "Anderson, Leroy",
-    "Ellington, Duke",
-    "Goldsmith, Jerry",
-    "Ibrahim, Abdullah",
-    "Morricone, Ennio",
-    "Wakeman, Rick",
-    "Willis, Wallace",
-    "Barry, John",
-    "Bradbury, William B.",
-    "Mangione, Chuck",
-    "Hisaishi, Joe",
-    "Herrmann, Bernard",
-    "Romberg, Sigmund",
-    "Bath, Hubert",
-    "Elfman, Danny",
-    "Hess, Nigel",
-    "Lamb, Joseph F.",
-    "Moretti, Raoul",
-    "Quiroga, Manuel",
-    "Shankar, Ravi",
-    "Williams, Charles",
-    "Williams, Clarence",
-    "Wood, Arthur",
-    "Bliss, Philip Paul",
-    "McLaughlin, John"
+# --- Work Processing Configuration ---
+# (Loaded from WORK_PROCESSING_CONFIG.yaml)
+EXCLUDED_COMPOSERS: Set[str] = set()
+EXCLUDED_WORKS: Set[str] = set()
+WSS_OVERRIDES: Dict[str, float] = {}
+MANUAL_CLASSIFICATION_OVERRIDES: Dict[str, str] = {}
+YEAR_OVERRIDES: Dict[str, Dict[str, Optional[int]]] = {}
 
-])
-
-# Deezer IDs without preview mp3s, loaded from 'excluded_deezer_ids' file
+# Deezer IDs without preview mp3s, loaded from 'DEEZER_EXCLUDED_IDS' file
 EXCLUDED_DEEZER_IDS: Set[int] = set([])
 
-# Deezer IDs that are hand-curated bans (e.g. wrong track in dataset), loaded from 'banned_deezer_ids' file
+# Deezer IDs that are hand-curated bans (e.g. wrong track in dataset), loaded from 'DEEZER_BANNED_IDS' file
 BANNED_DEEZER_IDS: Set[int] = set([])
 
-EXCLUDED_WORKS: Set[str] = set([
-    "bf57c435-6ce0-3d57-ab04-e2a9179b178c", # O Holy Night
-    "0e587c69-8ec2-3c66-ae73-c7ed79956af7", # O Holy Night
-    "681428fa-9095-388d-9500-ad88c7837f0c", # O Holy Night
-    "eef61485-ad91-4586-97b0-7421a683aeb5", # O Holy Night
-    "8531b357-339e-3cc7-9ed2-0d6b928ed12e", # Joy to the World
-    "bc0cdd41-eaa3-3330-b972-8e8174b9e64d", # Hark! The Herald Angels Sing
-    "718b96fa-75eb-436e-8c30-0c647aa99696", # Ave Maria (duplicate)
-    "92fb101d-4e49-4005-a88a-fdb0a1620f41", # Love Life
-    "5132c517-1141-3807-abc5-6779ed91209c", # Moon Love
-    "c5336b3f-cc5d-3ed7-b0f4-6754b78f920f", # A Fifth of Beethoven
-    "3bf709a7-a17a-3401-8025-cd522096f893", # March from A Clockwork Orange
-    "172693ca-7e2e-41d2-afa5-6e718f033d56", # Russian Rag
-    "9b15b8ac-5e35-3fd6-910a-1f59f51aa0cc", # Pictures at an Exhibition: Promenade (duplicate)
-    "ac469a24-9918-359b-8a95-54566968455c", # Promenade
-    "6eba656c-cd03-303d-a3e6-dc62719ca429", # Nut Rocker
-    "6f68b550-d2b2-30fd-932c-a3a1db6b60c9", # Wish Liszt
-    "23577ad8-1b8c-4666-9ea0-c9a49cadb4ec", # Marion's Theme
-    "f3281e81-eea2-409f-88b8-9e1e1de5ca10", # Nutcracker (full ballet - suite is already included)
-    "570f3852-ca39-4db2-aafd-4e818af725fd", # Swan Lake Suite
-    "17f624e2-97da-45c3-ab54-c3b2daf2ba68", # Sleeping Beauty
-    "968b9db7-ccc6-3402-9f6c-a436db9ee0c3", # Dance of the Little Swans (duplicate)
-])
-
-WSS_OVERRIDES: Dict[str, float] = {
-    "11f48c5e-5ee9-4646-9826-fb7c2fccce7f": 5.4, # Swan Lake
-    "bcc558d9-b9d5-39cd-b599-df5a988b9eee": 2.5, # Memories of the Alhambra
-    "300dc2e7-fd2c-48c5-bbdc-29553afa56da": 3.5, # La paloma
-    "15649d4e-2dd2-4211-84bc-f5d2d316203a": 4.0, # Messe solennelle en la majeur, op. 12
-}
-
-MANUAL_CLASSIFICATION_OVERRIDES: Dict[str, str] = {
-}
 # ==============================================================================
 # --- Data Class Definitions ---
 # ==============================================================================
@@ -278,10 +220,22 @@ class MusicbrainzProcessor:
         self.composers = self._parse_input_data(composers_data)
         self._composer_names: Dict[str, str] = {c.gid: c.name for c in self.composers}
         self.unresolved_work_candidates: Dict[str, List[Tuple[str, str]]] = defaultdict(list)
-        with open("work_type_matching.yaml", "r", encoding="utf-8") as f:
+        
+        # Load work type matching rules
+        with open("WORK_TYPE_MATCHING_RULES.yaml", "r", encoding="utf-8") as f:
             rules = yaml.safe_load(f)
         self.general_rules = rules.get("general_rules", {})
         self.composer_specific_rules = rules.get("composer_specific_rules", {})
+        
+        # Load work processing configuration
+        with open("WORK_PROCESSING_CONFIG.yaml", "r", encoding="utf-8") as f:
+            config = yaml.safe_load(f) or {}
+        self.excluded_composers = set(config.get("excluded_composers") or [])
+        self.excluded_works = set((config.get("excluded_works") or {}).keys())
+        self.wss_overrides = config.get("wss_overrides") or {}
+        self.year_overrides = config.get("year_overrides") or {}
+        self.manual_classification_overrides = config.get("manual_classification_overrides") or {}
+        
         self.stats: Counter = Counter()
 
     def _parse_input_data(self, raw_data: List[Dict[str, Any]]) -> List[MBComposer]:
@@ -496,8 +450,15 @@ class MusicbrainzProcessor:
                                  root_work.name, composer.name)
                     continue
 
-                if root_work.gid in WSS_OVERRIDES:
-                    wss = WSS_OVERRIDES[root_work.gid]
+                if root_work.gid in self.wss_overrides:
+                    wss = self.wss_overrides[root_work.gid]
+
+                begin_year = root_work.begin_year
+                end_year = root_work.end_year
+                if root_work.gid in self.year_overrides:
+                    override = self.year_overrides[root_work.gid]
+                    begin_year = None
+                    end_year = override
 
                 all_works.append(
                     FinalWork(
@@ -505,8 +466,8 @@ class MusicbrainzProcessor:
                         composer=composer.gid,
                         name=root_work.name,
                         type=self._transform_type(root_work, composer),
-                        begin_year=root_work.begin_year,
-                        end_year=root_work.end_year,
+                        begin_year=begin_year,
+                        end_year=end_year,
                         score=round(wss, 2),
                         parts=final_parts,
                     )
@@ -531,11 +492,11 @@ class MusicbrainzProcessor:
             initial_count = len(works)
             filtered_list = []
             for work in works:
-                if work.score >= MINIMUM_WSS and work.gid not in EXCLUDED_WORKS:
+                if work.score >= MINIMUM_WSS and work.gid not in self.excluded_works:
                     filtered_list.append(work)
                 else:
                     self.stats["works_dropped_by_min_wss"] += 1
-                    reason = "excluded" if work.gid in EXCLUDED_WORKS else f"WSS {work.score:.2f} < {MINIMUM_WSS}"
+                    reason = "excluded" if work.gid in self.excluded_works else f"WSS {work.score:.2f} < {MINIMUM_WSS}"
                     log.info("WORK DROPPED (%s) | %s | %s",
                              reason, work.name,
                              self._composer_names.get(work.composer, work.composer))
@@ -561,7 +522,7 @@ class MusicbrainzProcessor:
         final_composers: List[FinalComposer] = []
         for composer in original_composers:
             if composer_work_counts[composer.gid] >= MIN_WORKS_PER_COMPOSER and \
-               composer.name not in EXCLUDED_COMPOSERS:
+               composer.name not in self.excluded_composers:
                 final_composers.append(
                     FinalComposer(
                         gid=composer.gid,
@@ -573,7 +534,7 @@ class MusicbrainzProcessor:
                 )
             elif composer.gid in composer_work_counts:
                 self.stats["composers_dropped_min_works"] += 1
-                if composer.name in EXCLUDED_COMPOSERS:
+                if composer.name in self.excluded_composers:
                     log.info("COMPOSER DROPPED (excluded) | %s | %d works",
                              composer.name, composer_work_counts[composer.gid])
                 else:
@@ -709,20 +670,10 @@ class MusicbrainzProcessor:
                 if work.gid not in gid_to_first_work:
                     gid_to_first_work[work.gid] = work
 
-        # Find gids with multiple composers (to remove entirely)
-        gids_with_multiple_composers = {
-            gid for gid, composers in gid_to_composers.items() if len(composers) > 1
-        }
-        for gid in gids_with_multiple_composers:
-            w = gid_to_first_work[gid]
-            log.info("WORK DROPPED (multiple composers) | %s", w.name)
-
         # Assign each deezer ID to the first work that contains it
         deezer_to_work_gid = {}
         for work_type, works in works_after_wss.items():
             for work in works:
-                if work.gid in gids_with_multiple_composers:
-                    continue
                 for part in work.parts:
                     for deezer_id in part.deezer:
                         if deezer_id not in deezer_to_work_gid:
@@ -735,9 +686,6 @@ class MusicbrainzProcessor:
         for work_type, works in works_after_wss.items():
             filtered_list = []
             for work in works:
-                # Skip works with multiple composers
-                if work.gid in gids_with_multiple_composers:
-                    continue
                 # Skip duplicate gids (keep only first occurrence)
                 if work.gid in seen_gids:
                     duplicates_removed += 1
@@ -796,7 +744,6 @@ class MusicbrainzProcessor:
             if filtered_list:
                 filtered_works[work_type] = filtered_list
 
-        self.stats["works_dropped_multiple_composers"] = len(gids_with_multiple_composers)
         self.stats["works_dropped_duplicates"] = duplicates_removed
         return filtered_works
 
@@ -845,8 +792,8 @@ class MusicbrainzProcessor:
         work_name_normalized = work.name.replace("’", "'").replace("“", '"').replace("”", '"')
 
         # Respect any manual classification overrides first
-        if work.gid in MANUAL_CLASSIFICATION_OVERRIDES:
-            forced_type = MANUAL_CLASSIFICATION_OVERRIDES[work.gid]
+        if work.gid in self.manual_classification_overrides:
+            forced_type = self.manual_classification_overrides[work.gid]
             log.info("MANUAL OVERRIDE CLASSIFIED | %s | %s -> %s | manual override",
                      work.name, work.gid, forced_type)
             return forced_type
@@ -1013,9 +960,6 @@ class MusicbrainzProcessor:
             f"{'Works dropped (all parts filtered out):':<45} {self.stats['works_dropped_became_empty']}"
         )
         print(
-            f"{'Works dropped (multiple composers):':<45} {self.stats['works_dropped_multiple_composers']}"
-        )
-        print(
             f"{'Works dropped (duplicates):':<45} {self.stats['works_dropped_duplicates']}"
         )
         print(
@@ -1082,8 +1026,8 @@ def generate_markdown_report(final_output: FinalOutput) -> None:
     composer_map = {c.gid: c.name for c in final_output.composers}
     all_works = final_output.works
 
-    with open("lisztnup.md", "w", encoding="utf-8") as f:
-        f.write("# LisztNUp Curated Works\n\n")
+    with open("../doc/LIBRARY.md", "w", encoding="utf-8") as f:
+        f.write("# Liszt'n Up! Curated Works\n\n")
         f.write(
             "A curated list of classical works, sorted by composer and work title.\n\n"
         )
@@ -1141,7 +1085,7 @@ def compact_json_dumps(data, indent=2):
 
 def load_excluded_deezer_ids() -> set[int]:
     """Load excluded Deezer IDs from file."""
-    path = Path("excluded_deezer_ids")
+    path = Path("DEEZER_EXCLUDED_IDS")
     if path.exists():
         return set(int(line.strip()) for line in path.read_text().splitlines() if line.strip())
     return set()
@@ -1149,7 +1093,7 @@ def load_excluded_deezer_ids() -> set[int]:
 
 def load_banned_deezer_ids() -> set[int]:
     """Load hand-curated banned Deezer IDs from file."""
-    path = Path("banned_deezer_ids")
+    path = Path("DEEZER_BANNED_IDS")
     if path.exists():
         return set(int(line.strip()) for line in path.read_text().splitlines() if line.strip())
     return set()
@@ -1181,7 +1125,7 @@ def main() -> None:
 
     # Configure processing log
     log.setLevel(logging.DEBUG)
-    _fh = logging.FileHandler("processing.log", mode="w", encoding="utf-8")
+    _fh = logging.FileHandler("process_musicbrainz.log", mode="w", encoding="utf-8")
     _fh.setFormatter(logging.Formatter("%(message)s"))
     log.addHandler(_fh)
 
@@ -1204,7 +1148,7 @@ def main() -> None:
     log.info("")
     log.info("Processing complete. %d composers, %d works in final output.",
              len(final_output.composers), len(final_output.works))
-    print("Processing log written to 'processing.log'.")
+    print("Processing log written to 'process_musicbrainz.log'.")
     
     # Check for short UUID collisions
     check_short_uuid_collisions(final_output)

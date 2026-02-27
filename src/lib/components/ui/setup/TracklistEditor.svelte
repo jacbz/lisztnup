@@ -979,53 +979,6 @@
 						/>
 					{/if}
 				</div>
-
-				<!-- Max Tracks from Single Work -->
-				<div class="rounded-lg border-2 border-slate-700 bg-slate-800/50 p-4">
-					<div class="mb-3 flex items-center justify-between">
-						<div>
-							<span class="font-semibold text-cyan-300"
-								>{$_('tracklistEditor.maxTracksFromSingleWork')}</span
-							>
-							<p class="text-xs text-slate-400">
-								{$_('tracklistEditor.maxTracksFromSingleWorkDesc')}
-							</p>
-						</div>
-						<ToggleButton
-							value={maxTracksFromSingleWorkEnabled}
-							onToggle={toggleMaxTracksFromSingleWork}
-						/>
-					</div>
-					{#if maxTracksFromSingleWorkEnabled && config.maxTracksFromSingleWork !== undefined}
-						<Slider
-							value={config.maxTracksFromSingleWork}
-							min={1}
-							max={20}
-							step={1}
-							label=""
-							showValue={true}
-							onChange={(val) => (config.maxTracksFromSingleWork = val)}
-						/>
-					{/if}
-				</div>
-
-				<!-- Popularity Weighting -->
-				<div class="rounded-lg border-2 border-slate-700 bg-slate-800/50 p-4">
-					<div class="flex items-center justify-between">
-						<div>
-							<span class="font-semibold text-cyan-300"
-								>{$_('tracklistEditor.enablePopularityWeighting')}</span
-							>
-							<p class="text-xs text-slate-400">
-								{$_('tracklistEditor.enablePopularityWeightingDesc')}
-							</p>
-						</div>
-						<ToggleButton
-							value={enablePopularityWeighting}
-							onToggle={() => (enablePopularityWeighting = !enablePopularityWeighting)}
-						/>
-					</div>
-				</div>
 			{/if}
 
 			<!-- Manual Curation -->
@@ -1121,6 +1074,62 @@
 					<p class="text-xs text-slate-500 italic">
 						{$_('tracklistEditor.curation.noWorksExcluded')}
 					</p>
+				{/if}
+			</div>
+
+			<!-- Options -->
+			<div class="mt-2 flex items-center justify-between">
+				<div>
+					<h3 class="text-lg font-semibold text-purple-400">
+						{$_('tracklistEditor.options.title')}
+					</h3>
+				</div>
+			</div>
+
+			<!-- Popularity Weighting -->
+			<div class="rounded-lg border-2 border-slate-700 bg-slate-800/50 p-4">
+				<div class="flex items-center justify-between">
+					<div>
+						<span class="font-semibold text-cyan-300"
+							>{$_('tracklistEditor.enablePopularityWeighting')}</span
+						>
+						<p class="text-xs text-slate-400">
+							{$_('tracklistEditor.enablePopularityWeightingDesc')}
+						</p>
+					</div>
+					<ToggleButton
+						value={enablePopularityWeighting}
+						onToggle={() => (enablePopularityWeighting = !enablePopularityWeighting)}
+					/>
+				</div>
+			</div>
+
+			<!-- Max Tracks from Single Work -->
+			<div class="rounded-lg border-2 border-slate-700 bg-slate-800/50 p-4">
+				<div class="mb-3 flex items-center justify-between">
+					<div>
+						<span class="font-semibold text-cyan-300"
+							>{$_('tracklistEditor.maxTracksFromSingleWork')}</span
+						>
+						<p class="text-xs text-slate-400">
+							{$_('tracklistEditor.maxTracksFromSingleWorkDesc')}
+						</p>
+					</div>
+					<ToggleButton
+						value={maxTracksFromSingleWorkEnabled}
+						onToggle={toggleMaxTracksFromSingleWork}
+					/>
+				</div>
+				{#if maxTracksFromSingleWorkEnabled && config.maxTracksFromSingleWork !== undefined}
+					<Slider
+						value={config.maxTracksFromSingleWork}
+						min={1}
+						max={20}
+						step={1}
+						label=""
+						showValue={true}
+						onChange={(val) => (config.maxTracksFromSingleWork = val)}
+					/>
 				{/if}
 			</div>
 		</div>

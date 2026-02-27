@@ -286,7 +286,10 @@
 		"categoryCategories": "カテゴリ",
 		"categoryComposers": "作曲家",
 		"categoryEras": "時代",
-		"categoryCustom": "カスタム"
+		"categoryCustom": "カスタム",
+		"options": {
+			"title": "オプション"
+		}
 	},
 	"shareLink": {
 		"openLink": "開く",

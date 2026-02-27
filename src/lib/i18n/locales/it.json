@@ -286,7 +286,10 @@
 		"categoryCategories": "Categorie",
 		"categoryComposers": "Compositori",
 		"categoryEras": "Epoche",
-		"categoryCustom": "Personalizzato"
+		"categoryCustom": "Personalizzato",
+		"options": {
+			"title": "Opzioni"
+		}
 	},
 	"shareLink": {
 		"openLink": "Apri",

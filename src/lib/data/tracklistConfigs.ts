@@ -1,70 +1,12 @@
 import { MAX_WORK_SCORE_ROUNDED } from '$lib/types';
 import type { TracklistConfig } from '$lib/types/settings';
 import { COMPOSER_COUNT, MAX_WORK_YEAR, MIN_WORK_YEAR } from '$lib/types/settings';
-
-// List of manually curated works to always include in tracklists, regardless of their score
-export const WORKS_TO_INCLUDE = [
-	'87281f3c', // Beethoven - Kreutzer Sonata
-	'6ec79e92', // Bizet - L'Arlésienne Suite No. 1 - Farandole
-	'45efd8f4', // Bizet - Carmen
-	'3f13a790', // Brahms - Hungarian Dance No. 5
-	'1c0cb34d', // Bruckner 7
-	'f9ee7f5f', // Elgar - Pomp and Circumstance March No. 1
-	'2a3bf259', // Massenet - Meditation from Thais
-	'e208c5f5', // Mozart - Magic Flute
-	'19da23f4', // Puccini - O mio babbino caro
-	'1659508c', // Rachmaninoff - Vocalise
-	'1ce190e3', // Rossini - Guillaume Tell Overture
-	'640d92c6', // Saint-Saens - Danse macabre
-	'f8f24282', // Schubert - Auf dem Wasser zu singen
-	'd783dab0', // Schubert - Erlkönig
-	'c3b8d09b', // Shostakovich 5
-	'd3229859', // Shostakovich - Waltz No. 2
-	'fec1c6a5', // Strauss - Also sprach Zarathustra
-	'5983b48e', // Prokofiev 1
-	'0294f5e0' // Prokofiev - Romeo and Juliet - Dance of the Knights
-];
+import { BEGINNER_TRACKLIST } from './beginnerTracklist';
 
 export const BEGINNER_CONFIG: TracklistConfig = {
-	topWorksCount: 250,
-	categoryAdjustments: {
-		vocal: 0,
-		chamber: 0.4,
-		orchestral: -0.2,
-		piano: -0.1,
-		concerto: 0,
-		opera: 0.1,
-		ballet: 0.5,
-		organ: -0.3,
-		solo: 0
-	},
-	limitWorksFromComposer: 0.075,
+	enableFilters: false,
 	maxTracksFromSingleWork: 1,
-	includeWorks: WORKS_TO_INCLUDE,
-	excludeWorks: [
-		'937fff7e', // Bach - Nun komm, der Heiden Heiland
-		'0a633962', // Bach - Violin Sonata in E major
-		'c324226d', // Bach - Violin Sonata in C minor
-		'3c9a74de', // Beethoven 1
-		'273fea50', // Beethoven 4
-		'256f32ec', // Beethoven 8
-		'8f8c2b3e', // Debussy - L'Isle joyeuse
-		'df86a927', // Debussy - Préludes Book II
-		'937f3282', // Debussy - Syrinx
-		'26ea58b3', // De Falla - El amor brujo
-		'085103a5', // Holst - In the Bleak Midwinter,
-		'1dd56ba3', // Parry - Jerusalem
-		'4344e777', // Rodrigo - Concierto de Aranjuez
-		'676bdcd4', // Rossini - La gazza ladra Overture
-		'62308818', // Strauss - Annen-Polka
-		'a26cbcf8', // Strauss - Perpetuum mobile
-		'71f4fb64', // Strauss - Künstlerleben
-		'85be26e9', // Strauss - Unter Donner und Blitz
-		'2eb55386', // Strauss - Rosen aus dem Süden
-		'6237af8b', // Strauss - Wein, Weib und Gesang
-		'b42a2d27', // Strauss - Frühlingsstimmen
-		'9b1bd955' // Wagner - Tannhäuser Pilgerchor
-	]
+	includeWorks: BEGINNER_TRACKLIST
 };
 
 export const INTERMEDIATE_CONFIG: TracklistConfig = {
@@ -82,7 +24,7 @@ export const INTERMEDIATE_CONFIG: TracklistConfig = {
 	},
 	limitWorksFromComposer: 0.075,
 	maxTracksFromSingleWork: 1,
-	includeWorks: WORKS_TO_INCLUDE
+	includeWorks: BEGINNER_TRACKLIST
 };
 
 export const SKILLED_CONFIG: TracklistConfig = {
@@ -100,7 +42,7 @@ export const SKILLED_CONFIG: TracklistConfig = {
 	},
 	limitWorksFromComposer: 0.1,
 	maxTracksFromSingleWork: 1,
-	includeWorks: WORKS_TO_INCLUDE
+	includeWorks: BEGINNER_TRACKLIST
 };
 
 export const ADVANCED_CONFIG: TracklistConfig = {
@@ -116,7 +58,7 @@ export const ADVANCED_CONFIG: TracklistConfig = {
 		organ: -0.5,
 		solo: 0
 	},
-	limitWorksFromComposer: 0.15,
+	limitWorksFromComposer: 0.1,
 	maxTracksFromSingleWork: 2
 };
 
@@ -133,12 +75,11 @@ export const EXPERT_CONFIG: TracklistConfig = {
 		organ: -0.7,
 		solo: 0
 	},
+	limitWorksFromComposer: 0.1,
 	maxTracksFromSingleWork: 3
 };
 
-export const VIRTUOSO_CONFIG: TracklistConfig = {
-	includeWorks: WORKS_TO_INCLUDE
-};
+export const VIRTUOSO_CONFIG: TracklistConfig = {};
 
 export const CADENZA_CONFIG: TracklistConfig = {
 	workScoreRange: [0, 3],
@@ -297,6 +238,7 @@ export const VIOLINCONCERTO_CONFIG: TracklistConfig = {
 	limitWorksFromComposer: 0.1,
 	nameFilter: ['/viol(i|o)n\b/'],
 	includeWorks: [
+		'561b8302', // Vaughan Williams - The Lark Ascending
 		'24c323a3' // Ysaÿe - Amitié
 	]
 };

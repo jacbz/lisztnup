@@ -238,15 +238,15 @@ export class TracklistGenerator {
 
 		// Step 12: Filter parts within each work by maxTracksFromSingleWork
 		// Applied after all inclusion/exclusion to ensure ALL works respect the limit
-		if (enableFilters && config.maxTracksFromSingleWork !== undefined) {
+		if (config.maxTracksFromSingleWork !== undefined) {
 			works = works.map((work) => {
 				if (work.parts.length <= config.maxTracksFromSingleWork!) {
 					return work;
 				}
 
 				if (config.maxTracksFromSingleWork == 1) {
-					// If all scores are >97, just take the first part
-					if (work.parts.every((part) => part.score > 97)) {
+					// If all scores are >98, just take the first part
+					if (work.parts.every((part) => part.score > 98)) {
 						return {
 							...work,
 							parts: [work.parts[0]]

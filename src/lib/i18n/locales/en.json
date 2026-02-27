@@ -286,7 +286,10 @@
 		"categoryCategories": "Categories",
 		"categoryComposers": "Composers",
 		"categoryEras": "Eras",
-		"categoryCustom": "Custom"
+		"categoryCustom": "Custom",
+		"options": {
+			"title": "Options"
+		}
 	},
 	"shareLink": {
 		"openLink": "Open",

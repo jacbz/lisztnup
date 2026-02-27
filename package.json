@@ -5,8 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev --host",
-		"build": "yarn sync:playlist && vite build && yarn minify-json",
-		"sync:playlist": "tsx scripts/sync-playlist-md.ts",
+		"build": "yarn sync:tracklist && vite build && yarn minify-json",
+		"sync:tracklist": "tsx scripts/sync-tracklist-md.ts",
 		"minify-json": "node -e \"const fs=require('fs');const data=JSON.parse(fs.readFileSync('build/lisztnup.json','utf8'));fs.writeFileSync('build/lisztnup.json',JSON.stringify(data))\"",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",

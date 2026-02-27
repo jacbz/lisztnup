@@ -227,8 +227,10 @@
 		"yearStart": "Année de début",
 		"yearEnd": "Année de fin",
 		"workScoreRange": "Plage de popularité",
-		"workScoreRangeDesc": "Filtre les œuvres par score de popularité (plus haut = plus d’enregistrements existants).",		"topWorksCount": "Limite des meilleures œuvres",
-		"topWorksCountDesc": "N'inclure que les N œuvres les plus populaires, triées par score de popularité (ajusté).",		"limitWorksFromComposer": "Limite d’œuvres par compositeur",
+		"workScoreRangeDesc": "Filtre les œuvres par score de popularité (plus haut = plus d’enregistrements existants).",
+		"topWorksCount": "Limite des meilleures œuvres",
+		"topWorksCountDesc": "N'inclure que les N œuvres les plus populaires, triées par score de popularité (ajusté).",
+		"limitWorksFromComposer": "Limite d’œuvres par compositeur",
 		"limitWorksFromComposerDesc": "Limite chaque compositeur à un pourcentage du total des œuvres de cette liste.",
 		"maxTracksFromSingleWork": "Max pistes par œuvre unique",
 		"maxTracksFromSingleWorkDesc": "Limite le nombre de mouvements/parties inclus pour les œuvres de grande envergure.",
@@ -284,7 +286,10 @@
 		"categoryCategories": "Catégories",
 		"categoryComposers": "Compositeurs",
 		"categoryEras": "Époques",
-		"categoryCustom": "Personnalisé"
+		"categoryCustom": "Personnalisé",
+		"options": {
+			"title": "Options"
+		}
 	},
 	"shareLink": {
 		"openLink": "Ouvrir",

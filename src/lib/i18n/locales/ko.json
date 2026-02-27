@@ -286,7 +286,10 @@
 		"categoryCategories": "카테고리",
 		"categoryComposers": "작곡가",
 		"categoryEras": "시대",
-		"categoryCustom": "사용자 정의"
+		"categoryCustom": "사용자 정의",
+		"options": {
+			"title": "옵션"
+		}
 	},
 	"shareLink": {
 		"openLink": "열기",

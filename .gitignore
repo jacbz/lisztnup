@@ -7,10 +7,10 @@ IMPLEMENTATION.md
 data/*.sql
 data/*.txt
 data/*.log
-data/lisztnup.md
 data/musicbrainz.json
-data/processed_deezer_ids
+data/DEEZER_PROCESSED_IDS
 data/downloads
+doc/LIBRARY.md
 
 # Output
 .output

@@ -42,6 +42,8 @@ export function resolveShortUuids(shortUuids: string[], map: Map<string, string>
 		const full = map.get(short);
 		if (full) {
 			result.push(full);
+		} else {
+			console.warn(`Warning: Short UUID ${short} could not be resolved to a full UUID.`);
 		}
 	}
 	return result;

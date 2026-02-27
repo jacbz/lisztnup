@@ -286,7 +286,10 @@
 		"categoryCategories": "Categorías",
 		"categoryComposers": "Compositores",
 		"categoryEras": "Eras",
-		"categoryCustom": "Personalizado"
+		"categoryCustom": "Personalizado",
+		"options": {
+			"title": "Opciones"
+		}
 	},
 	"shareLink": {
 		"openLink": "Abrir",

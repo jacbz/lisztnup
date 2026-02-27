@@ -21,6 +21,8 @@ Main output
 - musicbrainz.json
     Array of composer objects, each with curated works, recordings, and nested
     subworks.
+- query_musicbrainz.log
+    Detailed execution log recording filtering decisions, dropped works, and inferences.
 
 Data model highlights
 ---------------------
@@ -67,12 +69,16 @@ Operational notes
     predictable.
 """
 
+import logging
 import psycopg2
 import psycopg2.extras
 import json
 import re
 from collections import defaultdict, Counter
 import traceback
+
+# Module-level logger – writes to query_musicbrainz.log (configured in main)
+log = logging.getLogger("query_mb")
 
 # --- Database Configuration ---
 DB_CONFIG = {
@@ -153,7 +159,7 @@ def normalize_name(name):
     return re.sub(r"[^a-z0-9]", "", name.lower())
 
 forbidden_artist_comment = ['band', 'score composer', 'producer', 'songwriter', 'film', 'soundtrack', 'TV', 'pop', 'rock', 'jazz', 'hip hop', 'rap', 
-                    'metal', 'punk', 'electronic', 'folk', 'country', 'dj', 'dance', 'reggae', 'new age', 'fusion', 'crossover'
+                    'metal', 'punk', 'electronic', 'folk', 'country', 'dj', 'dance', 'reggae', 'new age', 'fusion', 'crossover',
                     'blues', 'r&b', 'soul', 'schlager']
 patterns = [f"%{x}%" for x in forbidden_artist_comment]
 
@@ -201,7 +207,22 @@ classical_composers AS (
       AND a.sort_name ~ '^[A-Za-z]'
       
       -- If comment exists, it must NOT contain forbidden terms.
-      AND (COALESCE(a.comment, '') NOT ILIKE ANY (%s))
+      AND (COALESCE(a.comment, '') NOT ILIKE ALL (%s))
+),
+work_exceptions AS (
+    SELECT * FROM (VALUES
+        -- These works are technically arrangements, but keep them anyway
+        (8558675, 'Barber - Adagio for Strings'),
+        (9641726, 'Fauré - Pavane'),
+        (12611605, 'Glinka - The Lark'),
+        (12426464, 'Mozart - Don Giovanni'),
+        (9268731, 'V Williams - The Lark Ascending'),
+        (6370216, 'V. Williams - Fantasia on Greensleeves'),
+
+        -- These are erroneously classified as arrangements and may be removed with the next MusicBrainz update
+        (14487371, 'Tchaikovsky - Piano Concerto No.1'),
+        (10380841, 'Verdi - Nabucco')
+    ) AS t(id, comment)
 ),
 eligible_works AS (
   -- Count distinct composers per work and apply all work-level filters
@@ -238,7 +259,10 @@ eligible_works AS (
       JOIN musicbrainz.link lww_link ON lww.link = lww_link.id
       WHERE lww.entity1 = w.id 
         AND lww_link.link_type IN (281, 350) -- parts, arrangement
-        AND lww.entity0 != 13641795 -- Exclude "Fantasia" as an exception, which erroneously has Beethoven 6 etc. as parts
+        -- Exceptions for errors in the MusicBrainz database (can be removed with next dump update)
+        AND lww.entity0 != 13641795 -- "Fantasia"
+        AND lww.entity0 != 13046429 -- "An American in Paris" (2015 musical)
+        AND w.id NOT IN (SELECT id FROM work_exceptions)
     )
     AND NOT EXISTS (
       -- Exclude works that have an arranger relationship
@@ -246,9 +270,9 @@ eligible_works AS (
       JOIN musicbrainz.link l_arr ON law_arr.link = l_arr.id
       WHERE law_arr.entity1 = w.id
         AND l_arr.link_type = 293  -- 'arranger' relationship
+        -- Exclude when the arranger is NOT a classical composer and NOT in our allow-list
         AND law_arr.entity0 NOT IN (SELECT id FROM classical_composers)
-        AND law_arr.entity0 != 422300  -- Exception for Ralph Greaves (Fantasia on Greensleeves)
-        AND law_arr.entity0 != 1751198  -- Exception for Georg Sartorius (Mozart - Don Giovanni)
+        AND w.id NOT IN (SELECT id FROM work_exceptions)
     )
   GROUP BY w.id
   HAVING COUNT(DISTINCT law.entity0) = 1
@@ -440,7 +464,7 @@ WHERE lww.entity0 = %(work_id)s AND l.link_type = 281
 ORDER BY lww.link_order, work_name;
 """
 
-def get_work_details_recursive(cursor, work_id, label_counter):
+def get_work_details_recursive(cursor, work_id, work_name, label_counter):
     # Returns: subworks, recordings, total_recordings, descendant_types, descendant_begin_years, descendant_end_years
     cursor.execute(GET_RECORDINGS_FOR_WORK_SQL, {"work_id": work_id})
     recordings_data = cursor.fetchall()
@@ -448,22 +472,28 @@ def get_work_details_recursive(cursor, work_id, label_counter):
     for rec in recordings_data:
         deezer_id = rec.get("deezer_id")
 
-        artist_comment = rec.get("artist_comment") or ""
-        # Exclude recordings where the artist comment contains forbidden terms
-        if any(term in artist_comment.lower() for term in forbidden_artist_comment):
-            deezer_id = None
+        if deezer_id is not None:
+            artist_comment = rec.get("artist_comment") or ""
+            artist_credit = rec.get("artist_credit_name", "")
+            attrs = rec.get("attributes") or ""
+            attr_list = [a.strip().lower() for a in attrs.split(",") if a and a.strip()]
+            
+            dropped_reason = None
 
-        # Exclude recordings where the artist credit name does not contain a space, most often a band name
-        if ' ' not in rec.get("artist_credit_name", ''):
-            deezer_id = None
-        
-        # The SQL returns an `attributes` column which is a
-        # comma-separated string (e.g. 'live, partial'). When any of the
-        # excluded attributes are present, exclude
-        attrs = rec.get("attributes") or ""
-        attr_list = [a.strip().lower() for a in attrs.split(",") if a and a.strip()]
-        if any(a in ("medley", "cover", "karaoke") for a in attr_list):
-            deezer_id = None
+            # Exclude recordings where the artist comment contains forbidden terms
+            if any(term in artist_comment.lower() for term in forbidden_artist_comment):
+                dropped_reason = f"forbidden artist comment: '{artist_comment}'"
+            # Exclude recordings where the artist credit name does not contain a space, most often a band name
+            elif ' ' not in artist_credit:
+                dropped_reason = f"no space in artist credit: '{artist_credit}'"
+            # The SQL returns an `attributes` column which is a comma-separated string 
+            # (e.g. 'live, partial'). When any of the excluded attributes are present, exclude
+            elif any(a in ("medley", "cover", "karaoke") for a in attr_list):
+                dropped_reason = f"forbidden attribute: '{attrs}'"
+
+            if dropped_reason:
+                log.debug("RECORDING DEEZER ID DROPPED (%s) | %s | work: %s", dropped_reason, rec["recording_name"], work_name)
+                deezer_id = None
 
         recordings.append(
             {
@@ -476,7 +506,8 @@ def get_work_details_recursive(cursor, work_id, label_counter):
         )
 
     # if not a single recording has a deezerId, skip this work
-    if all(rec["deezerId"] is None for rec in recordings):
+    if recordings and all(rec["deezerId"] is None for rec in recordings):
+        log.debug("WORK/PART RECORDINGS CLEARED (all %d recs lack Deezer IDs) | %s", len(recordings), work_name)
         recordings = []
 
     for rec in recordings:
@@ -500,11 +531,12 @@ def get_work_details_recursive(cursor, work_id, label_counter):
         winner_row = duplicates[0]
         # Recursively find the winner if there are duplicates
         if len(duplicates) > 1:
+            log.debug("SUBWORK DUPLICATES RESOLVED | %s | selected 1 out of %d", normalized_name, len(duplicates))
             best_subwork_details = None
             max_recs = -1
             for subwork_row in duplicates:
                 sub, recs, count, types, byears, eyears = get_work_details_recursive(
-                    cursor, subwork_row["work_id"], label_counter
+                    cursor, subwork_row["work_id"], subwork_row["work_name"], label_counter
                 )
                 if count > max_recs:
                     max_recs = count
@@ -526,7 +558,7 @@ def get_work_details_recursive(cursor, work_id, label_counter):
                 child_descendant_types,
                 child_descendant_begin_years,
                 child_descendant_end_years,
-            ) = get_work_details_recursive(cursor, winner_row["work_id"], label_counter)
+            ) = get_work_details_recursive(cursor, winner_row["work_id"], winner_row["work_name"], label_counter)
 
         # Add the winner's direct type to the list
         if winner_row["work_type"]:
@@ -559,7 +591,6 @@ def get_work_details_recursive(cursor, work_id, label_counter):
 
 
 def print_statistics(final_data, stats):
-    # (Statistics function remains the same as previous version)
     print("\n" + "=" * 80)
     print(" " * 30 + "FINAL DATA STATISTICS")
     print("=" * 80)
@@ -640,6 +671,12 @@ def print_statistics(final_data, stats):
 
 
 def main():
+    # Configure logging
+    log.setLevel(logging.DEBUG)
+    _fh = logging.FileHandler("query_musicbrainz.log", mode="w", encoding="utf-8")
+    _fh.setFormatter(logging.Formatter("%(message)s"))
+    log.addHandler(_fh)
+
     conn = None
     composers = {}
     stats = {
@@ -652,11 +689,17 @@ def main():
     }
 
     try:
+        log.info("=" * 60)
+        log.info("STAGE 1: Query database for top-level work candidates")
+        log.info("=" * 60)
+        
         conn = psycopg2.connect(**DB_CONFIG)
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         print("Fetching and grouping top-level works...")
         cursor.execute(GET_TOP_LEVEL_WORKS_SQL, (patterns,))
         top_level_works_raw = cursor.fetchall()
+        
+        log.info("Found %d candidate top-level works via SQL.", len(top_level_works_raw))
 
         grouped_works = defaultdict(list)
         for work in top_level_works_raw:
@@ -678,8 +721,14 @@ def main():
         print(
             f"Found {len(top_level_works_raw)} candidate works, grouped into {len(grouped_works)} unique top-level works."
         )
+        log.info("Grouped into %d unique top-level works.", len(grouped_works))
+
         print(f"\n{'COMPOSER':<30}\t{'WORK':<60}\t{'RECORDINGS'}")
         print(f"{'-'*30}\t{'-'*60}\t{'-'*10}")
+        
+        log.info("\n" + "=" * 60)
+        log.info("STAGE 2: Process work trees, resolve duplicates, and fetch recordings")
+        log.info("=" * 60)
 
         for (composer_id, normalized_name), duplicates in grouped_works.items():
             winner_row = duplicates[0]
@@ -687,11 +736,13 @@ def main():
             descendant_begin_years = []
             descendant_end_years = []
             if len(duplicates) > 1:
+                log.debug("TOP-LEVEL WORK DUPLICATES RESOLVED | %s (%s) | selected 1 out of %d", 
+                          normalized_name, winner_row["composer_sort_name"], len(duplicates))
                 best_work_details = None
                 max_recs = -1
                 for work_row in duplicates:
                     sub, recs, count, types, byears, eyears = get_work_details_recursive(
-                        cursor, work_row["work_id"], stats["label_counter"]
+                        cursor, work_row["work_id"], work_row["work_name"], stats["label_counter"]
                     )
                     if count > max_recs:
                         max_recs = count
@@ -703,7 +754,7 @@ def main():
             else:
                 subworks, recordings, total_recordings, descendant_types, descendant_begin_years, descendant_end_years = (
                     get_work_details_recursive(
-                        cursor, winner_row["work_id"], stats["label_counter"]
+                        cursor, winner_row["work_id"], winner_row["work_name"], stats["label_counter"]
                     )
                 )
 
@@ -727,6 +778,7 @@ def main():
                             # pick the most common mapped high-level type among tags
                             mapped_from_tag = Counter(mapped_types).most_common(1)[0][0]
                             work_type_str = mapped_from_tag
+                            log.info("WORK TYPE INFERRED (from tag) | %s -> %s | tags: %s", final_work_name, work_type_str, tag_names)
 
                     # If tags didn't yield a mapping, fall back to child-type majority
                     if mapped_from_tag is None:
@@ -734,6 +786,9 @@ def main():
                         if non_null_types:
                             majority_type_int = Counter(non_null_types).most_common(1)[0][0]
                             work_type_str = WORK_TYPES.get(majority_type_int, "Unknown")
+                            log.info("WORK TYPE INFERRED (from descendants) | %s -> %s", final_work_name, work_type_str)
+                        else:
+                            log.info("WORK TYPE UNKNOWN | %s", final_work_name)
 
                 if composer_id not in composers:
                     composers[composer_id] = {
@@ -778,6 +833,13 @@ def main():
                     else final_work_name
                 )
                 print(f"{composer_name:<30}\t{truncated_name:<60}\t{total_recordings}")
+            else:
+                log.info("WORK DROPPED (<= 1 total recordings) | %s (%s) | recordings: %d", 
+                         winner_row["work_name"], winner_row["composer_sort_name"], total_recordings)
+
+        log.info("\n" + "=" * 60)
+        log.info("STAGE 3: Post-filter composers (birth year & distinct work types)")
+        log.info("=" * 60)
 
         # filter composers: if composer is born after 1900, works must have at least two distinct work types not counting "Song", otherwise remove composer
         composers_to_remove = set()
@@ -788,6 +850,8 @@ def main():
                     distinct_types.remove("Song")
                 if len(distinct_types) < 2:
                     composers_to_remove.add(composer["gid"])
+                    log.info("COMPOSER DROPPED (born > 1900, < 2 distinct work types) | %s | distinct types: %s", 
+                             composer['name'], list(distinct_types))
                     print(
                         f"Removing composer {composer['name']} born after 1900 with insufficient work types."
                     )
@@ -795,18 +859,27 @@ def main():
         final_data = sorted(
             [c for c in composers.values() if c["works"] and c["gid"] not in composers_to_remove], key=lambda c: c["name"]
         )
+        
         output_filename = "musicbrainz.json"
+        
+        log.info("\n" + "=" * 60)
+        log.info("STAGE 4: Writing output")
+        log.info("=" * 60)
+        log.info("Writing %d composers to %s.", len(final_data), output_filename)
         print(
             f"\nWriting {len(final_data)} composers with valid works to {output_filename}..."
         )
+        
         with open(output_filename, "w", encoding="utf-8") as f:
             json.dump(final_data, f, ensure_ascii=False, indent=2)
 
         print("Done.")
+        print("Processing log written to 'query_musicbrainz.log'.")
         print_statistics(final_data, stats)
 
     except (Exception, psycopg2.DatabaseError) as error:
         print("An error occurred while processing MusicBrainz data.")
+        log.error("An error occurred: %s - %s", type(error).__name__, error)
         print(f"Error type   : {type(error).__name__}")
         print(f"Error message: {error!s}")
 

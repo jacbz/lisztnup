@@ -273,12 +273,23 @@ export function getWorkEra(
 
 /**
  * Formats a list of works as a Markdown table.
- * Includes columns for No., ID, Composer - Work, Parts (as a bullet list), and Year.
+ * Includes columns for ID, Composer - Work, Parts (as a bullet list), and Year.
  */
 export function formatWorksAsMarkdown(works: Work[], composers: Composer[]): string {
 	const composerMap = new Map(composers.map((c) => [c.gid, c]));
 
-	const rows = works.map((work, idx) => {
+	works.sort((a, b) => {
+		return a.name.localeCompare(b.name);
+	});
+	works.sort((a, b) => {
+		const composerA = composers.find((c) => c.gid === a.composer)!;
+		const composerB = composers.find((c) => c.gid === b.composer)!;
+		const lastNameA = getComposerLastName(composerA ? composerA.name : '');
+		const lastNameB = getComposerLastName(composerB ? composerB.name : '');
+		return lastNameA.localeCompare(lastNameB);
+	});
+
+	const rows = works.map((work) => {
 		const composer = composerMap.get(work.composer);
 		const composerLastName = composer ? getComposerLastName(composer.name) : 'Unknown Composer';
 		const gidPrefix = work.gid.split('-')[0];
@@ -291,9 +302,9 @@ export function formatWorksAsMarkdown(works: Work[], composers: Composer[]): str
 			year = '?';
 		}
 
-		return `| ${idx + 1} | \`${gidPrefix}\` | ${composerWork} | ${partsList} | ${year} |`;
+		return `| \`${gidPrefix}\` | ${composerWork} | ${partsList} | ${year} |`;
 	});
 
-	const header = '| No. | ID | Work | Parts | Year |\n| :--- | :--- | :--- | :--- | :--- |';
+	const header = '| ID | Work | Parts | Year |\n| :--- | :--- | :--- | :--- |';
 	return [header, ...rows].join('\n');
 }

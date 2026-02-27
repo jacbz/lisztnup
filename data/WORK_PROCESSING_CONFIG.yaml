@@ -1,0 +1,83 @@
+# ==============================================================================
+# --- Work Processing Configuration ---
+# ==============================================================================
+
+# --- Excluded Composers ---
+# Composers in this list will be dropped from the final dataset.
+excluded_composers:
+  - 'Gruber, Franz Xaver'
+  - 'Pierpont, James Lord'
+  - 'Foster, Stephen'
+  - 'Anderson, Leroy'
+  - 'Ellington, Duke'
+  - 'Goldsmith, Jerry'
+  - 'Ibrahim, Abdullah'
+  - 'Morricone, Ennio'
+  - 'Wakeman, Rick'
+  - 'Willis, Wallace'
+  - 'Barry, John'
+  - 'Bradbury, William B.'
+  - 'Mangione, Chuck'
+  - 'Hisaishi, Joe'
+  - 'Herrmann, Bernard'
+  - 'Romberg, Sigmund'
+  - 'Bath, Hubert'
+  - 'Elfman, Danny'
+  - 'Hess, Nigel'
+  - 'Lamb, Joseph F.'
+  - 'Moretti, Raoul'
+  - 'Quiroga, Manuel'
+  - 'Shankar, Ravi'
+  - 'Williams, Charles'
+  - 'Williams, Clarence'
+  - 'Wood, Arthur'
+  - 'Bliss, Philip Paul'
+  - 'McLaughlin, John'
+
+# --- Excluded Works ---
+# Individual work GIDs that should be excluded (e.g., non-classical, duplicates).
+excluded_works:
+  'bf57c435-6ce0-3d57-ab04-e2a9179b178c': 'O Holy Night'
+  '0e587c69-8ec2-3c66-ae73-c7ed79956af7': 'O Holy Night'
+  '681428fa-9095-388d-9500-ad88c7837f0c': 'O Holy Night'
+  'eef61485-ad91-4586-97b0-7421a683aeb5': 'O Holy Night'
+  '8531b357-339e-3cc7-9ed2-0d6b928ed12e': 'Joy to the World'
+  'bc0cdd41-eaa3-3330-b972-8e8174b9e64d': 'Hark! The Herald Angels Sing'
+  '718b96fa-75eb-436e-8c30-0c647aa99696': 'Ave Maria (duplicate)'
+  '92fb101d-4e49-4005-a88a-fdb0a1620f41': 'Love Life'
+  '5132c517-1141-3807-abc5-6779ed91209c': 'Moon Love'
+  'c5336b3f-cc5d-3ed7-b0f4-6754b78f920f': 'A Fifth of Beethoven'
+  '3bf709a7-a17a-3401-8025-cd522096f893': 'March from A Clockwork Orange'
+  '172693ca-7e2e-41d2-afa5-6e718f033d56': 'Russian Rag'
+  '9b15b8ac-5e35-3fd6-910a-1f59f51aa0cc': 'Pictures at an Exhibition: Promenade (duplicate)'
+  'ac469a24-9918-359b-8a95-54566968455c': 'Promenade'
+  '6eba656c-cd03-303d-a3e6-dc62719ca429': 'Nut Rocker'
+  '6f68b550-d2b2-30fd-932c-a3a1db6b60c9': 'Wish Liszt'
+  '23577ad8-1b8c-4666-9ea0-c9a49cadb4ec': "Marion's Theme"
+  'f3281e81-eea2-409f-88b8-9e1e1de5ca10': 'Nutcracker (full ballet - suite is already included)'
+  '570f3852-ca39-4db2-aafd-4e818af725fd': 'Swan Lake Suite'
+  '17f624e2-97da-45c3-ab54-c3b2daf2ba68': 'Sleeping Beauty'
+  '968b9db7-ccc6-3402-9f6c-a436db9ee0c3': 'Dance of the Little Swans (duplicate)'
+  '9bfb2824-cc77-3b6d-8dc0-72747df9cfff': 'Anytime, Anywhere'
+  '2c9a7cc6-0eed-3a1d-a261-33ed96224c9e': 'Don Giovanni (duplicate)'
+  'd019f0f6-f972-45da-9705-b1a40be96090': 'Don Giovanni (duplicate)'
+  '5ba9868e-f053-4520-8957-6a9fedb2455a': 'Requiem in D minor, K. 626 (duplicate)'
+  'd0be6882-700f-48c9-af49-1f3d42627de5': 'Requiem in D minor, K. 626 (Beyer completion)'
+  '69bd99f8-636d-4f9c-9498-7b9cf32f871e': 'Carmen (Italian)'
+
+# --- Work Significance Score (WSS) Overrides ---
+# Manually set the WSS for specific works.
+wss_overrides:
+  '11f48c5e-5ee9-4646-9826-fb7c2fccce7f': 5.4 # Swan Lake
+  'bcc558d9-b9d5-39cd-b599-df5a988b9eee': 2.5 # Memories of the Alhambra
+  '300dc2e7-fd2c-48c5-bbdc-29553afa56da': 3.5 # La paloma
+  '15649d4e-2dd2-4211-84bc-f5d2d316203a': 4.0 # Messe solennelle en la majeur, op. 12
+
+# --- Year Overrides ---
+# Manually set the year for specific works.
+year_overrides:
+  'e74a3a95-8008-43e3-939d-50d6bc9a221b': 1738
+
+# --- Manual Classification Overrides ---
+# Manually force a work into a specific type category.
+manual_classification_overrides: {}

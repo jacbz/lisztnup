@@ -743,7 +743,7 @@ composer_specific_rules:
       - Mirabile mysterium|Resonet in laudibus
   'Gershwin, George':
     concerto:
-      - Rhapsody in Blue|Concerto in F
+      - Rhapsody in Blue|Concerto in F|Variations.*for Piano and Orchestra
     orchestral:
       - An American in Paris|Catfish Row
     piano:
@@ -779,7 +779,7 @@ composer_specific_rules:
     orchestral:
       - Kamarinskaya|Valse-fantaisie
     piano:
-      - Nocturne
+      - Nocturne|Lark
   'Gluck, Christoph Willibald':
     opera:
       - Orfeo ed Euridice|Orfeo.*Euridice|Orfeo, che fai\?|Wq\.\s?30
@@ -1911,8 +1911,10 @@ composer_specific_rules:
     vocal:
       - Dona nobis pacem
   'Vaughan Williams, Ralph':
+    concerto:
+      - Lark Ascending
     orchestral:
-      - Fantasia on a Theme by Thomas Tallis|Fantasia on.*Greensleeves|The Lark Ascending|Norfolk Rhapsody|Partita for Double String Orchestra|The Running Set
+      - Fantasia on a Theme by Thomas Tallis|Fantasia on.*Greensleeves|Norfolk Rhapsody|Partita for Double String Orchestra|The Running Set
       - The Wasps|Flos campi|Toccata marziale
     vocal:
       - Fantasia on Christmas Carols|Serenade to Music|Come down, O love divine|O taste and see|For All the Saints|I Heard the Voice|Rest
@@ -2018,6 +2020,9 @@ composer_specific_rules:
   'White, Robert':
     vocal:
       - Christe qui lux es
+  'Widor, Charles‐Marie':
+    organ:
+      - orgue
   'Wieniawski, Henryk':
     solo: # Violin
       - Études-Caprices

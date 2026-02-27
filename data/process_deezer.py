@@ -321,9 +321,9 @@ def main():
     print("--- Setting Up ---")
     _ensure_download_location()
     
-    excluded = load_id_set("excluded_deezer_ids")
-    processed = load_id_set("processed_deezer_ids")
-    banned = load_id_set("banned_deezer_ids")
+    excluded = load_id_set("DEEZER_EXCLUDED_IDS")
+    processed = load_id_set("DEEZER_PROCESSED_IDS")
+    banned = load_id_set("DEEZER_BANNED_IDS")
     banned_count = len(banned)
     
     with Path("../static/lisztnup.json").open("r", encoding="utf-8") as f:
@@ -351,7 +351,7 @@ def main():
     if RECHECK_EXCLUDED:
         for did in [t[0] for t in successful_fetches]:
             excluded.discard(did)
-    save_id_set("excluded_deezer_ids", excluded)
+    save_id_set("DEEZER_EXCLUDED_IDS", excluded)
 
     if not successful_fetches:
         print("No valid tracks retrieved. Exiting.")
@@ -380,7 +380,7 @@ def main():
     print(f"Needs review  : {len(needs_review)} tracks.")
     
     processed.update(auto_accepted)
-    save_id_set("processed_deezer_ids", processed)
+    save_id_set("DEEZER_PROCESSED_IDS", processed)
 
     # Phase 3: Interactive Review (Sequential)
     if needs_review:
@@ -415,11 +415,11 @@ def main():
                     print(" Please answer 'y' or 'n'.")
                     
             # Save incrementally in case user exits early
-            save_id_set("processed_deezer_ids", processed)
-            save_id_set("banned_deezer_ids", banned)
+            save_id_set("DEEZER_PROCESSED_IDS", processed)
+            save_id_set("DEEZER_BANNED_IDS", banned)
 
-    save_id_set("processed_deezer_ids", processed)
-    save_id_set("banned_deezer_ids", banned)
+    save_id_set("DEEZER_PROCESSED_IDS", processed)
+    save_id_set("DEEZER_BANNED_IDS", banned)
     
     print("\n--- Summary ---")
     print(f"Total Processed: {len(processed)}")

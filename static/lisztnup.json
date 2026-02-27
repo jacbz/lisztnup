@@ -33,14 +33,14 @@
       "name": "Albinoni, Tomaso Giovanni",
       "birth_year": 1671,
       "death_year": 1751,
-      "score": 23.63
+      "score": 20.58
     },
     {
       "gid": "0a46cf2a-61bd-447d-b8fd-a2b32eb20282",
       "name": "Albéniz, Isaac",
       "birth_year": 1860,
       "death_year": 1909,
-      "score": 40.85
+      "score": 41.37
     },
     {
       "gid": "f57c9f97-499e-4923-a714-37bca7b1eba0",
@@ -264,7 +264,7 @@
       "name": "Barber, Samuel",
       "birth_year": 1910,
       "death_year": 1981,
-      "score": 44.63
+      "score": 47.9
     },
     {
       "gid": "b42c6b63-db44-4489-bdba-319e79b0f467",
@@ -327,7 +327,7 @@
       "name": "Beethoven, Ludwig van",
       "birth_year": 1770,
       "death_year": 1827,
-      "score": 89.35
+      "score": 89.43
     },
     {
       "gid": "6f5bfd20-84cc-4879-8a40-05631ad576c7",
@@ -425,7 +425,7 @@
       "name": "Bizet, Georges",
       "birth_year": 1838,
       "death_year": 1875,
-      "score": 52.39
+      "score": 51.24
     },
     {
       "gid": "cb10c545-a594-467f-9f07-620de451a37f",
@@ -474,7 +474,7 @@
       "name": "Borodin, Alexander",
       "birth_year": 1833,
       "death_year": 1887,
-      "score": 36.9
+      "score": 38.47
     },
     {
       "gid": "7eb3beec-1e34-4449-8bea-67928e665be2",
@@ -775,7 +775,7 @@
       "name": "Chausson, Ernest",
       "birth_year": 1855,
       "death_year": 1899,
-      "score": 35.78
+      "score": 36.54
     },
     {
       "gid": "375d52ad-5b7a-4f96-80e2-6d9ad13f5160",
@@ -1244,7 +1244,7 @@
       "name": "Fauré, Gabriel",
       "birth_year": 1845,
       "death_year": 1924,
-      "score": 68.4
+      "score": 69.13
     },
     {
       "gid": "2ca0dc09-3a17-479c-a4db-4b8182f3726c",
@@ -1412,7 +1412,7 @@
       "name": "Gershwin, George",
       "birth_year": 1898,
       "death_year": 1937,
-      "score": 39.5
+      "score": 45.12
     },
     {
       "gid": "c6c6f154-b3b8-4f82-a500-589373f41556",
@@ -1475,14 +1475,14 @@
       "name": "Glazunov, Alexander",
       "birth_year": 1865,
       "death_year": 1936,
-      "score": 36.88
+      "score": 38.43
     },
     {
       "gid": "e539699a-5cb3-4f73-b60f-691b1499d0af",
       "name": "Glinka, Mikhail",
       "birth_year": 1804,
       "death_year": 1857,
-      "score": 26.99
+      "score": 29.7
     },
     {
       "gid": "8b008af7-cdb9-4abe-baed-ba737622e310",
@@ -1594,7 +1594,7 @@
       "name": "Grieg, Edvard",
       "birth_year": 1843,
       "death_year": 1907,
-      "score": 63.72
+      "score": 63.97
     },
     {
       "gid": "44b8f10a-0523-4479-bd6d-a3828dc960ae",
@@ -1741,7 +1741,7 @@
       "name": "Haydn, Michael",
       "birth_year": 1737,
       "death_year": 1806,
-      "score": 11.21
+      "score": 11.84
     },
     {
       "gid": "717d1c41-76a2-4203-9f36-f5d2dc873cc6",
@@ -2273,7 +2273,7 @@
       "name": "Levin, Robert",
       "birth_year": 1947,
       "death_year": null,
-      "score": 5.13
+      "score": 8.43
     },
     {
       "gid": "da5e774b-026a-4117-82a4-11d246c05a8b",
@@ -2455,7 +2455,7 @@
       "name": "Marcello, Alessandro",
       "birth_year": 1669,
       "death_year": 1747,
-      "score": 28.28
+      "score": 23.36
     },
     {
       "gid": "68f517d6-6d9e-43b5-99d9-eb42731eee5e",
@@ -2742,7 +2742,7 @@
       "name": "Mozart, Wolfgang Amadeus",
       "birth_year": 1756,
       "death_year": 1791,
-      "score": 95.97
+      "score": 95.98
     },
     {
       "gid": "48bf8560-86af-4c8a-8f31-93a4c38feb09",
@@ -3676,6 +3676,13 @@
       "score": 1.47
     },
     {
+      "gid": "38c9fc71-237a-4553-92a5-8b414acfde31",
+      "name": "Stadler, Maximilian",
+      "birth_year": 1748,
+      "death_year": 1833,
+      "score": 10.05
+    },
+    {
       "gid": "53c0e27d-3015-443c-b533-a7fc34bad3f0",
       "name": "Stamitz, Carl",
       "birth_year": 1745,
@@ -3820,7 +3827,7 @@
       "name": "Séverac, Déodat de",
       "birth_year": 1872,
       "death_year": 1921,
-      "score": 4.08
+      "score": 14.51
     },
     {
       "gid": "f07a6786-be69-4b11-b64e-18b5dd3c3425",
@@ -3869,7 +3876,7 @@
       "name": "Tchaikovsky, Pyotr Ilyich",
       "birth_year": 1840,
       "death_year": 1893,
-      "score": 72.01
+      "score": 72.51
     },
     {
       "gid": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
@@ -4023,7 +4030,7 @@
       "name": "Vaughan Williams, Ralph",
       "birth_year": 1872,
       "death_year": 1958,
-      "score": 56.61
+      "score": 57.93
     },
     {
       "gid": "db0087f3-7a6b-43cc-bde3-5da9e9ca6847",
@@ -4044,7 +4051,7 @@
       "name": "Verdi, Giuseppe",
       "birth_year": 1813,
       "death_year": 1901,
-      "score": 55.9
+      "score": 56.55
     },
     {
       "gid": "09170b4d-9a28-4d6a-9070-9c8c725826ec",
@@ -4758,22 +4765,6 @@
       ]
     },
     {
-      "gid": "9bfb2824-cc77-3b6d-8dc0-72747df9cfff",
-      "composer": "83903121-f611-4875-984c-673ae7173e56",
-      "name": "Anytime, Anywhere",
-      "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
-      "score": 2.77,
-      "parts": [
-        {
-          "name": "Anytime, Anywhere",
-          "deezer": [1516328672],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "cd4c4f1d-12fb-4b91-b362-1f18fb2e1e75",
       "composer": "83903121-f611-4875-984c-673ae7173e56",
       "name": "Sinfonia in G minor, T. Si 7",
@@ -4832,6 +4823,22 @@
         {
           "name": "12 piezas características, op. 92, no. 7: Zambra",
           "deezer": [983258562],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "b8d9f9a8-77fc-43ae-a031-0f43d74a881f",
+      "composer": "0a46cf2a-61bd-447d-b8fd-a2b32eb20282",
+      "name": "Azulejos, B. 50",
+      "type": "other",
+      "begin_year": 1909,
+      "end_year": 1909,
+      "score": 2.2,
+      "parts": [
+        {
+          "name": "Azulejos, B. 50",
+          "deezer": [6663468],
           "score": 100.0
         }
       ]
@@ -20771,7 +20778,7 @@
       "name": "Keyboard Concerto in D minor, BWV 1052",
       "type": "concerto",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1738,
       "score": 5.05,
       "parts": [
         {
@@ -27340,6 +27347,22 @@
           "name": "Bessie Bobtail, op. 2 no. 3",
           "deezer": [3171851, 2111204357],
           "score": 96.5
+        }
+      ]
+    },
+    {
+      "gid": "1ebe1abf-daf2-3e5e-b3ad-b6c5a4ec5727",
+      "composer": "74ed34ce-ee95-44e9-a87d-4d2d5056c24a",
+      "name": "Adagio for Strings",
+      "type": "orchestral",
+      "begin_year": 1936,
+      "end_year": 1936,
+      "score": 5.65,
+      "parts": [
+        {
+          "name": "Adagio for Strings",
+          "deezer": [68300128, 68247047, 124434664, 71919669, 71726468],
+          "score": 100.0
         }
       ]
     },
@@ -34664,6 +34687,22 @@
       ]
     },
     {
+      "gid": "fcfd79c5-2501-3e3a-91c5-cb702987f998",
+      "composer": "1f9df192-a621-4f54-8850-2c5373b7eac9",
+      "name": "Rondo for Piano and Orchestra in B-flat major, WoO 6: Allegro",
+      "type": "concerto",
+      "begin_year": 1793,
+      "end_year": 1793,
+      "score": 3.3,
+      "parts": [
+        {
+          "name": "Rondo for Piano and Orchestra in B-flat major, WoO 6: Allegro",
+          "deezer": [2772254721, 95941424],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "875d1660-2428-3fe6-9aee-021f8981277e",
       "composer": "1f9df192-a621-4f54-8850-2c5373b7eac9",
       "name": "Rondo in A major, WoO 49: Allegretto",
@@ -35024,6 +35063,27 @@
           "name": "Sonata for Horn and Piano in F major, op. 17: III. Rondo. Allegro moderato",
           "deezer": [6982042],
           "score": 95.98
+        }
+      ]
+    },
+    {
+      "gid": "cda3bb56-e196-47c3-9461-6ae2cdcb2dd3",
+      "composer": "1f9df192-a621-4f54-8850-2c5373b7eac9",
+      "name": "Sonata for Piano in C major, WoO 51",
+      "type": "piano",
+      "begin_year": 1791,
+      "end_year": 1798,
+      "score": 2.37,
+      "parts": [
+        {
+          "name": "Sonata for Piano in C major, WoO 51: I. Allegro",
+          "deezer": [3133179091],
+          "score": 100.0
+        },
+        {
+          "name": "Sonata for Piano in C major, WoO 51: II. Adagio",
+          "deezer": [3133179101],
+          "score": 96.03
         }
       ]
     },
@@ -39377,32 +39437,6 @@
       ]
     },
     {
-      "gid": "69bd99f8-636d-4f9c-9498-7b9cf32f871e",
-      "composer": "9bd20e6a-b41d-4983-a5b6-c0ff849fa235",
-      "name": "Carmen",
-      "type": "opera",
-      "begin_year": null,
-      "end_year": null,
-      "score": 4.56,
-      "parts": [
-        {
-          "name": "Carmen : Prélude",
-          "deezer": [65800714, 28869531, 3300727, 65766009, 65180727],
-          "score": 100.0
-        },
-        {
-          "name": "Carmen : Acte II. Entr’acte",
-          "deezer": [65800745, 3300752, 65766033, 5038154],
-          "score": 81.94
-        },
-        {
-          "name": "Carmen : Acte III. Entr’acte",
-          "deezer": [65800758, 3300761, 65766040],
-          "score": 84.58
-        }
-      ]
-    },
-    {
       "gid": "04173a43-7deb-4f26-af6f-031399444388",
       "composer": "9bd20e6a-b41d-4983-a5b6-c0ff849fa235",
       "name": "Carmen Suite no. 1 (arr. Guiraud)",
@@ -39488,6 +39522,11 @@
       "end_year": 1875,
       "score": 4.39,
       "parts": [
+        {
+          "name": "Carmen : Prélude",
+          "deezer": [65800714, 28869531, 3300727, 65766009, 65180727],
+          "score": 91.44
+        },
         {
           "name": "Carmen : Acte I. No. 5 Habanera « L’amour est un oiseau rebelle » (Carmen, chœur)",
           "deezer": [65800723, 3300731, 3097248, 65766014, 2897089061],
@@ -40718,6 +40757,32 @@
           "name": "Polovtsian March (from Borodin’s “Prince Igor”)",
           "deezer": [507030622, 63688016],
           "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "8b585d9b-1518-4951-a1ab-4b68306c6cd3",
+      "composer": "560b5e65-8d53-41b4-9913-83368f4721a0",
+      "name": "Prince Igor",
+      "type": "opera",
+      "begin_year": 1869,
+      "end_year": 1887,
+      "score": 3.17,
+      "parts": [
+        {
+          "name": "Prince Igor: Overture",
+          "deezer": [6981632, 66758782],
+          "score": 100.0
+        },
+        {
+          "name": "Prince Igor: Act II. Dance of the Polovtsian Maidens",
+          "deezer": [2631309782],
+          "score": 94.88
+        },
+        {
+          "name": "Prince Igor: Act II. Polovtsian Dance with Choir",
+          "deezer": [6981639, 127821009, 1470228802],
+          "score": 92.55
         }
       ]
     },
@@ -52775,6 +52840,32 @@
         {
           "name": "Poème, op. 25",
           "deezer": [66362174, 1256881342, 2144425667, 992190892, 91334314],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "e68786d6-9429-4765-91bd-6b11f5597926",
+      "composer": "dbe921e2-a7a7-4d4c-b2f8-109da1cd1e3a",
+      "name": "String Quartet in C minor, op. 35",
+      "type": "chamber",
+      "begin_year": 1898,
+      "end_year": 1899,
+      "score": 2.27,
+      "parts": [
+        {
+          "name": "String Quartet in C minor, op. 35: I. Grave",
+          "deezer": [2898705351],
+          "score": 95.42
+        },
+        {
+          "name": "String Quartet in C minor, op. 35: II. Très calme",
+          "deezer": [2898705361],
+          "score": 95.42
+        },
+        {
+          "name": "String Quartet in C minor, op. 35: III. Gaiement et pas trop vite",
+          "deezer": [2898705371],
           "score": 100.0
         }
       ]
@@ -69080,6 +69171,22 @@
       ]
     },
     {
+      "gid": "fd26fa0f-9a57-3ab3-9c3d-35b3fb057432",
+      "composer": "fa19a8b6-e7f4-40d4-af15-7a7c41ac7d8f",
+      "name": "Pavane in F-sharp minor, op. 50",
+      "type": "orchestral",
+      "begin_year": 1887,
+      "end_year": 1887,
+      "score": 4.63,
+      "parts": [
+        {
+          "name": "Pavane in F-sharp minor, op. 50",
+          "deezer": [13529909, 1762328737, 3074336321, 2747773641, 70259672],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "74bcefb4-8140-458a-a46d-b14c3bdf435e",
       "composer": "fa19a8b6-e7f4-40d4-af15-7a7c41ac7d8f",
       "name": "Pelléas et Mélisande, op. 80",
@@ -71844,6 +71951,22 @@
       ]
     },
     {
+      "gid": "7e7d799a-babe-3d9c-b271-9ad417ac650f",
+      "composer": "65744963-191a-44ef-a3c7-b693a808a158",
+      "name": "An American in Paris",
+      "type": "orchestral",
+      "begin_year": 1928,
+      "end_year": 1928,
+      "score": 4.92,
+      "parts": [
+        {
+          "name": "An American in Paris",
+          "deezer": [1918524037, 71907473, 122883288, 6987681, 1401727062],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "ec7c3e4f-06ad-4e19-be69-189d8454844f",
       "composer": "65744963-191a-44ef-a3c7-b693a808a158",
       "name": "Catfish Row",
@@ -71875,6 +71998,22 @@
         {
           "name": "Catfish Row: V. Good Mornin’, Sistuh",
           "deezer": [122883330, 1201248572],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "d9ef69ab-818e-3803-a416-853b4d9583b9",
+      "composer": "65744963-191a-44ef-a3c7-b693a808a158",
+      "name": "Cuban Overture",
+      "type": "orchestral",
+      "begin_year": 1932,
+      "end_year": 1932,
+      "score": 3.83,
+      "parts": [
+        {
+          "name": "Cuban Overture",
+          "deezer": [1785677537, 82643610, 1359120752],
           "score": 100.0
         }
       ]
@@ -71975,6 +72114,22 @@
       ]
     },
     {
+      "gid": "6192fff9-6526-3cd4-b703-4e890607688c",
+      "composer": "65744963-191a-44ef-a3c7-b693a808a158",
+      "name": "Second Rhapsody for Piano and Orchestra",
+      "type": "concerto",
+      "begin_year": 1931,
+      "end_year": 1931,
+      "score": 3.37,
+      "parts": [
+        {
+          "name": "Second Rhapsody for Piano and Orchestra",
+          "deezer": [122883334, 122883384, 3217217, 1785677467],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "5b878193-32b8-4075-86ec-71a3822655cd",
       "composer": "65744963-191a-44ef-a3c7-b693a808a158",
       "name": "Short Story (arr. Dushkin)",
@@ -72062,7 +72217,7 @@
       "gid": "f43e770d-8261-3d1a-9930-6a47d3081934",
       "composer": "65744963-191a-44ef-a3c7-b693a808a158",
       "name": "Variations on \"I Got Rhythm\" for Piano and Orchestra",
-      "type": "vocal",
+      "type": "concerto",
       "begin_year": 1933,
       "end_year": 1934,
       "score": 3.76,
@@ -73082,6 +73237,37 @@
       ]
     },
     {
+      "gid": "1bfa272b-e12b-48fd-a3e9-7f268b83fe7c",
+      "composer": "5a0988a4-695c-4bff-bc68-4f312427495e",
+      "name": "Four Musical Pictures from the Opera \"The Golden Cockerel\"",
+      "type": "opera",
+      "begin_year": 1913,
+      "end_year": 1913,
+      "score": 3.22,
+      "parts": [
+        {
+          "name": "Four Musical Pictures from the Opera \"The Golden Cockerel\": I. Introduction and Dodon's Sleep",
+          "deezer": [2134480577, 2771989611, 983288192],
+          "score": 100.0
+        },
+        {
+          "name": "Four Musical Pictures from the Opera \"The Golden Cockerel\": II. King Dodon on the Battlefield",
+          "deezer": [2134480587, 2771989621, 66633313],
+          "score": 100.0
+        },
+        {
+          "name": "Four Musical Pictures from the Opera \"The Golden Cockerel\": III. Queen of Shamakha's Dance - King Dodon's Dance",
+          "deezer": [2134480597, 2771989631, 128474149],
+          "score": 100.0
+        },
+        {
+          "name": "Four Musical Pictures from the Opera \"The Golden Cockerel\": IV. Wedding Procession - Death of King Dodon - Finale",
+          "deezer": [2134480607, 2771989641, 66633315],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "494a3341-3879-3a74-8beb-4bd8cb77a94b",
       "composer": "5a0988a4-695c-4bff-bc68-4f312427495e",
       "name": "Minstrel's Song",
@@ -73539,6 +73725,22 @@
         {
           "name": "Spanish Overture no. 1 “Capriccio Brilliante on the Jota Aragonesa”",
           "deezer": [2899528661],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "0b53d6f5-7beb-44da-b8b2-c1453e3d0479",
+      "composer": "e539699a-5cb3-4f73-b60f-691b1499d0af",
+      "name": "The Lark",
+      "type": "piano",
+      "begin_year": null,
+      "end_year": null,
+      "score": 3.18,
+      "parts": [
+        {
+          "name": "The Lark",
+          "deezer": [71953407, 2701182672],
           "score": 100.0
         }
       ]
@@ -75718,7 +75920,23 @@
         },
         {
           "name": "Lyric Pieces, Book 8, op. 65: No. 6. Wedding Day at Troldhaugen",
-          "deezer": [915300512, 2805353912, 1507276652, 2939651341, 658845242],
+          "deezer": [915300512, 1507276652, 2939651341, 658845242, 2200938427],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "0f559bfb-2b05-47ef-b425-a7f5f7194d65",
+      "composer": "013c8e5b-d72a-4cd3-8dee-6c64d6125823",
+      "name": "Lyriske stykker, op. 65 no. 6: Bryllupsdag på Troldhaugen",
+      "type": "piano",
+      "begin_year": null,
+      "end_year": null,
+      "score": 3.14,
+      "parts": [
+        {
+          "name": "Lyriske stykker, op. 65 no. 6: Bryllupsdag på Troldhaugen",
+          "deezer": [2899141511],
           "score": 100.0
         }
       ]
@@ -86982,14 +87200,19 @@
       ]
     },
     {
-      "gid": "f0f1363b-fb2f-453e-a757-c562750ddf41",
+      "gid": "52b421b1-2f11-49a8-bd26-c1028c9cef7f",
       "composer": "760357b4-37da-4271-8cb7-52786d335745",
-      "name": "Symphony no. 25 in G major, MH 334, P. 16",
+      "name": "Symphony no. 37 in G major, K. 444/425a",
       "type": "orchestral",
       "begin_year": 1783,
       "end_year": 1783,
-      "score": 2.06,
+      "score": 2.18,
       "parts": [
+        {
+          "name": "Symphony no. 37 in G major, K. 444/425a: I. Andante maestoso",
+          "deezer": [66149808, 2849613732],
+          "score": 94.64
+        },
         {
           "name": "Symphony no. 25 in G major, MH 334, P. 16: II. Andante sostenuto",
           "deezer": [2898852101, 66149809],
@@ -94357,6 +94580,27 @@
       ]
     },
     {
+      "gid": "4d4a7532-3989-4b06-bc4b-df5f9921755d",
+      "composer": "7ae4f30e-4182-4d4b-b64d-4e0db9dab186",
+      "name": "Sinfonia concertante in E-flat major for Oboe, Flute, Horn, Bassoon & Orchestra, K. 297B/Anh 9",
+      "type": "orchestral",
+      "begin_year": null,
+      "end_year": null,
+      "score": 1.92,
+      "parts": [
+        {
+          "name": "Sinfonia concertante in E-flat major for Oboe, Flute, Horn, Bassoon & Orchestra, K. 297B/Anh 9: I. Allegro",
+          "deezer": [65584495],
+          "score": 100.0
+        },
+        {
+          "name": "Sinfonia concertante in E-flat major for Oboe, Flute, Horn, Bassoon & Orchestra, K. 297B/Anh 9: II. Adagio",
+          "deezer": [65584496],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "e61e322f-63ff-4d50-88a8-a14b8ee5335b",
       "composer": "da5e774b-026a-4117-82a4-11d246c05a8b",
       "name": "Artikulation",
@@ -99217,6 +99461,22 @@
       ]
     },
     {
+      "gid": "ad4aa058-9abe-4a09-8ef5-3cb2e7711aab",
+      "composer": "ff5e5b31-62b5-44cd-a641-4750c7805c54",
+      "name": "Oboe Concerto in C minor, SF. 799 (attrib. Alessandro Marcello)",
+      "type": "concerto",
+      "begin_year": null,
+      "end_year": null,
+      "score": 2.56,
+      "parts": [
+        {
+          "name": "Oboe Concerto in C minor, SF. 799 (attrib. Alessandro Marcello): II. Adagio",
+          "deezer": [3156438241, 1107352972],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "e7fb2944-d4cd-448e-bf2d-2a47f25fe745",
       "composer": "68f517d6-6d9e-43b5-99d9-eb42731eee5e",
       "name": "Pièces de clavecin, livre 1 (Suite en ré)",
@@ -102051,7 +102311,7 @@
         },
         {
           "name": "Song Without Words in A major, Op. 62 No. 6",
-          "deezer": [66152731, 61250552, 1100896962, 1273755162, 5040387],
+          "deezer": [66152731, 61250552, 1100896962, 1273755162, 71843142],
           "score": 100.0
         }
       ]
@@ -107296,6 +107556,22 @@
       ]
     },
     {
+      "gid": "b809810b-d2fa-374a-b507-5883b085b9ce",
+      "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
+      "name": "Allegro in B-flat major, K. 372a/400 (Maximilian Stadler completion)",
+      "type": "other",
+      "begin_year": null,
+      "end_year": null,
+      "score": 2.3,
+      "parts": [
+        {
+          "name": "Allegro in B-flat major, K. 372a/400 (Maximilian Stadler completion)",
+          "deezer": [73747841, 396933352],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "cf567946-5c11-3477-9da9-18c7214c5d37",
       "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Allegro in C major",
@@ -107491,6 +107767,22 @@
         {
           "name": "Apollo et Hyacinthus, K. 38: Intrada",
           "deezer": [2981217571, 133533966, 2844015122],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "d1ea0424-2abf-330f-a70b-0e82f07de38b",
+      "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
+      "name": "Aria for Bass & Orchestra in E-flat major, K. 513: \"Mentre ti lascio, oh figlia\"",
+      "type": "vocal",
+      "begin_year": null,
+      "end_year": null,
+      "score": 2.77,
+      "parts": [
+        {
+          "name": "Aria for Bass & Orchestra in E-flat major, K. 513: \"Mentre ti lascio, oh figlia\"",
+          "deezer": [3353772911, 72082869, 66316171],
           "score": 100.0
         }
       ]
@@ -110277,27 +110569,6 @@
       ]
     },
     {
-      "gid": "fc146a29-84d0-4d0c-a374-8455c18e35d6",
-      "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
-      "name": "Don Giovanni: Recitative and Aria, K. 540c",
-      "type": "opera",
-      "begin_year": null,
-      "end_year": null,
-      "score": 4.42,
-      "parts": [
-        {
-          "name": "Don Giovanni: Atto II. Anhang. No. 21b Recitativo accompagnato “In quali eccessi, o Numi” (Donna Elvira) [540c/1]",
-          "deezer": [66639460, 122787498, 124197660, 2877062472, 1549534612],
-          "score": 100.0
-        },
-        {
-          "name": "Don Giovanni: Atto II. Anhang. No. 21b Aria “Mi tradi quell’alma ingrata” (Donna Elvira) [540c/2]",
-          "deezer": [124197662, 122787500, 2877062482, 1549534622, 66758566],
-          "score": 96.63
-        }
-      ]
-    },
-    {
       "gid": "d8a3aed9-d128-46ac-8ef6-3ced4d197922",
       "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Duo for Violin & Viola no. 1 in G major, K. 423",
@@ -110644,34 +110915,78 @@
       ]
     },
     {
-      "gid": "2c9a7cc6-0eed-3a1d-a261-33ed96224c9e",
+      "gid": "b3b1e2b3-cbb8-4b46-a7d0-0031ec13492c",
       "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
-      "name": "Il dissoluto punito, ossia il Don Giovanni, K. 527: Act I, Scene XX. No. 13 Finale Minuetto “Da bravi, via, ballate!” (Donna Anna, Donna Elvira, Don Ottavio, Leporello, Masetto, Zerlina, Don Giovanni)",
+      "name": "Il dissoluto punito, ossia il Don Giovanni, K. 527",
       "type": "opera",
-      "begin_year": null,
-      "end_year": null,
-      "score": 2.2,
+      "begin_year": 1787,
+      "end_year": 1787,
+      "score": 4.51,
       "parts": [
         {
-          "name": "Il dissoluto punito, ossia il Don Giovanni, K. 527: Act I, Scene XX. No. 13 Finale Minuetto “Da bravi, via, ballate!” (Donna Anna, Donna Elvira, Don Ottavio, Leporello, Masetto, Zerlina, Don Giovanni)",
-          "deezer": [124197624],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "d019f0f6-f972-45da-9705-b1a40be96090",
-      "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
-      "name": "Il dissoluto punito, ossia il Don Giovanni, K. Zu 527 NMA IV/11/10 (concert version): Ouverture. Andante - allegro molto",
-      "type": "opera",
-      "begin_year": 1788,
-      "end_year": 1788,
-      "score": 2.08,
-      "parts": [
+          "name": "Don Giovanni: Ouvertura",
+          "deezer": [66639411, 124197554, 122787466, 6952418, 2645176932],
+          "score": 97.18
+        },
         {
-          "name": "Il dissoluto punito, ossia il Don Giovanni, K. Zu 527 NMA IV/11/10 (concert version): Ouverture. Andante - allegro molto",
-          "deezer": [135416140],
+          "name": "Don Giovanni: Atto I. No. 4 Aria “Madamina, il catalogo è questo” (Leporello)",
+          "deezer": [66639420, 3353772951, 2850991372, 124197572, 69587713],
+          "score": 95.19
+        },
+        {
+          "name": "Don Giovanni: Atto I. No. 7 Duettino “Là ci darem la mano” (Don Giovanni, Zerlina)",
+          "deezer": [3219764381, 3353773051, 1907627307, 1984565387, 1789587777],
           "score": 100.0
+        },
+        {
+          "name": "Don Giovanni: Atto I. No. 10 Aria “Or sai chi l’onore” (Donna Anna)",
+          "deezer": [66639432, 1789587797, 122787478, 124197598, 2877062102],
+          "score": 87.36
+        },
+        {
+          "name": "Don Giovanni: Atto I. Anhang. No. 10a Aria “Dalla sua pace” (Don Ottavio) [K. 540a]",
+          "deezer": [66639434, 1789587807, 124197602, 122787480, 69587717],
+          "score": 86.28
+        },
+        {
+          "name": "Don Giovanni: Atto I. No. 11 Aria “Fin ch’han dal vino” (Don Giovanni)",
+          "deezer": [66639436, 3353773061, 1632124002, 1789587817, 124197586],
+          "score": 92.81
+        },
+        {
+          "name": "Don Giovanni: Atto I. No. 12 Aria “Batti, batti, oh bel Masetto” (Zerlina)",
+          "deezer": [3219764401, 66288039, 124197610, 122787484, 69587719],
+          "score": 87.98
+        },
+        {
+          "name": "Don Giovanni: Atto II. No. 16 Canzonetta “Deh vieni alla finestra” (Don Giovanni)",
+          "deezer": [66639448, 3353773031, 1789587847, 122787490, 124197638],
+          "score": 93.59
+        },
+        {
+          "name": "Don Giovanni: Atto II. No. 18 Aria “Vedrai, carino” (Zerlina)",
+          "deezer": [3219764431, 1789587857, 124197646, 122787492, 1549534632],
+          "score": 89.73
+        },
+        {
+          "name": "Don Giovanni: Atto II. No. 21 Aria “Il mio tesoro intanto” (Don Ottavio)",
+          "deezer": [66639459, 2504698081, 122787496, 124197658, 2877062462],
+          "score": 92.97
+        },
+        {
+          "name": "Don Giovanni: Atto II. Anhang. No. 21b Recitativo accompagnato “In quali eccessi, o Numi” (Donna Elvira) [540c/1]",
+          "deezer": [66639460, 122787498, 124197660, 2877062472, 1549534612],
+          "score": 86.06
+        },
+        {
+          "name": "Don Giovanni: Atto II. Anhang. No. 21b Aria “Mi tradi quell’alma ingrata” (Donna Elvira) [540c/2]",
+          "deezer": [124197662, 122787500, 2877062482, 1549534622, 66758566],
+          "score": 83.15
+        },
+        {
+          "name": "Don Giovanni: Atto II. No. 23 Rondo “Non mi dir, bell’idol mio” (Donna Anna)",
+          "deezer": [66639466, 124197674, 124197672, 65442119, 69587724],
+          "score": 87.98
         }
       ]
     },
@@ -113161,89 +113476,83 @@
       ]
     },
     {
-      "gid": "5ba9868e-f053-4520-8957-6a9fedb2455a",
+      "gid": "32c8943f-1b27-3a23-8660-4567f4847c94",
       "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
-      "name": "Requiem in D minor, K. 626",
+      "name": "Requiem in D minor, K. 626 (orch. Süßmayr)",
       "type": "vocal",
       "begin_year": 1791,
       "end_year": 1791,
-      "score": 4.66,
+      "score": 4.65,
       "parts": [
         {
           "name": "Requiem in D minor, K. 626: I. Introitus: Requiem aeternam",
-          "deezer": [3336508, 3124741791, 3312101351, 2794899642],
-          "score": 85.13
+          "deezer": [66301879, 68286447, 2877063722, 2866761992, 1400942652],
+          "score": 97.47
         },
         {
           "name": "Requiem in D minor, K. 626: II. Kyrie eleison",
-          "deezer": [71896319, 3336509, 59913311, 3312101361],
-          "score": 81.68
+          "deezer": [66301880, 68286448, 2877063732, 2866762002, 1400942662],
+          "score": 96.63
         },
         {
           "name": "Requiem in D minor, K. 626: III. Sequenz: a. Dies irae",
-          "deezer": [4159181, 3286502, 3015909021, 3336510, 71959654],
-          "score": 92.68
+          "deezer": [68286449, 2877063742, 2866762022, 4159181, 1400942672],
+          "score": 98.68
+        },
+        {
+          "name": "Requiem in D minor, K. 626: III. Sequenz: b. Tuba mirum",
+          "deezer": [68286450, 2877063752, 2866762032, 4159182, 1400942682],
+          "score": 94.83
         },
         {
           "name": "Requiem in D minor, K. 626: III. Sequenz: c. Rex tremendae majestatis",
-          "deezer": [1516590152, 65800648, 3336512, 2772371421, 3312101391],
-          "score": 82.54
+          "deezer": [68286452, 2877063762, 1516590152, 2866762042, 4159183],
+          "score": 96.41
         },
         {
-          "name": "Requiem in D minor, K. 626: III. Sequenz: e. Confutatis",
-          "deezer": [1110100572, 65800650, 3336514, 2772371441],
-          "score": 86.53
+          "name": "Requiem in D minor, K. 626: III. Sequenz: d. Recordare, Jesu pie",
+          "deezer": [68286453, 2877063772, 2866762062, 4159184, 1400942702],
+          "score": 95.07
+        },
+        {
+          "name": "Requiem in D minor, K. 626: III. Sequenz: e. Confutatis maledictis",
+          "deezer": [68286455, 2877063782, 2866762072, 4159185, 1400942712],
+          "score": 96.41
         },
         {
           "name": "Requiem in D minor, K. 626: III. Sequenz: f. Lacrimosa dies illa",
-          "deezer": [6948347, 3220455731, 429649062, 3336515, 2772371451],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "d0be6882-700f-48c9-af49-1f3d42627de5",
-      "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
-      "name": "Requiem in D minor, K. 626 (orch. Beyer)",
-      "type": "vocal",
-      "begin_year": 1791,
-      "end_year": 1791,
-      "score": 2.77,
-      "parts": [
-        {
-          "name": "Requiem in D minor, K. 626: I. Introitus: “Requiem aeternam”",
-          "deezer": [66244684, 1152550552, 14407350],
-          "score": 93.69
-        },
-        {
-          "name": "Requiem in D minor, K. 626: II. “Kyrie eleison”",
-          "deezer": [66244685, 1152550562, 1511954872],
-          "score": 93.69
-        },
-        {
-          "name": "Requiem in D minor, K. 626: IIIa. Sequenz: “Dies irae”",
-          "deezer": [66244686, 61289506, 1152550572],
-          "score": 91.31
-        },
-        {
-          "name": "Requiem in D minor, K. 626: IIIe. Sequenz: “Confutatis”",
-          "deezer": [66244690, 68960619, 2592562092, 1511954922],
+          "deezer": [3015909071, 68286457, 2866762082, 6948347, 67235869],
           "score": 100.0
         },
         {
-          "name": "Requiem in D minor, K. 626: IIIf. Sequenz: “Lacrimosa”",
-          "deezer": [14407357, 2850991652, 66244691],
-          "score": 98.02
+          "name": "Requiem in D minor, K. 626: VIII. Communio: a. Lux aeterna",
+          "deezer": [66301892, 68286468, 2877063852, 1400942782],
+          "score": 94.12
         },
         {
-          "name": "Requiem in D minor, K. 626: VII. “Agnus Dei”",
-          "deezer": [66244696, 2592562282, 1152550672],
-          "score": 93.69
+          "name": "Requiem in D minor, K. 626: IV. Offertorium: a. Domine Jesu Christie",
+          "deezer": [68286459, 2877063802, 2866762092, 4159187, 1400942732],
+          "score": 95.3
         },
         {
-          "name": "Requiem in D minor, K. 626: VIII. Communio: “Lux aeterna”",
-          "deezer": [66244697, 2592562292, 1152550682],
-          "score": 93.69
+          "name": "Requiem in D minor, K. 626: IV. Offertorium: b. Versus: Hostias et preces",
+          "deezer": [68286461, 2877063812, 2866762112, 4159188, 1400942742],
+          "score": 94.83
+        },
+        {
+          "name": "Requiem in D minor, K. 626: V. Sanctus: a. Sanctus Dominus Deus Sabaoth",
+          "deezer": [66301889, 68286463, 2877063822, 4159189, 1400942752],
+          "score": 94.12
+        },
+        {
+          "name": "Requiem in D minor, K. 626: V. Sanctus: b. Benedictus",
+          "deezer": [66301890, 68286465, 2877063832, 2866762132, 4159190],
+          "score": 95.3
+        },
+        {
+          "name": "Requiem in D minor, K. 626: VI. Agnus Dei",
+          "deezer": [66301891, 4159191, 68286467, 2877063842, 2866762152],
+          "score": 95.75
         }
       ]
     },
@@ -114444,6 +114753,22 @@
         {
           "name": "Sonata for Piano with 4 Hands in F major, K. 497: III. Allegro",
           "deezer": [1959712627, 3071137561, 3225731841],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "80ec5946-ddd2-41f5-a6a6-171b134ba134",
+      "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
+      "name": "Sonata for Violin & Piano no. 30 in C major, K. 385c/403",
+      "type": "other",
+      "begin_year": 1782,
+      "end_year": 1784,
+      "score": 2.17,
+      "parts": [
+        {
+          "name": "Violin Sonata in C major, K. 403/385c: II. Andante",
+          "deezer": [68253051],
           "score": 100.0
         }
       ]
@@ -116844,6 +117169,27 @@
       ]
     },
     {
+      "gid": "5ad1a3ac-76b3-463e-8ac9-e977f7b1f303",
+      "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
+      "name": "Violin Sonata in A major, K. 385e/402",
+      "type": "chamber",
+      "begin_year": null,
+      "end_year": null,
+      "score": 2.17,
+      "parts": [
+        {
+          "name": "Violin Sonata in A major, K. 385e/402: I. Andante ma un poco adagio",
+          "deezer": [3355764471],
+          "score": 94.64
+        },
+        {
+          "name": "Violin Sonata in A major, K. 385e/402: II. Fuga (Allegro moderato)",
+          "deezer": [2181209607],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "13d34749-274c-4105-aa00-fb020344c759",
       "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Violin Sonata in A major, K. 526",
@@ -117080,22 +117426,6 @@
           "name": "Violin Sonata in C major, K. 296: III. Rondo. Allegro",
           "deezer": [575890302, 1562041812, 2963034, 3248423131, 71921992],
           "score": 99.31
-        }
-      ]
-    },
-    {
-      "gid": "e678cd87-932e-4af6-a9eb-4b87034631ad",
-      "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
-      "name": "Violin Sonata in C major, K. 403/385c",
-      "type": "chamber",
-      "begin_year": 1782,
-      "end_year": 1784,
-      "score": 2.4,
-      "parts": [
-        {
-          "name": "Violin Sonata in C major, K. 403/385c: II. Andante",
-          "deezer": [68253051],
-          "score": 100.0
         }
       ]
     },
@@ -119490,7 +119820,7 @@
       "parts": [
         {
           "name": "Les Contes d’Hoffmann: Acte III. “Belle nuit, ô nuit d’amour” (Nicklausse, Giulietta)",
-          "deezer": [1762412777, 65727871, 1371730182, 124324552, 67238220],
+          "deezer": [1762412777, 124324552, 65727881, 518488122, 68296724],
           "score": 100.0
         }
       ]
@@ -165609,6 +165939,22 @@
       ]
     },
     {
+      "gid": "93a379b0-03df-3142-a16b-b17e1a400c05",
+      "composer": "38c9fc71-237a-4553-92a5-8b414acfde31",
+      "name": "Fantasia no. 2 in C minor, K. 385f / 396",
+      "type": "other",
+      "begin_year": null,
+      "end_year": null,
+      "score": 2.77,
+      "parts": [
+        {
+          "name": "Fantasia no. 2 in C minor, K. 385f / 396",
+          "deezer": [2444674145, 3023795221, 70884240, 3076564011],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "f00e15b9-951e-4d04-aedd-1d08ef47e524",
       "composer": "53c0e27d-3015-443c-b533-a7fc34bad3f0",
       "name": "Clarinet Concerto no. 1 in F major",
@@ -172298,6 +172644,22 @@
       ]
     },
     {
+      "gid": "22c0f6e6-8fbb-37c8-9ac3-f4192c8de164",
+      "composer": "56499953-dc43-4404-b643-868b6b2612da",
+      "name": "Navarra, B. 49",
+      "type": "other",
+      "begin_year": null,
+      "end_year": null,
+      "score": 3.18,
+      "parts": [
+        {
+          "name": "Navarra, B. 49",
+          "deezer": [2793899532, 3287589401, 65727027],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "3f9a2412-e50b-33c2-88a0-f522ec890816",
       "composer": "f07a6786-be69-4b11-b64e-18b5dd3c3425",
       "name": "Trollsjön",
@@ -173681,6 +174043,32 @@
           "name": "Concert Fantasy for Piano and Orchestra, op. 56: II. Contrastes",
           "deezer": [2444663265, 2769104151],
           "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "03c670e9-d1fb-4874-bb51-022c689328cd",
+      "composer": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
+      "name": "Concerto for Piano and Orchestra no. 1 in B-flat minor, op. 23",
+      "type": "concerto",
+      "begin_year": 1874,
+      "end_year": 1875,
+      "score": 5.57,
+      "parts": [
+        {
+          "name": "Concerto for Piano and Orchestra no. 1 in B-flat minor, op. 23: I. Allegro non troppo e molto maestoso",
+          "deezer": [65492802, 3381249, 2444663225, 6971581, 2767037171],
+          "score": 100.0
+        },
+        {
+          "name": "Concerto for Piano and Orchestra no. 1 in B-flat minor, op. 23: II. Andantino semplice",
+          "deezer": [65492803, 3381250, 2444663235, 2767037181, 6971582],
+          "score": 99.32
+        },
+        {
+          "name": "Concerto for Piano and Orchestra no. 1 in B-flat minor, op. 23: III. Allegro con fuoco",
+          "deezer": [65492804, 3381251, 2444663245, 6971583, 2767037191],
+          "score": 99.25
         }
       ]
     },
@@ -178741,6 +179129,22 @@
       ]
     },
     {
+      "gid": "561b8302-1b1a-3b7e-b4dd-ea3f8e0b3258",
+      "composer": "4f3b96ed-f1f1-4a68-be73-0e0657837096",
+      "name": "The Lark Ascending",
+      "type": "concerto",
+      "begin_year": 1914,
+      "end_year": 1914,
+      "score": 4.5,
+      "parts": [
+        {
+          "name": "The Lark Ascending",
+          "deezer": [1924762427, 68607368, 2803071552, 63768942, 66301917],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "6f66163b-232c-4f16-b7f2-0d361ab59b31",
       "composer": "4f3b96ed-f1f1-4a68-be73-0e0657837096",
       "name": "The Running Set",
@@ -179492,6 +179896,22 @@
           "name": "Messa da requiem: VI. Lux aeterna (mezzo-soprano, tenor, bass)",
           "deezer": [65786182, 2757284671, 2248697337, 65342338, 1690004417],
           "score": 90.28
+        }
+      ]
+    },
+    {
+      "gid": "445fc058-1596-3903-94a7-3ad4f38410c6",
+      "composer": "f1bedf1f-4445-4651-9c35-f4a3f3860a13",
+      "name": "Nabucco",
+      "type": "opera",
+      "begin_year": 1841,
+      "end_year": 1841,
+      "score": 4.27,
+      "parts": [
+        {
+          "name": "Nabucco: Parte III, scena 2. Coro “Va, pensiero, sull’ali dorate” (Coro)",
+          "deezer": [65527278, 66660371, 68294424, 2800838162, 2248699917],
+          "score": 100.0
         }
       ]
     },
@@ -191271,7 +191691,7 @@
       "gid": "589a9b99-a431-4f12-8890-053065498c63",
       "composer": "b1cf260d-0862-4e1b-91b8-7da537130261",
       "name": "Symphonie pour orgue nº 10 en re majeur, op. 73 \"Symphonie romane\"",
-      "type": "orchestral",
+      "type": "organ",
       "begin_year": null,
       "end_year": null,
       "score": 2.48,
@@ -191302,7 +191722,7 @@
       "gid": "3127b0fa-7132-45fd-9ece-8dc03dc2ea0f",
       "composer": "b1cf260d-0862-4e1b-91b8-7da537130261",
       "name": "Symphonie pour orgue nº 9 en ut mineur, op. 70 \"Symphonie gothique\"",
-      "type": "orchestral",
+      "type": "organ",
       "begin_year": null,
       "end_year": null,
       "score": 3.22,
@@ -191318,7 +191738,7 @@
       "gid": "2ed0c416-197a-4d88-9932-97c91ac54600",
       "composer": "b1cf260d-0862-4e1b-91b8-7da537130261",
       "name": "Symphonies pour orgue, op. 42",
-      "type": "orchestral",
+      "type": "organ",
       "begin_year": 1879,
       "end_year": 1879,
       "score": 4.4,

@@ -286,7 +286,10 @@
 		"categoryCategories": "分类",
 		"categoryComposers": "作曲家",
 		"categoryEras": "时期",
-		"categoryCustom": "自定义"
+		"categoryCustom": "自定义",
+		"options": {
+			"title": "选项"
+		}
 	},
 	"shareLink": {
 		"openLink": "打开",

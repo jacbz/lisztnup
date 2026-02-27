@@ -63,6 +63,6 @@ After generating the final dataset, an additional validation step is recommended
 **Validate Deezer Previews (`process_deezer.py`)**
 
 - This script checks all Deezer Track IDs in `lisztnup.json` to verify that preview MP3s are available via the Deezer API.
-- IDs without previews or with API errors are added to `excluded_deezer_ids`.
+- IDs without previews or with API errors are added to `DEEZER_EXCLUDED_IDS`.
 - **Recheck Mode:** Set `recheck_excluded = True` to verify previously excluded IDs and remove them if previews become available.
 - After running, re-run `process_musicbrainz.py` to regenerate `lisztnup.json` with the updated exclusion list. You may run `process_deezer.py` and `process_musicbrainz.py` alternately until no new IDs are excluded.
