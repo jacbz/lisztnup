@@ -21,12 +21,11 @@ export const BEGINNER_TRACKLIST = [
 	'e5cfd8b5', // Beethoven – Concerto for Piano and Orchestra no. 5 in E-flat major, op. 73 “Emperor”
 	'5364d796', // Beethoven – Concerto for Violin and Orchestra in D major, op. 61
 	'82c92c7d', // Beethoven – Coriolan Overture, Op. 62
-	'373722d2', // Beethoven - Minuet in G major
 	'591fcf82', // Beethoven – Overture “Leonore” no. 3 in C major, op. 72b
 	'591cd920', // Beethoven – Rage over a Lost Penny
 	'c366ec5b', // Beethoven – Sonata for Piano no. 8 in C minor, op. 13 “Pathétique”
 	'bcd958bd', // Beethoven – Sonata for Piano no. 14 in C-sharp minor, op. 27 no. 2 “Moonlight”
-	'a3c9dc10', // Beethoven – Sonata for Piano no. 21 in C major, op. 53 “Waldstein”
+	'173f1261', // Beethoven – Sonata for Piano no. 17 in D minor, op. 31 no. 2 “Tempest”
 	'88a8eaa9', // Beethoven – Sonata for Piano no. 23 in F minor, op. 57 “Appassionata”
 	'26c8afae', // Beethoven – Sonata for Violin and Piano no. 5 in F major, op. 24 “Spring”
 	'87281f3c', // Beethoven – Sonata for Violin and Piano no. 9 in A major, op. 47 “Kreutzer”
@@ -137,9 +136,8 @@ export const BEGINNER_TRACKLIST = [
 	'd63c68b1', // Mozart – Ave verum corpus, K. 618
 	'd180cb96', // Mozart – Concerto for Clarinet in A major, K. 622
 	'14b1ddad', // Mozart - Concerto for Oboe in C major, K. 314
-	'7245c9c6', // Mozart – Concerto for Piano and Orchestra no. 23 in A major, K. 488
 	'63ec17bb', // Mozart – Concerto for Piano no. 20 in D minor, K. 466
-	'f210c793', // Mozart – Concerto for Piano no. 21 in C major, K. 467
+	'7245c9c6', // Mozart – Concerto for Piano and Orchestra no. 23 in A major, K. 488
 	'eb704829', // Mozart – Concerto for Violin and Orchestra no. 3 in G major, K. 216
 	'f0f4b09b', // Mozart – Concerto for Violin and Orchestra no. 5 in A major, K. 219 “Turkish”
 	'a1558b7b', // Mozart - Così fan tutte, K. 588
@@ -150,7 +148,6 @@ export const BEGINNER_TRACKLIST = [
 	'70d1fa96', // Mozart – Sonata for Piano no. 10 in C major, K. 300h/330
 	'a488a020', // Mozart – Sonata for Piano no. 11 in A major, K. 300i/331 “Alla Turca”
 	'a2ad223d', // Mozart – Sonata for Piano no. 16 in C major, K. 545 "Sonata facile"
-	'53b2287b', // Mozart – Sonata for Piano no. 8 in A minor, K. 300d/310
 	'e99e8e9e', // Mozart - Symphony no. 25 in G minor, K. 183
 	'f45f868d', // Mozart – Symphony no. 35 for Orchestra in D major, K. 385 “Haffner”
 	'724cdab2', // Mozart – Symphony no. 40 in G minor, K. 550 “Great”
@@ -175,6 +172,7 @@ export const BEGINNER_TRACKLIST = [
 	'e83a319a', // Puccini – Madama Butterfly
 	'b3e15438', // Puccini – Tosca
 	'f617e5ae', // Puccini – Turandot
+	'0043a9b7', // Purcell – Dido and Aeneas (Dido’s Lament)
 	'8391d2e2', // Rachmaninoff – Morceaux de fantaisie, op. 3
 	'eda2e2b3', // Rachmaninoff – 10 Preludes, op. 23: no. 5 in G minor. Alla marcia
 	'aca4167a', // Rachmaninoff – Piano Concerto no. 2 in C minor, op. 18
@@ -185,6 +183,7 @@ export const BEGINNER_TRACKLIST = [
 	'487527b9', // Ravel – Boléro
 	'512fddf1', // Ravel – Jeux d’eau
 	'698cf12e', // Ravel – La Valse
+	'2443b5bb', // Ravel – Le Tombeau de Couperin
 	'7158bf7a', // Ravel – Pavane pour une infante défunte
 	'191c0821', // Ravel – Piano Concerto in G major
 	'4bf36cb5', // Rimsky‐Korsakov – Scheherazade, op. 35
@@ -227,6 +226,7 @@ export const BEGINNER_TRACKLIST = [
 	'6763c20d', // Strauss II – On the Beautiful Blue Danube, op. 314
 	'38ed9e44', // Strauss II – Tritsch–Tratsch Polka, op. 214
 	'54dacada', // Stravinsky – Le Sacre du printemps
+	'2fbaaf2d', // Stravinsky – The Firebird
 	'77b37e65', // Suppè – Light Cavalry
 	'03c670e9', // Tchaikovsky – Piano Concerto no. 1 in B-flat minor, op. 23
 	'f7136e19', // Tchaikovsky – Concerto for Violin and Orchestra in D major, op. 35

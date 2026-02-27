@@ -144,7 +144,6 @@
 | `13c0c417` | Beethoven – 3 String Quartets, op. 59 | * String Quartet no. 9 in C major, op. 59 no. 3: IV. Allegro molto | 1806 |
 | `1c9f6dbc` | Beethoven – 33 Variations for Piano in C major on a Waltz by Anton Diabelli, op. 120 | * Tema. Vivace | 1819‑1823 |
 | `b749491a` | Beethoven – 6 Bagatelles, op. 126 | * No. 4 in B minor: Presto | 1824 |
-| `373722d2` | Beethoven – 6 Minuets for Piano, WoO 10 | * No. 2 in G major | 1795 |
 | `3e53e5c3` | Beethoven – 6 String Quartets, op. 18 | * Quartet for 2 Violins, Viola, Cello no. 4 in C minor, op. 18 no. 4: IV. Allegro - Prestissimo | 1798‑1800 |
 | `aced4197` | Beethoven – Bagatelle for Piano in A minor “Für Elise”, WoO 59 | * Bagatelle for Piano in A minor “Für Elise”, WoO 59 | 1808‑1810 |
 | `6839959f` | Beethoven – Cello Sonatas nos. 1 & 2, op. 5 | * Sonata for Cello and Piano no. 2 in G minor, op. 5 no. 2: II. Rondo. Allegro | 1796 |
@@ -951,6 +950,7 @@
 | `11f48c5e` | Tchaikovsky – Swan Lake, op. 20 | * Act II, no. 10: Scene: Moderato | 1875‑1876 |
 | `e590ef34` | Tchaikovsky – Symphony no. 1 in G minor, op. 13 "Winter Daydreams" | * II. Land of Desolation, Land of Mists: Andante cantabile ma non tanto | 1866‑1868 |
 | `9127971c` | Tchaikovsky – Symphony no. 2 in C minor, op. 17 "Little Russian" | * I. Andante sostenuto – Allegro vivo | 1872 |
+| `e920883e` | Tchaikovsky – Symphony no. 3 in D major, op. 29 “Polish” | * I. Introduzione e Allegro - Moderato assai - Allegro brillante | 1875 |
 | `b9655de0` | Tchaikovsky – Symphony no. 4 in F minor, op. 36 | * IV. Finale. Allegro con fuoco | 1877‑1878 |
 | `9e906d77` | Tchaikovsky – Symphony no. 5 in E minor, op. 64 | * III. Valse. Allegro moderato | 1888 |
 | `15e0a721` | Tchaikovsky – Symphony no. 6 in B minor, op. 74 “Pathétique” | * IV. Finale. Adagio lamentoso | 1893 |

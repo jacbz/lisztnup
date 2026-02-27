@@ -18,15 +18,14 @@
 | `c4f0bd0a` | Bach – Toccata und Fuge d-Moll, BWV 565 | * I. Toccata | 1703‑1707 |
 | `5543ddeb` | Bach – Violin Concerto in A minor, BWV 1041 | * I. Allegro | 1717‑1723 |
 | `1ebe1abf` | Barber – Adagio for Strings | * Adagio for Strings | 1936 |
-| `373722d2` | Beethoven – 6 Minuets for Piano, WoO 10 | * No. 2 in G major | 1795 |
 | `aced4197` | Beethoven – Bagatelle for Piano in A minor “Für Elise”, WoO 59 | * Bagatelle for Piano in A minor “Für Elise”, WoO 59 | 1808‑1810 |
 | `2dd17c0c` | Beethoven – Concerto for Piano and Orchestra no. 4 in G major, op. 58 | * I. Allegro moderato | 1804‑1807 |
 | `e5cfd8b5` | Beethoven – Concerto for Piano and Orchestra no. 5 in E-flat major, op. 73 “Emperor” | * II. Adagio un poco mosso | 1809 |
 | `5364d796` | Beethoven – Concerto for Violin and Orchestra in D major, op. 61 | * III. Rondo. Allegro | 1806 |
 | `82c92c7d` | Beethoven – Coriolan Overture, Op. 62 | * Coriolan Overture, Op. 62 | 1807 |
 | `591fcf82` | Beethoven – Overture “Leonore” no. 3 in C major, op. 72b | * Overture “Leonore” no. 3 in C major, op. 72b | 1805‑1806 |
+| `173f1261` | Beethoven – Piano Sonatas, op. 31 | * Sonata for Piano no. 17 in D minor, op. 31 no. 2 "Tempest": III. Allegretto | 1801‑1802 |
 | `591cd920` | Beethoven – Rondo a capriccio for Piano in G major, op. 129 “The Rage Over the Lost Penny”: Allegro vivace | * Rondo a capriccio for Piano in G major, op. 129 “The Rage Over the Lost Penny”: Allegro vivace | 1795 |
-| `a3c9dc10` | Beethoven – Sonata for Piano no. 21 in C major, op. 53 “Waldstein” | * I. Allegro con brio | 1803‑1804 |
 | `88a8eaa9` | Beethoven – Sonata for Piano no. 23 in F minor, op. 57 “Appassionata” | * I. Allegro assai | 1804‑1806 |
 | `c366ec5b` | Beethoven – Sonata for Piano no. 8 in C minor, op. 13 “Pathétique” | * II. Adagio cantabile | 1798 |
 | `26c8afae` | Beethoven – Sonata for Violin and Piano no. 5 in F major, op. 24 “Spring” | * I. Allegro | 1800‑1801 |
@@ -140,7 +139,6 @@
 | `d180cb96` | Mozart – Concerto for Clarinet in A major, K. 622 | * II. Adagio | 1791 |
 | `7245c9c6` | Mozart – Concerto for Piano and Orchestra no. 23 in A major, K. 488 | * II. Andante (Adagio) | 1786 |
 | `63ec17bb` | Mozart – Concerto for Piano no. 20 in D minor, K. 466 | * II. Romanze | 1785 |
-| `f210c793` | Mozart – Concerto for Piano no. 21 in C major, K. 467 | * II. Andante | 1785 |
 | `eb704829` | Mozart – Concerto for Violin and Orchestra no. 3 in G major, K. 216 “Straßburg” | * II. Adagio | 1775 |
 | `f0f4b09b` | Mozart – Concerto for Violin and Orchestra no. 5 in A major, K. 219 “Turkish” | * I. Allegro aperto | 1775 |
 | `a1558b7b` | Mozart – Così fan tutte ossia La scuola degli amanti, K. 588 | * Così fan tutte: Atto I. No. 10 Terzettino “Soave sia il vento” (Fiordligi, Dorabella, Don Alfonso) | 1789‑1790 |
@@ -152,7 +150,6 @@
 | `70d1fa96` | Mozart – Sonata for Piano no. 10 in C major, K. 300h/330 | * I. Allegro moderato | 1783 |
 | `a488a020` | Mozart – Sonata for Piano no. 11 in A major, K. 300i/331 “Alla Turca” | * III. Rondo alla Turca. Allegretto | 1783 |
 | `a2ad223d` | Mozart – Sonata for Piano no. 16 in C major, K. 545 "Sonata facile" | * 1. Allegro | 1788 |
-| `53b2287b` | Mozart – Sonata for Piano no. 8 in A minor, K. 300d/310 | * I. Allegro maestoso | 1778 |
 | `e99e8e9e` | Mozart – Symphony no. 25 for Orchestra in G minor, K. 173dB/183 "Little G Minor" | * I. Allegro con brio | 1773 |
 | `f45f868d` | Mozart – Symphony no. 35 for Orchestra in D major, K. 385 “Haffner” | * I. Allegro con spirito | 1782 |
 | `724cdab2` | Mozart – Symphony no. 40 in G minor, K. 550 “Great” | * I. Allegro molto | 1788 |
@@ -177,6 +174,7 @@
 | `e83a319a` | Puccini – Madama Butterfly | * Atto II. “Un bel dì, vedremo” (Butterfly) | 1904 |
 | `b3e15438` | Puccini – Tosca | * Atto III. “E lucevan le stelle” (Cavaradossi) | 1900 |
 | `f617e5ae` | Puccini – Turandot | * Atto III, scena 1. Aria “Nessun dorma” (Calaf) | 1921‑1924 |
+| `0043a9b7` | Purcell – Dido and Aeneas, Z. 626 | * Act III, 37. Ground, Aria and Ritornello “When I am laid in earth” (Dido) | 1689 |
 | `820e42e0` | Rachmaninoff – 10 Preludes, op. 23 | * No. 5 in G minor: Alla marcia | 1901‑1903 |
 | `8391d2e2` | Rachmaninoff – Morceaux de fantaisie, op. 3 | * No. 2. Prélude in C‐sharp minor | 1892 |
 | `aca4167a` | Rachmaninoff – Piano Concerto no. 2 in C minor, op. 18 | * II. Adagio sostenuto | 1900‑1901 |
@@ -187,6 +185,7 @@
 | `487527b9` | Ravel – Boléro | * Boléro | 1928 |
 | `512fddf1` | Ravel – Jeux d’eau | * Jeux d’eau | 1901 |
 | `698cf12e` | Ravel – La Valse | * La Valse | 1919‑1920 |
+| `2443b5bb` | Ravel – Le tombeau de Couperin | * VI. Toccata | 1914‑1917 |
 | `7158bf7a` | Ravel – Pavane pour une infante défunte | * Pavane pour une infante défunte | 1899 |
 | `191c0821` | Ravel – Piano Concerto in G major | * II. Adagio assai | 1929‑1931 |
 | `4bf36cb5` | Rimsky‐Korsakov – Scheherazade, op. 35 | * III. The Young Prince and the Young Princess | 1888 |
@@ -229,6 +228,7 @@
 | `64e7a2e2` | Strauss – Radetzky March, op. 228 | * Radetzky March, op. 228 | 1848 |
 | `38ed9e44` | Strauss – Tritsch–Tratsch Polka, op. 214 | * Tritsch–Tratsch Polka, op. 214 | 1858 |
 | `54dacada` | Stravinsky – Le Sacre du printemps | * II. Le Sacrifice: VI. Danse sacrale (L’Élue) | 1911‑1913 |
+| `2fbaaf2d` | Stravinsky – The Firebird | * Act I, no. 14: Disappearance of Kastchei's Palace and Magical Creations, Return to Life of the Petrified Knights, General Rejoicing | 1909‑1910 |
 | `77b37e65` | Suppè – Light Cavalry | * Overture | 1866 |
 | `03c670e9` | Tchaikovsky – Concerto for Piano and Orchestra no. 1 in B-flat minor, op. 23 | * I. Allegro non troppo e molto maestoso | 1874‑1875 |
 | `f7136e19` | Tchaikovsky – Concerto for Violin and Orchestra in D major, op. 35 | * II. Canzonetta. Andante | 1878 |

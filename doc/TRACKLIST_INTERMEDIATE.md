@@ -36,7 +36,6 @@
 | `1ebe1abf` | Barber – Adagio for Strings | * Adagio for Strings | 1936 |
 | `2720522c` | Bartók – Concerto for Orchestra, Sz. 116, BB 123 | * IV. Intermezzo interrotto. Allegretto | 1943 |
 | `13c0c417` | Beethoven – 3 String Quartets, op. 59 | * String Quartet no. 9 in C major, op. 59 no. 3: IV. Allegro molto | 1806 |
-| `373722d2` | Beethoven – 6 Minuets for Piano, WoO 10 | * No. 2 in G major | 1795 |
 | `3e53e5c3` | Beethoven – 6 String Quartets, op. 18 | * Quartet for 2 Violins, Viola, Cello no. 4 in C minor, op. 18 no. 4: IV. Allegro - Prestissimo | 1798‑1800 |
 | `aced4197` | Beethoven – Bagatelle for Piano in A minor “Für Elise”, WoO 59 | * Bagatelle for Piano in A minor “Für Elise”, WoO 59 | 1808‑1810 |
 | `6839959f` | Beethoven – Cello Sonatas nos. 1 & 2, op. 5 | * Sonata for Cello and Piano no. 2 in G minor, op. 5 no. 2: II. Rondo. Allegro | 1796 |
@@ -363,6 +362,7 @@
 | `e83a319a` | Puccini – Madama Butterfly | * Atto II. “Un bel dì, vedremo” (Butterfly) | 1904 |
 | `b3e15438` | Puccini – Tosca | * Atto III. “E lucevan le stelle” (Cavaradossi) | 1900 |
 | `f617e5ae` | Puccini – Turandot | * Atto III, scena 1. Aria “Nessun dorma” (Calaf) | 1921‑1924 |
+| `0043a9b7` | Purcell – Dido and Aeneas, Z. 626 | * Act III, 37. Ground, Aria and Ritornello “When I am laid in earth” (Dido) | 1689 |
 | `820e42e0` | Rachmaninoff – 10 Preludes, op. 23 | * No. 5 in G minor: Alla marcia | 1901‑1903 |
 | `b1fc68bd` | Rachmaninoff – 13 Preludes, op. 32 | * No. 12 in G-sharp minor. Allegro | 1910 |
 | `8391d2e2` | Rachmaninoff – Morceaux de fantaisie, op. 3 | * No. 2. Prélude in C‐sharp minor | 1892 |
@@ -421,7 +421,6 @@
 | `3376fb40` | Schubert – Symphony no. 5 in B-flat major, D. 485 | * I. Allegro | 1816 |
 | `b1e3d631` | Schubert – Symphony no. 8 in B minor, D. 759 “Unfinished” | * I. Allegro moderato | 1822 |
 | `d0699d54` | Schubert – Symphony no. 9 in C major, D. 944 “The Great” | * I. Andante – Allegro ma non troppo | 1825‑1826 |
-| `cb37b29c` | Schubert – The Trout, D. 550 | * The Trout, D. 550 | 1816‑1817 |
 | `16a894eb` | Schubert – Winterreise, op. 89, D. 911 | * V. Der Lindenbaum | 1827 |
 | `f90c60d1` | Schumann – Arabeske in C major, op. 18 | * Arabeske in C major, op. 18 | 1839 |
 | `20cb8152` | Schumann – Carnaval, op. 9 | * XII. Chopin | 1834‑1835 |
@@ -466,6 +465,7 @@
 | `b42a2d27` | Strauss – Voices of Spring | * Voices of Spring | 1882 |
 | `6237af8b` | Strauss – Wine, Woman and Song | * Wine, Woman and Song | ? |
 | `54dacada` | Stravinsky – Le Sacre du printemps | * II. Le Sacrifice: VI. Danse sacrale (L’Élue) | 1911‑1913 |
+| `2fbaaf2d` | Stravinsky – The Firebird | * Act I, no. 14: Disappearance of Kastchei's Palace and Magical Creations, Return to Life of the Petrified Knights, General Rejoicing | 1909‑1910 |
 | `77b37e65` | Suppè – Light Cavalry | * Overture | 1866 |
 | `c54bedea` | Suppè – Poet and Peasant | * Overture | 1846 |
 | `854f7f28` | Tchaikovsky – Capriccio italien, op. 45 | * Capriccio italien, op. 45 | 1880 |

@@ -129,11 +129,12 @@
 
 	onDestroy(() => previewPlayer.destroy());
 
+	// Normalize work name for comparison:
+	// - Trim & lowercase
+	// - If it starts with a leading number (1- or 2-digit) followed by separators, drop it (ignore up to 99)
+	// - Remove leading articles (English, French, German, Italian, Spanish)
+	// - Remove punctuation for final comparison
 	const normalizeWorkName = (name: string): string => {
-		// Normalize work name for comparison:
-		// - Trim & lowercase
-		// - If it starts with a leading number (1- or 2-digit) followed by separators, drop it (ignore up to 99)
-		// - Remove punctuation for final comparison
 		let s = name.trim().toLowerCase();
 
 		// Match a leading 1- or 2-digit number followed by punctuation/whitespace separators
@@ -144,6 +145,15 @@
 				s = m[2].trim();
 			}
 		}
+
+		// Remove leading definite/indefinite articles followed by a space
+		s = s.replace(
+			/^(?:a|an|the|le|la|les|un|une|der|die|das|ein|eine|il|lo|gli|uno|una|el|los|las)\s+/u,
+			''
+		);
+
+		// Handle elided articles (e.g., "L'Orfeo", "L'Arlésienne")
+		s = s.replace(/^l['’]/u, '');
 
 		// Remove remaining punctuation characters
 		return s.replaceAll(/\p{P}+/gu, '');
@@ -400,7 +410,7 @@
 		// For parts, show a subtle gradient bar from 50 to 100 (parts are always above 50)
 		const normalizedScore = Math.max(0, Math.min(100, ((score - 50) / 50) * 100));
 		return `<div title="${score.toFixed(1)}" class="h-1.5 w-5 shrink-0 rounded-full bg-slate-700">
-				<div class="h-full rounded-full bg-gradient-to-r from-cyan-600 to-cyan-400" style="width: ${normalizedScore}%"></div>
+				<div class="h-full rounded-full ${score === 100 ? 'bg-cyan-300' : 'bg-gradient-to-r from-cyan-700 to-cyan-500'}" style="width: ${normalizedScore}%"></div>
 			</div>`;
 	}
 
