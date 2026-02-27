@@ -21,9 +21,9 @@ export const BEGINNER_TRACKLIST = [
 	'e5cfd8b5', // Beethoven – Concerto for Piano and Orchestra no. 5 in E-flat major, op. 73 “Emperor”
 	'5364d796', // Beethoven – Concerto for Violin and Orchestra in D major, op. 61
 	'82c92c7d', // Beethoven – Coriolan Overture, Op. 62
-	'd42bc69b', // Beethoven – Egmont, op. 84
 	'373722d2', // Beethoven - Minuet in G major
 	'591fcf82', // Beethoven – Overture “Leonore” no. 3 in C major, op. 72b
+	'591cd920', // Beethoven – Rage over a Lost Penny
 	'c366ec5b', // Beethoven – Sonata for Piano no. 8 in C minor, op. 13 “Pathétique”
 	'bcd958bd', // Beethoven – Sonata for Piano no. 14 in C-sharp minor, op. 27 no. 2 “Moonlight”
 	'a3c9dc10', // Beethoven – Sonata for Piano no. 21 in C major, op. 53 “Waldstein”

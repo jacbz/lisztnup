@@ -106,7 +106,7 @@
 | `e97507a6` | Bach – Sinfonia Nr. 7 e-Moll, BWV 793 | * Sinfonia Nr. 7 e-Moll, BWV 793 | ? |
 | `145dab90` | Bach – Sinfonia Nr. 8 F-Dur, BWV 794 | * Sinfonia Nr. 8 F-Dur, BWV 794 | ? |
 | `c45a4bd2` | Bach – Sinfonia Nr. 9 f-Moll, BWV 795 | * Sinfonia Nr. 9 f-Moll, BWV 795 | ? |
-| `7481c7f5` | Bach – Six concerts avec plusieurs instruments | * Brandenburgisches Konzert Nr. 3 G-Dur, BWV 1048: I. Allegro | ? |
+| `7481c7f5` | Bach – Six concerts avec plusieurs instruments | * Brandenburgisches Konzert Nr. 3 G-Dur, BWV 1048: I. Allegro | 1711‑1720 |
 | `4e4b97df` | Bach – Six Suites for Unaccompanied Cello | * Cello Suite No. 1 in G major, BWV 1007: I. Prélude | 1717‑1723 |
 | `6bdb38e2` | Bach – Sonata for Flute & Keyboard in B minor, BWV 1030 | * I. Andante | 1736‑1737 |
 | `e639b3db` | Bach – Sonata for Flute and Continuo in E minor, BWV 1034 | * I. Adagio ma non tanto | 1724 |
@@ -121,16 +121,16 @@
 | `0a633962` | Bach – Sonate für Violine und Klavier E-Dur, BWV 1016 | * I. Adagio | 1720 |
 | `8768bb9e` | Bach – Sonate für Violine und Klavier f-Moll, BWV 1018 | * I. | ? |
 | `e3d84d65` | Bach – Sonate für Violine und Klavier h-Moll, BWV 1014 | * II. Allegro | ? |
-| `45afb3b2` | Bach – St Matthew Passion, BWV 244 | * Matthäus-Passion, BWV 244: Teil II, XXXIX. Aria (Alto) "Erbarme dich, mein Gott" | ? |
+| `45afb3b2` | Bach – St Matthew Passion, BWV 244 | * Matthäus-Passion, BWV 244: Teil II, XXXIX. Aria (Alto) "Erbarme dich, mein Gott" | 1727 |
 | `e562bb8c` | Bach – The Art of Fugue, BWV 1080 | * Die Kunst der Fuge, BWV 1080: I. Contrapunctus 1 | 1742‑1750 |
 | `5ce9a117` | Bach – The Musical Offering, BWV 1079 | * Musikalisches Opfer, BWV 1079: V. Ricercare a 6 | 1747 |
 | `bd511c33` | Bach – The Well-Tempered Clavier, BWV 846–893 | * The Well-Tempered Clavier, Book I: Prelude and Fugue no. 1 in C major, BWV 846: Prelude | 1722 |
 | `809dbdcd` | Bach – Toccata and Fugue in D minor "Dorian", BWV 538 | * I. Toccata | 1712‑1717 |
 | `f0cf1f6b` | Bach – Toccata in C minor, BWV 911 | * Toccata in C minor, BWV 911 | ? |
-| `c4f0bd0a` | Bach – Toccata und Fuge d-Moll, BWV 565 | * I. Toccata | ? |
+| `c4f0bd0a` | Bach – Toccata und Fuge d-Moll, BWV 565 | * I. Toccata | 1703‑1707 |
 | `c844021e` | Bach – Toccata und Fuge F-Dur, BWV 540 | * I. Toccata | ? |
 | `f8d2e6ed` | Bach – Toccata, Adagio, and Fugue in C major, BWV 564 | * II. Adagio | 1712 |
-| `5543ddeb` | Bach – Violin Concerto in A minor, BWV 1041 | * I. Allegro | ? |
+| `5543ddeb` | Bach – Violin Concerto in A minor, BWV 1041 | * I. Allegro | 1717‑1723 |
 | `7e466a70` | Bach – Violin Concerto in E major, BWV 1042 | * I. Allegro | ? |
 | `1ebe1abf` | Barber – Adagio for Strings | * Adagio for Strings | 1936 |
 | `663f0bd9` | Barrios Mangoré – La catedral | * III. Allegro solemne | 1921 |
@@ -236,7 +236,7 @@
 | `491aba59` | Boccherini – 6 String Quintets, op. 11 (G.271-276) | * Quintet in E major, G. 275, op. 11 no. 5: III. Minuetto (con un poco di moto) | 1771 |
 | `5e6d614e` | Boëllmann – Suite Gothique, op. 25 | * IV. Toccata | 1895 |
 | `be546cd2` | Borodin – In the Steppes of Central Asia | * In the Steppes of Central Asia | 1880 |
-| `9a81051a` | Borodin – Polovtsian Dances (arr. Glazunov, Rimsky‐Korsakov) | * Polovtsian Dances no. 8, “Dance of the Polovtsian Maidens”: Presto, 6/8, F major | ? |
+| `9a81051a` | Borodin – Polovtsian Dances (arr. Glazunov, Rimsky‐Korsakov) | * Polovtsian Dances no. 8, “Dance of the Polovtsian Maidens”: Presto, 6/8, F major | 1887 |
 | `fc571a2e` | Borodin – String Quartet no. 2 in D major | * III. Notturno. Andante | 1881 |
 | `06780369` | Brahms – 16 Waltzes, op. 39 | * Walzer, op. 39: Nr. 15 As-dur | 1865 |
 | `34f23db8` | Brahms – 2 String Quartets, op. 51 | * String Quartet no. 1 in C minor, op. 51 no. 1: II. Romanze. Poco adagio | 1873 |
@@ -254,7 +254,7 @@
 | `40215afd` | Brahms – Concerto for Violin and Orchestra in D major, op. 77 | * III. Allegro giocoso, ma non troppo vivace | 1878 |
 | `304289a2` | Brahms – Concerto for Violin, Cello, and Orchestra in A minor, op. 102 “Double Concerto” | * I. Allegro | 1887 |
 | `362813da` | Brahms – Ein deutsches Requiem, op. 45 | * IV. “Wie lieblich sind Deine Wohnungen” (Chor) | 1865‑1868 |
-| `3f13a790` | Brahms – Hungarian Dances for orchestra (orch. Schmeling) | * Hungarian Dance No. 5 | ? |
+| `3f13a790` | Brahms – Hungarian Dances for orchestra (orch. Schmeling) | * Hungarian Dance No. 5 | 1879 |
 | `ef54cde3` | Brahms – Hungarian Dances for orchestra, WoO 1 | * Book 1, no. 1 in G minor: Allegro molto | 1867‑1869 |
 | `e7aa2f0b` | Brahms – Piano Pieces, op. 119 | * Klavierstücke, op. 119: Nr. 3. Intermezzo in C-Dur. Grazioso e giocoso | 1893 |
 | `0f006b80` | Brahms – Piano Quartet no. 1 in G minor, op. 25 | * IV. Rondo alla Zingarese. Presto | 1856‑1861 |
@@ -375,7 +375,7 @@
 | `42dbb579` | Debussy – String Quartet in G minor, Op. 10, L. 85, CD 91 | * I. Animé et très décidé | 1892‑1893 |
 | `51c5a474` | Debussy – Suite bergamasque, L. 75, CD 82 | * III. Clair de lune | 1890‑1905 |
 | `937f3282` | Debussy – Syrinx, L. 129, CD 137 | * Syrinx, L. 129, CD 137 | 1913 |
-| `ea9195ab` | Delibes – Lakmé | * Lakmé : Acte I. No. 2 Duetto « Viens, Mallika, les lianes en fleurs » … « Dôme épais le jasmin » (Lakmé, Mallika) | ? |
+| `ea9195ab` | Delibes – Lakmé | * Lakmé : Acte I. No. 2 Duetto « Viens, Mallika, les lianes en fleurs » … « Dôme épais le jasmin » (Lakmé, Mallika) | 1881‑1882 |
 | `a109759a` | Delius – On Hearing the First Cuckoo in Spring, RT vi/19/1 | * On Hearing the First Cuckoo in Spring, RT vi/19/1 | 1912 |
 | `e753558f` | Donizetti – L’elisir d’amore | * Atto II. Romanza “Una furtiva lagrima” (Nemorino) | 1832 |
 | `dea153fe` | Donizetti – Lucia di Lammermoor | * Atto III, Scena 2. no. 15. “Tombe degli avi miei” (Edgardo) | 1835 |
@@ -450,7 +450,7 @@
 | `b2650ffe` | Haydn – Piano Concerto no. 11 in D major, Hob. XVIII:11 | * I. Vivace | ? |
 | `ea1b28a6` | Haydn – Piano Sonata no. 60 in C major, Hob. XVI:50 | * I. Allegro | 1795 |
 | `19458141` | Haydn – Piano Sonata no. 62 in E-flat major, Hob. XVI:52 | * III. Finale: Presto | 1794 |
-| `21ccd102` | Haydn – Piano Trios, Hob. XV:24-26 | * Piano Trio no. 39 in G major, Hob. XV:25: III. Rondo "in the Gypsies' stile". Presto | ? |
+| `21ccd102` | Haydn – Piano Trios, Hob. XV:24-26 | * Piano Trio no. 39 in G major, Hob. XV:25: III. Rondo "in the Gypsies' stile". Presto | 1795 |
 | `c6360a27` | Haydn – String Quartets, op. 76 | * String Quartet in C major, op. 76 no. 3 Hob. III:77 “Kaiser”: II. Poco Adagio. Cantabile | 1796‑1797 |
 | `f1ac96bf` | Haydn – Symphony no. 100 in G major, Hob. I:100 "Military" | * I. Adagio - Allegro | 1794 |
 | `da30a1dc` | Haydn – Symphony no. 101 in D major, Hob. I:101 “Clock” | * II. Andante | 1794 |
@@ -474,7 +474,7 @@
 | `3abf8cb1` | Khachaturian – Masquerade Suite, op. 48a | * I. Waltz | 1944 |
 | `eda2e2b3` | Khachaturian – Spartacus, op. 82 | * Spartacus: Adagio of Spartacus & Phrygia | 1955 |
 | `17e6f714` | Khachaturian – Third Suite from the ballet “Gayaneh” for orchestra, op. 55 | * V. Sabre Dance | 1943 |
-| `d4d03cc3` | Kreisler – Alt-Wiener Tanzweisen | * Liebesleid | ? |
+| `d4d03cc3` | Kreisler – Alt-Wiener Tanzweisen | * Liebesleid | 1905 |
 | `d9030387` | Kreisler – Caprice viennois, op. 2 | * Caprice viennois, op. 2 | 1910 |
 | `b17b78e3` | Kreisler – Tambourin chinois, op. 3 | * Tambourin chinois, op. 3 | ? |
 | `9cf137ed` | Lalo – Symphonie espagnole in D minor, op. 21 | * II. Scherzando. Allegro molto | 1874 |
@@ -487,7 +487,7 @@
 | `d7793d9f` | Liszt – Concerto for Piano and Orchestra no. 1 in E‐flat major, S. 124 | * I. Allegro maestoso | 1830‑1856 |
 | `f0563d96` | Liszt – Consolations, S. 172 | * Consolation in D‐flat major, S. 172 no. 3: Lento placido | 1849‑1850 |
 | `91a50e75` | Liszt – Fantasia on Hungarian Folk Melodies for piano and orchestra, S. 123 | * Fantasia on Hungarian Folk Melodies for piano and orchestra, S. 123 | 1846‑1852 |
-| `5346c5d4` | Liszt – Grandes études de Paganini, S. 141 | * No. 3. La campanella in G‐sharp minor | ? |
+| `5346c5d4` | Liszt – Grandes études de Paganini, S. 141 | * No. 3. La campanella in G‐sharp minor | 1851 |
 | `7d2dae89` | Liszt – Konzert-Paraphrase über Verdis "Rigoletto", S. 434 | * Konzert-Paraphrase über Verdis "Rigoletto", S. 434 | ? |
 | `5e852053` | Liszt – Les Préludes, S. 97 | * Les Préludes, S. 97 | 1850‑1855 |
 | `879ddafd` | Liszt – Liebesträume, S. 541 | * No. 3 Liebestraum in A flat major “Dream of Love” | 1850 |
@@ -533,7 +533,7 @@
 | `c230858f` | Mendelssohn – Violin Concerto in E minor, op. 64 | * II. Andante | 1838‑1844 |
 | `92eab622` | Messiaen – Quartet for the End of Time | * Quatuor pour la fin du Temps : V. Louange à l'Éternité de Jesus | 1940 |
 | `fe664803` | Meyerbeer – L’africana: Atto IV. “Mi batte il cor” … “O Paradiso” | * L’africana: Atto IV. “Mi batte il cor” … “O Paradiso” | ? |
-| `693e3a75` | Monti – Csárdás | * Csárdás | ? |
+| `693e3a75` | Monti – Csárdás | * Csárdás | 1904 |
 | `a0241177` | Mozart – Adagio for Piano in B minor, K. 540 | * Adagio for Piano in B minor, K. 540 | 1788 |
 | `36aadcde` | Mozart – Adagio for Violin and Orchestra in E major, K. 261 | * Adagio for Violin and Orchestra in E major, K. 261 | 1776 |
 | `29428bfd` | Mozart – Andante in C major for Flute and Orchestra, K. 285e/315 | * Andante in C major for Flute and Orchestra, K. 285e/315 | 1778 |
@@ -649,10 +649,10 @@
 | `e624d7dc` | Mussorgsky – Pictures at an Exhibition (orch. Ravel) | * X. The Great Gate of Kiev | 1874 |
 | `dc59f081` | Nielsen – Symphony no. 4, op. 29, FS 76 “The Inextinguishable” | * I. Allegro | 1914‑1916 |
 | `c283b670` | Offenbach – Die schöne Helena | * La Belle Hélène: Ouverture | ? |
-| `7ca9655b` | Offenbach – Les Contes d’Hoffmann | * Acte III. “Belle nuit, ô nuit d’amour” (Nicklausse, Giulietta) | ? |
+| `7ca9655b` | Offenbach – Les Contes d’Hoffmann | * Acte III. “Belle nuit, ô nuit d’amour” (Nicklausse, Giulietta) | 1880 |
 | `ee79cd92` | Offenbach – Orpheus in the Underworld | * Overture | 1860 |
 | `76c6b9c5` | Orff – Trionfi | * Carmina Burana: Fortuna imperatrix mundi: I. O Fortuna | 1936 |
-| `70ed831c` | Pachelbel – Canon and Gigue in D major, P. 37, T. 337 | * I. Canon | ? |
+| `70ed831c` | Pachelbel – Canon and Gigue in D major, P. 37, T. 337 | * I. Canon | 1680 |
 | `ded18a4a` | Paganini – 24 Caprices for Solo Violin, op. 1, MS 25 | * 24 Caprices for Solo Violin, MS 25, op. 1 no. 24 in A minor: Tema con variazioni. Quasi presto | 1802‑1817 |
 | `86f174b7` | Paganini – Concerto for Violin and Orchestra in D major, op. 6, MS 21 | * III. Rondò - Allegro spiritoso | 1815‑1816 |
 | `de10695e` | Parry – I was glad | * I was glad | 1902 |
@@ -679,7 +679,7 @@
 | `13d340ea` | Prokofiev – Violin Concerto no. 2 in G minor, op. 63 | * I. Allegro moderato | 1935 |
 | `19da23f4` | Puccini – Il trittico | * Gianni Schicchi: “O mio babbino caro” (Lauretta) | 1917‑1918 |
 | `765c54af` | Puccini – La bohème | * Atto I, no. 6. “Che gelida manina!” (Rodolfo) | 1896 |
-| `e83a319a` | Puccini – Madama Butterfly | * Atto II. “Un bel dì, vedremo” (Butterfly) | ? |
+| `e83a319a` | Puccini – Madama Butterfly | * Atto II. “Un bel dì, vedremo” (Butterfly) | 1904 |
 | `d8a080c3` | Puccini – Manon Lescaut | * Atto I. “Donna non vidi mai simile a questa!” (Des Grieux) | 1893 |
 | `b3e15438` | Puccini – Tosca | * Atto III. “E lucevan le stelle” (Cavaradossi) | 1900 |
 | `f617e5ae` | Puccini – Turandot | * Atto III, scena 1. Aria “Nessun dorma” (Calaf) | 1921‑1924 |
@@ -733,12 +733,12 @@
 | `82d6a244` | Rimsky‐Korsakov – The Tale of Tsar Saltan | * Flight of the Bumblebee | 1899‑1900 |
 | `4344e777` | Rodrigo – Concierto de Aranjuez | * II. Adagio | 1939 |
 | `dcbd010a` | Rodrigo – Fantasía para un gentilhombre | * IV. Canario | 1954 |
-| `1ce190e3` | Rossini – Guillaume Tell | * William Tell Overture: Finale, March of the Swiss Soldiers (allegro vivace) | ? |
-| `adeb0cf7` | Rossini – Il barbiere di Siviglia | * Atto I, N°5a. Cavatina “Una voce poco fa” … “Io sono docile” (Rosina) | ? |
+| `1ce190e3` | Rossini – Guillaume Tell | * William Tell Overture: Finale, March of the Swiss Soldiers (allegro vivace) | 1829 |
+| `adeb0cf7` | Rossini – Il barbiere di Siviglia | * Atto I, N°5a. Cavatina “Una voce poco fa” … “Io sono docile” (Rosina) | 1816 |
 | `77887635` | Rossini – Il signor Bruschino | * Sinfonia | ? |
 | `3eb0c94b` | Rossini – L’italiana in Algeri | * Sinfonia | ? |
 | `676bdcd4` | Rossini – La gazza ladra | * The Thieving Magpie: Overture | 1817 |
-| `66f32354` | Rossini – The Barber of Seville | * Il barbiere di Siviglia: Sinfonia | ? |
+| `66f32354` | Rossini – The Barber of Seville | * Il barbiere di Siviglia: Sinfonia | 1816 |
 | `0c80275f` | Rubinstein – 2 Mélodies, op. 3 | * No. 1 in F major | 1852 |
 | `289c4b5c` | Saint‐Saëns – Cello Concerto no. 1 in A minor, op. 33 | * I. Allegro non troppo | 1872 |
 | `640d92c6` | Saint‐Saëns – Danse macabre, op. 40 | * Danse macabre, op. 40 | 1874 |
@@ -766,7 +766,7 @@
 | `b4d1328b` | Schubert – 3 Marches militaires, op. 51, D. 733 | * Marche militaire, op. 51, D. 733 no. 1 in D major | ? |
 | `b6971a84` | Schubert – 4 Impromptus, op. 142, D. 935 | * Impromptu in A-flat major, D. 935 no. 2. Allegretto | 1827 |
 | `9d1fcbf9` | Schubert – 4 Impromptus, op. 90, D. 899 | * Impromptu in G-flat major, op. 90, D. 899: No. 3. Andante | 1827 |
-| `a0e76a3e` | Schubert – 6 Moments musicaux for Piano, op. 94, D. 780 | * No. 3 in F minor. Allegro moderato | ? |
+| `a0e76a3e` | Schubert – 6 Moments musicaux for Piano, op. 94, D. 780 | * No. 3 in F minor. Allegro moderato | 1823‑1828 |
 | `d614a0cd` | Schubert – An die Musik, D. 547 | * An die Musik, D. 547 | 1817 |
 | `d79e53ef` | Schubert – An Sylvia, D. 891 | * An Sylvia, D. 891 | 1826 |
 | `f8f24282` | Schubert – Auf dem Wasser zu singen, D. 774 | * Auf dem Wasser zu singen, D. 774 | ? |
@@ -852,7 +852,7 @@
 | `bc715187` | Shostakovich – String Quartet no. 3 in F major, op. 73 | * I. Allegretto | 1946 |
 | `3885d794` | Shostakovich – String Quartet no. 7 in F-sharp minor, op. 108 | * I. Allegretto | 1960 |
 | `725265f4` | Shostakovich – String Quartet no. 8 in C minor, op. 110 | * II. Allegro molto | 1960 |
-| `d3229859` | Shostakovich – Suite for Variety Orchestra | * VII. Waltz II. Allegretto poco moderato | ? |
+| `d3229859` | Shostakovich – Suite for Variety Orchestra | * VII. Waltz II. Allegretto poco moderato | 1956 |
 | `75c7ebd2` | Shostakovich – Symphony no. 1 in F minor, op. 10 | * I. Allegretto - Allegro ma non troppo | 1924‑1925 |
 | `f1246634` | Shostakovich – Symphony no. 10 in E minor, op. 93 | * II. Allegro | 1946‑1953 |
 | `51542533` | Shostakovich – Symphony no. 11 in G minor, op. 103 "The Year 1905" | * I. Palace Square. Adagio | 1957 |
@@ -896,7 +896,7 @@
 | `589eea6b` | Strauss – Burleske in D minor, TrV 145 | * Burleske in D minor, TrV 145 | 1885‑1886 |
 | `8a385dbd` | Strauss – Champagner Polka, op. 211 | * Champagner Polka, op. 211 | ? |
 | `f2d0754e` | Strauss – Der Zigeunerbaron | * Ouvertüre | ? |
-| `88504b20` | Strauss – Die Fledermaus | * Overture | ? |
+| `88504b20` | Strauss – Die Fledermaus | * Overture | 1874 |
 | `fd3e8e99` | Strauss – Don Juan | * Don Juan | 1888 |
 | `55f0a8a1` | Strauss – Don Quixote | * op. 35: Epilogue: Don Quixote's Mind Clears. Death of Don Quixote | 1897 |
 | `927ad721` | Strauss – Egyptischer Marsch, op. 335 | * Egyptischer Marsch, op. 335 | ? |
@@ -921,7 +921,7 @@
 | `85be26e9` | Strauss – Thunder and Lightning, op. 324 | * Thunder and Lightning, op. 324 | ? |
 | `a4c3bb91` | Strauss – Till Eulenspiegel’s Merry Pranks | * Till Eulenspiegel’s Merry Pranks | 1894‑1895 |
 | `5a498219` | Strauss – Treasure-Waltz, Op. 418 | * Treasure-Waltz, Op. 418 | 1885 |
-| `38ed9e44` | Strauss – Tritsch–Tratsch Polka, op. 214 | * Tritsch–Tratsch Polka, op. 214 | ? |
+| `38ed9e44` | Strauss – Tritsch–Tratsch Polka, op. 214 | * Tritsch–Tratsch Polka, op. 214 | 1858 |
 | `dd995231` | Strauss – Vergnügungszug, op. 281 | * Vergnügungszug, op. 281 | ? |
 | `54fe325f` | Strauss – Vienna Blood | * Vienna Blood | ? |
 | `ed538401` | Strauss – Vienna Bonbons, Op. 307 | * Vienna Bonbons, Op. 307 | 1866 |
@@ -948,7 +948,7 @@
 | `c3912d1e` | Tchaikovsky – Sérénade mélancolique in B-flat minor, op. 26 | * Sérénade mélancolique in B-flat minor, op. 26 | 1875 |
 | `8251f675` | Tchaikovsky – Souvenir de Florence in D minor, op. 70 | * II. Adagio cantabile e con moto | 1890 |
 | `d82aa643` | Tchaikovsky – String Quartet no. 1 in D major, op. 11 | * II. Andante cantabile | 1871 |
-| `11f48c5e` | Tchaikovsky – Swan Lake, op. 20 | * Act II, no. 10: Scene: Moderato | ? |
+| `11f48c5e` | Tchaikovsky – Swan Lake, op. 20 | * Act II, no. 10: Scene: Moderato | 1875‑1876 |
 | `e590ef34` | Tchaikovsky – Symphony no. 1 in G minor, op. 13 "Winter Daydreams" | * II. Land of Desolation, Land of Mists: Andante cantabile ma non tanto | 1866‑1868 |
 | `9127971c` | Tchaikovsky – Symphony no. 2 in C minor, op. 17 "Little Russian" | * I. Andante sostenuto – Allegro vivo | 1872 |
 | `b9655de0` | Tchaikovsky – Symphony no. 4 in F minor, op. 36 | * IV. Finale. Allegro con fuoco | 1877‑1878 |
@@ -965,7 +965,7 @@
 | `d83f0a23` | Verdi – Don Carlo | * Atto III, scena 1. N°13 “O don fatale, o don crudel” (Eboli) | 1866 |
 | `74301cbd` | Verdi – Il trovatore | * Atto II, scena 1. “Vedi! Le fosche notturne” (zingari) | 1853 |
 | `2d9b73da` | Verdi – La forza del destino | * Sinfonia | ? |
-| `24df0a9b` | Verdi – La traviata | * Atto I. Brindisi “Libiamo, ne’ lieti calici” (Alfredo, Coro, Violetta) | ? |
+| `24df0a9b` | Verdi – La traviata | * Atto I. Brindisi “Libiamo, ne’ lieti calici” (Alfredo, Coro, Violetta) | 1853 |
 | `2d73a8a6` | Verdi – Messa da requiem | * IIh. Dies irae: Ingemisco (tenore) | 1874 |
 | `445fc058` | Verdi – Nabucco | * Parte III, scena 2. Coro “Va, pensiero, sull’ali dorate” (Coro) | 1841 |
 | `0b1f0523` | Verdi – Otello | * Atto IV. “Ave Maria” (Desdemona) | 1887 |

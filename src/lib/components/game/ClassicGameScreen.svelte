@@ -30,7 +30,7 @@
 					{#each activeCategories as category, index}
 						{@const categoryDef = getCategoryDefinition(category)}
 						<div
-							class="relative flex w-[calc(50%-0.1875rem)] flex-col items-center justify-center overflow-hidden rounded-2xl border-3 border-transparent py-1 backdrop-blur-md md:w-[calc(33%-0.1875rem)] md:py-2"
+							class="relative flex w-[calc(50%-0.1875rem)] flex-col items-center justify-center overflow-hidden rounded-2xl border-3 border-transparent py-1 md:w-[calc(33%-0.1875rem)] md:py-2"
 							style="border-color: {categoryDef.color2}; box-shadow: 0 0 40px {categoryDef.glowColor}; color: {categoryDef.color1};"
 						>
 							<!-- Background Icon -->

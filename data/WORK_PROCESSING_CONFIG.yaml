@@ -76,7 +76,33 @@ wss_overrides:
 # --- Year Overrides ---
 # Manually set the year for specific works.
 year_overrides:
+  # These overrides can be removed with the next MusicBrainz data dump
   'e74a3a95-8008-43e3-939d-50d6bc9a221b': 1738
+  '45afb3b2-18ac-4187-bc72-beb1b1c194ba': 1727
+  'ea9195ab-f3d6-420b-b087-d2f59868f745': [1881, 1882]
+  '21ccd102-113b-474d-9523-953829e87840': 1795
+  '5346c5d4-ae67-46c6-981b-553c0a6ad583': 1851
+  '693e3a75-7287-3459-872e-d8606b4861fe': 1904
+  '7ca9655b-8d9e-48be-9917-1e95bf9e183c': 1880
+  'a0e76a3e-0e4c-4721-abba-39bfc4744361': [1823, 1828]
+  '38ed9e44-839d-3088-b66a-45c6e2399ec6': 1858
+  '11f48c5e-5ee9-4646-9826-fb7c2fccce7f': [1875, 1876]
+
+  # Uncertain dates that are manually set to a reasonable scholarly estimate
+  '7481c7f5-71bd-464e-956a-c670f4117de3': [1711, 1720]
+  'c4f0bd0a-342e-3071-ac3b-7e5e7f17f924': [1703, 1707]
+  '5543ddeb-d430-4d04-9dd3-5217cff3fc89': [1717, 1723]
+  '9a81051a-cd0d-387c-8c71-fbf6788f90e0': 1887
+  'd4d03cc3-8c6c-4bdc-b584-68a5523db93e': 1905
+  '70ed831c-716e-3ba2-b997-527ea6ec1ca3': 1680
+  'e83a319a-4568-4077-88a4-f8f4db416926': 1904
+  '1ce190e3-3a91-4341-9fbb-201281357935': 1829
+  'adeb0cf7-4f03-4781-87e5-a9228fdb02a3': 1816
+  '66f32354-edf8-48d0-a8d9-4321db4d462f': 1816
+  'd3229859-69bc-4bb3-9c60-39ef47c761ef': 1956
+  '88504b20-f1e2-4316-ad45-347730af6b5f': 1874
+  '3f13a790-3103-4a79-ac0e-c7aa3d495568': 1879
+  '24df0a9b-7977-4ff6-a4dc-7ad71db6972c': 1853
 
 # --- Manual Classification Overrides ---
 # Manually force a work into a specific type category.

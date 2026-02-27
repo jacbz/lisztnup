@@ -158,10 +158,13 @@ def normalize_name(name):
         return ""
     return re.sub(r"[^a-z0-9]", "", name.lower())
 
-forbidden_artist_comment = ['band', 'score composer', 'producer', 'songwriter', 'film', 'soundtrack', 'TV', 'pop', 'rock', 'jazz', 'hip hop', 'rap', 
-                    'metal', 'punk', 'electronic', 'folk', 'country', 'dj', 'dance', 'reggae', 'new age', 'fusion', 'crossover',
-                    'blues', 'r&b', 'soul', 'schlager']
-patterns = [f"%{x}%" for x in forbidden_artist_comment]
+FORBIDDEN_ARTIST_COMMENT = [
+    'band', 'score composer', 'producer', 'songwriter', 'film', 'soundtrack', 'TV', 
+    'pop', 'rock', 'jazz', 'hip hop', 'rap', 'metal', 'punk', 'electronic', 'folk', 
+    'country', 'dj', 'dance', 'reggae', 'new age', 'fusion', 'crossover', 'blues', 
+    'r&b', 'soul', 'schlager'
+]
+PATTERNS = [rf"\m{x}\M" for x in FORBIDDEN_ARTIST_COMMENT]
 
 # --- SQL Queries ---
 GET_TOP_LEVEL_WORKS_SQL = """
@@ -481,7 +484,7 @@ def get_work_details_recursive(cursor, work_id, work_name, label_counter):
             dropped_reason = None
 
             # Exclude recordings where the artist comment contains forbidden terms
-            if any(term in artist_comment.lower() for term in forbidden_artist_comment):
+            if any(term in artist_comment.lower() for term in FORBIDDEN_ARTIST_COMMENT):
                 dropped_reason = f"forbidden artist comment: '{artist_comment}'"
             # Exclude recordings where the artist credit name does not contain a space, most often a band name
             elif ' ' not in artist_credit:
@@ -696,7 +699,7 @@ def main():
         conn = psycopg2.connect(**DB_CONFIG)
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         print("Fetching and grouping top-level works...")
-        cursor.execute(GET_TOP_LEVEL_WORKS_SQL, (patterns,))
+        cursor.execute(GET_TOP_LEVEL_WORKS_SQL, (PATTERNS,))
         top_level_works_raw = cursor.fetchall()
         
         log.info("Found %d candidate top-level works via SQL.", len(top_level_works_raw))

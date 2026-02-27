@@ -67,7 +67,7 @@ general_rules:
     - for (four|4|6) hands|à quatre mains|for (two|2) Pianos
     # Generic small ensemble forms.
     - \b(Serenade|Divertimento)\b for \d|\bKammermusik\b|Adagio und Allegro
-    - Pieces for Clarinet, Viola and Piano
+    - Pieces for Clarinet, Viola and Piano|Sonata for Violin & Piano
     - Sonata.*(major|minor|Dur|moll).*BWV
 
   #=============================================================================
@@ -119,7 +119,7 @@ composer_specific_rules:
       - orch\.
     piano:
       - Iberia|España|Cantos de España|Suite Española|Recuerdos de viaje|piezas características
-      - La Vega|Mallorca, op. 202|Navarra, B. 49|Pavana-capricho|Sonata para piano
+      - La Vega|Mallorca, op. 202|Navarra, B. 49|Pavana-capricho|Sonata para piano|Azulejos
   'Albéniz, Mateo':
     piano:
       - Sonata in D major
@@ -1253,7 +1253,8 @@ composer_specific_rules:
     concerto:
       - Andante in C major for Flute and Orchestra
     piano:
-      - Piano Sonata .* K\.\s?\d+|Fantasia .* K\.\s?\d+|Adagio.*K\.\s(617a|356)|Präludium.*K\.|Piano piece|for Keyboard|Rondo no\.?\s?2|The London Sketchbook|(Allegro|Andante|Menuett|Minuet) in . major|Romanze in A-flat major|Rondo D-Dur, KV 485
+      - Piano Sonata .* K\.\s?\d+|Fantasia .* K\.\s?\d+|Adagio.*K\.\s(617a|356)|Präludium.*K\.|Piano piece|for Keyboard|Rondo no\.?\s?2
+      - The London Sketchbook|(Allegro|Andante|Menuett|Minuet) in . major|Romanze in A-flat major|Rondo D-Dur, KV 485|Allegro in B-flat major
     orchestral:
       - Serenade .* K\.|Eine kleine Nachtmusik|Marches, K\. 320a|Church Sonata .* for Orchestra
     chamber:
@@ -1747,6 +1748,7 @@ composer_specific_rules:
       - Gulistān
   'Sousa, John Philip':
     orchestral:
+      - orch\.
       - El Capitán|Hands Across the Sea|The Thunderer
   'Squire, William Henry':
     chamber:

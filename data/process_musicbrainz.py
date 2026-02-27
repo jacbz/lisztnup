@@ -35,7 +35,7 @@ import re
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional, Set, Any, Tuple
+from typing import Dict, List, Optional, Set, Any, Tuple, Union
 import yaml
 
 # Module-level logger – writes to process_musicbrainz.log (configured in main)
@@ -91,7 +91,7 @@ EXCLUDED_COMPOSERS: Set[str] = set()
 EXCLUDED_WORKS: Set[str] = set()
 WSS_OVERRIDES: Dict[str, float] = {}
 MANUAL_CLASSIFICATION_OVERRIDES: Dict[str, str] = {}
-YEAR_OVERRIDES: Dict[str, Dict[str, Optional[int]]] = {}
+YEAR_OVERRIDES: Dict[str, Union[int, List[Optional[int]]]] = {}
 
 # Deezer IDs without preview mp3s, loaded from 'DEEZER_EXCLUDED_IDS' file
 EXCLUDED_DEEZER_IDS: Set[int] = set([])
@@ -457,8 +457,25 @@ class MusicbrainzProcessor:
                 end_year = root_work.end_year
                 if root_work.gid in self.year_overrides:
                     override = self.year_overrides[root_work.gid]
-                    begin_year = None
-                    end_year = override
+                    if isinstance(override, (list, tuple)):
+                        if len(override) >= 2:
+                            begin_year = override[0]
+                            end_year = override[1]
+                        elif len(override) == 1:
+                            begin_year = None
+                            end_year = override[0]
+                        else:
+                            begin_year = None
+                            end_year = None
+                    elif isinstance(override, int):
+                        begin_year = None
+                        end_year = override
+                    else:
+                        try:
+                            end_year = int(override)
+                            begin_year = None
+                        except Exception:
+                            pass
 
                 all_works.append(
                     FinalWork(
@@ -655,20 +672,34 @@ class MusicbrainzProcessor:
         """
         Cleans up the works list by:
         1. Removing works that appear with multiple different composers (same gid, different composer gid).
-        2. Removing duplicate works with the same gid (keeping only the first occurrence).
+        2. Removing duplicate works with the same gid (keeping the one by the composer with the higher score).
         3. Removing parts that have Deezer IDs assigned to other works (cross-work deduplication).
         4. Removing duplicate parts within each work that have the same Deezer ID (keeping only the first).
         5. Removing works that become empty after part deduplication.
         """
+        # Calculate preliminary composer scores to resolve duplicate GIDs
+        all_works_temp = [w for works in works_after_wss.values() for w in works]
+        work_counts = Counter(w.composer for w in all_works_temp)
+        max_work_count = max(work_counts.values()) if work_counts else 0
+        max_wss = max((w.score for w in all_works_temp), default=MINIMUM_WSS)
+        composer_scores = {}
+        for composer_gid in work_counts.keys():
+            composer_scores[composer_gid] = self._calculate_composer_score(
+                composer_gid, all_works_temp, max_work_count, max_wss
+            )
         gid_to_composers = defaultdict(set)
-        gid_to_first_work = {}
+        gid_to_best_work = {}
         
         for works in works_after_wss.values():
             for work in works:
                 gid_to_composers[work.gid].add(work.composer)
-                # Track the first occurrence of each gid
-                if work.gid not in gid_to_first_work:
-                    gid_to_first_work[work.gid] = work
+                # Track the best occurrence of each gid based on composer score
+                if work.gid not in gid_to_best_work:
+                    gid_to_best_work[work.gid] = work
+                else:
+                    current_best = gid_to_best_work[work.gid]
+                    if composer_scores.get(work.composer, 0) > composer_scores.get(current_best.composer, 0):
+                        gid_to_best_work[work.gid] = work
 
         # Assign each deezer ID to the first work that contains it
         deezer_to_work_gid = {}
@@ -686,10 +717,13 @@ class MusicbrainzProcessor:
         for work_type, works in works_after_wss.items():
             filtered_list = []
             for work in works:
-                # Skip duplicate gids (keep only first occurrence)
-                if work.gid in seen_gids:
+                # Skip duplicate gids (keep only the one with the highest composer score)
+                if gid_to_best_work[work.gid] is not work:
                     duplicates_removed += 1
-                    log.debug("WORK DROPPED (duplicate GID) | %s", work.name)
+                    log.debug("WORK DROPPED (duplicate GID, lower composer score) | %s", work.name)
+                    continue
+                
+                if work.gid in seen_gids:
                     continue
                 seen_gids.add(work.gid)
 
