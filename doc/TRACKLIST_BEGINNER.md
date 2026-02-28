@@ -4,6 +4,7 @@
 
 | ID | Work | Parts | Year |
 | :--- | :--- | :--- | :--- |
+| `c9790161` | Albéniz – Suite española no. 1, op. 47: V. Asturias (Leyenda) | * V. Asturias (Leyenda) | 1892 |
 | `fe8612d1` | Bach – Concerto for 2 Violins in D minor, BWV 1043 | * II. Largo ma non tanto | 1730‑1731 |
 | `1d51e560` | Bach – Goldberg Variations, BWV 988 | * Goldberg-Variationen, BWV 988: Aria | 1741 |
 | `e74a3a95` | Bach – Keyboard Concerto in D minor, BWV 1052 | * I. Allegro | 1738 |
@@ -37,7 +38,6 @@
 | `bcd958bd` | Beethoven – Two Piano Sonatas, op. 27 | * Sonata for Piano no. 14 in C-sharp minor, op. 27 no. 2 “Moonlight”: I. Adagio sostenuto | 1801 |
 | `3ee98c65` | Bellini – Norma | * Atto I, scena 1. Scena e cavatina “Casta diva, che inargenti” (Norma, coro) | 1831 |
 | `312510a8` | Berlioz – Symphonie fantastique, op. 14 : Épisode de la vie d’un artiste … en cinq parties | * Symphonie fantastique, op. 14: IV. Marche au supplice | 1830 |
-| `3f4b1135` | Berlioz – The Roman Carnival Overture for Orchestra, op. 9 | * The Roman Carnival Overture for Orchestra, op. 9 | 1843 |
 | `45efd8f4` | Bizet – Carmen, WD 31 | * Carmen : Acte I. No. 5 Habanera « L’amour est un oiseau rebelle » (Carmen, chœur) | 1875 |
 | `6ec79e92` | Bizet – L’Arlésienne Suite no. 2 (arr. Guiraud) | * IV. Farandole | 1872 |
 | `2dd0dc53` | Bizet – Les Pêcheurs de perles | * Les Pêcheurs de perles : Acte I. No. 2 Duo « Au fond du temple saint » (Zurga, Nadir) | 1863 |

@@ -420,7 +420,6 @@ def main():
         eval_data = evaluate_track(did, exp_title, dez_title)
         
         if eval_data.final_score >= SIMILARITY_THRESHOLD:
-            print(f" [AUTO-ACCEPT] '{dez_title}' (ID: {did}) | Score: {eval_data.final_score:.1f}")
             auto_accepted.append(did)
         elif eval_data.final_score < AUTO_REJECT_THRESHOLD:
             print(f" [AUTO-REJECT] '{dez_title}' (ID: {did}) | Score: {eval_data.final_score:.1f} | Expected: '{exp_title}'")

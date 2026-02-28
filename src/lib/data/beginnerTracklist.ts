@@ -2,6 +2,7 @@
  * Other tracklists are algorithmically generated, extending from this core list.
  */
 export const BEGINNER_TRACKLIST = [
+	'c9790161', // Albéniz – Asturias (guitar version)
 	'fe8612d1', // Bach – Concerto for 2 Violins in D minor, BWV 1043
 	'1d51e560', // Bach – Goldberg Variations, BWV 988
 	'e74a3a95', // Bach – Keyboard Concerto in D minor, BWV 1052
@@ -35,7 +36,6 @@ export const BEGINNER_TRACKLIST = [
 	'53ac5ed4', // Beethoven – Trio for Piano, Violin, and Cello no. 7 in B-flat major, op. 97 “Archduke”
 	'3ee98c65', // Bellini – Norma
 	'312510a8', // Berlioz – Symphonie fantastique, op. 14
-	'3f4b1135', // Berlioz – The Roman Carnival Overture for Orchestra, op. 9
 	'45efd8f4', // Bizet – Carmen, WD 31
 	'6ec79e92', // Bizet – L’Arlésienne Suite no. 2
 	'2dd0dc53', // Bizet - Les pêcheurs de perles

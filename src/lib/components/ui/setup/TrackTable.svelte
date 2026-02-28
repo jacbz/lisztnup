@@ -26,6 +26,7 @@
 	import { ALL_WORK_CATEGORIES } from '$lib/types/work';
 	import { ClipboardCopy } from 'lucide-svelte';
 	import { toast } from '$lib/stores/toast';
+	import { MIN_PART_SCORE } from '$lib/types/settings';
 
 	interface Props {
 		visible?: boolean;
@@ -382,8 +383,11 @@
 	}
 
 	function renderPartScore(score: number): string {
-		// For parts, show a subtle gradient bar from 50 to 100 (parts are always above 50)
-		const normalizedScore = Math.max(0, Math.min(100, ((score - 50) / 50) * 100));
+		// For parts, show a subtle gradient bar
+		const normalizedScore = Math.max(
+			0,
+			Math.min(100, ((score - MIN_PART_SCORE) / (100 - MIN_PART_SCORE)) * 100)
+		);
 		return `<div title="${score.toFixed(1)}" class="h-1.5 w-5 shrink-0 rounded-full bg-slate-700">
 				<div class="h-full rounded-full ${score === 100 ? 'bg-cyan-300' : 'bg-gradient-to-r from-cyan-700 to-cyan-500'}" style="width: ${normalizedScore}%"></div>
 			</div>`;

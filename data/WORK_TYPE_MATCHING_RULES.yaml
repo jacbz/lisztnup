@@ -115,6 +115,8 @@ composer_specific_rules:
     solo:
       - Fantasia prima
   'Albéniz, Isaac':
+    solo:
+      - 'Asturias' # Guitar arr.
     orchestral:
       - orch\.
     piano:

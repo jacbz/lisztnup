@@ -64,7 +64,7 @@ DYNAMIC_PART_SCORE_FILTER = {
     "WSS_LOWER_BOUND": MINIMUM_WSS, # WSS at which the part score requirement is highest.
     "WSS_UPPER_BOUND": 6.0,         # WSS at which the part score requirement is lowest.
     "PART_SCORE_AT_LOWER_WSS": 95,  # Required part score (0-100) for a work with WSS <= LOWER_BOUND.
-    "PART_SCORE_AT_UPPER_WSS": 75,  # Required part score (0-100) for a work with WSS >= UPPER_BOUND.
+    "PART_SCORE_AT_UPPER_WSS": 60,  # Required part score (0-100) for a work with WSS >= UPPER_BOUND.
 }
 
 # --- Work Type Transformation Rules ---

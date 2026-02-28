@@ -221,6 +221,7 @@ work_exceptions AS (
         (12426464, 'Mozart - Don Giovanni'),
         (9268731, 'V Williams - The Lark Ascending'),
         (6370216, 'V. Williams - Fantasia on Greensleeves'),
+        (13112400, 'Albeniz - Asturias (guitar version)'),
 
         -- These are erroneously classified as arrangements and may be removed with the next MusicBrainz update
         (14487371, 'Tchaikovsky - Piano Concerto No.1'),
@@ -495,7 +496,7 @@ def get_work_details_recursive(cursor, work_id, work_name, label_counter):
                 dropped_reason = f"forbidden attribute: '{attrs}'"
 
             if dropped_reason:
-                log.debug("RECORDING DEEZER ID DROPPED (%s) | %s | work: %s", dropped_reason, rec["recording_name"], work_name)
+                log.debug("RECORDING DEEZER ID DROPPED (%s) | %s | work: %s", dropped_reason, deezer_id, work_name)
                 deezer_id = None
 
         recordings.append(

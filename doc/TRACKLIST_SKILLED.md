@@ -4,6 +4,7 @@
 
 | ID | Work | Parts | Year |
 | :--- | :--- | :--- | :--- |
+| `c9790161` | Albéniz – Suite española no. 1, op. 47: V. Asturias (Leyenda) | * V. Asturias (Leyenda) | 1892 |
 | `094d968c` | Allegri – Miserere mei, Deus | * Miserere mei, Deus | ? |
 | `ecf63abc` | Arne – Alfred | * Rule, Britannia! | 1740 |
 | `a7722307` | Bach – 6 Französische Suiten | * Französische Suite Nr. 5 G-dur, BWV 816: IV. Gavotte | 1722‑1725 |
@@ -824,7 +825,6 @@
 | `6636e0db` | Schumann – Toccata in C major, op. 7 | * Toccata in C major, op. 7 | 1829‑1833 |
 | `5c5a1180` | Schumann – Waldszenen, op. 82 | * VII. Vogel als Prophet. Langsam, sehr zart | 1848‑1849 |
 | `ee89257d` | Scriabin – 12 études, op. 8 | * No. 12 in D-sharp minor | 1894 |
-| `fa4d4ecd` | Scriabin – 3 Pieces, op. 2 | * No. 1. Étude in C‐sharp minor | 1886‑1889 |
 | `bc2d0194` | Scriabin – Le Poème de l'extase, op. 54 "Symphony no. 4" | * Le Poème de l'extase, op. 54 "Symphony no. 4" | 1905‑1908 |
 | `9d445bc0` | Scriabin – Piano Sonata no. 10, op. 70. Moderato - Allegro | * Piano Sonata no. 10, op. 70. Moderato - Allegro | 1913 |
 | `1d09596d` | Scriabin – Piano Sonata no. 2 in G-sharp minor, op. 19 "Sonata-Fantasy" | * I. Andante | 1892‑1897 |

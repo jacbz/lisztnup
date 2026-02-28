@@ -81,13 +81,17 @@ export const DEFAULT_CATEGORY_ADJUSTMENTS: CategoryAdjustments = {
 };
 
 /**
- * The minimum work score.
+ * The minimum work score, configured in process_musicbrainz.py.
  */
 export const MIN_WORK_SCORE = 1.8;
 /**
  * The maximum work score outputted by process_musicbrainz.py
  */
 export const MAX_WORK_SCORE = 6.54;
+/**
+ * The minimum part score (dynamic threshold), configured in process_musicbrainz.py.
+ */
+export const MIN_PART_SCORE = 60;
 
 /**
  * The approximate number of composers in the database.
