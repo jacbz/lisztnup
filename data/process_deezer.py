@@ -6,9 +6,11 @@ composer and part name.
 
 Pipeline Architecture
 -------------------
+Phase 0 (Retroactive):
+    Scans previously processed tracks for newly added banned artists and re-bans them.
 Phase 1 (Concurrent I/O): 
     Fetches JSON metadata and MP3 previews concurrently. Handles rate limits, 
-    caching, and immediately excludes tracks with permanent API errors.
+    caching, checks for banned artists, and immediately excludes tracks with API errors.
 Phase 2 (Scoring): 
     Calculates similarity scores for all successfully fetched tracks.
 Phase 3 (Interactive): 
@@ -51,6 +53,11 @@ API_THROTTLE_SECONDS = 1  # Sleep after each Deezer API call
 # Optional: download Deezer JSON + preview MP3 to a flat folder
 DOWNLOAD_TRACKS = True
 DOWNLOAD_LOCATION = Path("downloads")
+
+# Manually ban certain artists that play arrangements
+BANNED_ARTISTS = [
+    'Rosemary Standley'
+]
 
 
 # --- Data Structures ---
@@ -166,7 +173,7 @@ def evaluate_track(deezer_id: int, expected_title: str, deezer_title: str) -> Tr
     )
 
 
-# --- File I/O Helpers ---
+# --- File I/O & Validation Helpers ---
 
 def load_id_set(filename: str) -> set[int]:
     path = Path(filename)
@@ -182,6 +189,21 @@ def _ensure_download_location() -> None:
     if DOWNLOAD_TRACKS:
         DOWNLOAD_LOCATION.mkdir(parents=True, exist_ok=True)
 
+def check_banned_artists(track_data: dict) -> bool:
+    """Checks if any contributor in the JSON response matches the BANNED_ARTISTS list."""
+    if not BANNED_ARTISTS or not track_data:
+        return False
+        
+    banned_lower = [artist.lower() for artist in BANNED_ARTISTS]
+    contributors = track_data.get("contributors", [])
+    
+    for contributor in contributors:
+        c_name = contributor.get("name", "").lower()
+        if any(banned in c_name for banned in banned_lower):
+            return True
+            
+    return False
+
 
 # --- Phase 1: Async Fetching ---
 
@@ -190,10 +212,10 @@ async def fetch_and_prepare_track(
     expected_title: str,
     session: aiohttp.ClientSession,
     semaphore: asyncio.Semaphore
-) -> Tuple[str, int, Optional[str]]:
+) -> Tuple[str, int, Optional[str], bool]:
     """
     Fetches JSON and MP3. 
-    Returns: (status, deezer_id, actual_deezer_title)
+    Returns: (status, deezer_id, actual_deezer_title, has_banned_artist)
     status is one of: "success", "excluded", "retry"
     """
     json_path = DOWNLOAD_LOCATION / f"{deezer_id}.json"
@@ -225,18 +247,22 @@ async def fetch_and_prepare_track(
                 await asyncio.sleep(API_THROTTLE_SECONDS)
             except Exception as e:
                 await asyncio.sleep(API_THROTTLE_SECONDS)
-                return "retry", deezer_id, None
+                return "retry", deezer_id, None, False
 
     # 3. Analyze Response
     error = res.get("error")
     if error:
-        return "excluded" if error.get("type") == "DataException" else "retry", deezer_id, None
+        return "excluded" if error.get("type") == "DataException" else "retry", deezer_id, None, False
 
     preview_url = res.get("preview")
     if not preview_url:
-        return "excluded", deezer_id, None
+        return "excluded", deezer_id, None, False
 
-    # 4. Download MP3
+    # 4. Check for banned artists & capture title
+    is_banned = check_banned_artists(res)
+    deezer_title = res.get("title", "")
+
+    # 5. Download MP3
     if DOWNLOAD_TRACKS:
         mp3_path = DOWNLOAD_LOCATION / f"{deezer_id}.mp3"
         if not (mp3_path.exists() and mp3_path.stat().st_size > 0):
@@ -248,14 +274,13 @@ async def fetch_and_prepare_track(
                 except Exception:
                     pass  # MP3 failure is non-fatal
 
-    deezer_title = res.get("title", "")
-    return "success", deezer_id, deezer_title
+    return "success", deezer_id, deezer_title, is_banned
 
 
 async def run_fetch_phase(
     ids_list: List[int], 
     expected_titles: dict[int, str]
-) -> Tuple[List[Tuple[int, Optional[str]]], set[int], set[int]]:
+) -> Tuple[List[Tuple[int, Optional[str], bool]], set[int], set[int]]:
     """Executes Phase 1 with retries. Returns (successful_tracks, excluded_ids, retry_ids)"""
     successful_tracks = []
     excluded = set()
@@ -271,9 +296,9 @@ async def run_fetch_phase(
         ]
         
         for coro in tqdm(asyncio.as_completed(tasks), total=len(ids_list), desc="Downloading Data"):
-            status, did, dez_title = await coro
+            status, did, dez_title, is_banned = await coro
             if status == "success":
-                successful_tracks.append((did, dez_title))
+                successful_tracks.append((did, dez_title, is_banned))
             elif status == "excluded":
                 excluded.add(did)
             elif status == "retry":
@@ -287,9 +312,9 @@ async def run_fetch_phase(
                 for did in retry_ids
             ]
             for coro in tqdm(asyncio.as_completed(retry_tasks), total=len(retry_tasks), desc="Retrying"):
-                status, did, dez_title = await coro
+                status, did, dez_title, is_banned = await coro
                 if status == "success":
-                    successful_tracks.append((did, dez_title))
+                    successful_tracks.append((did, dez_title, is_banned))
                 else:
                     # Anything failing twice is permanently excluded
                     excluded.add(did)
@@ -324,6 +349,29 @@ def main():
     excluded = load_id_set("DEEZER_EXCLUDED_IDS")
     processed = load_id_set("DEEZER_PROCESSED_IDS")
     banned = load_id_set("DEEZER_BANNED_IDS")
+    
+    # Phase 0: Retroactive Banned Artist Sweep
+    if BANNED_ARTISTS:
+        retroactively_banned = set()
+        for did in list(processed):
+            json_path = DOWNLOAD_LOCATION / f"{did}.json"
+            if json_path.exists():
+                try:
+                    track_data = json.loads(json_path.read_text(encoding="utf-8"))
+                    if check_banned_artists(track_data):
+                        title = track_data.get("title", "Unknown Title")
+                        print(f" [RETRO-BAN] Track contains newly banned artist: '{title}' (ID: {did})")
+                        retroactively_banned.add(did)
+                except Exception:
+                    pass
+        
+        if retroactively_banned:
+            print(f"\n[!] Retroactively banned {len(retroactively_banned)} previously processed tracks.")
+            processed.difference_update(retroactively_banned)
+            banned.update(retroactively_banned)
+            save_id_set("DEEZER_PROCESSED_IDS", processed)
+            save_id_set("DEEZER_BANNED_IDS", banned)
+
     banned_count = len(banned)
     
     with Path("../static/lisztnup.json").open("r", encoding="utf-8") as f:
@@ -357,30 +405,40 @@ def main():
         print("No valid tracks retrieved. Exiting.")
         return
 
-    # Phase 2: Similarity Evaluation
+    # Phase 2: Similarity Evaluation & Banned Checks
     print("\n--- Phase 2: Scoring Metadata ---")
     auto_accepted = []
     needs_review = []
 
-    for did, dez_title in successful_fetches:
+    for did, dez_title, is_banned in successful_fetches:
+        if is_banned:
+            print(f" [BANNED-ARTIST] Auto-Rejecting '{dez_title}' (ID: {did})")
+            banned.add(did)
+            continue
+
         exp_title = expected_titles.get(did, "")
         eval_data = evaluate_track(did, exp_title, dez_title)
         
         if eval_data.final_score >= SIMILARITY_THRESHOLD:
+            print(f" [AUTO-ACCEPT] '{dez_title}' (ID: {did}) | Score: {eval_data.final_score:.1f}")
             auto_accepted.append(did)
         elif eval_data.final_score < AUTO_REJECT_THRESHOLD:
+            print(f" [AUTO-REJECT] '{dez_title}' (ID: {did}) | Score: {eval_data.final_score:.1f} | Expected: '{exp_title}'")
             banned.add(did)
         else:
             needs_review.append(eval_data)
+            
     # Sort reviews by the expected original title for deterministic review order
     needs_review.sort(key=lambda e: e.expected_original.lower())
 
-    print(f"Auto-accepted : {len(auto_accepted)} tracks.")
-    print(f"Auto-rejected : {len(banned) - banned_count} tracks.")
-    print(f"Needs review  : {len(needs_review)} tracks.")
+    print(f"\nPhase 2 Complete:")
+    print(f"  Auto-accepted : {len(auto_accepted)} tracks.")
+    print(f"  Auto-rejected : {len(banned) - banned_count} tracks (includes Banned Artists).")
+    print(f"  Needs review  : {len(needs_review)} tracks.")
     
     processed.update(auto_accepted)
     save_id_set("DEEZER_PROCESSED_IDS", processed)
+    save_id_set("DEEZER_BANNED_IDS", banned)
 
     # Phase 3: Interactive Review (Sequential)
     if needs_review:
@@ -406,9 +464,11 @@ def main():
             while True:
                 ans = input("\n Accept this track? [y/n]: ").strip().lower()
                 if ans in ['y', 'yes', '']:
+                    print(f" [MANUAL-ACCEPT] Logged (ID: {eval_data.deezer_id})")
                     processed.add(eval_data.deezer_id)
                     break
                 elif ans in ['n', 'no']:
+                    print(f" [MANUAL-REJECT] Logged (ID: {eval_data.deezer_id})")
                     banned.add(eval_data.deezer_id)
                     break
                 else:
@@ -418,9 +478,6 @@ def main():
             save_id_set("DEEZER_PROCESSED_IDS", processed)
             save_id_set("DEEZER_BANNED_IDS", banned)
 
-    save_id_set("DEEZER_PROCESSED_IDS", processed)
-    save_id_set("DEEZER_BANNED_IDS", banned)
-    
     print("\n--- Summary ---")
     print(f"Total Processed: {len(processed)}")
     print(f"Total Excluded : {len(excluded)}")

@@ -2164,13 +2164,6 @@
       "score": 29.77
     },
     {
-      "gid": "029288f1-cb96-44e5-b17b-058bbe0f590d",
-      "name": "Landi, Stefano",
-      "birth_year": 1587,
-      "death_year": 1639,
-      "score": 7.07
-    },
-    {
       "gid": "86ace466-fe3d-469d-810f-42cbb98faacf",
       "name": "Langlais, Jean",
       "birth_year": 1907,
@@ -93709,22 +93702,6 @@
       ]
     },
     {
-      "gid": "00cd58fc-f533-474c-94da-8c08c51486c7",
-      "composer": "029288f1-cb96-44e5-b17b-058bbe0f590d",
-      "name": "Passacaglia della vita",
-      "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
-      "score": 2.3,
-      "parts": [
-        {
-          "name": "Passacaglia della vita",
-          "deezer": [76065197],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "06363ecf-8709-47de-b9dd-0933759c9256",
       "composer": "86ace466-fe3d-469d-810f-42cbb98faacf",
       "name": "Messe solennelle",
@@ -149320,7 +149297,7 @@
       "parts": [
         {
           "name": "Auf dem Wasser zu singen, D. 774",
-          "deezer": [2771595441, 3219763821, 75981203, 63895075, 1401770612],
+          "deezer": [2771595441, 3219763821, 75981203, 63895075, 66465131],
           "score": 100.0
         }
       ]
@@ -149944,7 +149921,7 @@
       "parts": [
         {
           "name": "Der Tod und das Mädchen, D. 531",
-          "deezer": [1081436452, 5972726, 1401770652, 65581571],
+          "deezer": [1081436452, 5972726, 65581571, 2042311967],
           "score": 100.0
         }
       ]
@@ -151166,7 +151143,7 @@
       "parts": [
         {
           "name": "Heidenröslein, D. 257",
-          "deezer": [6960958, 2771779241, 5972544, 1401770582],
+          "deezer": [6960958, 2771779241, 5972544],
           "score": 100.0
         }
       ]
@@ -151718,7 +151695,7 @@
       "parts": [
         {
           "name": "Nacht und Träume, D. 827",
-          "deezer": [1478835952, 75981214, 1401770622, 3432452, 66465138],
+          "deezer": [1478835952, 75981214, 3432452, 66465138, 1744344967],
           "score": 100.0
         }
       ]
@@ -152271,7 +152248,7 @@
         },
         {
           "name": "Schwanengesang, D. 957: IV. Ständchen (Leise flehen meine Lieder)",
-          "deezer": [2010795797, 6960961, 2116143557, 66632773, 1401770542],
+          "deezer": [2010795797, 6960961, 2116143557, 66632773, 75367387],
           "score": 100.0
         },
         {
