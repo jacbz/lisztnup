@@ -9,9 +9,11 @@
 | `68d0dd9d` | Albéniz – Cantos de España, op. 232 | * n.º 4: Córdoba<br>* n.º 5: Seguidillas | ? |
 | `be4f9c9b` | Albéniz – España, seis hojas de álbum, op. 165 | * II. Tango | 1890 |
 | `d79d77d6` | Albéniz – Iberia, B. 47 | * Book I: I. Evocación<br>* Book I: II. El puerto<br>* Book II: III. Triana | 1905‑1909 |
+| `3796eef3` | Albéniz – Iberia, B. 47: Book I: I. Evocación (orch. Arbós) | * I. Evocación (orch. Arbós) | ? |
 | `3ae8e087` | Albéniz – Iberia, B. 47: Book I: II. El puerto (orch. Arbós) | * Iberia, B. 47: Book I: II. El puerto (orch. Arbós) | ? |
 | `8db4fdcf` | Albéniz – Iberia, B. 47: Book I: III. El Corpus en Sevilla (orch. Arbós) | * Iberia, B. 47: Book I: III. El Corpus en Sevilla (orch. Arbós) | ? |
 | `9be392d2` | Albéniz – Iberia, B. 47: Book II: III. Triana (orch. Arbós) | * III. Triana (orch. Arbós) | ? |
+| `4181fbca` | Albéniz – Iberia, B. 47: Book III: I. El Albaicín (orch. Arbós) | * Iberia, B. 47: Book III: I. El Albaicín (orch. Arbós) | ? |
 | `22c0f6e6` | Albéniz – Navarra, B. 49 | * Navarra, B. 49 | ? |
 | `ca59a57d` | Albéniz – Suite española no. 1, op. 47 | * III. Sevilla (Sevillanas) | 1886 |
 | `b45fde5a` | Albinoni – 12 Concerti a cinque, op. 9 | * Concerto for Oboe in D minor, op. 9 no. 2: II. Adagio<br>* Concerto for Oboe in D minor, op. 9 no. 2: III. Allegro | 1722 |
@@ -30,6 +32,7 @@
 | `671aeca6` | Bach – 6 kleine Präludien: Präludium E-Dur, BWV 937 | * 6 kleine Präludien: Präludium E-Dur, BWV 937 | ? |
 | `481decb3` | Bach – 6 kleine Präludien: Präludium e-Moll, BWV 938 | * 6 kleine Präludien: Präludium e-Moll, BWV 938 | ? |
 | `3c1d42c1` | Bach – 6 Partitas, BWV 825-830 | * Partita no. 1 in B-flat major, BWV 825: I. Prelude<br>* Partita no. 1 in B-flat major, BWV 825: V. Menuet I<br>* Partita no. 1 in B-flat major, BWV 825: VII. Gigue | 1726‑1731 |
+| `078eed8c` | Bach – 6 Symphonies, Wq. 182 | * Symphony in B minor, Wq 182 no. 5, H 661: I. Allegretto<br>* Symphony in B minor, Wq 182 no. 5, H 661: II. Larghetto<br>* Symphony in B minor, Wq 182 no. 5, H 661: III. Presto | 1773 |
 | `9309e7da` | Bach – 9 kleine Präludien: Präludium C-Dur, BWV 924 | * 9 kleine Präludien: Präludium C-Dur, BWV 924 | ? |
 | `9deecf21` | Bach – 9 kleine Präludien: Präludium D-Dur, BWV 925 | * 9 kleine Präludien: Präludium D-Dur, BWV 925 | ? |
 | `65902eb6` | Bach – 9 kleine Präludien: Präludium d-Moll, BWV 926 | * 9 kleine Präludien: Präludium d-Moll, BWV 926 | ? |
@@ -39,10 +42,8 @@
 | `6d830628` | Bach – Ach Gott und Herr, BWV 714 | * Ach Gott und Herr, BWV 714 | ? |
 | `e1ad5545` | Bach – Ach wie nichtig, ach wie flüchtig, BWV 644 | * Ach wie nichtig, ach wie flüchtig, BWV 644 | ? |
 | `420d0f44` | Bach – Ach, dass ich Wassers g’nug hätte | * Ach, dass ich Wassers g’nug hätte | ? |
-| `dfe22015` | Bach – Allabreve in D major, BWV 589 | * Allabreve in D major, BWV 589 | ? |
 | `320d6eea` | Bach – Allein Gott in der Höh sei Ehr, BWV 711 | * Allein Gott in der Höh sei Ehr, BWV 711 | ? |
 | `2487d07a` | Bach – Allein Gott in der Höh sei Ehr, BWV 715 | * Allein Gott in der Höh sei Ehr, BWV 715 | ? |
-| `3bb42ad9` | Bach – Allein Gott in der Höh sei Ehr, BWV 717 | * Allein Gott in der Höh sei Ehr, BWV 717 | ? |
 | `37c945d8` | Bach – Aria from Overture no. 3, BWV 1068 (orch. Stokowski) | * Aria from Overture no. 3, BWV 1068 (orch. Stokowski) | ? |
 | `45234525` | Bach – Aria variata, BWV 989 | * I. Thema<br>* II. Var. 1 (Largo)<br>* III. Var. 2 | 1709 |
 | `a11b562a` | Bach – Aus tiefer Not schrei ich zu dir, BWV 686 | * Aus tiefer Not schrei ich zu dir, BWV 686 | ? |
@@ -132,7 +133,6 @@
 | `9dc29ea6` | Bach – Fantasia and Fugue in G minor, BWV 542 | * Fantasie (Praeludium) und Fuge g-Moll, BWV 542: I. Fantasie<br>* Fantasie (Praeludium) und Fuge g-Moll, BWV 542: II. Fuge | 1720‑1725 |
 | `cc815d5b` | Bach – Fantasia G-Dur, BWV 572 “Pièce d’Orgue” | * I. Trés vitement<br>* II. Gravement<br>* III. Lentement | ? |
 | `0fb5991d` | Bach – Fantasia in C major, BWV 570 | * Fantasia in C major, BWV 570 | ? |
-| `40003498` | Bach – Fantasia super "Jesu, meine Freude", BWV 713 | * Fantasia super "Jesu, meine Freude", BWV 713 | ? |
 | `7880d4a3` | Bach – Fantasia super: Christ lag in Todesbanden, BWV 695 | * Fantasia super: Christ lag in Todesbanden, BWV 695 | ? |
 | `11aa8eb7` | Bach – Fantasie g-Moll, BWV 917 | * Fantasie g-Moll, BWV 917 | 1710 |
 | `ad2a3e74` | Bach – Fantasie und Fuge c-Moll, BWV 562 | * I. Fantasie | ? |
@@ -141,11 +141,8 @@
 | `40e657e3` | Bach – Flute Sonata in E major, BWV 1035 | * I. Adagio ma non tanto<br>* II. Allegro<br>* IV. Allegro assai | ? |
 | `3ac58155` | Bach – Flute Sonata in E-flat major, BWV 1031 | * I. Allegro moderato<br>* II. Siciliano<br>* III. Allegro | ? |
 | `bd0adba3` | Bach – Fuge C-Dur, BWV 953 | * Fuge C-Dur, BWV 953 | ? |
-| `43b6b701` | Bach – Fuge c-Moll (über ein Thema von Giovanni Legrenzi), BWV 574 | * Fuge c-Moll (über ein Thema von Giovanni Legrenzi), BWV 574 | ? |
 | `49062c31` | Bach – Fuge G-Dur, BWV 577 | * Fuge G-Dur, BWV 577 | ? |
-| `3467a1b8` | Bach – Fuge g-Moll nach BWV 1000 | * Fuge g-Moll nach BWV 1000 | ? |
 | `f14dd91e` | Bach – Fuge h-Moll, BWV 579 | * Fuge h-Moll, BWV 579 | ? |
-| `6276c452` | Bach – Fughetta c-Moll, BWV 961 | * Fughetta c-Moll, BWV 961 | ? |
 | `55c8064f` | Bach – Fugue in C minor, BWV 575 | * Fugue in C minor, BWV 575 | 1708‑1717 |
 | `76424861` | Bach – Fugue in G minor, BWV 578 | * Fugue in G minor, BWV 578 | ? |
 | `82b9ae17` | Bach – Fürchte dich nicht, ich bin bei dir, BWV 228 | * Fürchte dich nicht, ich bin bei dir, BWV 228 | ? |
@@ -154,13 +151,10 @@
 | `9a9d5320` | Bach – Gelobet seist du, Jesu Christ, BWV 604 | * Gelobet seist du, Jesu Christ, BWV 604 | ? |
 | `1d51e560` | Bach – Goldberg Variations, BWV 988 | * Goldberg-Variationen, BWV 988: Aria<br>* Variatio 1. a 1 Clav.<br>* Variatio 3. Canone all Unisuono. a 1 Clav. | 1741 |
 | `4cc2095a` | Bach – Gottes Sohn ist kommen, BWV 600 | * Gottes Sohn ist kommen, BWV 600 | ? |
-| `7ded9856` | Bach – Gottes Sohn ist kommen, BWV 703 | * Gottes Sohn ist kommen, BWV 703 | ? |
 | `0239fa4b` | Bach – Helft mit Gotts Güte preisen, BWV 613 | * Helft mit Gotts Güte preisen, BWV 613 | ? |
 | `aae3bff6` | Bach – Herr Christ, der ein'ge Gottessohn, BWV 601 | * Herr Christ, der ein'ge Gottessohn, BWV 601 | ? |
-| `de00a1b2` | Bach – Herr Christ, der einig Gottes Sohn, BWV 698 | * Herr Christ, der einig Gottes Sohn, BWV 698 | ? |
 | `faa5b7ae` | Bach – Herr Gott, nun schleuß die Himmel auf, BWV 617 | * Herr Gott, nun schleuß die Himmel auf, BWV 617 | 1713‑1715 |
 | `166c128e` | Bach – Herr Jesu Christ, dich zu uns wend, BWV 632 | * Herr Jesu Christ, dich zu uns wend, BWV 632 | ? |
-| `b49ceaf2` | Bach – Herr Jesu Christ, dich zu uns wend, BWV 726 | * Herr Jesu Christ, dich zu uns wend, BWV 726 | 1726 |
 | `65701ea3` | Bach – Herzlich tut mich verlangen, BWV 727 | * Herzlich tut mich verlangen, BWV 727 | ? |
 | `3a99f42a` | Bach – Heut triumphieret Gottes Sohn, BWV 630 | * Heut triumphieret Gottes Sohn, BWV 630 | ? |
 | `d36844df` | Bach – Ich ruf zu dir, Herr Jesu Christ, BWV 639 | * Ich ruf zu dir, Herr Jesu Christ, BWV 639 | 1713‑1715 |
@@ -190,34 +184,26 @@
 | `fc30db88` | Bach – Jesus Christus, unser Heiland (Fuga super), BWV 689 | * Jesus Christus, unser Heiland (Fuga super), BWV 689 | 1739 |
 | `3a56e722` | Bach – Jesus, meine Zuversicht, BWV 728 | * Jesus, meine Zuversicht, BWV 728 | ? |
 | `85da3806` | Bach – Kantate, BWV 106 "Gottes Zeit ist die allerbeste Zeit" | * I. Sonatina<br>* IIa. Coro "Gottes Zeit ist die allerbeste Zeit"<br>* IIIa. Aria (Alt, Bass) "In deine Hände befehle ich meinen Geist" | 1707 |
-| `a5058c10` | Bach – Kantate, BWV 12 "Weinen, Klagen, Sorgen, Zagen" | * I. Sinfonia | 1714 |
 | `7e3af618` | Bach – Kantate, BWV 140 "Wachet auf, ruft uns die Stimme" | * I. Coro "Wachet auf, ruft uns die Stimme"<br>* IV. Choral (Tenor) “Zion hört die Wächter singen”<br>* VII. Choral "Gloria sei dir gesungen" | 1731 |
 | `b064a388` | Bach – Kantate, BWV 147 „Herz und Mund und Tat und Leben“ | * Teil II, X. Choral „Jesus bleibet meine Freude“ | 1723 |
-| `71573891` | Bach – Kantate, BWV 169 "Gott soll allein mein Herze haben" | * I. Sinfonia<br>* V. Aria (Alt) "Stirb in mir, Welt"<br>* VII. Choral "Du süße Liebe, schenk uns deine Gunst" | 1726 |
 | `944f3102` | Bach – Kantate, BWV 170 „Vergnügte Ruh! beliebte Seelenlust!“ | * I. Aria (Alt) "Vergnügte Ruh! beliebte Seelenlust!"<br>* II. Recitativo (Alt) "Die Welt, das Sündenhaus"<br>* III. Aria (Alt) "Wie jammern mich doch die verkehrten Herzen" | 1726 |
 | `2612a6bc` | Bach – Kantate, BWV 199 "Mein Herze schwimmt im Blut" | * I. Recitativo "Mein Herze schwimmt im Blut"<br>* VI. Choral "Ich, dein betrübtes Kind"<br>* VIII. Aria "Wie freudig ist mein Herz" | 1714 |
 | `ea24019b` | Bach – Kantate, BWV 202 "Weichet nur, betrübte Schatten" | * I. Aria "Weichet nur, betrübte Schatten"<br>* V. Aria "Wenn die Frühlingslüfte streichen"<br>* VII. Aria "Sich üben im Lieben" | 1718‑1723 |
 | `42d6fa14` | Bach – Kantate, BWV 208 “Was mir behagt, ist nur die muntre Jagd!” | * IX. Aria (Sopran II) “Schafe können sicher weiden” | 1713 |
 | `139ddaa9` | Bach – Kantate, BWV 21 "Ich hatte viel Bekümmernis" | * Teil I, I. Sinfonia | 1713‑1714 |
-| `a31f4009` | Bach – Kantate, BWV 211 "Schweigt stille, plaudert nicht" | * II. Aria (Bass) "Hat man nicht mit seinen Kindern"<br>* IV. Aria (Sopran) "Ei, wie schmeckt der Coffee süße"<br>* VIII. Aria (Sopran) "Heute noch, lieber Vater, tut es doch" | 1734‑1735 |
-| `f56ca74c` | Bach – Kantate, BWV 35 "Geist und Seele wird verwirret" | * Teil I, I. Sinfonia<br>* Teil I, II. Aria (Alto) "Geist und Seele wird verwirret"<br>* Teil II, V. Sinfonia | 1726 |
 | `95ee25ab` | Bach – Kantate, BWV 4 "Christ lag in Todesbanden" | * I. Sinfonia<br>* II. Coro Versus I "Christ Lag in Todes Banden"<br>* VIII. Choral Versus VII "Wir essen und leben wohl" | 1707 |
 | `38428a7a` | Bach – Kantate, BWV 51 "Jauchzet Gott in allen Landen" | * I. Aria "Jauchzet Gott in allen Landen"<br>* IV. Chorale "Sei Lob und Preis mit Ehren"<br>* V. "Alleluja" | 1730 |
 | `582b6710` | Bach – Kantate, BWV 54 "Widerstehe doch der Sünde" | * I. Aria (Alto) "Widerstehe doch der Sünde"<br>* II. Recitativo (Alto) "Die Art verruchter Sünden"<br>* III. Aria (Alto) Wer Sünde tut, der ist vom Teufel | 1714 |
 | `8bb2d318` | Bach – Kantate, BWV 56 "Ich will den Kreuzstab gerne tragen" | * I. Aria "Ich will den Kreuzstab gerne tragen"<br>* II. Recitative "Mein Wandel auf der Welt"<br>* V. Chorale "Komm, o Tod, du Schlafes Bruder" | 1726 |
-| `99c3f2a2` | Bach – Kantate, BWV 78 "Jesu, der du meine Seele" | * I. Coro "Jesu, der du meine Seele"<br>* II. Aria (Duetto Sopran, Alt) "Wir eilen mit schwachen, doch emsigen Schritten"<br>* VII. Choral "Herr, ich glaube, hilf mir Schwachen" | 1724 |
 | `f49ebe41` | Bach – Kantate, BWV 80 "Ein feste Burg ist unser Gott" | * I. Coro "Ein feste Burg ist unser Gott"<br>* II. Aria (Bass) con Choral (Sopran) "Alles, was von Gott geboren"<br>* VIII. Choral "Das Wort sie sollen lassen stahn" | 1715 |
 | `c6c039f1` | Bach – Kantate, BWV 82 “Ich habe genung” | * I. Aria (Bass) “Ich habe genung, ich habe den Heiland”<br>* II. Recitativo (Bass) "Ich habe genung! Mein Trost ist nur allein"<br>* III. Aria (Bass) "Schlummert ein, ihr matten Augen" | 1727 |
-| `5c3daeca` | Bach – Kantate, BWV 82a “Ich habe genug” | * I. Aria (Soprano) "Ich habe genug"<br>* II. Recitativo (Soprano) "Ich habe genug"<br>* III. Aria (Soprano) "Schlummert ein, ihr matten Augen" | ? |
 | `e74a3a95` | Bach – Keyboard Concerto in D minor, BWV 1052 | * I. Allegro<br>* II. Adagio<br>* III. Allegro | 1738 |
 | `8faf9f08` | Bach – Keyboard Concerto no. 4 in A major, BWV 1055 | * I. Allegro<br>* II. Larghetto<br>* III. Allegro ma non tanto | ? |
 | `cf5c91c9` | Bach – Keyboard Concerto no. 6 in F major, BWV 1057 | * I. Allegro<br>* II. Andante<br>* III. Allegro assai | ? |
 | `f2d361b1` | Bach – Komm, Gott Schöpfer, Heiliger Geist, BWV 631 | * Komm, Gott Schöpfer, Heiliger Geist, BWV 631 | ? |
 | `90dbeeda` | Bach – Liebster Jesu, wir sind hier, BWV 633 | * Liebster Jesu, wir sind hier, BWV 633 | ? |
-| `db48f909` | Bach – Liebster Jesu, wir sind hier, BWV 706 | * I. Choral | ? |
 | `a5aa481d` | Bach – Liebster Jesu, wir sind hier, BWV 731 | * Liebster Jesu, wir sind hier, BWV 731 | ? |
 | `b0f84426` | Bach – Lob sei dem allmächtigen Gott, BWV 602 | * Lob sei dem allmächtigen Gott, BWV 602 | ? |
-| `d96f98f5` | Bach – Lob sei dem allmächtigen Gott, BWV 704 | * Lob sei dem allmächtigen Gott, BWV 704 | ? |
 | `1d8fc884` | Bach – Lobet den Herrn, alle Heiden, BWV 230 | * Lobet den Herrn, alle Heiden, BWV 230 | ? |
 | `d5726f30` | Bach – Lobt Gott, ihr Christen, allzugleich, BWV 732 | * Lobt Gott, ihr Christen, allzugleich, BWV 732 | ? |
 | `8e807beb` | Bach – Machs mit mir, Gott, nach deiner Güt, BWV 957 | * Machs mit mir, Gott, nach deiner Güt, BWV 957 | ? |
@@ -229,7 +215,6 @@
 | `65fac60f` | Bach – Mit Fried und Freud ich fahr dahin, BWV 616 | * Mit Fried und Freud ich fahr dahin, BWV 616 | ? |
 | `bef341f9` | Bach – Nun freut euch, lieben Christen g’mein, BWV 734 | * Nun freut euch, lieben Christen g’mein, BWV 734 | ? |
 | `77f2ab24` | Bach – Nun komm, der Heiden Heiland, BWV 599 | * Nun komm, der Heiden Heiland, BWV 599 | ? |
-| `4de203e3` | Bach – Nun komm, der Heiden Heiland, BWV 699 | * Nun komm, der Heiden Heiland, BWV 699 | ? |
 | `2284f439` | Bach – Oboe Concerto in F major, BWV 1053R | * I. Allegro<br>* II. Siciliano<br>* III. Allegro | ? |
 | `c7faccbb` | Bach – Oboe d'Amore Concerto in A major, BWV 1055R | * I. Allegro<br>* II. Larghetto<br>* III. Allegro ma non tanto | ? |
 | `1ef8a483` | Bach – Orchestral suite no. 1 in C major, BWV 1066 | * Suite for Orchestra No. 1 in C major, BWV 1066: Ouverture<br>* Orchestersuite Nr. 1 C-Dur, BWV 1066: V. Menuet I / Menuet II<br>* Orchestersuite Nr. 1 C-Dur, BWV 1066: VII. Passepied I / Passepied II | ? |
@@ -258,15 +243,12 @@
 | `ee2cdbbf` | Bach – Prelude and Fugue in C major, BWV 531 | * Präludium und Fuge C-Dur, BWV 531: I. Präludium<br>* Präludium und Fuge C-Dur, BWV 531: II. Fuge | ? |
 | `75d73f1d` | Bach – Prelude and Fugue in E-flat major, BWV 552 | * Präludium und Fuge Es-Dur, BWV 552: I. Präludium<br>* Präludium und Fuge Es-Dur, BWV 552: II. Fuge | ? |
 | `373cb9e5` | Bach – Prelude and Fugue in F minor, BWV 534 | * Präludium und Fuge in f-Moll, BWV 534: I. Präludium<br>* Präludium und Fuge in f-Moll, BWV 534: II. Fuge | ? |
-| `6b09bbfd` | Bach – Prelude and Fugue in F minor, BWV 549 | * Präludium und Fuge c-Moll, BWV 549: I. Präludium<br>* Präludium und Fuge c-Moll, BWV 549: II. Fuge | ? |
 | `ccf2d167` | Bach – Prelude and Fugue in G major, BWV 541 | * Präludium und Fuge G-Dur, BWV 541: I. Präludium<br>* Präludium und Fuge G-Dur, BWV 541: II. Fuge | ? |
-| `0aebee53` | Bach – Prelude in A minor, BWV 569 | * Prelude in A minor, BWV 569 | ? |
 | `326d57a3` | Bach – Prelude in A minor, BWV 942 | * Prelude in A minor, BWV 942 | ? |
 | `04d4389d` | Bach – Prelude in C major, BWV 939 | * Prelude in C major, BWV 939 | ? |
 | `bb655498` | Bach – Prelude in C major, BWV 943 | * Prelude in C major, BWV 943 | ? |
 | `d53cc638` | Bach – Prelude in C minor, BWV 999 | * Prelude in C minor, BWV 999 | ? |
 | `037c4a97` | Bach – Prelude in D minor, BWV 940 | * Prelude in D minor, BWV 940 | ? |
-| `fbbc4d42` | Bach – Prelude in E minor, BWV 941 | * Prelude in E minor, BWV 941 | ? |
 | `2016b681` | Bach – Prelude, Fugue and Allegro in E-flat major, BWV 998 | * Praeludium, Fuge und Allegro Es-Dur, BWV 998: I. Praeludium<br>* Praeludium, Fuge und Allegro Es-Dur, BWV 998: II. Fuge<br>* Praeludium, Fuge und Allegro Es-Dur, BWV 998: III. Allegro | ? |
 | `eb77751f` | Bach – Preludes and Fugues by J. S. Bach, S. 462 | * No. 1 in A minor, BWV 543: Prelude<br>* No. 1 in A minor, BWV 543: Fugue | ? |
 | `8d94bf27` | Bach – Puer natus in Bethlehem, BWV 603 | * Puer natus in Bethlehem, BWV 603 | ? |
@@ -309,7 +291,6 @@
 | `e85b95c3` | Bach – Sonate G-Dur, BWV 1038 | * I. Largo<br>* II. Vivace<br>* III. Adagio | ? |
 | `45afb3b2` | Bach – St Matthew Passion, BWV 244 | * Matthäus-Passion, BWV 244: Teil II, XXXIX. Aria (Alto) "Erbarme dich, mein Gott"<br>* Matthäus-Passion, BWV 244: Teil II, LIV. Choral "O Haupt voll Blut und Wunden"<br>* Matthäus-Passion, BWV 244: Teil II, LXVIII. Coro "Wir setzen uns mit Tränen nieder" | 1727 |
 | `b16e5420` | Bach – St. John Passion, BWV 245 | * Johannes-Passion, BWV 245: Teil II. No. 30 Aria (Alt) "Es ist vollbracht!"<br>* Johannes-Passion, BWV 245: Teil II. No. 39 Chorus "Ruht wohl, ihr heiligen Gebeine"<br>* Johannes-Passion, BWV 245: Teil II. No. 40 Choral "Ach Herr, laß dein lieb Engelein" | ? |
-| `18b1f701` | Bach – Suite E-Dur, BWV 1006a: VI. Bourrée | * VI. Bourrée | ? |
 | `beff096a` | Bach – Suite for Lute in G minor, BWV 995 | * II. Allemande<br>* IV. Sarabande<br>* Lute Suite in G Minor, BWV 995: Gavotte I | 1727‑1731 |
 | `8ea818b8` | Bach – Suite in E minor, BWV 996 | * III. Courante<br>* IV. Sarabande<br>* V. Bourrée | 1707‑1709 |
 | `e562bb8c` | Bach – The Art of Fugue, BWV 1080 | * Die Kunst der Fuge, BWV 1080: I. Contrapunctus 1<br>* Die Kunst der Fuge, BWV 1080: IV. Contrapunctus 4<br>* Die Kunst der Fuge, BWV 1080: IX. Contrapunctus 9 a 4 alla Duodecima | 1742‑1750 |
@@ -342,7 +323,6 @@
 | `adc0f1f7` | Bach – Vom Himmel hoch, da komm ich her, BWV 606 | * Vom Himmel hoch, da komm ich her, BWV 606 | ? |
 | `3a703ad3` | Bach – Vom Himmel hoch, da komm ich her, BWV 700 | * Vom Himmel hoch, da komm ich her, BWV 700 | ? |
 | `ee1b650b` | Bach – Vom Himmel hoch, da komm ich her, BWV 701 | * Vom Himmel hoch, da komm ich her, BWV 701 | ? |
-| `bdcd611e` | Bach – Vom Himmel hoch, da komm ich her, BWV 738 | * Vom Himmel hoch, da komm ich her, BWV 738 | ? |
 | `9fa05d18` | Bach – Vom Himmel kam der Engel Schar, BWV 607 | * Vom Himmel kam der Engel Schar, BWV 607 | ? |
 | `4ac44bf3` | Bach – Wenn wir in höchsten Nöten sein, BWV 641 | * Wenn wir in höchsten Nöten sein, BWV 641 | ? |
 | `68b4662f` | Bach – Wer nur den lieben Gott läßt walten, BWV 642 | * Wer nur den lieben Gott läßt walten, BWV 642 | 1713‑1715 |
@@ -351,10 +331,13 @@
 | `c9c7337b` | Bach – Wir Christenleut, BWV 612 | * Wir Christenleut, BWV 612 | ? |
 | `a52af29a` | Bądarzewska – A Maiden's Prayer, op. 4 | * A Maiden's Prayer, op. 4 | ? |
 | `e4118c63` | Balakirev – “Islamey, Oriental Fantasy”, op. 18 | * “Islamey, Oriental Fantasy”, op. 18 | ? |
+| `68ec399b` | Balakirev – Tamara | * Tamara | 1867‑1882 |
 | `1ebe1abf` | Barber – Adagio for Strings | * Adagio for Strings | 1936 |
 | `8700eea7` | Barber – Concerto for Violin and Orchestra, op. 14 | * I. Allegro<br>* II. Andante<br>* III. Presto in moto perpetuo | 1939 |
 | `23c63ebf` | Barber – Excursions, op. 20 | * I. Un poco allegro<br>* II. In slow blues tempo<br>* IV. Allegro molto | 1942‑1944 |
 | `5779b290` | Barber – Four Songs, op. 13 | * Sure on This Shining Night, op. 13 no. 3 | 1937‑1940 |
+| `010c772d` | Barber – Medea's Dance of Vengeance | * Medea's Dance of Vengeance | 1955 |
+| `5bd04fdc` | Barber – Overture to “The School for Scandal”, op. 5 | * Overture to “The School for Scandal”, op. 5 | 1931 |
 | `5a88448e` | Barber – Sonata for Piano, op. 26 | * II. Allegro vivace e leggero<br>* III. Adagio mesto<br>* IV. Fuga. Allegro con spirito | 1947‑1949 |
 | `d2904a5a` | Barber – String Quartet, op. 11 | * II. Molto adagio | 1935‑1936 |
 | `7a22b62f` | Barrios Mangoré – Choro de saudade | * Choro de saudade | ? |
@@ -445,7 +428,9 @@
 | `cc6eba78` | Beethoven – Große Fuge for String Quartet in B-flat major, op. 133 | * Große Fuge for String Quartet in B-flat major, op. 133 | 1825 |
 | `3f632a34` | Beethoven – König Stephan, op. 117 | * Overtüre. Andante con moto - Presto | 1811 |
 | `2ee77f37` | Beethoven – Leonore, Hess 109 | * Overture “Leonore” no. 2 in C major, op. 72a | 1805 |
+| `6f812fff` | Beethoven – March for 2 Clarinets, 2 Horns, and 2 Bassoons in B-flat major, WoO 29 | * March for 2 Clarinets, 2 Horns, and 2 Bassoons in B-flat major, WoO 29 | 1797‑1798 |
 | `3ed5a88e` | Beethoven – Mass for 4 Solo Voices, Chorus, and Orchestra in C major, op. 86 | * V. Agnus Dei. Poco andante - Allegro ma non troppo - Andante con moto, tempo del kyrie<br>* I. Kyrie. Andante con moto assai vivace quasi Allegretto ma non troppo<br>* II. Gloria. Allegro con brio | 1807 |
+| `d3e0be2d` | Beethoven – Missa solemnis D-Dur, op. 123 | * IIa. Gloria: Allegro vivace: Gloria in excelsis Deo<br>* IIIa. Credo: Allegro ma non troppo: Credo in unum Deum<br>* IVd. Sanctus: Adagio: Benedictus, qui venit in nomine Domini | 1819‑1823 |
 | `ff13fd8c` | Beethoven – Name-Day, op. 115 | * Name-Day, op. 115 | 1814‑1815 |
 | `2f85aec5` | Beethoven – Octet for 2 Oboes, 2 Clarinets, 2 Horns, and 2 Bassoons in E-flat major, op. 103 | * I. Allegro<br>* II. Andante<br>* IV. Finale. Presto | 1792 |
 | `be4bf7f3` | Beethoven – Ode to Joy | * Ode to Joy | 1824 |
@@ -515,6 +500,7 @@
 | `256f32ec` | Beethoven – Symphony no. 8 in F major, op. 93 | * II. Allegretto scherzando<br>* III. Tempo di menuetto<br>* IV. Allegro vivace | 1812 |
 | `c35b4956` | Beethoven – Symphony no. 9 in D minor, op. 125 “Choral” | * II. Scherzo. Molto vivace – Presto<br>* III. Adagio molto e cantabile – Andante moderato – Tempo I – Andante moderato – Adagio – Lo stesso tempo<br>* IV. Finale. Presto – Allegro assai | 1822‑1824 |
 | `7de3a5e2` | Beethoven – The Creatures of Prometheus, Op. 43 | * Die Geschöpfe des Prometheus, op. 43: Ouverture | 1800‑1801 |
+| `5cd70f87` | Beethoven – The Creatures of Prometheus, op. 43: Introduction. Allegro non troppo | * Introduction. Allegro non troppo | 1801 |
 | `13735c98` | Beethoven – Trio for Piano, Clarinet [or Violin], and Cello no. 4 in B-flat major, op. 11 | * I. Allegro con brio<br>* II. Adagio<br>* III. Allegretto con variazioni | 1797 |
 | `16992485` | Beethoven – Trio for Piano, Violin, and Cello in E-flat major, WoO 38 | * I. Allegro moderato<br>* II. Scherzo. Allegro ma non troppo<br>* III. Rondo. Allegretto | 1791 |
 | `53ac5ed4` | Beethoven – Trio for Piano, Violin, and Cello no. 7 in B-flat major, op. 97 “Archduke” | * II. Scherzo. Allegro<br>* III. Andante cantabile ma però con moto<br>* IV. Allegro moderato | 1810‑1811 |
@@ -568,6 +554,7 @@
 | `6ec79e92` | Bizet – L’Arlésienne Suite no. 2 (arr. Guiraud) | * I. Pastorale<br>* III. Menuet<br>* IV. Farandole | 1872 |
 | `2dd0dc53` | Bizet – Les Pêcheurs de perles | * Les Pêcheurs de perles : Acte I. No. 2 Duo « Au fond du temple saint » (Zurga, Nadir) | 1863 |
 | `1aaa044f` | Bizet – Petite Suite d'orchestre (Jeux d'enfants), op. 22 | * I. Marche. Trompette et tambour<br>* II. Berceuse. La Poupée<br>* V. Galop. Le Bal | 1871 |
+| `d4e7b351` | Bizet – Scènes bohémiennes from « La Jolie Fille de Perth » | * II. Sérénade<br>* IV. Danse Bohémienne | ? |
 | `37b35e9f` | Bizet – Symphonie no. 1 en ut majeur | * Symphony no. 1 in C major: I. Allegro vivo<br>* Symphony No. 1 in C major: II. Adagio<br>* Symphony no. 1 in C major: IV. Allegro vivace | 1855 |
 | `28fb7cb4` | Bloch – Baal Shem: Three Pictures of Chassidic Life | * II. Nigun | 1923 |
 | `cb5124ea` | Bloch – From Jewish Life | * No. 1. Prayer | 1924 |
@@ -913,6 +900,7 @@
 | `4160cc88` | Delius – Koanga: La Calinda | * Koanga: La Calinda | 1896‑1897 |
 | `a109759a` | Delius – On Hearing the First Cuckoo in Spring, RT vi/19/1 | * On Hearing the First Cuckoo in Spring, RT vi/19/1 | 1912 |
 | `67ce0cdb` | Delius – Summer Night on the River, RT vi/19/2 | * Summer Night on the River, RT vi/19/2 | 1911 |
+| `a241cb0d` | Delius – Three Small Tone Poems, RT vi/7 | * I. Summer Evening<br>* II. Winter Night (Sleigh Ride) | 1890 |
 | `6c7fc800` | Delius – Two Aquarelles (arr. Fenby) | * Two Aquarelles: I. Lento, ma non troppo<br>* Two Aquarelles: II. Gaily, but not quick | ? |
 | `925b6057` | des Prez – Déploration sur la mort de Johannes Ockeghem | * Déploration sur la mort de Johannes Ockeghem | ? |
 | `7ac5b63b` | des Prez – Mille regretz | * Mille regretz | ? |
@@ -1228,11 +1216,13 @@
 | `c77e1961` | Haydn – Die Schöpfung, Hob. XXI:2 | * 2: Part I: IX. Arie: Nun beut die Flur das frische Grün<br>* 2: Part I: XI. Chor: Stimmt an die Saiten<br>* 2: Part I: XIV. Chor und Terzett: Die Himmel erzählen die Ehre Gottes | ? |
 | `d2e3f192` | Haydn – Fantasia (Capriccio) in C major, Hob. XVII:4 | * 4 | 1789 |
 | `9ac68e8a` | Haydn – Horn Concerto no. 1 in D major, Hob.VIId:3 | * I. Allegro<br>* II. Adagio<br>* III. Allegro | 1762 |
+| `868d69bd` | Haydn – Keyboard Concerto in C major, Hob. XVIII:1 | * I. Allegro moderato<br>* II. Largo<br>* III. Allegro molto | 1756 |
 | `b2650ffe` | Haydn – Piano Concerto no. 11 in D major, Hob. XVIII:11 | * I. Vivace<br>* II. Un poco adagio<br>* III. Rondo all'ungarese. Allegro assai | ? |
 | `d90472f5` | Haydn – Piano Concerto no. 3 in F major, Hob. XVIII:3 | * I. Allegro<br>* II. Largo cantabile<br>* III. Finale: Presto | ? |
 | `539fc051` | Haydn – Piano Concerto no. 4 in G major, Hob. XVIII:4 | * I. Allegro<br>* II. Adagio cantabile<br>* III. Rondo. Presto | ? |
 | `5b02613d` | Haydn – Piano Sonata no. 32 in G minor, Hob. XVI:44 | * I. Moderato<br>* II. Allegretto | 1771‑1773 |
 | `0a1f0af1` | Haydn – Piano Sonata no. 33 in C minor, Hob. XVI:20 | * I. Moderato<br>* II. Andante con moto<br>* III. Finale: Allegro | 1771 |
+| `21ddc864` | Haydn – Piano Sonata no. 35 in A-flat major, Hob. XVI:43 | * I. Moderato<br>* II. Menuetto<br>* III. Rondo: Presto | 1783 |
 | `638fe39b` | Haydn – Piano Sonata no. 46 in E major, Hob. XVI:31 | * I. Moderato<br>* II. Allegretto<br>* III. Finale: Presto | 1776 |
 | `bf814431` | Haydn – Piano Sonata no. 47 in B minor, Hob. XVI:32 | * I. Allegro moderato<br>* II. Menuet<br>* III. Finale: Presto | 1774‑1776 |
 | `9798d00a` | Haydn – Piano Sonata no. 48 in C major, Hob. XVI:35 | * I. Allegro con brio<br>* II. Adagio<br>* III. Finale: Allegro | ? |
@@ -1379,6 +1369,7 @@
 | `eda2e2b3` | Khachaturian – Spartacus, op. 82 | * Spartacus: Adagio of Spartacus & Phrygia | 1955 |
 | `17e6f714` | Khachaturian – Third Suite from the ballet “Gayaneh” for orchestra, op. 55 | * V. Sabre Dance | 1943 |
 | `aa1c1ce0` | Khachaturian – Violin Concerto in D minor, op. 46 | * I. Allegro con fermezza<br>* II. Andante sostenuto<br>* III. Allegro vivace | 1940 |
+| `47c7841d` | Kodály – Dances of Galánta | * I. Lento<br>* II. Allegretto moderato<br>* IV. Allegro | 1933 |
 | `fa1187e5` | Kodály – Duo for Violin & Cello, op. 7 | * I. Allegro serioso, non troppo<br>* II. Adagio - Andante - Tempo 1°<br>* III. Maestoso e largamente, ma non troppo lento - Presto | 1914 |
 | `9eecec2b` | Kodály – Háry János Suite | * II. Viennese Musical Clock: Allegretto<br>* V. Intermezzo: Andante maestoso, ma con fuoco<br>* VI. Entrance of the Emperor and His Court: Alla marcia | 1926‑1927 |
 | `4063c1da` | Kodály – Sonata for solo cello, op. 8 | * I. Allegro maestoso ma appassionato<br>* II. Adagio<br>* III. Allegro molto vivace | 1915 |
@@ -1890,6 +1881,7 @@
 | `53a20f2a` | Pärt – Für Alina | * Für Alina | 1976 |
 | `eac5bc29` | Pärt – Magnificat | * Magnificat | 1989 |
 | `e9a81627` | Pärt – Nunc dimittis | * Nunc dimittis | 2001 |
+| `ef3eed11` | Pärt – Sieben Magnificat-Antiphonen | * I. O Weisheit<br>* II. O Adonai<br>* VI. O König aller Völker | 1988 |
 | `83e63350` | Pärt – Spiegel im Spiegel | * Spiegel im Spiegel | 1978 |
 | `914919ea` | Pärt – Tabula rasa | * I. Ludus: Con moto<br>* II. Silentium: Senza moto | 1977 |
 | `b16332fa` | Penderecki – Threnody for the Victims of Hiroshima | * Threnody for the Victims of Hiroshima | 1960 |
@@ -1905,6 +1897,7 @@
 | `2b5ccf40` | Ponchielli – Dance of the Hours | * Dance of the Hours | ? |
 | `85a0c853` | Ponchielli – La Gioconda, op. 9 | * La Gioconda: Atto II. “Cielo e mar!” (Enzo)<br>* La Gioconda: Atto III, scena 2. Danza delle ore<br>* La Gioconda: Atto IV. Aria “Suicidio!” (Gioconda) | 1876 |
 | `51f93691` | Popper – Dance of the Elves | * Dance of the Elves | 1881 |
+| `32848b90` | Poulenc – 8 Nocturnes, FP 56 | * Nocturne no. 1 in C major<br>* Nocturne no. 4 in C minor "Bal fantôme" | ? |
 | `d80bb6bc` | Poulenc – Banalités, FP 107 | * 2. Hôtel<br>* 4. Voyage à Paris | 1940 |
 | `b4f82aed` | Poulenc – Concert champêtre, FP 49 | * I. Allegro molto - Adagio - Allegro molto<br>* II. Andante, Mouvement de Sicilienne<br>* III. Finale, Presto très gai | 1927‑1928 |
 | `cd2d9db3` | Poulenc – Concerto for Two Pianos and Orchestra in D minor, FP 61 | * I. Allegro ma non troppo<br>* II. Larghetto<br>* III. Finale (Allegro molto) | 1932 |
@@ -2479,6 +2472,7 @@
 | `adfd1a07` | Schumann – Zwölf Gedichte, op. 35 | * IV. Erstes Grün<br>* VII. Wanderung<br>* X. Stille Tränen | ? |
 | `5070b13b` | Schütz – Musikalische Exequien, op. 7, SWV 279-281 | * I. Concert in Form einer teutschen Begräbnis-Messe | ? |
 | `ee89257d` | Scriabin – 12 études, op. 8 | * No. 12 in D-sharp minor | 1894 |
+| `a16e17f3` | Scriabin – 2 Mazurkas, op. 40 | * No. 1 in D‐flat major<br>* No. 2 in F‐sharp major | ? |
 | `3d1df247` | Scriabin – 2 Poèmes, op. 69 | * No. 1. Allegretto<br>* No. 2. Allegretto | ? |
 | `9b3061f1` | Scriabin – 24 Preludes, op. 11 | * No. 4 in E minor. Lento<br>* No. 5 in D major. Andante cantabile<br>* No. 9 in E major. Andantino | 1888‑1896 |
 | `2f1cd78a` | Scriabin – 3 Études, op. 65 | * No. 1 in B‐flat major. Allegro fantastico<br>* No. 2 in C‐sharp major. Allegretto<br>* No. 3 in G major. Molto vivace | 1912 |
@@ -2545,6 +2539,7 @@
 | `3885d794` | Shostakovich – String Quartet no. 7 in F-sharp minor, op. 108 | * I. Allegretto<br>* II. Lento<br>* III. Allegro - Allegretto | 1960 |
 | `725265f4` | Shostakovich – String Quartet no. 8 in C minor, op. 110 | * I. Largo<br>* II. Allegro molto<br>* IV. Largo | 1960 |
 | `14382ae2` | Shostakovich – String Quartet no. 9 in E-flat major, op. 117 | * I. Moderato con moto<br>* II. Adagio<br>* IV. Adagio | 1964 |
+| `5e7fac9e` | Shostakovich – Suite for Jazz Orchestra no. 1 | * I. Waltz. Moderato | 1934 |
 | `d3229859` | Shostakovich – Suite for Variety Orchestra | * VII. Waltz II. Allegretto poco moderato | 1956 |
 | `4a62f66e` | Shostakovich – Suite from "The Age of Gold", op. 22a | * III. Polka | ? |
 | `75c7ebd2` | Shostakovich – Symphony no. 1 in F minor, op. 10 | * I. Allegretto - Allegro ma non troppo<br>* II. Allegro<br>* IV. Allegro molto - Lento - Allegro molto | 1924‑1925 |
@@ -2565,9 +2560,12 @@
 | `dcb2f66a` | Shostakovich – Two Pieces for String Quartet | * I. Elegy<br>* II. Polka | ? |
 | `11106b60` | Shostakovich – Violin Concerto no. 1 in A minor, op. 77 / 99 | * I. Nocturno<br>* II. Scherzo<br>* IV. Burleske | 1947‑1955 |
 | `dbf79787` | Shostakovich – Violin Concerto no. 2 in C-sharp minor, op. 129 | * I. Moderato<br>* II. Adagio<br>* III. Adagio – Allegro | 1967 |
+| `a31244c0` | Sibelius – 10 Pieces for Piano, op. 24 | * No. 9. Romance in D-flat major | 1895‑1903 |
 | `a4ab180b` | Sibelius – 2 Humoresques, op. 87 | * Humoresque no. 1 in D minor, op. 87 no. 1<br>* Humoresque no. 2 in D major, op. 87 no. 2 | 1917 |
 | `8224c547` | Sibelius – 2 Pieces from Kuolema, op. 44 | * Valse triste, op. 44 no. 1 | 1903‑1904 |
+| `49b90052` | Sibelius – 2 Serenades, op. 69 | * Serenade in D major, op. 69 no. 1<br>* Serenade in G minor, op. 69 no. 2 | 1912‑1913 |
 | `1bb44ca5` | Sibelius – 4 Humoresques, op. 89 | * Humoresque no. 4 in G minor, op. 89 no. 2: Andantino<br>* Humoresque no. 5 in E-flat, op. 89 no. 3<br>* Humoresque no. 6 in G minor, op. 89 no. 4: Allegro | 1917 |
+| `2433c70c` | Sibelius – 5 Songs, op. 37 | * The First Kiss, op. 37 no. 1<br>* Var det en dröm?, op. 37 no. 4<br>* Flickan kom ifrån sin älsklings möte, op. 37 no. 5 | 1900‑1902 |
 | `ed1a6ce5` | Sibelius – 6 Impromptus, op. 5 | * No. 1. Moderato<br>* No. 5. Vivace<br>* No. 6. Commodo | 1893 |
 | `674c40f2` | Sibelius – 6 Songs, op. 36 | * Svarta rosor, op. 36 no. 1<br>* Säv, säv, susa, op. 36 no. 4<br>* Demanten på marssnön, op. 36 no. 6 | 1899‑1900 |
 | `6d1c78fe` | Sibelius – En saga, op. 9 | * En saga, op. 9 | 1892 |
@@ -2606,6 +2604,7 @@
 | `7cd6af3a` | Soler – Fandango in D minor, R. 146 | * Fandango in D minor, R. 146 | ? |
 | `003a3db4` | Soler – Keyboard Sonata no. 84 in D major | * Keyboard Sonata no. 84 in D major | ? |
 | `a0d4d9e9` | Sor – Introduction and Variations on a Theme by Mozart, op. 9 | * Introduction and Variations on a Theme by Mozart, op. 9 | ? |
+| `8c38ae1f` | Sor – Twenty Studies for the Guitar by Fernando Sor | * 24 Exercises, op. 35: No. 22 in B minor<br>* 24 Exercises, op. 35: No. 17 in D major<br>* 12 estudios, op. 6: No. 11 en mi menor | ? |
 | `19543b4b` | Sousa – El Capitán | * El Capitán | 1896 |
 | `3814bcce` | Sousa – Hands Across the Sea | * Hands Across the Sea | 1899 |
 | `6543c18e` | Sousa – The Thunderer | * The Thunderer | 1889 |
@@ -2915,6 +2914,7 @@
 | `0376374e` | Vivaldi – Concerto in C major, RV 558, “con molti stromenti” | * I. Allegro molto<br>* II. Andante molto<br>* III. Allegro | ? |
 | `df225ba0` | Vivaldi – Concerto in C minor, RV 199 "Il sospetto" | * I. Allegro<br>* II. Andante<br>* III. Allegro | ? |
 | `9a3332b8` | Vivaldi – Concerto in D major for violin, strings and basso continuo, RV 234 "L'Inquietudine" | * I. Allegro molto<br>* II. Largo<br>* III. Allegro | ? |
+| `f8ef20e6` | Vivaldi – Concerto in D major, op. 10 no. 5, RV 429 | * I.<br>* II.<br>* III. | 1720‑1724 |
 | `5c36b37a` | Vivaldi – Concerto in D minor for Viola d'Amore, Lute, Strings and Continuo, RV 540 | * I. Allegro<br>* II. Largo<br>* III. Allegro | ? |
 | `b79443b8` | Vivaldi – Concerto in E major, RV 270 | * I. Allegro<br>* II. Adagio<br>* III. Allegro | ? |
 | `b7ab5da1` | Vivaldi – Concerto in G major for Two Mandolins, Strings and Continuo, RV 532 | * I. Allegro<br>* II. Andante<br>* III. Allegro | ? |

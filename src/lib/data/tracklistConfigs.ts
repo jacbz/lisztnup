@@ -22,7 +22,7 @@ export const INTERMEDIATE_CONFIG: TracklistConfig = {
 		organ: -0.3,
 		solo: 0
 	},
-	limitWorksFromComposer: 0.075,
+	limitWorksFromComposer: 0.08,
 	maxTracksFromSingleWork: 1,
 	includeWorks: BEGINNER_TRACKLIST
 };
@@ -40,7 +40,7 @@ export const SKILLED_CONFIG: TracklistConfig = {
 		organ: -0.3,
 		solo: 0
 	},
-	limitWorksFromComposer: 0.1,
+	limitWorksFromComposer: 0.08,
 	maxTracksFromSingleWork: 1,
 	includeWorks: BEGINNER_TRACKLIST
 };
@@ -58,7 +58,7 @@ export const ADVANCED_CONFIG: TracklistConfig = {
 		organ: -0.5,
 		solo: 0
 	},
-	limitWorksFromComposer: 0.1,
+	limitWorksFromComposer: 0.08,
 	maxTracksFromSingleWork: 2
 };
 
@@ -236,7 +236,7 @@ export const VIOLINCONCERTO_CONFIG: TracklistConfig = {
 		solo: -MAX_WORK_SCORE_ROUNDED
 	},
 	limitWorksFromComposer: 0.1,
-	nameFilter: ['/viol(i|o)n\b/'],
+	nameFilter: ['/viol(i|o)n\\b/'],
 	includeWorks: [
 		'561b8302', // Vaughan Williams - The Lark Ascending
 		'24c323a3' // Ysaÿe - Amitié
@@ -257,7 +257,6 @@ export const CELLOCONCERTO_CONFIG: TracklistConfig = {
 	},
 	limitWorksFromComposer: 0.1,
 	nameFilter: ['cello'],
-	maxTracksFromSingleWork: 5,
 	includeWorks: [
 		'0e9d27ec', // Bloch - Schemolo
 		'514024f4', // Bruch - Kol Nidrei
@@ -298,26 +297,21 @@ export const VIVALDI_CONFIG: TracklistConfig = {
 };
 
 export const RENAISSANCE_CONFIG: TracklistConfig = {
-	yearFilter: [MIN_WORK_YEAR, 1600],
-	workScoreRange: [0, MAX_WORK_SCORE_ROUNDED]
+	yearFilter: [MIN_WORK_YEAR, 1600]
 };
 
 export const BAROQUE_CONFIG: TracklistConfig = {
-	yearFilter: [1600, 1750],
-	workScoreRange: [0, MAX_WORK_SCORE_ROUNDED]
+	yearFilter: [1600, 1750]
 };
 
 export const CLASSICAL_CONFIG: TracklistConfig = {
-	yearFilter: [1750, 1820],
-	workScoreRange: [0, MAX_WORK_SCORE_ROUNDED]
+	yearFilter: [1750, 1820]
 };
 
 export const ROMANTIC_CONFIG: TracklistConfig = {
-	yearFilter: [1820, 1910],
-	workScoreRange: [0, MAX_WORK_SCORE_ROUNDED]
+	yearFilter: [1820, 1910]
 };
 
 export const TWENTIETH_CENTURY_CONFIG: TracklistConfig = {
-	yearFilter: [1900, 1999],
-	workScoreRange: [0, MAX_WORK_SCORE_ROUNDED]
+	yearFilter: [1900, 1999]
 };
