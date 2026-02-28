@@ -35,6 +35,7 @@ import re
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
+import subprocess
 from typing import Dict, List, Optional, Set, Any, Tuple, Union
 import yaml
 
@@ -84,14 +85,6 @@ TYPE_MAPPING = {
 LABEL_PREFERENCE = [
     "Deutsche Grammophon", "EMI", "Decca", "Hyperion", "Chandos", "Universal", "Philips"
 ]
-
-# --- Work Processing Configuration ---
-# (Loaded from WORK_PROCESSING_CONFIG.yaml)
-EXCLUDED_COMPOSERS: Set[str] = set()
-EXCLUDED_WORKS: Set[str] = set()
-WSS_OVERRIDES: Dict[str, float] = {}
-MANUAL_CLASSIFICATION_OVERRIDES: Dict[str, str] = {}
-YEAR_OVERRIDES: Dict[str, Union[int, List[Optional[int]]]] = {}
 
 # Deezer IDs without preview mp3s, loaded from 'DEEZER_EXCLUDED_IDS' file
 EXCLUDED_DEEZER_IDS: Set[int] = set([])
@@ -233,6 +226,7 @@ class MusicbrainzProcessor:
         self.excluded_composers = set(config.get("excluded_composers") or [])
         self.excluded_works = set((config.get("excluded_works") or {}).keys())
         self.wss_overrides = config.get("wss_overrides") or {}
+        self.pss_overrides = config.get("pss_overrides") or {}
         self.year_overrides = config.get("year_overrides") or {}
         self.manual_classification_overrides = config.get("manual_classification_overrides") or {}
         
@@ -332,6 +326,17 @@ class MusicbrainzProcessor:
         composer_map = {c.gid: c.name for c in final_composers}
         all_works.sort(key=lambda w: (composer_map.get(w.composer, ""), w.name))
 
+        # One exception for Peter and the Wolf, add one without narration
+        for w in all_works:
+            if w.gid == "812b5cc4-a7a0-3809-aa6c-290c9ebd79be":
+                w.parts = [
+                    FinalPart(
+                        name="Peter and the Wolf, op. 67: 1. Introduction (no narration)",
+                        deezer=[2803098022],
+                        score=100.0
+                    )
+                ]
+
         # Stage 5: Write logs and return the final packaged data
         final_output = FinalOutput(composers=final_composers, works=all_works)
         self._write_unresolved_log(final_output)
@@ -413,6 +418,13 @@ class MusicbrainzProcessor:
 
                 # Get the dynamic threshold for this specific work
                 dynamic_threshold = self._get_dynamic_part_score_threshold(wss)
+
+                # Boost parts that are in the PSS overrides list to ensure they are considered the most significant part of their work
+                if any(p.gid in self.pss_overrides for p, _ in parts_with_pss):
+                    max_pss = max_pss * 1.03
+                    parts_with_pss = [
+                        (part, max_pss if part.gid in self.pss_overrides else pss) for part, pss in parts_with_pss
+                    ]
 
                 potential_parts = []
                 for part, pss in parts_with_pss:
@@ -1222,3 +1234,4 @@ def check_short_uuid_collisions(final_output: FinalOutput, short_length: int = 8
 
 if __name__ == "__main__":
     main()
+    subprocess.run(["yarn", "sync:tracklist"], check=True)

@@ -47,7 +47,6 @@
 | `45234525` | Bach – Aria variata, BWV 989 | * I. Thema<br>* II. Var. 1 (Largo)<br>* III. Var. 2 | 1709 |
 | `a11b562a` | Bach – Aus tiefer Not schrei ich zu dir, BWV 686 | * Aus tiefer Not schrei ich zu dir, BWV 686 | ? |
 | `a4b6b169` | Bach – Aus tiefer Not schrei ich zu dir, BWV 687 | * Aus tiefer Not schrei ich zu dir, BWV 687 | 1739 |
-| `3f39aa99` | Bach – Brandenburgisches Konzert Nr. 3 G-Dur, BWV 1048: II. Adagio | * II. Adagio | ? |
 | `2f7b1809` | Bach – Canzona, BWV 588 | * Canzona, BWV 588 | 1705 |
 | `e730f208` | Bach – Capriccio sopra la lontananza del suo fratello dilettissimo, BWV 992 | * II. (Andante)<br>* III. Adagiosissimo<br>* V. Allegro poco. Aria de il Postiglione | 1704‑1706 |
 | `1ff65284` | Bach – Choralbearbeitung, BWV 669 “Kyrie, Gott Vater in Ewigkeit” | * Choralbearbeitung, BWV 669 “Kyrie, Gott Vater in Ewigkeit” | ? |
@@ -745,7 +744,7 @@
 | `dda6229e` | Chopin – Concerto for Piano and Orchestra no. 2 in F minor, op. 21 | * I. Maestoso<br>* II. Larghetto<br>* III. Allegro vivace | 1829‑1830 |
 | `dd9ca5a0` | Chopin – Contredanse in G-flat major, B. 17 | * Contredanse in G-flat major, B. 17 | ? |
 | `09fb2287` | Chopin – Études, op. 10 | * Étude in E major, op. 10 no. 3: Lento ma non troppo<br>* Étude in G-flat major, op. 10 no. 5 “Black Keys”: Vivace<br>* Étude in C minor, op. 10 no. 12 “Revolutionary”: Allegro con fuoco | 1829‑1832 |
-| `4e2cd2d3` | Chopin – Études, op. 25 | * Étude in A‐flat major, op. 25 no. 1 “Aeolian Harp”: Allegro sostenuto<br>* Étude in F minor, op. 25 no. 2: Presto<br>* Étude in C‐sharp minor, op. 25 no. 7: Lento | 1832‑1836 |
+| `4e2cd2d3` | Chopin – Études, op. 25 | * Étude in A‐flat major, op. 25 no. 1 “Aeolian Harp”: Allegro sostenuto<br>* Étude in C‐sharp minor, op. 25 no. 7: Lento<br>* Étude in A minor, op. 25 no. 11 “Winter Wind”: Lento | 1832‑1836 |
 | `e6a65b61` | Chopin – Fantaisie in F minor, op. 49 | * Fantaisie in F minor, op. 49 | 1841 |
 | `3fdac4f1` | Chopin – Fantaisie‐impromptu in C‐sharp minor, op. 66 | * Fantaisie‐impromptu in C‐sharp minor, op. 66 | 1834 |
 | `b4dac391` | Chopin – Fugue in A minor, B. 144 (KK IVc no. 2) | * Fugue in A minor, B. 144 (KK IVc no. 2) | 1841‑1842 |
@@ -1672,6 +1671,7 @@
 | `b6f113dd` | Mozart – Fugue for Piano G minor, K. 375e/401 | * Fugue for Piano G minor, K. 375e/401 | ? |
 | `616b17e9` | Mozart – Gigue for Piano in G major, K. 574 "Eine kleine Gigue". Allegro | * Gigue for Piano in G major, K. 574 "Eine kleine Gigue". Allegro | ? |
 | `712210fe` | Mozart – Great Mass in C minor, K. 427/417a | * Missa in c-Moll, K.427/417a ('Große Messe'): I. Kyrie<br>* Missa in c-Moll, K.427/417a ('Große Messe'): IIb. Gloria: “Laudamus te”<br>* Missa in c-Moll, K.427/417a ('Große Messe'): IIIb. Credo: “Et incarnatus est” | 1782‑1783 |
+| `13f62c9f` | Mozart – Idomeneo, K. 366: Atto Secondo: Recitativo: “Non più. Tutto acoltai” (Ilia, Idamante) | * Idomeneo, rè di Creta, K. 366: Act II, Scene II. No. 11 Aria "Se il padre perdei" (Ilia)<br>* Idomeneo, rè di Creta, K. 366: Act II, Scene III. No. 12 Aria "Fuor del mar" (Idomeneo) | ? |
 | `500f765e` | Mozart – Idomeneo, rè di Creta, K. 366 | * Ouverture | 1781 |
 | `b3b1e2b3` | Mozart – Il dissoluto punito, ossia il Don Giovanni, K. 527 | * Don Giovanni: Ouvertura<br>* Don Giovanni: Atto I. No. 4 Aria “Madamina, il catalogo è questo” (Leporello)<br>* Don Giovanni: Atto I. No. 7 Duettino “Là ci darem la mano” (Don Giovanni, Zerlina) | 1787 |
 | `d7e2a9f1` | Mozart – Konzertrondo für Klavier und Orchester D-Dur, KV 382 | * I. Allegretto grazioso<br>* II. Adagio<br>* III. Allegro | ? |
@@ -1897,9 +1897,9 @@
 | `7b46292d` | Piazzolla – Histoire du tango | * I. Bordel 1900<br>* II. Café 1930<br>* III. Night‐club 1960 | 1985 |
 | `48898169` | Piazzolla – La muerte del ángel | * La muerte del ángel | ? |
 | `978322e3` | Piazzolla – Le Grand Tango | * Le Grand Tango | 1982 |
-| `e039120f` | Piazzolla – Libertango | * Libertango | ? |
+| `e039120f` | Piazzolla – Libertango | * Libertango | 1974 |
 | `c51a45b9` | Piazzolla – Milonga del ángel | * Milonga del ángel | 1965 |
-| `f124195b` | Piazzolla – Oblivion | * Oblivion | ? |
+| `f124195b` | Piazzolla – Oblivion | * Oblivion | 1982 |
 | `c0d28734` | Piazzolla – Tangata (Silfo y Ondina) | * Fugata | 1969 |
 | `a289bd55` | Piazzolla – The Four Seasons of Buenos Aires | * Otoño porteño<br>* Invierno porteño<br>* Verano porteño | 1970 |
 | `2b5ccf40` | Ponchielli – Dance of the Hours | * Dance of the Hours | ? |
@@ -1937,7 +1937,7 @@
 | `d57aa142` | Prokofiev – Five Melodies for Violin and Piano, op. 35bis | * I. Andante<br>* III. Animato, ma non allegro<br>* V. Andante non troppo | 1925 |
 | `f168363e` | Prokofiev – Lieutenant Kijé Suite, op. 60 | * II. Romance<br>* III. Kijé’s Wedding<br>* IV. Troika | 1933 |
 | `146e01cf` | Prokofiev – Overture on Hebrew Themes, op. 34 | * Overture on Hebrew Themes, op. 34 | 1919 |
-| `812b5cc4` | Prokofiev – Peter and the Wolf, op. 67 | * 10. The bird diverts the wolf | 1936 |
+| `812b5cc4` | Prokofiev – Peter and the Wolf, op. 67 | * 1. Introduction (no narration) | 1936 |
 | `b18bb93c` | Prokofiev – Piano Concerto no. 1 in D-flat major, op. 10 | * I. Allegro brioso<br>* II. Andante assai<br>* III. Allegro scherzando | 1911‑1912 |
 | `c8b0aedf` | Prokofiev – Piano Concerto no. 2 in G minor, op. 16 | * I. Andantino – Allegretto<br>* II. Scherzo. Vivace<br>* IV. Finale. Allegro tempestoso | 1912‑1913 |
 | `7598a5f7` | Prokofiev – Piano Concerto no. 3 in C major, op. 26 | * I. Andante – Allegro<br>* III. Allegro ma non troppo | 1917‑1921 |
@@ -2760,7 +2760,6 @@
 | `03c670e9` | Tchaikovsky – Concerto for Piano and Orchestra no. 1 in B-flat minor, op. 23 | * I. Allegro non troppo e molto maestoso<br>* II. Andantino semplice<br>* III. Allegro con fuoco | 1874‑1875 |
 | `f7136e19` | Tchaikovsky – Concerto for Violin and Orchestra in D major, op. 35 | * I. Allegro moderato<br>* II. Canzonetta. Andante<br>* III. Finale. Allegro vivacissimo | 1878 |
 | `4e5af4ea` | Tchaikovsky – Coronation March in D major, TH 50, ČW 47 | * Coronation March in D major, TH 50, ČW 47 | 1883 |
-| `2179f131` | Tchaikovsky – Dance of the Sugar Plum Fairy | * Dance of the Sugar Plum Fairy | ? |
 | `37ca2168` | Tchaikovsky – Deux morceaux, op. 10 | * No. 1. Nocturne<br>* No. 2. Humoresque in G major | 1871‑1872 |
 | `c5758d31` | Tchaikovsky – Dumka, op. 59 "Russian rustic scene" | * Dumka, op. 59 "Russian rustic scene" | 1886 |
 | `279613e8` | Tchaikovsky – Eugene Onegin, op. 24 | * Excerpt from Eugene Onegin, op. 24: Act II Scene I: Waltz<br>* Евгений Онегин, op. 24: Действие III, картина 1, no. 19. Полонез | 1880 |
@@ -2791,8 +2790,9 @@
 | `e920883e` | Tchaikovsky – Symphony no. 3 in D major, op. 29 “Polish” | * I. Introduzione e Allegro - Moderato assai - Allegro brillante<br>* II. Alla tedesca. Allegro moderato e semplice<br>* III. Andante elegiaco | 1875 |
 | `b9655de0` | Tchaikovsky – Symphony no. 4 in F minor, op. 36 | * II. Andantino in modo di canzona<br>* III. Scherzo. Pizzicato ostinato<br>* IV. Finale. Allegro con fuoco | 1877‑1878 |
 | `9e906d77` | Tchaikovsky – Symphony no. 5 in E minor, op. 64 | * II. Andante cantabile, con alcuna licenza<br>* III. Valse. Allegro moderato<br>* IV. Finale. Andante maestoso – Allegro vivace | 1888 |
-| `15e0a721` | Tchaikovsky – Symphony no. 6 in B minor, op. 74 “Pathétique” | * II. Allegro con grazia<br>* III. Allegro molto vivace<br>* IV. Finale. Adagio lamentoso | 1893 |
+| `15e0a721` | Tchaikovsky – Symphony no. 6 in B minor, op. 74 “Pathétique” | * I. Adagio - Allegro non troppo<br>* II. Allegro con grazia<br>* IV. Finale. Adagio lamentoso | 1893 |
 | `fd337fdc` | Tchaikovsky – The Nutcracker (suite from the ballet), op. 71a | * II. Danses caractéristiques: b) Danse de la Fée-Dragée. Andante ma non troppo<br>* II. Danses caractéristiques: f) Danse des mirlitons. Moderato assai<br>* III. Valse des fleurs. Tempo di Valse | 1892 |
+| `f3281e81` | Tchaikovsky – The Nutcracker, op. 71 | * March<br>* Act II, Scene III. Waltz of the flowers<br>* Act II, Scene III. Pas de Deux: Variation II: Dance of the sugar-plum fairy | 1891‑1892 |
 | `76cd571a` | Tchaikovsky – The Seasons, op. 37a | * VI. June “Barcarolle”<br>* X. October “Autumn Song”<br>* XI. November “Troika” | 1875‑1876 |
 | `f9764922` | Tchaikovsky – The Sleeping Beauty, op. 66a | * I. Introduction. La Fée des Lilas<br>* V. Valse | 1890 |
 | `0dcb4dec` | Tchaikovsky – The Tempest, op. 18 | * The Tempest, op. 18 | ? |

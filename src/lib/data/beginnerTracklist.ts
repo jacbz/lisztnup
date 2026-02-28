@@ -1,8 +1,7 @@
-/** Manually curated beginner tracklist of 250 essential classical works.
+/** Manually curated beginner tracklist of 250 famous classical works, selected for their popularity and accessibility.
  * Other tracklists are algorithmically generated, extending from this core list.
  */
 export const BEGINNER_TRACKLIST = [
-	'07eaa830', // Allen - Chopsticks
 	'fe8612d1', // Bach – Concerto for 2 Violins in D minor, BWV 1043
 	'1d51e560', // Bach – Goldberg Variations, BWV 988
 	'e74a3a95', // Bach – Keyboard Concerto in D minor, BWV 1052
@@ -50,6 +49,7 @@ export const BEGINNER_TRACKLIST = [
 	'792f5001', // Brahms – Sonate Nr. 1 G-Dur für Klavier und Violine, op. 78
 	'c1b0e8a2', // Brahms – Symphony no. 1 in C minor, op. 68
 	'abc15adc', // Brahms – Symphony no. 4 in E minor, op. 98
+	'ace72a0f', // Britten – The Young Person’s Guide to the Orchestra
 	'd56d43b0', // Bruch – Violin Concerto no. 1 in G minor, op. 26
 	'1c0cb34d', // Bruckner – Symphony no. 7 in E major, WAB 107
 	'9a81051a', // Borodin - Prince Igor (Polovtsian Dances)
@@ -74,10 +74,8 @@ export const BEGINNER_TRACKLIST = [
 	'f846bc6f', // Copland – Fanfare for the Common Man
 	'bd18eb14', // Debussy – Children’s Corner, L. 113, CD 119
 	'ede113fb', // Debussy – Deux arabesques, L. 66, CD 74
-	'6b73c1be', // Debussy – La Mer, trois esquisses symphoniques pour orchestre, L. 109
 	'9e9d8173', // Debussy – Prelude to the Afternoon of a Faun, L. 86, CD 87
 	'1319ddc3', // Debussy – Préludes, Livre I, L. 117, CD 125
-	'7158411f', // Debussy – Rêverie, L. 68, CD 76
 	'51c5a474', // Debussy – Suite bergamasque, L. 75, CD 82
 	'ea9195ab', // Delibes – Lakmé
 	'39c69a8c', // Dukas – The Sorcerer's Apprentice
@@ -102,7 +100,8 @@ export const BEGINNER_TRACKLIST = [
 	'b95fea1e', // Grieg – Concerto in A minor for Piano and Orchestra, op. 16
 	'e6e5dee6', // Grieg - Lyric Pieces (Wedding Day at Troldhaugen)
 	'7554a660', // Grieg – Holberg Suite, op. 40
-	'd5d9aa32', // Grieg – Peer Gynt Suite no. 1, op. 46
+	'd5d9aa32', // Grieg – Peer Gynt - Morning Mood
+	'1418776f', // Grieg – Peer Gynt - In the Hall of the Mountain King
 	'46001164', // Grieg – Peer Gynt Suite no. 2, op. 55
 	'426b7e1c', // Handel – Messiah, HWV 56
 	'925c3677', // Handel – Music for the Royal Fireworks, HWV 351
@@ -189,8 +188,8 @@ export const BEGINNER_TRACKLIST = [
 	'4bf36cb5', // Rimsky‐Korsakov – Scheherazade, op. 35
 	'82d6a244', // Rimsky‐Korsakov – The Tale of Tsar Saltan (Bumblebee)
 	'4344e777', // Rodriguez – Concierto de Aranjuez
+	'adeb0cf7', // Rossini – Il barbiere di Siviglia
 	'1ce190e3', // Rossini – Guillaume Tell
-	'66f32354', // Rossini – The Barber of Seville
 	'640d92c6', // Saint‐Saëns – Danse macabre, op. 40
 	'7342dc65', // Saint‐Saëns – The Carnival of the Animals (The Swan)
 	'6998da09', // Sarasate – Zigeunerweisen
@@ -237,7 +236,8 @@ export const BEGINNER_TRACKLIST = [
 	'b9655de0', // Tchaikovsky – Symphony no. 4 in F minor, op. 36
 	'9e906d77', // Tchaikovsky – Symphony no. 5 in E minor, op. 64
 	'15e0a721', // Tchaikovsky – Symphony no. 6 in B minor, op. 74 “Pathétique”
-	'fd337fdc', // Tchaikovsky – The Nutcracker (suite from the ballet), op. 71a
+	'fd337fdc', // Tchaikovsky – The Nutcracker - Waltz of the Flowers
+	'f3281e81', // Tchaikovsky – The Nutcracker - Dance of the Sugar Plum Fairy
 	'f9764922', // Tchaikovsky – The Sleeping Beauty, op. 66a
 	'36dfecf2', // Tchaikovsky – The Year 1812, Festival Overture in E-flat major, op. 49
 	'06b34416', // Vaughan Williams – Fantasia on “Greensleeves”
@@ -247,7 +247,7 @@ export const BEGINNER_TRACKLIST = [
 	'445fc058', // Verdi - Nabucco (Va, pensiero)
 	'2dc7fb62', // Verdi – Rigoletto (La donna è mobile)
 	'87886dcf', // Vivaldi – The Four Seasons
-	'c9f9f244', // Waldteufel – The Skater’s Waltz
+	'1d774427', // Wagner - Lohengrin
 	'597e017a', // Wagner – Der Ring des Nibelungen (Ride of the Valkyries)
 	'd801c361', // Wagner – Tannhäuser: Ouverture and Venusberg Music
 	'2ed0c416', // Widor – Toccata from Symphony for Organ no. 5 in F minor, op. 42

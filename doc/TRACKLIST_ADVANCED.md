@@ -19,7 +19,6 @@
 | `481decb3` | Bach – 6 kleine Präludien: Präludium e-Moll, BWV 938 | * 6 kleine Präludien: Präludium e-Moll, BWV 938 | ? |
 | `3c1d42c1` | Bach – 6 Partitas, BWV 825-830 | * Partita no. 1 in B-flat major, BWV 825: V. Menuet I<br>* Partita no. 1 in B-flat major, BWV 825: VII. Gigue | 1726‑1731 |
 | `320d6eea` | Bach – Allein Gott in der Höh sei Ehr, BWV 711 | * Allein Gott in der Höh sei Ehr, BWV 711 | ? |
-| `3f39aa99` | Bach – Brandenburgisches Konzert Nr. 3 G-Dur, BWV 1048: II. Adagio | * II. Adagio | ? |
 | `e730f208` | Bach – Capriccio sopra la lontananza del suo fratello dilettissimo, BWV 992 | * III. Adagiosissimo<br>* V. Allegro poco. Aria de il Postiglione | 1704‑1706 |
 | `1ff65284` | Bach – Choralbearbeitung, BWV 669 “Kyrie, Gott Vater in Ewigkeit” | * Choralbearbeitung, BWV 669 “Kyrie, Gott Vater in Ewigkeit” | ? |
 | `f3d67aea` | Bach – Choralbearbeitung, BWV 670 "Christe, aller Welt Trost" | * Choralbearbeitung, BWV 670 "Christe, aller Welt Trost" | ? |
@@ -289,7 +288,7 @@
 | `198cb225` | Beethoven – Concerto for Piano and Orchestra no. 2 in B-flat major, op. 19 | * II. Adagio<br>* III. Rondo. Molto allegro | 1787‑1795 |
 | `82506d40` | Beethoven – Concerto for Piano and Orchestra no. 3 in C minor, op. 37 | * II. Largo<br>* III. Rondo. Allegro | 1800 |
 | `2dd17c0c` | Beethoven – Concerto for Piano and Orchestra no. 4 in G major, op. 58 | * II. Andante con moto<br>* III. Rondo. Vivace | 1804‑1807 |
-| `e5cfd8b5` | Beethoven – Concerto for Piano and Orchestra no. 5 in E-flat major, op. 73 “Emperor” | * II. Adagio un poco mosso<br>* III. Rondo. Allegro | 1809 |
+| `e5cfd8b5` | Beethoven – Concerto for Piano and Orchestra no. 5 in E-flat major, op. 73 “Emperor” | * I. Allegro<br>* II. Adagio un poco mosso | 1809 |
 | `178f118a` | Beethoven – Concerto for Piano, Violin, Cello and Orchestra in C major, op. 56 “Triple Concerto” | * II. Largo<br>* III. Rondo alla polacca | 1803 |
 | `5364d796` | Beethoven – Concerto for Violin and Orchestra in D major, op. 61 | * II. Larghetto<br>* III. Rondo. Allegro | 1806 |
 | `82c92c7d` | Beethoven – Coriolan Overture, Op. 62 | * Coriolan Overture, Op. 62 | 1807 |
@@ -412,7 +411,7 @@
 | `c86bf9ef` | Brahms – Cello Sonata no. 2 in F major, op. 99 | * I. Allegro vivace<br>* IV. Allegro molto | 1886 |
 | `b078677e` | Brahms – Concerto for Piano and Orchestra no. 1 in D minor, op. 15 | * I. Maestoso<br>* III. Rondo. Allegro non troppo | 1854‑1859 |
 | `11c6eebb` | Brahms – Concerto for Piano and Orchestra no. 2 in B-flat major, op. 83 | * II. Allegro appassionato<br>* III. Andante – Più adagio | 1878‑1881 |
-| `40215afd` | Brahms – Concerto for Violin and Orchestra in D major, op. 77 | * II. Adagio<br>* III. Allegro giocoso, ma non troppo vivace | 1878 |
+| `40215afd` | Brahms – Concerto for Violin and Orchestra in D major, op. 77 | * I. Allegro non troppo<br>* III. Allegro giocoso, ma non troppo vivace | 1878 |
 | `304289a2` | Brahms – Concerto for Violin, Cello, and Orchestra in A minor, op. 102 “Double Concerto” | * II. Andante<br>* III. Vivace non troppo | 1887 |
 | `362813da` | Brahms – Ein deutsches Requiem, op. 45 | * I. “Selig sind, die da Leid tragen” (Chor)<br>* IV. “Wie lieblich sind Deine Wohnungen” (Chor) | 1865‑1868 |
 | `3f13a790` | Brahms – Hungarian Dances for orchestra (orch. Schmeling) | * Hungarian Dance No. 5 | 1879 |
@@ -488,10 +487,10 @@
 | `680c7826` | Chopin – Ballades | * Ballade no. 1 in G minor, op. 23<br>* Ballade no. 4 in F minor, op. 52 | 1831‑1835 |
 | `0d5d12d1` | Chopin – Barcarolle in F‐sharp major, op. 60 | * Barcarolle in F‐sharp major, op. 60 | 1845‑1846 |
 | `d8c5d27a` | Chopin – Berceuse in D‐flat major, op. 57 | * Berceuse in D‐flat major, op. 57 | ? |
-| `5f7ded0a` | Chopin – Concerto for Piano and Orchestra no. 1 in E minor, op. 11 | * II. Romance. Larghetto<br>* III. Rondo. Vivace | 1830 |
+| `5f7ded0a` | Chopin – Concerto for Piano and Orchestra no. 1 in E minor, op. 11 | * I. Allegro maestoso<br>* II. Romance. Larghetto | 1830 |
 | `dda6229e` | Chopin – Concerto for Piano and Orchestra no. 2 in F minor, op. 21 | * II. Larghetto<br>* III. Allegro vivace | 1829‑1830 |
 | `09fb2287` | Chopin – Études, op. 10 | * Étude in E major, op. 10 no. 3: Lento ma non troppo<br>* Étude in C minor, op. 10 no. 12 “Revolutionary”: Allegro con fuoco | 1829‑1832 |
-| `4e2cd2d3` | Chopin – Études, op. 25 | * Étude in A‐flat major, op. 25 no. 1 “Aeolian Harp”: Allegro sostenuto<br>* Étude in C‐sharp minor, op. 25 no. 7: Lento | 1832‑1836 |
+| `4e2cd2d3` | Chopin – Études, op. 25 | * Étude in A‐flat major, op. 25 no. 1 “Aeolian Harp”: Allegro sostenuto<br>* Étude in A minor, op. 25 no. 11 “Winter Wind”: Lento | 1832‑1836 |
 | `e6a65b61` | Chopin – Fantaisie in F minor, op. 49 | * Fantaisie in F minor, op. 49 | 1841 |
 | `3fdac4f1` | Chopin – Fantaisie‐impromptu in C‐sharp minor, op. 66 | * Fantaisie‐impromptu in C‐sharp minor, op. 66 | 1834 |
 | `108abf05` | Chopin – Impromptu no. 1 in A‐flat major, op. 29: Allegro assai | * Impromptu no. 1 in A‐flat major, op. 29: Allegro assai | ? |
@@ -936,7 +935,7 @@
 | `ea02583a` | Mendelssohn – Trio for Piano, Violin and Violoncello no. 1 in D minor, op. 49 | * I. Molto allegro<br>* II. Andante con moto tranquillo | 1839 |
 | `4342b5d4` | Mendelssohn – Trio for Piano, Violin and Violoncello no. 2 in C minor, op. 66 | * I. Allegro energico e con fuoco<br>* II. Andante espressivo | 1845 |
 | `4bb2c66a` | Mendelssohn – Variations Sérieuses in D minor, op. 54 | * Variations Sérieuses in D minor, op. 54 | 1841 |
-| `c230858f` | Mendelssohn – Violin Concerto in E minor, op. 64 | * II. Andante<br>* III. Allegretto non troppo - Allegro molto vivace | 1838‑1844 |
+| `c230858f` | Mendelssohn – Violin Concerto in E minor, op. 64 | * I. Allegro molto appassionato<br>* II. Andante | 1838‑1844 |
 | `92eab622` | Messiaen – Quartet for the End of Time | * Quatuor pour la fin du Temps : III. Abîme des oiseaux<br>* Quatuor pour la fin du Temps : V. Louange à l'Éternité de Jesus | 1940 |
 | `a8f66df8` | Meyerbeer – L’Africaine | * L'Africaine: Acte IV. "Pays merveilleux" ... "Ô Paradis" | ? |
 | `fe664803` | Meyerbeer – L’africana: Atto IV. “Mi batte il cor” … “O Paradiso” | * L’africana: Atto IV. “Mi batte il cor” … “O Paradiso” | ? |
@@ -1144,9 +1143,9 @@
 | `7b46292d` | Piazzolla – Histoire du tango | * I. Bordel 1900<br>* II. Café 1930 | 1985 |
 | `48898169` | Piazzolla – La muerte del ángel | * La muerte del ángel | ? |
 | `978322e3` | Piazzolla – Le Grand Tango | * Le Grand Tango | 1982 |
-| `e039120f` | Piazzolla – Libertango | * Libertango | ? |
+| `e039120f` | Piazzolla – Libertango | * Libertango | 1974 |
 | `c51a45b9` | Piazzolla – Milonga del ángel | * Milonga del ángel | 1965 |
-| `f124195b` | Piazzolla – Oblivion | * Oblivion | ? |
+| `f124195b` | Piazzolla – Oblivion | * Oblivion | 1982 |
 | `a289bd55` | Piazzolla – The Four Seasons of Buenos Aires | * Invierno porteño<br>* Verano porteño | 1970 |
 | `85a0c853` | Ponchielli – La Gioconda, op. 9 | * La Gioconda: Atto II. “Cielo e mar!” (Enzo)<br>* La Gioconda: Atto III, scena 2. Danza delle ore | 1876 |
 | `cd2d9db3` | Poulenc – Concerto for Two Pianos and Orchestra in D minor, FP 61 | * I. Allegro ma non troppo<br>* II. Larghetto | 1932 |
@@ -1157,7 +1156,7 @@
 | `1d53db6d` | Poulenc – Sonate pour clarinette et piano en si bémol majeur, FP 184 | * II. Romanza (Très calme)<br>* III. Allegro con fuoco (Très animé) | 1962 |
 | `d57aa142` | Prokofiev – Five Melodies for Violin and Piano, op. 35bis | * I. Andante<br>* III. Animato, ma non allegro | 1925 |
 | `f168363e` | Prokofiev – Lieutenant Kijé Suite, op. 60 | * II. Romance<br>* IV. Troika | 1933 |
-| `812b5cc4` | Prokofiev – Peter and the Wolf, op. 67 | * 10. The bird diverts the wolf | 1936 |
+| `812b5cc4` | Prokofiev – Peter and the Wolf, op. 67 | * 1. Introduction (no narration) | 1936 |
 | `b18bb93c` | Prokofiev – Piano Concerto no. 1 in D-flat major, op. 10 | * II. Andante assai<br>* III. Allegro scherzando | 1911‑1912 |
 | `c8b0aedf` | Prokofiev – Piano Concerto no. 2 in G minor, op. 16 | * I. Andantino – Allegretto<br>* IV. Finale. Allegro tempestoso | 1912‑1913 |
 | `66dadd60` | Prokofiev – Piano Concerto no. 5 in G major, op. 55 | * I. Allegro con brio<br>* V. Vivo | 1931‑1932 |
@@ -1309,6 +1308,7 @@
 | `c29c5a25` | Satie – Gymnopédies (orch. Debussy) | * Gymnopédies: I. Lent et grave<br>* Gymnopédies: II. Lent et douloureux | 1888 |
 | `06438de8` | Satie – Le Fils des étoiles | * Préludes - II. L’Initiation (avec calme) | 1891 |
 | `6946ee61` | Satie – Le Piccadilly | * Le Piccadilly | 1904 |
+| `7ce248a4` | Satie – Les pantins dansent | * Les pantins dansent | 1913 |
 | `e9dc5490` | Satie – Les Trois Valses distinguées du précieux dégoûté | * II. Son binocle<br>* III. Ses jambes | 1914 |
 | `1556044c` | Satie – Petite ouverture à danser | * Petite ouverture à danser | ? |
 | `5fbf5d13` | Satie – Pièces froides | * no. 1, Airs à faire fuir: I. D’une manière très particulière<br>* no. 1, Airs à faire fuir: II. Modestemente | 1897 |
@@ -1633,8 +1633,7 @@
 | `9e337924` | Tavener – 3rd Earth | * 3rd Earth | ? |
 | `854f7f28` | Tchaikovsky – Capriccio italien, op. 45 | * Capriccio italien, op. 45 | 1880 |
 | `03c670e9` | Tchaikovsky – Concerto for Piano and Orchestra no. 1 in B-flat minor, op. 23 | * I. Allegro non troppo e molto maestoso<br>* II. Andantino semplice | 1874‑1875 |
-| `f7136e19` | Tchaikovsky – Concerto for Violin and Orchestra in D major, op. 35 | * II. Canzonetta. Andante<br>* III. Finale. Allegro vivacissimo | 1878 |
-| `2179f131` | Tchaikovsky – Dance of the Sugar Plum Fairy | * Dance of the Sugar Plum Fairy | ? |
+| `f7136e19` | Tchaikovsky – Concerto for Violin and Orchestra in D major, op. 35 | * I. Allegro moderato<br>* II. Canzonetta. Andante | 1878 |
 | `c5758d31` | Tchaikovsky – Dumka, op. 59 "Russian rustic scene" | * Dumka, op. 59 "Russian rustic scene" | 1886 |
 | `279613e8` | Tchaikovsky – Eugene Onegin, op. 24 | * Excerpt from Eugene Onegin, op. 24: Act II Scene I: Waltz<br>* Евгений Онегин, op. 24: Действие III, картина 1, no. 19. Полонез | 1880 |
 | `fa8bc8fc` | Tchaikovsky – Francesca da Rimini, op. 32 | * Francesca da Rimini, op. 32 | 1876 |
@@ -1655,8 +1654,9 @@
 | `e920883e` | Tchaikovsky – Symphony no. 3 in D major, op. 29 “Polish” | * I. Introduzione e Allegro - Moderato assai - Allegro brillante<br>* II. Alla tedesca. Allegro moderato e semplice | 1875 |
 | `b9655de0` | Tchaikovsky – Symphony no. 4 in F minor, op. 36 | * III. Scherzo. Pizzicato ostinato<br>* IV. Finale. Allegro con fuoco | 1877‑1878 |
 | `9e906d77` | Tchaikovsky – Symphony no. 5 in E minor, op. 64 | * III. Valse. Allegro moderato<br>* IV. Finale. Andante maestoso – Allegro vivace | 1888 |
-| `15e0a721` | Tchaikovsky – Symphony no. 6 in B minor, op. 74 “Pathétique” | * II. Allegro con grazia<br>* IV. Finale. Adagio lamentoso | 1893 |
+| `15e0a721` | Tchaikovsky – Symphony no. 6 in B minor, op. 74 “Pathétique” | * I. Adagio - Allegro non troppo<br>* IV. Finale. Adagio lamentoso | 1893 |
 | `fd337fdc` | Tchaikovsky – The Nutcracker (suite from the ballet), op. 71a | * II. Danses caractéristiques: f) Danse des mirlitons. Moderato assai<br>* III. Valse des fleurs. Tempo di Valse | 1892 |
+| `f3281e81` | Tchaikovsky – The Nutcracker, op. 71 | * Act II, Scene III. Waltz of the flowers<br>* Act II, Scene III. Pas de Deux: Variation II: Dance of the sugar-plum fairy | 1891‑1892 |
 | `76cd571a` | Tchaikovsky – The Seasons, op. 37a | * VI. June “Barcarolle”<br>* X. October “Autumn Song” | 1875‑1876 |
 | `f9764922` | Tchaikovsky – The Sleeping Beauty, op. 66a | * I. Introduction. La Fée des Lilas<br>* V. Valse | 1890 |
 | `36dfecf2` | Tchaikovsky – The Year 1812, Festival Overture in E-flat major, op. 49 | * The Year 1812, Festival Overture in E-flat major, op. 49 | 1880 |
@@ -1724,7 +1724,7 @@
 | `597e017a` | Wagner – Der Ring des Nibelungen, WWV 86 | * The Valkyrie: Ride of the Valkyries<br>* Excerpt from Götterdämmerung, WWV 86D: Akt III, Scene II. Trauermusik beim Tode Siegfrieds | 1854‑1856 |
 | `4d644732` | Wagner – Die Meistersinger von Nürnberg, WWV 96 | * Vorspiel | 1863‑1867 |
 | `15947da1` | Wagner – Faust Overture | * Faust Overture | ? |
-| `1d774427` | Wagner – Lohengrin, WWV 75 | * Vorspiel<br>* Akt III. Vorspiel | 1846‑1848 |
+| `1d774427` | Wagner – Lohengrin, WWV 75 | * Akt III. Vorspiel<br>* Lohengrin: Act III, Scene I. Bridal Chorus (Choir) | 1846‑1848 |
 | `98434ad8` | Wagner – Parsifal, WWV 111 | * I. Aufzug, Vorspiel<br>* II. Aufzug, 2. Szene | 1877‑1882 |
 | `315a0fe2` | Wagner – Rienzi, der letzte der Tribunen, WWV 49 | * Ouvertüre | 1838‑1840 |
 | `b7db99d4` | Wagner – Siegfried Idyll, WWV 103 | * Siegfried Idyll, WWV 103 | 1870 |

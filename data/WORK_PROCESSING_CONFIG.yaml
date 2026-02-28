@@ -54,8 +54,8 @@ excluded_works:
   '6eba656c-cd03-303d-a3e6-dc62719ca429': 'Nut Rocker'
   '6f68b550-d2b2-30fd-932c-a3a1db6b60c9': 'Wish Liszt'
   '23577ad8-1b8c-4666-9ea0-c9a49cadb4ec': "Marion's Theme"
-  'f3281e81-eea2-409f-88b8-9e1e1de5ca10': 'Nutcracker (full ballet - suite is already included)'
   '570f3852-ca39-4db2-aafd-4e818af725fd': 'Swan Lake Suite'
+  '2179f131-3a7f-3a7f-b966-da7029bdb60c': Dance of the Sugar Plum Fairy (duplicate)
   '17f624e2-97da-45c3-ab54-c3b2daf2ba68': 'Sleeping Beauty'
   '968b9db7-ccc6-3402-9f6c-a436db9ee0c3': 'Dance of the Little Swans (duplicate)'
   '9bfb2824-cc77-3b6d-8dc0-72747df9cfff': 'Anytime, Anywhere'
@@ -64,6 +64,7 @@ excluded_works:
   '5ba9868e-f053-4520-8957-6a9fedb2455a': 'Requiem in D minor, K. 626 (duplicate)'
   'd0be6882-700f-48c9-af49-1f3d42627de5': 'Requiem in D minor, K. 626 (Beyer completion)'
   '69bd99f8-636d-4f9c-9498-7b9cf32f871e': 'Carmen (Italian)'
+  '3f39aa99-224f-3c8a-8891-44589bcb8a08': 'Brandenburg Concerto No. 3 in G major, BWV 1048 (duplicate 2nd movement)'
 
 # --- Work Significance Score (WSS) Overrides ---
 # Manually set the WSS for specific works.
@@ -72,6 +73,28 @@ wss_overrides:
   'bcc558d9-b9d5-39cd-b599-df5a988b9eee': 2.5 # Memories of the Alhambra
   '300dc2e7-fd2c-48c5-bbdc-29553afa56da': 3.5 # La paloma
   '15649d4e-2dd2-4211-84bc-f5d2d316203a': 4.0 # Messe solennelle en la majeur, op. 12
+
+# --- Part Significance Score (PSS) Overrides ---
+# These parts will be upgraded to be the most significant part for their work.
+pss_overrides:
+  - '913bc84d-158b-3ac3-821e-6cc5e46c9bb5' # Beethoven - Piano Concerto No. 5: I.
+  - 'd4b8437e-5ee6-33b2-9462-3bb0d51ec0a0' # Beethoven - Symphony No. 6: I.
+  - '63348c90-54ee-328a-88f1-edc3b9d4bf55' # Brahms - Violin Concerto: I.
+  - '551b5d69-11a0-38f3-9b77-944a151500a3' # Chopin - Etudes Op. 25: No. 11
+  - 'd969c022-6d25-3dbb-8102-95a3d9d3de83' # Chopin - Piano Concerto No. 1: I.
+  - 'b8810dc0-1b98-3623-b292-95ac2cd0d227' # Mahler - Symphony No. 1: III.
+  - 'a15328c7-f30f-3c05-8fcc-27c9f46b1b22' # Mendelssohn - Violin Concerto: I.
+  - '6b96e92a-1e0f-30f7-b8fa-ee12b7b346be' # Mozart - Magic Flute: Der Hölle Rache
+  - 'ca017173-6247-3533-949a-90a0d679b060' # Mozart - Le nozze di Figaro: Voi che sapete
+  - '9f213234-ecbc-34bf-9d9b-8962bd3557e6' # Mozart - Violin Concerto No. 5: III.
+  - 'd3bde6fa-2500-3441-9ef3-0f3b66189c20' # Offenbach - Orpheus in the Underworld: Can-Can
+  - 'f98b590e-a3ba-37a9-829d-173a07b515c1' # Rossini - Il barbiere di Siviglia: Largo al factotum
+  - 'b1644976-4468-3f16-879f-c64423d90dff' # Shostakovich - Symphony No. 5: IV.
+  - '5fd9c9dd-9e0d-31cf-9861-58b7abd1d12f' # Tchaikovsky - The Nutcracker: Dance of the Sugar Plum Fairy
+  - 'c2cb4d52-1ea9-31b3-997b-68c0316b0f68' # Tchaikovsky - Symphony No. 6: I.
+  - 'de172280-45e0-359d-9221-2189643b664f' # Tchaikovsky - Violin Concerto: I.
+  - '9ffe50aa-b471-4e33-be06-61fd3625a4e3' # Verdi - Requiem: Dies Irae
+  - '5a75bea9-985d-4267-9a0a-2ace57e20716' # Wagner - Lohengrin: Bridal Chorus
 
 # --- Year Overrides ---
 # Manually set the year for specific works.
@@ -87,6 +110,8 @@ year_overrides:
   'a0e76a3e-0e4c-4721-abba-39bfc4744361': [1823, 1828]
   '38ed9e44-839d-3088-b66a-45c6e2399ec6': 1858
   '11f48c5e-5ee9-4646-9826-fb7c2fccce7f': [1875, 1876]
+  'e039120f-9a72-3d38-b885-5f9a6779e2c9': 1974
+  'f124195b-b3f2-3b47-af5c-f86e5cb7adff': 1982
 
   # Uncertain dates that are manually set to a reasonable scholarly estimate
   '7481c7f5-71bd-464e-956a-c670f4117de3': [1711, 1720]
