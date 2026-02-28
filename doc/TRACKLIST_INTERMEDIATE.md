@@ -45,7 +45,7 @@
 | `cce0fdf5` | Beethoven – Concerto for Piano and Orchestra no. 1 in C major, op. 15 | * I. Allegro con brio | 1796‑1797 |
 | `198cb225` | Beethoven – Concerto for Piano and Orchestra no. 2 in B-flat major, op. 19 | * I. Allegro con brio | 1787‑1795 |
 | `82506d40` | Beethoven – Concerto for Piano and Orchestra no. 3 in C minor, op. 37 | * I. Allegro con brio | 1800 |
-| `2dd17c0c` | Beethoven – Concerto for Piano and Orchestra no. 4 in G major, op. 58 | * I. Allegro moderato | 1804‑1807 |
+| `2dd17c0c` | Beethoven – Concerto for Piano and Orchestra no. 4 in G major, op. 58 | * III. Rondo. Vivace | 1804‑1807 |
 | `e5cfd8b5` | Beethoven – Concerto for Piano and Orchestra no. 5 in E-flat major, op. 73 “Emperor” | * I. Allegro | 1809 |
 | `5364d796` | Beethoven – Concerto for Violin and Orchestra in D major, op. 61 | * III. Rondo. Allegro | 1806 |
 | `82c92c7d` | Beethoven – Coriolan Overture, Op. 62 | * Coriolan Overture, Op. 62 | 1807 |
@@ -203,7 +203,6 @@
 | `0c16a148` | Dvořák – Symphony no. 8 in G major, op. 88 | * III. Allegretto grazioso – Molto vivace | 1889 |
 | `aacb1ab0` | Dvořák – Symphony no. 9 in E minor, op. 95 “From the New World” | * II. Largo | 1893 |
 | `8abd4aec` | Elgar – Cello Concerto in E minor, op. 85 | * I. Adagio – Moderato | 1919 |
-| `fe9c08b1` | Elgar – Introduction and Allegro for Strings, op. 47 | * Introduction | 1905 |
 | `f9ee7f5f` | Elgar – Pomp and Circumstance Military Marches, op. 39 | * March no. 1 in D major | 1901‑1930 |
 | `e49c8de1` | Elgar – Salut d’amour, op. 12 | * Salut d’amour, op. 12 | 1888 |
 | `af19cd3d` | Elgar – Serenade for Strings in E minor, op. 20 | * II. Larghetto | 1892 |
@@ -493,6 +492,7 @@
 | `4b8c6bb2` | Vivaldi – Concerto for Lute in D major, RV 93 | * II. Largo | ? |
 | `6ab1f532` | Vivaldi – Concerto for Mandolin in C major, RV 425 | * I. Allegro | ? |
 | `e7a37d0c` | Vivaldi – Flautino Concerto in C major, RV 443 | * II. Largo | ? |
+| `7044d543` | Vivaldi – The Contest Between Harmony and Invention, op. 8 | * Concerto in E-flat major, op. 8 no. 5, RV 253 "La tempesta di mare": I. (Allegro e) Presto | 1725 |
 | `87886dcf` | Vivaldi – The Four Seasons | * Concerto in E Major, op. 8 no. 1, RV. 269, “Spring”: 1. Allegro | 1723 |
 | `597e017a` | Wagner – Der Ring des Nibelungen, WWV 86 | * The Valkyrie: Ride of the Valkyries | 1854‑1856 |
 | `4d644732` | Wagner – Die Meistersinger von Nürnberg, WWV 96 | * Vorspiel | 1863‑1867 |

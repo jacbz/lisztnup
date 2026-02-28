@@ -68,7 +68,7 @@
 | `4e4b97df` | Bach – Six Suites for Unaccompanied Cello | * Cello Suite No. 1 in G major, BWV 1007: I. Prélude | 1717‑1723 |
 | `6bdb38e2` | Bach – Sonata for Flute & Keyboard in B minor, BWV 1030 | * I. Andante | 1736‑1737 |
 | `e639b3db` | Bach – Sonata for Flute and Continuo in E minor, BWV 1034 | * I. Adagio ma non tanto | 1724 |
-| `17ef195d` | Bach – Sonata for Violin and Harpsichord in G major, BWV 1019.1 | * Partita no. 6 in E minor, BWV 830: III. Courante | ? |
+| `17ef195d` | Bach – Sonata for Violin and Harpsichord in G major, BWV 1019.1 | * IV. Adagio | ? |
 | `5009eb7c` | Bach – Sonata for Violin and Harpsichord in G major, BWV 1019.3 | * I. Allegro | ? |
 | `03770728` | Bach – Sonata in G minor, H. 542.5 | * I. Allegro | ? |
 | `4a8c18a0` | Bach – Sonatas and Partitas for solo violin, BWV 1001–1006 | * Violin Partita no. 2 in D minor, BWV 1004: V. Chaconne | 1720 |
@@ -111,7 +111,7 @@
 | `cce0fdf5` | Beethoven – Concerto for Piano and Orchestra no. 1 in C major, op. 15 | * I. Allegro con brio | 1796‑1797 |
 | `198cb225` | Beethoven – Concerto for Piano and Orchestra no. 2 in B-flat major, op. 19 | * I. Allegro con brio | 1787‑1795 |
 | `82506d40` | Beethoven – Concerto for Piano and Orchestra no. 3 in C minor, op. 37 | * I. Allegro con brio | 1800 |
-| `2dd17c0c` | Beethoven – Concerto for Piano and Orchestra no. 4 in G major, op. 58 | * I. Allegro moderato | 1804‑1807 |
+| `2dd17c0c` | Beethoven – Concerto for Piano and Orchestra no. 4 in G major, op. 58 | * III. Rondo. Vivace | 1804‑1807 |
 | `e5cfd8b5` | Beethoven – Concerto for Piano and Orchestra no. 5 in E-flat major, op. 73 “Emperor” | * I. Allegro | 1809 |
 | `178f118a` | Beethoven – Concerto for Piano, Violin, Cello and Orchestra in C major, op. 56 “Triple Concerto” | * II. Largo | 1803 |
 | `5364d796` | Beethoven – Concerto for Violin and Orchestra in D major, op. 61 | * III. Rondo. Allegro | 1806 |
@@ -628,7 +628,6 @@
 | `86f174b7` | Paganini – Concerto for Violin and Orchestra in D major, op. 6, MS 21 | * III. Rondò - Allegro spiritoso | 1815‑1816 |
 | `de10695e` | Parry – I was glad | * I was glad | 1902 |
 | `1dd56ba3` | Parry – Jerusalem | * Jerusalem | 1916 |
-| `83e63350` | Pärt – Spiegel im Spiegel | * Spiegel im Spiegel | 1978 |
 | `ff1fa880` | Pergolesi – Stabat Mater for soprano, alto, strings and basso continuo | * I. Duo: Stabat mater dolorosa | 1736 |
 | `7b46292d` | Piazzolla – Histoire du tango | * II. Café 1930 | 1985 |
 | `48898169` | Piazzolla – La muerte del ángel | * La muerte del ángel | ? |
@@ -698,7 +697,6 @@
 | `47889055` | Ravel – Rapsodie espagnole | * I. Prélude à la nuit. Très modéré | 1895‑1908 |
 | `175894b9` | Ravel – Schéhérazade: Trois poèmes pour chant et orchestre | * Shéhérazade: II. La Flûte enchantée | 1903 |
 | `b49702b8` | Ravel – Sonata for Violin and Piano no. 2 | * II. Blues. Moderato | 1923‑1927 |
-| `06662c6c` | Ravel – Sonate pour violon et violoncelle, M. 73 | * I . Allegro | 1920‑1922 |
 | `1b581055` | Ravel – Sonatine | * I. Modéré | 1903‑1905 |
 | `8beb49f1` | Ravel – String Quartet in F major | * II. Assez vif - Très rythmé | 1902‑1903 |
 | `a8998dbb` | Ravel – Trio avec piano en la mineur | * I. Modéré | 1914 |
@@ -748,7 +746,6 @@
 | `b6971a84` | Schubert – 4 Impromptus, op. 142, D. 935 | * Impromptu in A-flat major, D. 935 no. 2. Allegretto | 1827 |
 | `9d1fcbf9` | Schubert – 4 Impromptus, op. 90, D. 899 | * Impromptu in G-flat major, op. 90, D. 899: No. 3. Andante | 1827 |
 | `a0e76a3e` | Schubert – 6 Moments musicaux for Piano, op. 94, D. 780 | * No. 3 in F minor. Allegro moderato | 1823‑1828 |
-| `e9e90c8a` | Schubert – Allegretto in C minor, D. 915 | * Allegretto in C minor, D. 915 | ? |
 | `d614a0cd` | Schubert – An die Musik, D. 547 | * An die Musik, D. 547 | 1817 |
 | `d79e53ef` | Schubert – An Sylvia, D. 891 | * An Sylvia, D. 891 | 1826 |
 | `f8f24282` | Schubert – Auf dem Wasser zu singen, D. 774 | * Auf dem Wasser zu singen, D. 774 | ? |
@@ -943,6 +940,7 @@
 | `8251f675` | Tchaikovsky – Souvenir de Florence in D minor, op. 70 | * II. Adagio cantabile e con moto | 1890 |
 | `d82aa643` | Tchaikovsky – String Quartet no. 1 in D major, op. 11 | * II. Andante cantabile | 1871 |
 | `11f48c5e` | Tchaikovsky – Swan Lake, op. 20 | * Act II, no. 10: Scene: Moderato | 1875‑1876 |
+| `13867eb1` | Tchaikovsky – Swan Lake, op. 20 (orch. Drigo) | * Swan Lake, op. 20: Act III: Pas de deux: II. Andante | 1876 |
 | `e590ef34` | Tchaikovsky – Symphony no. 1 in G minor, op. 13 "Winter Daydreams" | * II. Land of Desolation, Land of Mists: Andante cantabile ma non tanto | 1866‑1868 |
 | `9127971c` | Tchaikovsky – Symphony no. 2 in C minor, op. 17 "Little Russian" | * I. Andante sostenuto – Allegro vivo | 1872 |
 | `e920883e` | Tchaikovsky – Symphony no. 3 in D major, op. 29 “Polish” | * I. Introduzione e Allegro - Moderato assai - Allegro brillante | 1875 |
@@ -984,10 +982,12 @@
 | `313c10ad` | Vivaldi – Flute Concerto in C minor, RV 441 | * I. Allegro non molto | ? |
 | `ec764fa1` | Vivaldi – Gloria in D major, RV 589 | * I. Gloria in excelsis Deo | ? |
 | `161dd98a` | Vivaldi – L’estro armonico, op. 3 | * Concerto in A minor for Two Violins, Cello and Strings, op. 3 no. 8, RV 522, 'Con due Violini obligati': III. Allegro | 1711 |
+| `7044d543` | Vivaldi – The Contest Between Harmony and Invention, op. 8 | * Concerto in E-flat major, op. 8 no. 5, RV 253 "La tempesta di mare": I. (Allegro e) Presto | 1725 |
 | `87886dcf` | Vivaldi – The Four Seasons | * Concerto in E Major, op. 8 no. 1, RV. 269, “Spring”: 1. Allegro | 1723 |
 | `597e017a` | Wagner – Der Ring des Nibelungen, WWV 86 | * The Valkyrie: Ride of the Valkyries | 1854‑1856 |
 | `4d644732` | Wagner – Die Meistersinger von Nürnberg, WWV 96 | * Vorspiel | 1863‑1867 |
 | `1d774427` | Wagner – Lohengrin, WWV 75 | * Lohengrin: Act III, Scene I. Bridal Chorus (Choir) | 1846‑1848 |
+| `9181dd6e` | Wagner – Parsifal | * Atto II. “Ho visto il figlio sul materno sen” | 1877‑1882 |
 | `98434ad8` | Wagner – Parsifal, WWV 111 | * I. Aufzug, Vorspiel | 1877‑1882 |
 | `b7db99d4` | Wagner – Siegfried Idyll, WWV 103 | * Siegfried Idyll, WWV 103 | 1870 |
 | `d6897b63` | Wagner – Siegfried: Waldweben | * Siegfried: Waldweben | 1856‑1871 |

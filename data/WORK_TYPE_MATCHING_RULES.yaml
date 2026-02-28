@@ -374,7 +374,7 @@ composer_specific_rules:
     chamber:
       - Sir Roger de Coverley|Sonata.*Violoncello
     orchestral:
-      - The Sea
+      - The Sea|Two Old English Songs
   'Britten, Benjamin':
     vocal:
       - A Ceremony of Carols|War Requiem|Canticle|Antiphon|Christ's Nativity|The Ballad of Little Musgrave
