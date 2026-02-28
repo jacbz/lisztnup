@@ -556,7 +556,7 @@
 | `4a0c8736` | Mozart – Concerto for Piano no. 14 in E-flat major, K. 449 "First Ployer" | * II. Andantino | 1784 |
 | `24f76afe` | Mozart – Concerto for Piano no. 17 in G major, K. 453 "Second Ployer" | * I. Allegro | 1784 |
 | `1547d657` | Mozart – Concerto for Piano no. 18 in B-flat major, K. 456 "Paradis" | * II. Andante un poco sostenuto | 1784 |
-| `63ec17bb` | Mozart – Concerto for Piano no. 20 in D minor, K. 466 | * II. Romanze | 1785 |
+| `63ec17bb` | Mozart – Concerto for Piano no. 20 in D minor, K. 466 | * I. Allegro | 1785 |
 | `f210c793` | Mozart – Concerto for Piano no. 21 in C major, K. 467 | * II. Andante | 1785 |
 | `ea68754a` | Mozart – Concerto for Piano no. 22 in E-flat major, K. 482 | * III. Allegro | 1785 |
 | `c225a2bb` | Mozart – Concerto for Piano no. 24 in C minor, K. 491 | * I. Allegro | 1785‑1786 |
@@ -565,7 +565,7 @@
 | `bcd1c23c` | Mozart – Concerto for Piano no. 9 in E-flat major, K. 271 “Jenamy” | * I. Allegro | 1777 |
 | `14705098` | Mozart – Concerto for Violin and Orchestra no. 1 in B-flat major, K. 207 | * I. Allegro moderato | 1773 |
 | `5507316e` | Mozart – Concerto for Violin and Orchestra no. 2 in D major, K. 211 | * I. Allegro moderato | 1775 |
-| `eb704829` | Mozart – Concerto for Violin and Orchestra no. 3 in G major, K. 216 “Straßburg” | * II. Adagio | 1775 |
+| `eb704829` | Mozart – Concerto for Violin and Orchestra no. 3 in G major, K. 216 “Straßburg” | * I. Allegro aperto | 1775 |
 | `b6ce043d` | Mozart – Concerto for Violin and Orchestra no. 4 in D major, K. 218 | * I. Allegro aperto | 1775 |
 | `f0f4b09b` | Mozart – Concerto for Violin and Orchestra no. 5 in A major, K. 219 “Turkish” | * III. Rondeau. Tempo di menuetto – Allegro | 1775 |
 | `5fd685aa` | Mozart – Concerto in C major for Flute, Harp & Orchestra, K. 297c/299 | * II. Andantino | 1778 |

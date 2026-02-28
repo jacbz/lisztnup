@@ -138,8 +138,8 @@
 | `d63c68b1` | Mozart – Ave verum corpus, K. 618 | * Ave verum corpus, K. 618 | 1791 |
 | `d180cb96` | Mozart – Concerto for Clarinet in A major, K. 622 | * II. Adagio | 1791 |
 | `7245c9c6` | Mozart – Concerto for Piano and Orchestra no. 23 in A major, K. 488 | * II. Andante (Adagio) | 1786 |
-| `63ec17bb` | Mozart – Concerto for Piano no. 20 in D minor, K. 466 | * II. Romanze | 1785 |
-| `eb704829` | Mozart – Concerto for Violin and Orchestra no. 3 in G major, K. 216 “Straßburg” | * II. Adagio | 1775 |
+| `63ec17bb` | Mozart – Concerto for Piano no. 20 in D minor, K. 466 | * I. Allegro | 1785 |
+| `eb704829` | Mozart – Concerto for Violin and Orchestra no. 3 in G major, K. 216 “Straßburg” | * I. Allegro aperto | 1775 |
 | `f0f4b09b` | Mozart – Concerto for Violin and Orchestra no. 5 in A major, K. 219 “Turkish” | * III. Rondeau. Tempo di menuetto – Allegro | 1775 |
 | `a1558b7b` | Mozart – Così fan tutte ossia La scuola degli amanti, K. 588 | * Così fan tutte: Atto I. No. 10 Terzettino “Soave sia il vento” (Fiordligi, Dorabella, Don Alfonso) | 1789‑1790 |
 | `a653f923` | Mozart – Fantasia for Piano in D minor, K. 397/385g | * Fantasia for Piano in D minor, K. 397/385g | 1782 |

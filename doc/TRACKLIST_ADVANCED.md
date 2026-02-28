@@ -977,7 +977,7 @@
 | `80962aed` | Mozart – Concerto for Piano no. 16 in D major, K. 451 | * I. Allegro assai<br>* III. Rondo. Allegro di molto | 1784 |
 | `24f76afe` | Mozart – Concerto for Piano no. 17 in G major, K. 453 "Second Ployer" | * II. Andante<br>* III. Allegretto & Finale. Presto | 1784 |
 | `1547d657` | Mozart – Concerto for Piano no. 18 in B-flat major, K. 456 "Paradis" | * I. Allegro vivace<br>* II. Andante un poco sostenuto | 1784 |
-| `63ec17bb` | Mozart – Concerto for Piano no. 20 in D minor, K. 466 | * II. Romanze<br>* III. Rondo. Allegro assai | 1785 |
+| `63ec17bb` | Mozart – Concerto for Piano no. 20 in D minor, K. 466 | * I. Allegro<br>* II. Romanze | 1785 |
 | `f210c793` | Mozart – Concerto for Piano no. 21 in C major, K. 467 | * II. Andante<br>* III. Allegro vivace assai | 1785 |
 | `ea68754a` | Mozart – Concerto for Piano no. 22 in E-flat major, K. 482 | * I. Allegro<br>* III. Allegro | 1785 |
 | `c225a2bb` | Mozart – Concerto for Piano no. 24 in C minor, K. 491 | * II. Larghetto<br>* III. Allegretto | 1785‑1786 |
