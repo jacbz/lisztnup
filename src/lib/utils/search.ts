@@ -1,7 +1,5 @@
-// Fuse.js based flexible fuzzy search utility
-
-import Fuse from 'fuse.js';
-import type { IFuseOptions } from 'fuse.js';
+// MiniSearch based flexible fuzzy search utility
+import MiniSearch, { type SearchOptions } from 'minisearch';
 
 export interface SearchItem {
 	composer: string;
@@ -10,133 +8,136 @@ export interface SearchItem {
 	workGid: string;
 }
 
-const defaultFuseOptions: IFuseOptions<SearchItem> = {
-	// 0.35 allows for some misspellings
-	// but prevents wildly different words from matching. 0.0 is perfect match.
-	threshold: 0.35,
-	// Don't bias by location of match in the string
-	ignoreLocation: true,
-	// Allow matching across longer distances in the string
-	distance: 100,
-	// Find all matching substrings (helps with token matches)
-	findAllMatches: true,
-	// Minimum characters required to perform fuzzy matching
-	minMatchCharLength: 2,
-	// Return score and match details so callers can inspect results
-	includeScore: true,
-	includeMatches: true,
-	useExtendedSearch: true
-};
+interface CacheEntry<T extends SearchItem> {
+	ms: MiniSearch<T>;
+	itemMap: Map<string, T>;
+}
+
+// Cache prevents rebuilding the index on every render.
+const indexCache = new WeakMap<object, unknown>();
 
 /**
- * Normalizes a string for searching.
- * - Removes accents (diacritics).
- * - Converts to lowercase.
- * - Removes all characters that are not letters, numbers, or spaces.
- * - Collapses multiple spaces into a single space.
+ * Creates or retrieves a cached MiniSearch instance optimized for classical music.
  */
-export const normalizeString = (s?: string): string =>
-	s
-		? s
-				.normalize('NFD') // Separate accents from letters
-				.replace(/\p{Diacritic}/gu, '') // Remove the accents
-				.toLowerCase() // Convert to lowercase
-				.replace(/[^\p{L}\p{N}\s]/gu, '') // Remove all non-letter, non-number, non-space characters
-				.replace(/\s+/g, ' ') // Collapse multiple spaces into one
-				.trim() // Remove leading/trailing spaces
-		: '';
+function getMiniSearch<T extends SearchItem>(items: T[]): CacheEntry<T> {
+	if (indexCache.has(items)) {
+		return indexCache.get(items) as CacheEntry<T>;
+	}
 
-/**
- * Creates a Fuse instance with a pre-processed and combined search field.
- * Conditionally attaches workGid to the search field if the query demands it.
- */
-export function createFuse<T extends SearchItem>(
-	items: T[],
-	options?: IFuseOptions<T>,
-	query: string = ''
-) {
-	const normalizedQuery = normalizeString(query);
-	const searchTerms = normalizedQuery.split(' ').filter(Boolean);
+	const ms = new MiniSearch<T>({
+		fields: ['composer', 'work', 'year', 'workGid'],
+		idField: 'workGid', // Assumes workGid is unique per item
 
-	// Find any tokens in the query that could be a GID prefix (>= 8 chars of valid hex)
-	const gidPrefixes = searchTerms.filter((t) => t.length >= 8 && /^[a-f0-9]+$/.test(t));
+		// Removes diacritics and punctuation from terms without altering document IDs.
+		processTerm: (term) => {
+			const normalized = term
+				.normalize('NFD')
+				.replace(/\p{Diacritic}/gu, '')
+				.toLowerCase()
+				.replace(/[^\p{L}\p{N}]/gu, ''); // Keep only letters and numbers
 
-	const itemsWithSearchText = items.map((item) => {
-		let searchText = `${normalizeString(item.composer)} ${normalizeString(item.work)} ${normalizeString(item.year)}`;
-
-		// If the user's query contains a valid GID prefix, and this item's GID starts with it,
-		// append the GID to the search text. This isolates the GID from shorter fuzzy matches (like "123").
-		if (gidPrefixes.length > 0 && item.workGid) {
-			const normalizedGid = normalizeString(item.workGid); // Automatically strips hyphens
-
-			if (gidPrefixes.some((prefix) => normalizedGid.startsWith(prefix))) {
-				searchText += ` ${normalizedGid}`;
-			}
+			return normalized || null; // Return null to discard empty punctuation tokens
+		},
+		searchOptions: {
+			combineWith: 'AND', // "chopin 9" -> both terms MUST match
+			prefix: (term) => {
+				// Pure numbers must match exactly (e.g. '194' won't prefix-match '1947')
+				if (/^\d+$/.test(term)) return false;
+				return true;
+			},
+			fuzzy: (term) => {
+				// No fuzziness for numbers (prevents "Op 5" from matching "Op 6")
+				if (/^\d+$/.test(term)) return false;
+				// No fuzziness for very short words
+				if (term.length <= 3) return false;
+				// 20% Levenshtein fuzziness for longer strings (tolerates typos in composer names)
+				return 0.2;
+			},
+			// Rank exact hits on Composer and Work higher than Year hits
+			boost: { composer: 2, work: 1.5, year: 1 }
 		}
-
-		return {
-			...item,
-			searchText
-		};
 	});
 
-	const fuseOptions: IFuseOptions<T> = {
-		...defaultFuseOptions,
-		...options,
-		keys: ['searchText']
-	};
+	// Build an O(1) lookup map to retrieve original objects
+	const itemMap = new Map<string, T>();
+	for (const item of items) {
+		itemMap.set(item.workGid, item);
+	}
 
-	return new Fuse(itemsWithSearchText as T[], fuseOptions as IFuseOptions<T>);
+	ms.addAll(items);
+
+	const cacheEntry: CacheEntry<T> = { ms, itemMap };
+	indexCache.set(items, cacheEntry);
+
+	return cacheEntry;
 }
 
 /**
- * Creates the search query pattern for Fuse.js.
- * It ensures that every word in the user's query must be found.
+ * Parses the query to determine which fields MiniSearch should target.
  */
-function createSearchPattern(query: string): string {
-	const normalizedQuery = normalizeString(query);
-	const searchTerms = normalizedQuery.split(' ').filter(Boolean);
+function getSearchConfiguration(query: string, options?: SearchOptions) {
+	// Detect if any term looks like a GID (>= 8 valid hex chars, with optional hyphens)
+	const rawTerms = query.split(/\s+/).filter(Boolean);
+	const hasGidPrefix = rawTerms.some((t) => t.length >= 8 && /^[a-fA-F0-9-]+$/.test(t));
 
-	// Prefix each term with a single quote to enforce "include" matching.
-	return searchTerms.map((term) => `'${term}`).join(' ');
+	// Always search these core fields
+	const fields = ['composer', 'work', 'year'];
+
+	// Only include workGid in the target fields if the query explicitly demands it
+	if (hasGidPrefix) {
+		fields.push('workGid');
+	}
+
+	return {
+		fields,
+		...options
+	};
 }
 
 /**
- * Filter an array of items using a flexible fuzzy search powered by fuse.js.
+ * Filter an array of items using MiniSearch.
+ * Returns the original item type array (preserves generics).
  */
 export function filterWorks<T extends SearchItem>(
 	items: T[],
 	query: string,
-	options?: IFuseOptions<T>
+	options?: SearchOptions
 ): T[] {
 	if (!query || !query.trim()) return items;
 
-	const fuse = createFuse(items, options, query);
-	const searchPattern = createSearchPattern(query);
-	const results = fuse.search(searchPattern);
+	const { ms, itemMap } = getMiniSearch(items);
+	const searchConfig = getSearchConfiguration(query, options);
 
-	return results.map((r) => r.item as T);
+	const results = ms.search(query, searchConfig);
+
+	// Map results back to original objects, safely filtering out undefined
+	return results.map((r) => itemMap.get(r.id) as T).filter(Boolean);
 }
 
 /**
- * Convenience search that returns items with score included
+ * Convenience search that returns items with score included so callers can
+ * access match scores if they want to rank/annotate results.
  */
 export function searchWithScore<T extends SearchItem>(
 	items: T[],
 	query: string,
-	options?: IFuseOptions<T>
+	options?: SearchOptions
 ) {
 	if (!query || !query.trim()) {
-		return items.map((i) => ({ item: i, score: 0, matches: [] }));
+		return items.map((i) => ({ item: i, score: 0, matches: {} }));
 	}
 
-	const fuse = createFuse(items, options, query);
-	const searchPattern = createSearchPattern(query);
-	const results = fuse.search(searchPattern);
+	const { ms, itemMap } = getMiniSearch(items);
+	const searchConfig = getSearchConfiguration(query, options);
 
-	return results.map((r) => ({
-		item: r.item as T,
-		score: r.score ?? 0,
-		matches: r.matches ?? []
-	}));
+	const results = ms.search(query, searchConfig);
+
+	return results
+		.map((r) => ({
+			item: itemMap.get(r.id) as T,
+			score: r.score,
+			// MiniSearch 'match' object details which terms hit which fields
+			matches: r.match
+		}))
+		.filter((r) => r.item);
 }

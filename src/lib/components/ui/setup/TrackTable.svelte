@@ -219,56 +219,31 @@
 	});
 
 	// Filtered raw data (apply search) and total pages for UI
-	// Perform filtering asynchronously (debounced) to avoid freezing the UI during large searches.
 	let filteredRawData = $state<TableRow[]>([]);
-	let _searchTimeout: number | null = null;
 
 	// Recalculate filteredRawData whenever rawTableData or searchQuery changes, but do it
 	// asynchronously so the main thread can remain responsive. Show the loading spinner
 	// while filtering is in progress.
 	$effect(() => {
-		// Clear any pending work
-		if (_searchTimeout) {
-			clearTimeout(_searchTimeout as unknown as number);
-			_searchTimeout = null;
-		}
-
 		const currentPreFiltered = preFilteredData;
 
-		// If there is no query, set immediately (but still defer briefly to avoid layout thrash)
 		if (!searchQuery || !searchQuery.trim()) {
-			// No search query: populate immediately to avoid showing an empty table on open
-			// Do NOT toggle `isLoading` here — keep the loading indicator controlled by
-			// the data loader so the spinner remains visible until `loadTracklistData`
-			// finishes and clears `isLoading`.
 			filteredRawData = currentPreFiltered;
 			hasManualSort = false;
 			page = 1;
 			return;
 		}
 
-		// Debounce and perform heavy filtering off the immediate event (keeps UI responsive)
-		isLoading = true;
-		const DEBOUNCE_MS = 120;
-		_searchTimeout = setTimeout(() => {
+		setTimeout(() => {
 			try {
 				filteredRawData = filterWorks<TableRow>(currentPreFiltered, searchQuery);
 			} catch (err) {
 				console.error('Error filtering works:', err);
 				filteredRawData = [];
 			}
-			isLoading = false;
-			hasManualSort = false;
-			page = 1;
-		}, DEBOUNCE_MS) as unknown as number;
-
-		// Cleanup when dependencies change
-		return () => {
-			if (_searchTimeout) {
-				clearTimeout(_searchTimeout as unknown as number);
-				_searchTimeout = null;
-			}
-		};
+		}, 0);
+		hasManualSort = false;
+		page = 1;
 	});
 
 	// Pre-filter by composer and/or categories before search/sort pipeline
