@@ -7,6 +7,7 @@ export interface SearchItem {
 	composer: string;
 	work: string;
 	year?: string;
+	workGid: string;
 }
 
 const defaultFuseOptions: IFuseOptions<SearchItem> = {
@@ -23,7 +24,8 @@ const defaultFuseOptions: IFuseOptions<SearchItem> = {
 	minMatchCharLength: 2,
 	// Return score and match details so callers can inspect results
 	includeScore: true,
-	includeMatches: true
+	includeMatches: true,
+	useExtendedSearch: true
 };
 
 /**
@@ -46,45 +48,61 @@ export const normalizeString = (s?: string): string =>
 
 /**
  * Creates a Fuse instance with a pre-processed and combined search field.
- * This is the core of making multi-field search work correctly.
+ * Conditionally attaches workGid to the search field if the query demands it.
  */
-export function createFuse<T extends SearchItem>(items: T[], options?: IFuseOptions<T>) {
-	// Create a derived list where each item has a new `searchText` property.
-	// This property combines the normalized content of composer, work, and year,
-	// allowing Fuse to find terms across these original fields.
-	const itemsWithSearchText = items.map((item) => ({
-		...item,
-		searchText: `${normalizeString(item.composer)} ${normalizeString(item.work)} ${normalizeString(item.year)}`
-	}));
+export function createFuse<T extends SearchItem>(
+	items: T[],
+	options?: IFuseOptions<T>,
+	query: string = ''
+) {
+	const normalizedQuery = normalizeString(query);
+	const searchTerms = normalizedQuery.split(' ').filter(Boolean);
 
-	// Create the final Fuse options, overriding the 'keys' to search our new field.
+	// Find any tokens in the query that could be a GID prefix (>= 8 chars of valid hex)
+	const gidPrefixes = searchTerms.filter((t) => t.length >= 8 && /^[a-f0-9]+$/.test(t));
+
+	const itemsWithSearchText = items.map((item) => {
+		let searchText = `${normalizeString(item.composer)} ${normalizeString(item.work)} ${normalizeString(item.year)}`;
+
+		// If the user's query contains a valid GID prefix, and this item's GID starts with it,
+		// append the GID to the search text. This isolates the GID from shorter fuzzy matches (like "123").
+		if (gidPrefixes.length > 0 && item.workGid) {
+			const normalizedGid = normalizeString(item.workGid); // Automatically strips hyphens
+
+			if (gidPrefixes.some((prefix) => normalizedGid.startsWith(prefix))) {
+				searchText += ` ${normalizedGid}`;
+			}
+		}
+
+		return {
+			...item,
+			searchText
+		};
+	});
+
 	const fuseOptions: IFuseOptions<T> = {
 		...defaultFuseOptions,
-		...options, // Allow user-provided options to override defaults
-		keys: ['searchText'] // IMPORTANT: We now search ONLY on the combined field
+		...options,
+		keys: ['searchText']
 	};
 
-	// Initialize Fuse with the enhanced items and new options.
 	return new Fuse(itemsWithSearchText as T[], fuseOptions as IFuseOptions<T>);
 }
 
 /**
  * Creates the search query pattern for Fuse.js.
  * It ensures that every word in the user's query must be found.
- * Example: "chopin 9" -> "'chopin '9"
  */
 function createSearchPattern(query: string): string {
 	const normalizedQuery = normalizeString(query);
 	const searchTerms = normalizedQuery.split(' ').filter(Boolean);
 
 	// Prefix each term with a single quote to enforce "include" matching.
-	// This tells Fuse that all terms must be present in the result.
 	return searchTerms.map((term) => `'${term}`).join(' ');
 }
 
 /**
  * Filter an array of items using a flexible fuzzy search powered by fuse.js.
- * Returns the original item type array (preserves generics).
  */
 export function filterWorks<T extends SearchItem>(
 	items: T[],
@@ -93,7 +111,7 @@ export function filterWorks<T extends SearchItem>(
 ): T[] {
 	if (!query || !query.trim()) return items;
 
-	const fuse = createFuse(items, options);
+	const fuse = createFuse(items, options, query);
 	const searchPattern = createSearchPattern(query);
 	const results = fuse.search(searchPattern);
 
@@ -101,8 +119,7 @@ export function filterWorks<T extends SearchItem>(
 }
 
 /**
- * Convenience search that returns items with score included so callers can
- * access match scores if they want to rank/annotate results.
+ * Convenience search that returns items with score included
  */
 export function searchWithScore<T extends SearchItem>(
 	items: T[],
@@ -113,7 +130,7 @@ export function searchWithScore<T extends SearchItem>(
 		return items.map((i) => ({ item: i, score: 0, matches: [] }));
 	}
 
-	const fuse = createFuse(items, options);
+	const fuse = createFuse(items, options, query);
 	const searchPattern = createSearchPattern(query);
 	const results = fuse.search(searchPattern);
 

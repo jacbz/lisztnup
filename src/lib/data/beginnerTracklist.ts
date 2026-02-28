@@ -205,7 +205,6 @@ export const BEGINNER_TRACKLIST = [
 	'0c39260e', // Schubert – Sonata in A minor for Arpeggione and Piano, D. 821
 	'c6e6e640', // Schubert – String Quartet no. 14 in D minor, D. 810 “Death and the Maiden”
 	'b1e3d631', // Schubert – Symphony no. 8 in B minor, D. 759 “Unfinished”
-	'd0699d54', // Schubert – Symphony no. 9 in C major, D. 944 “The Great”
 	'16a894eb', // Schubert – Winterreise, op. 89, D. 911
 	'0883b91a', // Schumann – Concerto for Piano and Orchestra in A minor, op. 54
 	'a3f0f22c', // Schumann – Kinderszenen, op. 15 (Dreaming)
@@ -250,6 +249,7 @@ export const BEGINNER_TRACKLIST = [
 	'1d774427', // Wagner - Lohengrin
 	'597e017a', // Wagner – Der Ring des Nibelungen (Ride of the Valkyries)
 	'd801c361', // Wagner – Tannhäuser: Ouverture and Venusberg Music
+	'ae217ba8', // Wagner – Tristan und Isolde
 	'2ed0c416', // Widor – Toccata from Symphony for Organ no. 5 in F minor, op. 42
 	'3148af46' // Williams – Three Pieces from Schindler’s List (Theme)
 ];

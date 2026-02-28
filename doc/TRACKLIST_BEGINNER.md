@@ -207,7 +207,6 @@
 | `0c39260e` | Schubert – Sonata in A minor for Arpeggione and Piano, D. 821 | * I. Allegro moderato | 1824 |
 | `c6e6e640` | Schubert – String Quartet no. 14 in D minor, D. 810 “Death and the Maiden” | * II. Andante con moto | 1824 |
 | `b1e3d631` | Schubert – Symphony no. 8 in B minor, D. 759 “Unfinished” | * I. Allegro moderato | 1822 |
-| `d0699d54` | Schubert – Symphony no. 9 in C major, D. 944 “The Great” | * I. Andante – Allegro ma non troppo | 1825‑1826 |
 | `16a894eb` | Schubert – Winterreise, op. 89, D. 911 | * V. Der Lindenbaum | 1827 |
 | `0883b91a` | Schumann – Concerto for Piano and Orchestra in A minor, op. 54 | * I. Allegro affettuoso | 1845 |
 | `a3f0f22c` | Schumann – Kinderszenen, op. 15 | * Scenes from Childhood: Dreaming | 1838 |
@@ -252,5 +251,6 @@
 | `597e017a` | Wagner – Der Ring des Nibelungen, WWV 86 | * The Valkyrie: Ride of the Valkyries | 1854‑1856 |
 | `1d774427` | Wagner – Lohengrin, WWV 75 | * Lohengrin: Act III, Scene I. Bridal Chorus (Choir) | 1846‑1848 |
 | `d801c361` | Wagner – Tannhäuser: Ouverture and Venusberg Music | * Tannhäuser und der Sängerkrieg auf Wartburg, WWV 70: Ouvertüre | 1843‑1845 |
+| `ae217ba8` | Wagner – Tristan und Isolde, WWV 90 | * Excerpt from Tristan und Isolde, WWV 90: Akt III, Szene III. Liebestod. “Mild und leise wie er lächelt” | 1857‑1859 |
 | `2ed0c416` | Widor – Symphonies pour orgue, op. 42 | * Symphonie pour orgue n° 5 en fa mineur, op. 42 n° 1: V. Toccata | 1879 |
 | `3148af46` | Williams – Three Pieces from Schindler’s List | * Main Theme | 1993 |
