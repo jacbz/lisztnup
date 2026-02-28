@@ -112,6 +112,7 @@
 | `3e1453b3` | Haydn – Symphony no. 94 in G major, Hob. I:94 “Surprise” | * II. Andante | 1791 |
 | `0c2f8487` | Haydn – Trumpet Concerto in E-flat major | * Konzert für Trompete und Orchester Es-Dur, Hob. VIIe:1: III. Allegro | 1796 |
 | `439c1605` | Holst – The Planets, op. 32 | * IV. Jupiter, the Bringer of Jollity | 1914‑1916 |
+| `fc89d2b2` | Humperdinck – Hänsel und Gretel | * Vorspiel (Overture) | 1891‑1892 |
 | `a28705df` | Joplin – Maple Leaf Rag | * Maple Leaf Rag | 1899 |
 | `8833a765` | Joplin – The Entertainer | * The Entertainer | 1902 |
 | `3abf8cb1` | Khachaturian – Masquerade Suite, op. 48a | * I. Waltz | 1944 |
@@ -146,7 +147,6 @@
 | `14b1ddad` | Mozart – Oboe Concerto in C major, K. 314 / 271k | * I. Allegro aperto | 1777 |
 | `32c8943f` | Mozart – Requiem in D minor, K. 626 (orch. Süßmayr) | * III. Sequenz: f. Lacrimosa dies illa | 1791 |
 | `f334182c` | Mozart – Serenade no. 13 for Strings in G major, K. 525 „Eine kleine Nachtmusik“ | * I. Allegro | 1787 |
-| `70d1fa96` | Mozart – Sonata for Piano no. 10 in C major, K. 300h/330 | * I. Allegro moderato | 1783 |
 | `a488a020` | Mozart – Sonata for Piano no. 11 in A major, K. 300i/331 “Alla Turca” | * III. Rondo alla Turca. Allegretto | 1783 |
 | `a2ad223d` | Mozart – Sonata for Piano no. 16 in C major, K. 545 "Sonata facile" | * 1. Allegro | 1788 |
 | `e99e8e9e` | Mozart – Symphony no. 25 for Orchestra in G minor, K. 173dB/183 "Little G Minor" | * I. Allegro con brio | 1773 |

@@ -109,6 +109,7 @@ export const BEGINNER_TRACKLIST = [
 	'21ccd102', // Haydn - Piano Trio in G major, Hob. XV:25 "Gypsy"
 	'3e1453b3', // Haydn – Symphony no. 94 in G major “Surprise”
 	'0c2f8487', // Haydn – Trumpet Concerto in E-flat major
+	'fc89d2b2', // Humperdinck – Hansel and Gretel
 	'439c1605', // Holst – The Planets, op. 32
 	'a28705df', // Joplin – Maple Leaf Rag
 	'8833a765', // Joplin – The Entertainer
@@ -144,7 +145,6 @@ export const BEGINNER_TRACKLIST = [
 	'a653f923', // Mozart – Fantasia for Piano in D minor, K. 397/385g
 	'32c8943f', // Mozart – Requiem in D minor, K. 626
 	'f334182c', // Mozart – Serenade no. 13 for Strings in G major, K. 525 „Eine kleine Nachtmusik“
-	'70d1fa96', // Mozart – Sonata for Piano no. 10 in C major, K. 300h/330
 	'a488a020', // Mozart – Sonata for Piano no. 11 in A major, K. 300i/331 “Alla Turca”
 	'a2ad223d', // Mozart – Sonata for Piano no. 16 in C major, K. 545 "Sonata facile"
 	'e99e8e9e', // Mozart - Symphony no. 25 in G minor, K. 183

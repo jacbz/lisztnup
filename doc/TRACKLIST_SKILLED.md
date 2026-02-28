@@ -464,6 +464,7 @@
 | `0c2f8487` | Haydn – Trumpet Concerto in E-flat major | * Konzert für Trompete und Orchester Es-Dur, Hob. VIIe:1: III. Allegro | 1796 |
 | `085103a5` | Holst – 3 Hymns for the English Hymnal | * In the Bleak Midwinter | 1904‑1905 |
 | `439c1605` | Holst – The Planets, op. 32 | * IV. Jupiter, the Bringer of Jollity | 1914‑1916 |
+| `fc89d2b2` | Humperdinck – Hänsel und Gretel | * Vorspiel (Overture) | 1891‑1892 |
 | `b9c55462` | Janáček – Sinfonietta | * IV. Allegretto (The Street) | 1926 |
 | `19dd75a1` | Janáček – Sonata for Violin & Piano, JW VII/7 | * I. Con moto | 1914 |
 | `ed491125` | Janáček – String Quartet no. 1, JW VII/8 “Kreutzer Sonata” | * String Quartet no. 1: I. Adagio - Con moto | 1923 |
@@ -817,7 +818,6 @@
 | `304bda09` | Schumann – Davidsbündlertänze, op. 6 | * X. Balladenmäßig. Sehr rasch | 1837 |
 | `9416f9f5` | Schumann – Dichterliebe, op. 48 | * I. Im wunderschönen Monat Mai | 1840 |
 | `c418c7e2` | Schumann – Drei Fantasiestücke für Klarinette und Klavier, op. 73 | * Nr. 1. Zart und mit Ausdruck | 1849 |
-| `6642f474` | Schumann – Drei Romanzen für Pianoforte, op. 28 | * II. Einfach | 1839 |
 | `e0af92df` | Schumann – Fantasiestücke, op. 12 | * I. Des Abends | 1837 |
 | `27c866d2` | Schumann – Fantasy in C major, op. 17 | * I. Durchaus phantastisch und leidenschaftlich vorzutragen - Adagio - Im lebhaften Tempo - Im Legenden Ton | 1836 |
 | `a84f5671` | Schumann – Frauenliebe und -leben, op. 42 | * Nr. 4. Du Ring an meinem Finger | ? |

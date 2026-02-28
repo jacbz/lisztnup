@@ -675,7 +675,7 @@ class MusicbrainzProcessor:
             volume_component = 0.0
         
         # Final score
-        score = (peak_component * 15) + (depth_component * 25) + (volume_component * 60)
+        score = (peak_component * 15) + (depth_component * 35) + (volume_component * 50)
         return score
 
     def _filter_works_cleanup(
