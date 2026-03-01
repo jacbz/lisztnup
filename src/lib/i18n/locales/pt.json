@@ -160,6 +160,46 @@
 		"20thcentury": {
 			"name": "Século XX",
 			"description": "Regras quebradas, sons novos. A revolução musical do século passado."
+		},
+		"beethoven": {
+			"name": "Beathoven",
+			"description": "Ficou surdo e mesmo assim fez o mundo tremer. Isso sim é atitude."
+		},
+		"femalecomposers": {
+			"name": "Elas Compõem",
+			"description": "Compositoras que desafiaram sua época e assinaram obras que merecem aplausos de pé."
+		},
+		"germany": {
+			"name": "Austro-Alemão",
+			"description": "Das valsas vienenses ao drama wagneriano. A tradição que dita as regras da música clássica."
+		},
+		"italy": {
+			"name": "Bella Musica",
+			"description": "Bel canto, paixão e melodias que a gente cantarola no chuveiro."
+		},
+		"france": {
+			"name": "Savoir-faire",
+			"description": "Impressionismo, elegância e aquele toque parisiense impossível de copiar."
+		},
+		"russia": {
+			"name": "Alma Russa",
+			"description": "Estepes sem fim, noites brancas e melodias que arrepiam até os ossos."
+		},
+		"uk": {
+			"name": "God Save the Queen",
+			"description": "A fleuma britânica em forma de partitura. De Purcell a Britten, com chá das cinco."
+		},
+		"usa": {
+			"name": "Novo Mundo",
+			"description": "Ragtime de fraque, pradarias sinfônicas e o ritmo de um país que reinventa tudo."
+		},
+		"spain": {
+			"name": "¡Olé!",
+			"description": "Castanholas, flamenco e noites de verão. A música que a Espanha leva no sangue."
+		},
+		"scandinavia": {
+			"name": "Aurora Boreal",
+			"description": "Trolls, fiordes e melodias geladas que aquecem a alma. O Norte tem sua magia."
 		}
 	},
 	"tracklistSelector": {
@@ -296,7 +336,8 @@
 		"categoryCustom": "Personalizado",
 		"options": {
 			"title": "Opções"
-		}
+		},
+		"categoryCountries": "Países"
 	},
 	"shareLink": {
 		"openLink": "Abrir",
@@ -518,7 +559,7 @@
 		"poweredBy": "Desenvolvido com {first} e {second}"
 	},
 	"about": {
-		"description": "<em>Liszt\u2019n Up!</em> é um projeto pessoal que nasceu do amor pela música clássica. É basicamente um Hitster para nerds de clássica. Criei pra ver se eu e meus amigos realmente conhecemos o repertório que a gente diz adorar.",
+		"description": "<em>Liszt’n Up!</em> é um projeto pessoal que nasceu do amor pela música clássica. É basicamente um Hitster para nerds de clássica. Criei pra ver se eu e meus amigos realmente conhecemos o repertório que a gente diz adorar.",
 		"donateHint": "Isso aqui é e sempre vai ser de graça. Mas se quiser me pagar um café, aceito com prazer.",
 		"donateButton": "Me pagar um café",
 		"viewOnGithub": "Ver no GitHub"

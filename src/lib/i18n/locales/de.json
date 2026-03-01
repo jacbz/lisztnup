@@ -51,7 +51,7 @@
 	"tracklists": {
 		"beginner": {
 			"name": "Einsteiger",
-			"description": "Der perfekte Einstieg – hier summt jeder mit."
+			"description": "Der perfekte Einstieg: hier summt jeder mit."
 		},
 		"intermediate": {
 			"name": "Fortgeschritten",
@@ -59,35 +59,35 @@
 		},
 		"skilled": {
 			"name": "Kenner",
-			"description": "Publikumslieblinge treffen auf versteckte Perlen – die goldene Mitte für Musikkenner."
+			"description": "Publikumslieblinge treffen auf versteckte Perlen. Die goldene Mitte für Musikkenner."
 		},
 		"advanced": {
 			"name": "Experte",
-			"description": "Ab hier trennt sich die Spreu vom Weizen – willkommen in den Tiefen des Repertoires."
+			"description": "Ab hier trennt sich die Spreu vom Weizen. Willkommen in den Tiefen des Repertoires."
 		},
 		"expert": {
 			"name": "Maestro",
-			"description": "Nur für Ohren, die mehr wollen – hinter jeder Note lauert eine Überraschung."
+			"description": "Nur für Ohren, die mehr wollen. Hinter jeder Note lauert eine Überraschung."
 		},
 		"virtuoso": {
 			"name": "Virtuose",
-			"description": "Von den größten Hits bis zum letzten versteckten Juwel – alles drin, alles dran."
+			"description": "Von den größten Hits bis zum letzten versteckten Juwel: alles drin, alles dran."
 		},
 		"cadenza": {
 			"name": "Kadenz",
-			"description": "Die ultimative Herausforderung für echte Connaisseure – keine Gassenhauer, nur Rares und Raffiniertes."
+			"description": "Die ultimative Herausforderung für echte Connaisseure: keine Gassenhauer, nur Rares und Raffiniertes."
 		},
 		"obscure": {
 			"name": "Obskure Komponisten",
-			"description": "Abseits der ausgetretenen Pfade – hier spielen die Komponisten, die das Lexikon vergessen hat."
+			"description": "Abseits der ausgetretenen Pfade: hier spielen die Komponisten, die das Lexikon vergessen hat."
 		},
 		"piano": {
 			"name": "Klavier",
-			"description": "88 Tasten, unendliche Möglichkeiten – vom zarten Nocturne bis zur donnernden Sonate."
+			"description": "88 Tasten, unendliche Möglichkeiten. Vom zarten Nocturne bis zur donnernden Sonate."
 		},
 		"concerto": {
 			"name": "Konzert",
-			"description": "Solist gegen Orchester – das musikalische Duell, bei dem alle gewinnen."
+			"description": "Solist gegen Orchester: das musikalische Duell, bei dem alle gewinnen."
 		},
 		"orchestral": {
 			"name": "Orchester",
@@ -95,11 +95,11 @@
 		},
 		"chamber": {
 			"name": "Kammermusik",
-			"description": "Große Musik im kleinen Kreis – hier zählt jede Note doppelt."
+			"description": "Große Musik im kleinen Kreis, hier zählt jede Note doppelt."
 		},
 		"ballet": {
 			"name": "Ballett",
-			"description": "Spitzentanz für die Ohren – die großen Ballettpartituren zum Schwelgen."
+			"description": "Spitzentanz für die Ohren: die großen Ballettpartituren zum Schwelgen."
 		},
 		"opera": {
 			"name": "Oper",
@@ -107,19 +107,19 @@
 		},
 		"pianoconcerto": {
 			"name": "Klavierkonzerte",
-			"description": "Wenn 88 Tasten auf ein ganzes Orchester treffen – Gänsehaut vorprogrammiert."
+			"description": "Wenn 88 Tasten auf ein ganzes Orchester treffen. Gänsehaut vorprogrammiert."
 		},
 		"violinconcerto": {
 			"name": "Violinkonzerte",
-			"description": "Die Violine singt, das Orchester antwortet – Virtuosität in Reinform."
+			"description": "Die Violine singt, das Orchester antwortet: Virtuosität in Reinform."
 		},
 		"celloconcerto": {
 			"name": "Cellokonzerte",
-			"description": "Tief, warm und voller Seele – das Cello in seiner ganzen Pracht."
+			"description": "Tief, warm und voller Seele: das Cello in seiner ganzen Pracht."
 		},
 		"liszt": {
 			"name": "Lisztomania",
-			"description": "Vom Teufelspianisten direkt in deine Ohren – Fingerakrobatik garantiert."
+			"description": "Vom Teufelspianisten direkt in deine Ohren. Fingerakrobatik garantiert."
 		},
 		"bach": {
 			"name": "Bach to the Future",
@@ -143,11 +143,11 @@
 		},
 		"renaissance": {
 			"name": "Renaissance",
-			"description": "Polyphonie und Pergament – die Wiege der abendländischen Musik (1400–1600)."
+			"description": "Polyphonie und Pergament: die Wiege der abendländischen Musik (1400–1600)."
 		},
 		"baroque": {
 			"name": "Barock",
-			"description": "Perücken, Prunk und Prachtfugen – die opulente Klangwelt des Barock (1600–1750)."
+			"description": "Perücken, Prunk und Prachtfugen: die opulente Klangwelt des Barock (1600–1750)."
 		},
 		"classical": {
 			"name": "Wiener Klassik",
@@ -155,11 +155,51 @@
 		},
 		"romantic": {
 			"name": "Romantik",
-			"description": "Große Gefühle, große Gesten – Leidenschaft und Sehnsucht in orchestraler Wucht (1820–1910)."
+			"description": "Große Gefühle, große Gesten. Leidenschaft und Sehnsucht in orchestraler Wucht (1820–1910)."
 		},
 		"20thcentury": {
 			"name": "20. Jahrhundert",
 			"description": "Regeln? Welche Regeln? Hier wird die Klassik neu erfunden."
+		},
+		"beethoven": {
+			"name": "Beathoven",
+			"description": "Der Mann, der taub wurde und trotzdem die Welt zum Beben brachte."
+		},
+		"femalecomposers": {
+			"name": "Komponistinnen",
+			"description": "Geniale Frauen, die sich gegen den Zeitgeist durchkomponierten."
+		},
+		"germany": {
+			"name": "Deutsch-Österreichisch",
+			"description": "Von Walzern bis Wagnerwahnsinn, die Mutter aller Klassiktraditionen."
+		},
+		"italy": {
+			"name": "Bella Musica",
+			"description": "Temperament, Belcanto und Melodien, die ins Herz treffen wie ein guter Espresso."
+		},
+		"france": {
+			"name": "Savoir-faire",
+			"description": "Impressionismus, Eleganz und ein Hauch Revolutionsgeist. Très chic."
+		},
+		"russia": {
+			"name": "Aus der Steppe",
+			"description": "Endlose Weite, tiefer Schnee und Melodien, die sich in der Seele festsetzen."
+		},
+		"uk": {
+			"name": "God Save the Queen",
+			"description": "Britischer Understatement trifft auf maritime Größe. Von Purcell bis Britten."
+		},
+		"usa": {
+			"name": "Neue Welt",
+			"description": "Jazz im Frack, Präriestimmung und der Sound eines Landes, das alles neu erfindet."
+		},
+		"spain": {
+			"name": "¡Olé!",
+			"description": "Kastagnetten, Gitarrenfieber und der Duft von Orangenblüten in jedem Takt."
+		},
+		"scandinavia": {
+			"name": "Nordlichter",
+			"description": "Trollzauber und Mitternachtssonne. Musik so klar wie ein norwegischer Fjord."
 		}
 	},
 	"tracklistSelector": {
@@ -296,7 +336,8 @@
 		"categoryCustom": "Benutzerdefiniert",
 		"options": {
 			"title": "Optionen"
-		}
+		},
+		"categoryCountries": "Länder"
 	},
 	"shareLink": {
 		"openLink": "Öffnen",
@@ -518,7 +559,7 @@
 		"poweredBy": "Powered by {first} und {second}"
 	},
 	"about": {
-		"description": "<em>Liszt\u2019n Up!</em> ist ein Hobbyprojekt aus Liebe zur klassischen Musik \u2014 quasi Hitster, aber für Klassik-Nerds. Ich wollte einfach wissen, ob meine Freunde und ich das Repertoire wirklich so gut kennen, wie wir immer behaupten.",
+		"description": "<em>Liszt’n Up!</em> ist ein Hobbyprojekt aus Liebe zur klassischen Musik — quasi Hitster, aber für Klassik-Nerds. Ich wollte einfach wissen, ob meine Freunde und ich das Repertoire wirklich so gut kennen, wie wir immer behaupten.",
 		"donateHint": "Die App ist und bleibt kostenlos. Aber wenn du magst, freue ich mich über einen Kaffee.",
 		"donateButton": "Kaffee spendieren",
 		"viewOnGithub": "Auf GitHub ansehen"

@@ -44,6 +44,7 @@
 			categories: [],
 			composers: [],
 			eras: [],
+			countries: [],
 			custom: []
 		};
 
@@ -285,6 +286,20 @@
 				</h3>
 				<div class="grid gap-3 md:grid-cols-2">
 					{#each groupedTracklists.eras as tracklist}
+						{@render tracklistCard(tracklist)}
+					{/each}
+				</div>
+			</div>
+		{/if}
+
+		<!-- Countries -->
+		{#if groupedTracklists.countries.length > 0}
+			<div>
+				<h3 class="mb-3 text-lg font-semibold text-purple-400">
+					{$_('tracklistEditor.categoryCountries')}
+				</h3>
+				<div class="grid gap-3 md:grid-cols-2">
+					{#each groupedTracklists.countries as tracklist}
 						{@render tracklistCard(tracklist)}
 					{/each}
 				</div>

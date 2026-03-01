@@ -71,11 +71,11 @@
 		},
 		"virtuoso": {
 			"name": "Virtuoso",
-			"description": "The complete collection — from iconic to obscure."
+			"description": "The complete collection, from iconic to obscure."
 		},
 		"cadenza": {
 			"name": "Cadenza",
-			"description": "For the true connoisseur seeking the ultimate challenge – no popular hits, only the rare and refined."
+			"description": "For the true connoisseur seeking the ultimate challenge: no popular hits, only the rare and refined."
 		},
 		"obscure": {
 			"name": "Obscure Composers",
@@ -160,6 +160,46 @@
 		"20thcentury": {
 			"name": "20th Century",
 			"description": "Modern and experimental works."
+		},
+		"beethoven": {
+			"name": "Beathoven",
+			"description": "Nine symphonies, one destiny. Feel the thunder."
+		},
+		"femalecomposers": {
+			"name": "Her Notes",
+			"description": "Brilliant women who composed against the odds. Time to listen."
+		},
+		"germany": {
+			"name": "Austro-German",
+			"description": "From Vienna's coffeehouses to Berlin's concert halls. The heavyweight tradition."
+		},
+		"italy": {
+			"name": "Bella Musica",
+			"description": "Where opera was born and melody reigns supreme."
+		},
+		"france": {
+			"name": "Carte Blanche",
+			"description": "Elegance, color, and a certain je ne sais quoi."
+		},
+		"russia": {
+			"name": "From Russia with Love",
+			"description": "Soul, snow, and sweeping orchestral drama."
+		},
+		"uk": {
+			"name": "Rule, Britannia!",
+			"description": "English, Scottish, Welsh and Irish voices in classical music."
+		},
+		"usa": {
+			"name": "New World Symphony",
+			"description": "From jazz-inflected scores to Appalachian sunrises."
+		},
+		"spain": {
+			"name": "¡Olé!",
+			"description": "Flamenco rhythms, Moorish echoes, and guitars under the Spanish sun."
+		},
+		"scandinavia": {
+			"name": "Northern Lights",
+			"description": "Fjords, forests, and melodies that shimmer like the aurora."
 		}
 	},
 	"tracklistSelector": {
@@ -518,7 +558,7 @@
 		"poweredBy": "Powered by {first} and {second}"
 	},
 	"about": {
-		"description": "<em>Liszt\u2019n Up!</em> is a passion project born from a love of classical music. Think of it as Hitster, but for classical music nerds. I built it because I wanted a fun way to test how well my friends and I actually know the repertoire we claim to love.",
+		"description": "<em>Liszt’n Up!</em> is a passion project born from a love of classical music. Think of it as Hitster, but for classical music nerds. I built it because I wanted a fun way to test how well my friends and I actually know the repertoire we claim to love.",
 		"donateHint": "This is and always will be free. But if you're feeling generous, a coffee never hurts.",
 		"donateButton": "Buy me a coffee",
 		"viewOnGithub": "View on GitHub"

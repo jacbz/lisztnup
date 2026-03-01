@@ -51,7 +51,7 @@
 	"tracklists": {
 		"beginner": {
 			"name": "입문자",
-			"description": "클래식 초보도 흥얼거릴 수 있는 불후의 명곡들 — 귀가 먼저 반가워할 거예요!"
+			"description": "클래식 초보도 흥얼거릴 수 있는 불후의 명곡들. 귀가 먼저 반가워할 거예요!"
 		},
 		"intermediate": {
 			"name": "중급자",
@@ -63,7 +63,7 @@
 		},
 		"advanced": {
 			"name": "상급자",
-			"description": "여기서부턴 진짜입니다 — 레퍼토리의 심연에 오신 것을 환영합니다."
+			"description": "여기서부턴 진짜입니다. 레퍼토리의 심연에 오신 것을 환영합니다."
 		},
 		"expert": {
 			"name": "전문가",
@@ -71,7 +71,7 @@
 		},
 		"virtuoso": {
 			"name": "비르투오소",
-			"description": "전설의 히트곡부터 악보에 먼지 쌓인 희귀작까지 — 클래식의 완전판."
+			"description": "전설의 히트곡부터 악보에 먼지 쌓인 희귀작까지, 클래식의 완전판."
 		},
 		"cadenza": {
 			"name": "카덴차",
@@ -79,15 +79,15 @@
 		},
 		"obscure": {
 			"name": "숨겨진 작곡가들",
-			"description": "음악 사전도 깜빡한 작곡가들의 숨겨진 보석 — 아는 사람만 아는 세계."
+			"description": "음악 사전도 깜빡한 작곡가들의 숨겨진 보석. 아는 사람만 아는 세계."
 		},
 		"piano": {
 			"name": "피아노",
-			"description": "88개의 건반, 무한한 가능성 — 속삭이는 야상곡부터 폭풍의 소나타까지."
+			"description": "88개의 건반, 무한한 가능성. 속삭이는 야상곡부터 폭풍의 소나타까지."
 		},
 		"concerto": {
 			"name": "협주곡",
-			"description": "독주자 vs 오케스트라 — 모두가 승리하는 음악의 화려한 결투."
+			"description": "독주자 vs 오케스트라, 모두가 승리하는 음악의 화려한 결투."
 		},
 		"orchestral": {
 			"name": "관현악",
@@ -95,11 +95,11 @@
 		},
 		"chamber": {
 			"name": "실내악",
-			"description": "작은 무대, 큰 울림 — 음표 하나하나가 두 배로 빛나는 친밀한 공간."
+			"description": "작은 무대, 큰 울림. 음표 하나하나가 두 배로 빛나는 친밀한 공간."
 		},
 		"ballet": {
 			"name": "발레",
-			"description": "발끝으로 춤추는 선율 — 귀로 감상하는 무대 위의 우아함."
+			"description": "발끝으로 춤추는 선율. 귀로 감상하는 무대 위의 우아함."
 		},
 		"opera": {
 			"name": "오페라",
@@ -107,15 +107,15 @@
 		},
 		"pianoconcerto": {
 			"name": "피아노 협주곡",
-			"description": "88개의 건반이 오케스트라와 맞붙는 순간 — 전율은 이미 예약됐습니다."
+			"description": "88개의 건반이 오케스트라와 맞붙는 순간, 전율은 이미 예약됐습니다."
 		},
 		"violinconcerto": {
 			"name": "바이올린 협주곡",
-			"description": "바이올린이 노래하면 오케스트라가 화답합니다 — 기교와 서정의 극치."
+			"description": "바이올린이 노래하면 오케스트라가 화답합니다. 기교와 서정의 극치."
 		},
 		"celloconcerto": {
 			"name": "첼로 협주곡",
-			"description": "깊고, 따뜻하고, 영혼이 담긴 울림 — 첼로의 가장 찬란한 순간들."
+			"description": "깊고, 따뜻하고, 영혼이 담긴 울림. 첼로의 가장 찬란한 순간들."
 		},
 		"liszt": {
 			"name": "Lisztomania",
@@ -143,11 +143,11 @@
 		},
 		"renaissance": {
 			"name": "르네상스",
-			"description": "다성음악과 양피지 — 서양 음악이 첫 숨을 쉰 요람 (1400–1600)."
+			"description": "다성음악과 양피지, 서양 음악이 첫 숨을 쉰 요람 (1400–1600)."
 		},
 		"baroque": {
 			"name": "바로크",
-			"description": "가발, 장식음, 그리고 화려한 푸가 — 호화찬란한 바로크의 음향 세계 (1600–1750)."
+			"description": "가발, 장식음, 그리고 화려한 푸가. 호화찬란한 바로크의 음향 세계 (1600–1750)."
 		},
 		"classical": {
 			"name": "고전파",
@@ -155,11 +155,51 @@
 		},
 		"romantic": {
 			"name": "낭만파",
-			"description": "격정, 동경, 오케스트라의 거대한 파도 — 감정이 폭발하는 시대 (1820–1910)."
+			"description": "격정, 동경, 오케스트라의 거대한 파도. 감정이 폭발하는 시대 (1820–1910)."
 		},
 		"20thcentury": {
 			"name": "20세기",
 			"description": "규칙? 무슨 규칙? 여기서 클래식은 새로 태어납니다."
+		},
+		"beethoven": {
+			"name": "Beathoven",
+			"description": "귀가 안 들려도 세상을 흔든 사나이. 빠빠빠빰!"
+		},
+		"femalecomposers": {
+			"name": "그녀들의 악보",
+			"description": "시대의 벽을 뚫고 작곡한 여성들. 이름은 몰라도 음악은 반드시 알게 됩니다."
+		},
+		"germany": {
+			"name": "독일·오스트리아",
+			"description": "자허토르테의 달콤함과 브레첼의 짭짤함. 클래식의 본고장이 여기 있습니다."
+		},
+		"italy": {
+			"name": "벨라 무지카",
+			"description": "벨칸토의 열정과 젤라토처럼 달콤한 선율. 이탈리아는 노래 없이 못 삽니다."
+		},
+		"france": {
+			"name": "에스프리",
+			"description": "인상파의 빛, 파리의 멋, 프랑스만이 가진 세련된 감성."
+		},
+		"russia": {
+			"name": "대평원의 노래",
+			"description": "끝없는 대지, 백야, 뼛속까지 스며드는 선율. 러시아 음악은 뜨겁습니다."
+		},
+		"uk": {
+			"name": "갓 세이브 더 퀸",
+			"description": "영국 신사의 절제된 열정. 퍼셀부터 브리튼까지, 홍차 한 잔과 함께."
+		},
+		"usa": {
+			"name": "아메리칸 드림",
+			"description": "재즈 향이 감도는 오케스트라와 대평원의 사운드. 뭐든 가능한 신대륙."
+		},
+		"spain": {
+			"name": "¡Olé!",
+			"description": "캐스터네츠, 기타, 한여름 밤. 열정의 나라 스페인이 들려주는 음악 축제."
+		},
+		"scandinavia": {
+			"name": "백야의 선율",
+			"description": "트롤의 숲과 빙하의 고요함. 북유럽의 공기를 소리로 옮긴 듯한 투명한 울림."
 		}
 	},
 	"tracklistSelector": {
@@ -296,7 +336,8 @@
 		"categoryCustom": "사용자 정의",
 		"options": {
 			"title": "옵션"
-		}
+		},
+		"categoryCountries": "국가"
 	},
 	"shareLink": {
 		"openLink": "열기",
@@ -518,7 +559,7 @@
 		"poweredBy": "Powered by {first}와 {second}"
 	},
 	"about": {
-		"description": "<em>Liszt\u2019n Up!</em>은 클래식 음악을 사랑하는 마음으로 만든 개인 프로젝트입니다. 클래식 너드를 위한 Hitster라고 할까요. 친구들과 레퍼토리를 정말 잘 알고 있는지 테스트해 보고 싶어서 만들었어요.",
+		"description": "<em>Liszt’n Up!</em>은 클래식 음악을 사랑하는 마음으로 만든 개인 프로젝트입니다. 클래식 너드를 위한 Hitster라고 할까요. 친구들과 레퍼토리를 정말 잘 알고 있는지 테스트해 보고 싶어서 만들었어요.",
 		"donateHint": "이 앱은 영원히 무료입니다. 하지만 별 커피 한 잔 사주신다면 감사히 받겠습니다.",
 		"donateButton": "커피 한 잔 사주기",
 		"viewOnGithub": "GitHub에서 보기"

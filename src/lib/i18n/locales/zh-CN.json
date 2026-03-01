@@ -51,23 +51,23 @@
 	"tracklists": {
 		"beginner": {
 			"name": "入门",
-			"description": "一听就会哼的不朽旋律——古典乐的正确打开方式。"
+			"description": "一听就会哼的不朽旋律，古典乐的正确打开方式。"
 		},
 		"intermediate": {
 			"name": "进阶",
-			"description": "不止入门——这里的每一首，都能让整个音乐厅为之屏息。"
+			"description": "不止入门，这里的每一首都能让整个音乐厅为之屏息。"
 		},
 		"skilled": {
 			"name": "熟练",
-			"description": "大众宠儿与深藏不露的佳作——给懂行人的黄金配比。"
+			"description": "大众宠儿与深藏不露的佳作，给懂行人的黄金配比。"
 		},
 		"advanced": {
 			"name": "专家",
-			"description": "从这里开始，真正的考验才揭幕——欢迎来到曲库深水区。"
+			"description": "从这里开始，真正的考验才揭幕。欢迎来到曲库深水区。"
 		},
 		"expert": {
 			"name": "大师",
-			"description": "每个音符背后都藏着惊喜——只为不满足于「还行」的耳朵准备。"
+			"description": "每个音符背后都藏着惊喜，只为不满足于「还行」的耳朵准备。"
 		},
 		"virtuoso": {
 			"name": "炫技",
@@ -75,19 +75,19 @@
 		},
 		"cadenza": {
 			"name": "华彩",
-			"description": "真正的鉴赏家挑战——拒绝口水歌，只留给最挑剔的耳朵。"
+			"description": "真正的鉴赏家挑战：拒绝口水歌，只留给最挑剔的耳朵。"
 		},
 		"obscure": {
 			"name": "冷门作曲家",
-			"description": "连音乐辞典都未必记得住的名字——在这里，冷门即主角。"
+			"description": "连音乐辞典都未必记得住的名字。在这里，冷门即主角。"
 		},
 		"piano": {
 			"name": "钢琴",
-			"description": "88个黑白键，从温柔夜曲到雷鸣奏鸣曲——无限可能。"
+			"description": "88个黑白键，从温柔夜曲到雷鸣奏鸣曲，无限可能。"
 		},
 		"concerto": {
 			"name": "协奏曲",
-			"description": "独奏家 vs. 乐团——一场没有输家的音乐对决。"
+			"description": "独奏家 vs. 乐团，一场没有输家的音乐对决。"
 		},
 		"orchestral": {
 			"name": "管弦乐",
@@ -95,11 +95,11 @@
 		},
 		"chamber": {
 			"name": "室内乐",
-			"description": "小编制，大能量——在这里，每个音符都举足轻重。"
+			"description": "小编制，大能量。在这里，每个音符都举足轻重。"
 		},
 		"ballet": {
 			"name": "芭蕾",
-			"description": "耳朵的足尖舞——那些让人不由自主翩翩起舞的不朽旋律。"
+			"description": "耳朵的足尖舞，那些让人不由自主翩翩起舞的不朽旋律。"
 		},
 		"opera": {
 			"name": "歌剧",
@@ -107,15 +107,15 @@
 		},
 		"pianoconcerto": {
 			"name": "钢琴协奏曲",
-			"description": "当88个琴键叫板整支乐团——一场史诗级碰撞。"
+			"description": "当88个琴键叫板整支乐团，一场史诗级碰撞。"
 		},
 		"violinconcerto": {
 			"name": "小提琴协奏曲",
-			"description": "小提琴歌唱，乐团应答——炫技之美，尽在弓弦之间。"
+			"description": "小提琴歌唱，乐团应答。炫技之美，尽在弓弦之间。"
 		},
 		"celloconcerto": {
 			"name": "大提琴协奏曲",
-			"description": "深沉、温暖、饱含灵魂——大提琴的深情告白。"
+			"description": "深沉、温暖、饱含灵魂。大提琴的深情告白。"
 		},
 		"liszt": {
 			"name": "Lisztomania",
@@ -143,11 +143,11 @@
 		},
 		"renaissance": {
 			"name": "文艺复兴",
-			"description": "复调与羊皮纸的年代——西方音乐的摇篮 (1400–1600)。"
+			"description": "复调与羊皮纸的年代，西方音乐的摇篮 (1400–1600)。"
 		},
 		"baroque": {
 			"name": "巴洛克",
-			"description": "假发、华服与辉煌赋格——巴洛克的声色盛宴 (1600–1750)。"
+			"description": "假发、华服与辉煌赋格，巴洛克的声色盛宴 (1600–1750)。"
 		},
 		"classical": {
 			"name": "古典主义",
@@ -155,11 +155,51 @@
 		},
 		"romantic": {
 			"name": "浪漫主义",
-			"description": "大情怀、大手笔——用整个乐团倾诉爱与渴望 (1820–1910)。"
+			"description": "大情怀、大手笔，用整个乐团倾诉爱与渴望 (1820–1910)。"
 		},
 		"20thcentury": {
 			"name": "20世纪",
 			"description": "规则？什么规则？在这里，古典乐被重新定义。"
+		},
+		"beethoven": {
+			"name": "Beathoven",
+			"description": "聋了又怎样？九部交响曲照样震碎天花板。当当当当！"
+		},
+		"femalecomposers": {
+			"name": "她们的音符",
+			"description": "冲破藩篱、执笔作曲的天才女性。你可能没听过她们的名字，但你会记住她们的旋律。"
+		},
+		"germany": {
+			"name": "德奥之声",
+			"description": "萨赫蛋糕的甜蜜与椒盐卷饼的咸香，古典乐的祖师爷们都在这儿。"
+		},
+		"italy": {
+			"name": "阳光下的歌",
+			"description": "美声唱法的激情与冰淇淋般甜蜜的旋律，意大利人不唱歌会闷出病来。"
+		},
+		"france": {
+			"name": "法式风情",
+			"description": "印象派的光影、巴黎的浪漫，只有法国人才调得出这味儿。"
+		},
+		"russia": {
+			"name": "广袤大地的回响",
+			"description": "无尽的草原、白夜和直抵灵魂深处的旋律。战斗民族的音乐一样火热。"
+		},
+		"uk": {
+			"name": "天佑女王",
+			"description": "英伦绅士的含蓄热情，从珀塞尔到布里顿，配一杯下午茶正好。"
+		},
+		"usa": {
+			"name": "美国梦",
+			"description": "穿燕尾服的爵士乐、大草原的交响诗，什么都敢试的新大陆。"
+		},
+		"spain": {
+			"name": "¡Olé!",
+			"description": "响板、吉他和仲夏夜，热情之国西班牙的音乐嘉年华。"
+		},
+		"scandinavia": {
+			"name": "极光之歌",
+			"description": "精灵的森林与冰川的寂静，北欧的空气仿佛都能发出乐音。"
 		}
 	},
 	"tracklistSelector": {
@@ -296,7 +336,8 @@
 		"categoryCustom": "自定义",
 		"options": {
 			"title": "选项"
-		}
+		},
+		"categoryCountries": "国家"
 	},
 	"shareLink": {
 		"openLink": "打开",
@@ -518,7 +559,7 @@
 		"poweredBy": "数据与音频由 {first} 和 {second} 提供"
 	},
 	"about": {
-		"description": "<em>Liszt\u2019n Up!</em> 是一个出于对古典音乐的热爱而做的个人项目。简单来说就是古典音乐版的 Hitster。想看看自己和朋友们对古典曲目到底了解多少，所以做了这个小游戏。",
+		"description": "<em>Liszt’n Up!</em> 是一个出于对古典音乐的热爱而做的个人项目。简单来说就是古典音乐版的 Hitster。想看看自己和朋友们对古典曲目到底了解多少，所以做了这个小游戏。",
 		"donateHint": "这个应用永远免费。但如果你愿意请我喝杯咖啡，也非常感谢。",
 		"donateButton": "请我喝咖啡",
 		"viewOnGithub": "在 GitHub 上查看"

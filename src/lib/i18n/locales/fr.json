@@ -71,7 +71,7 @@
 		},
 		"virtuoso": {
 			"name": "Virtuose",
-			"description": "Tout le catalogue — du tube planétaire au manuscrit oublié."
+			"description": "Tout le catalogue, du tube planétaire au manuscrit oublié."
 		},
 		"cadenza": {
 			"name": "Cadence",
@@ -160,6 +160,46 @@
 		"20thcentury": {
 			"name": "XXe Siècle",
 			"description": "Quand la musique a décidé de réinventer toutes les règles."
+		},
+		"beethoven": {
+			"name": "Beathoven",
+			"description": "Sourd mais pas muet : neuf symphonies qui ont fait trembler l'Europe."
+		},
+		"femalecomposers": {
+			"name": "Compositrices",
+			"description": "Des plumes féminines qui ont bravé les interdits et signé des chef-d'œuvres."
+		},
+		"germany": {
+			"name": "Austro-Allemand",
+			"description": "De la Sachertorte au Bretzel, la tradition qui pèse lourd dans la balance musicale."
+		},
+		"italy": {
+			"name": "Bella Musica",
+			"description": "Du bel canto à la pasta sonore, l'Italie chante avec tout son cœur."
+		},
+		"france": {
+			"name": "Cocorico !",
+			"description": "Debussy, Ravel, Fauré… la crème de la crème, tout simplement."
+		},
+		"russia": {
+			"name": "L'Âme Slave",
+			"description": "Des steppes infinies et des nuits blanches. Ici, chaque note porte un manteau de fourrure."
+		},
+		"uk": {
+			"name": "God Save the Queen",
+			"description": "Le flegme britannique, version partition. De Purcell à Britten, so British."
+		},
+		"usa": {
+			"name": "Nouveau Monde",
+			"description": "Du ragtime au grand canyon sonore. L'Amérique qui swingue en queue-de-pie."
+		},
+		"spain": {
+			"name": "¡Olé !",
+			"description": "Soleil, guitare et castagnettes : la musique espagnole a du panache."
+		},
+		"scandinavia": {
+			"name": "Aurores Boréales",
+			"description": "Brumes, fjords et mélodies cristallines. Le grand Nord a le sens du frisson."
 		}
 	},
 	"tracklistSelector": {
@@ -296,7 +336,8 @@
 		"categoryCustom": "Personnalisé",
 		"options": {
 			"title": "Options"
-		}
+		},
+		"categoryCountries": "Pays"
 	},
 	"shareLink": {
 		"openLink": "Ouvrir",
@@ -518,8 +559,8 @@
 		"poweredBy": "Propulsé par {first} et {second}"
 	},
 	"about": {
-		"description": "<em>Liszt\u2019n Up!</em> est un projet perso né d\u2019une passion pour la musique classique. C\u2019est un peu comme Hitster, mais pour les mordus de classique. Je l\u2019ai créé pour voir si mes amis et moi connaissons vraiment le répertoire qu\u2019on prétend adorer.",
-		"donateHint": "C\u2019est gratuit et ça le restera. Mais si le c\u0153ur t\u2019en dit, un petit café fait toujours plaisir.",
+		"description": "<em>Liszt’n Up!</em> est un projet perso né d’une passion pour la musique classique. C’est un peu comme Hitster, mais pour les mordus de classique. Je l’ai créé pour voir si mes amis et moi connaissons vraiment le répertoire qu’on prétend adorer.",
+		"donateHint": "C’est gratuit et ça le restera. Mais si le cœur t’en dit, un petit café fait toujours plaisir.",
 		"donateButton": "Offrir un café",
 		"viewOnGithub": "Voir sur GitHub"
 	},

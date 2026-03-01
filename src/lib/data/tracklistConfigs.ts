@@ -266,35 +266,37 @@ export const CELLOCONCERTO_CONFIG: TracklistConfig = {
 };
 
 export const LISZT_CONFIG: TracklistConfig = {
-	composerFilter: { mode: 'include', composers: ['2cd475bb-1abd-40c4-9904-6d4b691c752c'] },
-	workScoreRange: [2.3, MAX_WORK_SCORE_ROUNDED]
+	composerFilter: { mode: 'include', composers: ['2cd475bb-1abd-40c4-9904-6d4b691c752c'] }
 };
 
 export const BACH_CONFIG: TracklistConfig = {
 	composerFilter: { mode: 'include', composers: ['24f1766e-9635-4d58-a4d4-9413f9f98a4c'] },
-	workScoreRange: [3.4, MAX_WORK_SCORE_ROUNDED],
 	maxTracksFromSingleWork: 5
-};
-
-export const CHOPIN_CONFIG: TracklistConfig = {
-	composerFilter: { mode: 'include', composers: ['09ff1fe8-d61c-4b98-bb82-18487c74d7b7'] },
-	workScoreRange: [2.3, MAX_WORK_SCORE_ROUNDED]
 };
 
 export const MOZART_CONFIG: TracklistConfig = {
 	composerFilter: { mode: 'include', composers: ['b972f589-fb0e-474e-b64a-803b0364fa75'] },
-	workScoreRange: [3, MAX_WORK_SCORE_ROUNDED],
 	maxTracksFromSingleWork: 5
 };
 
+export const BEETHOVEN_CONFIG: TracklistConfig = {
+	composerFilter: { mode: 'include', composers: ['1f9df192-a621-4f54-8850-2c5373b7eac9'] },
+	maxTracksFromSingleWork: 5
+};
+
+export const CHOPIN_CONFIG: TracklistConfig = {
+	composerFilter: { mode: 'include', composers: ['09ff1fe8-d61c-4b98-bb82-18487c74d7b7'] }
+};
 export const TCHAIKOVSKY_CONFIG: TracklistConfig = {
-	composerFilter: { mode: 'include', composers: ['9ddd7abc-9e1b-471d-8031-583bc6bc8be9'] },
-	workScoreRange: [2.3, MAX_WORK_SCORE_ROUNDED]
+	composerFilter: { mode: 'include', composers: ['9ddd7abc-9e1b-471d-8031-583bc6bc8be9'] }
 };
 
 export const VIVALDI_CONFIG: TracklistConfig = {
-	composerFilter: { mode: 'include', composers: ['ad79836d-9849-44df-8789-180bbc823f3c'] },
-	workScoreRange: [3, MAX_WORK_SCORE_ROUNDED]
+	composerFilter: { mode: 'include', composers: ['ad79836d-9849-44df-8789-180bbc823f3c'] }
+};
+
+export const FEMALE_COMPOSERS_CONFIG: TracklistConfig = {
+	composerFilter: { mode: 'gender', gender: 'female' }
 };
 
 export const RENAISSANCE_CONFIG: TracklistConfig = {
@@ -315,4 +317,44 @@ export const ROMANTIC_CONFIG: TracklistConfig = {
 
 export const TWENTIETH_CENTURY_CONFIG: TracklistConfig = {
 	yearFilter: [1900, 1999]
+};
+
+export const GERMANY_CONFIG: TracklistConfig = {
+	composerFilter: { mode: 'country', countries: ['DE', 'AT'] },
+	limitWorksFromComposer: 0.07
+};
+
+export const ITALY_CONFIG: TracklistConfig = {
+	composerFilter: { mode: 'country', countries: ['IT'] },
+	limitWorksFromComposer: 0.05
+};
+
+export const FRANCE_CONFIG: TracklistConfig = {
+	composerFilter: { mode: 'country', countries: ['FR'] },
+	limitWorksFromComposer: 0.1
+};
+
+export const RUSSIA_CONFIG: TracklistConfig = {
+	composerFilter: { mode: 'country', countries: ['RU'] },
+	limitWorksFromComposer: 0.1
+};
+
+export const UK_CONFIG: TracklistConfig = {
+	composerFilter: { mode: 'country', countries: ['GB'] },
+	limitWorksFromComposer: 0.1
+};
+
+export const USA_CONFIG: TracklistConfig = {
+	composerFilter: { mode: 'country', countries: ['US'] },
+	limitWorksFromComposer: 0.1
+};
+
+export const SPAIN_CONFIG: TracklistConfig = {
+	composerFilter: { mode: 'country', countries: ['ES'] },
+	limitWorksFromComposer: 0.1
+};
+
+export const SCANDINAVIA_CONFIG: TracklistConfig = {
+	composerFilter: { mode: 'country', countries: ['SE', 'NO', 'DK', 'FI'] },
+	limitWorksFromComposer: 0.1
 };

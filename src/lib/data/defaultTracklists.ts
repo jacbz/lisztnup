@@ -9,6 +9,7 @@ import concertoIcon from '$lib/assets/icons/concerto.svg?raw';
 import chamberIcon from '$lib/assets/icons/chamber.svg?raw';
 import balletIcon from '$lib/assets/icons/ballet.svg?raw';
 import operaIcon from '$lib/assets/icons/opera.svg?raw';
+import globeIcon from '$lib/assets/icons/globe.svg?raw';
 import starIcon from '$lib/assets/icons/star.svg?raw';
 import violinIcon from '$lib/assets/icons/violin.svg?raw';
 import celloIcon from '$lib/assets/icons/cello.svg?raw';
@@ -179,20 +180,28 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		config: Configs.BACH_CONFIG
 	},
 	{
-		name: 'tracklists.chopin.name',
-		description: 'tracklists.chopin.description',
-		isDefault: true,
-		icon: composerIcon,
-		category: 'composers',
-		config: Configs.CHOPIN_CONFIG
-	},
-	{
 		name: 'tracklists.mozart.name',
 		description: 'tracklists.mozart.description',
 		isDefault: true,
 		icon: composerIcon,
 		category: 'composers',
 		config: Configs.MOZART_CONFIG
+	},
+	{
+		name: 'tracklists.beethoven.name',
+		description: 'tracklists.beethoven.description',
+		isDefault: true,
+		icon: composerIcon,
+		category: 'composers',
+		config: Configs.BEETHOVEN_CONFIG
+	},
+	{
+		name: 'tracklists.chopin.name',
+		description: 'tracklists.chopin.description',
+		isDefault: true,
+		icon: composerIcon,
+		category: 'composers',
+		config: Configs.CHOPIN_CONFIG
 	},
 	{
 		name: 'tracklists.tchaikovsky.name',
@@ -209,6 +218,14 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		icon: composerIcon,
 		category: 'composers',
 		config: Configs.VIVALDI_CONFIG
+	},
+	{
+		name: 'tracklists.femalecomposers.name',
+		description: 'tracklists.femalecomposers.description',
+		isDefault: true,
+		icon: composerIcon,
+		category: 'composers',
+		config: Configs.FEMALE_COMPOSERS_CONFIG
 	},
 
 	// Era-based tracklists
@@ -251,6 +268,72 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'eras',
 		icon: eraIcon,
 		config: Configs.TWENTIETH_CENTURY_CONFIG
+	},
+
+	// Country-based tracklists
+	{
+		name: 'tracklists.germany.name',
+		description: 'tracklists.germany.description',
+		isDefault: true,
+		category: 'countries',
+		icon: globeIcon,
+		config: Configs.GERMANY_CONFIG
+	},
+	{
+		name: 'tracklists.italy.name',
+		description: 'tracklists.italy.description',
+		isDefault: true,
+		category: 'countries',
+		icon: globeIcon,
+		config: Configs.ITALY_CONFIG
+	},
+	{
+		name: 'tracklists.france.name',
+		description: 'tracklists.france.description',
+		isDefault: true,
+		category: 'countries',
+		icon: globeIcon,
+		config: Configs.FRANCE_CONFIG
+	},
+	{
+		name: 'tracklists.russia.name',
+		description: 'tracklists.russia.description',
+		isDefault: true,
+		category: 'countries',
+		icon: globeIcon,
+		config: Configs.RUSSIA_CONFIG
+	},
+	{
+		name: 'tracklists.uk.name',
+		description: 'tracklists.uk.description',
+		isDefault: true,
+		category: 'countries',
+		icon: globeIcon,
+		config: Configs.UK_CONFIG
+	},
+	{
+		name: 'tracklists.usa.name',
+		description: 'tracklists.usa.description',
+		isDefault: true,
+		category: 'countries',
+		icon: globeIcon,
+		config: Configs.USA_CONFIG
+	},
+	{
+		name: 'tracklists.spain.name',
+		description: 'tracklists.spain.description',
+		isDefault: true,
+		category: 'countries',
+		icon: globeIcon,
+		config: Configs.SPAIN_CONFIG
+	},
+	{
+		name: 'tracklists.scandinavia.name',
+		description: 'tracklists.scandinavia.description',
+		isDefault: true,
+		category: 'countries',
+		icon: globeIcon,
+		config: Configs.SCANDINAVIA_CONFIG
 	}
 ];
 

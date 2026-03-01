@@ -44,7 +44,7 @@ export interface Tracklist {
 	description: string;
 	isDefault: boolean; // Whether this is a built-in preset
 	icon?: string | null; // Optional SVG icon (as an inline SVG string)
-	category?: 'difficulty' | 'categories' | 'composers' | 'eras' | 'custom'; // Category for organization
+	category?: 'difficulty' | 'categories' | 'composers' | 'eras' | 'countries' | 'custom'; // Category for organization
 	config: TracklistConfig;
 }
 
