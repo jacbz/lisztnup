@@ -198,7 +198,10 @@
 		"yearFilters": "Años",
 		"clearFilters": "Borrar",
 		"born": "Nac.",
-		"died": "Fall."
+		"died": "Fall.",
+		"allCountries": "Todos los países",
+		"male": "Hombres",
+		"female": "Mujeres"
 	},
 	"tracklistEditor": {
 		"editTitle": "Editar lista",

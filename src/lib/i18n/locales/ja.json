@@ -198,7 +198,10 @@
 		"yearFilters": "年代",
 		"clearFilters": "クリア",
 		"born": "生年",
-		"died": "没年"
+		"died": "没年",
+		"allCountries": "すべての国",
+		"male": "男性",
+		"female": "女性"
 	},
 	"tracklistEditor": {
 		"editTitle": "トラックリスト編集",

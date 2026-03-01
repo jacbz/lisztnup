@@ -198,7 +198,10 @@
 		"yearFilters": "Anos",
 		"clearFilters": "Limpar",
 		"born": "Nasc.",
-		"died": "Falec."
+		"died": "Falec.",
+		"allCountries": "Todos os países",
+		"male": "Homens",
+		"female": "Mulheres"
 	},
 	"tracklistEditor": {
 		"editTitle": "Editar Repertório",

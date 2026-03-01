@@ -198,7 +198,10 @@
 		"yearFilters": "연도",
 		"clearFilters": "초기화",
 		"born": "출생",
-		"died": "사망"
+		"died": "사망",
+		"allCountries": "모든 국가",
+		"male": "남성",
+		"female": "여성"
 	},
 	"tracklistEditor": {
 		"editTitle": "트랙 리스트 편집",

@@ -198,7 +198,10 @@
 		"yearFilters": "Jahre",
 		"clearFilters": "Löschen",
 		"born": "Geb.",
-		"died": "Gest."
+		"died": "Gest.",
+		"allCountries": "Alle Länder",
+		"male": "Männer",
+		"female": "Frauen"
 	},
 	"tracklistEditor": {
 		"editTitle": "Tracklist bearbeiten",

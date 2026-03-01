@@ -20,6 +20,8 @@
 	let birthYearTo = $state('');
 	let deathYearFrom = $state('');
 	let deathYearTo = $state('');
+	let selectedCountry = $state('');
+	let selectedGender = $state<'male' | 'female' | ''>('');
 	let showFilters = $state(false);
 
 	// Normalize strings for search: strip diacritics and collapse to lower-case
@@ -51,7 +53,9 @@
 				score: c.score,
 				workCount: workCountMap.get(c.gid) || 0,
 				birthYear: c.birth_year,
-				deathYear: c.death_year
+				deathYear: c.death_year,
+				country: c.country,
+				gender: c.gender
 			}))
 			.sort((a, b) => b.score - a.score);
 	});
@@ -69,12 +73,27 @@
 		};
 	});
 
+	// Build country list with counts (sorted by count descending)
+	const countryOptions = $derived.by(() => {
+		const countMap = new Map<string, number>();
+		entries.forEach((e) => {
+			if (e.country) {
+				countMap.set(e.country, (countMap.get(e.country) || 0) + 1);
+			}
+		});
+		return [...countMap.entries()]
+			.map(([country, count]) => ({ country, count }))
+			.sort((a, b) => b.count - a.count);
+	});
+
 	const hasActiveFilters = $derived(
 		searchQuery.trim() !== '' ||
 			birthYearFrom !== '' ||
 			birthYearTo !== '' ||
 			deathYearFrom !== '' ||
-			deathYearTo !== ''
+			deathYearTo !== '' ||
+			selectedCountry !== '' ||
+			selectedGender !== ''
 	);
 
 	// Build a display-name map: for each last name group, the highest-scored composer
@@ -106,11 +125,23 @@
 		birthYearTo = '';
 		deathYearFrom = '';
 		deathYearTo = '';
+		selectedCountry = '';
+		selectedGender = '';
 	}
 
-	// Apply search and year filters
+	// Apply search, country, gender, and year filters
 	const filteredEntries = $derived.by(() => {
 		let result = entries;
+
+		// Country filter
+		if (selectedCountry) {
+			result = result.filter((e) => e.country === selectedCountry);
+		}
+
+		// Gender filter
+		if (selectedGender) {
+			result = result.filter((e) => e.gender === selectedGender);
+		}
 
 		// Search filter
 		const rawQuery = searchQuery.trim();
@@ -201,9 +232,9 @@
 
 <!-- Search & filters bar -->
 <div class="px-4 py-3 md:px-8">
-	<div class="mx-auto flex max-w-5xl flex-wrap items-center gap-2">
-		<!-- Search input -->
-		<div class="relative min-w-0 flex-1">
+	<div class="mx-auto max-w-5xl space-y-2.5">
+		<!-- Row 1: Search -->
+		<div class="relative">
 			<Search
 				class="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-500"
 			/>
@@ -215,80 +246,118 @@
 			/>
 		</div>
 
-		<!-- Year filter toggle -->
-		<button
-			type="button"
-			onclick={() => (showFilters = !showFilters)}
-			class="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm transition-colors {showFilters
-				? 'bg-cyan-400/15 text-cyan-300 ring-1 ring-cyan-400/40'
-				: 'bg-slate-700/50 text-slate-400 hover:bg-slate-700 hover:text-slate-300'}"
-		>
-			{$_('libraryViewer.yearFilters')}
-		</button>
+		<!-- Row 2: Filters -->
+		<div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+			<!-- Country dropdown -->
+			<select
+				bind:value={selectedCountry}
+				class="rounded-full border-none px-2.5 py-1 text-xs font-medium transition-all duration-150 focus:ring-1 focus:ring-cyan-400/50 focus:outline-none {selectedCountry
+					? 'bg-cyan-400/20 text-cyan-300 ring-1 ring-cyan-400/50'
+					: 'bg-slate-700/50 text-slate-400'}"
+			>
+				<option value="">{$_('libraryViewer.allCountries')}</option>
+				{#each countryOptions as opt}
+					<option value={opt.country}>{opt.country} ({opt.count})</option>
+				{/each}
+			</select>
 
-		<!-- Clear filters button -->
-		{#if hasActiveFilters}
+			<!-- Gender segmented control -->
+			<div class="flex items-center overflow-hidden rounded-full bg-slate-700/50">
+				<button
+					type="button"
+					onclick={() => (selectedGender = selectedGender === 'male' ? '' : 'male')}
+					class="rounded-l-full px-2.5 py-1 text-xs font-medium transition-all duration-150 {selectedGender ===
+					'male'
+						? 'bg-cyan-400/20 text-cyan-300 ring-1 ring-cyan-400/50 ring-inset'
+						: 'text-slate-400 hover:text-slate-300'}"
+				>
+					{$_('libraryViewer.male')}
+				</button>
+				<div class="h-3 w-px bg-slate-600/50"></div>
+				<button
+					type="button"
+					onclick={() => (selectedGender = selectedGender === 'female' ? '' : 'female')}
+					class="rounded-r-full px-2.5 py-1 text-xs font-medium transition-all duration-150 {selectedGender ===
+					'female'
+						? 'bg-cyan-400/20 text-cyan-300 ring-1 ring-cyan-400/50 ring-inset'
+						: 'text-slate-400 hover:text-slate-300'}"
+				>
+					{$_('libraryViewer.female')}
+				</button>
+			</div>
+
+			<!-- Year filter toggle -->
 			<button
 				type="button"
-				onclick={clearFilters}
-				class="flex items-center gap-1 rounded-lg bg-slate-700/50 px-2.5 py-2 text-sm text-slate-400 transition-colors hover:bg-slate-700 hover:text-slate-300"
+				onclick={() => (showFilters = !showFilters)}
+				class="rounded-full px-2.5 py-1 text-xs font-medium transition-all duration-150 {showFilters
+					? 'bg-cyan-400/20 text-cyan-300 ring-1 ring-cyan-400/50'
+					: 'bg-slate-700/50 text-slate-400 hover:bg-slate-700 hover:text-slate-300'}"
 			>
-				<X class="h-3.5 w-3.5" />
-				{$_('libraryViewer.clearFilters')}
+				{$_('libraryViewer.yearFilters')}
 			</button>
+
+			<!-- Clear filters -->
+			{#if hasActiveFilters}
+				<button
+					type="button"
+					onclick={clearFilters}
+					class="flex items-center gap-1 rounded-full px-2 py-1 text-xs text-slate-500 transition-colors hover:text-slate-300"
+				>
+					<X class="h-3 w-3" />
+					{$_('libraryViewer.clearFilters')}
+				</button>
+			{/if}
+
+			<!-- Result count (inline with filters) -->
+			{#if hasActiveFilters}
+				<span class="ml-auto text-xs text-slate-500">
+					{filteredEntries.length} / {entries.length}
+				</span>
+			{/if}
+		</div>
+
+		<!-- Year filter inputs (expandable) -->
+		{#if showFilters}
+			<div class="grid grid-cols-2 gap-x-6 gap-y-2" in:fade={{ duration: 150 }}>
+				<!-- Birth year -->
+				<div class="flex items-center gap-2">
+					<span class="w-10 shrink-0 text-xs text-slate-500">{$_('libraryViewer.born')}</span>
+					<input
+						type="number"
+						bind:value={birthYearFrom}
+						placeholder={String(yearBounds.minBirth)}
+						class="w-full min-w-0 rounded border border-slate-700 bg-slate-800/60 px-2 py-1 text-xs text-slate-300 placeholder:text-slate-600 focus:ring-1 focus:ring-cyan-400 focus:outline-none"
+					/>
+					<span class="text-xs text-slate-600">–</span>
+					<input
+						type="number"
+						bind:value={birthYearTo}
+						placeholder={String(yearBounds.maxBirth)}
+						class="w-full min-w-0 rounded border border-slate-700 bg-slate-800/60 px-2 py-1 text-xs text-slate-300 placeholder:text-slate-600 focus:ring-1 focus:ring-cyan-400 focus:outline-none"
+					/>
+				</div>
+
+				<!-- Death year -->
+				<div class="flex items-center gap-2">
+					<span class="w-10 shrink-0 text-xs text-slate-500">{$_('libraryViewer.died')}</span>
+					<input
+						type="number"
+						bind:value={deathYearFrom}
+						placeholder={String(yearBounds.minDeath)}
+						class="w-full min-w-0 rounded border border-slate-700 bg-slate-800/60 px-2 py-1 text-xs text-slate-300 placeholder:text-slate-600 focus:ring-1 focus:ring-cyan-400 focus:outline-none"
+					/>
+					<span class="text-xs text-slate-600">–</span>
+					<input
+						type="number"
+						bind:value={deathYearTo}
+						placeholder={String(yearBounds.maxDeath)}
+						class="w-full min-w-0 rounded border border-slate-700 bg-slate-800/60 px-2 py-1 text-xs text-slate-300 placeholder:text-slate-600 focus:ring-1 focus:ring-cyan-400 focus:outline-none"
+					/>
+				</div>
+			</div>
 		{/if}
 	</div>
-
-	<!-- Year filter inputs -->
-	{#if showFilters}
-		<div
-			class="mx-auto mt-3 grid max-w-5xl grid-cols-2 gap-x-6 gap-y-2"
-			in:fade={{ duration: 150 }}
-		>
-			<!-- Birth year -->
-			<div class="flex items-center gap-2">
-				<span class="w-10 shrink-0 text-xs text-slate-500">{$_('libraryViewer.born')}</span>
-				<input
-					type="number"
-					bind:value={birthYearFrom}
-					placeholder={String(yearBounds.minBirth)}
-					class="w-full min-w-0 rounded border border-slate-700 bg-slate-800/60 px-2 py-1 text-xs text-slate-300 placeholder:text-slate-600 focus:ring-1 focus:ring-cyan-400 focus:outline-none"
-				/>
-				<span class="text-xs text-slate-600">–</span>
-				<input
-					type="number"
-					bind:value={birthYearTo}
-					placeholder={String(yearBounds.maxBirth)}
-					class="w-full min-w-0 rounded border border-slate-700 bg-slate-800/60 px-2 py-1 text-xs text-slate-300 placeholder:text-slate-600 focus:ring-1 focus:ring-cyan-400 focus:outline-none"
-				/>
-			</div>
-
-			<!-- Death year -->
-			<div class="flex items-center gap-2">
-				<span class="w-10 shrink-0 text-xs text-slate-500">{$_('libraryViewer.died')}</span>
-				<input
-					type="number"
-					bind:value={deathYearFrom}
-					placeholder={String(yearBounds.minDeath)}
-					class="w-full min-w-0 rounded border border-slate-700 bg-slate-800/60 px-2 py-1 text-xs text-slate-300 placeholder:text-slate-600 focus:ring-1 focus:ring-cyan-400 focus:outline-none"
-				/>
-				<span class="text-xs text-slate-600">–</span>
-				<input
-					type="number"
-					bind:value={deathYearTo}
-					placeholder={String(yearBounds.maxDeath)}
-					class="w-full min-w-0 rounded border border-slate-700 bg-slate-800/60 px-2 py-1 text-xs text-slate-300 placeholder:text-slate-600 focus:ring-1 focus:ring-cyan-400 focus:outline-none"
-				/>
-			</div>
-		</div>
-	{/if}
-
-	<!-- Result count -->
-	{#if hasActiveFilters}
-		<p class="mx-auto mt-2 max-w-5xl text-xs text-slate-500">
-			{filteredEntries.length} / {entries.length}
-		</p>
-	{/if}
 </div>
 
 <!-- Word cloud -->

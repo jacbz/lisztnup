@@ -198,7 +198,10 @@
 		"yearFilters": "年份",
 		"clearFilters": "清除",
 		"born": "出生",
-		"died": "逝世"
+		"died": "逝世",
+		"allCountries": "所有國家",
+		"male": "男性",
+		"female": "女性"
 	},
 	"tracklistEditor": {
 		"editTitle": "編輯歌單",
