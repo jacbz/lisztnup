@@ -65,6 +65,7 @@ excluded_works:
   'd0be6882-700f-48c9-af49-1f3d42627de5': 'Requiem in D minor, K. 626 (Beyer completion)'
   '69bd99f8-636d-4f9c-9498-7b9cf32f871e': 'Carmen (Italian)'
   '3f39aa99-224f-3c8a-8891-44589bcb8a08': 'Brandenburg Concerto No. 3 in G major, BWV 1048 (duplicate 2nd movement)'
+  '6d0b007a-f956-4905-ae07-800a4a57b381': 'Star Wars: The Phantom Menace'
 
 # --- Work Significance Score (WSS) Overrides ---
 # Manually set the WSS for specific works.

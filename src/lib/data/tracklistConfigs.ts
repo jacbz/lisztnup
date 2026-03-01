@@ -214,6 +214,7 @@ export const PIANOCONCERTO_CONFIG: TracklistConfig = {
 	limitWorksFromComposer: 0.1,
 	nameFilter: ['piano', 'klavier'],
 	includeWorks: [
+		'487b34d5', // Boulanger - Fantaisie variée
 		'60b22df4', // Gershwin - Rhapsody in Blue
 		'21560c8d' // Schumann - Konzertstück
 	],

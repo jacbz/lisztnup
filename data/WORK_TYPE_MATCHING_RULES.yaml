@@ -156,6 +156,9 @@ composer_specific_rules:
   'Azzaiolo, Filippo':
     vocal:
       - Chi passa per'sta strada
+  'Bacewicz, Grażyna':
+    chamber:
+      - Polish Capriccio|Sonata da camera
   'Bach, Carl Philipp Emanuel':
     organ:
       - Organ Sonatas, Wq\. 70
@@ -258,6 +261,9 @@ composer_specific_rules:
   'Beach, Amy':
     piano:
       - 4 Sketches
+  'Beamish, Sally':
+    vocal:
+      - In the stillness
   'Bedingham, John':
     vocal:
       - O rosa bella
@@ -332,7 +338,7 @@ composer_specific_rules:
       - Suite hébraïque
   'Bonis, Mel':
     piano:
-      - Ophélie|Phoebé|Salomé|Scherzo Final|Soir, matin
+      - Ophélie|Phoebé|Salomé|Scherzo Final|Soir, matin|Agitato|Berceuse triste|Cloches lointaines|Gai printemps|Il pleut|Miocheries|Pièce|Romance sans paroles|Une flûte soupire|Églogue
   'Borodin, Alexander':
     orchestral:
       - Polovtsian Dances|Polovtsian March|orch.
@@ -351,6 +357,9 @@ composer_specific_rules:
       - Deux pièces pour violon
     vocal:
       - Pie Jesu
+  'Boulanger, Nadia':
+    concerto:
+      - Fantaisie variée
   'Boulez, Pierre':
     piano:
       - 12 Notations
@@ -475,7 +484,7 @@ composer_specific_rules:
       - Bourrée fantasque|Habañera|Impromptu|Pièces Pittoresques
   'Chaminade, Cécile':
     piano:
-      - Études de concert
+      - Études de concert|Nocturne|Poèmes provençales|Romances sans paroles|Thème varié in A major|Toccata|Étude symphonique
   'Chausson, Ernest':
     vocal:
       - Poème de l'amour et de la mer
@@ -503,7 +512,7 @@ composer_specific_rules:
       - Trumpet Tune
   'Clarke, Rebecca':
     chamber:
-      - Chinese Puzzle|Morpheus|Passacaglia
+      - Chinese Puzzle|Morpheus|Passacaglia|Dumka|Lullaby|Two Pieces for Viola and Cello
   'Clementi, Muzio':
     piano:
       - Sonatas, op\. 13|Sonatinas
@@ -680,6 +689,9 @@ composer_specific_rules:
       - Three(-|\s)Cornered Hat
     ballet:
       - Amor brujo
+  'Farrenc, Louise':
+    piano:
+      - 30 Etudes|Air russe varié
   'Fauré, Gabriel':
     orchestral:
       - Pelléas et Mélisande|Masques et bergamasques|orch\.
@@ -952,6 +964,9 @@ composer_specific_rules:
       - Set .*|orch\.
     piano:
       - Three-Page Sonata
+  'Jacquet de La Guerre, Élisabeth-Claude':
+    chamber:
+      - Sonata no. 1 in D minor
   'Janáček, Leoš':
     piano:
       - In the Mists|On an Overgrown Path|Sonata 1\. X\. 1905|Vzpomínka
@@ -994,6 +1009,8 @@ composer_specific_rules:
   'Kats‐Chernin, Elena':
     piano:
       - Russian Rag
+    chamber:
+      - Blue Silence
     orchestral:
       - Wild Swans
   'Kellner, David':
@@ -1131,6 +1148,9 @@ composer_specific_rules:
   'MacDowell, Edward':
     piano:
       - 10 Woodland Sketches
+  'Maconchy, Elizabeth, Dame':
+    vocal:
+      - There Is No Rose
   'MacMillan, James, Sir':
     vocal:
       - A Child's Prayer
@@ -1160,6 +1180,14 @@ composer_specific_rules:
       - Dix pièces de genre|Valse folle|Valse très lente
     opera:
       - Manon|Chiudo gli occhi
+  'Mazolli, Missy':
+    chamber:
+      - A Thousand Tongues
+    solo:
+      - Dissolve, O My Heart
+  'Mägi, Ester':
+    vocal:
+      - Pietà|Vahtralt valgõ pilve pääle|Vana kannel
   'McPhee, Colin':
     chamber:
       - Balinese Ceremonial Music
@@ -1174,7 +1202,7 @@ composer_specific_rules:
       - Three Nocturnes
   'Mendelssohn, Fanny':
     piano:
-      - Das Jahr
+      - Das Jahr|Notturno in G minor|Ostersonate
   'Mendelssohn, Felix':
     piano:
       - Album-Leaf|Capriccio.*(op\. 5\b|Brillant)|Three Caprices|Fantasy|Rondo Brilliant|Scherzo a Capriccio|Kinderstücke|Sonata.*op\.\s(6|106)\b|Fantasies or Caprices, op\. 16\b|Preludes and.*Studies, op\. 104\b
@@ -1223,9 +1251,15 @@ composer_specific_rules:
       - El combat del somni
     solo:
       - Suite compostelana
+  'Monk, Meredith':
+    piano:
+      - Railroad
   'Monte, Philippe de':
     vocal:
       - O suavitas et dulcedo|Super flumina Babylonis
+  'Montgeroult, Hélène de':
+    piano:
+      - Etude
   'Monteverdi, Claudio':
     vocal:
       - A quest olmo|Christe, adoramus te|Quarto Scherzo|Selva morale e spirituale|Sì dolce è'l tormento|Vespro della Beata Vergine
@@ -1356,6 +1390,9 @@ composer_specific_rules:
   'Pearsall, Robert Lucas':
     vocal:
       - Lay a Garland
+  'Pejačević, Dora':
+    piano:
+      - Blumenleben|Capriccio
   'Penderecki, Krzysztof':
     orchestral:
       - Anaklasis|De natura sonoris|Polymorphia|The Dream of Jacob|Threnody|Three Pieces in Old Style
@@ -1416,7 +1453,11 @@ composer_specific_rules:
       - Spagnoletta
   'Price, Florence':
     piano:
-      - Fantasie nègre
+      - Fantasie nègre|Dances in the Canebrakes|Sonata in E minor
+    orchestral:
+      - Ethiopia's Shadow in America
+    organ:
+      - Retrospection
   'Prokofiev, Sergei':
     piano:
       - Visions fugitives|Sarcasms|Toccata in D minor|Pieces from Romeo and Juliet|Music for Children|Tales of an Old Grandmother|Pieces from Cinderella|Four Pieces, op\. 4|Ten Small Pieces, op\. 12|Things in Themselves|Pensées
@@ -1572,8 +1613,9 @@ composer_specific_rules:
     piano:
       - Four North American Ballads|The People United
   'Saariaho, Kaija':
-    solo: # Cello
-      - Sept Papillons
+    solo:
+      - Sept Papillons # Cello
+      - Laconisme de l'aile # Flute
   'Saint‐Saëns, Camille':
     piano:
       - Études.*(main gauche|op\. 111|op\. 52)|Douze transcriptions pour le piano
@@ -1665,7 +1707,7 @@ composer_specific_rules:
       - Arabesques on
   'Schumann, Clara':
     piano:
-      - 3 Romanzen, op\. 11|Soirées musicales
+      - 3 Romanzen, op\. 11|Soirées musicales|Preludes and Fugues|Pièces fugitives|Romance varié|Romanze in A minor|Romanze in B minor
     chamber:
       - Romanzen.*(op\. 21|op\. 22)
   'Schumann, Robert':
@@ -1838,6 +1880,9 @@ composer_specific_rules:
       - Jam lucis orto|O salutaris hostia|Sancte Deus|Te lucis ante|Verily, verily|When Shall My Sorrowful|O Ye Tender Babes
     chamber:
       - A Solfing Song
+  'Tailleferre, Germaine':
+    piano:
+      - Pastorale
   'Tavener, John':
     orchestral:
       - 3rd Earth|The Protecting Veil

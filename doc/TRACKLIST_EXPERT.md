@@ -332,6 +332,7 @@
 | `c9c7337b` | Bach – Wir Christenleut, BWV 612 | * Wir Christenleut, BWV 612 | ? |
 | `a52af29a` | Bądarzewska – A Maiden's Prayer, op. 4 | * A Maiden's Prayer, op. 4 | ? |
 | `e4118c63` | Balakirev – “Islamey, Oriental Fantasy”, op. 18 | * “Islamey, Oriental Fantasy”, op. 18 | ? |
+| `68ec399b` | Balakirev – Tamara | * Tamara | 1867‑1882 |
 | `1ebe1abf` | Barber – Adagio for Strings | * Adagio for Strings | 1936 |
 | `8700eea7` | Barber – Concerto for Violin and Orchestra, op. 14 | * I. Allegro<br>* II. Andante<br>* III. Presto in moto perpetuo | 1939 |
 | `23c63ebf` | Barber – Excursions, op. 20 | * I. Un poco allegro<br>* II. In slow blues tempo<br>* IV. Allegro molto | 1942‑1944 |
@@ -2996,7 +2997,6 @@
 | `3461cc4e` | Wieniawski – Légende, op. 17 | * Légende, op. 17 | 1859 |
 | `69476138` | Wieniawski – Scherzo-tarantelle, op. 16 | * Scherzo-tarantelle, op. 16 | 1855 |
 | `1df061fd` | Wieniawski – Violin Concerto no. 2 in D minor, op. 22 | * I. Allegro moderato<br>* II. Romance: Andante non troppo<br>* III. Allegro con fuoco - Allegro moderato (a la Zingara) | 1870 |
-| `6d0b007a` | Williams – Star Wars: The Phantom Menace - Suite for Orchestra | * The Adventures of Jar Jar | ? |
 | `3148af46` | Williams – Three Pieces from Schindler’s List | * Main Theme | 1993 |
 | `4802e5e1` | Wirén – Serenade for Strings, op. 11 | * IV. Marcia | 1937 |
 | `d48c1874` | Wolf – Italian Serenade | * Italian Serenade | 1887 |

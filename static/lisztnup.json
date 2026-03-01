@@ -1609,7 +1609,7 @@
       "death_year": 1875,
       "gender": "female",
       "country": "FR",
-      "score": 19.11
+      "score": 17.95
     },
     {
       "gid": "7e162e7b-1ca4-494f-b16b-dadb9006b0de",
@@ -3301,7 +3301,7 @@
       "death_year": null,
       "gender": "female",
       "country": "US",
-      "score": 7.95
+      "score": 0.0
     },
     {
       "gid": "326ae0f1-7208-4321-93fc-7ef3332ce1a5",
@@ -3328,7 +3328,7 @@
       "death_year": 1847,
       "gender": "female",
       "country": "DE",
-      "score": 22.33
+      "score": 21.4
     },
     {
       "gid": "0e85eb79-1c05-44ba-827c-7b259a3d941a",
@@ -5668,7 +5668,7 @@
       "death_year": null,
       "gender": "male",
       "country": "US",
-      "score": 29.6
+      "score": 27.06
     },
     {
       "gid": "284382df-ae6d-4631-999a-ce6204f29c45",
@@ -7847,7 +7847,7 @@
       "parts": [
         {
           "name": "Polish Capriccio",
-          "deezer": [2772041321],
+          "deezer": [2898918171],
           "score": 100.0
         }
       ]
@@ -57380,7 +57380,7 @@
       "gid": "412722d6-f8f4-4563-9869-90e750431475",
       "composer": "3c10ff66-b763-411c-b4de-65c2cf710938",
       "name": "Nocturne, op. 165",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -57396,7 +57396,7 @@
       "gid": "b8f57102-bf5a-428c-943f-dea0d659fa08",
       "composer": "3c10ff66-b763-411c-b4de-65c2cf710938",
       "name": "Poèmes provençales, op. 127",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -57422,7 +57422,7 @@
       "gid": "38c44da3-0dc1-4245-b3b1-fb799a1101c5",
       "composer": "3c10ff66-b763-411c-b4de-65c2cf710938",
       "name": "Romances sans paroles, op. 76",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -57438,7 +57438,7 @@
       "gid": "16976343-970e-443e-9289-cf7874926807",
       "composer": "3c10ff66-b763-411c-b4de-65c2cf710938",
       "name": "Thème varié in A major, op. 89",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -57454,7 +57454,7 @@
       "gid": "07b41545-41b4-4236-9a45-f0792bd9cc34",
       "composer": "3c10ff66-b763-411c-b4de-65c2cf710938",
       "name": "Toccata, op. 39",
-      "type": "other",
+      "type": "piano",
       "begin_year": 1887,
       "end_year": 1887,
       "score": 1.8,
@@ -57470,7 +57470,7 @@
       "gid": "493ebf1e-ef1d-4609-a4d8-4951bc6e4c98",
       "composer": "3c10ff66-b763-411c-b4de-65c2cf710938",
       "name": "Étude symphonique, op. 28",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -60234,7 +60234,7 @@
       "gid": "da8d6966-75db-4723-9a28-6290db62ff97",
       "composer": "876477d7-f8a8-46a8-9f19-56b07dfe2cf8",
       "name": "Dumka",
-      "type": "other",
+      "type": "chamber",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -60250,7 +60250,7 @@
       "gid": "d870279a-dcc3-4e8d-9979-e18a420add7d",
       "composer": "876477d7-f8a8-46a8-9f19-56b07dfe2cf8",
       "name": "Lullaby",
-      "type": "other",
+      "type": "chamber",
       "begin_year": 1918,
       "end_year": 1918,
       "score": 1.8,
@@ -60366,7 +60366,7 @@
       "gid": "f9850c9d-0c7b-42d3-8655-ae073f7d7c30",
       "composer": "876477d7-f8a8-46a8-9f19-56b07dfe2cf8",
       "name": "Two Pieces for Viola and Cello",
-      "type": "other",
+      "type": "chamber",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -73392,7 +73392,7 @@
       "gid": "56b4e48c-84f0-483a-85de-af5312eb0dae",
       "composer": "30d66d7f-dd2e-4445-893c-95c5be92f4a8",
       "name": "30 Etudes, op. 26",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -73408,7 +73408,7 @@
       "gid": "f7ca85de-7ff9-4dbe-b9b8-0070df79bdfe",
       "composer": "30d66d7f-dd2e-4445-893c-95c5be92f4a8",
       "name": "Air russe varié, op. 17",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -73416,22 +73416,6 @@
         {
           "name": "Air russe varié, op. 17",
           "deezer": [2317374585],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "bfa9b671-d172-44aa-a11d-babc50db41f7",
-      "composer": "30d66d7f-dd2e-4445-893c-95c5be92f4a8",
-      "name": "Nonet in E-flat major, op. 38",
-      "type": "chamber",
-      "begin_year": 1849,
-      "end_year": 1849,
-      "score": 1.8,
-      "parts": [
-        {
-          "name": "Nonet in E-flat major, op. 38: III. Scherzo: Vivace",
-          "deezer": [1592066621],
           "score": 100.0
         }
       ]
@@ -97463,7 +97447,7 @@
       "gid": "724d15ed-f88f-4df8-8808-9bfc09ada4bb",
       "composer": "86233265-959c-4537-a2ee-47160c734e18",
       "name": "Sonata no. 1 in D minor for Violin and Continuo",
-      "type": "other",
+      "type": "chamber",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -99340,7 +99324,7 @@
       "gid": "51c78134-d9e3-4f90-a2bc-a053bc24d492",
       "composer": "3a6240a7-46c0-4971-befd-c4ca40299533",
       "name": "Blue Silence",
-      "type": "other",
+      "type": "chamber",
       "begin_year": 2006,
       "end_year": 2006,
       "score": 1.8,
@@ -106166,7 +106150,7 @@
       "gid": "d36c1fdc-038a-4a39-ab4c-02aa694d31b8",
       "composer": "a3eb5bc9-9abd-4023-a113-18800515d379",
       "name": "There Is No Rose",
-      "type": "other",
+      "type": "vocal",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -108386,26 +108370,10 @@
       ]
     },
     {
-      "gid": "ea7f918e-beb9-4661-b6fe-3eb1d9bb22f7",
-      "composer": "7957b889-2d8c-4f36-bbb6-33830cc87833",
-      "name": "A Thousand Tongues",
-      "type": "other",
-      "begin_year": 2011,
-      "end_year": 2011,
-      "score": 1.8,
-      "parts": [
-        {
-          "name": "A Thousand Tongues",
-          "deezer": [2772699181],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "d831114a-287a-4d04-b037-72cf1c8eb487",
       "composer": "7957b889-2d8c-4f36-bbb6-33830cc87833",
       "name": "Dissolve, O My Heart",
-      "type": "other",
+      "type": "solo",
       "begin_year": 2010,
       "end_year": 2010,
       "score": 1.8,
@@ -108413,22 +108381,6 @@
         {
           "name": "Dissolve, O My Heart",
           "deezer": [2768105411],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "ff3a8aff-5842-4a42-b6fa-c9166551b2dc",
-      "composer": "7957b889-2d8c-4f36-bbb6-33830cc87833",
-      "name": "Vespers for a New Dark Age",
-      "type": "vocal",
-      "begin_year": 2014,
-      "end_year": 2014,
-      "score": 1.8,
-      "parts": [
-        {
-          "name": "Vespers for a New Dark Age: Hello Lord",
-          "deezer": [2772699111],
           "score": 100.0
         }
       ]
@@ -108931,26 +108883,10 @@
       ]
     },
     {
-      "gid": "3b8e5695-d514-49a0-861e-8b8625dcc817",
-      "composer": "cfb00fff-8895-484a-b459-f050d70abe2c",
-      "name": "Dämmrung senkte sich von oben",
-      "type": "vocal",
-      "begin_year": 1843,
-      "end_year": 1843,
-      "score": 1.8,
-      "parts": [
-        {
-          "name": "Dämmrung senkte sich von oben",
-          "deezer": [1784890527],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "c75d699e-0c09-4dd5-8d3a-dc591ee49f3a",
       "composer": "cfb00fff-8895-484a-b459-f050d70abe2c",
       "name": "Notturno in G minor",
-      "type": "other",
+      "type": "piano",
       "begin_year": 1838,
       "end_year": 1838,
       "score": 1.8,
@@ -108966,7 +108902,7 @@
       "gid": "76d9cf3e-07a2-4527-b8fb-64cd2ebcc9f1",
       "composer": "cfb00fff-8895-484a-b459-f050d70abe2c",
       "name": "Ostersonate",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": 1828,
       "score": 1.8,
@@ -114090,7 +114026,7 @@
       "gid": "3e6a61e3-53e6-4eb6-8248-9ad0f72f4382",
       "composer": "1efe59aa-d9fb-4293-b431-75b6c3fb9bcc",
       "name": "Railroad (Travel Song)",
-      "type": "other",
+      "type": "piano",
       "begin_year": 1981,
       "end_year": 1981,
       "score": 1.8,
@@ -114919,7 +114855,7 @@
       "gid": "c820f299-d948-43c8-82d5-ba93ffef8a05",
       "composer": "763753f3-2ff7-48de-a7ae-7885083d1783",
       "name": "Etude no. 104 in G-sharp minor",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -114935,7 +114871,7 @@
       "gid": "61e0accb-e16c-48dd-9edc-302506f923a0",
       "composer": "763753f3-2ff7-48de-a7ae-7885083d1783",
       "name": "Etude no. 106 in B major",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -114951,7 +114887,7 @@
       "gid": "121c377e-4439-44cf-bb98-e70632d5ae6b",
       "composer": "763753f3-2ff7-48de-a7ae-7885083d1783",
       "name": "Etude no. 107 in D minor",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -114967,7 +114903,7 @@
       "gid": "3e3edca5-f9e3-4466-9e76-5ccc6be5a5e8",
       "composer": "763753f3-2ff7-48de-a7ae-7885083d1783",
       "name": "Etude no. 26 in G major",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -114983,7 +114919,7 @@
       "gid": "2dd3eee1-f32c-413f-a780-2cc83772b006",
       "composer": "763753f3-2ff7-48de-a7ae-7885083d1783",
       "name": "Etude no. 37 in G major",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -114999,7 +114935,7 @@
       "gid": "4e7c5679-936e-4bcc-ab5c-4493681bbb96",
       "composer": "763753f3-2ff7-48de-a7ae-7885083d1783",
       "name": "Etude no. 65 in E-flat minor",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -115015,7 +114951,7 @@
       "gid": "6cc8628b-2f92-4db2-a2b5-ec89acb572bc",
       "composer": "763753f3-2ff7-48de-a7ae-7885083d1783",
       "name": "Etude no. 66 in C minor",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -127899,7 +127835,7 @@
       "gid": "54e662dd-f84f-4340-a3d0-bc5a58e1f1e8",
       "composer": "3195acf6-7432-4607-adbd-972b4c0747e2",
       "name": "Pietà",
-      "type": "other",
+      "type": "vocal",
       "begin_year": 1990,
       "end_year": 1990,
       "score": 1.8,
@@ -127931,7 +127867,7 @@
       "gid": "025a5f2f-3ed6-4ca0-a9b3-1e237df5662a",
       "composer": "3195acf6-7432-4607-adbd-972b4c0747e2",
       "name": "Vahtralt valgõ pilve pääle",
-      "type": "other",
+      "type": "vocal",
       "begin_year": 1984,
       "end_year": 1984,
       "score": 1.8,
@@ -127947,7 +127883,7 @@
       "gid": "7c1402c9-2816-45fd-a997-73f0aebde947",
       "composer": "3195acf6-7432-4607-adbd-972b4c0747e2",
       "name": "Vana kannel",
-      "type": "other",
+      "type": "vocal",
       "begin_year": 1985,
       "end_year": 1985,
       "score": 1.8,
@@ -130465,7 +130401,7 @@
       "gid": "7765da8c-b416-4a31-8771-8b04bf2b7bbf",
       "composer": "41c4bb47-6c21-4754-ba75-e8bf554f7359",
       "name": "Blumenleben, op. 19",
-      "type": "other",
+      "type": "piano",
       "begin_year": 1904,
       "end_year": 1905,
       "score": 1.8,
@@ -130481,7 +130417,7 @@
       "gid": "3ea11617-d9cf-43a3-9ac7-582c28cd08b5",
       "composer": "41c4bb47-6c21-4754-ba75-e8bf554f7359",
       "name": "Capriccio, op. 47",
-      "type": "other",
+      "type": "piano",
       "begin_year": 1919,
       "end_year": 1919,
       "score": 1.8,
@@ -133726,7 +133662,7 @@
       "gid": "6bb8d162-5a24-42a8-9ec4-ac748bb9895b",
       "composer": "b8f27069-283c-4a2d-979a-7ee9e0b49c75",
       "name": "Dances in the Canebrakes",
-      "type": "other",
+      "type": "piano",
       "begin_year": 1953,
       "end_year": 1953,
       "score": 1.8,
@@ -133742,7 +133678,7 @@
       "gid": "8d96b789-6974-43e4-a8bf-2d5d90f1ffca",
       "composer": "b8f27069-283c-4a2d-979a-7ee9e0b49c75",
       "name": "Ethiopia's Shadow in America",
-      "type": "other",
+      "type": "orchestral",
       "begin_year": 1932,
       "end_year": 1932,
       "score": 1.8,
@@ -133790,7 +133726,7 @@
       "gid": "4be888b2-11a1-4d4f-8285-568a4b158a2d",
       "composer": "b8f27069-283c-4a2d-979a-7ee9e0b49c75",
       "name": "Retrospection (An Elf on a Moonbeam)",
-      "type": "other",
+      "type": "organ",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -133806,7 +133742,7 @@
       "gid": "5fe42fc7-4c12-49f3-bdf5-6419f518d483",
       "composer": "b8f27069-283c-4a2d-979a-7ee9e0b49c75",
       "name": "Sonata in E minor",
-      "type": "other",
+      "type": "piano",
       "begin_year": 1932,
       "end_year": 1932,
       "score": 1.8,
@@ -146603,7 +146539,7 @@
       "gid": "efe7fa72-02a9-428b-b34a-e9b784df9cd1",
       "composer": "456596a9-1d4f-4b47-b4e0-ac402ca672b0",
       "name": "Laconisme de l'aile",
-      "type": "other",
+      "type": "solo",
       "begin_year": 1982,
       "end_year": 1982,
       "score": 1.8,
@@ -165736,7 +165672,7 @@
       "gid": "3c0ff350-9cd1-4173-bca6-e7148a189f29",
       "composer": "36df8e64-6ec6-4342-9045-e962ab9effb3",
       "name": "3 Preludes and Fugues, op. 16",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -165789,7 +165725,7 @@
       "gid": "07594c7f-9a62-4e4b-a0d5-ad0fd43fd388",
       "composer": "36df8e64-6ec6-4342-9045-e962ab9effb3",
       "name": "4 Pièces fugitives, op. 15",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -166010,7 +165946,7 @@
       "gid": "a004887d-3787-4c65-bd48-e81a2dbeb694",
       "composer": "36df8e64-6ec6-4342-9045-e962ab9effb3",
       "name": "Romance varié, op. 3",
-      "type": "other",
+      "type": "piano",
       "begin_year": 1831,
       "end_year": 1833,
       "score": 1.8,
@@ -166026,7 +165962,7 @@
       "gid": "58b37c68-b1df-4e27-84e9-7107259a564a",
       "composer": "36df8e64-6ec6-4342-9045-e962ab9effb3",
       "name": "Romanze in A minor",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -166042,7 +165978,7 @@
       "gid": "eb6224f5-1fb3-40fc-8a05-a35e79a34710",
       "composer": "36df8e64-6ec6-4342-9045-e962ab9effb3",
       "name": "Romanze in B minor",
-      "type": "other",
+      "type": "piano",
       "begin_year": null,
       "end_year": null,
       "score": 1.8,
@@ -184796,7 +184732,7 @@
       "gid": "ef384aa5-2398-4eef-ad57-674731fd4101",
       "composer": "2cf48701-c346-447c-947a-30a85a26f0d9",
       "name": "Pastorale in A-flat major",
-      "type": "other",
+      "type": "piano",
       "begin_year": 1928,
       "end_year": 1928,
       "score": 1.8,
@@ -184812,7 +184748,7 @@
       "gid": "718446b7-58e7-42f4-85d6-a2cd3275c6ba",
       "composer": "2cf48701-c346-447c-947a-30a85a26f0d9",
       "name": "Pastorale in C major",
-      "type": "other",
+      "type": "piano",
       "begin_year": 1929,
       "end_year": 1929,
       "score": 1.8,
@@ -192972,7 +192908,7 @@
       "parts": [
         {
           "name": "Havanaise",
-          "deezer": [2899370311, 65863401],
+          "deezer": [65863401],
           "score": 100.0
         }
       ]
@@ -205702,22 +205638,6 @@
         {
           "name": "Escapades: I. Closing In",
           "deezer": [1272444722],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "6d0b007a-f956-4905-ae07-800a4a57b381",
-      "composer": "53b106e7-0cc6-42cc-ac95-ed8d30a3a98e",
-      "name": "Star Wars: The Phantom Menace - Suite for Orchestra",
-      "type": "orchestral",
-      "begin_year": null,
-      "end_year": null,
-      "score": 3.0,
-      "parts": [
-        {
-          "name": "The Adventures of Jar Jar",
-          "deezer": [2305909795],
           "score": 100.0
         }
       ]
