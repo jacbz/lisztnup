@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Composer, Work } from '$lib/types';
 	import { formatComposerName, formatLifespan, getComposerLastName } from '$lib/utils';
-	import { _ } from 'svelte-i18n';
+	import { _, locale } from 'svelte-i18n';
 	import { fade } from 'svelte/transition';
 	import Search from 'lucide-svelte/icons/search';
 	import X from 'lucide-svelte/icons/x';
@@ -73,7 +73,25 @@
 		};
 	});
 
-	// Build country list with counts (sorted by count descending)
+	// Resolve alpha-2 country codes to localized display names
+	const countryDisplayNames = $derived.by(() => {
+		const loc = $locale || 'en';
+		try {
+			return new Intl.DisplayNames([loc], { type: 'region' });
+		} catch {
+			return new Intl.DisplayNames(['en'], { type: 'region' });
+		}
+	});
+
+	function countryName(code: string): string {
+		try {
+			return countryDisplayNames.of(code) ?? code;
+		} catch {
+			return code;
+		}
+	}
+
+	// Build country list with counts (sorted by localized name)
 	const countryOptions = $derived.by(() => {
 		const countMap = new Map<string, number>();
 		entries.forEach((e) => {
@@ -82,8 +100,8 @@
 			}
 		});
 		return [...countMap.entries()]
-			.map(([country, count]) => ({ country, count }))
-			.sort((a, b) => b.count - a.count);
+			.map(([code, count]) => ({ code, name: countryName(code), count }))
+			.sort((a, b) => a.name.localeCompare(b.name));
 	});
 
 	const hasActiveFilters = $derived(
@@ -257,7 +275,7 @@
 			>
 				<option value="">{$_('libraryViewer.allCountries')}</option>
 				{#each countryOptions as opt}
-					<option value={opt.country}>{opt.country} ({opt.count})</option>
+					<option value={opt.code}>{opt.name} ({opt.count})</option>
 				{/each}
 			</select>
 

@@ -38,6 +38,7 @@ from pathlib import Path
 import subprocess
 from typing import Dict, List, Optional, Set, Any, Tuple
 import yaml
+import pycountry
 
 # Module-level logger – writes to process_musicbrainz.log
 log = logging.getLogger("lisztnup")
@@ -85,6 +86,34 @@ TYPE_MAPPING = {
 LABEL_PREFERENCE = [
     "Deutsche Grammophon", "EMI", "Decca", "Hyperion", "Chandos", "Universal", "Philips"
 ]
+
+# --- Country Normalization ---
+# Maps MusicBrainz area names to ISO 3166-1 alpha-2 codes.
+# Historical/regional names that don't appear in COUNTRY_TO_ALPHA2 are
+# resolved here first, then everything is converted to alpha-2.
+COUNTRY_REGION_MAP: Dict[str, str] = {
+    "England": "GB",
+    "Scotland": "GB",
+    "Flanders": "BE",
+    "Napoli": "IT",
+    "Czechoslovakia": "CZ",
+    "South Korea": "KR",
+    "Russia": "RU",
+}
+
+# Per-composer country overrides by full GID (alpha-2).
+# Used for dissolved states (Soviet Union) and composers with null MusicBrainz area.
+COUNTRY_COMPOSER_MAP: Dict[str, str] = {
+    # Soviet Union
+    "96c39679-7de4-48d1-a9ea-d8840296bb73": "RU",  # Kabalevsky, Dmitri
+    "fa25cd1f-beeb-4718-b4bb-d3da4f53539f": "AM",  # Khachaturian, Aram
+    "5486f401-0f75-4e65-ae02-d54bdb25c83e": "RU",  # Mosolov, Alexander
+    "2382cbc9-dd4e-4fc8-a92e-5391f70bd3b2": "RU",  # Schnittke, Alfred
+    "554fbabf-54f4-4640-8eb6-88693b6085c7": "PL",  # Weinberg, Mieczysław
+    # Null area
+    "0e3cc8e1-7bfe-4110-830e-dca6e8e6a999": "SI",  # Gallus, Jacobus
+    "9a99004f-87b1-4598-b049-ff79d9993357": "GB",  # Richards, David
+}
 
 # Deezer IDs excluded via external configuration files (loaded in main)
 EXCLUDED_DEEZER_IDS: Set[int] = set([])
@@ -242,6 +271,44 @@ class MusicbrainzProcessor:
             for c in raw_data
         ]
 
+    @staticmethod
+    def _normalize_countries(composers: List[FinalComposer]) -> None:
+        """Normalizes all composer countries to ISO 3166-1 alpha-2 codes.
+
+        Resolution order:
+        1. Per-composer GID override (dissolved states, null areas)
+        2. Historical region mapping (England → GB, etc.)
+        3. pycountry lookup for standard country names
+        """
+        for c in composers:
+            original = c.country
+
+            if c.gid in COUNTRY_COMPOSER_MAP:
+                c.country = COUNTRY_COMPOSER_MAP[c.gid]
+            elif original in COUNTRY_REGION_MAP:
+                c.country = COUNTRY_REGION_MAP[original]
+            else:
+                c.country = MusicbrainzProcessor._lookup_alpha2(original, c.name, c.gid)
+
+            if c.country != original:
+                log.info("COUNTRY α2 | %s | %s → %s", c.name, original, c.country)
+
+    @staticmethod
+    def _lookup_alpha2(country: Optional[str], composer_name: str, composer_gid: str) -> str:
+        """Resolves a country name to its ISO 3166-1 alpha-2 code via pycountry."""
+        if not country or country == "None":
+            raise ValueError(
+                f"Composer {composer_name} ({composer_gid}) has no country. "
+                f"Add their GID to COUNTRY_COMPOSER_MAP."
+            )
+        try:
+            return pycountry.countries.lookup(country).alpha_2
+        except LookupError:
+            raise ValueError(
+                f"Unknown country '{country}' for {composer_name} ({composer_gid}). "
+                f"Add to COUNTRY_REGION_MAP or COUNTRY_COMPOSER_MAP."
+            ) from None
+
     def _parse_work_tree(
         self, work_dict: Dict[str, Any], parent_type: Optional[str] = None
     ) -> MBWork:
@@ -317,7 +384,12 @@ class MusicbrainzProcessor:
         final_composers = self._filter_final_composers(composers_active, all_final_works)
         self.stats["final_composers"] = len(final_composers)
 
-        # Stage 9: Sync lists and sort
+        # Stage 9: Normalize country names to ISO 3166-1
+        log.info("=" * 60)
+        log.info("STAGE 9: Normalize country names")
+        self._normalize_countries(final_composers)
+
+        # Stage 10: Sync lists and sort
         final_composer_gids = {c.gid for c in final_composers}
         final_work_list = []
         for w in all_final_works:
