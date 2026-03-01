@@ -32,6 +32,7 @@
 	import Eye from 'lucide-svelte/icons/eye';
 	import ListMusic from 'lucide-svelte/icons/list-music';
 	import { COMPOSER_COUNT, MAX_WORK_YEAR, MIN_WORK_YEAR } from '$lib/types/settings';
+	import { locale } from 'svelte-i18n';
 
 	interface Props {
 		visible?: boolean;
@@ -78,10 +79,20 @@
 	let shortUuidMap = $state<Map<string, string>>(new Map());
 
 	// Composer filter mode state
-	let composerFilterMode = $state<'include' | 'exclude' | 'notabilityRange'>('include');
+	let composerFilterMode = $state<
+		'include' | 'exclude' | 'notabilityRange' | 'country' | 'countryExclude' | 'gender'
+	>('include');
 	let selectedComposers = $state<string[]>([]);
 	let notabilityRange = $state<[number, number]>([1, COMPOSER_COUNT]); // Default to all composers (will be updated based on actual count)
 	let composerSearchTerm = $state('');
+
+	// Country filter state
+	let selectedCountries = $state<string[]>([]);
+	let countryFilterMode = $state<'include' | 'exclude'>('include');
+	let countrySearchTerm = $state('');
+
+	// Gender filter state
+	let selectedGender = $state<'male' | 'female' | ''>('');
 
 	// Name filter state
 	let nameFilterInput = $state('');
@@ -152,8 +163,15 @@
 
 				// Composer filter
 				composerFilterEnabled = config.composerFilter !== undefined;
+				selectedComposers = [];
+				selectedCountries = [];
+				selectedGender = '';
+				countryFilterMode = 'include';
 				if (config.composerFilter) {
-					composerFilterMode = config.composerFilter.mode;
+					composerFilterMode =
+						config.composerFilter.mode === 'countryExclude'
+							? 'country'
+							: config.composerFilter.mode;
 					if (
 						config.composerFilter.mode === 'include' ||
 						config.composerFilter.mode === 'exclude'
@@ -161,6 +179,14 @@
 						selectedComposers = [...config.composerFilter.composers];
 					} else if (config.composerFilter.mode === 'notabilityRange') {
 						notabilityRange = [...config.composerFilter.range];
+					} else if (config.composerFilter.mode === 'country') {
+						selectedCountries = [...config.composerFilter.countries];
+						countryFilterMode = 'include';
+					} else if (config.composerFilter.mode === 'countryExclude') {
+						selectedCountries = [...config.composerFilter.countries];
+						countryFilterMode = 'exclude';
+					} else if (config.composerFilter.mode === 'gender') {
+						selectedGender = config.composerFilter.gender;
 					}
 				}
 			} else {
@@ -181,6 +207,10 @@
 				composerFilterMode = 'include';
 				selectedComposers = [];
 				notabilityRange = [1, COMPOSER_COUNT];
+				selectedCountries = [];
+				countryFilterMode = 'include';
+				countrySearchTerm = '';
+				selectedGender = '';
 				nameFilters = [];
 				nameFilterInput = '';
 				includeWorkGids = [];
@@ -208,6 +238,9 @@
 			composerFilterMode,
 			selectedComposers,
 			notabilityRange,
+			selectedCountries,
+			countryFilterMode,
+			selectedGender,
 			JSON.stringify(config),
 			JSON.stringify(nameFilters),
 			JSON.stringify(includeWorkGids),
@@ -379,9 +412,18 @@
 			return { mode: 'include', composers: selectedComposers };
 		} else if (composerFilterMode === 'exclude') {
 			return { mode: 'exclude', composers: selectedComposers };
-		} else {
+		} else if (composerFilterMode === 'notabilityRange') {
 			return { mode: 'notabilityRange', range: notabilityRange };
+		} else if (composerFilterMode === 'country') {
+			if (countryFilterMode === 'exclude') {
+				return { mode: 'countryExclude', countries: selectedCountries };
+			}
+			return { mode: 'country', countries: selectedCountries };
+		} else if (composerFilterMode === 'gender') {
+			if (!selectedGender) return undefined;
+			return { mode: 'gender', gender: selectedGender };
 		}
+		return undefined;
 	}
 
 	function handleCategoryAdjustmentChange(category: keyof CategoryAdjustments, value: number) {
@@ -620,6 +662,67 @@
 
 		return composers;
 	});
+
+	// Resolve alpha-2 country codes to localized display names
+	const countryDisplayNames = $derived.by(() => {
+		const loc = $locale || 'en';
+		try {
+			return new Intl.DisplayNames([loc], { type: 'region' });
+		} catch {
+			return new Intl.DisplayNames(['en'], { type: 'region' });
+		}
+	});
+
+	function countryName(code: string): string {
+		try {
+			return countryDisplayNames.of(code) ?? code;
+		} catch {
+			return code;
+		}
+	}
+
+	// Build country list with counts (sorted by localized name)
+	const countryList = $derived.by(() => {
+		const data = get(gameData);
+		if (!data) return [];
+
+		const countMap = new Map<string, number>();
+		data.composers.forEach((c) => {
+			if (c.country) {
+				countMap.set(c.country, (countMap.get(c.country) || 0) + 1);
+			}
+		});
+
+		let countries = Array.from(countMap.entries())
+			.map(([code, count]) => ({ code, name: countryName(code), count }))
+			.sort((a, b) => a.name.localeCompare(b.name));
+
+		// Filter by search term
+		if (countrySearchTerm.trim()) {
+			const search = countrySearchTerm.toLowerCase();
+			countries = countries.filter(
+				(c) => c.name.toLowerCase().includes(search) || c.code.toLowerCase().includes(search)
+			);
+		}
+
+		return countries;
+	});
+
+	function toggleCountry(code: string) {
+		if (selectedCountries.includes(code)) {
+			selectedCountries = selectedCountries.filter((c) => c !== code);
+		} else {
+			selectedCountries = [...selectedCountries, code];
+		}
+	}
+
+	function selectAllCountries() {
+		selectedCountries = countryList.map((c) => c.code);
+	}
+
+	function selectNoneCountries() {
+		selectedCountries = [];
+	}
 </script>
 
 <Popup {visible} onClose={handleCloseAttempt} width="5xl">
@@ -764,7 +867,7 @@
 					</div>
 					{#if composerFilterEnabled}
 						<!-- Mode selector -->
-						<div class="mb-3 flex gap-2">
+						<div class="mb-3 flex flex-wrap gap-2">
 							<button
 								type="button"
 								onclick={() => (composerFilterMode = 'include')}
@@ -792,6 +895,24 @@
 							>
 								{$_('tracklistEditor.notabilityRangeMode')}
 							</button>
+							<button
+								type="button"
+								onclick={() => (composerFilterMode = 'country')}
+								class="flex-1 rounded-lg px-3 py-2 text-sm {composerFilterMode === 'country'
+									? 'bg-cyan-500 text-white'
+									: 'bg-slate-700 text-slate-300'}"
+							>
+								{$_('tracklistEditor.countryMode')}
+							</button>
+							<button
+								type="button"
+								onclick={() => (composerFilterMode = 'gender')}
+								class="flex-1 rounded-lg px-3 py-2 text-sm {composerFilterMode === 'gender'
+									? 'bg-cyan-500 text-white'
+									: 'bg-slate-700 text-slate-300'}"
+							>
+								{$_('tracklistEditor.genderMode')}
+							</button>
 						</div>
 
 						{#if composerFilterMode === 'notabilityRange'}
@@ -809,8 +930,108 @@
 									values: { start: notabilityRange[0], end: notabilityRange[1] }
 								})}
 							</p>
+						{:else if composerFilterMode === 'gender'}
+							<!-- Gender toggle -->
+							<div class="flex items-center gap-3">
+								<button
+									type="button"
+									onclick={() => (selectedGender = selectedGender === 'male' ? '' : 'male')}
+									class="flex-1 rounded-lg px-4 py-2 text-sm font-semibold transition-all {selectedGender ===
+									'male'
+										? 'bg-cyan-500 text-white'
+										: 'bg-slate-700 text-slate-300 hover:bg-slate-600'}"
+								>
+									{$_('libraryViewer.male')}
+								</button>
+								<button
+									type="button"
+									onclick={() => (selectedGender = selectedGender === 'female' ? '' : 'female')}
+									class="flex-1 rounded-lg px-4 py-2 text-sm font-semibold transition-all {selectedGender ===
+									'female'
+										? 'bg-cyan-500 text-white'
+										: 'bg-slate-700 text-slate-300 hover:bg-slate-600'}"
+								>
+									{$_('libraryViewer.female')}
+								</button>
+							</div>
+						{:else if composerFilterMode === 'country'}
+							<!-- Country selection -->
+							<div class="space-y-2">
+								<!-- Include/Exclude toggle -->
+								<div class="flex gap-2">
+									<button
+										type="button"
+										onclick={() => (countryFilterMode = 'include')}
+										class="flex-1 rounded-lg px-3 py-1.5 text-xs {countryFilterMode === 'include'
+											? 'bg-cyan-500/30 text-cyan-300 ring-1 ring-cyan-500'
+											: 'bg-slate-700 text-slate-400'}"
+									>
+										{$_('tracklistEditor.includeMode')}
+									</button>
+									<button
+										type="button"
+										onclick={() => (countryFilterMode = 'exclude')}
+										class="flex-1 rounded-lg px-3 py-1.5 text-xs {countryFilterMode === 'exclude'
+											? 'bg-cyan-500/30 text-cyan-300 ring-1 ring-cyan-500'
+											: 'bg-slate-700 text-slate-400'}"
+									>
+										{$_('tracklistEditor.excludeMode')}
+									</button>
+								</div>
+								<div class="flex gap-2">
+									<input
+										type="text"
+										bind:value={countrySearchTerm}
+										placeholder={$_('tracklistEditor.searchCountries')}
+										class="flex-1 rounded-lg border-2 border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white focus:border-cyan-400 focus:outline-none"
+									/>
+									<button
+										type="button"
+										onclick={selectAllCountries}
+										class="rounded-lg bg-slate-700 px-3 py-2 text-sm text-slate-300 hover:bg-slate-600"
+										title={$_('tracklistEditor.selectAll')}
+									>
+										<SquareCheck class="h-4 w-4" />
+									</button>
+									<button
+										type="button"
+										onclick={selectNoneCountries}
+										class="rounded-lg bg-slate-700 px-3 py-2 text-sm text-slate-300 hover:bg-slate-600"
+										title={$_('tracklistEditor.selectNone')}
+									>
+										<SquareX class="h-4 w-4" />
+									</button>
+								</div>
+								<div
+									class="max-h-48 overflow-y-auto rounded-lg border-2 border-slate-700 bg-slate-800 p-2"
+								>
+									<div class="grid grid-cols-1 gap-1 md:grid-cols-2">
+										{#each countryList as country}
+											<label
+												class="flex items-center gap-2 rounded px-2 py-1 text-sm hover:bg-slate-700"
+											>
+												<input
+													type="checkbox"
+													checked={selectedCountries.includes(country.code)}
+													onchange={() => toggleCountry(country.code)}
+													class="rounded border-slate-600 bg-slate-700 text-cyan-500 focus:ring-cyan-500"
+												/>
+												<span class="text-slate-300">
+													{country.name}
+													<span class="text-xs text-slate-400">({country.count})</span>
+												</span>
+											</label>
+										{/each}
+									</div>
+								</div>
+								<p class="text-xs text-slate-400">
+									{$_('tracklistEditor.countriesSelected', {
+										values: { count: selectedCountries.length }
+									})}
+								</p>
+							</div>
 						{:else}
-							<!-- Composer selection -->
+							<!-- Composer selection (include/exclude) -->
 							<div class="space-y-2">
 								<div class="flex gap-2">
 									<input

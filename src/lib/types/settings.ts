@@ -19,7 +19,10 @@ export interface CategoryAdjustments {
 export type ComposerFilter =
 	| { mode: 'include'; composers: string[] }
 	| { mode: 'exclude'; composers: string[] }
-	| { mode: 'notabilityRange'; range: [number, number] };
+	| { mode: 'notabilityRange'; range: [number, number] }
+	| { mode: 'country'; countries: string[] }
+	| { mode: 'countryExclude'; countries: string[] }
+	| { mode: 'gender'; gender: 'male' | 'female' };
 
 export interface TracklistConfig {
 	categoryAdjustments?: CategoryAdjustments;

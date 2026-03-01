@@ -279,6 +279,17 @@
 				{/each}
 			</select>
 
+			<!-- Year filter toggle -->
+			<button
+				type="button"
+				onclick={() => (showFilters = !showFilters)}
+				class="rounded-full px-2.5 py-1 text-xs font-medium transition-all duration-150 {showFilters
+					? 'bg-cyan-400/20 text-cyan-300 ring-1 ring-cyan-400/50'
+					: 'bg-slate-700/50 text-slate-400 hover:bg-slate-700 hover:text-slate-300'}"
+			>
+				{$_('libraryViewer.yearFilters')}
+			</button>
+
 			<!-- Gender segmented control -->
 			<div class="flex items-center overflow-hidden rounded-full bg-slate-700/50">
 				<button
@@ -303,17 +314,6 @@
 					{$_('libraryViewer.female')}
 				</button>
 			</div>
-
-			<!-- Year filter toggle -->
-			<button
-				type="button"
-				onclick={() => (showFilters = !showFilters)}
-				class="rounded-full px-2.5 py-1 text-xs font-medium transition-all duration-150 {showFilters
-					? 'bg-cyan-400/20 text-cyan-300 ring-1 ring-cyan-400/50'
-					: 'bg-slate-700/50 text-slate-400 hover:bg-slate-700 hover:text-slate-300'}"
-			>
-				{$_('libraryViewer.yearFilters')}
-			</button>
 
 			<!-- Clear filters -->
 			{#if hasActiveFilters}

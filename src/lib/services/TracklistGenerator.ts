@@ -162,6 +162,23 @@ export class TracklistGenerator {
 					sortedComposers.slice(Math.max(0, startRank - 1), endRank).map((c) => c.gid)
 				);
 				filtered = filtered.filter((w) => allowedIds.has(w.composer));
+			} else if (cf.mode === 'country') {
+				const validCountries = new Set(cf.countries);
+				const validIds = new Set(
+					this.data.composers.filter((c) => validCountries.has(c.country)).map((c) => c.gid)
+				);
+				filtered = filtered.filter((w) => validIds.has(w.composer));
+			} else if (cf.mode === 'countryExclude') {
+				const excludedCountries = new Set(cf.countries);
+				const invalidIds = new Set(
+					this.data.composers.filter((c) => excludedCountries.has(c.country)).map((c) => c.gid)
+				);
+				filtered = filtered.filter((w) => !invalidIds.has(w.composer));
+			} else if (cf.mode === 'gender') {
+				const validIds = new Set(
+					this.data.composers.filter((c) => c.gender === cf.gender).map((c) => c.gid)
+				);
+				filtered = filtered.filter((w) => validIds.has(w.composer));
 			}
 		}
 
