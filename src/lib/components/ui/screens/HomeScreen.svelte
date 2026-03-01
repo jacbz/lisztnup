@@ -122,11 +122,6 @@
 		// Don't allow starting with invalid player names
 		if (!playersValid) return;
 
-		// For Buzzer mode, require at least 2 players only if scoring is enabled
-		if (selectedMode === 'buzzer' && enableScoring && currentPlayers.length < 2) {
-			return;
-		}
-
 		// Play start sound to initialize audio context for Safari
 		playStartSound();
 
@@ -350,8 +345,7 @@
 				<button
 					type="button"
 					onclick={handleStartGame}
-					disabled={!playersValid ||
-						(selectedMode === 'buzzer' && enableScoring && currentPlayers.length < 2)}
+					disabled={!playersValid}
 					class="group relative w-full cursor-pointer overflow-hidden rounded-2xl border-2 border-cyan-400/50 bg-linear-to-r from-slate-900 via-cyan-950/30 to-slate-900 px-8 py-6 text-2xl font-bold text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-cyan-400 hover:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100 disabled:hover:border-cyan-400/50 disabled:hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
 				>
 					<!-- Animated gradient overlay -->
@@ -372,11 +366,6 @@
 						{$_('home.startGame', { default: 'Start Game' })}
 					</span>
 				</button>
-				{#if selectedMode === 'buzzer' && enableScoring && currentPlayers.length < 2}
-					<p class="mt-2 text-center text-sm text-amber-400">
-						{$_('players.minPlayers', { default: 'At least two players are required' })}
-					</p>
-				{/if}
 			</div>
 		{/if}
 

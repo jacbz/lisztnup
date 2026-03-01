@@ -426,7 +426,6 @@
 		"removePlayer": "移除",
 		"startGame": "开始游戏",
 		"cancel": "取消",
-		"minPlayers": "开启计分时，该模式至少需要两名玩家。",
 		"edge": {
 			"toggle": "切换屏幕边缘",
 			"bottom": "下",

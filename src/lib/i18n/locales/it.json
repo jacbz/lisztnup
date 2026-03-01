@@ -426,7 +426,6 @@
 		"removePlayer": "Rimuovi",
 		"startGame": "Inizia Gioco",
 		"cancel": "Annulla",
-		"minPlayers": "Servono almeno due giocatori per questa modalità se il punteggio è attivo.",
 		"edge": {
 			"toggle": "Cambia lato schermo",
 			"bottom": "Basso",

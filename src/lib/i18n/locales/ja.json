@@ -426,7 +426,6 @@
 		"removePlayer": "削除",
 		"startGame": "ゲーム開始",
 		"cancel": "キャンセル",
-		"minPlayers": "スコアありで遊ぶ場合、最低2人のプレイヤーが必要です。",
 		"edge": {
 			"toggle": "画面端を切り替え",
 			"bottom": "下",

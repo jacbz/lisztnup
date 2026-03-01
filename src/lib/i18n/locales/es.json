@@ -426,7 +426,6 @@
 		"removePlayer": "Quitar",
 		"startGame": "Empezar partida",
 		"cancel": "Cancelar",
-		"minPlayers": "Se requieren al menos dos jugadores para este modo si la puntuación está activada.",
 		"edge": {
 			"toggle": "Cambiar borde de pantalla",
 			"bottom": "Abajo",

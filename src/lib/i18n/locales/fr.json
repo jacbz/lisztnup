@@ -426,7 +426,6 @@
 		"removePlayer": "Retirer",
 		"startGame": "Lancer la partie",
 		"cancel": "Annuler",
-		"minPlayers": "Au moins deux joueurs sont requis si le score est activé.",
 		"edge": {
 			"toggle": "Changer le bord de l’écran",
 			"bottom": "Bas",

@@ -426,7 +426,6 @@
 		"removePlayer": "제거",
 		"startGame": "게임 시작",
 		"cancel": "취소",
-		"minPlayers": "점수 계산이 켜져 있을 땐 최소 2명의 플레이어가 필요합니다.",
 		"edge": {
 			"toggle": "화면 위치 변경",
 			"bottom": "하단",
