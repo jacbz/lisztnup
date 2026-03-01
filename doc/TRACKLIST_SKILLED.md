@@ -493,6 +493,7 @@
 | `675ac1b7` | Liszt – Transcendental Études, S. 139, R. 2b | * XI. “Harmonies du soir” in D‐flat major. Andantino | 1851 |
 | `f9527e1b` | Liszt – Trois études de concert, S. 144 | * III. "Un sospiro" in D-flat major | 1845‑1849 |
 | `d392438e` | Liszt – Zwei Konzertetüden, S. 145 | * Nr. 2: Gnomenreigen | 1862‑1863 |
+| `e474f649` | Lloyd Webber – Requiem | * Pie Jesu | ? |
 | `4b6583df` | Mahler – Piano Quartet in A minor | * I. Nicht zu schnell | 1876 |
 | `9a70a244` | Mahler – Rückert-Lieder | * III. Ich bin der Welt abhanden gekommen | 1901‑1902 |
 | `81c59ea4` | Mahler – Songs of a Wayfarer | * Lieder eines fahrenden Gesellen: I. "Wenn mein Schatz Hochzeit macht" | 1884‑1896 |
@@ -529,7 +530,6 @@
 | `3329a6c8` | Mendelssohn – The Hebrides, op. 26 “Fingal’s Cave” | * The Hebrides, op. 26 “Fingal’s Cave” | 1830 |
 | `ea02583a` | Mendelssohn – Trio for Piano, Violin and Violoncello no. 1 in D minor, op. 49 | * I. Molto allegro | 1839 |
 | `4342b5d4` | Mendelssohn – Trio for Piano, Violin and Violoncello no. 2 in C minor, op. 66 | * I. Allegro energico e con fuoco | 1845 |
-| `4bb2c66a` | Mendelssohn – Variations Sérieuses in D minor, op. 54 | * Variations Sérieuses in D minor, op. 54 | 1841 |
 | `c230858f` | Mendelssohn – Violin Concerto in E minor, op. 64 | * I. Allegro molto appassionato | 1838‑1844 |
 | `92eab622` | Messiaen – Quartet for the End of Time | * Quatuor pour la fin du Temps : V. Louange à l'Éternité de Jesus | 1940 |
 | `fe664803` | Meyerbeer – L’africana: Atto IV. “Mi batte il cor” … “O Paradiso” | * L’africana: Atto IV. “Mi batte il cor” … “O Paradiso” | ? |

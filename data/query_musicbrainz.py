@@ -473,11 +473,13 @@ WHERE lww.entity0 = %(work_id)s AND l.link_type = 281
 ORDER BY lww.link_order, work_name;
 """
 
-def get_work_details_recursive(cursor, work_id, work_name, label_counter):
+def get_work_details_recursive(cursor, work_id, work_gid, work_name, label_counter):
     # Returns: subworks, recordings, total_recordings, descendant_types, descendant_begin_years, descendant_end_years
+    log.debug("PROCESSING WORK | %s | %s", work_gid, work_name)
     cursor.execute(GET_RECORDINGS_FOR_WORK_SQL, {"work_id": work_id})
     recordings_data = cursor.fetchall()
     recordings = []
+    deezer_count = 0
     for rec in recordings_data:
         deezer_id = rec.get("deezer_id")
 
@@ -501,8 +503,10 @@ def get_work_details_recursive(cursor, work_id, work_name, label_counter):
                 dropped_reason = f"forbidden attribute: '{attrs}'"
 
             if dropped_reason:
-                log.debug("RECORDING DEEZER ID DROPPED (%s) | %s | work: %s", dropped_reason, deezer_id, work_name)
+                log.debug("RECORDING DEEZER ID DROPPED (%s) | rec: %s | deezer: %s | work: %s (%s)", dropped_reason, rec["recording_gid"], deezer_id, work_gid, work_name)
                 deezer_id = None
+            else:
+                deezer_count += 1
 
         recordings.append(
             {
@@ -514,9 +518,11 @@ def get_work_details_recursive(cursor, work_id, work_name, label_counter):
             }
         )
 
+    log.debug("RECORDINGS FOUND | %d total, %d with Deezer IDs | work: %s (%s)", len(recordings), deezer_count, work_gid, work_name)
+
     # if not a single recording has a deezerId, skip this work
     if recordings and all(rec["deezerId"] is None for rec in recordings):
-        log.debug("WORK/PART RECORDINGS CLEARED (all %d recs lack Deezer IDs) | %s", len(recordings), work_name)
+        log.debug("WORK/PART RECORDINGS CLEARED (all %d recs lack Deezer IDs) | %s (%s)", len(recordings), work_gid, work_name)
         recordings = []
 
     for rec in recordings:
@@ -530,6 +536,13 @@ def get_work_details_recursive(cursor, work_id, work_name, label_counter):
 
     cursor.execute(GET_SUBWORKS_FOR_WORK_SQL, {"work_id": work_id})
     subworks_data = cursor.fetchall()
+
+    if subworks_data:
+        log.debug("SUBWORKS FOUND | %d subworks for work: %s (%s) | %s",
+                  len(subworks_data), work_gid, work_name,
+                  ", ".join(f"{sw['work_gid']} ({sw['work_name']})" for sw in subworks_data))
+    else:
+        log.debug("NO SUBWORKS | work: %s (%s)", work_gid, work_name)
 
     grouped_subworks = defaultdict(list)
     for sw in subworks_data:
@@ -545,7 +558,7 @@ def get_work_details_recursive(cursor, work_id, work_name, label_counter):
             max_recs = -1
             for subwork_row in duplicates:
                 sub, recs, count, types, byears, eyears = get_work_details_recursive(
-                    cursor, subwork_row["work_id"], subwork_row["work_name"], label_counter
+                    cursor, subwork_row["work_id"], subwork_row["work_gid"], subwork_row["work_name"], label_counter
                 )
                 if count > max_recs:
                     max_recs = count
@@ -567,7 +580,7 @@ def get_work_details_recursive(cursor, work_id, work_name, label_counter):
                 child_descendant_types,
                 child_descendant_begin_years,
                 child_descendant_end_years,
-            ) = get_work_details_recursive(cursor, winner_row["work_id"], winner_row["work_name"], label_counter)
+            ) = get_work_details_recursive(cursor, winner_row["work_id"], winner_row["work_gid"], winner_row["work_name"], label_counter)
 
         # Add the winner's direct type to the list
         if winner_row["work_type"]:
@@ -595,7 +608,14 @@ def get_work_details_recursive(cursor, work_id, work_name, label_counter):
                     "subworks": child_subworks,
                 }
             )
+            log.debug("SUBWORK KEPT | %s (%s) | %d recordings in subtree | parent: %s (%s)",
+                      winner_row["work_gid"], winner_row["work_name"], child_rec_count, work_gid, work_name)
+        else:
+            log.debug("SUBWORK SKIPPED (0 recordings in subtree) | %s (%s) | parent: %s (%s)",
+                      winner_row["work_gid"], winner_row["work_name"], work_gid, work_name)
 
+    log.debug("WORK RESULT | %s (%s) | %d own recordings, %d subworks kept, %d total in tree",
+              work_gid, work_name, len(recordings), len(valid_subworks), total_recordings_in_tree)
     return valid_subworks, recordings, total_recordings_in_tree, all_descendant_types, all_descendant_begin_years, all_descendant_end_years
 
 
@@ -745,13 +765,13 @@ def main():
             descendant_begin_years = []
             descendant_end_years = []
             if len(duplicates) > 1:
-                log.debug("TOP-LEVEL WORK DUPLICATES RESOLVED | %s (%s) | selected 1 out of %d", 
-                          normalized_name, winner_row["composer_sort_name"], len(duplicates))
+                log.debug("TOP-LEVEL WORK DUPLICATES RESOLVED | %s | %s (%s) | selected 1 out of %d", 
+                          winner_row["work_gid"], normalized_name, winner_row["composer_sort_name"], len(duplicates))
                 best_work_details = None
                 max_recs = -1
                 for work_row in duplicates:
                     sub, recs, count, types, byears, eyears = get_work_details_recursive(
-                        cursor, work_row["work_id"], work_row["work_name"], stats["label_counter"]
+                        cursor, work_row["work_id"], work_row["work_gid"], work_row["work_name"], stats["label_counter"]
                     )
                     if count > max_recs:
                         max_recs = count
@@ -763,7 +783,7 @@ def main():
             else:
                 subworks, recordings, total_recordings, descendant_types, descendant_begin_years, descendant_end_years = (
                     get_work_details_recursive(
-                        cursor, winner_row["work_id"], winner_row["work_name"], stats["label_counter"]
+                        cursor, winner_row["work_id"], winner_row["work_gid"], winner_row["work_name"], stats["label_counter"]
                     )
                 )
 
@@ -828,6 +848,8 @@ def main():
                     "subworks": subworks,
                 }
                 composers[composer_id]["works"].append(work_obj)
+                log.info("WORK ACCEPTED | %s | %s | composer: %s | type: %s | %d recordings in tree",
+                         winner_row["work_gid"], final_work_name, composer_name, work_type_str, total_recordings)
 
                 # Update statistics and print progress
                 stats["total_recordings"] += total_recordings
@@ -845,27 +867,35 @@ def main():
                 )
                 print(f"{composer_name:<30}\t{truncated_name:<60}\t{total_recordings}")
             else:
-                log.info("WORK DROPPED (<= 1 total recordings) | %s (%s) | recordings: %d", 
-                         winner_row["work_name"], winner_row["composer_sort_name"], total_recordings)
+                log.info("WORK DROPPED (<= 1 total recordings) | %s | %s (%s) | recordings: %d", 
+                         winner_row["work_gid"], winner_row["work_name"], winner_row["composer_sort_name"], total_recordings)
 
         log.info("\n" + "=" * 60)
         log.info("STAGE 3: Post-filter composers (birth year & distinct work types)")
         log.info("=" * 60)
 
-        # filter composers: if composer is born after 1900, works must have at least two distinct work types not counting "Song", otherwise remove composer
+        # Post-filter composers: drop composers born after 1900 unless they have at least
+        # one non-"Song"/non-"Unknown" work type.
         composers_to_remove = set()
-        for composer in list(composers.values()):
-            if composer["birth_year"] and composer["birth_year"] > 1900:
-                distinct_types = set(w["type"] for w in composer["works"])
-                if "Song" in distinct_types:
-                    distinct_types.remove("Song")
-                if len(distinct_types) < 2:
-                    composers_to_remove.add(composer["gid"])
-                    log.info("COMPOSER DROPPED (born > 1900, < 2 distinct work types) | %s | distinct types: %s", 
-                             composer['name'], list(distinct_types))
-                    print(
-                        f"Removing composer {composer['name']} born after 1900 with insufficient work types."
-                    )
+        for composer in composers.values():
+            birth = composer.get("birth_year")
+            if not birth or birth <= 1900:
+                continue
+
+            types = {w.get("type") for w in composer.get("works", [])}
+            # Exclude falsy, 'Song' and 'Unknown' types
+            valid_types = {t for t in types if t and t not in ("Song", "Unknown")}
+
+            if not valid_types:
+                composers_to_remove.add(composer["gid"])
+                work_names = [w["name"] for w in composer.get("works", [])]
+                log.info(
+                    "COMPOSER DROPPED (born > 1900, insufficient work types) | %s | %s | all types: %s | works: %s",
+                    composer.get("name"),
+                    composer.get("gid"),
+                    sorted(types),
+                    work_names,
+                )
 
         final_data = sorted(
             [c for c in composers.values() if c["works"] and c["gid"] not in composers_to_remove], key=lambda c: c["name"]

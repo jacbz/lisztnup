@@ -33,6 +33,9 @@ excluded_composers:
   - 'Wood, Arthur'
   - 'Bliss, Philip Paul'
   - 'McLaughlin, John'
+  - 'Petrucci, John'
+  - 'Lopez, Francis'
+  - 'Burkhard, Paul'
 
 # --- Excluded Works ---
 # Individual work GIDs that should be excluded (e.g., non-classical, duplicates).
@@ -66,6 +69,7 @@ excluded_works:
   '69bd99f8-636d-4f9c-9498-7b9cf32f871e': 'Carmen (Italian)'
   '3f39aa99-224f-3c8a-8891-44589bcb8a08': 'Brandenburg Concerto No. 3 in G major, BWV 1048 (duplicate 2nd movement)'
   '6d0b007a-f956-4905-ae07-800a4a57b381': 'Star Wars: The Phantom Menace'
+  '9658d549-6c39-4a8c-8992-060e5913e819': 'Three Irish Country Songs'
 
 # --- Work Significance Score (WSS) Overrides ---
 # Manually set the WSS for specific works.

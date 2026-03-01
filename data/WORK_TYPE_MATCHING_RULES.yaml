@@ -1180,6 +1180,9 @@ composer_specific_rules:
       - Dix pièces de genre|Valse folle|Valse très lente
     opera:
       - Manon|Chiudo gli occhi
+  'Maurice, Paule':
+    orchestral:
+      - Tableaux de Provence
   'Mazolli, Missy':
     chamber:
       - A Thousand Tongues
@@ -1947,6 +1950,9 @@ composer_specific_rules:
   'Uccellini, Marco':
     chamber:
       - Sonate, arie et correnti
+  'Van Overmeire, Mark':
+    vocal:
+      - Between the shadows|La Forêt
   'Varèse, Edgard':
     orchestral:
       - Amériques|Arcana|Hyperprism|Intégrales|Ionisation|Poème électronique

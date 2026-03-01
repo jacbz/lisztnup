@@ -1105,7 +1105,7 @@
       "death_year": 1979,
       "gender": "female",
       "country": "GB",
-      "score": 25.4
+      "score": 24.65
     },
     {
       "gid": "ea07995e-fd2d-4091-85bd-f780bc3c45bf",
@@ -2998,6 +2998,15 @@
       "score": 26.19
     },
     {
+      "gid": "980ee2d8-2ee9-407b-b48e-48360fbc7437",
+      "name": "Lloyd Webber, Andrew",
+      "birth_year": 1948,
+      "death_year": null,
+      "gender": "male",
+      "country": "GB",
+      "score": 40.71
+    },
+    {
       "gid": "8ed33eef-db09-4654-a4ce-42273532b519",
       "name": "Lobo, Alonso",
       "birth_year": 1555,
@@ -3293,6 +3302,15 @@
       "gender": "male",
       "country": "FR",
       "score": 38.95
+    },
+    {
+      "gid": "9bea26ef-fa60-4233-b477-5a609baa903b",
+      "name": "Maurice, Paule",
+      "birth_year": 1910,
+      "death_year": 1967,
+      "gender": "female",
+      "country": "FR",
+      "score": 2.38
     },
     {
       "gid": "7957b889-2d8c-4f36-bbb6-33830cc87833",
@@ -5266,6 +5284,15 @@
       "score": 7.95
     },
     {
+      "gid": "dc855399-5ee4-477a-8631-dc346993a01e",
+      "name": "Van Overmeire, Mark",
+      "birth_year": 1968,
+      "death_year": null,
+      "gender": "male",
+      "country": "US",
+      "score": 8.06
+    },
+    {
       "gid": "9a6d6ce0-3496-4db2-8c7a-f2a9a14548a9",
       "name": "Varèse, Edgard",
       "birth_year": 1883,
@@ -5300,6 +5327,15 @@
       "gender": "male",
       "country": "GB",
       "score": 60.31
+    },
+    {
+      "gid": "74ed331c-7c1b-4337-ae4b-ad05030b870e",
+      "name": "Vavilov, Vladimir",
+      "birth_year": 1925,
+      "death_year": 1973,
+      "gender": "male",
+      "country": "RU",
+      "score": 32.16
     },
     {
       "gid": "db0087f3-7a6b-43cc-bde3-5da9e9ca6847",
@@ -60321,22 +60357,6 @@
       ]
     },
     {
-      "gid": "9658d549-6c39-4a8c-8992-060e5913e819",
-      "composer": "876477d7-f8a8-46a8-9f19-56b07dfe2cf8",
-      "name": "Three Irish Country Songs",
-      "type": "vocal",
-      "begin_year": 1926,
-      "end_year": 1926,
-      "score": 1.8,
-      "parts": [
-        {
-          "name": "Three Irish Country Songs: No. 1. I Know my Love",
-          "deezer": [733332],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "ac75232a-3a39-421a-899f-3ffa9db004f6",
       "composer": "876477d7-f8a8-46a8-9f19-56b07dfe2cf8",
       "name": "Trio for Violin, Cello and Piano",
@@ -105231,6 +105251,22 @@
       ]
     },
     {
+      "gid": "e474f649-c561-480b-aba5-fd1ee931cdf6",
+      "composer": "980ee2d8-2ee9-407b-b48e-48360fbc7437",
+      "name": "Requiem",
+      "type": "vocal",
+      "begin_year": null,
+      "end_year": null,
+      "score": 4.37,
+      "parts": [
+        {
+          "name": "Requiem: Pie Jesu",
+          "deezer": [1762412897, 3392138, 10331047, 13464296, 1915879277],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "350d189d-2ca3-31a0-be85-c4545fa34538",
       "composer": "8ed33eef-db09-4654-a4ce-42273532b519",
       "name": "Versa est in luctum",
@@ -108365,6 +108401,42 @@
         {
           "name": "Werther : Acte III. « Toute mon âme est là ! » – « Pourquoi me réveiller ? » (Werther)",
           "deezer": [3472006, 3288590, 3044740, 1203424022, 5120504],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "6bc69803-5112-49e0-b4df-ad455fe5daa8",
+      "composer": "9bea26ef-fa60-4233-b477-5a609baa903b",
+      "name": "Tableaux de Provence",
+      "type": "orchestral",
+      "begin_year": null,
+      "end_year": null,
+      "score": 1.95,
+      "parts": [
+        {
+          "name": "Tableaux de Provence: I. Farandole des jeunes filles",
+          "deezer": [1665280632],
+          "score": 100.0
+        },
+        {
+          "name": "Tableaux de Provence: II. Chanson pour ma mie",
+          "deezer": [1665280642],
+          "score": 100.0
+        },
+        {
+          "name": "Tableaux de Provence: III. La Bohémienne",
+          "deezer": [1665280652],
+          "score": 100.0
+        },
+        {
+          "name": "Tableaux de Provence: IV. Des Alyscamps l'âme soupire",
+          "deezer": [1665280662],
+          "score": 100.0
+        },
+        {
+          "name": "Tableaux de Provence: V. Le Cabridan",
+          "deezer": [1665280672],
           "score": 100.0
         }
       ]
@@ -190737,6 +190809,38 @@
       ]
     },
     {
+      "gid": "a493d5f6-5afc-40d7-ad51-a1fccfb8e5e4",
+      "composer": "dc855399-5ee4-477a-8631-dc346993a01e",
+      "name": "Between the shadows 1. When all is said and done",
+      "type": "vocal",
+      "begin_year": null,
+      "end_year": null,
+      "score": 1.95,
+      "parts": [
+        {
+          "name": "Between the shadows",
+          "deezer": [3360799911, 3360799871, 3360799901],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "0ddd053b-bec4-4b2a-b8cc-a03246ca2fd5",
+      "composer": "dc855399-5ee4-477a-8631-dc346993a01e",
+      "name": "La Forêt 1. Sous les arbres",
+      "type": "vocal",
+      "begin_year": null,
+      "end_year": null,
+      "score": 2.08,
+      "parts": [
+        {
+          "name": "La Forêt",
+          "deezer": [1620731602, 1620731612, 1620731592],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "65499c34-6ff8-41e1-9bd7-cd94c396db57",
       "composer": "9a6d6ce0-3496-4db2-8c7a-f2a9a14548a9",
       "name": "Amériques",
@@ -191990,6 +192094,22 @@
         {
           "name": "Valiant-for-truth",
           "deezer": [526099942],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "da6b56ca-6049-456e-ba01-64c0a0d71166",
+      "composer": "74ed331c-7c1b-4337-ae4b-ad05030b870e",
+      "name": "Ave Maria",
+      "type": "vocal",
+      "begin_year": null,
+      "end_year": null,
+      "score": 3.83,
+      "parts": [
+        {
+          "name": "Ave Maria",
+          "deezer": [2630632, 1006650, 13491887, 84158893],
           "score": 100.0
         }
       ]

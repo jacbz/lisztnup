@@ -33,7 +33,6 @@
 | `671aeca6` | Bach – 6 kleine Präludien: Präludium E-Dur, BWV 937 | * 6 kleine Präludien: Präludium E-Dur, BWV 937 | ? |
 | `481decb3` | Bach – 6 kleine Präludien: Präludium e-Moll, BWV 938 | * 6 kleine Präludien: Präludium e-Moll, BWV 938 | ? |
 | `3c1d42c1` | Bach – 6 Partitas, BWV 825-830 | * Partita no. 1 in B-flat major, BWV 825: I. Prelude<br>* Partita no. 1 in B-flat major, BWV 825: V. Menuet I<br>* Partita no. 1 in B-flat major, BWV 825: VII. Gigue | 1726‑1731 |
-| `078eed8c` | Bach – 6 Symphonies, Wq. 182 | * Symphony in B minor, Wq 182 no. 5, H 661: I. Allegretto<br>* Symphony in B minor, Wq 182 no. 5, H 661: II. Larghetto<br>* Symphony in B minor, Wq 182 no. 5, H 661: III. Presto | 1773 |
 | `9309e7da` | Bach – 9 kleine Präludien: Präludium C-Dur, BWV 924 | * 9 kleine Präludien: Präludium C-Dur, BWV 924 | ? |
 | `9deecf21` | Bach – 9 kleine Präludien: Präludium D-Dur, BWV 925 | * 9 kleine Präludien: Präludium D-Dur, BWV 925 | ? |
 | `65902eb6` | Bach – 9 kleine Präludien: Präludium d-Moll, BWV 926 | * 9 kleine Präludien: Präludium d-Moll, BWV 926 | ? |
@@ -332,7 +331,6 @@
 | `c9c7337b` | Bach – Wir Christenleut, BWV 612 | * Wir Christenleut, BWV 612 | ? |
 | `a52af29a` | Bądarzewska – A Maiden's Prayer, op. 4 | * A Maiden's Prayer, op. 4 | ? |
 | `e4118c63` | Balakirev – “Islamey, Oriental Fantasy”, op. 18 | * “Islamey, Oriental Fantasy”, op. 18 | ? |
-| `68ec399b` | Balakirev – Tamara | * Tamara | 1867‑1882 |
 | `1ebe1abf` | Barber – Adagio for Strings | * Adagio for Strings | 1936 |
 | `8700eea7` | Barber – Concerto for Violin and Orchestra, op. 14 | * I. Allegro<br>* II. Andante<br>* III. Presto in moto perpetuo | 1939 |
 | `23c63ebf` | Barber – Excursions, op. 20 | * I. Un poco allegro<br>* II. In slow blues tempo<br>* IV. Allegro molto | 1942‑1944 |
@@ -1448,6 +1446,7 @@
 | `d974a534` | Liszt – Zweite Ungarische Rhapsodie (orch. Müller-Berghaus) | * Zweite Ungarische Rhapsodie (orch. Müller-Berghaus) | ? |
 | `ca139438` | Litolff – Concerto Symphonique no. 4 in D minor, op. 102 | * II. Scherzo | ? |
 | `5e3a069c` | Llobet Solés – El mestre | * El mestre | ? |
+| `e474f649` | Lloyd Webber – Requiem | * Pie Jesu | ? |
 | `350d189d` | Lobo – Versa est in luctum | * Versa est in luctum | ? |
 | `6a5cbb29` | Lotti – Crucifixus a 8 | * Crucifixus a 8 | ? |
 | `f949e1c5` | Lutosławski – Concerto for Orchestra | * I. Intrada. Allegro maestoso<br>* II. Capriccio notturno e Arioso. Vivace<br>* III. Passacaglia, Toccata e Corale. Andante con moto - Allegro giusto | 1950‑1954 |
@@ -2836,6 +2835,7 @@
 | `b963fff2` | Vaughan Williams – Symphony no. 9 in E minor | * I. Moderato maestoso<br>* II. Andante sostenuto<br>* III. Scherzo. Allegro pesante | 1956‑1957 |
 | `561b8302` | Vaughan Williams – The Lark Ascending | * The Lark Ascending | 1914 |
 | `d0c305e7` | Vaughan Williams – Three Shakespeare Songs | * Full fathom five<br>* The cloud-capp’d towers<br>* Over hill, over dale | 1951 |
+| `da6b56ca` | Vavilov – Ave Maria | * Ave Maria | ? |
 | `6675ed9c` | Verdi – Aida | * Atto I, scena 1. Recitativo “Se quel guerriero io fossi!” … Romanza “Celeste Aida” (Radamès)<br>* Atto II, scena 2. Marcia trionfale (orchestra)<br>* Atto II, scena 2. Gran Finale II “Gloria all’Egitto, ad Iside” (Popolo, Sacerdoti) | 1871 |
 | `d83f0a23` | Verdi – Don Carlo | * Atto III, scena 1. N°10 “Ella giammai m’amò” … “Dormiro sol” (Filippo)<br>* Atto III, scena 1. N°13 “O don fatale, o don crudel” (Eboli)<br>* Atto IV. N°15 “Tu che le vanità” – “O Francia, nobile suol” (Elisabetta) | 1866 |
 | `4b0c1526` | Verdi – Ernani | * Atto I. (no. 4a) Scena “Surta è la notte” (Elvira)<br>* Atto I. (no. 4b) Cavatina “Ernani!… Ernani, involami” (Elvira) | ? |

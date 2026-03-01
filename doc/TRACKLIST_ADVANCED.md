@@ -426,7 +426,6 @@
 | `680c7826` | Chopin – Ballades | * Ballade no. 1 in G minor, op. 23<br>* Ballade no. 4 in F minor, op. 52 | 1831‑1835 |
 | `0d5d12d1` | Chopin – Barcarolle in F‐sharp major, op. 60 | * Barcarolle in F‐sharp major, op. 60 | 1845‑1846 |
 | `d8c5d27a` | Chopin – Berceuse in D‐flat major, op. 57 | * Berceuse in D‐flat major, op. 57 | ? |
-| `0c471b8a` | Chopin – Cantabile in B‐flat major, BI 84 | * Cantabile in B‐flat major, BI 84 | 1834 |
 | `5f7ded0a` | Chopin – Concerto for Piano and Orchestra no. 1 in E minor, op. 11 | * I. Allegro maestoso<br>* II. Romance. Larghetto | 1830 |
 | `dda6229e` | Chopin – Concerto for Piano and Orchestra no. 2 in F minor, op. 21 | * II. Larghetto<br>* III. Allegro vivace | 1829‑1830 |
 | `09fb2287` | Chopin – Études, op. 10 | * Étude in E major, op. 10 no. 3: Lento ma non troppo<br>* Étude in C minor, op. 10 no. 12 “Revolutionary”: Allegro con fuoco | 1829‑1832 |
@@ -566,7 +565,6 @@
 | `facd5a87` | Duruflé – Quatre motets sur des thèmes grégoriens, op. 10 | * No. 1. Ubi caritas et amor<br>* No. 2: Tota pulchra es | ? |
 | `6fd403fe` | Dvořák – Carnival Overture, op. 92, B. 169 | * Carnival Overture, op. 92, B. 169 | 1891 |
 | `7c7657b6` | Dvořák – Cello Concerto in B minor, op. 104 | * I. Allegro<br>* II. Adagio ma non troppo | 1894‑1895 |
-| `76a5f1d1` | Dvořák – Czech Suite in D major, op. 39, B. 93 | * Tschechische Suite D-Dur, op. 39: I. Preludium (Pastorale). Allegro moderato<br>* Tschechische Suite D-Dur, op. 39: II. Polka. Allegretto grazioso | 1879 |
 | `242e1428` | Dvořák – In Nature's Realm Overture, op. 91, B. 168 "V přírodě" | * In Nature's Realm Overture, op. 91, B. 168 "V přírodě" | 1891 |
 | `d0b17a20` | Dvořák – Klid (Silent Woods) for Cello and Orchestra, op. 68 no. 5 | * Klid (Silent Woods) for Cello and Orchestra, op. 68 no. 5 | 1893 |
 | `11cb043f` | Dvořák – Nocturne in B major, op. 40, B. 47 | * Nocturne in B major, op. 40, B. 47 | 1882‑1883 |
@@ -846,6 +844,7 @@
 | `058b6015` | Liszt – Trübe Wolken (Nuages gris), S. 199, R. 78 | * Trübe Wolken (Nuages gris), S. 199, R. 78 | 1881 |
 | `d45aab77` | Liszt – Valses oubliées, S. 215 | * Valse oubliée no. 1, S. 215 no. 1 | 1881‑1885 |
 | `d392438e` | Liszt – Zwei Konzertetüden, S. 145 | * Nr. 1: Waldesrauschen<br>* Nr. 2: Gnomenreigen | 1862‑1863 |
+| `e474f649` | Lloyd Webber – Requiem | * Pie Jesu | ? |
 | `6a5cbb29` | Lotti – Crucifixus a 8 | * Crucifixus a 8 | ? |
 | `76b6aa85` | MacDowell – 10 Woodland Sketches, op. 51 | * No. 1. To a Wild Rose | 1896 |
 | `157b073f` | Mahler – Lieder aus “Des Knaben Wunderhorn” | * Des Knaben Wunderhorn: Rheinlegendchen<br>* Des Knaben Wunderhorn: Wo die schönen Trompeten blasen | 1892‑1898 |
@@ -1663,6 +1662,7 @@
 | `c3f759b0` | Vaughan Williams – Symphony no. 4 in F minor | * I. Allegro<br>* III. Scherzo: Allegro molto | 1931‑1934 |
 | `0dbe1390` | Vaughan Williams – Symphony no. 5 in D major | * I. Preludio (Moderato)<br>* III. Romanza (Lento) | 1938‑1943 |
 | `561b8302` | Vaughan Williams – The Lark Ascending | * The Lark Ascending | 1914 |
+| `da6b56ca` | Vavilov – Ave Maria | * Ave Maria | ? |
 | `6675ed9c` | Verdi – Aida | * Atto I, scena 1. Recitativo “Se quel guerriero io fossi!” … Romanza “Celeste Aida” (Radamès)<br>* Atto II, scena 2. Marcia trionfale (orchestra) | 1871 |
 | `d83f0a23` | Verdi – Don Carlo | * Atto III, scena 1. N°13 “O don fatale, o don crudel” (Eboli)<br>* Atto IV. N°15 “Tu che le vanità” – “O Francia, nobile suol” (Elisabetta) | 1866 |
 | `4b0c1526` | Verdi – Ernani | * Atto I. (no. 4a) Scena “Surta è la notte” (Elvira)<br>* Atto I. (no. 4b) Cavatina “Ernani!… Ernani, involami” (Elvira) | ? |
