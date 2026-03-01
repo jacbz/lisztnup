@@ -191,15 +191,15 @@
 		},
 		"usa": {
 			"name": "Nuovo Mondo",
-			"description": "Ragtime in frac, praterie sinfoniche e il ritmo di un paese che reinventa tutto."
+			"description": "Ragtime in frac, praterie sinfoniche e il ritmo americano di un paese che reinventa tutto."
 		},
 		"spain": {
 			"name": "¡Olé!",
-			"description": "Nacchere, chitarre e notti d'estate. La musica che ha il sole dentro."
+			"description": "Nacchere, chitarre e notti d'estate. La musica spagnola che ha il sole dentro."
 		},
 		"scandinavia": {
 			"name": "Aurora Boreale",
-			"description": "Troll, fiordi e melodie gelide che scaldano il cuore. Il Nord ha una magia tutta sua."
+			"description": "Troll, fiordi e melodie scandinave che scaldano il cuore. Il Nord ha una magia tutta sua."
 		}
 	},
 	"tracklistSelector": {

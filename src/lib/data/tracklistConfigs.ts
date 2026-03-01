@@ -46,7 +46,7 @@ export const SKILLED_CONFIG: TracklistConfig = {
 };
 
 export const ADVANCED_CONFIG: TracklistConfig = {
-	topWorksCount: 1750,
+	topWorksCount: 2000,
 	categoryAdjustments: {
 		vocal: -0.2,
 		chamber: 0.1,
@@ -63,12 +63,12 @@ export const ADVANCED_CONFIG: TracklistConfig = {
 };
 
 export const EXPERT_CONFIG: TracklistConfig = {
-	topWorksCount: 3000,
+	topWorksCount: 4000,
 	categoryAdjustments: {
-		vocal: -0.3,
+		vocal: -0.5,
 		chamber: 0,
 		orchestral: 0,
-		piano: -0.1,
+		piano: -0.3,
 		concerto: 0,
 		opera: 0.1,
 		ballet: 0,
@@ -321,12 +321,34 @@ export const TWENTIETH_CENTURY_CONFIG: TracklistConfig = {
 
 export const GERMANY_CONFIG: TracklistConfig = {
 	composerFilter: { mode: 'country', countries: ['DE', 'AT'] },
-	limitWorksFromComposer: 0.07
+	limitWorksFromComposer: 0.07,
+	categoryAdjustments: {
+		vocal: -2.0,
+		chamber: 0,
+		orchestral: 0,
+		piano: 0,
+		concerto: 0,
+		opera: 0,
+		ballet: 0,
+		organ: 0,
+		solo: 0
+	}
 };
 
 export const ITALY_CONFIG: TracklistConfig = {
 	composerFilter: { mode: 'country', countries: ['IT'] },
-	limitWorksFromComposer: 0.05
+	limitWorksFromComposer: 0.05,
+	categoryAdjustments: {
+		vocal: -0.5,
+		chamber: 0,
+		orchestral: 0,
+		piano: 0,
+		concerto: 0,
+		opera: 0,
+		ballet: 0,
+		organ: 0,
+		solo: 0
+	}
 };
 
 export const FRANCE_CONFIG: TracklistConfig = {
@@ -341,7 +363,18 @@ export const RUSSIA_CONFIG: TracklistConfig = {
 
 export const UK_CONFIG: TracklistConfig = {
 	composerFilter: { mode: 'country', countries: ['GB'] },
-	limitWorksFromComposer: 0.1
+	limitWorksFromComposer: 0.1,
+	categoryAdjustments: {
+		vocal: -1.8,
+		chamber: 0,
+		orchestral: 0,
+		piano: 0,
+		concerto: 0,
+		opera: 0,
+		ballet: 0,
+		organ: 0,
+		solo: 0
+	}
 };
 
 export const USA_CONFIG: TracklistConfig = {

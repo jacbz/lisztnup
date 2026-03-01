@@ -51,7 +51,7 @@ log = logging.getLogger("lisztnup")
 MIN_WORKS_PER_COMPOSER = 1      # Composers with fewer final works than this will be dropped.
 MIN_BIRTH_YEAR = 1400           # Composers born before this year will be dropped.
 MIN_RECORDINGS_PER_PART = 3     # Leaf works (parts) with fewer recordings will be dropped at the start.
-MINIMUM_WSS = 1.8               # The absolute minimum Work Significance Score for a work to be considered.
+MINIMUM_WSS = 1.6               # The absolute minimum Work Significance Score for a work to be considered.
 
 # --- Popularity Scoring Parameters ---
 POPULARITY_ALPHA = 0.5          # Balances peak vs. average part popularity in the WSS formula.
@@ -105,10 +105,13 @@ COUNTRY_REGION_MAP: Dict[str, str] = {
 # Used for dissolved states (Soviet Union) and composers with null MusicBrainz area.
 COUNTRY_COMPOSER_MAP: Dict[str, str] = {
     # Soviet Union
+    "c74a60bb-7f8b-4d73-90d0-c993861b8779": "AM",  # Babajanian, Arno
+    "9654ff1f-1d6d-4673-973e-a4b42c1e8469": "RU",  # Blumenfeld, Felix
     "96c39679-7de4-48d1-a9ea-d8840296bb73": "RU",  # Kabalevsky, Dmitri
     "fa25cd1f-beeb-4718-b4bb-d3da4f53539f": "AM",  # Khachaturian, Aram
     "5486f401-0f75-4e65-ae02-d54bdb25c83e": "RU",  # Mosolov, Alexander
     "2382cbc9-dd4e-4fc8-a92e-5391f70bd3b2": "RU",  # Schnittke, Alfred
+    "58db9420-92fe-4921-b89f-53d1fe65cefd": "RS",  # Tajčević, Marko
     "554fbabf-54f4-4640-8eb6-88693b6085c7": "PL",  # Weinberg, Mieczysław
     # Null area
     "0e3cc8e1-7bfe-4110-830e-dca6e8e6a999": "SI",  # Gallus, Jacobus

@@ -202,9 +202,10 @@
 		return a.name === b.name && a.isDefault === b.isDefault;
 	}
 
-	// Scroll to selected tracklist when popup opens
+	// Scroll to selected tracklist (when the selector first opens)
+	let prevVisible = $state(false);
 	$effect(() => {
-		if (visible && !showEditor && !showViewer) {
+		if (visible && !prevVisible) {
 			setTimeout(() => {
 				const selectedCard = document.querySelector('[data-selected="true"]');
 				selectedCard?.scrollIntoView({
@@ -212,10 +213,11 @@
 				});
 			}, 0);
 		}
+		prevVisible = visible;
 	});
 </script>
 
-<Popup visible={visible && !showEditor && !showViewer} {onClose} width="3xl">
+<Popup {visible} {onClose} width="3xl">
 	<div class="mb-5 flex flex-col justify-between gap-4 md:flex-row">
 		<h2 class="text-3xl font-bold text-cyan-400">
 			{$_('tracklistSelector.title')}

@@ -175,15 +175,15 @@
 		},
 		"italy": {
 			"name": "Bella Musica",
-			"description": "Where opera was born and melody reigns supreme."
+			"description": "Italian passion — where opera was born and melody reigns supreme."
 		},
 		"france": {
 			"name": "Carte Blanche",
-			"description": "Elegance, color, and a certain je ne sais quoi."
+			"description": "French elegance, color, and a certain je ne sais quoi."
 		},
 		"russia": {
-			"name": "From Russia with Love",
-			"description": "Soul, snow, and sweeping orchestral drama."
+			"name": "The Russian Soul",
+			"description": "Sweeping orchestral drama from the vast Russian heartland."
 		},
 		"uk": {
 			"name": "Rule, Britannia!",
@@ -191,7 +191,7 @@
 		},
 		"usa": {
 			"name": "New World Symphony",
-			"description": "From jazz-inflected scores to Appalachian sunrises."
+			"description": "American classical — from jazz-inflected scores to Appalachian sunrises."
 		},
 		"spain": {
 			"name": "¡Olé!",
@@ -199,7 +199,7 @@
 		},
 		"scandinavia": {
 			"name": "Northern Lights",
-			"description": "Fjords, forests, and melodies that shimmer like the aurora."
+			"description": "Scandinavian fjords, forests, and melodies that shimmer like the aurora."
 		}
 	},
 	"tracklistSelector": {
@@ -333,6 +333,7 @@
 		"categoryCategories": "Categories",
 		"categoryComposers": "Composers",
 		"categoryEras": "Eras",
+		"categoryCountries": "Countries",
 		"categoryCustom": "Custom",
 		"options": {
 			"title": "Options"

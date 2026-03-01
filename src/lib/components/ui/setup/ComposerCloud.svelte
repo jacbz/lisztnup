@@ -272,6 +272,7 @@
 				class="rounded-full border-none px-2.5 py-1 text-xs font-medium transition-all duration-150 focus:ring-1 focus:ring-cyan-400/50 focus:outline-none {selectedCountry
 					? 'bg-cyan-400/20 text-cyan-300 ring-1 ring-cyan-400/50'
 					: 'bg-slate-700/50 text-slate-400'}"
+				class:w-30={selectedCountry === ''}
 			>
 				<option value="">{$_('libraryViewer.allCountries')}</option>
 				{#each countryOptions as opt}

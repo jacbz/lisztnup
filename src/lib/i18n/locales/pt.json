@@ -175,7 +175,7 @@
 		},
 		"italy": {
 			"name": "Bella Musica",
-			"description": "Bel canto, paixão e melodias que a gente cantarola no chuveiro."
+			"description": "Bel canto italiano, paixão e melodias que a gente cantarola no chuveiro."
 		},
 		"france": {
 			"name": "Savoir-faire",
@@ -191,7 +191,7 @@
 		},
 		"usa": {
 			"name": "Novo Mundo",
-			"description": "Ragtime de fraque, pradarias sinfônicas e o ritmo de um país que reinventa tudo."
+			"description": "Ragtime de fraque, pradarias sinfônicas e o ritmo americano de um país que reinventa tudo."
 		},
 		"spain": {
 			"name": "¡Olé!",
@@ -199,7 +199,7 @@
 		},
 		"scandinavia": {
 			"name": "Aurora Boreal",
-			"description": "Trolls, fiordes e melodias geladas que aquecem a alma. O Norte tem sua magia."
+			"description": "Trolls, fiordes e melodias nórdicas que aquecem a alma. A Escandinávia tem sua magia."
 		}
 	},
 	"tracklistSelector": {

@@ -100,7 +100,7 @@
 					<button
 						type="button"
 						onclick={handleBack}
-						class="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-700 hover:text-cyan-400"
+						class="rounded-lg p-1.5 text-cyan-400 transition-colors hover:bg-slate-700"
 					>
 						<ChevronLeft class="h-5 w-5" />
 					</button>

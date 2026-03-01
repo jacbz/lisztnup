@@ -175,15 +175,15 @@
 		},
 		"italy": {
 			"name": "Bella Musica",
-			"description": "Temperament, Belcanto und Melodien, die ins Herz treffen wie ein guter Espresso."
+			"description": "Italienisches Temperament, Belcanto und Melodien, die ins Herz treffen wie ein guter Espresso."
 		},
 		"france": {
 			"name": "Savoir-faire",
-			"description": "Impressionismus, Eleganz und ein Hauch Revolutionsgeist. Très chic."
+			"description": "Französischer Impressionismus, Eleganz und ein Hauch Revolutionsgeist. Très chic."
 		},
 		"russia": {
 			"name": "Aus der Steppe",
-			"description": "Endlose Weite, tiefer Schnee und Melodien, die sich in der Seele festsetzen."
+			"description": "Russische Weite, tiefer Schnee und Melodien, die sich in der Seele festsetzen."
 		},
 		"uk": {
 			"name": "God Save the Queen",
@@ -191,11 +191,11 @@
 		},
 		"usa": {
 			"name": "Neue Welt",
-			"description": "Jazz im Frack, Präriestimmung und der Sound eines Landes, das alles neu erfindet."
+			"description": "Amerikanischer Jazz im Frack, Präriestimmung und der Sound eines Landes, das alles neu erfindet."
 		},
 		"spain": {
 			"name": "¡Olé!",
-			"description": "Kastagnetten, Gitarrenfieber und der Duft von Orangenblüten in jedem Takt."
+			"description": "Spanische Kastagnetten, Gitarrenfieber und der Duft von Orangenblüten in jedem Takt."
 		},
 		"scandinavia": {
 			"name": "Nordlichter",

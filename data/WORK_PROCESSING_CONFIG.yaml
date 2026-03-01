@@ -36,6 +36,12 @@ excluded_composers:
   - 'Petrucci, John'
   - 'Lopez, Francis'
   - 'Burkhard, Paul'
+  - 'Westlake, Nigel'
+  - 'Burgon, Geoffrey'
+  - 'Johnson, Matt'
+  - 'Jenkins, Karl'
+  - 'Fillmore, Henry'
+  - 'Vollenweider, Andreas'
 
 # --- Excluded Works ---
 # Individual work GIDs that should be excluded (e.g., non-classical, duplicates).
@@ -70,6 +76,8 @@ excluded_works:
   '3f39aa99-224f-3c8a-8891-44589bcb8a08': 'Brandenburg Concerto No. 3 in G major, BWV 1048 (duplicate 2nd movement)'
   '6d0b007a-f956-4905-ae07-800a4a57b381': 'Star Wars: The Phantom Menace'
   '9658d549-6c39-4a8c-8992-060e5913e819': 'Three Irish Country Songs'
+  '29ccdc8a-b4d0-47ca-be6c-a3c82112eae0': 'Theme'
+  'a6e478f6-e2b8-3485-a732-a0c263fbc43c': 'Come Out'
 
 # --- Work Significance Score (WSS) Overrides ---
 # Manually set the WSS for specific works.

@@ -175,7 +175,7 @@
 		},
 		"italy": {
 			"name": "Bella Musica",
-			"description": "Bel canto, pasión a flor de piel y melodías que saben a gelato."
+			"description": "Bel canto, pasión italiana a flor de piel y melodías que saben a gelato."
 		},
 		"france": {
 			"name": "Ooh là là",
@@ -187,7 +187,7 @@
 		},
 		"uk": {
 			"name": "God Save the Queen",
-			"description": "El clasicismo más flemático. De Purcell a Britten, con té de las cinco incluido."
+			"description": "El clasicismo más británico y flemático. De Purcell a Britten, con té de las cinco incluido."
 		},
 		"usa": {
 			"name": "Sueño Americano",
@@ -199,7 +199,7 @@
 		},
 		"scandinavia": {
 			"name": "Aurora Boreal",
-			"description": "Trolls, fiordos y melodías heladas que calientan el alma. El Norte tiene magia."
+			"description": "Trolls, fiordos y melodías escandinavas que calientan el alma. El Norte tiene magia."
 		}
 	},
 	"tracklistSelector": {
