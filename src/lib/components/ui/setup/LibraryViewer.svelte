@@ -141,14 +141,16 @@
 
 		<!-- Content -->
 		<div class="flex-1 overflow-hidden">
-			{#if viewMode === 'cloud' && !tracklist}
+			{#if !tracklist}
 				<!-- Composer word cloud -->
-				<div class="h-full overflow-y-auto">
+				<div class="h-full overflow-y-auto" class:hidden={viewMode !== 'cloud'}>
 					<div class="mx-auto max-w-5xl">
 						<ComposerCloud {composers} {works} onSelectComposer={handleSelectComposer} />
 					</div>
 				</div>
-			{:else}
+			{/if}
+
+			{#if viewMode !== 'cloud' || tracklist}
 				<!-- Table view (all works or single composer) -->
 				<TrackTable
 					{visible}
