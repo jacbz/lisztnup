@@ -27,7 +27,7 @@ Main output
 Data model highlights
 ---------------------
 
-- Composer entries contain: gid, name, birth/death years, works[].
+- Composer entries contain: gid, name, gender, country, birth/death years, works[].
 - Work entries contain: gid, name, type, begin/end year, recordings[], subworks[].
 - Recording entries contain: gid, name, isrc, label, deezerId.
 
@@ -198,13 +198,16 @@ classical_composers AS (
       ) AS sort_name,
       a.begin_date_year,
       a.end_date_year,
-      a.comment
+      a.comment,
+      CASE WHEN a.gender = 1 THEN 'male' WHEN a.gender = 2 THEN 'female' ELSE 'other' END AS gender_str,
+      ar.name AS area_name
     FROM musicbrainz.artist AS a
     JOIN (
         SELECT id FROM tagged_candidates
         UNION
         SELECT id FROM comment_candidates
     ) AS c ON a.id = c.id
+    LEFT JOIN musicbrainz.area AS ar ON a.area = ar.id
     WHERE
       a.begin_date_year IS NOT NULL
       AND a.sort_name ~ '^[A-Za-z]'
@@ -215,13 +218,13 @@ classical_composers AS (
 work_exceptions AS (
     SELECT * FROM (VALUES
         -- These works are technically arrangements, but keep them anyway
+        (13112400, 'Albeniz - Asturias (guitar version)'),
         (8558675, 'Barber - Adagio for Strings'),
         (9641726, 'Fauré - Pavane'),
         (12611605, 'Glinka - The Lark'),
         (12426464, 'Mozart - Don Giovanni'),
         (9268731, 'V Williams - The Lark Ascending'),
         (6370216, 'V. Williams - Fantasia on Greensleeves'),
-        (13112400, 'Albeniz - Asturias (guitar version)'),
 
         -- These are erroneously classified as arrangements and may be removed with the next MusicBrainz update
         (14487371, 'Tchaikovsky - Piano Concerto No.1'),
@@ -305,6 +308,8 @@ SELECT
   c.sort_name AS composer_sort_name,
   c.begin_date_year AS composer_birth_year, 
   c.end_date_year AS composer_death_year,
+  c.gender_str AS composer_gender,
+  c.area_name AS composer_country,
   w.id AS work_id, 
   w.gid AS work_gid, 
   COALESCE(
@@ -358,7 +363,7 @@ WHERE
     )
   )
 GROUP BY 
-  c.id, c.gid, c.sort_name, c.begin_date_year, c.end_date_year,
+  c.id, c.gid, c.sort_name, c.begin_date_year, c.end_date_year, c.gender_str, c.area_name,
   w.id, w.gid, w.name, w.type, l.begin_date_year, l.end_date_year
 ORDER BY c.sort_name, work_name;
 """
@@ -800,6 +805,8 @@ def main():
                         "name": composer_name,
                         "birth_year": winner_row["composer_birth_year"],
                         "death_year": winner_row["composer_death_year"],
+                        "gender": winner_row["composer_gender"],
+                        "country": winner_row["composer_country"],
                         "works": [],
                     }
 

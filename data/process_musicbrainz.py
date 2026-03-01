@@ -122,8 +122,10 @@ class MBComposer:
     """Represents a single composer and their top-level works from the Musicbrainz data."""
     gid: str
     name: str
-    birth_year: Optional[int]
+    birth_year: int
     death_year: Optional[int]
+    gender: str
+    country: str
     works: List[MBWork]
 
 
@@ -167,8 +169,10 @@ class FinalComposer:
     """Represents a composer present in the final dataset."""
     gid: str
     name: str
-    birth_year: Optional[int]
+    birth_year: int
     death_year: Optional[int]
+    gender: str
+    country: str
     score: float
 
     def to_dict(self) -> Dict[str, Any]:
@@ -231,6 +235,8 @@ class MusicbrainzProcessor:
                 name=c["name"] if "," in c["name"] else f"{c['name'].split()[-1]}, {' '.join(c['name'].split()[:-1])}",
                 birth_year=c["birth_year"],
                 death_year=c["death_year"],
+                gender=c["gender"],
+                country=c["country"],
                 works=[self._parse_work_tree(w) for w in c["works"]],
             )
             for c in raw_data
@@ -635,7 +641,9 @@ class MusicbrainzProcessor:
                         name=composer.name,
                         birth_year=composer.birth_year,
                         death_year=composer.death_year,
-                        score=0.0,  # Will calculate below
+                        gender=composer.gender,
+                        country=composer.country,
+                        score=0.0,  # Will be calculated later
                     )
                 )
             elif count > 0:
