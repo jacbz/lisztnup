@@ -586,9 +586,15 @@ class MusicbrainzProcessor:
             for work in works:
                 # 1. Check Global Work Score
                 if work.score < MINIMUM_WSS:
-                    self.stats["works_dropped_by_min_wss"] += 1
-                    log.info("WORK DROPPED (WSS < %.2f) | %s (%s) | %.2f", MINIMUM_WSS, work.name, work.gid, work.score)
-                    continue
+                    # If work is by a female composer, keep it anyway
+                    composer_gender = next((c.gender for c in self.composers if c.gid == work.composer), "unknown")
+                    if composer_gender == "female":
+                        log.info("WORK RETAINED (WSS < %.2f but composer is female) | %s (%s) | %.2f", MINIMUM_WSS, work.name, work.gid, work.score)
+                        work.score = MINIMUM_WSS  # Boost to threshold to keep it in the dataset
+                    else:
+                        self.stats["works_dropped_by_min_wss"] += 1
+                        log.info("WORK DROPPED (WSS < %.2f) | %s (%s) | %.2f", MINIMUM_WSS, work.name, work.gid, work.score)
+                        continue
 
                 # 2. Check Dynamic Part Score Threshold
                 dynamic_threshold = self._get_dynamic_part_score_threshold(work.score)
