@@ -98,6 +98,10 @@ class DeezerPlayer {
 	// HTML Audio Element properties (used when normalization is disabled)
 	private audioElement: HTMLAudioElement | null = null;
 
+	// HTML Audio event listener references (for cleanup)
+	private boundHandleEnded: (() => void) | null = null;
+	private boundHandleTimeUpdate: (() => void) | null = null;
+
 	// Common properties
 	private currentTrackData: DeezerTrackData | null = null;
 	private onPlaybackEndCallback: (() => void) | null = null;
@@ -108,6 +112,13 @@ class DeezerPlayer {
 	private trackLength: number = 30; // 30s previews from Deezer
 	private ignoreTrackLength: boolean = false; // If true, always use full 30s duration
 	private loadPromise: Promise<void> | null = null;
+
+	/**
+	 * Generation counter for load cancellation.
+	 * Incremented on every load() call so that a stale _load() can detect
+	 * it has been superseded and abort without corrupting singleton state.
+	 */
+	private loadGeneration = 0;
 
 	private enableAudioNormalization: boolean = false;
 
@@ -174,14 +185,20 @@ class DeezerPlayer {
 	 */
 	async load(deezerId: number): Promise<void> {
 		this.destroy();
+		const generation = ++this.loadGeneration;
 		playerState.update((s) => ({ ...s, isLoading: true }));
 		try {
-			const loadPromise = this._load(deezerId);
+			const loadPromise = this._load(deezerId, generation);
 			this.loadPromise = loadPromise;
 			await loadPromise;
-			this.loadPromise = null;
+			// Only clear if we are still the active generation
+			if (this.loadGeneration === generation) {
+				this.loadPromise = null;
+			}
 		} finally {
-			playerState.update((s) => ({ ...s, isLoading: false }));
+			if (this.loadGeneration === generation) {
+				playerState.update((s) => ({ ...s, isLoading: false }));
+			}
 		}
 	}
 
@@ -239,7 +256,7 @@ class DeezerPlayer {
 		});
 	}
 
-	private async _load(deezerId: number): Promise<void> {
+	private async _load(deezerId: number, generation: number): Promise<void> {
 		try {
 			// If offline, wait until back online before attempting load
 			if (typeof navigator !== 'undefined' && !navigator.onLine) {
@@ -247,30 +264,40 @@ class DeezerPlayer {
 				await waitForOnline();
 			}
 
+			// Abort if a newer load() has been called
+			if (this.loadGeneration !== generation) return;
+
 			this.currentTrackData = await this.fetchTrackData(deezerId);
 			if (!this.currentTrackData || !this.currentTrackData.preview) {
 				throw new Error('Track data or preview URL not available.');
 			}
 
-			playerState.update((s) => ({ ...s, track: this.currentTrackData }));
+			if (this.loadGeneration !== generation) return;
+
+			// Capture locally so async continuations log the correct ID even if
+			// this.currentTrackData is overwritten during an await.
+			const trackData = this.currentTrackData;
+
+			playerState.update((s) => ({ ...s, track: trackData }));
 
 			// Fetch and analyze audio for LUFS (when normalization is enabled or volume control is supported)
 			if (this.enableAudioNormalization || this.supportsVolumeControl()) {
-				const response = await this.fetchWithTimeout(
-					this.currentTrackData.preview,
-					FETCH_TIMEOUT_MS
-				);
+				const response = await this.fetchWithTimeout(trackData.preview, FETCH_TIMEOUT_MS);
+				if (this.loadGeneration !== generation) return;
+
 				const arrayBuffer = await response.arrayBuffer();
+				if (this.loadGeneration !== generation) return;
 
 				// Decode audio data for analysis (and for Web Audio API playback if enabled)
 				const audioContext = this.getAudioContext();
 				const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+				if (this.loadGeneration !== generation) return;
 
 				// Calculate LUFS for normalization
 				const lufs = await this.calculateLUFS(audioBuffer);
-				console.log(
-					`[DeezerPlayer] Calculated LUFS for track ${this.currentTrackData.id}: ${lufs.toFixed(2)}`
-				);
+				if (this.loadGeneration !== generation) return;
+
+				console.log(`[DeezerPlayer] Calculated LUFS for track ${trackData.id}: ${lufs.toFixed(2)}`);
 
 				let gain = 10 ** ((TARGET_LUFS - lufs) / 20);
 				if (gain > MAX_GAIN) {
@@ -291,11 +318,12 @@ class DeezerPlayer {
 					console.log(`[DeezerPlayer] Web Audio API mode: applying gain via GainNode`);
 				} else {
 					// HTML Audio Element mode - translate gain to volume
-					this.audioElement = new Audio(this.currentTrackData.preview);
+					this.audioElement = new Audio(trackData.preview);
 					this.audioElement.crossOrigin = 'anonymous';
 
 					// Preload the audio with timeout
 					await this.preloadAudioElement(this.audioElement, AUDIO_PRELOAD_TIMEOUT_MS);
+					if (this.loadGeneration !== generation) return;
 
 					// Translate gain to volume: gain of 2 = volume 1.0, gain of 1 = volume 0.5
 					// Volume = min(1, gain / 2)
@@ -307,13 +335,16 @@ class DeezerPlayer {
 				}
 			} else {
 				// iOS without normalization: use HTML Audio without volume adjustment
-				this.audioElement = new Audio(this.currentTrackData.preview);
+				this.audioElement = new Audio(trackData.preview);
 				this.audioElement.crossOrigin = 'anonymous';
 
 				// Preload the audio with timeout
 				await this.preloadAudioElement(this.audioElement, AUDIO_PRELOAD_TIMEOUT_MS);
+				if (this.loadGeneration !== generation) return;
 			}
 		} catch (error) {
+			// If superseded by a newer load, swallow the error silently
+			if (this.loadGeneration !== generation) return;
 			console.error('DeezerPlayer: Error loading track', error);
 			this.destroy();
 			throw error;
@@ -398,24 +429,30 @@ class DeezerPlayer {
 			playerState.update((s) => ({ ...s, isPlaying: true, analyserNode: null }));
 			this.startProgressTracking();
 
+			// Remove any stale listeners from a previous play() on the same element
+			this.removeAudioEventListeners();
+
 			// Set up event listeners for playback end
+			const audioEl = this.audioElement; // capture ref for closures
+
 			const handleEnded = () => {
+				this.removeAudioEventListeners();
 				this.stop();
 				this.onPlaybackEndCallback?.();
 			};
 
 			const handleTimeUpdate = () => {
-				if (this.audioElement && this.audioElement.currentTime >= effectiveTrackLength) {
-					this.audioElement.pause();
-					this.audioElement.removeEventListener('ended', handleEnded);
-					this.audioElement.removeEventListener('timeupdate', handleTimeUpdate);
+				if (audioEl.currentTime >= effectiveTrackLength) {
+					this.removeAudioEventListeners();
 					this.stop();
 					this.onPlaybackEndCallback?.();
 				}
 			};
 
-			this.audioElement.addEventListener('ended', handleEnded, { once: true });
-			this.audioElement.addEventListener('timeupdate', handleTimeUpdate);
+			this.boundHandleEnded = handleEnded;
+			this.boundHandleTimeUpdate = handleTimeUpdate;
+			audioEl.addEventListener('ended', handleEnded, { once: true });
+			audioEl.addEventListener('timeupdate', handleTimeUpdate);
 		}
 	}
 
@@ -438,8 +475,10 @@ class DeezerPlayer {
 			// HTML Audio Element mode
 			if (!this.audioElement) return;
 
-			this.audioElement.pause();
+			// Remove event listeners BEFORE pausing to prevent ghost callbacks
+			this.removeAudioEventListeners();
 
+			this.audioElement.pause();
 			this.audioElement.currentTime = 0;
 		}
 
@@ -455,6 +494,7 @@ class DeezerPlayer {
 		this.audioBuffer = null;
 		this.audioElement = null;
 		this.currentTrackData = null;
+		this.loadPromise = null;
 		playerState.set({
 			isPlaying: false,
 			isLoading: false,
@@ -462,6 +502,23 @@ class DeezerPlayer {
 			track: null,
 			analyserNode: null
 		});
+	}
+
+	/**
+	 * Removes HTML Audio event listeners added in play().
+	 * Safe to call even if no listeners are registered.
+	 */
+	private removeAudioEventListeners(): void {
+		if (this.audioElement) {
+			if (this.boundHandleEnded) {
+				this.audioElement.removeEventListener('ended', this.boundHandleEnded);
+			}
+			if (this.boundHandleTimeUpdate) {
+				this.audioElement.removeEventListener('timeupdate', this.boundHandleTimeUpdate);
+			}
+		}
+		this.boundHandleEnded = null;
+		this.boundHandleTimeUpdate = null;
 	}
 
 	private startProgressTracking(): void {
@@ -581,6 +638,7 @@ class DeezerPlayer {
 				return;
 			}
 
+			this.removeAudioEventListeners();
 			this.audioElement.pause();
 			this.audioElement.currentTime = 0;
 		}

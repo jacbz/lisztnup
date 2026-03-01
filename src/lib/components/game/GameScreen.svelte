@@ -9,7 +9,6 @@
 		nextRound as nextRoundFn,
 		resetGame,
 		toast,
-		isOffline,
 		waitForOnline
 	} from '$lib/stores';
 	import { deezerPlayer, progress, NetworkError } from '$lib/services';
@@ -97,6 +96,10 @@
 	// from corrupting the tracklist or fighting over the DeezerPlayer singleton.
 	let preloadInProgress = false;
 
+	// Guard: prevents double-advancement caused by double-tapping Continue
+	// during the popup out-transition.
+	let isAdvancingRound = false;
+
 	// Start game session on mount
 	onMount(() => {
 		gameSession.startSession(mode, players, isSoloMode);
@@ -146,6 +149,27 @@
 		hasPreloadError = false;
 
 		try {
+			// If a track already exists for the current round index (e.g. due to
+			// a retry or a duplicated call), just re-load it instead of sampling
+			// a brand-new track. This prevents phantom tracks piling up in the
+			// tracklist while the DeezerPlayer singleton advances past the UI.
+			const existingTrack = $tracklist[$currentRound.currentTrackIndex];
+			if (existingTrack) {
+				const availableDeezerIds = [...existingTrack.part.deezer];
+				while (availableDeezerIds.length > 0) {
+					const randomIndex = Math.floor(Math.random() * availableDeezerIds.length);
+					const deezerId = availableDeezerIds[randomIndex];
+					try {
+						await deezerPlayer.load(deezerId);
+						return;
+					} catch {
+						availableDeezerIds.splice(randomIndex, 1);
+					}
+				}
+				// All deezer IDs failed for existing track — fall through to sample new
+				tracklist.update((t) => t.filter((item) => item !== existingTrack));
+			}
+
 			while (true) {
 				const track = sampleNextTrack();
 				if (!track) {
@@ -282,31 +306,38 @@
 	}
 
 	async function nextRound(): Promise<void> {
-		deezerPlayer.stop();
+		if (isAdvancingRound) return;
+		isAdvancingRound = true;
 
-		currentRound.update((state) => ({
-			...state,
-			isPlaying: false,
-			playbackEnded: false,
-			isRevealed: false
-		}));
+		try {
+			deezerPlayer.stop();
 
-		// Check if this is the last track and show end game screen (skip for bingo/timeline)
-		if (
-			mode !== 'bingo' &&
-			mode !== 'timeline' &&
-			$currentRound.currentTrackIndex >= numberOfTracks - 1
-		) {
-			showEndGameScreen = true;
-			return;
-		}
+			currentRound.update((state) => ({
+				...state,
+				isPlaying: false,
+				playbackEnded: false,
+				isRevealed: false
+			}));
 
-		nextRoundFn();
+			// Check if this is the last track and show end game screen (skip for bingo/timeline)
+			if (
+				mode !== 'bingo' &&
+				mode !== 'timeline' &&
+				$currentRound.currentTrackIndex >= numberOfTracks - 1
+			) {
+				showEndGameScreen = true;
+				return;
+			}
 
-		// Preload next track if needed
-		// For timeline, we always want to preload the "next" card when this function is called
-		if ($currentRound.currentTrackIndex >= $tracklist.length) {
-			await sampleAndPreloadTrack();
+			nextRoundFn();
+
+			// Preload next track if needed
+			// For timeline, we always want to preload the "next" card when this function is called
+			if ($currentRound.currentTrackIndex >= $tracklist.length) {
+				await sampleAndPreloadTrack();
+			}
+		} finally {
+			isAdvancingRound = false;
 		}
 	}
 
@@ -346,6 +377,7 @@
 		tracksExhausted = false;
 		hasPreloadError = false;
 		preloadInProgress = false;
+		isAdvancingRound = false;
 		resetGame();
 		gameSession.startSession(mode, players, isSoloMode);
 		sampleAndPreloadTrack();
@@ -366,6 +398,7 @@
 		tracksExhausted = false;
 		hasPreloadError = false;
 		preloadInProgress = false;
+		isAdvancingRound = false;
 		sampleAndPreloadTrack();
 	}
 
