@@ -41,92 +41,6 @@ export function formatYearRange(
 }
 
 /**
- * Formats a part name by attempting to remove the work title.
- * It first tries to strip the `workName` as a direct prefix.
- * If that fails, it looks for a colon followed by a common movement identifier,
- * but only proceeds if the text before the colon is semantically similar to the work name.
- *
- * @param partName - The full part name, which may include the work title.
- * @param workName - The work name to potentially strip.
- * @returns The formatted part name with the work title removed if applicable.
- */
-export function formatPartName(partName: string, workName: string): string {
-	// 1. First, try the original logic: strip the exact workName as a prefix.
-	const prefixPattern = new RegExp(
-		`^${workName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[:\\-,]\\s*`,
-		'i'
-	);
-	const strippedByPrefix = partName.replace(prefixPattern, '').trim();
-
-	if (strippedByPrefix && strippedByPrefix !== partName) {
-		return strippedByPrefix;
-	}
-
-	// 2. Fallback: Look for a colon followed by a movement pattern.
-	// We capture the text BEFORE the colon (Group 1) to check for similarity,
-	// and the text AFTER the colon (Group 2) which is the candidate result.
-	const splitPattern = /^(.+?):\s*((?:[IVXLCDM]+\.?|(?:(?:No|Nº|Nr|Op)\.?\s*)?\d+\.?)\s*.*)/i;
-	const match = partName.match(splitPattern);
-
-	if (match) {
-		const potentialPrefix = match[1];
-		const movementPart = match[2];
-
-		// Only strip the prefix if it is "similar enough" to the workName.
-		// This prevents stripping "Brandenburg Concerto..." when the Work Name is "Six Concerts..."
-		if (areTitlesSimilar(workName, potentialPrefix)) {
-			return movementPart.trim();
-		}
-	}
-
-	// 3. No valid pattern or insufficient similarity found.
-	return partName;
-}
-
-/**
- * Helper to determine if two title strings are semantically similar.
- * Uses a token-based Jaccard Index approach.
- */
-function areTitlesSimilar(titleA: string, titleB: string): boolean {
-	const tokensA = tokenize(titleA);
-	const tokensB = tokenize(titleB);
-
-	// Calculate intersection (common words)
-	const intersection = new Set([...tokensA].filter((x) => tokensB.has(x)));
-
-	// Calculate union size
-	const unionSize = new Set([...tokensA, ...tokensB]).size;
-
-	if (unionSize === 0) return false;
-
-	// Jaccard Index: Intersection / Union
-	const score = intersection.size / unionSize;
-
-	// Threshold: 0.5 allows for significant variations (e.g., missing subtitles,
-	// "No. 5" vs "5"), but blocks totally different titles.
-	// e.g. "Symphony 5" vs "Symphony No. 5" -> ~0.66 (Pass)
-	// e.g. "Brandenburg..." vs "Six Concerts..." -> 0.0 (Fail)
-	return score > 0.5;
-}
-
-/**
- * Helper to split a string into a set of normalized words.
- * Splits on punctuation/spaces to handle "No.5", "op.35", etc.
- */
-function tokenize(str: string): Set<string> {
-	return new Set(
-		str
-			.toLowerCase()
-			// Normalize unicode characters if available (optional but good for "Französische")
-			.normalize('NFD')
-			.replace(/[\u0300-\u036f]/g, '')
-			// Split by non-alphanumeric characters (spaces, dots, commas, dashes)
-			.split(/[^a-z0-9]+/)
-			.filter(Boolean)
-	);
-}
-
-/**
  * Formats a composer's lifespan
  */
 export function formatLifespan(birthYear: number | null, deathYear: number | null): string {
@@ -294,9 +208,7 @@ export function formatWorksAsMarkdown(works: Work[], composers: Composer[]): str
 		const composerLastName = composer ? getComposerLastName(composer.name) : 'Unknown Composer';
 		const gidPrefix = work.gid.split('-')[0];
 		const composerWork = `${composerLastName} – ${work.name}`;
-		const partsList = work.parts
-			.map((part) => `* ${formatPartName(part.name, work.name)}`)
-			.join('<br>');
+		const partsList = work.parts.map((part) => `* ${part.name}`).join('<br>');
 		let year = formatYearRange(work.begin_year, work.end_year);
 		if (year.length === 0) {
 			year = '?';

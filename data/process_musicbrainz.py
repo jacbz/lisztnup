@@ -23,7 +23,7 @@ This script executes a multi-stage data processing pipeline:
     the remaining parts are re-scaled so the new best part becomes 100.0.
 10. Filters works by the global WSS threshold.
 11. Applies dynamic part filtering (higher WSS works allow lower-scoring parts).
-12. Transforms Musicbrainz work types into a simplified taxonomy.
+12. Formats part names by stripping redundant work-name prefixes.
 13. Finalizes the composer list and calculates composer scores.
 14. Saves data to 'lisztnup.json' and generates markdown reports.
 """
@@ -31,7 +31,9 @@ This script executes a multi-stage data processing pipeline:
 import json
 import logging
 import math
+import os
 import re
+import unicodedata
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -123,6 +125,51 @@ COUNTRY_COMPOSER_MAP: Dict[str, str] = {
 # Deezer IDs excluded via external configuration files (loaded in main)
 EXCLUDED_DEEZER_IDS: Set[int] = set([])
 BANNED_DEEZER_IDS: Set[int] = set([])
+
+
+# ==============================================================================
+# --- Title Similarity Helpers (for part-name formatting) ---
+# ==============================================================================
+
+def _normalize_punctuation(text: str) -> str:
+    """Replace smart quotes and apostrophes with their ASCII equivalents.
+
+    Each replacement is a single-char-to-single-char mapping, so the
+    string length is preserved.  This allows index arithmetic on the
+    original string to remain valid after matching against the
+    normalized version.
+    """
+    return (
+        text
+        .replace("\u2018", "'")   # \u2018 LEFT SINGLE QUOTATION MARK
+        .replace("\u2019", "'")   # \u2019 RIGHT SINGLE QUOTATION MARK
+        .replace("\u201A", "'")   # \u201a SINGLE LOW-9 QUOTATION MARK
+        .replace("\u201C", '"')   # \u201c LEFT DOUBLE QUOTATION MARK
+        .replace("\u201D", '"')   # \u201d RIGHT DOUBLE QUOTATION MARK
+        .replace("\u201E", '"')   # \u201e DOUBLE LOW-9 QUOTATION MARK
+    )
+
+
+def _tokenize_title(text: str) -> Set[str]:
+    """Splits a string into a set of normalized word tokens for similarity comparison."""
+    normalized = unicodedata.normalize("NFD", text.lower())
+    stripped = re.sub(r"[\u0300-\u036f]", "", normalized)  # remove combining marks
+    return set(token for token in re.split(r"[^a-z0-9]+", stripped) if token)
+
+
+def _are_titles_similar(title_a: str, title_b: str) -> bool:
+    """
+    Checks whether two title strings are semantically similar
+    using a token-based Jaccard Index (threshold > 0.5).
+    """
+    tokens_a = _tokenize_title(title_a)
+    tokens_b = _tokenize_title(title_b)
+    union = tokens_a | tokens_b
+    if not union:
+        return False
+    score = len(tokens_a & tokens_b) / len(union)
+    return score > 0.5
+
 
 # ==============================================================================
 # --- Data Class Definitions ---
@@ -382,19 +429,26 @@ class MusicbrainzProcessor:
         works_by_type = self._group_works_by_type(work_candidates)
         works_after_wss = self._filter_works_by_wss(works_by_type)
 
-        # Stage 8: Finalize Composer List
+        # Stage 8: Format part names (strip work-name prefixes)
+        # Runs after all filtering so the common-prefix / all-or-nothing logic
+        # operates on the final set of parts per work.
         log.info("=" * 60)
-        log.info("STAGE 8: Finalize composer list")
+        log.info("STAGE 8: Format part names")
         all_final_works = [w for works in works_after_wss.values() for w in works]
+        self._format_part_names(all_final_works)
+
+        # Stage 9: Finalize Composer List
+        log.info("=" * 60)
+        log.info("STAGE 9: Finalize composer list")
         final_composers = self._filter_final_composers(composers_active, all_final_works)
         self.stats["final_composers"] = len(final_composers)
 
-        # Stage 9: Normalize country names to ISO 3166-1
+        # Stage 10: Normalize country names to ISO 3166-1
         log.info("=" * 60)
-        log.info("STAGE 9: Normalize country names")
+        log.info("STAGE 10: Normalize country names")
         self._normalize_countries(final_composers)
 
-        # Stage 10: Sync lists and sort
+        # Stage 11: Sync lists and sort
         final_composer_gids = {c.gid for c in final_composers}
         final_work_list = []
         for w in all_final_works:
@@ -523,6 +577,97 @@ class MusicbrainzProcessor:
                     parts=potential_parts
                 ))
         return candidates
+
+    def _format_part_names(self, works: List[FinalWork]) -> None:
+        """
+        Strips redundant work-name prefixes from part names in-place.
+
+        Strategy per part:
+        1. Try to strip the exact work name as a prefix (with colon/dash/comma separator).
+        2. Fallback: Look for a colon followed by a movement identifier pattern,
+           but ONLY if there is no text between the common prefix of all parts
+           in the work and the matched colon (safety check), AND the text before
+           the colon is semantically similar to the work name (Jaccard Index).
+        """
+        renamed_count = 0
+        for work in works:
+            if not work.parts:
+                continue
+            
+            # Collect candidate renames: either ALL parts rename, or NONE do.
+            candidates: List[Tuple[FinalPart, str]] = []
+            for part in work.parts:
+                new_name = self._format_single_part_name(
+                    part.name, work.name
+                )
+                candidates.append((part, new_name))
+
+            all_renamed = all(new != p.name for p, new in candidates)
+            if not all_renamed:
+                # Log which parts blocked the rename
+                for part, new_name in candidates:
+                    if new_name == part.name:
+                        log.debug(
+                            "PART RENAME BLOCKED (all-or-nothing) | %s (%s) | part '%s' unchanged",
+                            work.name, work.gid, part.name,
+                        )
+                continue
+
+            # Apply all renames
+            for part, new_name in candidates:
+                log.debug(
+                    "PART RENAMED | %s (%s) | '%s' -> '%s'",
+                    work.name, work.gid, part.name, new_name,
+                )
+                part.name = new_name
+                renamed_count += 1
+
+        log.info("Part names formatted: %d parts renamed across all works", renamed_count)
+        self.stats["parts_renamed"] = renamed_count
+
+    @staticmethod
+    def _format_single_part_name(
+        part_name: str, work_name: str
+    ) -> str:
+        """
+        Formats a single part name by removing the work title prefix.
+
+        1. Strip exact work name as prefix (with separator).
+        2. Fallback: colon + movement pattern, guarded by a common-prefix safety
+           check and Jaccard title similarity.
+        """
+        # 1. Try stripping the exact work name as a prefix.
+        #    Normalize smart quotes / apostrophes so that typographic
+        #    inconsistencies between work and part names don't prevent
+        #    matching.  Length is preserved so we can index the original.
+        norm_part = _normalize_punctuation(part_name)
+        norm_work = _normalize_punctuation(work_name)
+        prefix_pattern = re.compile(
+            r"^" + re.escape(norm_work) + r"[:\-,]\s*", re.IGNORECASE
+        )
+        m = prefix_pattern.match(norm_part)
+        if m:
+            stripped = part_name[m.end():].strip()
+            if stripped:
+                return stripped
+
+        # 2. Fallback: colon followed by a movement identifier
+        movement_pattern = re.compile(
+            r"^(.+?):\s*"
+            r"((?:[IVXLCDM]+\b\.?|(?:(?:No|Nº|Nr|Op)\.?\s*)?\d+\.?)\s*.*)",
+            re.IGNORECASE,
+        )
+        match = movement_pattern.match(part_name)
+        if match:
+            potential_prefix = match.group(1)
+            movement_part = match.group(2)
+
+            # Verify the prefix is similar to the work name
+            if _are_titles_similar(work_name, potential_prefix):
+                return movement_part.strip()
+
+        # 3. No valid pattern found
+        return part_name
 
     def _apply_manual_exclusions(self, works: List[FinalWork]) -> List[FinalWork]:
         """

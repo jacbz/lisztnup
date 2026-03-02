@@ -51,7 +51,7 @@
 | `ef5ff09e` | Bach – Mass in B minor, BWV 232 | * IIa. Gloria: Chorus "Gloria in excelsis Deo" | ? |
 | `1ef8a483` | Bach – Orchestral suite no. 1 in C major, BWV 1066 | * Suite for Orchestra No. 1 in C major, BWV 1066: Ouverture | ? |
 | `179cc1f2` | Bach – Orchestral Suite no. 2 in B minor, BWV 1067 | * VII. Badinerie | 1738‑1739 |
-| `1767c8ae` | Bach – Orchestral Suite no. 3 in D major, BWV 1068 | * II. Air | 1730 |
+| `1767c8ae` | Bach – Orchestral Suite no. 3 in D major, BWV 1068 | * Orchestral Suite no. 3 in D major, BWV 1068: II. Air | 1730 |
 | `872109a2` | Bach – Orchestral suite no. 4 in D major, BWV 1069 | * Orchestersuite Nr. 4 D-Dur, BWV 1069: V. Réjouissance | ? |
 | `f8a50fdd` | Bach – Passacaglia and Fugue in C minor, BWV 582 | * I. Passacaglia | 1708‑1712 |
 | `75d73f1d` | Bach – Prelude and Fugue in E-flat major, BWV 552 | * Präludium und Fuge Es-Dur, BWV 552: I. Präludium | ? |
@@ -275,7 +275,7 @@
 | `3fdac4f1` | Chopin – Fantaisie‐impromptu in C‐sharp minor, op. 66 | * Fantaisie‐impromptu in C‐sharp minor, op. 66 | 1834 |
 | `108abf05` | Chopin – Impromptu no. 1 in A‐flat major, op. 29: Allegro assai | * Impromptu no. 1 in A‐flat major, op. 29: Allegro assai | ? |
 | `82f36f6a` | Chopin – Impromptu no. 2 in F‐sharp major, op. 36: Andantino | * Impromptu no. 2 in F‐sharp major, op. 36: Andantino | ? |
-| `e64a4256` | Chopin – Impromptu no. 3 in G‐flat major, op. 51: Vivace | * Vivace | ? |
+| `e64a4256` | Chopin – Impromptu no. 3 in G‐flat major, op. 51: Vivace | * Impromptu no. 3 in G‐flat major, op. 51: Vivace | ? |
 | `99abedc4` | Chopin – Mazurkas, op. 17 | * Mazurka no. 13 in A minor, op. 17 no. 4 | 1822‑1823 |
 | `d6df8d5e` | Chopin – Mazurkas, op. 24 | * Mazurka no. 17 in B‐flat minor, op. 24 no. 4 | 1834‑1835 |
 | `78ca3d04` | Chopin – Mazurkas, op. 33 | * Mazurka no. 23 in D major, op. 33 no. 2, CT. 73 | 1838 |
@@ -327,10 +327,10 @@
 | `906ee67e` | Cottrau – Santa Lucia | * Santa Lucia | ? |
 | `bd18eb14` | Debussy – Children’s Corner, L. 113, CD 119 | * VI. Golliwogg’s Cake‐Walk | 1906‑1908 |
 | `ede113fb` | Debussy – Deux arabesques, L. 66, CD 74 | * No. 1. Andantino con moto | 1890‑1891 |
-| `727783b1` | Debussy – Deux danses pour Harpe et Orchestre, L. 103, CD 113 | * Danse sacrée | 1904 |
+| `727783b1` | Debussy – Deux danses pour Harpe et Orchestre, L. 103, CD 113 | * Deux danses pour Harpe et Orchestre, L. 103: Danse sacrée | 1904 |
 | `089505e0` | Debussy – Douze Études, pour piano, L. 136, CD 143 | * Études, L. 136: XI. Pour les arpèges composés | 1915 |
 | `a418831e` | Debussy – Estampes, L. 100, CD 108 | * III. Jardins sous la pluie. Net et vif | 1903 |
-| `9eec5902` | Debussy – Images pour orchestre, L. 122, CD 118 | * IIc. Ibéria - Le Matin d'un jour de fête | 1905‑1912 |
+| `9eec5902` | Debussy – Images pour orchestre, L. 122, CD 118 | * Images pour orchestre, L 122: IIc. Ibéria - Le Matin d'un jour de fête | 1905‑1912 |
 | `0b5def1a` | Debussy – Images, Livre 1, L. 110, CD 105 | * Images, Book I: 1. Reflets dans l’eau | 1901‑1905 |
 | `732c6498` | Debussy – Images, Livre 2, L. 111, CD 120 | * Images, Book II: 3. Poissons d’or | 1907 |
 | `2fa50190` | Debussy – Jeux, L. 126, CD 133 | * Jeux, L. 126, CD 133 | 1912‑1913 |
@@ -349,7 +349,7 @@
 | `347e5bc7` | Debussy – Sonata for Cello and Piano | * I. Prologue | 1915 |
 | `f8efedb2` | Debussy – Sonata for flute, viola and harp, L. 137 | * I. Pastorale | 1915 |
 | `776d55b7` | Debussy – Sonate pour violon et piano en sol mineur, L. 140 | * I. Allegro vivo | 1916‑1917 |
-| `42dbb579` | Debussy – String Quartet in G minor, Op. 10, L. 85, CD 91 | * I. Animé et très décidé | 1892‑1893 |
+| `42dbb579` | Debussy – String Quartet in G minor, Op. 10, L. 85, CD 91 | * String Quartet No. 1 in G minor, Op. 10: I. Animé et très décidé | 1892‑1893 |
 | `51c5a474` | Debussy – Suite bergamasque, L. 75, CD 82 | * III. Clair de lune | 1890‑1905 |
 | `937f3282` | Debussy – Syrinx, L. 129, CD 137 | * Syrinx, L. 129, CD 137 | 1913 |
 | `ea9195ab` | Delibes – Lakmé | * Lakmé : Acte I. No. 2 Duetto « Viens, Mallika, les lianes en fleurs » … « Dôme épais le jasmin » (Lakmé, Mallika) | 1881‑1882 |
@@ -378,7 +378,7 @@
 | `56dd29ec` | Dvořák – Violin Concerto in A minor, op. 53, B. 96/B. 108 | * I. Allegro ma non troppo | 1879 |
 | `8abd4aec` | Elgar – Cello Concerto in E minor, op. 85 | * I. Adagio – Moderato | 1919 |
 | `2b92747a` | Elgar – Cockaigne (In London Town), op. 40 | * Cockaigne (In London Town), op. 40 | 1897 |
-| `fe9c08b1` | Elgar – Introduction and Allegro for Strings, op. 47 | * Introduction | 1905 |
+| `fe9c08b1` | Elgar – Introduction and Allegro for Strings, op. 47 | * Introduction and Allegro for Strings and Orchestra, op. 47: Introduction | 1905 |
 | `f9ee7f5f` | Elgar – Pomp and Circumstance Military Marches, op. 39 | * March no. 1 in D major | 1901‑1930 |
 | `e49c8de1` | Elgar – Salut d’amour, op. 12 | * Salut d’amour, op. 12 | 1888 |
 | `af19cd3d` | Elgar – Serenade for Strings in E minor, op. 20 | * II. Larghetto | 1892 |
@@ -436,7 +436,7 @@
 | `fc9b4aec` | Haydn – Andante con variazioni in F-moll, Hob. XVII:6 "Un piccolo divertimento" | * 6 "Un piccolo divertimento" | 1793 |
 | `1139ecc7` | Haydn – Cello Concerto no. 1 in C major, Hob. VIIb:1 | * II. Adagio | 1761‑1765 |
 | `122d68d7` | Haydn – Cello Concerto no. 2 in D major, Hob. VIIb:2, op. 101 | * III. Rondo: Allegro | 1783 |
-| `c77e1961` | Haydn – Die Schöpfung, Hob. XXI:2 | * 2: Part I: XIV. Chor und Terzett: Die Himmel erzählen die Ehre Gottes | ? |
+| `c77e1961` | Haydn – Die Schöpfung, Hob. XXI:2 | * Die Schöpfung, Hob XXI:2: Part I: XIV. Chor und Terzett: Die Himmel erzählen die Ehre Gottes | ? |
 | `b2650ffe` | Haydn – Piano Concerto no. 11 in D major, Hob. XVIII:11 | * I. Vivace | ? |
 | `ea1b28a6` | Haydn – Piano Sonata no. 60 in C major, Hob. XVI:50 | * I. Allegro | 1795 |
 | `19458141` | Haydn – Piano Sonata no. 62 in E-flat major, Hob. XVI:52 | * III. Finale: Presto | 1794 |
@@ -456,7 +456,7 @@
 | `0c2f8487` | Haydn – Trumpet Concerto in E-flat major | * Konzert für Trompete und Orchester Es-Dur, Hob. VIIe:1: III. Allegro | 1796 |
 | `085103a5` | Holst – 3 Hymns for the English Hymnal | * In the Bleak Midwinter | 1904‑1905 |
 | `439c1605` | Holst – The Planets, op. 32 | * IV. Jupiter, the Bringer of Jollity | 1914‑1916 |
-| `fc89d2b2` | Humperdinck – Hänsel und Gretel | * Vorspiel (Overture) | 1891‑1892 |
+| `fc89d2b2` | Humperdinck – Hänsel und Gretel | * Hänsel und Gretel: Vorspiel (Overture) | 1891‑1892 |
 | `b9c55462` | Janáček – Sinfonietta | * IV. Allegretto (The Street) | 1926 |
 | `19dd75a1` | Janáček – Sonata for Violin & Piano, JW VII/7 | * I. Con moto | 1914 |
 | `ed491125` | Janáček – String Quartet no. 1, JW VII/8 “Kreutzer Sonata” | * String Quartet no. 1: I. Adagio - Con moto | 1923 |
@@ -477,7 +477,7 @@
 | `3ab8fcaa` | Leoncavallo – Pagliacci | * Atto I. “Recitar!” … “Vesti la giubba” (Canio) | 1892 |
 | `8c90ffa1` | Liszt – 19 Hungarian Rhapsodies, S. 244 / R. 106 | * No. 2 in C-sharp minor, S. 244 no. 2 | 1846‑1885 |
 | `77f77898` | Liszt – 6 Hungarian Rhapsodies for Orchestra, S. 359 (orch. Doppler) | * Hungarian Rhapsody for Orchestra no. 2 in C minor, S. 359/2 | ? |
-| `29954628` | Liszt – Années de pèlerinage | * Deuxième année; Italie, S. 161: Sonetto 104 del Petrarca, S. 161 no. 5 | 1877 |
+| `29954628` | Liszt – Années de pèlerinage | * Années de pèlerinage, Deuxième année; Italie, S. 161: Sonetto 104 del Petrarca, S. 161 no. 5 | 1877 |
 | `d7793d9f` | Liszt – Concerto for Piano and Orchestra no. 1 in E‐flat major, S. 124 | * I. Allegro maestoso | 1830‑1856 |
 | `f0563d96` | Liszt – Consolations, S. 172 | * Consolation in D‐flat major, S. 172 no. 3: Lento placido | 1849‑1850 |
 | `eff720d2` | Liszt – Deux épisodes d’après le Faust de Lenau, S. 110 | * II. Der Tanz in der Dorfschenke (Erster Mephisto-Walzer) | ? |
@@ -512,7 +512,7 @@
 | `9e131dd9` | Mascagni – Cavalleria rusticana | * Intermezzo | 1890 |
 | `f0be02e5` | Mason – Nearer, My God, to Thee | * Nearer, My God, to Thee | 1856 |
 | `2a3bf259` | Massenet – Thaïs | * Acte II. Entr’acte “Méditation” | 1894 |
-| `e2a0b12c` | Mendelssohn – A Midsummer Night's Dream, op. 61 | * no. 9. Wedding March: Allegro vivace | 1842 |
+| `e2a0b12c` | Mendelssohn – A Midsummer Night's Dream, op. 61 | * A Midsummer Night’s Dream, op. 61: no. 9. Wedding March: Allegro vivace | 1842 |
 | `750a717e` | Mendelssohn – Cello Sonata no. 2 in D major, op. 58 | * I. Allegro assai vivace | 1843 |
 | `7481155b` | Mendelssohn – Hear My Prayer | * II. “O For the Wings of a Dove!” Con un poco più di moto | 1844 |
 | `19dab9f1` | Mendelssohn – Octet in E-flat major, op. 20 | * III. Scherzo: Allegro leggerissimo | 1825 |
@@ -616,11 +616,11 @@
 | `3b768f87` | Mozart – Violin Sonata in B-flat major, K. 454 | * III. Allegretto | 1784 |
 | `7cd45975` | Mussorgsky – Night on Bald Mountain (orch. Rimsky‐Korsakov) | * Night on Bald Mountain (orch. Rimsky‐Korsakov) | 1867 |
 | `fef21cee` | Mussorgsky – Pictures at an Exhibition | * The great gate at Kiev | 1874 |
-| `e624d7dc` | Mussorgsky – Pictures at an Exhibition (orch. Ravel) | * X. The Great Gate of Kiev | 1874 |
+| `e624d7dc` | Mussorgsky – Pictures at an Exhibition (orch. Ravel) | * Pictures at an Exhibition: X. The Great Gate of Kiev | 1874 |
 | `4bf24d79` | Nicolai – Die lustigen Weiber von Windsor | * Ouvertüre | ? |
 | `dc59f081` | Nielsen – Symphony no. 4, op. 29, FS 76 “The Inextinguishable” | * I. Allegro | 1914‑1916 |
 | `c283b670` | Offenbach – Die schöne Helena | * La Belle Hélène: Ouverture | ? |
-| `7ca9655b` | Offenbach – Les Contes d’Hoffmann | * Acte III. “Belle nuit, ô nuit d’amour” (Nicklausse, Giulietta) | 1880 |
+| `7ca9655b` | Offenbach – Les Contes d’Hoffmann | * Les Contes d’Hoffmann: Acte III. “Belle nuit, ô nuit d’amour” (Nicklausse, Giulietta) | 1880 |
 | `ee79cd92` | Offenbach – Orpheus in the Underworld | * Infernal Galop | 1860 |
 | `76c6b9c5` | Orff – Trionfi | * Carmina Burana: Fortuna imperatrix mundi: I. O Fortuna | 1936 |
 | `70ed831c` | Pachelbel – Canon and Gigue in D major, P. 37, T. 337 | * I. Canon | 1680 |
@@ -638,7 +638,7 @@
 | `85a0c853` | Ponchielli – La Gioconda, op. 9 | * La Gioconda: Atto III, scena 2. Danza delle ore | 1876 |
 | `1d53db6d` | Poulenc – Sonate pour clarinette et piano en si bémol majeur, FP 184 | * II. Romanza (Très calme) | 1962 |
 | `f168363e` | Prokofiev – Lieutenant Kijé Suite, op. 60 | * IV. Troika | 1933 |
-| `812b5cc4` | Prokofiev – Peter and the Wolf, op. 67 | * 1. Introduction (no narration) | 1936 |
+| `812b5cc4` | Prokofiev – Peter and the Wolf, op. 67 | * Peter and the Wolf, op. 67: 1. Introduction (no narration) | 1936 |
 | `e70d0050` | Prokofiev – Piano Sonata no. 6 in A major, op. 82 | * I. Allegro moderato | 1939‑1940 |
 | `45d6ee5d` | Prokofiev – Piano Sonata no. 7 in B-flat major, op. 83 | * III. Precipitato | 1939‑1942 |
 | `57513a93` | Prokofiev – Piano Sonata no. 8 in B-flat major, op. 84 | * II. Andante sognando | 1939‑1944 |
@@ -687,7 +687,7 @@
 | `512fddf1` | Ravel – Jeux d’eau | * Jeux d’eau | 1901 |
 | `698cf12e` | Ravel – La Valse | * La Valse | 1919‑1920 |
 | `2443b5bb` | Ravel – Le tombeau de Couperin | * VI. Toccata | 1914‑1917 |
-| `a638901c` | Ravel – Ma mère l’Oye | * Danse du rouet et scène | 1908‑1912 |
+| `a638901c` | Ravel – Ma mère l’Oye | * Ma mère l’Oye : Tableau I : Danse du rouet et scène | 1908‑1912 |
 | `c9aacef3` | Ravel – Menuet antique | * Menuet antique | 1895 |
 | `1dc0574e` | Ravel – Menuet sur le nom d'Haydn | * Menuet sur le nom d'Haydn | 1909 |
 | `8192e0b8` | Ravel – Miroirs | * IV. Alborada del gracioso | 1904‑1905 |
@@ -722,7 +722,7 @@
 | `3397838b` | Saint‐Saëns – Havanaise in E major, op. 83 | * Havanaise in E major, op. 83 | 1887 |
 | `075a814d` | Saint‐Saëns – Introduction and Rondo capriccioso in A minor for Violin and Orchestra | * Introduction and Rondo capriccioso in A minor for Violin and Orchestra | 1863 |
 | `eb86844b` | Saint‐Saëns – Piano Concerto no. 2 in G minor, op. 22 | * II. Allegro scherzando | 1868 |
-| `7342dc65` | Saint‐Saëns – The Carnival of the Animals | * XIII. The Swan | 1886 |
+| `7342dc65` | Saint‐Saëns – The Carnival of the Animals | * The Carnival of the Animals: XIII. The Swan | 1886 |
 | `e9effa77` | Saint‐Saëns – Violin Concerto no. 3 in B minor, op. 61 | * II. Andantino quasi allegretto | 1880 |
 | `9a51f880` | Sarasate – Spanish Dances, op. 23 | * no. 2: Zapateado | ? |
 | `6998da09` | Sarasate – Zigeunerweisen, op. 20 | * Zigeunerweisen, op. 20 | 1878 |
@@ -920,7 +920,7 @@
 | `1a00a184` | Stravinsky – L’Oiseau de feu, suite de 1919 | * III. Danse infernale du roi Kachtcheï | 1919 |
 | `54dacada` | Stravinsky – Le Sacre du printemps | * II. Le Sacrifice: VI. Danse sacrale (L’Élue) | 1911‑1913 |
 | `57deae1f` | Stravinsky – Pétrouchka | * Pétrouchka : Tableau II. Chez Pétrouchka | ? |
-| `2fbaaf2d` | Stravinsky – The Firebird | * Act I, no. 14: Disappearance of Kastchei's Palace and Magical Creations, Return to Life of the Petrified Knights, General Rejoicing | 1909‑1910 |
+| `2fbaaf2d` | Stravinsky – The Firebird | * The Firebird: Act I, no. 14: Disappearance of Kastchei's Palace and Magical Creations, Return to Life of the Petrified Knights, General Rejoicing | 1909‑1910 |
 | `77b37e65` | Suppè – Light Cavalry | * Overture | 1866 |
 | `c54bedea` | Suppè – Poet and Peasant | * Overture | 1846 |
 | `48a40036` | Tallis – Spem in alium | * Spem in alium | ? |
@@ -948,7 +948,7 @@
 | `9e906d77` | Tchaikovsky – Symphony no. 5 in E minor, op. 64 | * III. Valse. Allegro moderato | 1888 |
 | `15e0a721` | Tchaikovsky – Symphony no. 6 in B minor, op. 74 “Pathétique” | * I. Adagio - Allegro non troppo | 1893 |
 | `fd337fdc` | Tchaikovsky – The Nutcracker (suite from the ballet), op. 71a | * III. Valse des fleurs. Tempo di Valse | 1892 |
-| `f3281e81` | Tchaikovsky – The Nutcracker, op. 71 | * Act II, Scene III. Pas de Deux: Variation II: Dance of the sugar-plum fairy | 1891‑1892 |
+| `f3281e81` | Tchaikovsky – The Nutcracker, op. 71 | * The Nutcracker, Op. 71: Act II, Scene III. Pas de Deux: Variation II: Dance of the sugar-plum fairy | 1891‑1892 |
 | `76cd571a` | Tchaikovsky – The Seasons, op. 37a | * VI. June “Barcarolle” | 1875‑1876 |
 | `f9764922` | Tchaikovsky – The Sleeping Beauty, op. 66a | * V. Valse | 1890 |
 | `36dfecf2` | Tchaikovsky – The Year 1812, Festival Overture in E-flat major, op. 49 | * The Year 1812, Festival Overture in E-flat major, op. 49 | 1880 |
@@ -983,7 +983,7 @@
 | `ec764fa1` | Vivaldi – Gloria in D major, RV 589 | * I. Gloria in excelsis Deo | ? |
 | `161dd98a` | Vivaldi – L’estro armonico, op. 3 | * Concerto in A minor for Two Violins, Cello and Strings, op. 3 no. 8, RV 522, 'Con due Violini obligati': III. Allegro | 1711 |
 | `7044d543` | Vivaldi – The Contest Between Harmony and Invention, op. 8 | * Concerto in E-flat major, op. 8 no. 5, RV 253 "La tempesta di mare": I. (Allegro e) Presto | 1725 |
-| `87886dcf` | Vivaldi – The Four Seasons | * Concerto in E Major, op. 8 no. 1, RV. 269, “Spring”: 1. Allegro | 1723 |
+| `87886dcf` | Vivaldi – The Four Seasons | * “The Four Seasons”: Concerto in E Major, op. 8 no. 1, RV. 269, “Spring”: 1. Allegro | 1723 |
 | `597e017a` | Wagner – Der Ring des Nibelungen, WWV 86 | * The Valkyrie: Ride of the Valkyries | 1854‑1856 |
 | `4d644732` | Wagner – Die Meistersinger von Nürnberg, WWV 96 | * Vorspiel | 1863‑1867 |
 | `1d774427` | Wagner – Lohengrin, WWV 75 | * Lohengrin: Act III, Scene I. Bridal Chorus (Choir) | 1846‑1848 |

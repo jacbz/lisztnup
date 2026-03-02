@@ -4,7 +4,6 @@
 		formatComposerName,
 		formatLifespan,
 		formatYearRange,
-		formatPartName,
 		getWorkEra,
 		getComposerLastName
 	} from '$lib/utils';
@@ -77,7 +76,7 @@
 	const displayPartName = $derived.by(() => {
 		if (!track || !shouldShowPart) return '';
 
-		return formatPartName(track.part.name, track.work.name);
+		return track.part.name;
 	});
 
 	const displayYear = $derived.by(() => {

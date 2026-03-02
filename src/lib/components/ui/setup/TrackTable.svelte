@@ -11,7 +11,6 @@
 	import {
 		formatComposerName,
 		formatLifespan,
-		formatPartName,
 		formatYearRange,
 		formatWorksAsMarkdown
 	} from '$lib/utils';
@@ -637,7 +636,7 @@
 																? 'font-semibold text-cyan-400'
 																: ''}"
 														>
-															{formatPartName(part.name, row.work)}
+															{part.name}
 														</button>
 													</li>
 												{/each}
