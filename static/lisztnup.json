@@ -610,7 +610,7 @@
       "death_year": 1827,
       "gender": "male",
       "country": "DE",
-      "score": 92.42
+      "score": 92.51
     },
     {
       "gid": "6f5bfd20-84cc-4879-8a40-05631ad576c7",
@@ -2185,7 +2185,7 @@
       "death_year": 1904,
       "gender": "male",
       "country": "CZ",
-      "score": 73.07
+      "score": 73.08
     },
     {
       "gid": "13f33e84-7305-4ba0-8c7f-39742dca43d0",
@@ -3868,7 +3868,7 @@
       "death_year": 1951,
       "gender": "male",
       "country": "RU",
-      "score": 8.29
+      "score": 5.59
     },
     {
       "gid": "27954d65-5a87-49e2-8013-bb9846664c67",
@@ -4645,15 +4645,6 @@
       "score": 41.65
     },
     {
-      "gid": "08783795-f9bf-4f36-9b4b-343ed9a8bb8b",
-      "name": "Martucci, Giuseppe",
-      "birth_year": 1856,
-      "death_year": 1909,
-      "gender": "male",
-      "country": "IT",
-      "score": 1.86
-    },
-    {
       "gid": "fce348ea-05cd-4533-850d-fee25d42019f",
       "name": "Martynov, Vladimir",
       "birth_year": 1946,
@@ -5200,7 +5191,7 @@
       "death_year": 1881,
       "gender": "male",
       "country": "RU",
-      "score": 54.2
+      "score": 54.21
     },
     {
       "gid": "2e3c82fd-fbab-4675-bc64-e57ebb40dcca",
@@ -6730,7 +6721,7 @@
       "death_year": 1975,
       "gender": "male",
       "country": "RU",
-      "score": 70.57
+      "score": 70.62
     },
     {
       "gid": "691b0e9d-9e57-41cf-932d-a3d21b068e75",
@@ -7108,7 +7099,7 @@
       "death_year": 1937,
       "gender": "male",
       "country": "PL",
-      "score": 46.62
+      "score": 46.51
     },
     {
       "gid": "e80c7d8c-7b50-4b33-ad11-8bfdd54f8db6",
@@ -7252,7 +7243,7 @@
       "death_year": 1767,
       "gender": "male",
       "country": "DE",
-      "score": 55.77
+      "score": 55.64
     },
     {
       "gid": "480aa5f2-97e6-4e79-a364-6629d7b63b55",
@@ -12470,17 +12461,17 @@
       "parts": [
         {
           "name": "Sonata in D major, Wq. 61 no. 2: I. Allegro di molto",
-          "deezer": [3074345221, 961189082],
+          "deezer": [961189082],
           "score": 88.56
         },
         {
           "name": "Sonata in D major, Wq. 61 no. 2: II. Allegro",
-          "deezer": [3074344581, 961189092],
+          "deezer": [961189092],
           "score": 88.56
         },
         {
           "name": "Sonata in D major, Wq. 61 no. 2: III. Presto di molto",
-          "deezer": [3074345051, 961189102],
+          "deezer": [961189102],
           "score": 88.56
         },
         {
@@ -13824,18 +13815,18 @@
       "score": 1.55,
       "parts": [
         {
-          "name": "Trio Sonata in C minor, H. 579, Wq. 161 no. 1 “Sanguineus and Melancholicus”: I. Allegretto - Presto -",
-          "deezer": [1401526832],
+          "name": "Sonata in B-flat major, H. 578, Wq. 161 no. 2: I. Allegro",
+          "deezer": [1466976502],
           "score": 100.0
         },
         {
-          "name": "Trio Sonata in C minor, H. 579, Wq. 161 no. 1 “Sanguineus and Melancholicus”: II. Adagio",
-          "deezer": [1401526842],
+          "name": "Sonata in B-flat major, H. 578, Wq. 161 no. 2: II. Adagio ma non troppo",
+          "deezer": [1466976512],
           "score": 100.0
         },
         {
-          "name": "Trio Sonata in C minor, H. 579, Wq. 161 no. 1 “Sanguineus and Melancholicus”: III. Allegro",
-          "deezer": [1401526852],
+          "name": "Sonata in B-flat major, H. 578, Wq. 161 no. 2: III. Allegretto",
+          "deezer": [1466976522],
           "score": 100.0
         }
       ]
@@ -44114,8 +44105,8 @@
       "composer": "1f9df192-a621-4f54-8850-2c5373b7eac9",
       "name": "Allemande for Piano in A major, WoO 81",
       "type": "piano",
-      "begin_year": 1793,
-      "end_year": 1793,
+      "begin_year": 1822,
+      "end_year": 1822,
       "score": 1.95,
       "parts": [
         {
@@ -48030,6 +48021,52 @@
       ]
     },
     {
+      "gid": "7ce0f214-f37a-407e-907d-2a4ab7a80757",
+      "composer": "1f9df192-a621-4f54-8850-2c5373b7eac9",
+      "name": "String Quartet no. 14 in C-sharp minor, op. 131",
+      "type": "chamber",
+      "begin_year": 1825,
+      "end_year": 1826,
+      "score": 4.47,
+      "parts": [
+        {
+          "name": "String Quartet no. 14 in C-sharp minor, op. 131: I. Adagio, ma non troppo e molto espressivo",
+          "deezer": [69089106, 739414242, 67330061, 1048350242, 943740572],
+          "score": 97.09
+        },
+        {
+          "name": "String Quartet no. 14 in C-sharp minor, op. 131: II. Allegro molto vivace",
+          "deezer": [69089107, 739414252, 2990608731, 68243932, 2073992607],
+          "score": 96.35
+        },
+        {
+          "name": "String Quartet no. 14 in C-sharp minor, op. 131: III. Allegro moderato",
+          "deezer": [69089108, 739414262, 67330063, 68243933, 919618602],
+          "score": 96.09
+        },
+        {
+          "name": "String Quartet no. 14 in C-sharp minor, op. 131: IV. Andante ma non troppo e molto cantabile - Più mosso - Andante moderato e lusinghiero - Adagio - Allegretto - Adagio, ma non troppo e semplice - Allegretto",
+          "deezer": [69089109, 739414272, 67330064, 68243934, 1048350272],
+          "score": 96.09
+        },
+        {
+          "name": "String Quartet no. 14 in C-sharp minor, op. 131: V. Presto - Molto poco adagio",
+          "deezer": [2747758391, 739414282, 67330065, 68243935, 919618622],
+          "score": 96.09
+        },
+        {
+          "name": "String Quartet no. 14 in C-sharp minor, op. 131: VI. Adagio quasi un poco andante",
+          "deezer": [2747758401, 739414292, 2990608531, 68243936, 943740622],
+          "score": 100.0
+        },
+        {
+          "name": "String Quartet no. 14 in C-sharp minor, op. 131: VII. Allegro",
+          "deezer": [69089112, 739414302, 67330067, 2898922911, 2778235791],
+          "score": 96.09
+        }
+      ]
+    },
+    {
       "gid": "2638304f-0c71-40e6-9572-375c85e1cdf4",
       "composer": "1f9df192-a621-4f54-8850-2c5373b7eac9",
       "name": "String Quartet no. 15 in A minor, op. 132",
@@ -48298,22 +48335,22 @@
       "parts": [
         {
           "name": "Symphony no. 7 in A major, op. 92: I. Poco sostenuto - Vivace",
-          "deezer": [916244542, 66435402, 2777518681, 2790428472, 2992520991],
+          "deezer": [916244542, 66435402, 2777518681, 2790428472, 2778528461],
           "score": 97.31
         },
         {
           "name": "Symphony no. 7 in A major, op. 92: II. Allegretto",
-          "deezer": [66435403, 916244552, 2790428482, 2777518661, 2992521001],
+          "deezer": [66435403, 916244552, 2790428482, 2777518661, 2778528471],
           "score": 100.0
         },
         {
           "name": "Symphony no. 7 in A major, op. 92: III. Presto",
-          "deezer": [916244562, 66435404, 2777518671, 2790428492, 2992521011],
+          "deezer": [916244562, 66435404, 2777518671, 2790428492, 1076221722],
           "score": 97.93
         },
         {
           "name": "Symphony no. 7 in A major, op. 92: IV. Allegro con brio",
-          "deezer": [66435405, 916244572, 2790428502, 2777518691, 2992521021],
+          "deezer": [66435405, 916244572, 2790428502, 2777518691, 2778528491],
           "score": 98.12
         }
       ]
@@ -48354,7 +48391,7 @@
       "composer": "1f9df192-a621-4f54-8850-2c5373b7eac9",
       "name": "Symphony no. 9 in D minor, op. 125 “Choral”",
       "type": "orchestral",
-      "begin_year": 1822,
+      "begin_year": 1823,
       "end_year": 1824,
       "score": 5.94,
       "parts": [
@@ -69852,8 +69889,8 @@
       "score": 1.55,
       "parts": [
         {
-          "name": "Bless the Lord, O My Soul",
-          "deezer": [2792500952],
+          "name": "Blessed is the Man, op. 44 no. 2",
+          "deezer": [2792500962],
           "score": 100.0
         }
       ]
@@ -85386,22 +85423,6 @@
         {
           "name": "Six Pieces, op. 52, B. 110: No. 6. Tempo di Marcia in E-flat major",
           "deezer": [1471162552],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "7b5c805e-3db9-405d-99db-6be005cb20c4",
-      "composer": "819eaeb2-8dd8-48a5-ad07-0bcd137985ef",
-      "name": "Slavonic Dances, B. 172",
-      "type": "chamber",
-      "begin_year": 1878,
-      "end_year": 1878,
-      "score": 1.55,
-      "parts": [
-        {
-          "name": "Slavonic Dances, B. 172: No. 1 in A major. Polka",
-          "deezer": [542616812],
           "score": 100.0
         }
       ]
@@ -123929,22 +123950,6 @@
       ]
     },
     {
-      "gid": "28161102-490d-494f-b493-0ae152bc2c34",
-      "composer": "fdfea72e-82f6-4d99-9ddb-992b5861dd31",
-      "name": "Double Bass Concerto, op. 3",
-      "type": "concerto",
-      "begin_year": null,
-      "end_year": null,
-      "score": 1.54,
-      "parts": [
-        {
-          "name": "Double Bass Concerto, op. 3: II. Andante",
-          "deezer": [774656042],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "f9b4e0b9-aa15-4dd2-88f5-d3497aafd8d0",
       "composer": "27954d65-5a87-49e2-8013-bb9846664c67",
       "name": "Sholem-alekhem, rov Feidman!",
@@ -135428,27 +135433,6 @@
       ]
     },
     {
-      "gid": "b5339ca9-ce63-4c86-905c-256d22aab7b4",
-      "composer": "08783795-f9bf-4f36-9b4b-343ed9a8bb8b",
-      "name": "La canzone dei ricordi",
-      "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
-      "score": 1.53,
-      "parts": [
-        {
-          "name": "La canzone dei ricordi: No. 1. No, svaniti non sono i sogni",
-          "deezer": [2768280881],
-          "score": 100.0
-        },
-        {
-          "name": "La canzone dei ricordi: No. 2. Cantava'l ruscello la gaia canzone",
-          "deezer": [2768280891],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "3c4f2455-d82c-486d-8881-78fee336198d",
       "composer": "fce348ea-05cd-4533-850d-fee25d42019f",
       "name": "\"Come In!\" for Two Violins and String Orchestra",
@@ -145249,13 +145233,18 @@
       "score": 1.54,
       "parts": [
         {
-          "name": "6 Contredanses for Orchestra, K. 448b/462: No. 3 in B-flat major",
-          "deezer": [2046037387],
+          "name": "6 Contredanses for Orchestra, K. 448b/462: No. 1 in C major",
+          "deezer": [2881398122],
           "score": 100.0
         },
         {
-          "name": "6 Contredanses for Orchestra, K. 448b/462: No. 6 in F major",
-          "deezer": [2046037417],
+          "name": "6 Contredanses for Orchestra, K. 448b/462: No. 2 in E-flat major",
+          "deezer": [2851100662],
+          "score": 100.0
+        },
+        {
+          "name": "6 Contredanses for Orchestra, K. 448b/462: No. 4 in D major",
+          "deezer": [3298020361],
           "score": 100.0
         }
       ]
@@ -158325,22 +158314,6 @@
         {
           "name": "Songs and Dances of Death: IV. The Field Marshal",
           "deezer": [610699762, 1684837267],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "eec5983b-bc4a-4a96-a678-e8b73ad2dc3c",
-      "composer": "c1380b12-3909-47d8-a5fd-d20e76123310",
-      "name": "Songs and Dances of Death (orch. Aho)",
-      "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1877,
-      "score": 1.54,
-      "parts": [
-        {
-          "name": "Songs and Dances of Death: III. Trepak",
-          "deezer": [2632397222],
           "score": 100.0
         }
       ]
@@ -215792,22 +215765,6 @@
       ]
     },
     {
-      "gid": "fe13f68a-f70d-434c-91bd-53c4df40d070",
-      "composer": "519dd32e-8f30-4380-8826-7aa99169e1bb",
-      "name": "Ballet Suite no. 4 for Orchestra, op. 91f (arr. Atovmian)",
-      "type": "ballet",
-      "begin_year": null,
-      "end_year": null,
-      "score": 1.54,
-      "parts": [
-        {
-          "name": "Ballet Suite no. 4 for Orchestra, op. 91f: II. Waltz",
-          "deezer": [2898825131],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "4aeb233b-9b52-4264-b1af-3129b86e4c6c",
       "composer": "519dd32e-8f30-4380-8826-7aa99169e1bb",
       "name": "Ballet Suite no. 5, op. 27a \"The Bolt\"",
@@ -230173,22 +230130,6 @@
       ]
     },
     {
-      "gid": "8f557b17-620d-4e1f-bd0e-2f028b95772d",
-      "composer": "e04ef24e-b64e-4ca5-a479-b6bc79042ff5",
-      "name": "Nocturne and Tarantella, op. 28 (orch. Fitelberg)",
-      "type": "orchestral",
-      "begin_year": 1915,
-      "end_year": 1915,
-      "score": 1.55,
-      "parts": [
-        {
-          "name": "Nocturne and Tarantella, op. 28: II. Tarantella",
-          "deezer": [2768336121],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "7ef933e8-8214-40ab-8741-aa6dc9cfcf2c",
       "composer": "e04ef24e-b64e-4ca5-a479-b6bc79042ff5",
       "name": "Piano Sonata no. 1 in C major, op. 8, M8",
@@ -235032,8 +234973,13 @@
       "score": 1.54,
       "parts": [
         {
-          "name": "Three Choruses: no. 3. Without Time, Without Season, TH 87, ČW 76",
-          "deezer": [68471233],
+          "name": "Three Choruses: no. 1. Tis Not the Cuckoo in the Damp Pinewood, TH 87, ČW 74",
+          "deezer": [68471241],
+          "score": 100.0
+        },
+        {
+          "name": "Three Choruses: no. 2. Why Did the Merry Voice Grow Silent?, TH 87, ČW 75",
+          "deezer": [68471232],
           "score": 100.0
         }
       ]
@@ -236214,16 +236160,6 @@
       "score": 2.56,
       "parts": [
         {
-          "name": "Essercizii musici: VII. Sonata in d, TWV 41:d4: III. Grave",
-          "deezer": [110946318],
-          "score": 90.86
-        },
-        {
-          "name": "Essercizii musici: VII. Sonata in d, TWV 41:d4: IV. Allegro",
-          "deezer": [110946320],
-          "score": 90.86
-        },
-        {
           "name": "Essercizii Musici: Trio No. 5 for recorder, violin & continuo in A minor, TWV 42:a4: I. Largo",
           "deezer": [3050850191],
           "score": 100.0
@@ -236924,32 +236860,6 @@
       ]
     },
     {
-      "gid": "d4760eb0-dd95-4c3c-95a8-ca352a483c7d",
-      "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
-      "name": "Ouverture-Suite \"La Bizarre\", TWV 55:G2",
-      "type": "orchestral",
-      "begin_year": null,
-      "end_year": null,
-      "score": 1.54,
-      "parts": [
-        {
-          "name": "Ouverture-Suite \"La Bizarre\", TWV 55:G2: I. Ouverture",
-          "deezer": [629615472],
-          "score": 100.0
-        },
-        {
-          "name": "Ouverture-Suite \"La Bizarre\", TWV 55:G2: VI. Fantaisie",
-          "deezer": [629615522],
-          "score": 100.0
-        },
-        {
-          "name": "Ouverture-Suite \"La Bizarre\", TWV 55:G2: VIII. Rossignol",
-          "deezer": [629615542],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "bcf7c1fe-5816-4d21-9194-2e397a927cce",
       "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
       "name": "Ouverture-Suite in D Major for Viola da Gamba, Strings and Basso Continuo, TWV 55:D6",
@@ -237544,27 +237454,6 @@
         {
           "name": "Recorder Concerto in F major, TWV 51:F1: IV. Menuett I - Menuett II - Menuett I da capo",
           "deezer": [71793780],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "1fa22d5e-49d4-4fbb-8611-d9b64afd6386",
-      "composer": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
-      "name": "Recorder Sonata in D minor, TWV 41:d4",
-      "type": "chamber",
-      "begin_year": null,
-      "end_year": null,
-      "score": 1.45,
-      "parts": [
-        {
-          "name": "Recorder Sonata in D minor, TWV 41:d4: III. Grave",
-          "deezer": [2631298222],
-          "score": 100.0
-        },
-        {
-          "name": "Recorder Sonata in D minor, TWV 41:d4: IV. Allegro",
-          "deezer": [2631298232],
           "score": 100.0
         }
       ]
@@ -244632,7 +244521,7 @@
       "parts": [
         {
           "name": "Guia prático nº 2, W278, nº 2: Machadinha",
-          "deezer": [2768393461],
+          "deezer": [2795230162],
           "score": 100.0
         },
         {

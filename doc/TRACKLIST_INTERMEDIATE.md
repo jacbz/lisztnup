@@ -69,7 +69,7 @@
 | `c366ec5b` | Beethoven – Sonata for Piano no. 8 in C minor, op. 13 “Pathétique” | * II. Adagio cantabile | 1798 |
 | `26c8afae` | Beethoven – Sonata for Violin and Piano no. 5 in F major, op. 24 “Spring” | * I. Allegro | 1800‑1801 |
 | `87281f3c` | Beethoven – Sonata for Violin and Piano no. 9 in A major, op. 47 “Kreutzer” | * I. Adagio sostenuto - Presto | 1802‑1803 |
-| `f2a1939b` | Beethoven – Sonatas for Violin and Piano, op. 30 | * Sonata for Violin and Piano no. 8 in G major, op. 30 no. 3: III. Allegro vivace | 1801‑1802 |
+| `7ce0f214` | Beethoven – String Quartet no. 14 in C-sharp minor, op. 131 | * VI. Adagio quasi un poco andante | 1825‑1826 |
 | `3c9a74de` | Beethoven – Symphony no. 1 in C major, op. 21 | * I. Adagio molto – Allegro con brio | 1799‑1800 |
 | `3c33b26a` | Beethoven – Symphony no. 2 in D major, op. 36 | * I. Adagio molto - Allegro con brio | 1801‑1802 |
 | `80737426` | Beethoven – Symphony no. 3 in E‐flat major, op. 55 “Eroica” | * I. Allegro con brio | 1803‑1804 |
@@ -78,7 +78,7 @@
 | `60e1dcf6` | Beethoven – Symphony no. 6 in F major, op. 68 “Pastorale” | * I. Allegro ma non troppo "Awakening of cheerful feelings upon arrival in the country" | 1808 |
 | `c7caedf2` | Beethoven – Symphony no. 7 in A major, op. 92 | * II. Allegretto | 1811‑1812 |
 | `256f32ec` | Beethoven – Symphony no. 8 in F major, op. 93 | * I. Allegro vivace e con brio | 1812 |
-| `c35b4956` | Beethoven – Symphony no. 9 in D minor, op. 125 “Choral” | * IV. Finale. Presto – Allegro assai | 1822‑1824 |
+| `c35b4956` | Beethoven – Symphony no. 9 in D minor, op. 125 “Choral” | * IV. Finale. Presto – Allegro assai | 1823‑1824 |
 | `53ac5ed4` | Beethoven – Trio for Piano, Violin, and Cello no. 7 in B-flat major, op. 97 “Archduke” | * I. Allegro moderato | 1810‑1811 |
 | `bcd958bd` | Beethoven – Two Piano Sonatas, op. 27 | * Sonata for Piano no. 14 in C-sharp minor, op. 27 no. 2 “Moonlight”: I. Adagio sostenuto | 1801 |
 | `3ee98c65` | Bellini – Norma | * Atto I, scena 1. Scena e cavatina “Casta diva, che inargenti” (Norma, coro) | 1831 |
@@ -203,6 +203,7 @@
 | `0c16a148` | Dvořák – Symphony no. 8 in G major, op. 88 | * III. Allegretto grazioso – Molto vivace | 1889 |
 | `aacb1ab0` | Dvořák – Symphony no. 9 in E minor, op. 95 “From the New World” | * II. Largo | 1893 |
 | `8abd4aec` | Elgar – Cello Concerto in E minor, op. 85 | * I. Adagio – Moderato | 1919 |
+| `fe9c08b1` | Elgar – Introduction and Allegro for Strings, op. 47 | * Introduction | 1905 |
 | `f9ee7f5f` | Elgar – Pomp and Circumstance Military Marches, op. 39 | * March no. 1 in D major | 1901‑1930 |
 | `e49c8de1` | Elgar – Salut d’amour, op. 12 | * Salut d’amour, op. 12 | 1888 |
 | `af19cd3d` | Elgar – Serenade for Strings in E minor, op. 20 | * II. Larghetto | 1892 |
@@ -462,7 +463,6 @@
 | `b42a2d27` | Strauss – Voices of Spring | * Voices of Spring | 1882 |
 | `6237af8b` | Strauss – Wine, Woman and Song | * Wine, Woman and Song | ? |
 | `54dacada` | Stravinsky – Le Sacre du printemps | * II. Le Sacrifice: VI. Danse sacrale (L’Élue) | 1911‑1913 |
-| `2fbaaf2d` | Stravinsky – The Firebird | * Act I, no. 14: Disappearance of Kastchei's Palace and Magical Creations, Return to Life of the Petrified Knights, General Rejoicing | 1909‑1910 |
 | `77b37e65` | Suppè – Light Cavalry | * Overture | 1866 |
 | `c54bedea` | Suppè – Poet and Peasant | * Overture | 1846 |
 | `854f7f28` | Tchaikovsky – Capriccio italien, op. 45 | * Capriccio italien, op. 45 | 1880 |

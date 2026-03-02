@@ -463,6 +463,8 @@ class MusicbrainzProcessor:
 
                 # Apply PSS Overrides (Manual boosts for specific parts)
                 if any(p.gid in self.pss_overrides for p, _ in parts_with_pss):
+                    log.debug("PSS OVERRIDE APPLIED | %s (%s) | Composer: %s | Source type: %s | Original max PSS: %.2f",
+                              root_work.name, root_work.gid, composer.name, root_work.type, max_pss)
                     max_pss = max_pss * 1.03
                     parts_with_pss = [
                         (part, max_pss if part.gid in self.pss_overrides else pss) 

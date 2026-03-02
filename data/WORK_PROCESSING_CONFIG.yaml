@@ -326,6 +326,7 @@ wss_overrides:
 pss_overrides:
   - '8039ddb5-587f-350c-ad78-126ca9782aed' # Beethoven - Piano Concerto No. 4: III.
   - '913bc84d-158b-3ac3-821e-6cc5e46c9bb5' # Beethoven - Piano Concerto No. 5: I.
+  - 'b77f533a-3c52-331a-918a-eea808a3f620' # Beethoven - String Quartet No. 14: VI.
   - 'd4b8437e-5ee6-33b2-9462-3bb0d51ec0a0' # Beethoven - Symphony No. 6: I.
   - '63348c90-54ee-328a-88f1-edc3b9d4bf55' # Brahms - Violin Concerto: I.
   - '551b5d69-11a0-38f3-9b77-944a151500a3' # Chopin - Etudes Op. 25: No. 11

@@ -160,6 +160,7 @@
 | `8883f4bf` | Beethoven – String Quartet no. 11 in F minor, op. 95 | * I. Allegro con brio | 1810‑1811 |
 | `6472a326` | Beethoven – String Quartet no. 12 in E-flat major, op. 127 | * I. Maestoso - Allegro | 1823‑1824 |
 | `56fc7235` | Beethoven – String Quartet no. 13 in B-flat major, op. 130 | * V. Cavatina. Adagio molto espressivo | 1825‑1826 |
+| `7ce0f214` | Beethoven – String Quartet no. 14 in C-sharp minor, op. 131 | * VI. Adagio quasi un poco andante | 1825‑1826 |
 | `2638304f` | Beethoven – String Quartet no. 15 in A minor, op. 132 | * III. A Convalescent's Holy Song of Thanksgiving to the Deity, in the Lydian Mode. Molto adagio - Andante - Molto adagio - Andante - Molto adagio. Mit innigster Empfindung | 1824‑1826 |
 | `4d973e8d` | Beethoven – String Quartet no. 16 in F major, op. 135 | * I. Allegretto | 1826 |
 | `3c9a74de` | Beethoven – Symphony no. 1 in C major, op. 21 | * I. Adagio molto – Allegro con brio | 1799‑1800 |
@@ -170,7 +171,7 @@
 | `60e1dcf6` | Beethoven – Symphony no. 6 in F major, op. 68 “Pastorale” | * I. Allegro ma non troppo "Awakening of cheerful feelings upon arrival in the country" | 1808 |
 | `c7caedf2` | Beethoven – Symphony no. 7 in A major, op. 92 | * II. Allegretto | 1811‑1812 |
 | `256f32ec` | Beethoven – Symphony no. 8 in F major, op. 93 | * I. Allegro vivace e con brio | 1812 |
-| `c35b4956` | Beethoven – Symphony no. 9 in D minor, op. 125 “Choral” | * IV. Finale. Presto – Allegro assai | 1822‑1824 |
+| `c35b4956` | Beethoven – Symphony no. 9 in D minor, op. 125 “Choral” | * IV. Finale. Presto – Allegro assai | 1823‑1824 |
 | `7de3a5e2` | Beethoven – The Creatures of Prometheus, Op. 43 | * Die Geschöpfe des Prometheus, op. 43: Ouverture | 1800‑1801 |
 | `13735c98` | Beethoven – Trio for Piano, Clarinet [or Violin], and Cello no. 4 in B-flat major, op. 11 | * II. Adagio | 1797 |
 | `53ac5ed4` | Beethoven – Trio for Piano, Violin, and Cello no. 7 in B-flat major, op. 97 “Archduke” | * I. Allegro moderato | 1810‑1811 |
@@ -453,7 +454,6 @@
 | `99783678` | Haydn – Symphony no. 96 in D major, Hob. I:96 "Miracle" | * IV. Finale. Vivace assai | 1791 |
 | `eb4cf616` | Haydn – Symphony no. 99 in E-flat major, Hob. I:99 | * I. Adagio - Vivace assai | 1793 |
 | `0c2f8487` | Haydn – Trumpet Concerto in E-flat major | * Konzert für Trompete und Orchester Es-Dur, Hob. VIIe:1: III. Allegro | 1796 |
-| `2db498f7` | Haydn – Violin Concerto in C major, Hob. VIIa:1 | * II. Adagio | ? |
 | `085103a5` | Holst – 3 Hymns for the English Hymnal | * In the Bleak Midwinter | 1904‑1905 |
 | `439c1605` | Holst – The Planets, op. 32 | * IV. Jupiter, the Bringer of Jollity | 1914‑1916 |
 | `fc89d2b2` | Humperdinck – Hänsel und Gretel | * Vorspiel (Overture) | 1891‑1892 |

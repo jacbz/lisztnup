@@ -28,6 +28,7 @@ export const BEGINNER_TRACKLIST = [
 	'88a8eaa9', // Beethoven – Sonata for Piano no. 23 in F minor, op. 57 “Appassionata”
 	'26c8afae', // Beethoven – Sonata for Violin and Piano no. 5 in F major, op. 24 “Spring”
 	'87281f3c', // Beethoven – Sonata for Violin and Piano no. 9 in A major, op. 47 “Kreutzer”
+	'7ce0f214', // Beethoven - String Quartet No. 14 in C-sharp minor, op. 131
 	'80737426', // Beethoven – Symphony no. 3 in E‐flat major, op. 55 “Eroica”
 	'd03bff61', // Beethoven – Symphony no. 5 in C minor, op. 67
 	'60e1dcf6', // Beethoven – Symphony no. 6 in F major, op. 68 “Pastorale”
@@ -224,7 +225,6 @@ export const BEGINNER_TRACKLIST = [
 	'6763c20d', // Strauss II – On the Beautiful Blue Danube, op. 314
 	'38ed9e44', // Strauss II – Tritsch–Tratsch Polka, op. 214
 	'54dacada', // Stravinsky – Le Sacre du printemps
-	'2fbaaf2d', // Stravinsky – The Firebird
 	'77b37e65', // Suppè – Light Cavalry
 	'03c670e9', // Tchaikovsky – Piano Concerto no. 1 in B-flat minor, op. 23
 	'f7136e19', // Tchaikovsky – Concerto for Violin and Orchestra in D major, op. 35

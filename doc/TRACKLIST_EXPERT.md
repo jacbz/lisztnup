@@ -161,7 +161,6 @@
 | `40003498` | Bach – Fantasia super "Jesu, meine Freude", BWV 713 | * Fantasia super "Jesu, meine Freude", BWV 713 | ? |
 | `7880d4a3` | Bach – Fantasia super: Christ lag in Todesbanden, BWV 695 | * Fantasia super: Christ lag in Todesbanden, BWV 695 | ? |
 | `11aa8eb7` | Bach – Fantasie g-Moll, BWV 917 | * Fantasie g-Moll, BWV 917 | 1710 |
-| `4158a0a6` | Bach – Fantasie in F-sharp minor, H 300, Wq. 67 | * Fantasie in F-sharp minor, H 300, Wq. 67 | ? |
 | `ad2a3e74` | Bach – Fantasie und Fuge c-Moll, BWV 562 | * I. Fantasie | ? |
 | `7282d87c` | Bach – Fantasy and Fugue in C minor, BWV 906 | * Fantasie und Fuge c-Moll, BWV 906: I. Fantasie | ? |
 | `296d5d56` | Bach – Flute Sonata in C major, BWV 1033 | * II. Allegro<br>* III. Adagio<br>* IV. Menuetto I | 1736 |
@@ -628,6 +627,7 @@
 | `8883f4bf` | Beethoven – String Quartet no. 11 in F minor, op. 95 | * I. Allegro con brio<br>* II. Allegretto ma non troppo<br>* IV. Larghetto espressivo - Allegretto agitato - Allegro | 1810‑1811 |
 | `6472a326` | Beethoven – String Quartet no. 12 in E-flat major, op. 127 | * I. Maestoso - Allegro<br>* II. Adagio, ma non troppo e molto cantabile - Andante con moto - Adagio molto espressivo - Tempo I<br>* IV. Allegro - Allegro comodo | 1823‑1824 |
 | `56fc7235` | Beethoven – String Quartet no. 13 in B-flat major, op. 130 | * II. Presto<br>* IV. Alla danza tedesca. Allegro assai<br>* V. Cavatina. Adagio molto espressivo | 1825‑1826 |
+| `7ce0f214` | Beethoven – String Quartet no. 14 in C-sharp minor, op. 131 | * I. Adagio, ma non troppo e molto espressivo<br>* II. Allegro molto vivace<br>* VI. Adagio quasi un poco andante | 1825‑1826 |
 | `2638304f` | Beethoven – String Quartet no. 15 in A minor, op. 132 | * I. Assai sostenuto - Allegro<br>* II. Allegro ma non tanto<br>* III. A Convalescent's Holy Song of Thanksgiving to the Deity, in the Lydian Mode. Molto adagio - Andante - Molto adagio - Andante - Molto adagio. Mit innigster Empfindung | 1824‑1826 |
 | `4d973e8d` | Beethoven – String Quartet no. 16 in F major, op. 135 | * II. Vivace<br>* III. Lento assai, e cantante tranquillo<br>* IV. Grave, ma non troppo tratto - Allegro | 1826 |
 | `3c9a74de` | Beethoven – Symphony no. 1 in C major, op. 21 | * II. Andante cantabile con moto<br>* III. Menuetto. Allegro molto e vivace<br>* IV. Adagio – Allegro molto e vivace | 1799‑1800 |
@@ -638,7 +638,7 @@
 | `60e1dcf6` | Beethoven – Symphony no. 6 in F major, op. 68 “Pastorale” | * I. Allegro ma non troppo "Awakening of cheerful feelings upon arrival in the country"<br>* II. Andante molto mosso "Scene at the brook"<br>* V. "Shepherds' song: Cheerful and thankful feelings after the storm" Allegretto | 1808 |
 | `c7caedf2` | Beethoven – Symphony no. 7 in A major, op. 92 | * II. Allegretto<br>* III. Presto<br>* IV. Allegro con brio | 1811‑1812 |
 | `256f32ec` | Beethoven – Symphony no. 8 in F major, op. 93 | * II. Allegretto scherzando<br>* III. Tempo di menuetto<br>* IV. Allegro vivace | 1812 |
-| `c35b4956` | Beethoven – Symphony no. 9 in D minor, op. 125 “Choral” | * II. Scherzo. Molto vivace – Presto<br>* III. Adagio molto e cantabile – Andante moderato – Tempo I – Andante moderato – Adagio – Lo stesso tempo<br>* IV. Finale. Presto – Allegro assai | 1822‑1824 |
+| `c35b4956` | Beethoven – Symphony no. 9 in D minor, op. 125 “Choral” | * II. Scherzo. Molto vivace – Presto<br>* III. Adagio molto e cantabile – Andante moderato – Tempo I – Andante moderato – Adagio – Lo stesso tempo<br>* IV. Finale. Presto – Allegro assai | 1823‑1824 |
 | `7de3a5e2` | Beethoven – The Creatures of Prometheus, Op. 43 | * Die Geschöpfe des Prometheus, op. 43: Ouverture | 1800‑1801 |
 | `5cd70f87` | Beethoven – The Creatures of Prometheus, op. 43: Introduction. Allegro non troppo | * Introduction. Allegro non troppo | 1801 |
 | `2ff4d781` | Beethoven – Three duos for clarinet & bassoon, WoO 27 | * Duo for clarinet & bassoon in C major, WoO 27 no. 1: I. Allegro commodo<br>* Duo for clarinet & bassoon in C major, WoO 27 no. 1: II. Larghetto sostenuto<br>* Duo for clarinet & bassoon in C major, WoO 27 no. 1: III. Rondo: Allegretto | 1792‑1810 |

@@ -291,6 +291,7 @@
 | `8883f4bf` | Beethoven – String Quartet no. 11 in F minor, op. 95 | * I. Allegro con brio<br>* II. Allegretto ma non troppo | 1810‑1811 |
 | `6472a326` | Beethoven – String Quartet no. 12 in E-flat major, op. 127 | * II. Adagio, ma non troppo e molto cantabile - Andante con moto - Adagio molto espressivo - Tempo I<br>* IV. Allegro - Allegro comodo | 1823‑1824 |
 | `56fc7235` | Beethoven – String Quartet no. 13 in B-flat major, op. 130 | * IV. Alla danza tedesca. Allegro assai<br>* V. Cavatina. Adagio molto espressivo | 1825‑1826 |
+| `7ce0f214` | Beethoven – String Quartet no. 14 in C-sharp minor, op. 131 | * I. Adagio, ma non troppo e molto espressivo<br>* VI. Adagio quasi un poco andante | 1825‑1826 |
 | `2638304f` | Beethoven – String Quartet no. 15 in A minor, op. 132 | * II. Allegro ma non tanto<br>* III. A Convalescent's Holy Song of Thanksgiving to the Deity, in the Lydian Mode. Molto adagio - Andante - Molto adagio - Andante - Molto adagio. Mit innigster Empfindung | 1824‑1826 |
 | `4d973e8d` | Beethoven – String Quartet no. 16 in F major, op. 135 | * II. Vivace<br>* III. Lento assai, e cantante tranquillo | 1826 |
 | `3c9a74de` | Beethoven – Symphony no. 1 in C major, op. 21 | * II. Andante cantabile con moto<br>* IV. Adagio – Allegro molto e vivace | 1799‑1800 |
@@ -301,7 +302,7 @@
 | `60e1dcf6` | Beethoven – Symphony no. 6 in F major, op. 68 “Pastorale” | * I. Allegro ma non troppo "Awakening of cheerful feelings upon arrival in the country"<br>* V. "Shepherds' song: Cheerful and thankful feelings after the storm" Allegretto | 1808 |
 | `c7caedf2` | Beethoven – Symphony no. 7 in A major, op. 92 | * II. Allegretto<br>* IV. Allegro con brio | 1811‑1812 |
 | `256f32ec` | Beethoven – Symphony no. 8 in F major, op. 93 | * II. Allegretto scherzando<br>* III. Tempo di menuetto | 1812 |
-| `c35b4956` | Beethoven – Symphony no. 9 in D minor, op. 125 “Choral” | * II. Scherzo. Molto vivace – Presto<br>* IV. Finale. Presto – Allegro assai | 1822‑1824 |
+| `c35b4956` | Beethoven – Symphony no. 9 in D minor, op. 125 “Choral” | * II. Scherzo. Molto vivace – Presto<br>* IV. Finale. Presto – Allegro assai | 1823‑1824 |
 | `7de3a5e2` | Beethoven – The Creatures of Prometheus, Op. 43 | * Die Geschöpfe des Prometheus, op. 43: Ouverture | 1800‑1801 |
 | `13735c98` | Beethoven – Trio for Piano, Clarinet [or Violin], and Cello no. 4 in B-flat major, op. 11 | * I. Allegro con brio<br>* II. Adagio | 1797 |
 | `16992485` | Beethoven – Trio for Piano, Violin, and Cello in E-flat major, WoO 38 | * I. Allegro moderato<br>* II. Scherzo. Allegro ma non troppo | 1791 |
@@ -1574,7 +1575,6 @@
 | `bc0337ee` | Schubert – String Quartet no. 13 in A minor, D. 804, op. 29 “Rosamunde” | * I. Allegro ma non troppo<br>* II. Andante | 1824 |
 | `c6e6e640` | Schubert – String Quartet no. 14 in D minor, D. 810 “Death and the Maiden” | * II. Andante con moto<br>* III. Scherzo (Allegro molto) | 1824 |
 | `42899d69` | Schubert – String Quartet no. 15 in G major, D. 887, op. post. 161 | * I. Allegro molto moderato<br>* III. Scherzo. Allegro vivace - Trio. Allegretto | 1826 |
-| `f584b586` | Schubert – String Quartet no. 8 in B-flat major, D. 112 | * I. Allegro ma non troppo<br>* II. Andante sostenuto | 1814 |
 | `5e47150f` | Schubert – String Quartet no. 9 in G minor, D. 173 | * I. Allegro con brio<br>* III. Menuetto. Allegro vivace | 1815 |
 | `924a3a1e` | Schubert – String Quintet in C major, D. 956 | * I. Allegro ma non troppo<br>* II. Adagio | 1828 |
 | `24f2ca89` | Schubert – Suleika I, op. 14 no. 1, D. 720 | * Suleika I, op. 14 no. 1, D. 720 | 1821 |
