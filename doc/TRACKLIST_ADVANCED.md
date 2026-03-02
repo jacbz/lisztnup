@@ -309,6 +309,7 @@
 | `a33cdb4e` | Beethoven – Trio for Violin, Viola, and Cello in E-flat major, op. 3 | * I. Allegro con brio<br>* V. Menuetto. Moderato | 1794 |
 | `bcd958bd` | Beethoven – Two Piano Sonatas, op. 27 | * Sonata for Piano no. 14 in C-sharp minor, op. 27 no. 2 “Moonlight”: I. Adagio sostenuto<br>* Sonata for Piano no. 14 in C-sharp minor, op. 27 no. 2 “Moonlight”: III. Presto agitato | 1801 |
 | `19c3772e` | Beethoven – Zärtliche Liebe, WoO 123 "Ich liebe dich so wie du mich" | * Zärtliche Liebe, WoO 123 "Ich liebe dich so wie du mich" | 1795 |
+| `c92f35ad` | Beethoven – Zwölf Variationen F-Dur über das Thema "Se vuol ballare", WoO 40: Thema. Allegretto - Variazioni I-XII - Coda | * Zwölf Variationen F-Dur über das Thema "Se vuol ballare", WoO 40: Thema. Allegretto - Variazioni I-XII - Coda | 1792‑1793 |
 | `415bad45` | Bellini – I puritani | * Atto II. N°16a “O rendetemi la speme” (Elvira, Riccardo, Giorgio)<br>* Atto II. N°16b “Qui la voce sua soave” (Elvira, Riccardo, Giorgio) | ? |
 | `ecf71f3a` | Bellini – La sonnambula | * Atto I, scena 1. Recitativo e cavatina “Care compagne, teneri amici… Come per me sereno” (Amina, Tutti)<br>* Atto II, scena 2. “Ah! Non credea mirarti” (Amina, Elvino) | ? |
 | `3ee98c65` | Bellini – Norma | * Atto I, scena 1. Scena e cavatina “Casta diva, che inargenti” (Norma, coro) | 1831 |
@@ -862,6 +863,7 @@
 | `df39673a` | Holst – St. Paul’s Suite for String Orchestra, op. 29 no. 2 | * I. Jig. Vivace<br>* IV. Finale (The Dargason). Allegro | 1912 |
 | `439c1605` | Holst – The Planets, op. 32 | * I. Mars, the Bringer of War<br>* IV. Jupiter, the Bringer of Jollity | 1914‑1916 |
 | `f842e25f` | Honegger – Pacific 231 | * Pacific 231 | 1923 |
+| `71cbac8d` | Horowitz – Variations on a Theme from Carmen | * Variations on a Theme from Carmen | ? |
 | `837301f8` | Howells – Three Carol-Anthems | * A Spotless Rose | 1919 |
 | `f7ca89a2` | Hummel – Trumpet Concerto in E-flat major | * II. Andante<br>* III. Rondo. Allegro | 1803 |
 | `fc89d2b2` | Humperdinck – Hänsel und Gretel | * Hansel and Gretel: Evening Prayer<br>* Vorspiel (Overture) | 1891‑1892 |
@@ -933,7 +935,7 @@
 | `52dec80f` | Liszt – En rêve - Nocturne, S. 207 | * En rêve - Nocturne, S. 207 | 1885 |
 | `91a50e75` | Liszt – Fantasia on Hungarian Folk Melodies for piano and orchestra, S. 123 | * Fantasia on Hungarian Folk Melodies for piano and orchestra, S. 123 | 1846‑1852 |
 | `5346c5d4` | Liszt – Grandes études de Paganini, S. 141 | * No. 3. La campanella in G‐sharp minor | 1851 |
-| `49d54dc0` | Liszt – Harmonies poétiques et religieuses, S. 173 | * No. 7. Funérailles | 1849 |
+| `49d54dc0` | Liszt – Harmonies poétiques et religieuses, S. 173 | * No. 3. Bénédiction de Dieu dans la solitude<br>* No. 7. Funérailles | 1849 |
 | `7d2dae89` | Liszt – Konzert-Paraphrase über Verdis "Rigoletto", S. 434 | * Konzert-Paraphrase über Verdis "Rigoletto", S. 434 | ? |
 | `615ae7e7` | Liszt – La lugubre gondola, S. 200/2 | * La lugubre gondola, S. 200/2 | 1883 |
 | `5e852053` | Liszt – Les Préludes, S. 97 | * Les Préludes, S. 97 | 1850‑1855 |
@@ -957,6 +959,7 @@
 | `e474f649` | Lloyd Webber – Requiem | * Pie Jesu | ? |
 | `6a5cbb29` | Lotti – Crucifixus a 8 | * Crucifixus a 8 | ? |
 | `f949e1c5` | Lutosławski – Concerto for Orchestra | * I. Intrada. Allegro maestoso<br>* II. Capriccio notturno e Arioso. Vivace | 1950‑1954 |
+| `e246a5de` | Lutosławski – Variations on a Theme of Paganini | * Variations on a Theme of Paganini | 1941 |
 | `a01c5fa7` | Lyadov – The Enchanted Lake, op. 62 | * The Enchanted Lake, op. 62 | 1909 |
 | `76b6aa85` | MacDowell – 10 Woodland Sketches, op. 51 | * No. 1. To a Wild Rose | 1896 |
 | `157b073f` | Mahler – Lieder aus “Des Knaben Wunderhorn” | * Des Knaben Wunderhorn: Rheinlegendchen<br>* Des Knaben Wunderhorn: Wo die schönen Trompeten blasen | 1892‑1898 |
@@ -1623,7 +1626,6 @@
 | `179f16b1` | Schumann – Nachtstücke, op. 23 | * III. Mit großer Lebhaftigkeit<br>* IV. Ad libitum - Einfach | 1839 |
 | `419de2c2` | Schumann – Novelletten, op. 21 | * I. Markiert und kräftig<br>* II. Äußerst rasch und mit Bravour | 1838 |
 | `51bf8c8f` | Schumann – Papillons, op. 2 | * Introduzione. Moderato<br>* Nr. 2 Prestissimo | 1829‑1831 |
-| `17dc2767` | Schumann – Phantasiestücke, op. 88 | * I. Romanze<br>* III. Duett | 1842 |
 | `efcc3125` | Schumann – Piano Quartet in E-flat major, op. 47 | * III. Andante cantabile<br>* IV. Finale. Vivace | 1842 |
 | `9e6cbe3d` | Schumann – Piano Quintet in E-flat major, op. 44 | * I. Allegro brillante<br>* IV. Allegro, ma non troppo | 1842 |
 | `9179cca6` | Schumann – Piano Sonata no. 2 in G minor, op. 22 | * I. So rasch wie möglich - Schneller - Noch schneller<br>* II. Andantino. Getragen | 1833‑1838 |
@@ -1647,8 +1649,8 @@
 | `9b3061f1` | Scriabin – 24 Preludes, op. 11 | * No. 5 in D major. Andante cantabile<br>* No. 9 in E major. Andantino | 1888‑1896 |
 | `fa4d4ecd` | Scriabin – 3 Pieces, op. 2 | * No. 1. Étude in C‐sharp minor | 1886‑1889 |
 | `4b229715` | Scriabin – 5 Preludes, op. 16 | * No. 1 in B major. Andante<br>* No. 4 in E‐flat minor. Lento | 1894‑1895 |
-| `6241b66d` | Scriabin – 8 Études, op. 42 | * No. 5 in C‐sharp minor. Affanato | 1903 |
-| `c75262d3` | Scriabin – Deux poèmes, op. 32 | * No. 1. Poème en fa dièse majeur | 1903 |
+| `6241b66d` | Scriabin – 8 Études, op. 42 | * No. 3 in F‐sharp major<br>* No. 5 in C‐sharp minor. Affanato | 1903 |
+| `c75262d3` | Scriabin – Deux poèmes, op. 32 | * No. 1. Poème en fa dièse majeur<br>* No. 2. Poème en ré majeur | 1903 |
 | `dc42d813` | Scriabin – Five Preludes, op. 74 | * No. 1. Doloureux, déchirant<br>* No. 3. Allegro drammatico | ? |
 | `bc2d0194` | Scriabin – Le Poème de l'extase, op. 54 "Symphony no. 4" | * Le Poème de l'extase, op. 54 "Symphony no. 4" | 1905‑1908 |
 | `0b05f1af` | Scriabin – Piano Sonata no. 1 in F minor, op. 6 | * I. Allegro con fuoco<br>* IV. Funèbre | 1892 |
@@ -1762,7 +1764,6 @@
 | `55f0a8a1` | Strauss – Don Quixote | * op. 35: Variation II: The Battle With the Sheep<br>* op. 35: Epilogue: Don Quixote's Mind Clears. Death of Don Quixote | 1897 |
 | `927ad721` | Strauss – Egyptischer Marsch, op. 335 | * Egyptischer Marsch, op. 335 | ? |
 | `e0ee1792` | Strauss – Ein Heldenleben | * A Hero’s Life, op. 40: 1. The Hero<br>* A Hero’s Life, op. 40: 2. The Hero’s Adversaries | 1898 |
-| `cda880ae` | Strauss – Eine Nacht in Venedig | * Akt I. Gondellied "Komm' in die Gondel, mein Liebchen" (Herzog, Delacqua, Annina) | ? |
 | `49adc2c3` | Strauss – Éljen a Magyar, op. 332 | * Éljen a Magyar, op. 332 | ? |
 | `17c5bf4e` | Strauss – Emperor Waltz, op. 437 | * Emperor Waltz, op. 437 | 1889 |
 | `07393065` | Strauss – Four Last Songs, AV 150 | * 3. “When You Go to Sleep”<br>* 4. “In the Afterglow” | 1948 |
@@ -1813,7 +1814,6 @@
 | `1a00a184` | Stravinsky – L’Oiseau de feu, suite de 1919 | * III. Danse infernale du roi Kachtcheï<br>* III. Finale | 1919 |
 | `a79fb213` | Stravinsky – Le Chant du rossignol | * III. Chant du rossignol<br>* IV. Jeu du rossignol mécanique | 1917 |
 | `54dacada` | Stravinsky – Le Sacre du printemps | * I. L’Adoration de la terre: VI. Cortège du Sage<br>* II. Le Sacrifice: VI. Danse sacrale (L’Élue) | 1911‑1913 |
-| `6b3a726b` | Stravinsky – Octet for Wind Instruments | * I. Sinfonia<br>* III. Finale | 1923 |
 | `57deae1f` | Stravinsky – Pétrouchka | * Pétrouchka : Tableau Ic. Danse russe<br>* Pétrouchka : Tableau II. Chez Pétrouchka | ? |
 | `8acf6c28` | Stravinsky – Pulcinella Suite | * I. Sinfonia (Ouverture)<br>* IV. Tarantella | ? |
 | `a0872503` | Stravinsky – Symphonies of Wind Instruments | * Symphonies of Wind Instruments | 1920 |

@@ -13,6 +13,7 @@
 | `8508f407` | Bach – Choralvorspiel, BWV 605 "Der Tag, der ist so freudenreich" | * Choralvorspiel, BWV 605 "Der Tag, der ist so freudenreich" | ? |
 | `8ba330f2` | Bach – Choralvorspiel, BWV 614 "Das alte Jahr vergangen ist" | * Choralvorspiel, BWV 614 "Das alte Jahr vergangen ist" | ? |
 | `dcf4aa55` | Bach – Choralvorspiel, BWV 622 "O Mensch bewein dein Sünde groß" | * Choralvorspiel, BWV 622 "O Mensch bewein dein Sünde groß" | ? |
+| `70d87e82` | Bach – Choralvorspiele für Orgel in a-Moll, BWV 625 "Christ lag in Todesbanden" | * Choralvorspiele für Orgel in a-Moll, BWV 625 "Christ lag in Todesbanden" | ? |
 | `f114dc56` | Bach – Choralvorspiele für Orgel in F-Dur, BWV 618 "O Lamm Gottes, unschuldig" | * Choralvorspiele für Orgel in F-Dur, BWV 618 "O Lamm Gottes, unschuldig" | ? |
 | `2fc5f337` | Bach – Christmas Oratorio, BWV 248 | * Weihnachts-Oratorium, BWV 248: Teil II, X. Sinfonia | 1734 |
 | `7031bd90` | Bach – Chromatische Fantasie und Fuge d-Moll, BWV 903 | * I. Fantasie | 1717‑1723 |
@@ -41,7 +42,6 @@
 | `8b3a9214` | Bach – Inventio Nr. 2 c-Moll, BWV 773 | * Inventio Nr. 2 c-Moll, BWV 773 | ? |
 | `f8b6980d` | Bach – Inventio Nr. 3 D-Dur, BWV 774 | * Inventio Nr. 3 D-Dur, BWV 774 | ? |
 | `e3d95013` | Bach – Inventio Nr. 4 d-Moll, BWV 775 | * Inventio Nr. 4 d-Moll, BWV 775 | ? |
-| `f486b15e` | Bach – Inventio Nr. 5 Es-Dur, BWV 776 | * Inventio Nr. 5 Es-Dur, BWV 776 | ? |
 | `d4cd3ec1` | Bach – Inventio Nr. 6 E-Dur, BWV 777 | * Inventio Nr. 6 E-Dur, BWV 777 | ? |
 | `edcd30e1` | Bach – Inventio Nr. 8 F-Dur, BWV 779 | * Inventio Nr. 8 F-Dur, BWV 779 | ? |
 | `97a2c256` | Bach – Italian Concerto in F major, BWV 971 | * I. [Allegro] | 1735 |
@@ -321,6 +321,7 @@
 | `b4716010` | Coates – The Dam Busters March | * The Dam Busters March | 1955 |
 | `a46f3c70` | Copland – Appalachian Spring Suite | * VII. Doppio movimento: Variations on a Shaker Hymn | 1945 |
 | `f846bc6f` | Copland – Fanfare for the Common Man | * Fanfare for the Common Man | 1942 |
+| `c72e86c7` | Copland – Four Dance Episodes from Rodeo | * Rodeo: IV. Hoedown | 1942 |
 | `f5155e79` | Corelli – 12 concerti grossi, op. 6 | * Concerto Grosso in G minor, op. 6 no. 8 “Christmas Concerto”: VI. Pastorale (Largo) | ? |
 | `906ee67e` | Cottrau – Santa Lucia | * Santa Lucia | ? |
 | `bd18eb14` | Debussy – Children’s Corner, L. 113, CD 119 | * VI. Golliwogg’s Cake‐Walk | 1906‑1908 |
@@ -468,7 +469,6 @@
 | `9eecec2b` | Kodály – Háry János Suite | * II. Viennese Musical Clock: Allegretto | 1926‑1927 |
 | `d4d03cc3` | Kreisler – Alt-Wiener Tanzweisen | * Liebesleid | 1905 |
 | `d9030387` | Kreisler – Caprice viennois, op. 2 | * Caprice viennois, op. 2 | 1910 |
-| `1ee21089` | Kreisler – Prélude et Allegro dans le style de Pugnani | * Prélude et Allegro dans le style de Pugnani | ? |
 | `b17b78e3` | Kreisler – Tambourin chinois, op. 3 | * Tambourin chinois, op. 3 | ? |
 | `9cf137ed` | Lalo – Symphonie espagnole in D minor, op. 21 | * II. Scherzando. Allegro molto | 1874 |
 | `a6f7b108` | Lehár – Das Land des Lächelns | * Akt II. Nr. 11 „Dein ist mein ganzes Herz” (Sou-Chong) | ? |
@@ -520,7 +520,6 @@
 | `592979bd` | Mendelssohn – Rondo capriccioso, op. 14 | * Rondo capriccioso, op. 14 | 1824 |
 | `1ab2a0ee` | Mendelssohn – Song Without Words, op. 109 | * Song Without Words, op. 109 | 1845 |
 | `f70722cf` | Mendelssohn – Songs Without Words, op. 19b | * Song Without Words in E major, Op. 19b No. 1 | 1829‑1830 |
-| `f839f497` | Mendelssohn – Songs Without Words, op. 30 | * Song Without Words in F-sharp minor, Op. 30 No. 6 | 1833‑1834 |
 | `fe2e9ed4` | Mendelssohn – Songs Without Words, op. 62 | * Song Without Words in A major, Op. 62 No. 6 | 1841‑1844 |
 | `82b881e8` | Mendelssohn – Songs Without Words, op. 67 | * Song Without Words in C major, Op. 67 No. 4 | 1843‑1845 |
 | `053396fb` | Mendelssohn – String Quartet no. 2 in A minor, op. 13 | * III. Intermezzo. Allegretto con moto – Allegro di molto | 1827 |
@@ -530,6 +529,7 @@
 | `3329a6c8` | Mendelssohn – The Hebrides, op. 26 “Fingal’s Cave” | * The Hebrides, op. 26 “Fingal’s Cave” | 1830 |
 | `ea02583a` | Mendelssohn – Trio for Piano, Violin and Violoncello no. 1 in D minor, op. 49 | * I. Molto allegro | 1839 |
 | `4342b5d4` | Mendelssohn – Trio for Piano, Violin and Violoncello no. 2 in C minor, op. 66 | * I. Allegro energico e con fuoco | 1845 |
+| `4bb2c66a` | Mendelssohn – Variations Sérieuses in D minor, op. 54 | * Variations Sérieuses in D minor, op. 54 | 1841 |
 | `c230858f` | Mendelssohn – Violin Concerto in E minor, op. 64 | * I. Allegro molto appassionato | 1838‑1844 |
 | `92eab622` | Messiaen – Quartet for the End of Time | * Quatuor pour la fin du Temps : V. Louange à l'Éternité de Jesus | 1940 |
 | `fe664803` | Meyerbeer – L’africana: Atto IV. “Mi batte il cor” … “O Paradiso” | * L’africana: Atto IV. “Mi batte il cor” … “O Paradiso” | ? |

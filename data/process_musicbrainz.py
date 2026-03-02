@@ -51,7 +51,7 @@ log = logging.getLogger("lisztnup")
 MIN_WORKS_PER_COMPOSER = 1      # Composers with fewer final works than this will be dropped.
 MIN_BIRTH_YEAR = 1400           # Composers born before this year will be dropped.
 MIN_RECORDINGS_PER_PART = 3     # Leaf works (parts) with fewer recordings will be dropped at the start.
-MINIMUM_WSS = 1.6               # The absolute minimum Work Significance Score for a work to be considered.
+MINIMUM_WSS = 1.4               # The absolute minimum Work Significance Score for a work to be considered.
 
 # --- Popularity Scoring Parameters ---
 POPULARITY_ALPHA = 0.5          # Balances peak vs. average part popularity in the WSS formula.
@@ -439,6 +439,8 @@ class MusicbrainzProcessor:
                 leaf_parts = self._filter_and_flatten_tree(root_work)
                 
                 if not leaf_parts:
+                    log.debug("WORK SKIPPED (no leaf parts) | %s (%s) | Composer: %s | Source type: %s",
+                              root_work.name, root_work.gid, composer.name, root_work.type)
                     continue
 
                 # Root shared recordings boost: Recordings attached to the parent work
@@ -486,26 +488,33 @@ class MusicbrainzProcessor:
 
                 if not potential_parts:
                     self.stats["works_dropped_became_empty"] += 1
+                    log.debug("WORK SKIPPED (no parts with Deezer IDs) | %s (%s) | Composer: %s | Source type: %s",
+                              root_work.name, root_work.gid, composer.name, root_work.type)
                     continue
 
                 # Apply WSS Overrides
                 if root_work.gid in self.wss_overrides:
+                    log.debug("WSS OVERRIDE | %s (%s) | %.2f -> %.2f", root_work.name, root_work.gid, wss, self.wss_overrides[root_work.gid])
                     wss = self.wss_overrides[root_work.gid]
                 
                 # Apply Year Overrides
                 begin_year, end_year = root_work.begin_year, root_work.end_year
                 if root_work.gid in self.year_overrides:
                     override = self.year_overrides[root_work.gid]
+                    log.debug("YEAR OVERRIDE | %s (%s) | %s/%s -> %s", root_work.name, root_work.gid, begin_year, end_year, override)
                     if isinstance(override, list) and len(override) >= 2:
                         begin_year, end_year = override[0], override[1]
                     elif isinstance(override, int):
                         begin_year, end_year = None, override
 
+                work_type = self._transform_type(root_work, composer)
+                log.info("WORK CANDIDATE | %s (%s) | Composer: %s | Source type: %s | Final type: %s | WSS: %.2f | Parts: %d",
+                         root_work.name, root_work.gid, composer.name, root_work.type, work_type, round(wss, 2), len(potential_parts))
                 candidates.append(FinalWork(
                     gid=root_work.gid,
                     composer=composer.gid,
                     name=root_work.name,
-                    type=self._transform_type(root_work, composer),
+                    type=work_type,
                     begin_year=begin_year,
                     end_year=end_year,
                     score=round(wss, 2),
@@ -524,6 +533,7 @@ class MusicbrainzProcessor:
                 c_name = self._composer_names[w.composer]
                 if c_name in self.excluded_composers:
                     self.stats["works_dropped_excluded_composer"] += 1
+                    log.info("WORK DROPPED (excluded composer) | %s (%s) | Composer: %s", w.name, w.gid, c_name)
                     continue
             
             # Check Excluded Work
@@ -609,7 +619,7 @@ class MusicbrainzProcessor:
                 else:
                     self.stats["parts_dropped_all_deezer_banned"] += 1
                     banned_in_part = original_ids.intersection(runtime_banned_ids)
-                    log.debug("PART DROPPED (Deezer ban) | %s (%s) | Work: %s (%s) | Offending IDs: %s", 
+                    log.debug("PART DROPPED (No Deezer remaining after ban) | %s (%s) | Work: %s (%s) | Offending IDs: %s", 
                               part.name, part.gid, work.name, work.gid, banned_in_part)
             
             work.parts = cleaned_parts
@@ -636,7 +646,7 @@ class MusicbrainzProcessor:
             # If max is less than 100 (and greater than 0), scale up
             if 0 < max_score < 99.9:
                 factor = 100.0 / max_score
-                # log.debug("RENORMALIZING | %s | Max was %.2f, factor %.2f", work.name, max_score, factor)
+                log.debug("RENORMALIZING | %s (%s) | Max was %.2f, factor %.2f", work.name, work.gid, max_score, factor)
                 for p in work.parts:
                     p.score = min(100.0, round(p.score * factor, 2))
 
@@ -869,12 +879,16 @@ class MusicbrainzProcessor:
         if not work.subworks:
             if len(work.recordings) >= MIN_RECORDINGS_PER_PART:
                 return [work]
+            log.debug("PART DROPPED (too few recordings) | %s (%s) | Recordings: %d < %d",
+                      work.name, work.gid, len(work.recordings), MIN_RECORDINGS_PER_PART)
             return []
 
         filtered_leafs = [
             leaf for sub in work.subworks for leaf in self._filter_and_flatten_tree(sub)
         ]
         if not filtered_leafs and len(work.recordings) >= MIN_RECORDINGS_PER_PART:
+            log.debug("WORK PROMOTED TO LEAF (no subwork leaves survived) | %s (%s) | Recordings: %d",
+                      work.name, work.gid, len(work.recordings))
             return [work]
         return filtered_leafs
 
@@ -884,12 +898,19 @@ class MusicbrainzProcessor:
         work_name_normalized = work.name.replace("’", "'").replace("“", '"').replace("”", '"')
 
         if work.gid in self.manual_classification_overrides:
-            return self.manual_classification_overrides[work.gid]
+            result = self.manual_classification_overrides[work.gid]
+            log.debug("TYPE RESOLVED (manual override) | %s (%s) | %s -> %s | Composer: %s",
+                      work.name, work.gid, work.type, result, composer_name)
+            return result
 
         if "Piano Sonata" in work_name_normalized and work.type == "Sonata":
+            log.debug("TYPE RESOLVED (Piano Sonata special case) | %s (%s) | %s -> piano | Composer: %s",
+                      work.name, work.gid, work.type, composer_name)
             return "piano"
 
         if "ballet" in work_name_normalized.lower():
+            log.debug("TYPE RESOLVED (ballet keyword) | %s (%s) | %s -> ballet | Composer: %s",
+                      work.name, work.gid, work.type, composer_name)
             return "ballet"
         
         # Composer specific rules
@@ -898,18 +919,27 @@ class MusicbrainzProcessor:
                 if isinstance(patterns, list):
                     for pattern in patterns:
                         if isinstance(pattern, str) and re.search(pattern, work_name_normalized, re.IGNORECASE):
+                            log.debug("TYPE RESOLVED (composer-specific rule) | %s (%s) | %s -> %s | Composer: %s | Pattern: %s",
+                                      work.name, work.gid, work.type, rule_type, composer_name, pattern)
                             return rule_type
 
         if work.type in TYPE_MAPPING and TYPE_MAPPING[work.type] != "other":
-            return TYPE_MAPPING[work.type]
+            result = TYPE_MAPPING[work.type]
+            log.debug("TYPE RESOLVED (TYPE_MAPPING) | %s (%s) | %s -> %s | Composer: %s",
+                      work.name, work.gid, work.type, result, composer_name)
+            return result
 
         # General rules
         for rule_type, patterns in self.general_rules.items():
             if isinstance(patterns, list):
                 for pattern in patterns:
                     if isinstance(pattern, str) and re.search(pattern, work_name_normalized, re.IGNORECASE):
+                        log.debug("TYPE RESOLVED (general rule) | %s (%s) | %s -> %s | Composer: %s | Pattern: %s",
+                                  work.name, work.gid, work.type, rule_type, composer_name, pattern)
                         return rule_type
 
+        log.debug("TYPE UNRESOLVED (no rule matched) | %s (%s) | Source type: %s -> other | Composer: %s",
+                  work.name, work.gid, work.type, composer_name)
         self.unresolved_work_candidates[composer.gid].append((work.name, work.type))
         return "other"
 
@@ -968,6 +998,7 @@ class MusicbrainzProcessor:
         for w in works:
             if w.gid == "812b5cc4-a7a0-3809-aa6c-290c9ebd79be": # Peter and the Wolf
                 # Replace parts with a specific manually selected recording
+                log.info("SPECIAL PATCH | %s (%s) | Replacing parts with manual selection", w.name, w.gid)
                 w.parts = [
                     FinalPart(
                         gid="manual-patch-gid",

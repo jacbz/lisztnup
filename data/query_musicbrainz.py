@@ -269,6 +269,7 @@ eligible_works AS (
         -- Exceptions for errors in the MusicBrainz database (can be removed with next dump update)
         AND lww.entity0 != 13641795 -- "Fantasia"
         AND lww.entity0 != 13046429 -- "An American in Paris" (2015 musical)
+        AND lww.entity0 != 13892679 -- "Beethoven Op. 131"
         AND w.id NOT IN (SELECT id FROM work_exceptions)
     )
     AND NOT EXISTS (
