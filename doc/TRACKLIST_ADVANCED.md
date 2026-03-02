@@ -747,7 +747,6 @@
 | `31d7a07f` | Giuliani – First Grand Concerto for Guitar, op. 30 | * Guitar Concerto in A major, op. 30: II. Andantino siciliano<br>* Guitar Concerto in A major, op. 30: III. Alla polacca | 1808 |
 | `dab2b054` | Glass – Mad Rush | * Mad Rush | 1979 |
 | `0a0b8c60` | Glass – Metamorphosis | * Metamorphosis I<br>* Metamorphosis II | 1988 |
-| `1bfa272b` | Glazunov – Four Musical Pictures from the Opera "The Golden Cockerel" | * I. Introduction and Dodon's Sleep<br>* II. King Dodon on the Battlefield | 1913 |
 | `b8be14dc` | Glière – The Red Poppy Suite, op. 70 | * VI. Russian Sailor’s Dance | ? |
 | `d1b335d1` | Glinka – Ruslan and Lyudmila | * Overture | 1837‑1842 |
 | `89d3eaa1` | Gluck – Orfeo ed Euridice, Wq. 30 | * Atto III. Aria “Che farò senza Euridice?” (Orfeo) | 1762 |
@@ -939,7 +938,7 @@
 | `49d54dc0` | Liszt – Harmonies poétiques et religieuses, S. 173 | * No. 3. Bénédiction de Dieu dans la solitude<br>* No. 7. Funérailles | 1849 |
 | `7d2dae89` | Liszt – Konzert-Paraphrase über Verdis "Rigoletto", S. 434 | * Konzert-Paraphrase über Verdis "Rigoletto", S. 434 | ? |
 | `615ae7e7` | Liszt – La lugubre gondola, S. 200/2 | * La lugubre gondola, S. 200/2 | 1883 |
-| `5e852053` | Liszt – Les Préludes, S. 97 | * Les Préludes, S. 97 | 1850‑1855 |
+| `5e852053` | Liszt – Les Préludes, S. 97 | * Les Préludes, S. 97 | 1848 |
 | `879ddafd` | Liszt – Liebesträume, S. 541 | * No. 3 Liebestraum in A flat major “Dream of Love” | 1850 |
 | `158e25fe` | Liszt – Mazeppa, S. 100 | * Mazeppa, S. 100 | ? |
 | `982af684` | Liszt – Mephisto Waltz no. 1, S. 514 "Der Tanz in der Dorfschenke" | * Mephisto Waltz no. 1, S. 514 "Der Tanz in der Dorfschenke" | 1860 |
@@ -1393,6 +1392,7 @@
 | `874eec4c` | Rheinberger – Drei geistliche Gesänge, op. 69 | * Abendlied, op. 69 nr. 3 | ? |
 | `a645d42f` | Riley – In C | * In C | 1964 |
 | `18d5c524` | Rimsky‐Korsakov – Capriccio espagnol, Op. 34 | * I. Alborada<br>* II. Variazioni | 1887 |
+| `1bfa272b` | Rimsky‐Korsakov – Four Musical Pictures from the Opera "The Golden Cockerel" | * I. Introduction and Dodon's Sleep<br>* II. King Dodon on the Battlefield | 1907 |
 | `840155b0` | Rimsky‐Korsakov – Russian Easter Festival Overture, op. 36 | * Russian Easter Festival Overture, op. 36 | 1887‑1888 |
 | `4bf36cb5` | Rimsky‐Korsakov – Scheherazade, op. 35 | * I. The Sea and Sinbad’s Ship<br>* III. The Young Prince and the Young Princess | 1888 |
 | `0e7487cf` | Rimsky‐Korsakov – Suite from “The Snow Maiden” | * IV. Dance of the Tumblers | 1895 |

@@ -1455,7 +1455,6 @@
 | `e5919526` | Glass – The Complete Piano Etudes | * Etude no. 2<br>* Etude no. 5<br>* Etude no. 9 | 1994‑1995 |
 | `2f339706` | Glass – Violin Concerto no. 1 | * I. ♩ = 104 — ♩ = 120<br>* III. ♩ = ca. 150 — Coda. Poco meno, ♩ = 104 | 1987 |
 | `5024e9b8` | Glazunov – Concert Waltz no. 1 in D major, op. 47 | * Concert Waltz no. 1 in D major, op. 47 | 1893 |
-| `1bfa272b` | Glazunov – Four Musical Pictures from the Opera "The Golden Cockerel" | * I. Introduction and Dodon's Sleep<br>* II. King Dodon on the Battlefield<br>* III. Queen of Shamakha's Dance - King Dodon's Dance | 1913 |
 | `494a3341` | Glazunov – Minstrel's Song | * Minstrel's Song | 1900 |
 | `33d3d11c` | Glazunov – Symphony no. 4 in E-flat major, op. 48 | * I. Andante - allegro moderato<br>* II. Scherzo, allegro vivace<br>* III. Andante - allegro | 1893 |
 | `067fd7d8` | Glazunov – Violin Concerto in A minor, op. 82 | * Violin Concerto in A minor, op. 82 | 1904 |
@@ -1894,7 +1893,7 @@
 | `7d2dae89` | Liszt – Konzert-Paraphrase über Verdis "Rigoletto", S. 434 | * Konzert-Paraphrase über Verdis "Rigoletto", S. 434 | ? |
 | `e4594957` | Liszt – La lugubre gondola, S. 200/1 | * La lugubre gondola, S. 200/1 | ? |
 | `615ae7e7` | Liszt – La lugubre gondola, S. 200/2 | * La lugubre gondola, S. 200/2 | 1883 |
-| `5e852053` | Liszt – Les Préludes, S. 97 | * Les Préludes, S. 97 | 1850‑1855 |
+| `5e852053` | Liszt – Les Préludes, S. 97 | * Les Préludes, S. 97 | 1848 |
 | `879ddafd` | Liszt – Liebesträume, S. 541 | * No. 3 Liebestraum in A flat major “Dream of Love” | 1850 |
 | `158e25fe` | Liszt – Mazeppa, S. 100 | * Mazeppa, S. 100 | ? |
 | `982af684` | Liszt – Mephisto Waltz no. 1, S. 514 "Der Tanz in der Dorfschenke" | * Mephisto Waltz no. 1, S. 514 "Der Tanz in der Dorfschenke" | 1860 |
@@ -2782,6 +2781,7 @@
 | `51c1a82f` | Richter – On the Nature of Daylight | * On the Nature of Daylight | ? |
 | `a645d42f` | Riley – In C | * In C | 1964 |
 | `18d5c524` | Rimsky‐Korsakov – Capriccio espagnol, Op. 34 | * I. Alborada<br>* II. Variazioni<br>* V. Fandango asturiano | 1887 |
+| `1bfa272b` | Rimsky‐Korsakov – Four Musical Pictures from the Opera "The Golden Cockerel" | * I. Introduction and Dodon's Sleep<br>* II. King Dodon on the Battlefield<br>* III. Queen of Shamakha's Dance - King Dodon's Dance | 1907 |
 | `6b81a07e` | Rimsky‐Korsakov – May Night | * Overture | ? |
 | `eb389a54` | Rimsky‐Korsakov – Mlada Suite | * V. Cortège | ? |
 | `b6986a33` | Rimsky‐Korsakov – Musical Pictures from “The Tale of Tsar Saltan”, op. 57 | * I. The Tsar’s Farewell and Departure<br>* II. The Tsarina in a Barrel at Sea<br>* III. The Three Wonders | ? |

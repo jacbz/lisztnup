@@ -838,15 +838,6 @@
       "score": 34.66
     },
     {
-      "gid": "522ad32a-a18a-4936-bcbe-0663124973df",
-      "name": "Blok, Vladimir",
-      "birth_year": 1932,
-      "death_year": 1996,
-      "gender": "male",
-      "country": "RU",
-      "score": 3.01
-    },
-    {
       "gid": "de778ca6-320e-4ca0-b0c5-335678af8b2d",
       "name": "Blomdahl, Karl-Birger",
       "birth_year": 1916,
@@ -890,15 +881,6 @@
       "gender": "female",
       "country": "CZ",
       "score": 0.0
-    },
-    {
-      "gid": "d7ced1dc-1327-43da-a5f3-adaec72d74d9",
-      "name": "Bogatyrev, Semyon",
-      "birth_year": 1890,
-      "death_year": 1960,
-      "gender": "male",
-      "country": "RU",
-      "score": 3.01
     },
     {
       "gid": "2fe9ec68-126e-4aed-bc9c-d29bb17476dc",
@@ -2035,15 +2017,6 @@
       "score": 20.53
     },
     {
-      "gid": "ec1f5bd2-bb2b-4093-8a25-7e93470a43fc",
-      "name": "Douglas, Roy",
-      "birth_year": 1907,
-      "death_year": 2015,
-      "gender": "male",
-      "country": "GB",
-      "score": 4.88
-    },
-    {
       "gid": "09be51dd-a2ff-4f62-8e66-d5f64b3b75b6",
       "name": "Dove, Jonathan",
       "birth_year": 1959,
@@ -2752,7 +2725,7 @@
       "death_year": 1936,
       "gender": "male",
       "country": "RU",
-      "score": 43.32
+      "score": 41.85
     },
     {
       "gid": "ead6afb1-f957-4528-b778-b433cb35b1f9",
@@ -4240,15 +4213,6 @@
       "score": 29.23
     },
     {
-      "gid": "7ae4f30e-4182-4d4b-b64d-4e0db9dab186",
-      "name": "Levin, Robert",
-      "birth_year": 1947,
-      "death_year": null,
-      "gender": "male",
-      "country": "US",
-      "score": 14.67
-    },
-    {
       "gid": "da5e774b-026a-4117-82a4-11d246c05a8b",
       "name": "Ligeti, György",
       "birth_year": 1923,
@@ -4579,7 +4543,16 @@
       "death_year": 1747,
       "gender": "male",
       "country": "IT",
-      "score": 35.11
+      "score": 44.61
+    },
+    {
+      "gid": "16f1e308-ae3e-4001-baf1-f6877aca7f15",
+      "name": "Marcello, Benedetto",
+      "birth_year": 1686,
+      "death_year": 1739,
+      "gender": "male",
+      "country": "IT",
+      "score": 16.64
     },
     {
       "gid": "68f517d6-6d9e-43b5-99d9-eb42731eee5e",
@@ -5803,7 +5776,7 @@
       "death_year": 1953,
       "gender": "male",
       "country": "RU",
-      "score": 69.34
+      "score": 69.31
     },
     {
       "gid": "a693df4a-8762-4a45-b7fd-6695b558385e",
@@ -6100,7 +6073,7 @@
       "death_year": 1908,
       "gender": "male",
       "country": "RU",
-      "score": 52.26
+      "score": 53.03
     },
     {
       "gid": "f58d69d7-fc17-419f-8348-e11bcc7fd1dc",
@@ -7225,7 +7198,7 @@
       "death_year": 1893,
       "gender": "male",
       "country": "RU",
-      "score": 77.31
+      "score": 77.27
     },
     {
       "gid": "aae12a3d-8f00-410a-a87b-f19f8d7fd24e",
@@ -7531,7 +7504,7 @@
       "death_year": 1958,
       "gender": "male",
       "country": "GB",
-      "score": 62.41
+      "score": 62.42
     },
     {
       "gid": "74ed331c-7c1b-4337-ae4b-ad05030b870e",
@@ -44105,8 +44078,8 @@
       "composer": "1f9df192-a621-4f54-8850-2c5373b7eac9",
       "name": "Allemande for Piano in A major, WoO 81",
       "type": "piano",
-      "begin_year": 1822,
-      "end_year": 1822,
+      "begin_year": 1793,
+      "end_year": 1793,
       "score": 1.95,
       "parts": [
         {
@@ -53100,22 +53073,6 @@
       ]
     },
     {
-      "gid": "136ecd87-e269-4cf3-91ae-fc903c15670a",
-      "composer": "522ad32a-a18a-4936-bcbe-0663124973df",
-      "name": "Sonata for Solo Cello in C-sharp minor, op. 134",
-      "type": "solo",
-      "begin_year": null,
-      "end_year": null,
-      "score": 1.61,
-      "parts": [
-        {
-          "name": "Sonata for Solo Cello in C-sharp minor, op. 134",
-          "deezer": [2802918442],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "7d2f44d8-2100-4c7c-a540-c107e2ab499c",
       "composer": "de778ca6-320e-4ca0-b0c5-335678af8b2d",
       "name": "Adagio ur Vaknatten",
@@ -53799,37 +53756,6 @@
         {
           "name": "Dža more",
           "deezer": [2772350801],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "65151a93-51ca-4e25-a5a5-51684abca2de",
-      "composer": "d7ced1dc-1327-43da-a5f3-adaec72d74d9",
-      "name": "Symphony no. 7 in E-flat major",
-      "type": "orchestral",
-      "begin_year": null,
-      "end_year": null,
-      "score": 1.61,
-      "parts": [
-        {
-          "name": "Symphony no. 7 in E-flat major: I. Allegro brillante",
-          "deezer": [2576110682],
-          "score": 100.0
-        },
-        {
-          "name": "Symphony no. 7 in E-flat major: II. Andante",
-          "deezer": [2576110692],
-          "score": 100.0
-        },
-        {
-          "name": "Symphony no. 7 in E-flat major: III. Scherzo. Vivace assai",
-          "deezer": [2576110702],
-          "score": 100.0
-        },
-        {
-          "name": "Symphony no. 7 in E-flat major: IV. Allegro maestoso",
-          "deezer": [2576110712],
           "score": 100.0
         }
       ]
@@ -81269,22 +81195,6 @@
       ]
     },
     {
-      "gid": "4bb68ce0-1a42-41ce-8bce-426e05fce4f7",
-      "composer": "ec1f5bd2-bb2b-4093-8a25-7e93470a43fc",
-      "name": "The First Nowell",
-      "type": "vocal",
-      "begin_year": 1958,
-      "end_year": 1958,
-      "score": 1.74,
-      "parts": [
-        {
-          "name": "The First Nowell: I. Prelude: God rest you merry - The truth from above",
-          "deezer": [1678206487],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "2301e537-7a2b-41f5-a0aa-f4cc6191da79",
       "composer": "09be51dd-a2ff-4f62-8e66-d5f64b3b75b6",
       "name": "I Am the Day",
@@ -97446,37 +97356,6 @@
         {
           "name": "Finnish Fantasy, op. 88",
           "deezer": [2774622731],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "1bfa272b-e12b-48fd-a3e9-7f268b83fe7c",
-      "composer": "5a0988a4-695c-4bff-bc68-4f312427495e",
-      "name": "Four Musical Pictures from the Opera \"The Golden Cockerel\"",
-      "type": "opera",
-      "begin_year": 1913,
-      "end_year": 1913,
-      "score": 3.22,
-      "parts": [
-        {
-          "name": "Four Musical Pictures from the Opera \"The Golden Cockerel\": I. Introduction and Dodon's Sleep",
-          "deezer": [2134480577, 2771989611],
-          "score": 100.0
-        },
-        {
-          "name": "Four Musical Pictures from the Opera \"The Golden Cockerel\": II. King Dodon on the Battlefield",
-          "deezer": [2134480587, 2771989621, 66633313],
-          "score": 100.0
-        },
-        {
-          "name": "Four Musical Pictures from the Opera \"The Golden Cockerel\": III. Queen of Shamakha's Dance - King Dodon's Dance",
-          "deezer": [2134480597, 2771989631, 128474149],
-          "score": 100.0
-        },
-        {
-          "name": "Four Musical Pictures from the Opera \"The Golden Cockerel\": IV. Wedding Procession - Death of King Dodon - Finale",
-          "deezer": [2134480607, 2771989641, 66633315],
           "score": 100.0
         }
       ]
@@ -114983,8 +114862,8 @@
       "composer": "c130b0fb-5dce-449d-9f40-1437f889f7fe",
       "name": "The Seven Last Words of Our Savior on the Cross, Hob XX:2",
       "type": "orchestral",
-      "begin_year": 1796,
-      "end_year": 1796,
+      "begin_year": 1785,
+      "end_year": 1785,
       "score": 2.11,
       "parts": [
         {
@@ -120516,8 +120395,8 @@
       "composer": "edfced8a-01bc-4c22-96b2-da58edd6b8af",
       "name": "Lachian Dances, JW 6/17",
       "type": "orchestral",
-      "begin_year": 1927,
-      "end_year": 1927,
+      "begin_year": 1888,
+      "end_year": 1925,
       "score": 2.38,
       "parts": [
         {
@@ -127412,108 +127291,6 @@
       ]
     },
     {
-      "gid": "bdef67da-e132-4661-ab05-8ac16f4c26c0",
-      "composer": "7ae4f30e-4182-4d4b-b64d-4e0db9dab186",
-      "name": "Requiem in D minor, K. 626",
-      "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
-      "score": 2.3,
-      "parts": [
-        {
-          "name": "Requiem in D minor, K. 626: I. Introitus: a. Kyrie eleison",
-          "deezer": [3009457341, 2798858332],
-          "score": 96.03
-        },
-        {
-          "name": "Requiem in D minor, K. 626: I. Introitus: b. Requiem aeternam",
-          "deezer": [2798858322],
-          "score": 91.63
-        },
-        {
-          "name": "Requiem in D minor, K. 626: II. Sequenz: a. Dies irae",
-          "deezer": [2798858342],
-          "score": 91.63
-        },
-        {
-          "name": "Requiem in D minor, K. 626: II. Sequenz: c. Rex tremendae",
-          "deezer": [2798858362],
-          "score": 91.63
-        },
-        {
-          "name": "Requiem in D minor, K. 626: II. Sequenz: e. Confutatis",
-          "deezer": [2798858382],
-          "score": 91.63
-        },
-        {
-          "name": "Requiem in D minor, K. 626: II. Sequenz: f. Lacrimosa",
-          "deezer": [2770279681],
-          "score": 91.63
-        },
-        {
-          "name": "Requiem in D minor, K. 626: II. Sequenz: g. Amen",
-          "deezer": [2798858402],
-          "score": 91.63
-        },
-        {
-          "name": "Requiem in D minor, K. 626: III. Offertorium: a. Domine Jesu",
-          "deezer": [2798858412],
-          "score": 91.63
-        },
-        {
-          "name": "Requiem in D minor, K. 626: III. Offertorium: b. Hostias",
-          "deezer": [2798858422],
-          "score": 91.63
-        },
-        {
-          "name": "Requiem in D minor, K. 626: IV. Sanctus: a. Sanctus",
-          "deezer": [3009457151],
-          "score": 100.0
-        },
-        {
-          "name": "Requiem in D minor, K. 626: V. Agnus Dei: Agnus Dei",
-          "deezer": [2798858472],
-          "score": 91.63
-        },
-        {
-          "name": "Requiem in D minor, K. 626: VI. Communio: a. Lux aeterna",
-          "deezer": [3009457351],
-          "score": 91.63
-        },
-        {
-          "name": "Requiem in D minor, K. 626: VI. Communio: b. Cum sanctis tuis",
-          "deezer": [3009457281, 2798858492],
-          "score": 96.03
-        }
-      ]
-    },
-    {
-      "gid": "4d4a7532-3989-4b06-bc4b-df5f9921755d",
-      "composer": "7ae4f30e-4182-4d4b-b64d-4e0db9dab186",
-      "name": "Sinfonia concertante in E-flat major for Oboe, Flute, Horn, Bassoon & Orchestra, K. 297B/Anh 9",
-      "type": "orchestral",
-      "begin_year": null,
-      "end_year": null,
-      "score": 1.92,
-      "parts": [
-        {
-          "name": "Sinfonia concertante in E-flat major for Oboe, Flute, Horn, Bassoon & Orchestra, K. 297B/Anh 9: I. Allegro",
-          "deezer": [65584495],
-          "score": 100.0
-        },
-        {
-          "name": "Sinfonia concertante in E-flat major for Oboe, Flute, Horn, Bassoon & Orchestra, K. 297B/Anh 9: II. Adagio",
-          "deezer": [65584496],
-          "score": 100.0
-        },
-        {
-          "name": "Sinfonia concertante in E-flat major for Oboe, Flute, Horn, Bassoon & Orchestra, K. 297B/Anh 9: III. Andantino con variazioni",
-          "deezer": [65584497],
-          "score": 92.08
-        }
-      ]
-    },
-    {
       "gid": "e61e322f-63ff-4d50-88a8-a14b8ee5335b",
       "composer": "da5e774b-026a-4117-82a4-11d246c05a8b",
       "name": "Artikulation",
@@ -129477,8 +129254,8 @@
       "composer": "2cd475bb-1abd-40c4-9904-6d4b691c752c",
       "name": "Freudvoll und leidvoll, S. 280/2",
       "type": "vocal",
-      "begin_year": 1849,
-      "end_year": 1849,
+      "begin_year": 1844,
+      "end_year": 1844,
       "score": 2.3,
       "parts": [
         {
@@ -129764,8 +129541,8 @@
       "composer": "2cd475bb-1abd-40c4-9904-6d4b691c752c",
       "name": "Les Préludes, S. 97",
       "type": "orchestral",
-      "begin_year": 1850,
-      "end_year": 1855,
+      "begin_year": 1848,
+      "end_year": 1848,
       "score": 4.63,
       "parts": [
         {
@@ -134179,7 +133956,7 @@
     },
     {
       "gid": "ad4aa058-9abe-4a09-8ef5-3cb2e7711aab",
-      "composer": "ff5e5b31-62b5-44cd-a641-4750c7805c54",
+      "composer": "16f1e308-ae3e-4001-baf1-f6877aca7f15",
       "name": "Oboe Concerto in C minor, SF. 799 (attrib. Alessandro Marcello)",
       "type": "concerto",
       "begin_year": null,
@@ -153570,6 +153347,32 @@
       ]
     },
     {
+      "gid": "4d4a7532-3989-4b06-bc4b-df5f9921755d",
+      "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
+      "name": "Sinfonia concertante in E-flat major for Oboe, Flute, Horn, Bassoon & Orchestra, K. 297B/Anh 9",
+      "type": "orchestral",
+      "begin_year": null,
+      "end_year": null,
+      "score": 1.92,
+      "parts": [
+        {
+          "name": "Sinfonia concertante in E-flat major for Oboe, Flute, Horn, Bassoon & Orchestra, K. 297B/Anh 9: I. Allegro",
+          "deezer": [65584495],
+          "score": 100.0
+        },
+        {
+          "name": "Sinfonia concertante in E-flat major for Oboe, Flute, Horn, Bassoon & Orchestra, K. 297B/Anh 9: II. Adagio",
+          "deezer": [65584496],
+          "score": 100.0
+        },
+        {
+          "name": "Sinfonia concertante in E-flat major for Oboe, Flute, Horn, Bassoon & Orchestra, K. 297B/Anh 9: III. Andantino con variazioni",
+          "deezer": [65584497],
+          "score": 92.08
+        }
+      ]
+    },
+    {
       "gid": "de2ce5b8-3341-3a6f-bc22-9e9fee160cf2",
       "composer": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Small Funeral March for Piano in C minor, K. 453a / deest \"Marche funèbre del Sigr Maestro Contrapunto\": Marche funebre. Lento",
@@ -169559,6 +169362,22 @@
       ]
     },
     {
+      "gid": "136ecd87-e269-4cf3-91ae-fc903c15670a",
+      "composer": "0e43fe9d-c472-4b62-be9e-55f971a023e1",
+      "name": "Sonata for Solo Cello in C-sharp minor, op. 134",
+      "type": "solo",
+      "begin_year": null,
+      "end_year": null,
+      "score": 1.61,
+      "parts": [
+        {
+          "name": "Sonata for Solo Cello in C-sharp minor, op. 134",
+          "deezer": [2802918442],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "6a790a0f-864c-425c-a59b-f3365ced3da6",
       "composer": "0e43fe9d-c472-4b62-be9e-55f971a023e1",
       "name": "Sonata for Solo Violin in D major, op. 115",
@@ -181416,6 +181235,37 @@
         {
           "name": "Fantasia on Serbian Themes, op. 6",
           "deezer": [2632327012],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "1bfa272b-e12b-48fd-a3e9-7f268b83fe7c",
+      "composer": "4cfe7051-f649-4d07-83b3-7a732abe7249",
+      "name": "Four Musical Pictures from the Opera \"The Golden Cockerel\"",
+      "type": "opera",
+      "begin_year": 1907,
+      "end_year": 1907,
+      "score": 3.22,
+      "parts": [
+        {
+          "name": "Four Musical Pictures from the Opera \"The Golden Cockerel\": I. Introduction and Dodon's Sleep",
+          "deezer": [2134480577, 2771989611],
+          "score": 100.0
+        },
+        {
+          "name": "Four Musical Pictures from the Opera \"The Golden Cockerel\": II. King Dodon on the Battlefield",
+          "deezer": [2134480587, 2771989621, 66633313],
+          "score": 100.0
+        },
+        {
+          "name": "Four Musical Pictures from the Opera \"The Golden Cockerel\": III. Queen of Shamakha's Dance - King Dodon's Dance",
+          "deezer": [2134480597, 2771989631, 128474149],
+          "score": 100.0
+        },
+        {
+          "name": "Four Musical Pictures from the Opera \"The Golden Cockerel\": IV. Wedding Procession - Death of King Dodon - Finale",
+          "deezer": [2134480607, 2771989641, 66633315],
           "score": 100.0
         }
       ]
@@ -221427,8 +221277,8 @@
       "composer": "6eb5695e-cf7b-4b94-b441-a09901127ef9",
       "name": "Slavnostní symfonie, op. 6, B. 92",
       "type": "orchestral",
-      "begin_year": 1881,
-      "end_year": 1881,
+      "begin_year": 1853,
+      "end_year": 1854,
       "score": 1.72,
       "parts": [
         {
@@ -234580,6 +234430,37 @@
       ]
     },
     {
+      "gid": "65151a93-51ca-4e25-a5a5-51684abca2de",
+      "composer": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
+      "name": "Symphony no. 7 in E-flat major",
+      "type": "orchestral",
+      "begin_year": null,
+      "end_year": null,
+      "score": 1.61,
+      "parts": [
+        {
+          "name": "Symphony no. 7 in E-flat major: I. Allegro brillante",
+          "deezer": [2576110682],
+          "score": 100.0
+        },
+        {
+          "name": "Symphony no. 7 in E-flat major: II. Andante",
+          "deezer": [2576110692],
+          "score": 100.0
+        },
+        {
+          "name": "Symphony no. 7 in E-flat major: III. Scherzo. Vivace assai",
+          "deezer": [2576110702],
+          "score": 100.0
+        },
+        {
+          "name": "Symphony no. 7 in E-flat major: IV. Allegro maestoso",
+          "deezer": [2576110712],
+          "score": 100.0
+        }
+      ]
+    },
+    {
       "gid": "c3912d1e-4bde-3400-962d-11d2027d65f7",
       "composer": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
       "name": "Sérénade mélancolique in B-flat minor, op. 26",
@@ -241887,6 +241768,22 @@
         {
           "name": "Symphony no. 9 in E minor: IV. Andante tranquillo",
           "deezer": [2550552462, 664227712],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "4bb68ce0-1a42-41ce-8bce-426e05fce4f7",
+      "composer": "4f3b96ed-f1f1-4a68-be73-0e0657837096",
+      "name": "The First Nowell",
+      "type": "vocal",
+      "begin_year": 1958,
+      "end_year": 1958,
+      "score": 1.74,
+      "parts": [
+        {
+          "name": "The First Nowell: I. Prelude: God rest you merry - The truth from above",
+          "deezer": [1678206487],
           "score": 100.0
         }
       ]

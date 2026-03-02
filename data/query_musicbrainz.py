@@ -349,6 +349,7 @@ FROM
   LEFT JOIN musicbrainz.artist AS orc ON law_orc.entity0 = orc.id AND l_orc.link_type = 164 -- 'orchestrator' relationship
 WHERE
   l.link_type = 168 -- 'composer' relationship
+  AND l.attribute_count = 0 -- Primary composer
   -- Composer-specific filters (can vary by composer for the same work)
   AND (
     -- Include if not a song (type 17), or if a song but composer died before 1900
