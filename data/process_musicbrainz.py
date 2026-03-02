@@ -985,8 +985,15 @@ class MusicbrainzProcessor:
                 selected_ids.append(rec.deezerId)
                 if len(selected_ids) >= max_to_select:
                     return selected_ids
+                
+        # 3. Any remaining (non-live)
+        for rec in candidates:
+            if rec.deezerId not in selected_ids and "live" not in rec.name.lower():
+                selected_ids.append(rec.deezerId)
+                if len(selected_ids) >= max_to_select:
+                    return selected_ids
         
-        # 3. Any remaining
+        # 4. Any remaining
         for rec in candidates:
             if rec.deezerId not in selected_ids:
                 selected_ids.append(rec.deezerId)
