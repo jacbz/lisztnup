@@ -82,7 +82,7 @@ export const EXPERT_CONFIG: TracklistConfig = {
 export const VIRTUOSO_CONFIG: TracklistConfig = {};
 
 export const CADENZA_CONFIG: TracklistConfig = {
-	workScoreRange: [0, 3],
+	workScoreRange: [0, 2.5],
 	categoryAdjustments: {
 		vocal: -0.8,
 		chamber: 0,
@@ -322,6 +322,7 @@ export const TWENTIETH_CENTURY_CONFIG: TracklistConfig = {
 export const GERMANY_CONFIG: TracklistConfig = {
 	composerFilter: { mode: 'country', countries: ['DE', 'AT'] },
 	limitWorksFromComposer: 0.07,
+	workScoreRange: [1.8, MAX_WORK_SCORE_ROUNDED],
 	categoryAdjustments: {
 		vocal: -2.0,
 		chamber: 0,
@@ -353,7 +354,8 @@ export const ITALY_CONFIG: TracklistConfig = {
 
 export const FRANCE_CONFIG: TracklistConfig = {
 	composerFilter: { mode: 'country', countries: ['FR'] },
-	limitWorksFromComposer: 0.1
+	limitWorksFromComposer: 0.1,
+	workScoreRange: [1.8, MAX_WORK_SCORE_ROUNDED]
 };
 
 export const RUSSIA_CONFIG: TracklistConfig = {

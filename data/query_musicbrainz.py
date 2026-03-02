@@ -874,31 +874,8 @@ def main():
         log.info("STAGE 3: Post-filter composers (birth year & distinct work types)")
         log.info("=" * 60)
 
-        # Post-filter composers: drop composers born after 1900 unless they have at least
-        # one non-"Song"/non-"Unknown" work type.
-        composers_to_remove = set()
-        for composer in composers.values():
-            birth = composer.get("birth_year")
-            if not birth or birth <= 1900:
-                continue
-
-            types = {w.get("type") for w in composer.get("works", [])}
-            # Exclude falsy, 'Song' and 'Unknown' types
-            valid_types = {t for t in types if t and t not in ("Song", "Unknown")}
-
-            if not valid_types:
-                composers_to_remove.add(composer["gid"])
-                work_names = [w["name"] for w in composer.get("works", [])]
-                log.info(
-                    "COMPOSER DROPPED (born > 1900, insufficient work types) | %s | %s | all types: %s | works: %s",
-                    composer.get("name"),
-                    composer.get("gid"),
-                    sorted(types),
-                    work_names,
-                )
-
         final_data = sorted(
-            [c for c in composers.values() if c["works"] and c["gid"] not in composers_to_remove], key=lambda c: c["name"]
+            [c for c in composers.values() if c["works"]], key=lambda c: c["name"]
         )
         
         output_filename = "musicbrainz.json"

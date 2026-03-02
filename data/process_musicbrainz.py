@@ -94,11 +94,13 @@ LABEL_PREFERENCE = [
 COUNTRY_REGION_MAP: Dict[str, str] = {
     "England": "GB",
     "Scotland": "GB",
+    "Wales": "GB",
     "Flanders": "BE",
     "Napoli": "IT",
     "Czechoslovakia": "CZ",
     "South Korea": "KR",
     "Russia": "RU",
+    "Québec": "CA",
 }
 
 # Per-composer country overrides by full GID (alpha-2).

@@ -164,20 +164,20 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 
 	// Composer-based tracklists
 	{
-		name: 'tracklists.liszt.name',
-		description: 'tracklists.liszt.description',
-		isDefault: true,
-		icon: composerIcon,
-		category: 'composers',
-		config: Configs.LISZT_CONFIG
-	},
-	{
 		name: 'tracklists.bach.name',
 		description: 'tracklists.bach.description',
 		isDefault: true,
 		icon: composerIcon,
 		category: 'composers',
 		config: Configs.BACH_CONFIG
+	},
+	{
+		name: 'tracklists.beethoven.name',
+		description: 'tracklists.beethoven.description',
+		isDefault: true,
+		icon: composerIcon,
+		category: 'composers',
+		config: Configs.BEETHOVEN_CONFIG
 	},
 	{
 		name: 'tracklists.mozart.name',
@@ -188,12 +188,12 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		config: Configs.MOZART_CONFIG
 	},
 	{
-		name: 'tracklists.beethoven.name',
-		description: 'tracklists.beethoven.description',
+		name: 'tracklists.liszt.name',
+		description: 'tracklists.liszt.description',
 		isDefault: true,
 		icon: composerIcon,
 		category: 'composers',
-		config: Configs.BEETHOVEN_CONFIG
+		config: Configs.LISZT_CONFIG
 	},
 	{
 		name: 'tracklists.chopin.name',

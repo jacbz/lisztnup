@@ -187,7 +187,6 @@
 | `199cc677` | Bartók – Allegro barbaro, Sz. 49, BB 63 | * Allegro barbaro, Sz. 49, BB 63 | 1911 |
 | `b83e28a0` | Bartók – Bluebeard's Castle, Sz. 48, BB 62 | * A Kékszakállú herceg vára: Door 2 "Mit látsz? Százkegyetlen szörnyü fegyver"<br>* A Kékszakállú herceg vára: Door 3 "Oh, be sok kincs! Oh, be sok kincs!" | 1911 |
 | `2720522c` | Bartók – Concerto for Orchestra, Sz. 116, BB 123 | * II. Giuoco delle coppie. Allegretto scherzando<br>* IV. Intermezzo interrotto. Allegretto | 1943 |
-| `1caee8d2` | Bartók – Concerto for Viola and Orchestra, Sz. 120, BB 128 | * I. Moderato<br>* II. Adagio religioso | 1945 |
 | `5216f1f1` | Bartók – Concerto for Violin and Orchestra no. 1, Sz. 36, BB 48a | * I. Andante sostenuto<br>* II. Allegro giocoso | 1907‑1908 |
 | `0ea83560` | Bartók – Contrasts, Sz. 111 | * Kontrasztok, Sz. 111: I. Verbunkos. Moderato, ben ritmico<br>* Kontrasztok, Sz. 111: II. Pihenő. Lento | 1938 |
 | `2937b339` | Bartók – Dance Suite, Sz. 77, BB 86a | * I. Moderato<br>* V. Comodo | 1923 |
@@ -916,6 +915,7 @@
 | `b17b78e3` | Kreisler – Tambourin chinois, op. 3 | * Tambourin chinois, op. 3 | ? |
 | `0aaff52f` | Lalo – Concerto pour violoncelle et orchestre en ré majeur | * I. Allegro<br>* II. Intermezzo | 1876‑1877 |
 | `9cf137ed` | Lalo – Symphonie espagnole in D minor, op. 21 | * II. Scherzando. Allegro molto<br>* V. Rondo. Allegro | 1874 |
+| `a5ab06d4` | Lauro – 4 valses venezolanos | * Vals venezolano no. 3: "Natalia" | ? |
 | `a6f7b108` | Lehár – Das Land des Lächelns | * Akt II. Nr. 11 „Dein ist mein ganzes Herz” (Sou-Chong) | ? |
 | `1065a858` | Lehár – Die lustige Witwe | * Akt II. N°7. Introduktion, Tanz und Vilja-Lied: “Ich bitte, hier jetzt zu verweilen” … “Nun laßt uns aber wie daheim” … “Es lebt’ eine Vilja” (Hanna, Chor)<br>* Akt III. Nr. 15. Duett „Lippen schweigen” … „Bei jedem Walzerschritt” (Hanna, Danilo) | 1905 |
 | `7f357dfc` | Lehár – Gold und Silber-Walzer, op. 79 | * Gold und Silber-Walzer, op. 79 | ? |
@@ -1244,6 +1244,7 @@
 | `a289bd55` | Piazzolla – The Four Seasons of Buenos Aires | * Invierno porteño<br>* Verano porteño | 1970 |
 | `85a0c853` | Ponchielli – La Gioconda, op. 9 | * La Gioconda: Atto II. “Cielo e mar!” (Enzo)<br>* La Gioconda: Atto III, scena 2. Danza delle ore | 1876 |
 | `51f93691` | Popper – Dance of the Elves | * Dance of the Elves | 1881 |
+| `00a84104` | Poston – Jesus Christ the Apple Tree | * Jesus Christ the Apple Tree | ? |
 | `cd2d9db3` | Poulenc – Concerto for Two Pianos and Orchestra in D minor, FP 61 | * I. Allegro ma non troppo<br>* II. Larghetto | 1932 |
 | `396c6c73` | Poulenc – Gloria, for Soprano, Chorus and Orchestra, FP 177 | * I. Gloria<br>* III. Domine Deus | 1959‑1960 |
 | `7b1e1f24` | Poulenc – Quatre motets pour le temps de Noël, FP 152 | * No. 1. O magnum mysterium<br>* No. 2. Quem vidistis pastores dicite | 1951‑1952 |
@@ -1989,7 +1990,6 @@
 | `602512da` | Weber – Concerto for Clarinet and Orchestra no. 2 in E-flat major, op.74 | * I. Allegro<br>* III. Alla polacca | 1811 |
 | `57fa5a14` | Weber – Der Freischütz | * Ouvertüre<br>* Akt III. Nr. 15. Jägerchor „Was gleicht wohl auf Erden dem Jägervergnügen?“ (Chor) | 1817‑1821 |
 | `d77d9f3f` | Weber – Euryanthe | * Ouvertüre | 1822‑1823 |
-| `88306e63` | Weber – Grand Duo Concertant for Clarinet and Piano in E flat, Op. 48 | * Grand Duo Concertant für Klarinette und Klavier Es-Dur, op. 48: II. Andante con moto<br>* Grand Duo Concertant für Klarinette und Klavier Es-Dur, op. 48: III. Rondo. Allegro | ? |
 | `ae5bea45` | Weber – Invitation to the Dance, J. 260 (orch. Berlioz) | * Invitation to the Dance, J. 260 (orch. Berlioz) | ? |
 | `38d1c948` | Weber – Invitation to the Dance, op. 65 | * Invitation to the Dance, op. 65 | ? |
 | `636f46a0` | Weber – Oberon, J. 306 | * Overture | 1825‑1826 |
