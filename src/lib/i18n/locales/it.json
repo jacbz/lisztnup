@@ -157,9 +157,13 @@
 			"name": "Romanticismo",
 			"description": "Cuori in tempesta e melodie immortali. L'era dei sentimenti a fior di pelle (1820-1910)."
 		},
-		"20thcentury": {
-			"name": "Novecento",
-			"description": "Regole infrante, suoni nuovi. La rivoluzione musicale del secolo scorso."
+		"modernism": {
+			"name": "Modernismo",
+			"description": "Addio tonalità, benvenuto caos creativo. Ogni prima, uno scandalo garantito (1890-1945)."
+		},
+		"contemporary": {
+			"name": "Musica contemporanea",
+			"description": "Tutto è lecito, niente è scontato. La musica colta non è mai stata così viva (1945-)."
 		},
 		"beethoven": {
 			"name": "Beathoven",

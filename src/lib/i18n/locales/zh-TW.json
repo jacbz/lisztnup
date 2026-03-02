@@ -157,9 +157,13 @@
 			"name": "浪漫主義",
 			"description": "大情懷、大手筆，用整個樂團傾訴愛與渴望 (1820–1910)。"
 		},
-		"20thcentury": {
-			"name": "20世紀",
-			"description": "規則？什麼規則？在這裡，古典樂被重新定義。"
+		"modernism": {
+			"name": "現代主義",
+			"description": "調性崩塔、規則粉碎，每場首演都是一場音樂地震 (1890–1945)。"
+		},
+		"contemporary": {
+			"name": "當代音樂",
+			"description": "一切皆有可能，經典仍在書寫。古典樂從未停止進化 (1945–)。"
 		},
 		"beethoven": {
 			"name": "Beathoven",

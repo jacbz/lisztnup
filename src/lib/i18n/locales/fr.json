@@ -157,9 +157,13 @@
 			"name": "Romantique",
 			"description": "Grandes passions et élans du cœur — l’ère des frissons (1820-1910)."
 		},
-		"20thcentury": {
-			"name": "XXe Siècle",
-			"description": "Quand la musique a décidé de réinventer toutes les règles."
+		"modernism": {
+			"name": "Modernisme",
+			"description": "Adieu la tonalité, bonjour le scandale ! Chaque création faisait polémique (1890-1945)."
+		},
+		"contemporary": {
+			"name": "Musique contemporaine",
+			"description": "Tout est possible, rien n'est interdit. La musique savante n'a jamais été aussi vivante (1945-)."
 		},
 		"beethoven": {
 			"name": "Beathoven",

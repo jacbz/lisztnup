@@ -157,9 +157,13 @@
 			"name": "Romantik",
 			"description": "Große Gefühle, große Gesten. Leidenschaft und Sehnsucht in orchestraler Wucht (1820–1910)."
 		},
-		"20thcentury": {
-			"name": "20. Jahrhundert",
-			"description": "Regeln? Welche Regeln? Hier wird die Klassik neu erfunden."
+		"modernism": {
+			"name": "Moderne",
+			"description": "Zwölftöne, Skandalkonzerte und fliegende Programmhefte. Hier wird provoziert! (1890–1945)"
+		},
+		"contemporary": {
+			"name": "Zeitgenössische Musik",
+			"description": "Von Klangskulpturen bis Laptop-Opern: was heute komponiert wird, ist morgen schon Legende (1945–)."
 		},
 		"beethoven": {
 			"name": "Beathoven",

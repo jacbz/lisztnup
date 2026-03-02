@@ -262,12 +262,20 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		config: Configs.ROMANTIC_CONFIG
 	},
 	{
-		name: 'tracklists.20thcentury.name',
-		description: 'tracklists.20thcentury.description',
+		name: 'tracklists.modernism.name',
+		description: 'tracklists.modernism.description',
 		isDefault: true,
 		category: 'eras',
 		icon: eraIcon,
-		config: Configs.TWENTIETH_CENTURY_CONFIG
+		config: Configs.MODERNISM_CONFIG
+	},
+	{
+		name: 'tracklists.contemporary.name',
+		description: 'tracklists.contemporary.description',
+		isDefault: true,
+		category: 'eras',
+		icon: eraIcon,
+		config: Configs.CONTEMPORARY_CONFIG
 	},
 
 	// Country-based tracklists

@@ -157,9 +157,13 @@
 			"name": "ロマン派",
 			"description": "感情のうねりが音になる。情熱とドラマの黄金時代（1820–1910年）。"
 		},
-		"20thcentury": {
-			"name": "近現代",
-			"description": "ルール？もう要らない。常識を超えた、音の大実験。"
+		"modernism": {
+			"name": "近代音楽",
+			"description": "調性よ、さらば。不協和音と革命の嵐がコンサートホールを揺らす（1890–1945年）。"
+		},
+		"contemporary": {
+			"name": "現代音楽",
+			"description": "何でもありの時代。クラシックは今も進化し続けている（1945年–）。"
 		},
 		"beethoven": {
 			"name": "Beathoven",

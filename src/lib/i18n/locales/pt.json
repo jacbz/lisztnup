@@ -157,9 +157,13 @@
 			"name": "Romântico",
 			"description": "Corações transbordando e melodias imortais. Pura emoção à flor da pele (1820-1910)."
 		},
-		"20thcentury": {
-			"name": "Século XX",
-			"description": "Regras quebradas, sons novos. A revolução musical do século passado."
+		"modernism": {
+			"name": "Modernismo",
+			"description": "Adeus tonalidade, olá provocação. Cada estreia, um terremoto nas plateias (1890-1945)."
+		},
+		"contemporary": {
+			"name": "Música contemporânea",
+			"description": "Vale tudo, nada se repete. A música erudita nunca esteve tão viva quanto agora (1945-)."
 		},
 		"beethoven": {
 			"name": "Beathoven",

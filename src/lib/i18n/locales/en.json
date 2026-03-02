@@ -83,39 +83,39 @@
 		},
 		"piano": {
 			"name": "Piano",
-			"description": "Works focused on piano repertoire."
+			"description": "Black and white keys, a whole spectrum of colour."
 		},
 		"concerto": {
 			"name": "Concerto",
-			"description": "Concertos highlighting soloists with orchestra."
+			"description": "The ultimate showdown: one instrument against the full orchestra."
 		},
 		"orchestral": {
 			"name": "Orchestral",
-			"description": "Symphonic works for orchestra."
+			"description": "Symphonies, overtures and tone poems. The big sound."
 		},
 		"chamber": {
 			"name": "Chamber",
-			"description": "Intimate chamber ensemble works."
+			"description": "The art of musical dialogue. Intimate, intense and unfiltered."
 		},
 		"ballet": {
 			"name": "Ballet",
-			"description": "Music composed for ballets."
+			"description": "Music built for leaps, spins and the occasional dying swan."
 		},
 		"opera": {
 			"name": "Opera",
-			"description": "Famous operatic works and well-known arias."
+			"description": "Big voices, bigger drama. Curtain up on the greatest show in music."
 		},
 		"pianoconcerto": {
 			"name": "Piano Concertos",
-			"description": "Featuring the grandeur of piano concertos."
+			"description": "Grand pianos, grander ambitions. The pinnacle of keyboard showmanship."
 		},
 		"violinconcerto": {
 			"name": "Violin Concertos",
-			"description": "Showcasing the brilliance of violin concertos."
+			"description": "Virtuosity on four strings. Where the violin outshines them all."
 		},
 		"celloconcerto": {
 			"name": "Cello Concertos",
-			"description": "Exploring the depth of cello concertos."
+			"description": "Rich, resonant and impossibly moving. The cello's finest hour."
 		},
 		"liszt": {
 			"name": "Lisztomania",
@@ -143,23 +143,27 @@
 		},
 		"renaissance": {
 			"name": "Renaissance",
-			"description": "Music from the age of rebirth (1400-1600)."
+			"description": "Before the bass drop, there was the bass line. The dawn of harmony (1400-1600)."
 		},
 		"baroque": {
 			"name": "Baroque",
-			"description": "Ornate and expressive works (1600-1750)."
+			"description": "Big wigs, bigger fugues. The era that believed more is more (1600-1750)."
 		},
 		"classical": {
 			"name": "Classical",
-			"description": "Elegance and clarity of the Classical period (1750-1820)."
+			"description": "Clean lines, crisp sonatas and a whiff of Viennese coffee (1750-1820)."
 		},
 		"romantic": {
 			"name": "Romantic",
-			"description": "Passionate and expressive works (1820-1910)."
+			"description": "Longing, love and orchestras so big they barely fit on stage (1820-1910)."
 		},
-		"20thcentury": {
-			"name": "20th Century",
-			"description": "Modern and experimental works."
+		"modernism": {
+			"name": "Modernism",
+			"description": "Dissonance is the new consonance. Buckle up (1890-1945)."
+		},
+		"contemporary": {
+			"name": "Contemporary",
+			"description": "Where anything goes and everything counts. Classical music's bleeding edge (1945-)."
 		},
 		"beethoven": {
 			"name": "Beathoven",

@@ -239,6 +239,7 @@ export const VIOLINCONCERTO_CONFIG: TracklistConfig = {
 	limitWorksFromComposer: 0.1,
 	nameFilter: ['/viol(i|o)n\\b/'],
 	includeWorks: [
+		'22393fc2', // Bernstein - Serenade after Plato's Symposium
 		'561b8302', // Vaughan Williams - The Lark Ascending
 		'24c323a3' // Ysaÿe - Amitié
 	]
@@ -304,19 +305,25 @@ export const RENAISSANCE_CONFIG: TracklistConfig = {
 };
 
 export const BAROQUE_CONFIG: TracklistConfig = {
-	yearFilter: [1600, 1750]
+	yearFilter: [1600, 1750],
+	limitWorksFromComposer: 0.3
 };
 
 export const CLASSICAL_CONFIG: TracklistConfig = {
-	yearFilter: [1750, 1820]
+	yearFilter: [1750, 1820],
+	limitWorksFromComposer: 0.3
 };
 
 export const ROMANTIC_CONFIG: TracklistConfig = {
 	yearFilter: [1820, 1910]
 };
 
-export const TWENTIETH_CENTURY_CONFIG: TracklistConfig = {
-	yearFilter: [1900, 1999]
+export const MODERNISM_CONFIG: TracklistConfig = {
+	yearFilter: [1890, 1945]
+};
+
+export const CONTEMPORARY_CONFIG: TracklistConfig = {
+	yearFilter: [1945, 2050]
 };
 
 export const GERMANY_CONFIG: TracklistConfig = {
@@ -390,6 +397,6 @@ export const SPAIN_CONFIG: TracklistConfig = {
 };
 
 export const SCANDINAVIA_CONFIG: TracklistConfig = {
-	composerFilter: { mode: 'country', countries: ['SE', 'NO', 'DK', 'FI'] },
+	composerFilter: { mode: 'country', countries: ['SE', 'NO', 'DK', 'FI', 'IS'] },
 	limitWorksFromComposer: 0.1
 };

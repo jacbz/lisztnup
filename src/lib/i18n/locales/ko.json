@@ -157,9 +157,13 @@
 			"name": "낭만파",
 			"description": "격정, 동경, 오케스트라의 거대한 파도. 감정이 폭발하는 시대 (1820–1910)."
 		},
-		"20thcentury": {
-			"name": "20세기",
-			"description": "규칙? 무슨 규칙? 여기서 클래식은 새로 태어납니다."
+		"modernism": {
+			"name": "모더니즘",
+			"description": "조성은 안녕, 불협화음은 환영. 초연마다 객석이 뒤집어진 시대 (1890–1945)."
+		},
+		"contemporary": {
+			"name": "현대음악",
+			"description": "가능성은 무한대, 장르의 경계는 제로. 클래식은 지금도 진화 중 (1945–)."
 		},
 		"beethoven": {
 			"name": "Beathoven",

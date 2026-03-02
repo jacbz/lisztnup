@@ -157,9 +157,13 @@
 			"name": "浪漫主义",
 			"description": "大情怀、大手笔，用整个乐团倾诉爱与渴望 (1820–1910)。"
 		},
-		"20thcentury": {
-			"name": "20世纪",
-			"description": "规则？什么规则？在这里，古典乐被重新定义。"
+		"modernism": {
+			"name": "现代主义",
+			"description": "调性崩塔、规则粉碎，每场首演都是一场音乐地震 (1890–1945)。"
+		},
+		"contemporary": {
+			"name": "当代音乐",
+			"description": "一切皆有可能，经典仍在书写。古典乐从未停止进化 (1945–)。"
 		},
 		"beethoven": {
 			"name": "Beathoven",
