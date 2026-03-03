@@ -26,6 +26,8 @@ export class PreviewPlayer {
 	 * the fetch is in flight, the stale operation is silently discarded.
 	 */
 	async play(deezerId: number): Promise<void> {
+		console.log('PreviewPlayer: playing Deezer ID', deezerId);
+
 		// If the same track is already playing, toggle it off
 		if (this.currentDeezerId === deezerId && this.isPlaying) {
 			this.stop();

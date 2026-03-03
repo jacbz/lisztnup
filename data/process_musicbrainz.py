@@ -305,6 +305,7 @@ class MusicbrainzProcessor:
         self.pss_overrides = config.get("pss_overrides") or {}
         self.year_overrides = config.get("year_overrides") or {}
         self.manual_classification_overrides = config.get("manual_classification_overrides") or {}
+        self.deezer_overrides: Dict[str, List[int]] = config.get("deezer_overrides") or {}
         
         self.stats: Counter = Counter()
 
@@ -528,7 +529,11 @@ class MusicbrainzProcessor:
                 # Convert to FinalPart objects
                 potential_parts = []
                 for part, pss in parts_with_pss:
-                    deezer_ids = self._select_deezer_ids(part.recordings)
+                    if part.gid in self.deezer_overrides:
+                        deezer_ids = self.deezer_overrides[part.gid]
+                        log.debug("DEEZER OVERRIDE | %s (%s) | IDs: %s", part.name, part.gid, deezer_ids)
+                    else:
+                        deezer_ids = self._select_deezer_ids(part.recordings)
                     if deezer_ids:
                         part_score = (pss / max_pss) * 100 if max_pss > 0 else 0
                         potential_parts.append(
@@ -593,7 +598,7 @@ class MusicbrainzProcessor:
         for work in works:
             if not work.parts:
                 continue
-            
+
             # Collect candidate renames: either ALL parts rename, or NONE do.
             candidates: List[Tuple[FinalPart, str]] = []
             for part in work.parts:
@@ -733,11 +738,16 @@ class MusicbrainzProcessor:
         1. Intra-work: If 'Mov 1' and 'Mov 2' of the same work share a Deezer ID, it's banned.
         2. Cross-work: If 'Work A' and 'Work B' share a Deezer ID, it's banned.
         """
+        # Collect part GIDs with Deezer overrides (exempt from collision checks)
+        overridden_part_gids = set(self.deezer_overrides.keys())
+
         # Pass 1: Map Deezer ID -> Set of Unique Part GIDs that use it
         deezer_to_parts: Dict[int, Set[str]] = defaultdict(set)
         
         for work in works:
             for part in work.parts:
+                if part.gid in overridden_part_gids:
+                    continue  # Overridden parts are exempt from collision detection
                 for did in part.deezer:
                     deezer_to_parts[did].add(part.gid)
         
@@ -756,6 +766,9 @@ class MusicbrainzProcessor:
         for work in works:
             cleaned_parts = []
             for part in work.parts:
+                if part.gid in overridden_part_gids:
+                    cleaned_parts.append(part)  # Overridden parts skip collision filtering
+                    continue
                 # Filter IDs
                 original_ids = set(part.deezer)
                 valid_ids = [did for did in part.deezer if did not in runtime_banned_ids]

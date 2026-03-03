@@ -387,6 +387,24 @@ year_overrides:
   '24df0a9b-7977-4ff6-a4dc-7ad71db6972c': 1853
   'c9790161-7aaf-4ddb-9c78-caf216666617': 1892
 
+# --- Deezer ID Overrides ---
+# Manually set the Deezer IDs for specific works/parts, e.g. to feature a specific segment
+deezer_overrides:
+  '19f446ef-f11a-3a41-aa99-4637c1d3e71b': [3133175281]
+  '6934e59b-e82c-3050-b0cf-70907db1f1a3': [2531329811]
+  'c98f3754-3aef-3fa1-80a2-de500e678519': [65527749]
+  'c20c22ca-c343-336d-a99a-eca5228ab916': [1476894392]
+  'b80b189d-f15e-39fe-b965-a9ba030383d0': [2774887481]
+  '00403271-8c3f-3d25-a115-10dd42c5274c': [2788537702]
+  '8039ddb5-587f-350c-ad78-126ca9782aed': [2770578761]
+  'b6f9ecc3-24d1-38ed-b8a0-091f7cd0c6b2': [2774848301]
+  '3761b925-82b2-3a61-9581-57751dee2e9e': [75574271]
+  '47fd6ff8-c237-34bd-8f75-3abf847fc6b3': [2790534262]
+  '62d7ad23-3444-364a-85c2-1ae5e44b648b': [2786234572]
+  '5fd9c9dd-9e0d-31cf-9861-58b7abd1d12f': [97269646]
+  '36dfecf2-b58c-3997-a629-3b34979791ae': [28869391]
+  '3f62d0d8-8ccd-31ab-bfca-768a1ae5708d': [2715192982]
+
 # --- Manual Classification Overrides ---
 # Manually force a work into a specific type category.
 manual_classification_overrides: {}
