@@ -610,7 +610,7 @@
       "death_year": 1827,
       "gender": "male",
       "country": "DE",
-      "score": 92.51
+      "score": 92.5
     },
     {
       "gid": "6f5bfd20-84cc-4879-8a40-05631ad576c7",
@@ -3592,15 +3592,6 @@
       "score": 3.01
     },
     {
-      "gid": "6b1a62f4-a1a5-4e24-b40b-3c39d59062d7",
-      "name": "Joachim, Joseph",
-      "birth_year": 1831,
-      "death_year": 1907,
-      "gender": "male",
-      "country": "HU",
-      "score": 21.37
-    },
-    {
       "gid": "8162fd70-fb10-4747-b0d3-a556d3f5d3d2",
       "name": "Johnson, Robert",
       "birth_year": 1583,
@@ -3886,7 +3877,7 @@
       "death_year": 1962,
       "gender": "male",
       "country": "AT",
-      "score": 53.35
+      "score": 53.26
     },
     {
       "gid": "e36675f1-1a1f-4dda-b58f-7cf12a34f148",
@@ -5839,7 +5830,7 @@
       "death_year": 1943,
       "gender": "male",
       "country": "RU",
-      "score": 72.02
+      "score": 72.09
     },
     {
       "gid": "49f19c6b-444a-465e-8043-7db79ce69798",
@@ -6821,15 +6812,6 @@
       "gender": "male",
       "country": "US",
       "score": 3.01
-    },
-    {
-      "gid": "f006d7dc-643a-4c9b-abde-a04fb4ae1c90",
-      "name": "Spiegel, Laurie",
-      "birth_year": 1945,
-      "death_year": null,
-      "gender": "female",
-      "country": "US",
-      "score": 7.5
     },
     {
       "gid": "328e23ea-d79c-4c58-bd20-bbdd3f64bb8e",
@@ -44323,27 +44305,6 @@
       ]
     },
     {
-      "gid": "a8cc6412-8328-47a1-a5d1-91d43b90a2cf",
-      "composer": "1f9df192-a621-4f54-8850-2c5373b7eac9",
-      "name": "Cadenzas to Mozart’s Piano Concerto no. 20, WoO 58",
-      "type": "concerto",
-      "begin_year": null,
-      "end_year": null,
-      "score": 2.6,
-      "parts": [
-        {
-          "name": "Cadenza for the Allegro of Mozart's Piano Concerto no. 20, WoO 58 no. 1",
-          "deezer": [2795162342, 2768624641],
-          "score": 94.16
-        },
-        {
-          "name": "Cadenza for the Rondo of Mozart's Piano Concerto no. 20, WoO 58 no. 2",
-          "deezer": [95941358, 2795162362, 2768624651],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "88fc9b69-ad15-3068-bf85-cadffdd1afba",
       "composer": "1f9df192-a621-4f54-8850-2c5373b7eac9",
       "name": "Canon in 2 parts in A-flat major, Hess 275, WoO 222",
@@ -57064,7 +57025,7 @@
       "parts": [
         {
           "name": "I. Allegro non troppo",
-          "deezer": [66400260, 1872601227, 2778113631],
+          "deezer": [66400260, 1872601227, 65528433, 2778113631],
           "score": 100.0
         },
         {
@@ -89753,7 +89714,7 @@
       "gid": "5a8cb6e7-0811-31ec-8816-9b7b2a05c915",
       "composer": "fa19a8b6-e7f4-40d4-af15-7a7c41ac7d8f",
       "name": "Ballade en Fa dièse majeur, op. 19",
-      "type": "concerto",
+      "type": "piano",
       "begin_year": 1879,
       "end_year": 1879,
       "score": 3.04,
@@ -121021,22 +120982,6 @@
       ]
     },
     {
-      "gid": "d1a93e08-a0fe-407a-853f-b88d2b3e18e7",
-      "composer": "6b1a62f4-a1a5-4e24-b40b-3c39d59062d7",
-      "name": "Cadenza for the First Movement of Brahms' Violin Concerto in D major, op. 77",
-      "type": "concerto",
-      "begin_year": null,
-      "end_year": null,
-      "score": 2.89,
-      "parts": [
-        {
-          "name": "Cadenza for the First Movement of Brahms' Violin Concerto in D major, op. 77",
-          "deezer": [2927772751, 1582433052],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "bd37e5b9-20d9-390f-83a2-fbbafecf96f4",
       "composer": "8162fd70-fb10-4747-b0d3-a556d3f5d3d2",
       "name": "Full Fathom Five Thy Father Lies",
@@ -124062,22 +124007,6 @@
         {
           "name": "Aucassin and Nicolette",
           "deezer": [1872600137],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "2e9366b9-de03-4a50-9d31-57f0c993a5a5",
-      "composer": "590fcad4-2ba4-43bc-a22f-a4bb9b496fe8",
-      "name": "Cadenzas to Beethoven’s Concerto for Violin",
-      "type": "concerto",
-      "begin_year": null,
-      "end_year": null,
-      "score": 2.01,
-      "parts": [
-        {
-          "name": "III. Rondo (Allegro)",
-          "deezer": [5317331],
           "score": 100.0
         }
       ]
@@ -147591,7 +147520,7 @@
       "parts": [
         {
           "name": "I. Allegro",
-          "deezer": [3305442, 14599603, 1137266112, 2899004901],
+          "deezer": [2185013957, 3305442, 14599603, 1137266112, 2899004901],
           "score": 100.0
         },
         {
@@ -147601,7 +147530,7 @@
         },
         {
           "name": "III. Rondo. Allegro assai",
-          "deezer": [3305444, 1137266132, 14599605, 2899004921],
+          "deezer": [2185013977, 3305444, 1137266132, 14599605, 2899004921],
           "score": 92.83
         }
       ]
@@ -175130,22 +175059,6 @@
           "name": "VII. The Six Psalms. Glory to God in the Highest",
           "deezer": [2377591835, 1479848352, 2787910652, 396968932, 2475688341],
           "score": 85.67
-        }
-      ]
-    },
-    {
-      "gid": "d2c948fd-c7f3-4748-a9ef-12591e47789f",
-      "composer": "44b16e44-da77-4580-b851-0d765904573e",
-      "name": "Cadenza for Liszt's Hungarian Rhapsody no. 2, TN iii/6",
-      "type": "piano",
-      "begin_year": null,
-      "end_year": 1919,
-      "score": 1.61,
-      "parts": [
-        {
-          "name": "Cadenza for Liszt's Hungarian Rhapsody no. 2, TN iii/6",
-          "deezer": [396969372],
-          "score": 100.0
         }
       ]
     },
@@ -222031,38 +221944,6 @@
         {
           "name": "Comes Autumn Time",
           "deezer": [2778114781],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "20f82da0-043d-4402-b7f3-9f0b68fb16f5",
-      "composer": "f006d7dc-643a-4c9b-abde-a04fb4ae1c90",
-      "name": "Appalachian Grove I",
-      "type": "solo",
-      "begin_year": 1974,
-      "end_year": 1974,
-      "score": 1.61,
-      "parts": [
-        {
-          "name": "Appalachian Grove I",
-          "deezer": [444576782],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "118f614a-79be-4dd6-825e-2e2b2adaaf46",
-      "composer": "f006d7dc-643a-4c9b-abde-a04fb4ae1c90",
-      "name": "Drums",
-      "type": "solo",
-      "begin_year": 1975,
-      "end_year": 1975,
-      "score": 1.61,
-      "parts": [
-        {
-          "name": "Drums",
-          "deezer": [444576772],
           "score": 100.0
         }
       ]

@@ -154,6 +154,7 @@
 | `316b9df0` | Bach – Es ist das Heil uns kommen her, BWV 638 | * Es ist das Heil uns kommen her, BWV 638 | ? |
 | `1b34ee8a` | Bach – Fantasia a-Moll, BWV 922 | * Fantasia a-Moll, BWV 922 | 1707‑1710 |
 | `281e848b` | Bach – Fantasia and Fugue in A minor, BWV 904 | * Fantasie und Fuge a-Moll, BWV 904: I. Fantasie<br>* Fantasie und Fuge a-Moll, BWV 904: II. Fuge | ? |
+| `2bda1f50` | Bach – Fantasia and Fugue in A minor, BWV 944 | * Fantasie und Fuge a-Moll, BWV 944: I. Fantasia<br>* Fantasie und Fuge a-Moll, BWV 944: II. Fuga | ? |
 | `44ab8b8d` | Bach – Fantasia and Fugue in C minor, BWV 537 | * Fantasie und Fuge C-moll, BWV 537: I. Fantasie<br>* Fantasie und Fuge C-moll, BWV 537: II. Fuge | 1723 |
 | `9dc29ea6` | Bach – Fantasia and Fugue in G minor, BWV 542 | * Fantasie (Praeludium) und Fuge g-Moll, BWV 542: I. Fantasie<br>* Fantasie (Praeludium) und Fuge g-Moll, BWV 542: II. Fuge | 1720‑1725 |
 | `cc815d5b` | Bach – Fantasia G-Dur, BWV 572 “Pièce d’Orgue” | * I. Trés vitement<br>* II. Gravement<br>* III. Lentement | ? |
@@ -161,6 +162,7 @@
 | `40003498` | Bach – Fantasia super "Jesu, meine Freude", BWV 713 | * Fantasia super "Jesu, meine Freude", BWV 713 | ? |
 | `7880d4a3` | Bach – Fantasia super: Christ lag in Todesbanden, BWV 695 | * Fantasia super: Christ lag in Todesbanden, BWV 695 | ? |
 | `11aa8eb7` | Bach – Fantasie g-Moll, BWV 917 | * Fantasie g-Moll, BWV 917 | 1710 |
+| `4158a0a6` | Bach – Fantasie in F-sharp minor, H 300, Wq. 67 | * Fantasie in F-sharp minor, H 300, Wq. 67 | ? |
 | `ad2a3e74` | Bach – Fantasie und Fuge c-Moll, BWV 562 | * I. Fantasie | ? |
 | `7282d87c` | Bach – Fantasy and Fugue in C minor, BWV 906 | * Fantasie und Fuge c-Moll, BWV 906: I. Fantasie | ? |
 | `296d5d56` | Bach – Flute Sonata in C major, BWV 1033 | * II. Allegro<br>* III. Adagio<br>* IV. Menuetto I | 1736 |
@@ -532,7 +534,6 @@
 | `d9e5e4cc` | Beethoven – Andante and Variations, WoO 44b | * Andante and Variations, WoO 44b | 1796 |
 | `aced4197` | Beethoven – Bagatelle for Piano in A minor “Für Elise”, WoO 59 | * Bagatelle for Piano in A minor “Für Elise”, WoO 59 | 1808‑1810 |
 | `c46e7de1` | Beethoven – Bagatelle for Piano in C minor, WoO 52: Presto | * Bagatelle for Piano in C minor, WoO 52: Presto | 1795 |
-| `a8cc6412` | Beethoven – Cadenzas to Mozart’s Piano Concerto no. 20, WoO 58 | * Cadenza for the Allegro of Mozart's Piano Concerto no. 20, WoO 58 no. 1<br>* Cadenza for the Rondo of Mozart's Piano Concerto no. 20, WoO 58 no. 2 | ? |
 | `880bdc81` | Beethoven – Cantata for Mixed Chorus and Orchestra, op. 112 "Meeresstille und glückliche Fahrt" | * Cantata for Mixed Chorus and Orchestra, op. 112 "Meeresstille und glückliche Fahrt" | 1807 |
 | `6839959f` | Beethoven – Cello Sonatas nos. 1 & 2, op. 5 | * Sonata for Cello and Piano no. 1 in F major, op. 5 no. 1: I. Adagio sostenuto / II. Allegro – Adagio – Presto – Tempo primo<br>* Sonata for Cello and Piano no. 1 in F major, op. 5 no. 1: III. Rondo. Allegro vivace<br>* Sonata for Cello and Piano no. 2 in G minor, op. 5 no. 2: II. Rondo. Allegro | 1796 |
 | `39b3b802` | Beethoven – Cello Sonatas nos. 4 & 5, op. 102 | * Sonata for Cello and Piano no. 5 in D major, op. 102 no. 2: I. Allegro con brio<br>* Sonata for Cello and Piano no. 5 in D major, op. 102 no. 2: II. Adagio con molto sentimento d’affetto<br>* Sonata for Cello and Piano no. 5 in D major, op. 102 no. 2: III. Allegro – Allegro fugato | 1815 |
@@ -1775,7 +1776,6 @@
 | `bfcbf232` | Janáček – Taras Bulba | * I. Death of Andrey<br>* II. Death of Ostap<br>* III. Prophecy and Death of Taras Bulba | 1918 |
 | `2d76b0ee` | Janequin – La Guerre | * La Guerre | ? |
 | `efacd02d` | Järnefelt – Berceuse (Kehtolaulu) | * Berceuse (Kehtolaulu) | 1904 |
-| `d1a93e08` | Joachim – Cadenza for the First Movement of Brahms' Violin Concerto in D major, op. 77 | * Cadenza for the First Movement of Brahms' Violin Concerto in D major, op. 77 | ? |
 | `51d827a8` | Jolivet – Chant de Linos | * Chant de Linos | 1944 |
 | `1eb4bf31` | Joplin – A Breeze From Alabama | * A Breeze From Alabama | ? |
 | `d01c13ba` | Joplin – Bethena | * Bethena | 1905 |

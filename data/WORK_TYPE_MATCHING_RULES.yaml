@@ -943,11 +943,10 @@ composer_specific_rules:
     piano:
       - Nocturne|Barcarolle|Impromptu|romances sans paroles|Pièces, op\. 104|Préludes, op\. 103|pièces brèves|Mazurka.*op\. 32|Valse‐caprice
       - Thème et Variations
+      - Ballade en Fa dièse majeur # Piano version
     chamber:
       - Andante pour violon|Romance for Violin and Piano|Sonate pour violoncelle|Berceuse.*op\. 16|Morceau de concours|Dolly
       - Allegretto moderato
-    concerto:
-      - Ballade en Fa dièse majeur
   'Feldman, Morton':
     piano:
       - Extensions 1|Palais de Mari|Piano Piece

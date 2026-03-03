@@ -241,6 +241,7 @@ excluded_composers:
   - 'Soken, Masayoshi'
   - 'Someren, Lex van'
   - 'Sondheim, Stephen'
+  - 'Spiegel, Laurie'
   - 'Stirling, Lindsey'
   - 'Tamaki, Chihiro'
   - 'Tiersen, Yann'
@@ -312,6 +313,10 @@ excluded_works:
   'a6e478f6-e2b8-3485-a732-a0c263fbc43c': 'Come Out'
   'f1193bef-55fd-4966-accb-b749d1595a58': 'J.S.B.'
   'b7c50761-050d-4a81-a379-e35c48d273c0': 'Tout l’amour'
+  'd2c948fd-c7f3-4748-a9ef-12591e47789f': 'Cadenza for Liszt’s Hungarian Rhapsody No. 2'
+  'a8cc6412-8328-47a1-a5d1-91d43b90a2cf': 'Cadenza for Mozart’s Piano Concerto No. 20'
+  'd1a93e08-a0fe-407a-853f-b88d2b3e18e7': 'Cadenza for Brahms’s Violin Concerto'
+  '2e9366b9-de03-4a50-9d31-57f0c993a5a5': 'Cadenza for Beethoven’s Violin Concerto'
 
 # --- Work Significance Score (WSS) Overrides ---
 # Manually set the WSS for specific works.
