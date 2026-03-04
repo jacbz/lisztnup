@@ -117,6 +117,10 @@
 			"name": "첼로 협주곡",
 			"description": "깊고, 따뜻하고, 영혼이 담긴 울림. 첼로의 가장 찬란한 순간들."
 		},
+		"woodwindconcerto": {
+			"name": "목관 협주곡",
+			"description": "숨결 하나로 마법을 빚는 악기들. 목관이 오케스트라 한가운데서 노래합니다."
+		},
 		"liszt": {
 			"name": "Lisztomania",
 			"description": "피아노의 마술사, 리스트의 화려한 기교와 낭만에 빠져보세요."

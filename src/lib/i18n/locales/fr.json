@@ -117,6 +117,10 @@
 			"name": "Concertos pour Violoncelle",
 			"description": "La voix grave qui fait vibrer l’âme : le violoncelle à l’honneur."
 		},
+		"woodwindconcerto": {
+			"name": "Concertos pour Bois",
+			"description": "Quand le souffle se fait chant : les bois sortent de l'ombre et volent la vedette."
+		},
 		"liszt": {
 			"name": "Lisztomania",
 			"description": "Une virtuosité qui va te faire tourner la tête."

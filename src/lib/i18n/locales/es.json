@@ -117,6 +117,10 @@
 			"name": "Conciertos para Violonchelo",
 			"description": "La voz más profunda de las cuerdas, capaz de conmover al más impasible."
 		},
+		"woodwindconcerto": {
+			"name": "Conciertos para Viento-Madera",
+			"description": "Un soplo y nace la maravilla. Flauta, oboe, clarinete y fagot se adueñan del escenario."
+		},
 		"liszt": {
 			"name": "Lisztomania",
 			"description": "¡Liszt para la acción! Un torbellino de virtuosismo romántico que pondrá a prueba tus reflejos."

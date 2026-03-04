@@ -117,6 +117,10 @@
 			"name": "Cellokonzerte",
 			"description": "Tief, warm und voller Seele: das Cello in seiner ganzen Pracht."
 		},
+		"woodwindconcerto": {
+			"name": "Holzbläserkonzerte",
+			"description": "Aus Luft wird Klangmagie: Flöte, Oboe, Klarinette und Fagott geben den Ton an."
+		},
 		"liszt": {
 			"name": "Lisztomania",
 			"description": "Vom Teufelspianisten direkt in deine Ohren. Fingerakrobatik garantiert."

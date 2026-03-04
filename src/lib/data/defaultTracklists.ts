@@ -5,6 +5,7 @@ import difficultyMedium from '$lib/assets/icons/difficulty-medium.svg?raw';
 import difficultyHard from '$lib/assets/icons/difficulty-hard.svg?raw';
 import difficultyExtreme from '$lib/assets/icons/difficulty-extreme.svg?raw';
 import pianoIcon from '$lib/assets/icons/piano.svg?raw';
+import fluteIcon from '$lib/assets/icons/flute.svg?raw';
 import concertoIcon from '$lib/assets/icons/concerto.svg?raw';
 import chamberIcon from '$lib/assets/icons/chamber.svg?raw';
 import balletIcon from '$lib/assets/icons/ballet.svg?raw';
@@ -98,14 +99,6 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		config: Configs.PIANO_CONFIG
 	},
 	{
-		name: 'tracklists.concerto.name',
-		description: 'tracklists.concerto.description',
-		isDefault: true,
-		icon: concertoIcon,
-		category: 'categories',
-		config: Configs.CONCERTO_CONFIG
-	},
-	{
 		name: 'tracklists.orchestral.name',
 		description: 'tracklists.orchestral.description',
 		isDefault: true,
@@ -138,6 +131,14 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		config: Configs.OPERA_CONFIG
 	},
 	{
+		name: 'tracklists.concerto.name',
+		description: 'tracklists.concerto.description',
+		isDefault: true,
+		icon: concertoIcon,
+		category: 'categories',
+		config: Configs.CONCERTO_CONFIG
+	},
+	{
 		name: 'tracklists.pianoconcerto.name',
 		description: 'tracklists.pianoconcerto.description',
 		isDefault: true,
@@ -160,6 +161,14 @@ export const DEFAULT_TRACKLISTS: Tracklist[] = [
 		category: 'categories',
 		icon: celloIcon,
 		config: Configs.CELLOCONCERTO_CONFIG
+	},
+	{
+		name: 'tracklists.woodwindconcerto.name',
+		description: 'tracklists.woodwindconcerto.description',
+		isDefault: true,
+		category: 'categories',
+		icon: fluteIcon,
+		config: Configs.WOODWINDCONCERTO_CONFIG
 	},
 
 	// Composer-based tracklists

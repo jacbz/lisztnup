@@ -117,6 +117,10 @@
 			"name": "Concertos para Violoncelo",
 			"description": "A voz mais profunda das cordas, capaz de emocionar até os mais impassíveis."
 		},
+		"woodwindconcerto": {
+			"name": "Concertos para Madeiras",
+			"description": "Um sopro e a madeira ganha voz. As vozes mais líricas da orquestra roubam a cena."
+		},
 		"liszt": {
 			"name": "Lisztomania",
 			"description": "Franz nunca perde a pose. Prepare-se para muito virtuosismo."

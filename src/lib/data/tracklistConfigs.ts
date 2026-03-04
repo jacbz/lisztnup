@@ -121,22 +121,6 @@ export const PIANO_CONFIG: TracklistConfig = {
 	maxTracksFromSingleWork: 5
 };
 
-export const CONCERTO_CONFIG: TracklistConfig = {
-	categoryAdjustments: {
-		vocal: -MAX_WORK_SCORE_ROUNDED,
-		chamber: -MAX_WORK_SCORE_ROUNDED,
-		orchestral: -MAX_WORK_SCORE_ROUNDED,
-		piano: -MAX_WORK_SCORE_ROUNDED,
-		concerto: 0,
-		opera: -MAX_WORK_SCORE_ROUNDED,
-		ballet: -MAX_WORK_SCORE_ROUNDED,
-		organ: -MAX_WORK_SCORE_ROUNDED,
-		solo: -MAX_WORK_SCORE_ROUNDED
-	},
-	maxTracksFromSingleWork: 5,
-	limitWorksFromComposer: 0.1
-};
-
 export const ORCHESTRAL_CONFIG: TracklistConfig = {
 	categoryAdjustments: {
 		vocal: -MAX_WORK_SCORE_ROUNDED,
@@ -196,6 +180,22 @@ export const OPERA_CONFIG: TracklistConfig = {
 		organ: -MAX_WORK_SCORE_ROUNDED,
 		solo: -MAX_WORK_SCORE_ROUNDED
 	},
+	limitWorksFromComposer: 0.1
+};
+
+export const CONCERTO_CONFIG: TracklistConfig = {
+	categoryAdjustments: {
+		vocal: -MAX_WORK_SCORE_ROUNDED,
+		chamber: -MAX_WORK_SCORE_ROUNDED,
+		orchestral: -MAX_WORK_SCORE_ROUNDED,
+		piano: -MAX_WORK_SCORE_ROUNDED,
+		concerto: 0,
+		opera: -MAX_WORK_SCORE_ROUNDED,
+		ballet: -MAX_WORK_SCORE_ROUNDED,
+		organ: -MAX_WORK_SCORE_ROUNDED,
+		solo: -MAX_WORK_SCORE_ROUNDED
+	},
+	maxTracksFromSingleWork: 5,
 	limitWorksFromComposer: 0.1
 };
 
@@ -338,6 +338,51 @@ export const CELLOCONCERTO_CONFIG: TracklistConfig = {
 		'8709d5f7', // Leo – Sinfonia concertata (Concerto no. 6) in C minor
 		'890399dc', // Offenbach – Concerto militaire
 		'942499a7' // Tchaikovsky - Variations on a Rococo Theme
+	]
+};
+
+export const WOODWINDCONCERTO_CONFIG: TracklistConfig = {
+	categoryAdjustments: {
+		vocal: -MAX_WORK_SCORE_ROUNDED,
+		chamber: -MAX_WORK_SCORE_ROUNDED,
+		orchestral: -MAX_WORK_SCORE_ROUNDED,
+		piano: -MAX_WORK_SCORE_ROUNDED,
+		concerto: 0,
+		opera: -MAX_WORK_SCORE_ROUNDED,
+		ballet: -MAX_WORK_SCORE_ROUNDED,
+		organ: -MAX_WORK_SCORE_ROUNDED,
+		solo: -MAX_WORK_SCORE_ROUNDED
+	},
+	limitWorksFromComposer: 0.1,
+	nameFilter: [
+		'flute',
+		'flöte',
+		'flûte',
+		'flautino',
+		'recorder',
+		'oboe',
+		'hautbois',
+		'clarinet',
+		'klarinette',
+		'bassoon',
+		'fagott'
+	],
+	includeWorks: [
+		'caf15212', // Bach – Concerto D-Dur, BWV 1050a
+		'c91f280f', // Barber – Capricorn Concerto, op. 21
+		'6cc0b61c', // Boismortier – 5 Sonates en trio suivies d'un concerto, op. 37
+		'4d0833a7', // Handel – Concerto grosso in C major, HWV 318 "Alexander's Feast"
+		'69604c1c', // Holst – A Fugal Concerto, op. 40 no. 2
+		'7d9486d7', // Martin – Concerto for 7 Wind Instruments, Percussion & Strings
+		'3b515385', // Rodrigo – Concierto pastoral
+		'58d19f67', // Rutter – Suite Antique
+		'774246e0', // Takemitsu – I Hear the Water Dreaming
+		'f3ad1ed9', // Vivaldi – Concerto in A minor, RV 445
+		'17d413a2', // Vivaldi – Concerto in C major, RV 444
+		'0376374e', // Vivaldi – Concerto in C major, RV 558, “con molti stromenti”
+		'f8ef20e6', // Vivaldi – Concerto in D major, op. 10 no. 5, RV 429
+		'844601dc', // Vivaldi – Concerto in G minor, RV 577
+		'd158f74d' // Wolf‐Ferrari – Suite-Concertino in F major, op. 16
 	]
 };
 

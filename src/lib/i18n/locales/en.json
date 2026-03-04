@@ -117,6 +117,10 @@
 			"name": "Cello Concertos",
 			"description": "Rich, resonant and impossibly moving. The cello's finest hour."
 		},
+		"woodwindconcerto": {
+			"name": "Woodwind Concertos",
+			"description": "All it takes is a breath. The woodwinds prove you don't need strings to steal the show."
+		},
 		"liszt": {
 			"name": "Lisztomania",
 			"description": "Liszt’n up, will you?"

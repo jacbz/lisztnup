@@ -117,6 +117,10 @@
 			"name": "チェロ協奏曲",
 			"description": "深く、温かく、魂を揺さぶる。チェロの真骨頂をとくとご堪能あれ。"
 		},
+		"woodwindconcerto": {
+			"name": "木管協奏曲",
+			"description": "ひと息で魔法が生まれる。木管楽器の晴れ舞台、繊細にして華麗。"
+		},
 		"liszt": {
 			"name": "Lisztomania",
 			"description": "超絶技巧のピアノに酔いしれて。リストの魔術に魅了されるひととき。"

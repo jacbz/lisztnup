@@ -117,6 +117,10 @@
 			"name": "Concerti per Violoncello",
 			"description": "La voce più profonda dell'orchestra, capace di commuovere anche i più stoici."
 		},
+		"woodwindconcerto": {
+			"name": "Concerti per Legni",
+			"description": "Basta un soffio e il legno prende vita. Le voci più poetiche dell'orchestra, finalmente protagoniste."
+		},
 		"liszt": {
 			"name": "Lisztomania",
 			"description": "Virtuosismo puro, pianoforti in fiamme e capelli al vento."
