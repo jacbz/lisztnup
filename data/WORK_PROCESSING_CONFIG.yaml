@@ -317,6 +317,10 @@ excluded_works:
   'a8cc6412-8328-47a1-a5d1-91d43b90a2cf': 'Cadenza for Mozart’s Piano Concerto No. 20'
   'd1a93e08-a0fe-407a-853f-b88d2b3e18e7': 'Cadenza for Brahms’s Violin Concerto'
   '2e9366b9-de03-4a50-9d31-57f0c993a5a5': 'Cadenza for Beethoven’s Violin Concerto'
+  '0d08734b-8dfc-4724-bff4-fa5b189a6053': 'Le ça ira'
+  '6a20dd7c-4c5e-35df-88d9-bdde3162a659': 'Gershwin Prelude arr.'
+  '3428f35f-dac8-45ba-af0b-17e345edd355': 'The Yankee Doodle Blues'
+  '9e337924-660c-4f92-b1b5-a81456db8572': '3rd Earth'
 
 # --- Work Significance Score (WSS) Overrides ---
 # Manually set the WSS for specific works.
@@ -336,6 +340,7 @@ pss_overrides:
   - '63348c90-54ee-328a-88f1-edc3b9d4bf55' # Brahms - Violin Concerto: I.
   - '551b5d69-11a0-38f3-9b77-944a151500a3' # Chopin - Etudes Op. 25: No. 11
   - 'd969c022-6d25-3dbb-8102-95a3d9d3de83' # Chopin - Piano Concerto No. 1: I.
+  - '2216e0e5-dee6-31db-b91b-6fc4851d36f5' # Gershwin - Porgy and Bess: Summertime
   - '0f2c6bb0-6a63-3ddf-b023-6d4483b497d2' # Humperdinck - Hänsel und Gretel: Overture
   - 'b8810dc0-1b98-3623-b292-95ac2cd0d227' # Mahler - Symphony No. 1: III.
   - 'a15328c7-f30f-3c05-8fcc-27c9f46b1b22' # Mendelssohn - Violin Concerto: I.
@@ -404,6 +409,7 @@ deezer_overrides:
   '5fd9c9dd-9e0d-31cf-9861-58b7abd1d12f': [97269646]
   '36dfecf2-b58c-3997-a629-3b34979791ae': [28869391]
   '3f62d0d8-8ccd-31ab-bfca-768a1ae5708d': [2715192982]
+  '17ccf450-81a6-4c8d-8f22-f35476db18a2': [646272042]
 
 # --- Manual Classification Overrides ---
 # Manually force a work into a specific type category.

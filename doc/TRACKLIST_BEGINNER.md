@@ -97,6 +97,7 @@
 | `4dfff025` | Franck – Sonata for Violin and Piano in A major, M. 8, CFF 123 | * I. Allegretto ben moderato | 1886 |
 | `c8d8615a` | Fučík – Entry of the Gladiators | * Entry of the Gladiators | 1897 |
 | `7e7d799a` | Gershwin – An American in Paris | * An American in Paris | 1928 |
+| `1094de73` | Gershwin – Porgy and Bess | * Act I, Scene I. “Summertime” (Clara) | 1934‑1935 |
 | `60b22df4` | Gershwin – Rhapsody in Blue (orch. Grofé) | * Rhapsody in Blue (orch. Grofé) | 1924 |
 | `d1b335d1` | Glinka – Ruslan and Lyudmila | * Overture | 1837‑1842 |
 | `b95fea1e` | Grieg – Concerto in A minor for Piano and Orchestra, op. 16 | * I. Allegro molto moderato | 1868 |
@@ -252,5 +253,4 @@
 | `1d774427` | Wagner – Lohengrin, WWV 75 | * Lohengrin: Act III, Scene I. Bridal Chorus (Choir) | 1846‑1848 |
 | `d801c361` | Wagner – Tannhäuser: Ouverture and Venusberg Music | * Tannhäuser und der Sängerkrieg auf Wartburg, WWV 70: Ouvertüre | 1843‑1845 |
 | `ae217ba8` | Wagner – Tristan und Isolde, WWV 90 | * Excerpt from Tristan und Isolde, WWV 90: Akt III, Szene III. Liebestod. “Mild und leise wie er lächelt” | 1857‑1859 |
-| `2ed0c416` | Widor – Symphonies pour orgue, op. 42 | * Symphonie pour orgue n° 5 en fa mineur, op. 42 n° 1: V. Toccata | 1879 |
 | `3148af46` | Williams – Three Pieces from Schindler’s List | * Main Theme | 1993 |

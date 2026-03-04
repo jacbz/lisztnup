@@ -266,6 +266,7 @@ export const VIOLINCONCERTO_CONFIG: TracklistConfig = {
 		'e858c951', // Berlioz – Rêverie et caprice, op. 8, H. 88
 		'22393fc2', // Bernstein – Serenade after Plato’s “Symposium”
 		'c1882b78', // Bruch – Adagio appassionato, op. 57
+		'02f290d4', // Bruch - Scottish Fantasy, op. 46
 		'e749559a', // Dutilleux – L'arbre des songes
 		'54b5e409', // Dvořák – Romance in F minor, op. 11, B. 39
 		'a69778c2', // Glass – Echorus

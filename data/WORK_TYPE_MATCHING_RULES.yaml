@@ -510,7 +510,7 @@ composer_specific_rules:
       - Danza característica|Dos aires populares|El decamerón negro|Estudios sencillos|Ojos brujos|Tres piezas latinoamericanas|La espiral eterna|Tres apuntes
   'Bruch, Max':
     concerto:
-      - Kol Nidrei|Romance in F major
+      - Kol Nidrei|Romance in F major|Scottish Fantasy
       - Adagio appassionato
     chamber:
       - 8 Pieces for Clarinet, Viola and Piano
@@ -1038,7 +1038,7 @@ composer_specific_rules:
     orchestral:
       - An American in Paris|Catfish Row|Girl Crazy|orch\.|Prelude no\. 2
     piano:
-      - Three Preludes|Rialto Ripples|Impromptu in Two Keys
+      - Three Preludes|Rialto Ripples|Impromptu in Two Keys|George Gershwin’s Songbook|Tip-Toes
     chamber:
       - Short Story
     vocal:
@@ -2375,7 +2375,7 @@ composer_specific_rules:
     vocal:
       - Tre canti sacri
   'Schlick, Arnolt':
-    organ:
+    vocal:
       - Maria zart von edler Art
   'Scheidemann, Heinrich':
     organ:
@@ -2519,11 +2519,14 @@ composer_specific_rules:
       - Hamlet
   'Sibelius, Jean':
     piano:
-      - Bagatelles|Pensées lyriques|Pieces|Rondinos|Sonatinas|Impromptus|morceaux|Esquisses|Arioso|morceaux romantiques|Characteristic Impressions|Lyric Pieces|Spagnuolo|Till trånaden|Kyllikki
+      - Bagatelles|Pensées lyriques|Rondinos|Sonatinas|Impromptus|morceaux|Esquisses|Arioso|morceaux romantiques|Characteristic Impressions|Lyric Pieces|Spagnuolo|Till trånaden|Kyllikki
       - Allegretto in B-flat minor|Andantino in B major|Kavaljeren|Largo in A major|Mandolinato|Till O\. Parviainen|Suite caractéristique|JS 18|JS 44|JS 109|JS 117|JS 123|JS 201|op\. 100
       - Con passione|Florestan
+      - Pieces, op\. (58|75|76|85|94)
+    organ:
+      - op\. 111
     chamber:
-      - Sonatina in E major, op\. 80
+      - Sonatina in E major, op\. 80|op\. 79
     orchestral:
       - Kuolema|Lemminkäinen|Rakastava|Pieces from Kuolema
       - Belshazzar|Karelia|King Christian|Pelléas|Scènes historiques|Svanevit|The Tempest|Spring Song

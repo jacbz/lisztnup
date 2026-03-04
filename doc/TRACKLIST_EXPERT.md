@@ -154,7 +154,6 @@
 | `316b9df0` | Bach – Es ist das Heil uns kommen her, BWV 638 | * Es ist das Heil uns kommen her, BWV 638 | ? |
 | `1b34ee8a` | Bach – Fantasia a-Moll, BWV 922 | * Fantasia a-Moll, BWV 922 | 1707‑1710 |
 | `281e848b` | Bach – Fantasia and Fugue in A minor, BWV 904 | * Fantasie und Fuge a-Moll, BWV 904: I. Fantasie<br>* Fantasie und Fuge a-Moll, BWV 904: II. Fuge | ? |
-| `2bda1f50` | Bach – Fantasia and Fugue in A minor, BWV 944 | * Fantasie und Fuge a-Moll, BWV 944: I. Fantasia<br>* Fantasie und Fuge a-Moll, BWV 944: II. Fuga | ? |
 | `44ab8b8d` | Bach – Fantasia and Fugue in C minor, BWV 537 | * Fantasie und Fuge C-moll, BWV 537: I. Fantasie<br>* Fantasie und Fuge C-moll, BWV 537: II. Fuge | 1723 |
 | `9dc29ea6` | Bach – Fantasia and Fugue in G minor, BWV 542 | * Fantasie (Praeludium) und Fuge g-Moll, BWV 542: I. Fantasie<br>* Fantasie (Praeludium) und Fuge g-Moll, BWV 542: II. Fuge | 1720‑1725 |
 | `cc815d5b` | Bach – Fantasia G-Dur, BWV 572 “Pièce d’Orgue” | * I. Trés vitement<br>* II. Gravement<br>* III. Lentement | ? |
@@ -162,7 +161,6 @@
 | `40003498` | Bach – Fantasia super "Jesu, meine Freude", BWV 713 | * Fantasia super "Jesu, meine Freude", BWV 713 | ? |
 | `7880d4a3` | Bach – Fantasia super: Christ lag in Todesbanden, BWV 695 | * Fantasia super: Christ lag in Todesbanden, BWV 695 | ? |
 | `11aa8eb7` | Bach – Fantasie g-Moll, BWV 917 | * Fantasie g-Moll, BWV 917 | 1710 |
-| `4158a0a6` | Bach – Fantasie in F-sharp minor, H 300, Wq. 67 | * Fantasie in F-sharp minor, H 300, Wq. 67 | ? |
 | `ad2a3e74` | Bach – Fantasie und Fuge c-Moll, BWV 562 | * I. Fantasie | ? |
 | `7282d87c` | Bach – Fantasy and Fugue in C minor, BWV 906 | * Fantasie und Fuge c-Moll, BWV 906: I. Fantasie | ? |
 | `296d5d56` | Bach – Flute Sonata in C major, BWV 1033 | * II. Allegro<br>* III. Adagio<br>* IV. Menuetto I | 1736 |
@@ -1434,7 +1432,7 @@
 | `d9ef69ab` | Gershwin – Cuban Overture | * Cuban Overture | 1932 |
 | `8c225a2a` | Gershwin – George Gershwin’s Songbook | * The Man I Love<br>* Fascinating Rhythm<br>* I Got Rhythm | 1924 |
 | `3864a5d0` | Gershwin – Lullaby | * Lullaby | 1919 |
-| `1094de73` | Gershwin – Porgy and Bess | * Act II, Scene I. “Bess, You Is My Woman Now”<br>* Act III, Scene II. “There’s a Boat Dat’s Leavin’ Soon for New York”<br>* Act III, Scene III. “Oh Bess, oh where’s my Bess” | 1934‑1935 |
+| `1094de73` | Gershwin – Porgy and Bess | * Act I, Scene I. “Summertime” (Clara)<br>* Act III, Scene II. “There’s a Boat Dat’s Leavin’ Soon for New York”<br>* Act III, Scene III. “Oh Bess, oh where’s my Bess” | 1934‑1935 |
 | `60b22df4` | Gershwin – Rhapsody in Blue (orch. Grofé) | * Rhapsody in Blue (orch. Grofé) | 1924 |
 | `6192fff9` | Gershwin – Second Rhapsody for Piano and Orchestra | * Second Rhapsody for Piano and Orchestra | 1931 |
 | `013d4aad` | Gershwin – Three Preludes | * No. 1. Allegro ben ritmato e deciso<br>* No. 2. Andante con moto e poco rubato<br>* No. 3. Allegro ben ritmato e deciso | 1926 |
@@ -1572,13 +1570,13 @@
 | `9dba78e9` | Harris – Bring us, O Lord God | * Bring us, O Lord God | 1959 |
 | `20ce7988` | Harris – Faire is the Heaven | * Faire is the Heaven | ? |
 | `b56e0a48` | Hartmann – Concerto funebre | * I. Introduktion. Largo<br>* II. Adagio<br>* IV. Choral. Langsamer Marsch | 1939 |
-| `fc9b4aec` | Haydn – Andante con variazioni in F-moll, Hob. XVII:6 "Un piccolo divertimento" | * 6 "Un piccolo divertimento" | 1793 |
+| `fc9b4aec` | Haydn – Andante con variazioni in F-moll, Hob. XVII:6 "Un piccolo divertimento" | * Andante con variazioni in F-moll, Hob. XVII:6 "Un piccolo divertimento" | 1793 |
 | `1139ecc7` | Haydn – Cello Concerto no. 1 in C major, Hob. VIIb:1 | * I. Moderato<br>* II. Adagio<br>* III. Allegro molto | 1761‑1765 |
 | `122d68d7` | Haydn – Cello Concerto no. 2 in D major, Hob. VIIb:2, op. 101 | * I. Allegro moderato<br>* II. Adagio<br>* III. Rondo: Allegro | 1783 |
 | `510fea48` | Haydn – Concerto for Violin, Piano and Strings in F major, Hob. XVIII:6 | * I. Allegro moderato<br>* II. Largo<br>* III. Allegro | 1766 |
 | `305553f4` | Haydn – Die Jahreszeiten | * Der Frühling: II. Chor des Landvolkes: Allegretto: "Komm, holder Lenz!" (Chor)<br>* Der Frühling: IV. Aria: Allegretto: "Schon eilet froh der Ackermann" (Simon)<br>* Der Winter: XXXIX. Terzett und Doppelchor: Allegro moderato: "Dann bricht der große Morgen an" (Simon, Lukas, Hanne, Chor) | ? |
 | `c77e1961` | Haydn – Die Schöpfung, Hob. XXI:2 | * Die Schöpfung, Hob XXI:2: Part I: IX. Arie: Nun beut die Flur das frische Grün<br>* Die Schöpfung, Hob XXI:2: Part I: XI. Chor: Stimmt an die Saiten<br>* Die Schöpfung, Hob XXI:2: Part I: XIV. Chor und Terzett: Die Himmel erzählen die Ehre Gottes | ? |
-| `d2e3f192` | Haydn – Fantasia (Capriccio) in C major, Hob. XVII:4 | * 4 | 1789 |
+| `d2e3f192` | Haydn – Fantasia (Capriccio) in C major, Hob. XVII:4 | * Fantasia (Capriccio) in C major, Hob. XVII:4 | 1789 |
 | `9ac68e8a` | Haydn – Horn Concerto no. 1 in D major, Hob.VIId:3 | * I. Allegro<br>* II. Adagio<br>* III. Allegro | 1762 |
 | `868d69bd` | Haydn – Keyboard Concerto in C major, Hob. XVIII:1 | * I. Allegro moderato<br>* II. Largo<br>* III. Allegro molto | 1756 |
 | `3f05b96e` | Haydn – Keyboard Concerto in C major, Hob. XVIII:10 | * I. Moderato<br>* II. Adagio<br>* III. Allegro | ? |
@@ -1609,7 +1607,7 @@
 | `21ccd102` | Haydn – Piano Trios, Hob. XV:24-26 | * Piano Trio no. 39 in G major, Hob. XV:25: I. Andante<br>* Piano Trio no. 39 in G major, Hob. XV:25: II. Poco adagio<br>* Piano Trio no. 39 in G major, Hob. XV:25: III. Rondo "in the Gypsies' stile". Presto | 1795 |
 | `0c00dc59` | Haydn – Piano Trios, Hob. XV:27-29 | * Piano Trio in C major, Hob. XV:27: I. Allegro<br>* Piano Trio in C major, Hob. XV:27: II. Andante<br>* Piano Trio in C major, Hob. XV:27: III. Presto | ? |
 | `b800dd41` | Haydn – Septem Verba Christi in Cruce, Hob. XX:1 | * I. L'introduzione. Maestoso ed Adagio<br>* III. Sonata II. Grave e Cantabile<br>* IX. Il Terremoto. Presto con tutta la forza | ? |
-| `d6b5525b` | Haydn – She Never Told Her Love, Hob. XXVIa:34 | * 34 | ? |
+| `d6b5525b` | Haydn – She Never Told Her Love, Hob. XXVIa:34 | * She Never Told Her Love, Hob. XXVIa:34 | ? |
 | `c5f89522` | Haydn – Sinfonia Concertante for Violin, Cello, Oboe & Bassoon in B-flat major, Hob. I:105 | * I. Allegro<br>* II. Andante<br>* III. Allegro con spirito | ? |
 | `c8cf44da` | Haydn – Sonata no. 11 in B-flat major, Hob. XVI:2 | * I. Moderato<br>* II. Largo<br>* III. Menuet | ? |
 | `e38e4e80` | Haydn – Sonata no. 13 in G major, Hob. XVI:6 | * I. Allegro<br>* II. Minuet<br>* IV. Finale: Allegro molto | ? |
@@ -3360,9 +3358,12 @@
 | `a31244c0` | Sibelius – 10 Pieces for Piano, op. 24 | * No. 9. Romance in D-flat major | 1895‑1903 |
 | `a4ab180b` | Sibelius – 2 Humoresques, op. 87 | * Humoresque no. 1 in D minor, op. 87 no. 1<br>* Humoresque no. 2 in D major, op. 87 no. 2 | 1917 |
 | `8224c547` | Sibelius – 2 Pieces from Kuolema, op. 44 | * Valse triste, op. 44 no. 1 | 1903‑1904 |
+| `9a38ab28` | Sibelius – 2 Pieces from Kuolema, op. 62 | * Canzonetta, op. 62a | 1911 |
+| `6531c631` | Sibelius – 2 Pieces, op. 77 | * Cantique (Laetare anima mea), op. 77 no. 1<br>* Devotion (Ab imo pectore), op. 77 no. 2 | 1914‑1915 |
 | `49b90052` | Sibelius – 2 Serenades, op. 69 | * Serenade in D major, op. 69 no. 1<br>* Serenade in G minor, op. 69 no. 2 | 1912‑1913 |
 | `1bb44ca5` | Sibelius – 4 Humoresques, op. 89 | * Humoresque no. 4 in G minor, op. 89 no. 2: Andantino<br>* Humoresque no. 5 in E-flat, op. 89 no. 3<br>* Humoresque no. 6 in G minor, op. 89 no. 4: Allegro | 1917 |
 | `a36a8349` | Sibelius – 4 pieces, op. 78 | * Romanssi, op. 78 no. 2 | 1915‑1917 |
+| `3d575c4e` | Sibelius – 5 Pieces, op. 81 | * Mazurka, op. 81 no. 1<br>* Rondino, op. 81 no. 2 | 1915‑1918 |
 | `2433c70c` | Sibelius – 5 Songs, op. 37 | * The First Kiss, op. 37 no. 1<br>* Var det en dröm?, op. 37 no. 4<br>* Flickan kom ifrån sin älsklings möte, op. 37 no. 5 | 1900‑1902 |
 | `ed1a6ce5` | Sibelius – 6 Impromptus, op. 5 | * No. 1. Moderato<br>* No. 5. Vivace<br>* No. 6. Commodo | 1893 |
 | `674c40f2` | Sibelius – 6 Songs, op. 36 | * Svarta rosor, op. 36 no. 1<br>* Säv, säv, susa, op. 36 no. 4<br>* Demanten på marssnön, op. 36 no. 6 | 1899‑1900 |
@@ -3623,7 +3624,6 @@
 | `fa33e89e` | Tárrega – Sueño (mazurka) | * Sueño (mazurka) | ? |
 | `1378a484` | Tartini – Violin Sonata in G minor, B. g10 “Didone abbandonata” | * I. Affettuoso<br>* II. Presto<br>* III. Allegro | ? |
 | `430c7c84` | Tartini – Violin Sonata in G minor, B. g5, 'Le trille du diable' | * I. Larghetto affettuoso<br>* II. Allegro (Tempo giusto)<br>* III. Andante - Allegro | 1740 |
-| `9e337924` | Tavener – 3rd Earth | * 3rd Earth | ? |
 | `ea91511c` | Tavener – Funeral Ikos | * Funeral Ikos | 1981 |
 | `dec17728` | Tavener – Two Hymns to the Mother of God | * I. A Hymn to the Mother of God | 1985 |
 | `210348bb` | Taverner – In Nomine | * In Nomine | ? |

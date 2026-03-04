@@ -1225,15 +1225,6 @@
       "score": 49.59
     },
     {
-      "gid": "4b239732-7d25-46c0-8fc0-1aa0ce38d0b5",
-      "name": "Bécourt, ",
-      "birth_year": 1760,
-      "death_year": 1794,
-      "gender": "male",
-      "country": "FR",
-      "score": 11.48
-    },
-    {
       "gid": "ea547ae6-8ab1-48b2-b1a9-70a638d2ad26",
       "name": "Böhm, Georg",
       "birth_year": 1661,
@@ -2635,7 +2626,7 @@
       "death_year": 1937,
       "gender": "male",
       "country": "US",
-      "score": 52.12
+      "score": 52.69
     },
     {
       "gid": "c6c6f154-b3b8-4f82-a500-589373f41556",
@@ -7162,7 +7153,7 @@
       "death_year": 2013,
       "gender": "male",
       "country": "GB",
-      "score": 34.43
+      "score": 29.82
     },
     {
       "gid": "b65b5ed2-aa5a-4a2f-a65c-78a74fe95846",
@@ -62928,7 +62919,7 @@
       "gid": "02f290d4-49a1-38f1-81dd-41d906f04d50",
       "composer": "e3d5cfcd-e42b-411d-add2-716a5029f59b",
       "name": "Scottish Fantasy in E-flat major, op. 46",
-      "type": "orchestral",
+      "type": "concerto",
       "begin_year": 1879,
       "end_year": 1880,
       "score": 3.56,
@@ -67594,22 +67585,6 @@
         {
           "name": "Ye Sacred Muses",
           "deezer": [1996050897, 2037941],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "0d08734b-8dfc-4724-bff4-fa5b189a6053",
-      "composer": "4b239732-7d25-46c0-8fc0-1aa0ce38d0b5",
-      "name": "Le « Ça ira » (arr. Françaix)",
-      "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
-      "score": 2.2,
-      "parts": [
-        {
-          "name": "Le « Ça ira » (arr. Françaix)",
-          "deezer": [71316655],
           "score": 100.0
         }
       ]
@@ -95120,38 +95095,22 @@
         {
           "name": "Act I, Scene I. “Summertime” (Clara)",
           "deezer": [3217447741],
-          "score": 85.05
+          "score": 100.0
         },
         {
           "name": "Act II, Scene I. “Bess, You Is My Woman Now”",
           "deezer": [122883314],
-          "score": 88.56
+          "score": 85.98
         },
         {
           "name": "Act III, Scene II. “There’s a Boat Dat’s Leavin’ Soon for New York”",
           "deezer": [122883326],
-          "score": 100.0
+          "score": 97.09
         },
         {
           "name": "Act III, Scene III. “Oh Bess, oh where’s my Bess”",
           "deezer": [1568056],
-          "score": 96.02
-        }
-      ]
-    },
-    {
-      "gid": "6a20dd7c-4c5e-35df-88d9-bdde3162a659",
-      "composer": "65744963-191a-44ef-a3c7-b693a808a158",
-      "name": "Prelude no. 2 (orch. Kennedy, Lenehan)",
-      "type": "orchestral",
-      "begin_year": 1926,
-      "end_year": 1926,
-      "score": 1.61,
-      "parts": [
-        {
-          "name": "Prelude no. 2 (orch. Kennedy, Lenehan)",
-          "deezer": [636757962],
-          "score": 100.0
+          "score": 93.22
         }
       ]
     },
@@ -95220,22 +95179,6 @@
       ]
     },
     {
-      "gid": "3428f35f-dac8-45ba-af0b-17e345edd355",
-      "composer": "65744963-191a-44ef-a3c7-b693a808a158",
-      "name": "The Yankee Doodle Blues",
-      "type": "vocal",
-      "begin_year": 1922,
-      "end_year": 1922,
-      "score": 1.61,
-      "parts": [
-        {
-          "name": "The Yankee Doodle Blues",
-          "deezer": [396949182],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "013d4aad-70a5-4822-985d-ff41c6656417",
       "composer": "65744963-191a-44ef-a3c7-b693a808a158",
       "name": "Three Preludes",
@@ -95265,7 +95208,7 @@
       "gid": "938ce8c8-85b5-41ea-97ab-470fbbc618bd",
       "composer": "65744963-191a-44ef-a3c7-b693a808a158",
       "name": "Tip-Toes",
-      "type": "vocal",
+      "type": "piano",
       "begin_year": 1925,
       "end_year": 1925,
       "score": 3.62,
@@ -107209,7 +107152,7 @@
       "score": 1.79,
       "parts": [
         {
-          "name": "20",
+          "name": "\"Solo e pensoso\", Hob. XXIVb:20",
           "deezer": [1400865832],
           "score": 100.0
         }
@@ -107287,7 +107230,7 @@
       "score": 2.48,
       "parts": [
         {
-          "name": "9",
+          "name": "Adagio in F major, Hob. XVII:9",
           "deezer": [1400920672, 2776252251],
           "score": 100.0
         }
@@ -107303,7 +107246,7 @@
       "score": 1.79,
       "parts": [
         {
-          "name": "10",
+          "name": "Allegretto in G major, Hob. XVII:10",
           "deezer": [2899118341],
           "score": 100.0
         }
@@ -107319,7 +107262,7 @@
       "score": 4.01,
       "parts": [
         {
-          "name": "6 \"Un piccolo divertimento\"",
+          "name": "Andante con variazioni in F-moll, Hob. XVII:6 \"Un piccolo divertimento\"",
           "deezer": [65727753, 2506620871, 2894691121, 2771261431, 1400920682],
           "score": 100.0
         }
@@ -107335,22 +107278,22 @@
       "score": 2.06,
       "parts": [
         {
-          "name": "2: I. Recitativo \"Teseo mio ben!\"",
+          "name": "I. Recitativo \"Teseo mio ben!\"",
           "deezer": [1401463032],
           "score": 100.0
         },
         {
-          "name": "2: II. Aria \"Dove sei, mio bel tesoro?'",
+          "name": "II. Aria \"Dove sei, mio bel tesoro?'",
           "deezer": [1401463042],
           "score": 100.0
         },
         {
-          "name": "2: III. Recitativo \"Ma, a chi parlo?\"",
+          "name": "III. Recitativo \"Ma, a chi parlo?\"",
           "deezer": [1401463052],
           "score": 93.58
         },
         {
-          "name": "2: IV. Aria \"Ah, che morir vorrei\"",
+          "name": "IV. Aria \"Ah, che morir vorrei\"",
           "deezer": [1401463062],
           "score": 100.0
         }
@@ -107408,37 +107351,37 @@
       "score": 1.61,
       "parts": [
         {
-          "name": "97: I. Adagio cantabile",
+          "name": "I. Adagio cantabile",
           "deezer": [716513032],
           "score": 100.0
         },
         {
-          "name": "97: II. Allegro di molto",
+          "name": "II. Allegro di molto",
           "deezer": [716513042],
           "score": 100.0
         },
         {
-          "name": "97: III. Menuet",
+          "name": "III. Menuet",
           "deezer": [2882805592],
           "score": 100.0
         },
         {
-          "name": "97: IV. Polonaise",
+          "name": "IV. Polonaise",
           "deezer": [716513062],
           "score": 100.0
         },
         {
-          "name": "97: V. Adagio",
+          "name": "V. Adagio",
           "deezer": [716513072],
           "score": 100.0
         },
         {
-          "name": "97: VI. Menuet",
+          "name": "VI. Menuet",
           "deezer": [925356872],
           "score": 100.0
         },
         {
-          "name": "97: VII. Fuga. Presto",
+          "name": "VII. Fuga. Presto",
           "deezer": [925356962],
           "score": 100.0
         }
@@ -107454,7 +107397,7 @@
       "score": 2.3,
       "parts": [
         {
-          "name": "1",
+          "name": "Capriccio in G-dur, Hob. XVII:1",
           "deezer": [2899118231, 2138471227],
           "score": 100.0
         }
@@ -107564,7 +107507,7 @@
       "score": 2.08,
       "parts": [
         {
-          "name": "36",
+          "name": "Content, Hob. XXVIa:36",
           "deezer": [1675179877],
           "score": 100.0
         }
@@ -107580,7 +107523,7 @@
       "score": 1.79,
       "parts": [
         {
-          "name": "21",
+          "name": "Das Leben Ist Ein Traum, Hob. XXVIa:21",
           "deezer": [1557264842],
           "score": 100.0
         }
@@ -107596,7 +107539,7 @@
       "score": 1.95,
       "parts": [
         {
-          "name": "28",
+          "name": "Despair, Hob. XXVIa:28",
           "deezer": [65581566],
           "score": 100.0
         }
@@ -108156,7 +108099,7 @@
       "score": 3.3,
       "parts": [
         {
-          "name": "4",
+          "name": "Fantasia (Capriccio) in C major, Hob. XVII:4",
           "deezer": [2772279781, 2506620861, 2138471067, 2899118161],
           "score": 100.0
         }
@@ -108172,7 +108115,7 @@
       "score": 2.56,
       "parts": [
         {
-          "name": "30",
+          "name": "Fidelity, Hob. XXVIa:30",
           "deezer": [2992524041, 1675179867],
           "score": 100.0
         }
@@ -108188,7 +108131,7 @@
       "score": 1.79,
       "parts": [
         {
-          "name": "17",
+          "name": "Geistliches Lied, Hob. XXVIa:17",
           "deezer": [1557264802],
           "score": 100.0
         }
@@ -108438,7 +108381,7 @@
       "score": 1.79,
       "parts": [
         {
-          "name": "22",
+          "name": "Lob der Faulheit, Hob. XXVIa:22",
           "deezer": [1675179777],
           "score": 100.0
         }
@@ -108454,7 +108397,7 @@
       "score": 1.79,
       "parts": [
         {
-          "name": "2",
+          "name": "March for the Derbyshire Cavalry Regiment no. 2 in C Hob. VIII:2",
           "deezer": [2772279831],
           "score": 100.0
         }
@@ -108817,7 +108760,7 @@
       "score": 2.4,
       "parts": [
         {
-          "name": "42",
+          "name": "O Tuneful Voice, Hob. XXVIa:42",
           "deezer": [1675179827],
           "score": 100.0
         }
@@ -108833,7 +108776,7 @@
       "score": 1.95,
       "parts": [
         {
-          "name": "7",
+          "name": "Overture in D major, Hob. Ia:7",
           "deezer": [2805526742],
           "score": 100.0
         }
@@ -110120,7 +110063,7 @@
       "score": 2.48,
       "parts": [
         {
-          "name": "35",
+          "name": "Piercing Eyes, Hob. XXVIa:35",
           "deezer": [1675179887, 75981316],
           "score": 100.0
         }
@@ -110136,7 +110079,7 @@
       "score": 2.2,
       "parts": [
         {
-          "name": "29",
+          "name": "Pleasing Pain, Hob. XXVIa:29",
           "deezer": [2768712551],
           "score": 100.0
         }
@@ -110152,7 +110095,7 @@
       "score": 2.2,
       "parts": [
         {
-          "name": "26",
+          "name": "Recollection, Hob. XXVIa:26",
           "deezer": [65581561],
           "score": 100.0
         }
@@ -110168,7 +110111,7 @@
       "score": 2.71,
       "parts": [
         {
-          "name": "31",
+          "name": "Sailor's Song, Hob. XXVIa:31",
           "deezer": [2418639455, 75981312, 1675179837],
           "score": 100.0
         }
@@ -110184,7 +110127,7 @@
       "score": 2.3,
       "parts": [
         {
-          "name": "10",
+          "name": "Scena di Berenice, Hob. XXIVa:10",
           "deezer": [401486012],
           "score": 100.0
         }
@@ -110256,7 +110199,7 @@
       "score": 2.94,
       "parts": [
         {
-          "name": "34",
+          "name": "She Never Told Her Love, Hob. XXVIa:34",
           "deezer": [75981315, 1675179897, 396919212],
           "score": 100.0
         }
@@ -111982,7 +111925,7 @@
       "score": 2.2,
       "parts": [
         {
-          "name": "33",
+          "name": "Sympathy, Hob. XXVIa:33",
           "deezer": [1675179847],
           "score": 100.0
         }
@@ -114796,7 +114739,7 @@
       "score": 2.56,
       "parts": [
         {
-          "name": "2",
+          "name": "Te Deum in C major, Hob. XXIIIc:2",
           "deezer": [4763072],
           "score": 100.0
         }
@@ -114812,7 +114755,7 @@
       "score": 2.48,
       "parts": [
         {
-          "name": "25 \"Now the dancing sunbeams play\"",
+          "name": "The Mermaid's Song, Hob. XXVIa:25 \"Now the dancing sunbeams play\"",
           "deezer": [2992524051],
           "score": 100.0
         }
@@ -114961,7 +114904,7 @@
       "score": 2.56,
       "parts": [
         {
-          "name": "32",
+          "name": "The Wanderer, Hob. XXVIa:32",
           "deezer": [75981313],
           "score": 100.0
         }
@@ -115029,7 +114972,7 @@
       "score": 1.61,
       "parts": [
         {
-          "name": "9",
+          "name": "Trost unglücklicher Liebe, Hob. XXVIa:9",
           "deezer": [1675179797],
           "score": 100.0
         }
@@ -115071,7 +115014,7 @@
       "score": 1.95,
       "parts": [
         {
-          "name": "7",
+          "name": "Variationen in D-dur, Hob. XVII:7",
           "deezer": [2772279801],
           "score": 100.0
         }
@@ -115087,7 +115030,7 @@
       "score": 1.61,
       "parts": [
         {
-          "name": "46",
+          "name": "Vergiss mein nicht, Hob. XXVIa:46",
           "deezer": [1557264852],
           "score": 100.0
         }
@@ -115181,7 +115124,7 @@
       "score": 2.4,
       "parts": [
         {
-          "name": "12",
+          "name": "Zwölf Deutsche Tänze, Hob. IX:12",
           "deezer": [2772279811],
           "score": 100.0
         }
@@ -130547,7 +130490,7 @@
       "parts": [
         {
           "name": "Nr. 3. Die Hirten an der Krippe",
-          "deezer": [1144114682],
+          "deezer": [1490678902],
           "score": 100.0
         },
         {
@@ -143176,7 +143119,7 @@
       "score": 1.79,
       "parts": [
         {
-          "name": "3.1",
+          "name": "Movete al mio bel suon le piante snelle, SV 154:3.1",
           "deezer": [2440326325],
           "score": 100.0
         }
@@ -196498,7 +196441,7 @@
       "gid": "06a262c3-0d02-47af-94ff-b17b54be0fce",
       "composer": "a04e3151-f8a6-48dd-9322-7a1317c8ef30",
       "name": "Maria zart von edler Art",
-      "type": "organ",
+      "type": "vocal",
       "begin_year": null,
       "end_year": null,
       "score": 1.79,
@@ -217835,7 +217778,7 @@
       "gid": "8224c547-e30b-4490-b8b4-5a0d2b413b94",
       "composer": "691b0e9d-9e57-41cf-932d-a3d21b068e75",
       "name": "2 Pieces from Kuolema, op. 44",
-      "type": "piano",
+      "type": "orchestral",
       "begin_year": 1903,
       "end_year": 1904,
       "score": 4.48,
@@ -217851,7 +217794,7 @@
       "gid": "9a38ab28-e2fd-435d-8c96-52835a7b8e92",
       "composer": "691b0e9d-9e57-41cf-932d-a3d21b068e75",
       "name": "2 Pieces from Kuolema, op. 62",
-      "type": "piano",
+      "type": "orchestral",
       "begin_year": 1911,
       "end_year": 1911,
       "score": 2.5,
@@ -217867,7 +217810,7 @@
       "gid": "4a3a97bf-3305-4fcd-8e80-c3f5f0471c8a",
       "composer": "691b0e9d-9e57-41cf-932d-a3d21b068e75",
       "name": "2 Pieces, op. 111",
-      "type": "piano",
+      "type": "organ",
       "begin_year": 1925,
       "end_year": 1931,
       "score": 2.17,
@@ -217883,7 +217826,7 @@
       "gid": "20c672ac-e287-46fe-9839-dfe547ef19ae",
       "composer": "691b0e9d-9e57-41cf-932d-a3d21b068e75",
       "name": "2 Pieces, op. 45",
-      "type": "piano",
+      "type": "orchestral",
       "begin_year": 1904,
       "end_year": 1910,
       "score": 2.01,
@@ -217899,7 +217842,7 @@
       "gid": "6531c631-ce91-4cab-86b1-47c61ff9f843",
       "composer": "691b0e9d-9e57-41cf-932d-a3d21b068e75",
       "name": "2 Pieces, op. 77",
-      "type": "piano",
+      "type": "orchestral",
       "begin_year": 1914,
       "end_year": 1915,
       "score": 2.56,
@@ -218041,7 +217984,7 @@
       "gid": "a9a065e8-3b38-45ed-965b-1ba17a21c6b7",
       "composer": "691b0e9d-9e57-41cf-932d-a3d21b068e75",
       "name": "3 Pieces, op. 116",
-      "type": "piano",
+      "type": "chamber",
       "begin_year": 1929,
       "end_year": 1929,
       "score": 1.61,
@@ -218067,7 +218010,7 @@
       "gid": "4854ef46-a817-4b4d-913d-e2bb6f7a2bd6",
       "composer": "691b0e9d-9e57-41cf-932d-a3d21b068e75",
       "name": "3 Pieces, op. 96",
-      "type": "piano",
+      "type": "vocal",
       "begin_year": 1914,
       "end_year": 1921,
       "score": 1.73,
@@ -218171,7 +218114,7 @@
       "gid": "36c97042-1071-42eb-9308-40a64fd12cc0",
       "composer": "691b0e9d-9e57-41cf-932d-a3d21b068e75",
       "name": "4 Pieces, op. 115",
-      "type": "piano",
+      "type": "chamber",
       "begin_year": 1929,
       "end_year": 1929,
       "score": 1.89,
@@ -218202,7 +218145,7 @@
       "gid": "a36a8349-fdbe-4db3-957a-571a6c452e7a",
       "composer": "691b0e9d-9e57-41cf-932d-a3d21b068e75",
       "name": "4 pieces, op. 78",
-      "type": "piano",
+      "type": "chamber",
       "begin_year": 1915,
       "end_year": 1917,
       "score": 2.76,
@@ -218234,7 +218177,7 @@
       "gid": "3d575c4e-36cc-4335-bad2-ede7a9eb07f6",
       "composer": "691b0e9d-9e57-41cf-932d-a3d21b068e75",
       "name": "5 Pieces, op. 81",
-      "type": "piano",
+      "type": "chamber",
       "begin_year": 1915,
       "end_year": 1918,
       "score": 2.66,
@@ -218535,7 +218478,7 @@
       "gid": "af8ad5df-9f6b-4e58-a69c-f5be4c60478e",
       "composer": "691b0e9d-9e57-41cf-932d-a3d21b068e75",
       "name": "6 pieces, op. 79",
-      "type": "piano",
+      "type": "chamber",
       "begin_year": 1915,
       "end_year": 1917,
       "score": 1.96,
@@ -221137,7 +221080,7 @@
       "score": 2.2,
       "parts": [
         {
-          "name": "80",
+          "name": "On the Seashore, op. 17, JB 1:80",
           "deezer": [2444350075],
           "score": 100.0
         }
@@ -232291,22 +232234,6 @@
       ]
     },
     {
-      "gid": "9e337924-660c-4f92-b1b5-a81456db8572",
-      "composer": "7b0a18b7-2b32-4b26-8db3-3ea39a59e1e6",
-      "name": "3rd Earth",
-      "type": "orchestral",
-      "begin_year": null,
-      "end_year": null,
-      "score": 3.81,
-      "parts": [
-        {
-          "name": "3rd Earth",
-          "deezer": [17492803, 971157542, 62933479, 62933478, 62933476],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "cbe6d6b2-cb97-4e60-9b40-898ce1e49233",
       "composer": "7b0a18b7-2b32-4b26-8db3-3ea39a59e1e6",
       "name": "As one who has slept",
@@ -234794,7 +234721,7 @@
       "parts": [
         {
           "name": "Valse-caprice, op. 4",
-          "deezer": [685382952],
+          "deezer": [646272042],
           "score": 100.0
         }
       ]
@@ -235233,42 +235160,42 @@
       "score": 1.78,
       "parts": [
         {
-          "name": "17: I. Sonata",
+          "name": "I. Sonata",
           "deezer": [1401354912],
           "score": 100.0
         },
         {
-          "name": "17: II. Coro: \"Du aber, Daniel, gehe hin\"",
+          "name": "II. Coro: \"Du aber, Daniel, gehe hin\"",
           "deezer": [1401354922],
           "score": 100.0
         },
         {
-          "name": "17: III. Recitativo (Bass): \"Mit Freuden folgt die Seele\"",
+          "name": "III. Recitativo (Bass): \"Mit Freuden folgt die Seele\"",
           "deezer": [1401354932],
           "score": 100.0
         },
         {
-          "name": "17: IV. Aria: \"Du Aufenthalt der blassen Sorgen\", Accompagnato: \"Du bist ein ungestümes Meer\", Arioso: \"Komm, sanfter Tod\", Recitativo: \"Im Himmel ist der Sitz\" (Bass)",
+          "name": "IV. Aria: \"Du Aufenthalt der blassen Sorgen\", Accompagnato: \"Du bist ein ungestümes Meer\", Arioso: \"Komm, sanfter Tod\", Recitativo: \"Im Himmel ist der Sitz\" (Bass)",
           "deezer": [1401354942],
           "score": 100.0
         },
         {
-          "name": "17: V. Recitativo (Soprano): \"Mit sehnendem Verlangen\"",
+          "name": "V. Recitativo (Soprano): \"Mit sehnendem Verlangen\"",
           "deezer": [1401354952],
           "score": 100.0
         },
         {
-          "name": "17: VI. Arie (Soprano): \"Brecht, ihr müden Augenlieder\"",
+          "name": "VI. Arie (Soprano): \"Brecht, ihr müden Augenlieder\"",
           "deezer": [1401354962],
           "score": 100.0
         },
         {
-          "name": "17: VII. Recitativo (Bass): \"Dir ist, hochsel'ger Mann\"",
+          "name": "VII. Recitativo (Bass): \"Dir ist, hochsel'ger Mann\"",
           "deezer": [1401354972],
           "score": 89.82
         },
         {
-          "name": "17: VIII. Coro: \"Schlaft wohl, ihr seligen Gebeine\"",
+          "name": "VIII. Coro: \"Schlaft wohl, ihr seligen Gebeine\"",
           "deezer": [1401354982],
           "score": 100.0
         }
@@ -243632,7 +243559,7 @@
       "parts": [
         {
           "name": "A lenda do caboclo, W166",
-          "deezer": [570812, 2775797381],
+          "deezer": [2775797381],
           "score": 100.0
         }
       ]

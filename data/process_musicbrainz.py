@@ -658,7 +658,7 @@ class MusicbrainzProcessor:
 
         # 2. Fallback: colon followed by a movement identifier
         movement_pattern = re.compile(
-            r"^(.+?):\s*"
+            r"^(.+?):\s+"
             r"((?:[IVXLCDM]+\b\.?|(?:(?:No|Nº|Nr|Op)\.?\s*)?\d+\.?)\s*.*)",
             re.IGNORECASE,
         )

@@ -733,7 +733,7 @@
 | `7e7d799a` | Gershwin – An American in Paris | * An American in Paris | 1928 |
 | `d9ef69ab` | Gershwin – Cuban Overture | * Cuban Overture | 1932 |
 | `8c225a2a` | Gershwin – George Gershwin’s Songbook | * The Man I Love<br>* Fascinating Rhythm | 1924 |
-| `1094de73` | Gershwin – Porgy and Bess | * Act III, Scene II. “There’s a Boat Dat’s Leavin’ Soon for New York”<br>* Act III, Scene III. “Oh Bess, oh where’s my Bess” | 1934‑1935 |
+| `1094de73` | Gershwin – Porgy and Bess | * Act I, Scene I. “Summertime” (Clara)<br>* Act III, Scene II. “There’s a Boat Dat’s Leavin’ Soon for New York” | 1934‑1935 |
 | `60b22df4` | Gershwin – Rhapsody in Blue (orch. Grofé) | * Rhapsody in Blue (orch. Grofé) | 1924 |
 | `6192fff9` | Gershwin – Second Rhapsody for Piano and Orchestra | * Second Rhapsody for Piano and Orchestra | 1931 |
 | `013d4aad` | Gershwin – Three Preludes | * No. 1. Allegro ben ritmato e deciso<br>* No. 2. Andante con moto e poco rubato | 1926 |
@@ -798,11 +798,11 @@
 | `aa7ac24f` | Handel – Sonatas for an Accompanied Solo Instrument, op. 1 | * Violin Sonata in D major, op. 1 no. 13, HWV 371: II. Allegro<br>* Violin Sonata in D major, op. 1 no. 13, HWV 371: III. Larghetto | 1725‑1726 |
 | `aeba89c4` | Handel – Suites de Pièces, Vol. 1, HWV 426-433 | * Suite de pièce in F major, Vol. 1 no. 2, HWV 427: I. Adagio<br>* Suite de pièce in G minor, Vol. 1 no. 7, HWV 432: VI. Passacaglia. Allegro commodo | ? |
 | `493b61ba` | Handel – Water Music, HWV 348–350 | * Water Music, Suite no. 1 in F major, HWV 348: V. Air. Presto<br>* Water Music, Suite no. 2 in D major, HWV 349: 12. Alla hornpipe | 1717 |
-| `fc9b4aec` | Haydn – Andante con variazioni in F-moll, Hob. XVII:6 "Un piccolo divertimento" | * 6 "Un piccolo divertimento" | 1793 |
+| `fc9b4aec` | Haydn – Andante con variazioni in F-moll, Hob. XVII:6 "Un piccolo divertimento" | * Andante con variazioni in F-moll, Hob. XVII:6 "Un piccolo divertimento" | 1793 |
 | `1139ecc7` | Haydn – Cello Concerto no. 1 in C major, Hob. VIIb:1 | * II. Adagio<br>* III. Allegro molto | 1761‑1765 |
 | `122d68d7` | Haydn – Cello Concerto no. 2 in D major, Hob. VIIb:2, op. 101 | * II. Adagio<br>* III. Rondo: Allegro | 1783 |
 | `c77e1961` | Haydn – Die Schöpfung, Hob. XXI:2 | * Die Schöpfung, Hob XXI:2: Part I: IX. Arie: Nun beut die Flur das frische Grün<br>* Die Schöpfung, Hob XXI:2: Part I: XIV. Chor und Terzett: Die Himmel erzählen die Ehre Gottes | ? |
-| `d2e3f192` | Haydn – Fantasia (Capriccio) in C major, Hob. XVII:4 | * 4 | 1789 |
+| `d2e3f192` | Haydn – Fantasia (Capriccio) in C major, Hob. XVII:4 | * Fantasia (Capriccio) in C major, Hob. XVII:4 | 1789 |
 | `b2650ffe` | Haydn – Piano Concerto no. 11 in D major, Hob. XVIII:11 | * I. Vivace<br>* III. Rondo all'ungarese. Allegro assai | ? |
 | `5b02613d` | Haydn – Piano Sonata no. 32 in G minor, Hob. XVI:44 | * I. Moderato<br>* II. Allegretto | 1771‑1773 |
 | `0a1f0af1` | Haydn – Piano Sonata no. 33 in C minor, Hob. XVI:20 | * I. Moderato<br>* II. Andante con moto | 1771 |
@@ -1575,6 +1575,7 @@
 | `bc0337ee` | Schubert – String Quartet no. 13 in A minor, D. 804, op. 29 “Rosamunde” | * I. Allegro ma non troppo<br>* II. Andante | 1824 |
 | `c6e6e640` | Schubert – String Quartet no. 14 in D minor, D. 810 “Death and the Maiden” | * II. Andante con moto<br>* III. Scherzo (Allegro molto) | 1824 |
 | `42899d69` | Schubert – String Quartet no. 15 in G major, D. 887, op. post. 161 | * I. Allegro molto moderato<br>* III. Scherzo. Allegro vivace - Trio. Allegretto | 1826 |
+| `f584b586` | Schubert – String Quartet no. 8 in B-flat major, D. 112 | * I. Allegro ma non troppo<br>* II. Andante sostenuto | 1814 |
 | `5e47150f` | Schubert – String Quartet no. 9 in G minor, D. 173 | * I. Allegro con brio<br>* III. Menuetto. Allegro vivace | 1815 |
 | `924a3a1e` | Schubert – String Quintet in C major, D. 956 | * I. Allegro ma non troppo<br>* II. Adagio | 1828 |
 | `24f2ca89` | Schubert – Suleika I, op. 14 no. 1, D. 720 | * Suleika I, op. 14 no. 1, D. 720 | 1821 |
@@ -1842,7 +1843,6 @@
 | `354eb79f` | Tárrega – Marieta (mazurka) | * Marieta (mazurka) | ? |
 | `ae3925c9` | Tárrega – Mazurka en Sol | * Mazurka en Sol | ? |
 | `98c48061` | Tárrega – Prelude for guitar no. 8 in A- "Lágrima" | * Prelude for guitar no. 8 in A- "Lágrima" | ? |
-| `9e337924` | Tavener – 3rd Earth | * 3rd Earth | ? |
 | `854f7f28` | Tchaikovsky – Capriccio italien, op. 45 | * Capriccio italien, op. 45 | 1880 |
 | `03c670e9` | Tchaikovsky – Concerto for Piano and Orchestra no. 1 in B-flat minor, op. 23 | * I. Allegro non troppo e molto maestoso<br>* II. Andantino semplice | 1874‑1875 |
 | `f7136e19` | Tchaikovsky – Concerto for Violin and Orchestra in D major, op. 35 | * I. Allegro moderato<br>* II. Canzonetta. Andante | 1878 |

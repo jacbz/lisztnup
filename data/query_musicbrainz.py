@@ -222,11 +222,11 @@ work_exceptions AS (
         (8558675, 'Barber - Adagio for Strings'),
         (9641726, 'Fauré - Pavane'),
         (12611605, 'Glinka - The Lark'),
-        (12426464, 'Mozart - Don Giovanni'),
         (9268731, 'V Williams - The Lark Ascending'),
         (6370216, 'V. Williams - Fantasia on Greensleeves'),
 
         -- These are erroneously classified as arrangements and may be removed with the next MusicBrainz update
+        (12426464, 'Mozart - Don Giovanni'),
         (14487371, 'Tchaikovsky - Piano Concerto No.1'),
         (10380841, 'Verdi - Nabucco')
     ) AS t(id, comment)

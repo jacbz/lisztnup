@@ -95,6 +95,7 @@ export const BEGINNER_TRACKLIST = [
 	'4dfff025', // Franck – Sonata for Violin and Piano in A major
 	'c8d8615a', // Fuçík - Entry of the Gladiators
 	'7e7d799a', // Gershwin – An American in Paris
+	'1094de73', // Gershwin - Porgy and Bess: Summertime
 	'60b22df4', // Gershwin – Rhapsody in Blue
 	'd1b335d1', // Glinka – Ruslan and Lyudmila
 	'b95fea1e', // Grieg – Concerto in A minor for Piano and Orchestra, op. 16
@@ -250,6 +251,5 @@ export const BEGINNER_TRACKLIST = [
 	'597e017a', // Wagner – Der Ring des Nibelungen (Ride of the Valkyries)
 	'd801c361', // Wagner – Tannhäuser: Ouverture and Venusberg Music
 	'ae217ba8', // Wagner – Tristan und Isolde
-	'2ed0c416', // Widor – Toccata from Symphony for Organ no. 5 in F minor, op. 42
 	'3148af46' // Williams – Three Pieces from Schindler’s List (Theme)
 ];

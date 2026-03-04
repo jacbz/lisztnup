@@ -411,6 +411,7 @@
 | `c8d8615a` | Fučík – Entry of the Gladiators | * Entry of the Gladiators | 1897 |
 | `7e7d799a` | Gershwin – An American in Paris | * An American in Paris | 1928 |
 | `d9ef69ab` | Gershwin – Cuban Overture | * Cuban Overture | 1932 |
+| `1094de73` | Gershwin – Porgy and Bess | * Act I, Scene I. “Summertime” (Clara) | 1934‑1935 |
 | `60b22df4` | Gershwin – Rhapsody in Blue (orch. Grofé) | * Rhapsody in Blue (orch. Grofé) | 1924 |
 | `013d4aad` | Gershwin – Three Preludes | * No. 2. Andante con moto e poco rubato | 1926 |
 | `520ac9a2` | Giordano – Andrea Chénier | * Atto III. “La mamma morta” (Maddalena, Gérard) | 1896 |
@@ -433,7 +434,7 @@
 | `925c3677` | Handel – Music for the Royal Fireworks, HWV 351 | * IV. La Réjouissance | 1749 |
 | `813a0567` | Handel – Serse, HWV 40 | * Atto I, no. 2. Arioso “Ombra mai fù” (Serse) | 1737‑1738 |
 | `493b61ba` | Handel – Water Music, HWV 348–350 | * Water Music, Suite no. 2 in D major, HWV 349: 12. Alla hornpipe | 1717 |
-| `fc9b4aec` | Haydn – Andante con variazioni in F-moll, Hob. XVII:6 "Un piccolo divertimento" | * 6 "Un piccolo divertimento" | 1793 |
+| `fc9b4aec` | Haydn – Andante con variazioni in F-moll, Hob. XVII:6 "Un piccolo divertimento" | * Andante con variazioni in F-moll, Hob. XVII:6 "Un piccolo divertimento" | 1793 |
 | `1139ecc7` | Haydn – Cello Concerto no. 1 in C major, Hob. VIIb:1 | * II. Adagio | 1761‑1765 |
 | `122d68d7` | Haydn – Cello Concerto no. 2 in D major, Hob. VIIb:2, op. 101 | * III. Rondo: Allegro | 1783 |
 | `c77e1961` | Haydn – Die Schöpfung, Hob. XXI:2 | * Die Schöpfung, Hob XXI:2: Part I: XIV. Chor und Terzett: Die Himmel erzählen die Ehre Gottes | ? |
@@ -927,7 +928,6 @@
 | `270dab51` | Tárrega – Adelita (mazurka) | * Adelita (mazurka) | ? |
 | `8a690c97` | Tárrega – Capricho árabe | * Capricho árabe | 1892 |
 | `98c48061` | Tárrega – Prelude for guitar no. 8 in A- "Lágrima" | * Prelude for guitar no. 8 in A- "Lágrima" | ? |
-| `9e337924` | Tavener – 3rd Earth | * 3rd Earth | ? |
 | `854f7f28` | Tchaikovsky – Capriccio italien, op. 45 | * Capriccio italien, op. 45 | 1880 |
 | `03c670e9` | Tchaikovsky – Concerto for Piano and Orchestra no. 1 in B-flat minor, op. 23 | * I. Allegro non troppo e molto maestoso | 1874‑1875 |
 | `f7136e19` | Tchaikovsky – Concerto for Violin and Orchestra in D major, op. 35 | * I. Allegro moderato | 1878 |
