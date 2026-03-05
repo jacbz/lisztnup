@@ -20,7 +20,7 @@
 	let { visible, url, onClose, shareTitle, shareText, showOpenButton = true }: Props = $props();
 
 	let copied = $state(false);
-	let hasShareSupport = $state(false);
+	let hasShareSupport = $derived(false);
 
 	$effect(() => {
 		hasShareSupport = typeof navigator !== 'undefined' && 'share' in navigator;

@@ -222,30 +222,6 @@
 
 	// Update preview when config changes
 	$effect(() => {
-		// Track dependencies for preview
-		const deps = [
-			categoryAdjustmentsEnabled,
-			composerFilterEnabled,
-			yearFilterEnabled,
-			workScoreRangeEnabled,
-			topWorksCountEnabled,
-			limitWorksFromComposerEnabled,
-			maxTracksFromSingleWorkEnabled,
-			nameFilterEnabled,
-			enablePopularityWeighting,
-			enableFilters,
-			composerFilterMode,
-			selectedComposers,
-			notabilityRange,
-			selectedCountries,
-			countryFilterMode,
-			selectedGender,
-			JSON.stringify(config),
-			JSON.stringify(nameFilters),
-			JSON.stringify(includeWorkGids),
-			JSON.stringify(excludeWorkGids)
-		];
-
 		if (visible) {
 			updatePreview();
 		}

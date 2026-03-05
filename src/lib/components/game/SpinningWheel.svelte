@@ -25,7 +25,7 @@
 
 	// Filter out disabled categories and shuffle for visual variety
 	// Store as state to maintain consistency across re-renders
-	let activeCategories = $state(
+	let activeCategories = $derived(
 		shuffle(allCategories.filter((cat) => !disabledCategories.includes(cat.id)))
 	);
 

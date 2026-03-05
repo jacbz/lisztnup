@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { _ } from 'svelte-i18n';
 	import { fly } from 'svelte/transition';
-	import type { Player, GameMode } from '$lib/types';
+	import type { Player } from '$lib/types';
 	import Trophy from 'lucide-svelte/icons/trophy';
 	import BarChart from 'lucide-svelte/icons/bar-chart-3';
 	import Home from 'lucide-svelte/icons/home';

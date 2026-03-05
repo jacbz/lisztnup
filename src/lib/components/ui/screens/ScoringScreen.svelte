@@ -12,7 +12,6 @@
 		mode?: 'classic' | 'buzzer';
 		players?: Player[];
 		track?: Track | null;
-		currentCategory?: GuessCategory | null;
 		categories?: readonly GuessCategory[];
 		revealedCategories?: GuessCategory[]; // For buzzer mode: categories shown so far
 		onScore?: (scores: Record<string, number>) => void;

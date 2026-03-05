@@ -434,7 +434,6 @@
 				playbackEnded={false}
 				isRevealed={false}
 				progress={previewPlayer.progress}
-				track={null}
 				playerSize={48}
 				onStop={stopPlayback}
 				onReveal={() => {}}

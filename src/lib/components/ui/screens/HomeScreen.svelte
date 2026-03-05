@@ -11,7 +11,6 @@
 	import PlayerSetup from '../setup/PlayerSetup.svelte';
 	import BingoSetup from '../setup/BingoSetup.svelte';
 	import ShareLinkPopup from '../setup/ShareLinkPopup.svelte';
-	import { SettingsService } from '$lib/services';
 	import type { Tracklist, GameMode, Player } from '$lib/types';
 	import Plus from 'lucide-svelte/icons/plus';
 	import AppFooter from '../primitives/AppFooter.svelte';
@@ -35,7 +34,7 @@
 	let bingoUrl = $state('');
 	let selectedMode = $state<GameMode | null>($settingsStore.gameMode || 'classic');
 	let localSettings = $state({ ...$settingsStore });
-	let currentLocale = $state($locale || 'en');
+	let currentLocale = $derived($locale || 'en');
 	let currentPlayers = $state<Player[]>([]);
 	let currentIsSoloMode = $state(false);
 	let playersValid = $state(true);
@@ -48,9 +47,6 @@
 		timeline: '/start_timeline.mp3',
 		bingo: '/start_bingo.mp3'
 	};
-
-	// Load custom tracklists
-	let customTracklists = $state(SettingsService.loadCustomTracklists());
 
 	// Update local settings when store changes
 	$effect(() => {
@@ -76,7 +72,6 @@
 	function handleTracklistSelect(tracklist: Tracklist) {
 		localSettings.selectedTracklist = tracklist.name;
 		settingsStore.update((s) => ({ ...s, selectedTracklist: tracklist.name }));
-		customTracklists = SettingsService.loadCustomTracklists(); // Reload in case of changes
 	}
 
 	function handleLocaleChange(newLocale: string) {
