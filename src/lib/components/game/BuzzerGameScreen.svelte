@@ -214,7 +214,7 @@
 		}
 	}
 
-	function handleBuzzerDown(event: Event) {
+	function handleBuzzerDown() {
 		if (showReveal) {
 			handleBuzzerReveal();
 		} else {
@@ -226,7 +226,7 @@
 		// Only trigger buzzer if button is not disabled
 		if (!isBuzzerPressed || showReveal) {
 			event.preventDefault();
-			handleBuzzerDown(event);
+			handleBuzzerDown();
 		}
 	}
 
@@ -295,73 +295,71 @@
 			hideTop={$gameSession.players.length < 2}
 			hideLeftRight={$gameSession.players.length < 3}
 		>
-			{#snippet children()}
-				<div class="flex max-w-[90vw] items-center justify-center gap-2 md:gap-3">
-					{#each categoriesToDisplay as category, index (category)}
-						{@const currentIndex = categoryProgression.indexOf(currentCategory)}
-						{@const next =
-							currentIndex >= 0 && currentIndex < categoryProgression.length - 1
-								? categoryProgression[currentIndex + 1]
-								: null}
-						{@const isPlaceholder = timeRemaining < BUZZER_PREVIEW_COUNTDOWN && category === next}
-						{@const categoryDef = isPlaceholder
-							? null
-							: getCategoryDefinition(category as GuessCategory)}
-						{@const isCurrent = category === currentCategory}
-						<div
-							in:fly={{ x: 100, duration: 300 }}
-							out:fly={{ x: -100, duration: 300 }}
-							class="relative flex flex-col items-center gap-2 overflow-hidden rounded-[20px] border-[3px] px-4 py-3 shadow-[0_0_40px] backdrop-blur-xs transition-all duration-300 md:flex-row md:gap-6 md:px-8"
-							style="border-color: {isPlaceholder
-								? '#6b7280'
-								: categoryDef!.color2}; box-shadow: 0 0 40px {isPlaceholder
-								? 'rgba(107, 114, 128, 0.6)'
-								: categoryDef!.glowColor};"
-						>
-							{#if isPlaceholder}
-								<div class="text-4xl font-bold text-gray-400 md:text-5xl">?</div>
-								<div class="min-w-[60px] text-center text-4xl font-bold text-gray-400 md:text-5xl">
-									{Math.ceil(timeRemaining)}
-								</div>
-							{:else}
-								<!-- Background Icon -->
-								<svg
-									class="pointer-events-none absolute inset-0 h-full w-full p-2 opacity-25"
-									viewBox="0 0 24 24"
-									fill="currentColor"
-									preserveAspectRatio="xMidYMid meet"
-									style="color: {categoryDef!.color1};"
-								>
-									{#each categoryDef!.iconPaths as pathData}
-										<path d={pathData} />
-									{/each}
-								</svg>
+			<div class="flex max-w-[90vw] items-center justify-center gap-2 md:gap-3">
+				{#each categoriesToDisplay as category (category)}
+					{@const currentIndex = categoryProgression.indexOf(currentCategory)}
+					{@const next =
+						currentIndex >= 0 && currentIndex < categoryProgression.length - 1
+							? categoryProgression[currentIndex + 1]
+							: null}
+					{@const isPlaceholder = timeRemaining < BUZZER_PREVIEW_COUNTDOWN && category === next}
+					{@const categoryDef = isPlaceholder
+						? null
+						: getCategoryDefinition(category as GuessCategory)}
+					{@const isCurrent = category === currentCategory}
+					<div
+						in:fly={{ x: 100, duration: 300 }}
+						out:fly={{ x: -100, duration: 300 }}
+						class="relative flex flex-col items-center gap-2 overflow-hidden rounded-[20px] border-[3px] px-4 py-3 shadow-[0_0_40px] backdrop-blur-xs transition-all duration-300 md:flex-row md:gap-6 md:px-8"
+						style="border-color: {isPlaceholder
+							? '#6b7280'
+							: categoryDef!.color2}; box-shadow: 0 0 40px {isPlaceholder
+							? 'rgba(107, 114, 128, 0.6)'
+							: categoryDef!.glowColor};"
+					>
+						{#if isPlaceholder}
+							<div class="text-4xl font-bold text-gray-400 md:text-5xl">?</div>
+							<div class="min-w-[60px] text-center text-4xl font-bold text-gray-400 md:text-5xl">
+								{Math.ceil(timeRemaining)}
+							</div>
+						{:else}
+							<!-- Background Icon -->
+							<svg
+								class="pointer-events-none absolute inset-0 h-full w-full p-2 opacity-25"
+								viewBox="0 0 24 24"
+								fill="currentColor"
+								preserveAspectRatio="xMidYMid meet"
+								style="color: {categoryDef!.color1};"
+							>
+								{#each categoryDef!.iconPaths as pathData (pathData)}
+									<path d={pathData} />
+								{/each}
+							</svg>
+							<div
+								class="relative z-10 text-2xl font-bold tracking-wider uppercase"
+								style="color: {categoryDef!.color1};"
+							>
+								{$_(`game.categories.${category}`)}
+							</div>
+							<div
+								class="relative z-10 text-lg font-semibold text-nowrap"
+								style="color: {categoryDef!.color2};"
+							>
+								{$_('scoring.pointsAwarded', {
+									values: { points: CATEGORY_POINTS[category as GuessCategory] }
+								})}
+							</div>
+							{#if isCurrent}
 								<div
-									class="relative z-10 text-2xl font-bold tracking-wider uppercase"
-									style="color: {categoryDef!.color1};"
+									class="relative z-10 min-w-[60px] text-center text-4xl font-bold text-white md:text-5xl"
 								>
-									{$_(`game.categories.${category}`)}
+									{Math.ceil(trackDuration - playbackTime)}
 								</div>
-								<div
-									class="relative z-10 text-lg font-semibold text-nowrap"
-									style="color: {categoryDef!.color2};"
-								>
-									{$_('scoring.pointsAwarded', {
-										values: { points: CATEGORY_POINTS[category as GuessCategory] }
-									})}
-								</div>
-								{#if isCurrent}
-									<div
-										class="relative z-10 min-w-[60px] text-center text-4xl font-bold text-white md:text-5xl"
-									>
-										{Math.ceil(trackDuration - playbackTime)}
-									</div>
-								{/if}
 							{/if}
-						</div>
-					{/each}
-				</div>
-			{/snippet}
+						{/if}
+					</div>
+				{/each}
+			</div>
 		</EdgeDisplay>
 		<div class="relative z-50 flex items-center justify-center">
 			<button

@@ -12,6 +12,7 @@
 	import Plus from 'lucide-svelte/icons/plus';
 	import PanelBottomClose from 'lucide-svelte/icons/panel-bottom-close';
 	import { slide } from 'svelte/transition';
+	import { SvelteMap } from 'svelte/reactivity';
 
 	interface Props {
 		mode?: GameMode | null;
@@ -66,7 +67,7 @@
 		const isSoloMode = players.length === 1;
 
 		// Validate all names and update errors map
-		const newErrors = new Map<number, string>();
+		const newErrors = new SvelteMap<number, string>();
 		let allValid = true;
 
 		players.forEach((p, i) => {
@@ -123,7 +124,7 @@
 			return 'top';
 		}
 
-		const edgeCounts = new Map<PlayerEdge, number>();
+		const edgeCounts = new SvelteMap<PlayerEdge, number>();
 		ALL_EDGES.forEach((edge) => edgeCounts.set(edge, 0));
 
 		players.forEach((p) => {

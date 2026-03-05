@@ -187,7 +187,7 @@
 				<div
 					class="absolute right-0 z-50 mt-2 rounded-lg border-2 border-cyan-400/30 bg-slate-900/95 shadow-lg backdrop-blur-sm"
 				>
-					{#each locales as loc}
+					{#each locales as loc (loc.code)}
 						<button
 							type="button"
 							onclick={() => {

@@ -23,38 +23,35 @@
 			hideTop={$gameSession.players.length < 2}
 			hideLeftRight={$gameSession.players.length < 3}
 		>
-			{#snippet children()}
-				<div
-					class="flex w-[80vw] flex-wrap justify-center gap-1.5 md:max-w-[60vmin] md:min-w-[60vmin]"
-				>
-					{#each activeCategories as category, index}
-						{@const categoryDef = getCategoryDefinition(category)}
-						<div
-							class="relative flex w-[calc(50%-0.1875rem)] flex-col items-center justify-center overflow-hidden rounded-2xl border-3 border-transparent py-1 md:w-[calc(33%-0.1875rem)] md:py-2"
-							style="border-color: {categoryDef.color2}; box-shadow: 0 0 40px {categoryDef.glowColor}; color: {categoryDef.color1};"
+			<div
+				class="flex w-[80vw] flex-wrap justify-center gap-1.5 md:max-w-[60vmin] md:min-w-[60vmin]"
+			>
+				{#each activeCategories as category (category)}
+					{@const categoryDef = getCategoryDefinition(category)}
+					<div
+						class="relative flex w-[calc(50%-0.1875rem)] flex-col items-center justify-center overflow-hidden rounded-2xl border-3 border-transparent py-1 md:w-[calc(33%-0.1875rem)] md:py-2"
+						style="border-color: {categoryDef.color2}; box-shadow: 0 0 40px {categoryDef.glowColor}; color: {categoryDef.color1};"
+					>
+						<!-- Background Icon -->
+						<svg
+							class="pointer-events-none absolute inset-0 h-full w-full p-2 opacity-25"
+							viewBox="0 0 24 24"
+							fill="currentColor"
+							preserveAspectRatio="xMidYMid meet"
 						>
-							<!-- Background Icon -->
-							<svg
-								class="pointer-events-none absolute inset-0 h-full w-full p-2 opacity-25"
-								viewBox="0 0 24 24"
-								fill="currentColor"
-								preserveAspectRatio="xMidYMid meet"
-							>
-								{#each categoryDef.iconPaths as pathData}
-									<path d={pathData} />
-								{/each}
-							</svg>
-							<span
-								class="relative z-10 px-3 text-xl font-bold tracking-wider uppercase md:text-2xl"
-								>{$_(`game.categories.${category}`)}</span
-							>
-							<span class="relative z-10 text-sm font-semibold text-nowrap md:text-base">
-								{$_('scoring.pointsAwarded', { values: { points: CATEGORY_POINTS[category] } })}
-							</span>
-						</div>
-					{/each}
-				</div>
-			{/snippet}
+							{#each categoryDef.iconPaths as pathData (pathData)}
+								<path d={pathData} />
+							{/each}
+						</svg>
+						<span class="relative z-10 px-3 text-xl font-bold tracking-wider uppercase md:text-2xl"
+							>{$_(`game.categories.${category}`)}</span
+						>
+						<span class="relative z-10 text-sm font-semibold text-nowrap md:text-base">
+							{$_('scoring.pointsAwarded', { values: { points: CATEGORY_POINTS[category] } })}
+						</span>
+					</div>
+				{/each}
+			</div>
 		</EdgeDisplay>
 
 		<!-- Player Control Button (Fixed Center) -->
@@ -64,7 +61,6 @@
 			playbackEnded={$currentRound.playbackEnded}
 			isRevealed={$currentRound.isRevealed}
 			progress={ctx.audioProgressValue}
-			track={ctx.currentTrack}
 			onPlay={ctx.playTrack}
 			onStop={ctx.stopTrack}
 			onReveal={ctx.revealTrack}

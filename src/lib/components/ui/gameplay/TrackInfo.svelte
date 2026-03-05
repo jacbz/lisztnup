@@ -236,7 +236,6 @@
 						playbackEnded={false}
 						isRevealed={false}
 						progress={previewPlayer.progress}
-						track={null}
 						playerSize={64}
 						onPlay={handlePlayAgain}
 						onStop={handleReplayStop}

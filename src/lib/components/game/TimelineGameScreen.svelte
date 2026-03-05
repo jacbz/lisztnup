@@ -2,7 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import { fly } from 'svelte/transition';
-	import type { Player, PlayerEdge, Track } from '$lib/types';
+	import type { Player, PlayerEdge } from '$lib/types';
 	import { ALL_EDGES } from '$lib/types';
 	import { currentRound, resetGame, gameSession, lastReconnectedAt } from '$lib/stores';
 	import { _ } from 'svelte-i18n';
@@ -156,7 +156,7 @@
 		dragOrigin={game.drag.origin}
 		onPointerDown={(ev) => game.startDragFromCenter(ev)}
 	>
-		{#snippet topCardContent(track: Track)}
+		{#snippet topCardContent()}
 			<div class="absolute inset-0 flex flex-col items-center justify-center gap-4 p-4">
 				{#if !game.hasPlaybackStarted}
 					<!-- Fresh card — show play button -->
@@ -167,7 +167,6 @@
 							playbackEnded={false}
 							isRevealed={false}
 							progress={ctx.audioProgressValue}
-							{track}
 							playerSize={120}
 							onPlay={() => game.handlePlay()}
 							onStop={() => game.handleStop()}
@@ -189,7 +188,6 @@
 							playbackEnded={false}
 							isRevealed={false}
 							progress={ctx.audioProgressValue}
-							{track}
 							playerSize={120}
 							onPlay={() => {}}
 							onStop={() => game.handleStop()}
@@ -225,7 +223,6 @@
 					y: game.drag.translate.y - game.drag.pendingLayoutOffset.y
 				}
 			: game.drag.translate}
-		isDealing={game.isDealing}
 		helpText={isActive
 			? game.pendingEntryId
 				? $_('timeline.help.reorder')
@@ -264,7 +261,6 @@
 			{#if edgeTimelines.length > 0}
 				{@const hideTop = edge !== 'top'}
 				{@const hideLeftRight = edge !== 'left' && edge !== 'right'}
-				{@const hideBottom = edge !== 'bottom'}
 				<EdgeDisplay visible={true} disablePointerEvents={false} {hideTop} {hideLeftRight}>
 					{#snippet children({ rotation })}
 						{@const isCorrectRotation =

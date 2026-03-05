@@ -1,9 +1,7 @@
 <script lang="ts">
-	import type { Track } from '$lib/types';
 	import Logo from '$lib/components/ui/primitives/Logo.svelte';
 
 	interface Props {
-		track?: Track | null;
 		/**
 		 * face-down: Logo (Back of card)
 		 * revealed: Year text (Front of card)

@@ -16,7 +16,7 @@
 		suppressReleaseAnimation?: boolean;
 
 		onPointerDown?: (e: PointerEvent) => void;
-		topCardContent?: import('svelte').Snippet<[Track]>;
+		topCardContent?: import('svelte').Snippet;
 	}
 
 	let {
@@ -86,14 +86,13 @@
 					: ''}
 			>
 				<TimelineCard
-					track={c.item.track}
 					size="lg"
 					state={isTop && isTurnActive ? 'interactive' : 'face-down'}
 					draggable={false}
 					borderVariant="neutral"
 				>
 					{#if isTop && isTurnActive && topCardContent}
-						{@render topCardContent(c.item.track)}
+						{@render topCardContent()}
 					{/if}
 				</TimelineCard>
 			</div>

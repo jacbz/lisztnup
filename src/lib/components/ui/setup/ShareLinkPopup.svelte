@@ -34,6 +34,7 @@
 				copied = false;
 			}, 2000);
 		} catch (error) {
+			console.warn('Copy failed:', error);
 			toast.error($_('shareLink.copyFailed'));
 		}
 	}

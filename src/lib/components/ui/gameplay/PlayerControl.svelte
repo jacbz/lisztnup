@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { Track } from '$lib/types';
 	import { _ } from 'svelte-i18n';
 	import { onMount } from 'svelte';
 	import { playerState } from '$lib/services';
@@ -12,7 +11,6 @@
 		playbackEnded?: boolean;
 		isRevealed?: boolean;
 		progress?: number; // 0-1
-		track?: Track | null;
 		/// Optional fixed size for the player button. If not provided, size is dynamic based on viewport.
 		playerSize?: number;
 		onPlay?: () => void;
@@ -27,7 +25,6 @@
 		playbackEnded = false,
 		isRevealed = false,
 		progress = 0,
-		track = null,
 		playerSize = undefined,
 		onPlay = () => {},
 		onStop = () => {},

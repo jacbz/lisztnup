@@ -10,10 +10,8 @@
 		visible?: boolean;
 		players?: Player[];
 		isSoloMode?: boolean;
-		mode?: GameMode;
 		enableScoring?: boolean;
 		tracksExhausted?: boolean;
-		onPlayAgain?: () => void;
 		onViewStats?: () => void;
 		onHome?: () => void;
 	}

@@ -723,7 +723,7 @@
 		style="transform: rotate({currentRotation}deg);"
 	>
 		<defs>
-			{#each activeCategories as category, i}
+			{#each activeCategories as category, i (category.id)}
 				{@const segmentAngle = 360 / activeCategories.length}
 				{@const startAngle = segmentAngle * i - 90}
 				{@const endAngle = segmentAngle * (i + 1) - 90}
@@ -758,7 +758,7 @@
 		</defs>
 
 		<!-- Draw curved text for each segment -->
-		{#each activeCategories as category, i}
+		{#each activeCategories as category, i (category.id)}
 			{@const categoryText = ($_(`game.categories.${category.id}`) as string).toUpperCase()}
 
 			<!-- Outer text (upside down for readability from outside) -->

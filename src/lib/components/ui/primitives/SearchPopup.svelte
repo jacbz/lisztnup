@@ -136,7 +136,8 @@
 
 		<!-- Provider Grid -->
 		<div class="grid grid-cols-2 gap-3">
-			{#each searchProviders as provider}
+			{#each searchProviders as provider (provider.url)}
+				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				<a
 					href={provider.url}
 					target="_blank"

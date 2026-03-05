@@ -10,6 +10,7 @@
 	import Printer from 'lucide-svelte/icons/printer';
 	import Dialog from '$lib/components/ui/primitives/Dialog.svelte';
 	import Logo from '$lib/components/ui/primitives/Logo.svelte';
+	import { SvelteSet } from 'svelte/reactivity';
 
 	let grid = $state<BingoGridCell[][]>([]);
 	let showResetDialog = $state(false);
@@ -17,7 +18,7 @@
 	let guessText = $state('');
 	let guessState = $state<'input' | 'hidden' | 'revealed'>('input');
 	let inputElement: HTMLTextAreaElement | undefined = $state();
-	let winningCells = $state<Set<string>>(new Set());
+	let winningCells = $state(new Set());
 
 	// Category weights: composer 7, work 6, era 5, type 4, decade 3 (total 25)
 	const CATEGORY_WEIGHTS = {
@@ -189,7 +190,7 @@
 	}
 
 	function checkVictory() {
-		const newWinningCells = new Set<string>();
+		const newWinningCells = new SvelteSet();
 
 		// Check rows
 		for (let row = 0; row < 5; row++) {
@@ -239,7 +240,7 @@
 	function confirmReset() {
 		grid = generateGrid();
 		saveGrid();
-		winningCells = new Set();
+		winningCells = new SvelteSet();
 		showResetDialog = false;
 	}
 
@@ -387,8 +388,8 @@
 			>
 				<!-- Grid - Responsive size -->
 				<div class="grid grid-cols-5 gap-1 md:gap-2">
-					{#each grid as row, rowIndex}
-						{#each row as cell, colIndex}
+					{#each grid as row, rowIndex (rowIndex)}
+						{#each row as cell, colIndex (colIndex)}
 							{@const categoryDef = getCategoryDefinition(cell.category)}
 							{@const isWinning = winningCells.has(`${rowIndex}-${colIndex}`)}
 							<button
@@ -412,7 +413,7 @@
 								>
 									{#if categoryDef}
 										<svg viewBox="0 0 24 24" class="opacity-30" style="fill: {categoryDef.color1};">
-											{#each categoryDef.iconPaths as path}
+											{#each categoryDef.iconPaths as path (path)}
 												<path d={path} />
 											{/each}
 										</svg>

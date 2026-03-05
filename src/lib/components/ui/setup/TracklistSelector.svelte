@@ -141,6 +141,7 @@
 			shareUrl = `${baseUrl}?addTracklist=${encodeURIComponent(compressed)}`;
 			showSharePopup = true;
 		} catch (error) {
+			console.error('Error creating share link:', error);
 			toast.error('Failed to create share link');
 		}
 	}
@@ -175,8 +176,7 @@
 		showDeleteDialog = false;
 	}
 
-	function handleSaveTracklist(tracklist: Tracklist) {
-		// SettingsService.saveCustomTracklist is now called in TracklistEditor.handleSave
+	function handleSaveTracklist() {
 		customTracklists = SettingsService.loadCustomTracklists();
 		showEditor = false;
 		editingTracklist = null;
@@ -245,7 +245,7 @@
 					{$_('tracklistEditor.categoryDifficulty')}
 				</h3>
 				<div class="grid gap-3 md:grid-cols-2">
-					{#each groupedTracklists.difficulty as tracklist}
+					{#each groupedTracklists.difficulty as tracklist (tracklist.name)}
 						{@render tracklistCard(tracklist)}
 					{/each}
 				</div>
@@ -259,7 +259,7 @@
 					{$_('tracklistEditor.categoryCategories')}
 				</h3>
 				<div class="grid gap-3 md:grid-cols-2">
-					{#each groupedTracklists.categories as tracklist}
+					{#each groupedTracklists.categories as tracklist (tracklist.name)}
 						{@render tracklistCard(tracklist)}
 					{/each}
 				</div>
@@ -273,7 +273,7 @@
 					{$_('tracklistEditor.categoryComposers')}
 				</h3>
 				<div class="grid gap-3 md:grid-cols-2">
-					{#each groupedTracklists.composers as tracklist}
+					{#each groupedTracklists.composers as tracklist (tracklist.name)}
 						{@render tracklistCard(tracklist)}
 					{/each}
 				</div>
@@ -287,7 +287,7 @@
 					{$_('tracklistEditor.categoryEras')}
 				</h3>
 				<div class="grid gap-3 md:grid-cols-2">
-					{#each groupedTracklists.eras as tracklist}
+					{#each groupedTracklists.eras as tracklist (tracklist.name)}
 						{@render tracklistCard(tracklist)}
 					{/each}
 				</div>
@@ -301,7 +301,7 @@
 					{$_('tracklistEditor.categoryCountries')}
 				</h3>
 				<div class="grid gap-3 md:grid-cols-2">
-					{#each groupedTracklists.countries as tracklist}
+					{#each groupedTracklists.countries as tracklist (tracklist.name)}
 						{@render tracklistCard(tracklist)}
 					{/each}
 				</div>
@@ -314,7 +314,7 @@
 				{$_('tracklistEditor.categoryCustom')}
 			</h3>
 			<div class="grid gap-3 md:grid-cols-2">
-				{#each groupedTracklists.custom as tracklist}
+				{#each groupedTracklists.custom as tracklist (tracklist.name)}
 					{@render tracklistCard(tracklist)}
 				{/each}
 				<!-- Create New Button -->

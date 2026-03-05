@@ -26,7 +26,6 @@
 	let currentMode: GameMode | null = null;
 	let currentPlayers: Player[] = [];
 	let isSoloMode = false;
-	let enableScoring = true;
 
 	/**
 	 * Processes a shared tracklist from the 'addTracklist' URL parameter.
@@ -74,16 +73,10 @@
 		handleTracklistFromURL();
 	});
 
-	function handleStartGame(
-		mode: GameMode,
-		players: Player[],
-		solo: boolean,
-		scoringEnabled: boolean = true
-	) {
+	function handleStartGame(mode: GameMode, players: Player[], solo: boolean) {
 		currentMode = mode;
 		currentPlayers = players;
 		isSoloMode = solo;
-		enableScoring = scoringEnabled;
 
 		// Show loading state
 		gameState.set('generating');
@@ -112,7 +105,6 @@
 		currentMode = null;
 		currentPlayers = [];
 		isSoloMode = false;
-		enableScoring = true;
 		gameState.set('home');
 	}
 
@@ -146,17 +138,15 @@
 			ignoreTrackLength={currentMode === 'buzzer'}
 			onHome={handleBackToHome}
 		>
-			{#snippet children()}
-				{#if currentMode === 'classic'}
-					<ClassicGameScreen />
-				{:else if currentMode === 'buzzer'}
-					<BuzzerGameScreen />
-				{:else if currentMode === 'timeline'}
-					<TimelineGameScreen players={currentPlayers} cardsToWin={$settings.timelineCardsToWin} />
-				{:else}
-					<BingoGameScreen />
-				{/if}
-			{/snippet}
+			{#if currentMode === 'classic'}
+				<ClassicGameScreen />
+			{:else if currentMode === 'buzzer'}
+				<BuzzerGameScreen />
+			{:else if currentMode === 'timeline'}
+				<TimelineGameScreen players={currentPlayers} cardsToWin={$settings.timelineCardsToWin} />
+			{:else}
+				<BingoGameScreen />
+			{/if}
 		</GameScreen>
 	</div>
 {/if}

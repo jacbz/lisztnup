@@ -5,6 +5,7 @@
 	import TrackInfo from '../gameplay/TrackInfo.svelte';
 	import { CATEGORY_POINTS, type GuessCategory, type Player, type Track } from '$lib/types';
 	import { ArrowRight } from 'lucide-svelte';
+	import { SvelteMap } from 'svelte/reactivity';
 
 	interface Props {
 		visible?: boolean;
@@ -35,7 +36,7 @@
 	$effect(() => {
 		if (visible) {
 			// Default all players to 'none'
-			const defaults = new Map<string, GuessCategory | 'none' | 'wrong'>();
+			const defaults = new SvelteMap<string, GuessCategory | 'none' | 'wrong'>();
 			players.forEach((player) => {
 				defaults.set(player.name, 'none');
 			});
@@ -44,7 +45,7 @@
 	});
 
 	function handlePlayerSelect(playerName: string, option: GuessCategory | 'none' | 'wrong') {
-		const newSelections = new Map(playerSelections);
+		const newSelections = new SvelteMap(playerSelections);
 		newSelections.set(playerName, option);
 		playerSelections = newSelections;
 	}
@@ -98,7 +99,7 @@
 			</p>
 			{#if mode === 'classic'}
 				<div class="flex flex-col gap-3">
-					{#each players as player}
+					{#each players as player (player.name)}
 						<ScoringCard
 							{player}
 							{mode}
@@ -111,7 +112,7 @@
 			{:else if mode === 'buzzer'}
 				<!-- Buzzer Mode: Scoring Cards -->
 				<div class="flex flex-col gap-3">
-					{#each players as player}
+					{#each players as player (player.name)}
 						<ScoringCard
 							{player}
 							{mode}

@@ -5,6 +5,7 @@
 	import { fade } from 'svelte/transition';
 	import Search from 'lucide-svelte/icons/search';
 	import X from 'lucide-svelte/icons/x';
+	import { SvelteMap, SvelteSet } from 'svelte/reactivity';
 
 	interface Props {
 		composers: Composer[];
@@ -35,7 +36,7 @@
 
 	// Build composer entries with work counts
 	const entries = $derived.by(() => {
-		const workCountMap = new Map<string, number>();
+		const workCountMap = new SvelteMap<string, number>();
 		works.forEach((w) => {
 			workCountMap.set(w.composer, (workCountMap.get(w.composer) || 0) + 1);
 		});
@@ -93,7 +94,7 @@
 
 	// Build country list with counts (sorted by localized name)
 	const countryOptions = $derived.by(() => {
-		const countMap = new Map<string, number>();
+		const countMap = new SvelteMap<string, number>();
 		entries.forEach((e) => {
 			if (e.country) {
 				countMap.set(e.country, (countMap.get(e.country) || 0) + 1);
@@ -118,8 +119,8 @@
 	// keeps the short last-name display; subsequent composers with the same last
 	// name get their full name shown. Efficient: single linear pass over `entries`.
 	function buildDisplayNameMap(entries: Array<any>): Map<string, string> {
-		const map = new Map<string, string>();
-		const seen = new Set<string>();
+		const map = new SvelteMap<string, string>();
+		const seen = new SvelteSet<string>();
 
 		for (let i = 0; i < entries.length; i++) {
 			const e = entries[i];
@@ -275,7 +276,7 @@
 				class:w-30={selectedCountry === ''}
 			>
 				<option value="">{$_('libraryViewer.allCountries')}</option>
-				{#each countryOptions as opt}
+				{#each countryOptions as opt (opt.code)}
 					<option value={opt.code}>{opt.name} ({opt.count})</option>
 				{/each}
 			</select>
@@ -384,7 +385,7 @@
 	class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 px-4 py-6 md:px-8 md:py-8"
 	in:fade={{ duration: 200 }}
 >
-	{#each cloudItems as item, i}
+	{#each cloudItems as item, i (item.gid)}
 		<button
 			type="button"
 			onclick={() => onSelectComposer(item.gid)}

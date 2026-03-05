@@ -6,7 +6,6 @@
 	import ModeRulesPopup from './ModeRulesPopup.svelte';
 	import LifeBuoy from 'lucide-svelte/icons/life-buoy';
 	import Crown from 'lucide-svelte/icons/crown';
-	import History from 'lucide-svelte/icons/history';
 	import SquareStack from 'lucide-svelte/icons/square-stack';
 
 	interface Props {

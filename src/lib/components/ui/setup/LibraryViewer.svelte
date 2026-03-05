@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Tracklist, Composer, WorkCategory } from '$lib/types';
+	import type { Tracklist, WorkCategory } from '$lib/types';
 	import { gameData } from '$lib/stores';
 	import { get } from 'svelte/store';
 	import { formatComposerName, formatLifespan } from '$lib/utils';
@@ -13,6 +13,7 @@
 	import ChevronLeft from 'lucide-svelte/icons/chevron-left';
 	import List from 'lucide-svelte/icons/list';
 	import composerIcon from '$lib/assets/icons/composer.svg?raw';
+	import { SvelteSet } from 'svelte/reactivity';
 
 	interface Props {
 		visible?: boolean;
@@ -66,13 +67,13 @@
 	function handleBack() {
 		if (viewMode === 'composer') {
 			selectedComposerGid = null;
-			selectedCategories = new Set<WorkCategory>();
+			selectedCategories = new SvelteSet<WorkCategory>();
 		}
 		viewMode = 'cloud';
 	}
 
 	function handleToggleCategory(cat: WorkCategory) {
-		const next = new Set(selectedCategories);
+		const next = new SvelteSet(selectedCategories);
 		if (next.has(cat)) {
 			next.delete(cat);
 		} else {
@@ -86,7 +87,7 @@
 		if (!visible) {
 			viewMode = tracklist ? 'table' : 'cloud';
 			selectedComposerGid = null;
-			selectedCategories = new Set<WorkCategory>();
+			selectedCategories = new SvelteSet<WorkCategory>();
 		}
 	});
 </script>

@@ -24,7 +24,6 @@
 		isDragging?: boolean;
 		dragKind?: 'none' | 'center' | 'pending';
 		dragTranslate?: { x: number; y: number };
-		isDealing?: boolean;
 		helpText?: string;
 		showConfirm?: boolean;
 		confirmDisabled?: boolean;
@@ -48,7 +47,6 @@
 		isDragging = false,
 		dragKind = 'none',
 		dragTranslate = { x: 0, y: 0 },
-		isDealing = false,
 		helpText = '',
 		showConfirm = false,
 		confirmDisabled = true,
@@ -155,7 +153,6 @@
 		{#if entries.length === 0}
 			<div class="pointer-events-none opacity-0">
 				<TimelineCard
-					track={{ work: { begin_year: 0, end_year: 0 } } as Track}
 					state="face-down"
 					draggable={false}
 					size={cardSize}
@@ -191,7 +188,6 @@
 						in:flyFromCenter={{ duration: 600 }}
 					>
 						<TimelineCard
-							track={entry.track}
 							state={entry.confirmed ? 'revealed' : 'face-down'}
 							draggable={!entry.confirmed && !entry.isDiscarding}
 							size={cardSize}

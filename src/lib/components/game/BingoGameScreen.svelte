@@ -66,7 +66,6 @@
 			playbackEnded={$currentRound.playbackEnded}
 			isRevealed={$currentRound.isRevealed}
 			progress={ctx.audioProgressValue}
-			track={ctx.currentTrack}
 			onPlay={ctx.playTrack}
 			onStop={ctx.stopTrack}
 			onReveal={handleReveal}
@@ -80,28 +79,26 @@
 	visible={!!($currentRound.category && !$currentRound.isRevealed && !$currentRound.isSpinning)}
 	hideTop={true}
 >
-	{#snippet children()}
-		{@const categoryDef = getCategoryDefinition($currentRound.category!)}
-		<div
-			class="relative overflow-hidden rounded-2xl border-2 px-10 py-2 backdrop-blur-xs"
-			style="border-color: {categoryDef.color2}; box-shadow: 0 0 40px {categoryDef.glowColor}; color: {categoryDef.color1};"
+	{@const categoryDef = getCategoryDefinition($currentRound.category!)}
+	<div
+		class="relative overflow-hidden rounded-2xl border-2 px-10 py-2 backdrop-blur-xs"
+		style="border-color: {categoryDef.color2}; box-shadow: 0 0 40px {categoryDef.glowColor}; color: {categoryDef.color1};"
+	>
+		<!-- Background Icon -->
+		<svg
+			class="pointer-events-none absolute inset-0 h-full w-full p-2 opacity-25"
+			viewBox="0 0 24 24"
+			fill="currentColor"
+			preserveAspectRatio="xMidYMid meet"
 		>
-			<!-- Background Icon -->
-			<svg
-				class="pointer-events-none absolute inset-0 h-full w-full p-2 opacity-25"
-				viewBox="0 0 24 24"
-				fill="currentColor"
-				preserveAspectRatio="xMidYMid meet"
-			>
-				{#each categoryDef.iconPaths as pathData}
-					<path d={pathData} />
-				{/each}
-			</svg>
-			<p class="relative z-10 text-3xl font-bold tracking-wider uppercase drop-shadow-lg">
-				{$_('game.guessCategory', {
-					values: { category: $_(`game.categories.${$currentRound.category}`) }
-				})}
-			</p>
-		</div>
-	{/snippet}
+			{#each categoryDef.iconPaths as pathData (pathData)}
+				<path d={pathData} />
+			{/each}
+		</svg>
+		<p class="relative z-10 text-3xl font-bold tracking-wider uppercase drop-shadow-lg">
+			{$_('game.guessCategory', {
+				values: { category: $_(`game.categories.${$currentRound.category}`) }
+			})}
+		</p>
+	</div>
 </EdgeDisplay>

@@ -26,6 +26,7 @@
 	import { ClipboardCopy } from 'lucide-svelte';
 	import { toast } from '$lib/stores/toast';
 	import { MIN_PART_SCORE } from '$lib/types/settings';
+	import { SvelteMap } from 'svelte/reactivity';
 
 	interface Props {
 		visible?: boolean;
@@ -138,7 +139,7 @@
 		let s = name.trim().toLowerCase();
 
 		// Match a leading 1- or 2-digit number followed by punctuation/whitespace separators
-		const m = s.match(/^(\d{1,2})(?:[\.\)\-:\/\s]+)(.*)$/u);
+		const m = s.match(/^(\d{1,2})(?:[.)\-:/\s]+)(.*)$/u);
 		if (m) {
 			const num = parseInt(m[1], 10);
 			if (num <= 99) {
@@ -278,7 +279,7 @@
 			}
 
 			// Create a map of composer GIDs to composer objects
-			const composerMap = new Map<string, Composer>();
+			const composerMap = new SvelteMap<string, Composer>();
 			filteredComposers.forEach((c) => composerMap.set(c.gid, c));
 
 			// Build table rows
@@ -341,12 +342,8 @@
 		page = n;
 
 		// Scroll content container to top so the user sees the beginning of the page
-		try {
-			if (contentScrollEl && typeof contentScrollEl.scrollTo === 'function') {
-				contentScrollEl.scrollTo({ top: 0 });
-			}
-		} catch (e) {
-			// ignore if scroll behavior not supported
+		if (contentScrollEl && typeof contentScrollEl.scrollTo === 'function') {
+			contentScrollEl.scrollTo({ top: 0 });
 		}
 	}
 
@@ -447,7 +444,7 @@
 		<!-- Category filter chips -->
 		{#if showCategoryFilter}
 			<div class="flex w-full flex-wrap gap-1.5">
-				{#each ALL_WORK_CATEGORIES as cat}
+				{#each ALL_WORK_CATEGORIES as cat (cat)}
 					{@const isActive = selectedCategories.has(cat)}
 					<button
 						type="button"
@@ -527,7 +524,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							{#each tableData as row}
+							{#each tableData as row (row.workGid)}
 								{@const isIncluded = includedWorkGids.has(row.workGid)}
 								{@const isInTracklist = tracklistWorkGids.has(row.workGid)}
 								<tr
@@ -623,7 +620,7 @@
 										</div>
 										{#if row.parts.length > 1 || (row.parts.length === 1 && row.work !== row.parts[0].name)}
 											<ul class="mt-1 space-y-0.5 pl-2 text-slate-400 md:pl-4">
-												{#each row.parts as part}
+												{#each row.parts as part (part.name)}
 													<li class="flex items-center gap-2">
 														{#if row.parts.length > 1}
 															{@html renderPartScore(part.score)}

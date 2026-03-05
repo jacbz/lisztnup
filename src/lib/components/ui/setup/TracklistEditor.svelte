@@ -3,7 +3,6 @@
 	import {
 		DEFAULT_CATEGORY_ADJUSTMENTS,
 		DEFAULT_TRACKLIST_CONFIG,
-		MIN_WORK_SCORE_ROUNDED,
 		MAX_WORK_SCORE_ROUNDED
 	} from '$lib/types';
 	import { gameData } from '$lib/stores';
@@ -29,10 +28,10 @@
 	import Plus from 'lucide-svelte/icons/plus';
 	import Ban from 'lucide-svelte/icons/ban';
 	import X from 'lucide-svelte/icons/x';
-	import Eye from 'lucide-svelte/icons/eye';
 	import ListMusic from 'lucide-svelte/icons/list-music';
 	import { COMPOSER_COUNT, MAX_WORK_YEAR, MIN_WORK_YEAR } from '$lib/types/settings';
 	import { locale } from 'svelte-i18n';
+	import { SvelteMap, SvelteSet } from 'svelte/reactivity';
 
 	interface Props {
 		visible?: boolean;
@@ -278,7 +277,7 @@
 			previewInfo = generator.getInfo();
 
 			// Build composer list with work details
-			const composerWorkMap = new Map<
+			const composerWorkMap = new SvelteMap<
 				string,
 				{ name: string; gid: string; works: Array<{ name: string }>; trackCount: number }
 			>();
@@ -287,7 +286,7 @@
 			const filteredData = generator.getFilteredData();
 
 			// Collect work GIDs for visual indicator in include selector
-			previewWorkGids = new Set(filteredData.works.map((w) => w.gid));
+			previewWorkGids = new SvelteSet(filteredData.works.map((w) => w.gid));
 
 			filteredData.works.forEach((work) => {
 				if (!composerWorkMap.has(work.composer)) {
@@ -317,7 +316,7 @@
 				.sort((a, b) => b.workCount - a.workCount);
 
 			// Build category breakdown
-			const categoryMap = new Map<
+			const categoryMap = new SvelteMap<
 				string,
 				{ composers: Set<string>; workCount: number; trackCount: number }
 			>();
@@ -686,7 +685,7 @@
 		const data = get(gameData);
 		if (!data) return [];
 
-		const countMap = new Map<string, number>();
+		const countMap = new SvelteMap<string, number>();
 		data.composers.forEach((c) => {
 			if (c.country) {
 				countMap.set(c.country, (countMap.get(c.country) || 0) + 1);
@@ -838,7 +837,7 @@
 					</div>
 					{#if categoryAdjustmentsEnabled && config.categoryAdjustments}
 						<div class="grid grid-cols-2 gap-3">
-							{#each Object.keys(config.categoryAdjustments) as category}
+							{#each Object.keys(config.categoryAdjustments) as category (category)}
 								<Slider
 									value={config.categoryAdjustments[category as keyof CategoryAdjustments]}
 									min={-MAX_WORK_SCORE_ROUNDED}
@@ -1006,7 +1005,7 @@
 									class="max-h-48 overflow-y-auto rounded-lg border-2 border-slate-700 bg-slate-800 p-2"
 								>
 									<div class="grid grid-cols-1 gap-1 md:grid-cols-2">
-										{#each countryList as country}
+										{#each countryList as country (country.code)}
 											<label
 												class="flex items-center gap-2 rounded px-2 py-1 text-sm hover:bg-slate-700"
 											>
@@ -1061,7 +1060,7 @@
 									class="max-h-48 overflow-y-auto rounded-lg border-2 border-slate-700 bg-slate-800 p-2"
 								>
 									<div class="grid grid-cols-1 gap-1 md:grid-cols-2">
-										{#each composerList as composer}
+										{#each composerList as composer (composer.gid)}
 											<label
 												class="flex items-center gap-2 rounded px-2 py-1 text-sm hover:bg-slate-700"
 											>
@@ -1146,7 +1145,7 @@
 							<!-- Chips display -->
 							{#if nameFilters.length > 0}
 								<div class="flex flex-wrap gap-2">
-									{#each nameFilters as filter}
+									{#each nameFilters as filter (filter)}
 										{@const isRegex = filter.startsWith('/') && filter.endsWith('/')}
 										{@const displayText = isRegex ? filter.slice(1, -1) : filter}
 										<div
@@ -1232,7 +1231,7 @@
 				</div>
 				{#if includeWorkGids.length > 0}
 					<div class="flex flex-wrap gap-2">
-						{#each includeWorkGids as gid}
+						{#each includeWorkGids as gid (gid)}
 							<div
 								class="flex items-center gap-1 rounded-full border-2 border-cyan-500 bg-cyan-500/20 px-3 py-1 text-xs text-cyan-300"
 							>
@@ -1275,7 +1274,7 @@
 				</div>
 				{#if excludeWorkGids.length > 0}
 					<div class="flex flex-wrap gap-2">
-						{#each excludeWorkGids as gid}
+						{#each excludeWorkGids as gid (gid)}
 							<div
 								class="flex items-center gap-1 rounded-full border-2 border-red-500 bg-red-500/20 px-3 py-1 text-xs text-red-300"
 							>
@@ -1430,7 +1429,7 @@
 							<div class="border-t border-slate-700 pt-3">
 								<h4 class="mb-2 text-xs font-semibold text-slate-400 uppercase">Categories</h4>
 								<div class="space-y-1 rounded-lg border border-slate-700 bg-slate-800/30 p-2">
-									{#each previewCategories as category}
+									{#each previewCategories as category (category.category)}
 										<div class="flex items-center justify-between rounded px-2 py-1 text-xs">
 											<span class="text-slate-300 capitalize"
 												>{$_(`settings.categories.${category.category}`)}</span
@@ -1465,7 +1464,7 @@
 								<div
 									class="max-h-96 space-y-1 overflow-y-auto rounded-lg border border-slate-700 bg-slate-800/30 p-2"
 								>
-									{#each previewComposers as composer}
+									{#each previewComposers as composer (composer.gid)}
 										<div
 											class="flex items-center justify-between rounded px-2 py-1.5 text-xs hover:bg-slate-700/50"
 											title={composer.works
