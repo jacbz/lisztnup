@@ -117,7 +117,8 @@
 
 	// Build a display-name map: for each last name group, the highest-scored composer
 	// keeps the short last-name display; subsequent composers with the same last
-	// name get their full name shown. Efficient: single linear pass over `entries`.
+	// name get their full name shown.
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function buildDisplayNameMap(entries: Array<any>): Map<string, string> {
 		const map = new SvelteMap<string, string>();
 		const seen = new SvelteSet<string>();

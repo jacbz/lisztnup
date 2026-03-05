@@ -62,6 +62,10 @@
 	v{__BUILD_DATE__}
 </div>
 
-<LibraryViewer visible={showLibraryViewer} tracklist={null} onClose={() => (showLibraryViewer = false)} />
+<LibraryViewer
+	visible={showLibraryViewer}
+	tracklist={null}
+	onClose={() => (showLibraryViewer = false)}
+/>
 
 <AboutPopup visible={showAboutPopup} onClose={() => (showAboutPopup = false)} />

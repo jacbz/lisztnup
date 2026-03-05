@@ -39,7 +39,7 @@
 	let currentIsSoloMode = $state(false);
 	let playersValid = $state(true);
 	let enableScoring = $state($settingsStore.enableScoring); // Load from settings
-	let playerSetupRef: any = $state();
+	let playerSetupRef: { addPlayer: () => void } | undefined = $state();
 	let startAudio: HTMLAudioElement | null = null;
 	let startAudioSources = {
 		classic: '/start_classic.mp3',

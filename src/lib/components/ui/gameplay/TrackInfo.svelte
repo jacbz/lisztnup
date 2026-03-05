@@ -209,6 +209,7 @@
 
 		<!-- Artist/Performer (only if not unknown) -->
 		{#if shouldShowArtist && !replayActive}
+			<!-- eslint-disable svelte/no-navigation-without-resolve -->
 			<a
 				href={deezerTrackUrl}
 				target="_blank"
@@ -264,6 +265,7 @@
 					<Search class="h-3.5 w-3.5" />
 					<span class="text-[0.65rem] leading-tight font-medium">{$_('common.searchOn')}</span>
 				</button>
+				<!-- eslint-disable svelte/no-navigation-without-resolve -->
 				<a
 					href={reportProblemUrl}
 					target="_blank"
