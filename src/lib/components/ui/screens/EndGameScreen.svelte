@@ -5,6 +5,7 @@
 	import Trophy from 'lucide-svelte/icons/trophy';
 	import BarChart from 'lucide-svelte/icons/bar-chart-3';
 	import Home from 'lucide-svelte/icons/home';
+	import { onMount } from 'svelte';
 
 	interface Props {
 		visible?: boolean;
@@ -32,6 +33,23 @@
 	const isTie = $derived(
 		sortedPlayers.length > 1 && sortedPlayers[0].score === sortedPlayers[1].score
 	);
+
+	let gameoverAudio: HTMLAudioElement | null = null;
+
+	$effect(() => {
+		if (visible && gameoverAudio) {
+			setTimeout(() => {
+				if (gameoverAudio) {
+					gameoverAudio.currentTime = 0;
+					gameoverAudio.play().catch((err) => console.warn('Failed to play gameover sound:', err));
+				}
+			}, 300);
+		}
+	});
+
+	onMount(() => {
+		gameoverAudio = new Audio('/gameover.mp3');
+	});
 </script>
 
 {#if visible}

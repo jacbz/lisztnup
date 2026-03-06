@@ -6,6 +6,7 @@
 	import TrackInfo from '$lib/components/ui/gameplay/TrackInfo.svelte';
 	import { formatYearRange } from '$lib/utils';
 	import Home from 'lucide-svelte/icons/home';
+	import { onMount } from 'svelte';
 
 	interface FinalTimeline {
 		player: Player;
@@ -65,6 +66,23 @@
 		return formatYearRange(inspectTrack.work.begin_year, inspectTrack.work.end_year, {
 			preferEndYearWhenRange: true
 		});
+	});
+
+	let gameoverAudio: HTMLAudioElement | null = null;
+
+	$effect(() => {
+		if (visible && gameoverAudio) {
+			setTimeout(() => {
+				if (gameoverAudio) {
+					gameoverAudio.currentTime = 0;
+					gameoverAudio.play().catch((err) => console.warn('Failed to play gameover sound:', err));
+				}
+			}, 300);
+		}
+	});
+
+	onMount(() => {
+		gameoverAudio = new Audio('/gameover.mp3');
 	});
 </script>
 

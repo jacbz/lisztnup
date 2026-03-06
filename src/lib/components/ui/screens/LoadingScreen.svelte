@@ -10,7 +10,8 @@
 		'/start_timeline.mp3',
 		'/start_classic.mp3',
 		'/start_buzzer.mp3',
-		'/start_bingo.mp3'
+		'/start_bingo.mp3',
+		'/gameover.mp3'
 	];
 
 	let error = $state<string | null>(null);
