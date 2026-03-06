@@ -381,7 +381,6 @@
 		"reveal": "Svela",
 		"nextRound": "Prossimo Round",
 		"gameOver": "Game Over!",
-		"playAgain": "Gioca ancora",
 		"quitTitle": "Uscire?",
 		"quitMessage": "Vuoi davvero lasciare il gioco? La tua cartella verrà salvata.",
 		"quitConfirm": "Esci",
@@ -523,7 +522,6 @@
 		"noMoreTracks": "Nessuna altra traccia disponibile.",
 		"finalScores": "Punteggi Finali",
 		"viewStats": "Vedi Statistiche",
-		"playAgain": "Gioca Ancora",
 		"home": "Home"
 	},
 	"timeline": {

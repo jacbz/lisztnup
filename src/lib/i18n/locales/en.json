@@ -381,7 +381,6 @@
 		"reveal": "Reveal",
 		"nextRound": "Next Round",
 		"gameOver": "Game Over!",
-		"playAgain": "Play Again",
 		"quitTitle": "Leave Game?",
 		"quitMessage": "Are you sure you want to leave? Your grid will be saved.",
 		"quitConfirm": "Leave",
@@ -523,7 +522,6 @@
 		"noMoreTracks": "No more tracks available.",
 		"finalScores": "Final Scores",
 		"viewStats": "View Statistics",
-		"playAgain": "Play Again",
 		"home": "Home"
 	},
 	"timeline": {

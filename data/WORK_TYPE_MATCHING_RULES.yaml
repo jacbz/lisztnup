@@ -1740,6 +1740,8 @@ composer_specific_rules:
     piano:
       - Das Jahr|Notturno in G minor|Ostersonate
   'Mendelssohn, Felix':
+    chamber:
+      - Song Without Words, op\. 109
     piano:
       - Album-Leaf|Capriccio.*(op\. 5\b|Brillant)|Three Caprices|Fantasy|Rondo Brilliant|Scherzo a Capriccio|Kinderstücke|Sonata.*op\.\s(6|106)\b|Fantasies or Caprices, op\. 16\b|Preludes and.*Studies, op\. 104\b
       - \bSix Preludes and Fugues\b

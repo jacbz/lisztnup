@@ -1618,7 +1618,7 @@
       "death_year": 1957,
       "gender": "male",
       "country": "GB",
-      "score": 31.7
+      "score": 24.18
     },
     {
       "gid": "4ade7e9d-cb1d-4d35-b711-dd970a7c4341",
@@ -73157,22 +73157,6 @@
       ]
     },
     {
-      "gid": "b4716010-6059-4673-8f2d-cc8073386918",
-      "composer": "76edf08f-d673-407c-9402-5552cc382f49",
-      "name": "The Dam Busters March",
-      "type": "orchestral",
-      "begin_year": 1955,
-      "end_year": 1955,
-      "score": 4.32,
-      "parts": [
-        {
-          "name": "The Dam Busters March",
-          "deezer": [54362081, 2852251232],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "7cd8414d-93de-4bb3-abe6-82a1fdf75d4b",
       "composer": "76edf08f-d673-407c-9402-5552cc382f49",
       "name": "The Merrymakers (A Miniature Overture)",
@@ -138123,7 +138107,7 @@
       "gid": "1ab2a0ee-088b-4b36-b5ed-7728a0a3ee00",
       "composer": "0e85eb79-1c05-44ba-827c-7b259a3d941a",
       "name": "Song Without Words, op. 109",
-      "type": "piano",
+      "type": "chamber",
       "begin_year": 1845,
       "end_year": 1845,
       "score": 4.08,

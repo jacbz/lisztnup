@@ -381,7 +381,6 @@
 		"reveal": "Revelar",
 		"nextRound": "Siguiente ronda",
 		"gameOver": "¡Fin del juego!",
-		"playAgain": "Jugar de nuevo",
 		"quitTitle": "¿Abandonar partida?",
 		"quitMessage": "¿Seguro que quieres irte? Tu cartón se guardará.",
 		"quitConfirm": "Abandonar",
@@ -523,7 +522,6 @@
 		"noMoreTracks": "No quedan más pistas.",
 		"finalScores": "Puntuaciones finales",
 		"viewStats": "Ver estadísticas",
-		"playAgain": "Jugar de nuevo",
 		"home": "Inicio"
 	},
 	"timeline": {

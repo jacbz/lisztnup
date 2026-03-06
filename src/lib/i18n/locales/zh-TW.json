@@ -381,7 +381,6 @@
 		"reveal": "揭曉",
 		"nextRound": "下一輪",
 		"gameOver": "遊戲結束！",
-		"playAgain": "再玩一次",
 		"quitTitle": "離開遊戲？",
 		"quitMessage": "確定要離開嗎？你的賓果盤將會被儲存。",
 		"quitConfirm": "離開",
@@ -523,7 +522,6 @@
 		"noMoreTracks": "沒有更多曲目了。",
 		"finalScores": "最終得分",
 		"viewStats": "檢視統計",
-		"playAgain": "再玩一次",
 		"home": "返回首頁"
 	},
 	"timeline": {

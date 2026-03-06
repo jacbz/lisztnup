@@ -5,6 +5,7 @@
 	import PlayerTimeline, { type TimelineEntry } from './PlayerTimeline.svelte';
 	import TrackInfo from '$lib/components/ui/gameplay/TrackInfo.svelte';
 	import { formatYearRange } from '$lib/utils';
+	import Home from 'lucide-svelte/icons/home';
 
 	interface FinalTimeline {
 		player: Player;
@@ -17,7 +18,6 @@
 		timelines: FinalTimeline[];
 		tracksExhausted?: boolean;
 		onHome?: () => void;
-		onPlayAgain?: () => void;
 	}
 
 	let {
@@ -25,8 +25,7 @@
 		cardsToWin,
 		timelines,
 		tracksExhausted = false,
-		onHome = () => {},
-		onPlayAgain = () => {}
+		onHome = () => {}
 	}: Props = $props();
 
 	let inspectTrack = $state<Track | null>(null);
@@ -103,19 +102,13 @@
 			{/each}
 		</div>
 
-		<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
-			<button
-				type="button"
-				onclick={onPlayAgain}
-				class="rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3 font-bold text-cyan-400 transition-all hover:bg-slate-800 hover:shadow-[0_0_25px_rgba(34,211,238,0.5)] active:scale-95"
-			>
-				{$_('endGame.playAgain')}
-			</button>
+		<div class="flex flex-col gap-3">
 			<button
 				type="button"
 				onclick={onHome}
-				class="rounded-xl border-2 border-slate-600 bg-slate-900 px-6 py-3 font-bold text-slate-200 transition-all hover:bg-slate-800 active:scale-95"
+				class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3.5 text-base font-bold text-cyan-400 transition-all duration-200 hover:border-cyan-400 hover:bg-slate-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)]"
 			>
+				<Home class="h-5 w-5" />
 				{$_('endGame.home')}
 			</button>
 		</div>

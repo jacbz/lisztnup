@@ -119,7 +119,7 @@
 		},
 		"woodwindconcerto": {
 			"name": "Concertos pour Bois",
-			"description": "Quand le souffle se fait chant : les bois sortent de l'ombre et volent la vedette."
+			"description": "Quand le souffle se fait chant : les bois sortent de l’ombre et volent la vedette."
 		},
 		"liszt": {
 			"name": "Lisztomania",
@@ -163,19 +163,19 @@
 		},
 		"modernism": {
 			"name": "Modernisme",
-			"description": "Adieu la tonalité, bonjour le scandale ! Chaque création faisait polémique (1890-1945)."
+			"description": "Adieu la tonalité, bonjour le scandale ! Chaque création faisait polémique (1890-1945)."
 		},
 		"contemporary": {
 			"name": "Musique contemporaine",
-			"description": "Tout est possible, rien n'est interdit. La musique savante n'a jamais été aussi vivante (1945-)."
+			"description": "Tout est possible, rien n’est interdit. La musique savante n’a jamais été aussi vivante (1945-)."
 		},
 		"beethoven": {
 			"name": "Beathoven",
-			"description": "Sourd mais pas muet : neuf symphonies qui ont fait trembler l'Europe."
+			"description": "Sourd mais pas muet : neuf symphonies qui ont fait trembler l’Europe."
 		},
 		"femalecomposers": {
 			"name": "Compositrices",
-			"description": "Des plumes féminines qui ont bravé les interdits et signé des chef-d'œuvres."
+			"description": "Des plumes féminines qui ont bravé les interdits et signé des chef-d’œuvres."
 		},
 		"germany": {
 			"name": "Austro-Allemand",
@@ -183,14 +183,14 @@
 		},
 		"italy": {
 			"name": "Bella Musica",
-			"description": "Du bel canto à la pasta sonore, l'Italie chante avec tout son cœur."
+			"description": "Du bel canto à la pasta sonore, l’Italie chante avec tout son cœur."
 		},
 		"france": {
-			"name": "Cocorico !",
+			"name": "Cocorico !",
 			"description": "Debussy, Ravel, Fauré… la crème de la crème, tout simplement."
 		},
 		"russia": {
-			"name": "L'Âme Russe",
+			"name": "L’Âme Russe",
 			"description": "Des steppes infinies et des nuits blanches. Ici, chaque note porte un manteau de fourrure."
 		},
 		"uk": {
@@ -199,7 +199,7 @@
 		},
 		"usa": {
 			"name": "Nouveau Monde",
-			"description": "Du ragtime au grand canyon sonore. L'Amérique qui swingue en queue-de-pie."
+			"description": "Du ragtime au grand canyon sonore. L’Amérique qui swingue en queue-de-pie."
 		},
 		"spain": {
 			"name": "Soleil d’Espagne",
@@ -284,7 +284,7 @@
 		"workScoreRange": "Plage de popularité",
 		"workScoreRangeDesc": "Filtre les œuvres par score de popularité (plus haut = plus d’enregistrements existants).",
 		"topWorksCount": "Limite des meilleures œuvres",
-		"topWorksCountDesc": "N'inclure que les N œuvres les plus populaires, triées par score de popularité (ajusté).",
+		"topWorksCountDesc": "N’inclure que les N œuvres les plus populaires, triées par score de popularité (ajusté).",
 		"limitWorksFromComposer": "Limite d’œuvres par compositeur",
 		"limitWorksFromComposerDesc": "Limite chaque compositeur à un pourcentage du total des œuvres de cette liste.",
 		"maxTracksFromSingleWork": "Max pistes par œuvre unique",
@@ -381,7 +381,6 @@
 		"reveal": "Révéler",
 		"nextRound": "Manche suivante",
 		"gameOver": "Partie terminée !",
-		"playAgain": "Rejouer",
 		"quitTitle": "Quitter le jeu ?",
 		"quitMessage": "Es-tu sûr de vouloir partir ? Ta grille sera sauvegardée.",
 		"quitConfirm": "Partir",
@@ -523,7 +522,6 @@
 		"noMoreTracks": "Plus de morceaux disponibles.",
 		"finalScores": "Scores finaux",
 		"viewStats": "Voir les stats",
-		"playAgain": "Rejouer",
 		"home": "Accueil"
 	},
 	"timeline": {

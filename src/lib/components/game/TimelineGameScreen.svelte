@@ -116,14 +116,6 @@
 		gameSession.reset();
 		onHome();
 	}
-
-	function handlePlayAgain() {
-		game.showEndGame = false;
-		resetGame();
-		gameSession.startSession('timeline', players, false);
-		ctx.prepareNewGame();
-		game.initGame();
-	}
 </script>
 
 <!-- ═══════════════════════════════════════════════════════ -->
@@ -342,5 +334,4 @@
 	timelines={game.timelines}
 	tracksExhausted={ctx.tracksExhausted}
 	onHome={handleQuit}
-	onPlayAgain={handlePlayAgain}
 />

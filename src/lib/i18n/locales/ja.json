@@ -381,7 +381,6 @@
 		"reveal": "正解を表示",
 		"nextRound": "次のラウンドへ",
 		"gameOver": "ゲーム終了！",
-		"playAgain": "もう一度遊ぶ",
 		"quitTitle": "退出しますか？",
 		"quitMessage": "本当に退出しますか？グリッドの状態は保存されます。",
 		"quitConfirm": "退出する",
@@ -523,7 +522,6 @@
 		"noMoreTracks": "再生できる曲がなくなりました。",
 		"finalScores": "最終スコア",
 		"viewStats": "詳細データを見る",
-		"playAgain": "もう一度遊ぶ",
 		"home": "ホームへ戻る"
 	},
 	"timeline": {

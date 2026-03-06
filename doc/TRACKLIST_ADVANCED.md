@@ -534,7 +534,6 @@
 | `beaa593a` | Cilea – L’arlesiana | * Atto II. “È la solita storia del pastore” (Lamento di Federico) | 1897 |
 | `900b0632` | Clarke – The Prince of Denmark’s March | * The Prince of Denmark’s March | 1700 |
 | `5f93dfb0` | Coates – London Suite | * III. Knightsbridge (March) | ? |
-| `b4716010` | Coates – The Dam Busters March | * The Dam Busters March | 1955 |
 | `a46f3c70` | Copland – Appalachian Spring Suite | * I. Very Slowly<br>* VII. Doppio movimento: Variations on a Shaker Hymn | 1945 |
 | `91c75fc8` | Copland – Billy the Kid | * I. Introduction: The Open Prairie<br>* V. Gun Battle | 1939 |
 | `a6ebd91d` | Copland – El Salón México | * El Salón México | 1932‑1936 |
@@ -1627,6 +1626,7 @@
 | `179f16b1` | Schumann – Nachtstücke, op. 23 | * III. Mit großer Lebhaftigkeit<br>* IV. Ad libitum - Einfach | 1839 |
 | `419de2c2` | Schumann – Novelletten, op. 21 | * I. Markiert und kräftig<br>* II. Äußerst rasch und mit Bravour | 1838 |
 | `51bf8c8f` | Schumann – Papillons, op. 2 | * Introduzione. Moderato<br>* Nr. 2 Prestissimo | 1829‑1831 |
+| `17dc2767` | Schumann – Phantasiestücke, op. 88 | * I. Romanze<br>* III. Duett | 1842 |
 | `efcc3125` | Schumann – Piano Quartet in E-flat major, op. 47 | * III. Andante cantabile<br>* IV. Finale. Vivace | 1842 |
 | `9e6cbe3d` | Schumann – Piano Quintet in E-flat major, op. 44 | * I. Allegro brillante<br>* IV. Allegro, ma non troppo | 1842 |
 | `9179cca6` | Schumann – Piano Sonata no. 2 in G minor, op. 22 | * I. So rasch wie möglich - Schneller - Noch schneller<br>* II. Andantino. Getragen | 1833‑1838 |

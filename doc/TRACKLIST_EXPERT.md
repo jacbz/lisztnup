@@ -161,6 +161,7 @@
 | `40003498` | Bach – Fantasia super "Jesu, meine Freude", BWV 713 | * Fantasia super "Jesu, meine Freude", BWV 713 | ? |
 | `7880d4a3` | Bach – Fantasia super: Christ lag in Todesbanden, BWV 695 | * Fantasia super: Christ lag in Todesbanden, BWV 695 | ? |
 | `11aa8eb7` | Bach – Fantasie g-Moll, BWV 917 | * Fantasie g-Moll, BWV 917 | 1710 |
+| `4158a0a6` | Bach – Fantasie in F-sharp minor, H 300, Wq. 67 | * Fantasie in F-sharp minor, H 300, Wq. 67 | ? |
 | `ad2a3e74` | Bach – Fantasie und Fuge c-Moll, BWV 562 | * I. Fantasie | ? |
 | `7282d87c` | Bach – Fantasy and Fugue in C minor, BWV 906 | * Fantasie und Fuge c-Moll, BWV 906: I. Fantasie | ? |
 | `296d5d56` | Bach – Flute Sonata in C major, BWV 1033 | * II. Allegro<br>* III. Adagio<br>* IV. Menuetto I | 1736 |
@@ -1042,7 +1043,6 @@
 | `ac75232a` | Clarke – Trio for Violin, Cello and Piano | * I. Moderato ma appassionato<br>* II. Andante molto semplice<br>* III. Allegro vigoroso | 1921 |
 | `52b4cf87` | Coates – Calling All Workers | * Calling All Workers | 1940 |
 | `5f93dfb0` | Coates – London Suite | * III. Knightsbridge (March) | ? |
-| `b4716010` | Coates – The Dam Busters March | * The Dam Busters March | 1955 |
 | `1c305e42` | Copland – An Outdoor Overture | * An Outdoor Overture | 1938 |
 | `a46f3c70` | Copland – Appalachian Spring Suite | * I. Very Slowly<br>* II. Allegro<br>* VII. Doppio movimento: Variations on a Shaker Hymn | 1945 |
 | `91c75fc8` | Copland – Billy the Kid | * I. Introduction: The Open Prairie<br>* IV. Prairie Night (Card Game at Night)<br>* V. Gun Battle | 1939 |

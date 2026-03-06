@@ -319,7 +319,6 @@
 | `a56208f3` | Chopin – Waltzes, op. 70 | * Waltz no. 11 in G‐flat major, op. 70 no. 1 | 1829‑1832 |
 | `beaa593a` | Cilea – L’arlesiana | * Atto II. “È la solita storia del pastore” (Lamento di Federico) | 1897 |
 | `900b0632` | Clarke – The Prince of Denmark’s March | * The Prince of Denmark’s March | 1700 |
-| `b4716010` | Coates – The Dam Busters March | * The Dam Busters March | 1955 |
 | `a46f3c70` | Copland – Appalachian Spring Suite | * VII. Doppio movimento: Variations on a Shaker Hymn | 1945 |
 | `f846bc6f` | Copland – Fanfare for the Common Man | * Fanfare for the Common Man | 1942 |
 | `c72e86c7` | Copland – Four Dance Episodes from Rodeo | * Rodeo: IV. Hoedown | 1942 |
@@ -455,6 +454,7 @@
 | `99783678` | Haydn – Symphony no. 96 in D major, Hob. I:96 "Miracle" | * IV. Finale. Vivace assai | 1791 |
 | `eb4cf616` | Haydn – Symphony no. 99 in E-flat major, Hob. I:99 | * I. Adagio - Vivace assai | 1793 |
 | `0c2f8487` | Haydn – Trumpet Concerto in E-flat major | * Konzert für Trompete und Orchester Es-Dur, Hob. VIIe:1: III. Allegro | 1796 |
+| `2db498f7` | Haydn – Violin Concerto in C major, Hob. VIIa:1 | * II. Adagio | ? |
 | `085103a5` | Holst – 3 Hymns for the English Hymnal | * In the Bleak Midwinter | 1904‑1905 |
 | `439c1605` | Holst – The Planets, op. 32 | * IV. Jupiter, the Bringer of Jollity | 1914‑1916 |
 | `fc89d2b2` | Humperdinck – Hänsel und Gretel | * Hänsel und Gretel: Vorspiel (Overture) | 1891‑1892 |

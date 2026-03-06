@@ -381,7 +381,6 @@
 		"reveal": "정답 공개",
 		"nextRound": "다음 라운드",
 		"gameOver": "게임 종료!",
-		"playAgain": "다시 하기",
 		"quitTitle": "나가기",
 		"quitMessage": "정말로 나가시겠습니까? 빙고판 상태는 저장됩니다.",
 		"quitConfirm": "나가기",
@@ -523,7 +522,6 @@
 		"noMoreTracks": "더 이상 재생할 곡이 없습니다.",
 		"finalScores": "최종 점수",
 		"viewStats": "통계 보기",
-		"playAgain": "다시 하기",
 		"home": "홈으로"
 	},
 	"timeline": {

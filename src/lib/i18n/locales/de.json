@@ -7,7 +7,7 @@
 		"confirm": "Bestätigen",
 		"reportProblem": "Problem melden",
 		"searchOn": "Suchen auf...",
-		"playAgain": "Nochmal hören"
+		"playAgain": "Nochmal abspielen"
 	},
 	"search": {
 		"title": "Suchen auf...",
@@ -381,7 +381,6 @@
 		"reveal": "Auflösen",
 		"nextRound": "Nächste Runde",
 		"gameOver": "Spiel vorbei!",
-		"playAgain": "Nochmal spielen",
 		"quitTitle": "Spiel verlassen?",
 		"quitMessage": "Willst du wirklich gehen? Deine Bingo-Karte wird gespeichert.",
 		"quitConfirm": "Verlassen",
@@ -523,7 +522,6 @@
 		"noMoreTracks": "Keine weiteren Tracks verfügbar.",
 		"finalScores": "Endstand",
 		"viewStats": "Statistik ansehen",
-		"playAgain": "Nochmal spielen",
 		"home": "Start"
 	},
 	"timeline": {

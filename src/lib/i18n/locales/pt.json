@@ -381,7 +381,6 @@
 		"reveal": "Revelar",
 		"nextRound": "Próxima Rodada",
 		"gameOver": "Fim de Jogo!",
-		"playAgain": "Jogar Novamente",
 		"quitTitle": "Sair do Jogo?",
 		"quitMessage": "Tem certeza de que deseja sair? Sua cartela será salva.",
 		"quitConfirm": "Sair",
@@ -523,7 +522,6 @@
 		"noMoreTracks": "Não há mais faixas disponíveis.",
 		"finalScores": "Placar Final",
 		"viewStats": "Ver Estatísticas",
-		"playAgain": "Jogar Novamente",
 		"home": "Início"
 	},
 	"timeline": {

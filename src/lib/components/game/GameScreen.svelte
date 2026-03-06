@@ -372,17 +372,6 @@
 		showStatsScreen = true;
 	}
 
-	function handlePlayAgain(): void {
-		showEndGameScreen = false;
-		tracksExhausted = false;
-		hasPreloadError = false;
-		preloadInProgress = false;
-		isAdvancingRound = false;
-		resetGame();
-		gameSession.startSession(mode, players, isSoloMode);
-		sampleAndPreloadTrack();
-	}
-
 	function handleHome(): void {
 		deezerPlayer.stop();
 		resetGame();
@@ -589,7 +578,6 @@
 	track={currentTrack}
 	players={$gameSession.players}
 	categories={activeCategories}
-	currentCategory={$currentRound.category}
 	revealedCategories={revealOptions.scoringCategories ?? []}
 	onScore={handleScoreSubmit}
 />
@@ -633,10 +621,8 @@
 	visible={showEndGameScreen}
 	players={$gameSession.players}
 	{isSoloMode}
-	{mode}
 	{enableScoring}
 	{tracksExhausted}
-	onPlayAgain={handlePlayAgain}
 	onViewStats={handleViewStatsFromEndGame}
 	onHome={handleHome}
 />
