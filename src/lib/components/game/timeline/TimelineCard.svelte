@@ -35,7 +35,7 @@
 		children
 	}: Props = $props();
 
-	const borderRadius = $derived.by(() => (size === 'xs' ? 'rounded-[6px]' : 'rounded-[10px]'));
+	const borderRadius = $derived.by(() => (size === 'lg' ? 'rounded-[12px]' : 'rounded-[12%]'));
 
 	const sizeClasses = $derived.by(() => {
 		switch (size) {

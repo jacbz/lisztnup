@@ -171,6 +171,30 @@ def _are_titles_similar(title_a: str, title_b: str) -> bool:
     return score > 0.5
 
 
+# Pattern for qualifier phrases (e.g. "for cello and piano", "op. 12")
+# that can appear between the work name and the movement identifier.
+_QUALIFIER_PREFIX_RE = re.compile(
+    r"^(?:for\b|op\.?\s*|in\s+[A-G]).*?:\s+", re.IGNORECASE
+)
+
+
+def _strip_qualifier_prefix(text: str) -> str:
+    """Strip a leading qualifier phrase ending with ': ' from *text*.
+
+    After the work-name prefix has been removed, the remainder may still
+    start with a qualifier like "for cello and piano: " or "op. 12: ".
+    This function strips that qualifier so only the movement content
+    remains.  If the text doesn't start with a recognised qualifier, it
+    is returned unchanged.
+    """
+    m = _QUALIFIER_PREFIX_RE.match(text)
+    if m:
+        rest = text[m.end():].strip()
+        if rest:
+            return rest
+    return text
+
+
 # ==============================================================================
 # --- Data Class Definitions ---
 # ==============================================================================
@@ -648,12 +672,15 @@ class MusicbrainzProcessor:
         norm_part = _normalize_punctuation(part_name)
         norm_work = _normalize_punctuation(work_name)
         prefix_pattern = re.compile(
-            r"^" + re.escape(norm_work) + r"[:\-,]\s*", re.IGNORECASE
+            r"^" + re.escape(norm_work) + r" ?[:\-,]\s*", re.IGNORECASE
         )
         m = prefix_pattern.match(norm_part)
         if m:
             stripped = part_name[m.end():].strip()
             if stripped:
+                # If stripping left a qualifier (e.g. "for cello and piano: 1. Allegro"),
+                # extend through the qualifier up to the colon before movement content.
+                stripped = _strip_qualifier_prefix(stripped)
                 return stripped
 
         # 2. Fallback: colon followed by a movement identifier
