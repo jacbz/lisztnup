@@ -373,7 +373,6 @@ export class TimelineGame {
 	startDragFromCenter(ev: PointerEvent) {
 		if (!this.canDragCenter || !this.topCard) return;
 
-		this.#ctx.stopTrack();
 		this.turnPhase = 'locked';
 		this.#initDrag(ev, 'center', this.topCard);
 	}
