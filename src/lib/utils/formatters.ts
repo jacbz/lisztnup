@@ -80,7 +80,7 @@ const PERIODS = [
 	{ start: 1850, key: 'romantic' },
 	{ start: 1880, key: 'lateRomantic' },
 	{ start: 1900, key: '20thCentury' },
-	{ start: 2000, key: 'contemporary' }
+	{ start: 1945, key: 'contemporary' }
 ];
 
 /**
