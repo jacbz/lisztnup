@@ -337,8 +337,7 @@ export const CELLOCONCERTO_CONFIG: TracklistConfig = {
 		'ddd19c33', // Leo – Concerto no. 4 in A major
 		'370dd15d', // Leo – Concerto no. 5 in F minor
 		'8709d5f7', // Leo – Sinfonia concertata (Concerto no. 6) in C minor
-		'890399dc', // Offenbach – Concerto militaire
-		'942499a7' // Tchaikovsky - Variations on a Rococo Theme
+		'890399dc' // Offenbach – Concerto militaire
 	]
 };
 
@@ -372,7 +371,6 @@ export const WOODWINDCONCERTO_CONFIG: TracklistConfig = {
 		'caf15212', // Bach – Concerto D-Dur, BWV 1050a
 		'c91f280f', // Barber – Capricorn Concerto, op. 21
 		'6cc0b61c', // Boismortier – 5 Sonates en trio suivies d'un concerto, op. 37
-		'4d0833a7', // Handel – Concerto grosso in C major, HWV 318 "Alexander's Feast"
 		'69604c1c', // Holst – A Fugal Concerto, op. 40 no. 2
 		'7d9486d7', // Martin – Concerto for 7 Wind Instruments, Percussion & Strings
 		'3b515385', // Rodrigo – Concierto pastoral

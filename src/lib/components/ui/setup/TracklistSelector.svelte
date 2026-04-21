@@ -77,9 +77,16 @@
 	// Compute tracklist info for each tracklist
 	const tracklistInfoMap = $derived.by(() => {
 		const data = get(gameData);
-		if (!data) return {} as Record<string, { composers: number; works: number; tracks: number }>;
+		if (!data)
+			return {} as Record<
+				string,
+				{ composers: number; works: number; tracks: number; allFemaleComposers: boolean }
+			>;
 
-		const map: Record<string, { composers: number; works: number; tracks: number }> = {};
+		const map: Record<
+			string,
+			{ composers: number; works: number; tracks: number; allFemaleComposers: boolean }
+		> = {};
 
 		// Calculate info for each tracklist in all groups
 		Object.values(groupedTracklists)
@@ -90,7 +97,7 @@
 					map[tracklist.name] = generator.getInfo();
 				} catch (error) {
 					console.error(`Error getting info for tracklist ${tracklist.name}:`, error);
-					map[tracklist.name] = { composers: 0, works: 0, tracks: 0 };
+					map[tracklist.name] = { composers: 0, works: 0, tracks: 0, allFemaleComposers: false };
 				}
 			});
 
@@ -381,7 +388,12 @@
 			{#if tracklistInfoMap[tracklist.name]}
 				<span class="mt-1 text-xs opacity-70">
 					{$_('settings.presetInfo.default', {
-						values: tracklistInfoMap[tracklist.name]
+						values: {
+							...tracklistInfoMap[tracklist.name],
+							allFemaleComposers: tracklistInfoMap[tracklist.name].allFemaleComposers
+								? 'true'
+								: 'false'
+						}
 					})}
 				</span>
 			{/if}

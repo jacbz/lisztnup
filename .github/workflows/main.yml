@@ -15,8 +15,6 @@ jobs:
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
-        with:
-          lfs: true
 
       - name: Install dependencies
         run: yarn install

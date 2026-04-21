@@ -33,7 +33,7 @@
 		"cardsToWin": "Cartes pour gagner",
 		"language": "Langue",
 		"presetInfo": {
-			"default": "{composers, plural, =0 {aucun compositeur} one {# compositeur} other {# compositeurs}}, {works, plural, =0 {aucune œuvre} one {# œuvre} other {# œuvres}}, {tracks, plural, =0 {aucune piste} one {# piste} other {# pistes}}"
+			"default": "{allFemaleComposers, select, true {{composers, plural, one {# compositrice} other {# compositrices}}} other {{composers, plural, =0 {aucun compositeur} one {# compositeur} other {# compositeurs}}}}, {works, plural, =0 {aucune œuvre} one {# œuvre} other {# œuvres}}, {tracks, plural, =0 {aucune piste} one {# piste} other {# pistes}}"
 		},
 		"categories": {
 			"vocal": "Vocal",

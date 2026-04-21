@@ -311,12 +311,17 @@ export class TracklistGenerator {
 	/**
 	 * Gets information about the filtered dataset
 	 */
-	getInfo(): { composers: number; works: number; tracks: number } {
+	getInfo(): { composers: number; works: number; tracks: number; allFemaleComposers: boolean } {
 		const totalTracks = this.filteredWorks.reduce((sum, work) => sum + work.parts.length, 0);
+		const allFemaleComposers =
+			this.filteredComposers.length > 0 &&
+			this.filteredComposers.every((c) => c.gender === 'female');
+
 		return {
 			composers: this.filteredComposers.length,
 			works: this.filteredWorks.length,
-			tracks: totalTracks
+			tracks: totalTracks,
+			allFemaleComposers
 		};
 	}
 

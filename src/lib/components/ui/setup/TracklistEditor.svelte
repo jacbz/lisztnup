@@ -104,7 +104,12 @@
 	let showCloseDialog = $state(false);
 
 	// Preview state
-	let previewInfo = $state<{ composers: number; works: number; tracks: number } | null>(null);
+	let previewInfo = $state<{
+		composers: number;
+		works: number;
+		tracks: number;
+		allFemaleComposers: boolean;
+	} | null>(null);
 	let currentPreviewTracklist = $state<Tracklist | null>(null);
 	let previewWorkGids = $state<Set<string>>(new Set());
 	let previewComposers = $state<
@@ -317,7 +322,7 @@
 				.sort((a, b) => b.workCount - a.workCount);
 		} catch (error) {
 			console.error('Error generating preview:', error);
-			previewInfo = { composers: 0, works: 0, tracks: 0 };
+			previewInfo = { composers: 0, works: 0, tracks: 0, allFemaleComposers: false };
 			previewComposers = [];
 			previewCategories = [];
 		}
