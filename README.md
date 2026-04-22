@@ -34,7 +34,7 @@ Designed as a modern web app, _Liszt’n Up!_ is optimized for tablet usage (ide
 
 ## Tech Stack
 
-- **Framework:** [SvelteKit](https://kit.svelte.dev/) (Svelte 5 with Runes)
+- **Framework:** [SvelteKit](https://kit.svelte.dev/) (Svelte 5 with Runes) + Cloudflare Pages & D1 (Analytics)
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS 4
 - **State Management:** Svelte Stores & LocalStorage persistence
@@ -52,7 +52,7 @@ To get a local copy up and running, follow these steps.
 ### Prerequisites
 
 - Node.js (Latest LTS recommended)
-- Yarn
+- pnpm
 
 ### Installation
 
@@ -66,13 +66,13 @@ To get a local copy up and running, follow these steps.
 2.  Install dependencies:
 
     ```bash
-    yarn install
+    pnpm install
     ```
 
 3.  Start the development server:
 
     ```bash
-    yarn dev
+    pnpm dev
     ```
 
 4.  Open [http://localhost:5173](http://localhost:5173) in your browser.

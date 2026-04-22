@@ -1365,4 +1365,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-    subprocess.run(["yarn", "sync:tracklist"], check=True)
+    subprocess.run(["pnpm", "sync:tracklist"], check=True)

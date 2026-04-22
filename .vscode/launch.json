@@ -4,8 +4,8 @@
 		{
 			"type": "node-terminal",
 			"request": "launch",
-			"name": "Yarn Dev",
-			"command": "yarn run dev",
+			"name": "pnpm dev",
+			"command": "pnpm run dev",
 			"cwd": "${workspaceFolder}"
 		}
 	]

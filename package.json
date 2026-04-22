@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev --host",
-		"build": "yarn sync:tracklist && vite build && yarn minify-json",
+		"build": "pnpm sync:tracklist && vite build && pnpm minify-json",
 		"sync:tracklist": "tsx scripts/sync-tracklist-md.ts",
 		"minify-json": "node -e \"const fs=require('fs');const data=JSON.parse(fs.readFileSync('.svelte-kit/cloudflare/lisztnup.json','utf8'));fs.writeFileSync('.svelte-kit/cloudflare/lisztnup.json',JSON.stringify(data))\"",
 		"preview": "vite preview",
