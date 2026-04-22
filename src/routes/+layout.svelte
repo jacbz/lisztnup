@@ -1,10 +1,11 @@
 <script lang="ts">
+	import { type Snippet } from 'svelte';
 	import '../app.css';
 	import '$lib/i18n'; // Initialize i18n
 	import Toast from '$lib/components/ui/primitives/Toast.svelte';
 	import { _ } from 'svelte-i18n';
 
-	let { children } = $props();
+	let { children }: { children: Snippet } = $props();
 </script>
 
 <svelte:head>

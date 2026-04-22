@@ -1,0 +1,7 @@
+name = "lisztnup"
+pages_build_output_dir = ".svelte-kit/cloudflare"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "lisztnup-analytics"
+database_id = "22ad463f-b645-44da-9dfc-df3885f72a0b"
