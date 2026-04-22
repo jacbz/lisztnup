@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, setContext } from 'svelte';
+	import { onMount, onDestroy, setContext } from 'svelte';
 	import type { TracklistGenerator } from '$lib/services';
 	import type { Player, GameMode, Track } from '$lib/types';
 	import {
@@ -25,6 +25,9 @@
 	import BarChart from 'lucide-svelte/icons/bar-chart-3';
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';
 	import { _ } from 'svelte-i18n';
+	import { analytics } from '$lib/game-logger';
+	import { settings } from '$lib/stores/settings';
+	import { get } from 'svelte/store';
 
 	// Context for sharing functions with child components
 	import { GAME_SCREEN_CONTEXT, type GameScreenContext, type RevealOptions } from './context';
@@ -102,6 +105,23 @@
 
 	// Start game session on mount
 	onMount(() => {
+		const tracklistId = get(settings).selectedTracklist || 'unknown';
+		let gameInfo: Record<string, any> | null = null;
+		
+		if (mode === 'timeline') {
+			gameInfo = {
+				cardsToWin: get(settings).timelineCardsToWin,
+				numberOfPlayers: players.length
+			};
+		} else if (mode === 'buzzer' || mode === 'classic') {
+			gameInfo = {
+				numberOfTracks,
+				numberOfPlayers: players.length
+			};
+		}
+
+		analytics.startGame(mode, tracklistId, gameInfo);
+
 		gameSession.startSession(mode, players, isSoloMode);
 
 		// Set track length behavior based on mode
@@ -123,6 +143,21 @@
 			window.removeEventListener('beforeunload', handleBeforeUnload);
 			deezerPlayer.destroy();
 		};
+	});
+
+	onDestroy(() => {
+		// If we are destroying and the session is still active, it means the user quit early
+		// or we are capturing the natural end state.
+		const state = showEndGameScreen ? 'completed' : 'abandoned';
+		
+		if (mode === 'buzzer' || mode === 'classic') {
+			analytics.endGame(state, {
+				scores: get(gameSession).players.map((p) => p.score)
+			});
+		} else {
+			// For Bingo or as a catch-all for other modes
+			analytics.endGame(state);
+		}
 	});
 
 	function sampleNextTrack(): Track | null {

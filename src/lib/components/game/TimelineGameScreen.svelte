@@ -6,6 +6,7 @@
 	import { ALL_EDGES } from '$lib/types';
 	import { currentRound, resetGame, gameSession, lastReconnectedAt } from '$lib/stores';
 	import { _ } from 'svelte-i18n';
+	import { analytics } from '$lib/game-logger';
 
 	// Components
 	import EdgeDisplay from '$lib/components/ui/primitives/EdgeDisplay.svelte';
@@ -49,6 +50,12 @@
 	// ─── Audio Progress ────────────────────────────────────
 
 	onDestroy(() => {
+		// Capture final stats before the session is closed.
+		// This handles both natural game end and manual navigation.
+		analytics.endGame(game.showEndGame ? 'completed' : 'abandoned', {
+			numberOfTurns: game.totalTurns,
+			timelines: game.timelinesYears
+		});
 		game.destroy();
 	});
 

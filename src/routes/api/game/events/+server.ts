@@ -22,18 +22,50 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 			try {
 				const db = platform.env!.DB;
 
-				if (payload.type === 'session_start') {
+				if (payload.type === 'game_start') {
+					// Use UPSERT to handle cases where game_end arrives first
 					await db
 						.prepare(
-							`INSERT INTO game_sessions (id, timestamp, state, mode, tracklist_id, country, user_hash) 
-						 VALUES (?, CURRENT_TIMESTAMP, 'started', ?, ?, ?, ?)`
+							`INSERT INTO game_sessions (id, started_at, state, mode, tracklist_id, country, user_hash, game_info) 
+						 VALUES (?1, CURRENT_TIMESTAMP, 'started', ?2, ?3, ?4, ?5, ?6)
+						 ON CONFLICT(id) DO UPDATE SET 
+						 	started_at = COALESCE(game_sessions.started_at, CURRENT_TIMESTAMP),
+						 	mode = ?2,
+						 	tracklist_id = ?3,
+						 	country = ?4,
+						 	user_hash = ?5,
+						 	game_info = json_patch(COALESCE(game_sessions.game_info, '{}'), ?6)`
 						)
-						.bind(payload.sessionId, payload.mode, payload.tracklistId, country, userHash)
+						.bind(
+							payload.sessionId,
+							payload.mode,
+							payload.tracklistId,
+							country,
+							userHash,
+							payload.gameInfo ? JSON.stringify(payload.gameInfo) : '{}'
+						)
 						.run();
-				} else if (payload.type === 'session_end') {
+				} else if (payload.type === 'game_end') {
+					// Use UPSERT to handle cases where game_end arrives before game_start
+					const gameInfoJson = payload.gameInfo ? JSON.stringify(payload.gameInfo) : '{}';
+					const newState = payload.state || 'ended';
+					
 					await db
-						.prepare(`UPDATE game_sessions SET state = 'ended' WHERE id = ? AND user_hash = ?`)
-						.bind(payload.sessionId, userHash)
+						.prepare(
+							`INSERT INTO game_sessions (id, ended_at, state, country, user_hash, game_info) 
+						 VALUES (?1, CURRENT_TIMESTAMP, ?2, ?3, ?4, ?5)
+						 ON CONFLICT(id) DO UPDATE SET 
+						 	ended_at = CURRENT_TIMESTAMP,
+						 	state = ?2,
+						 	game_info = json_patch(COALESCE(game_sessions.game_info, '{}'), ?5)`
+						)
+						.bind(
+							payload.sessionId,
+							newState,
+							country,
+							userHash,
+							gameInfoJson
+						)
 						.run();
 				} else if (payload.type === 'timeline_placement') {
 					await db

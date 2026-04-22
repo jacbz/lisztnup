@@ -14,13 +14,14 @@ function generateSessionId(): string {
 
 class GameAnalytics {
 	private sessionId: string | null = null;
-	private endpoint = '/api/analytics/events';
+	private endpoint = '/api/game/events';
 
 	/**
 	 * Fire-and-forget payload dispatcher using the browser's Background Sync
 	 * or standard fetch, prioritizing Keep-Alive.
 	 */
 	private dispatch(payload: Record<string, any>) {
+		console.log('[Analytics] Dispatching:', payload.type, payload);
 		try {
 			if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
 				// Reliable transmission even when the tab is closing
@@ -45,13 +46,18 @@ class GameAnalytics {
 	 * Initiate a totally new game logging session.
 	 * Should be triggered directly before standard gameplay mounts.
 	 */
-	public startSession(mode: string, tracklistId: string) {
+	public startGame(
+		mode: string,
+		tracklistId: string,
+		gameInfo: Record<string, any> | null = null
+	) {
 		this.sessionId = generateSessionId();
 		this.dispatch({
-			type: 'session_start',
+			type: 'game_start',
 			sessionId: this.sessionId,
 			mode,
-			tracklistId
+			tracklistId,
+			gameInfo
 		});
 	}
 
@@ -73,12 +79,14 @@ class GameAnalytics {
 	/**
 	 * Conclude playing, saving state back.
 	 */
-	public endSession() {
+	public endGame(state: 'completed' | 'abandoned' = 'abandoned', gameInfo: Record<string, any> | null = null) {
 		if (!this.sessionId) return;
 
 		this.dispatch({
-			type: 'session_end',
-			sessionId: this.sessionId
+			type: 'game_end',
+			sessionId: this.sessionId,
+			state,
+			gameInfo: gameInfo || {}
 		});
 
 		// Unset session ID so we do not pollute later.

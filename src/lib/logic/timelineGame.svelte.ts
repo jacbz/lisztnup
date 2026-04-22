@@ -61,6 +61,7 @@ export class TimelineGame {
 	// ═══════════════════════════════════════════════════════
 	timelines = $state<TimelineRow[]>([]);
 	activePlayerIndex = $state(0);
+	totalTurns = $state(0);
 	centerStack = $state<StackItem[]>([]);
 	turnPhase = $state<TurnPhase>('idle');
 	pendingEntryId = $state<string | null>(null);
@@ -110,6 +111,15 @@ export class TimelineGame {
 
 	activePlayer = $derived(this.timelines[this.activePlayerIndex]);
 	activePlayerName = $derived(this.activePlayer?.player.name ?? '');
+
+	/** Returns all Kept cards in all timelines as an array of year arrays. */
+	timelinesYears = $derived(
+		this.timelines.map((t) =>
+			t.entries
+				.filter((e) => e.confirmed && e.correct !== false)
+				.map((e) => this.#getTimelineYear(e.track))
+		)
+	);
 
 	topStackItem = $derived(this.centerStack[0] ?? null);
 	topCard = $derived(this.topStackItem?.track ?? null);
@@ -611,6 +621,7 @@ export class TimelineGame {
 	async handleConfirmPlacement() {
 		if (!this.pendingEntryId) return;
 		this.resolvingTurn = true;
+		this.totalTurns++;
 		this.#ctx.stopTrack();
 
 		const entries = this.activePlayer.entries;
@@ -626,6 +637,13 @@ export class TimelineGame {
 
 		entries[idx].confirmed = true;
 		entries[idx].correct = isCorrect;
+
+		// Log placement to analytics
+		import('$lib/game-logger')
+			.then(({ analytics }) => {
+				analytics.logPlacement(track.work.gid, isCorrect);
+			})
+			.catch(() => {});
 
 		const audio = isCorrect ? new Audio('/correct.mp3') : new Audio('/wrong.mp3');
 		audio.play().catch(() => {});
