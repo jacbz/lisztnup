@@ -26,15 +26,16 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 					// Use UPSERT to handle cases where game_end arrives first
 					await db
 						.prepare(
-							`INSERT INTO game_sessions (id, started_at, state, mode, tracklist_id, country, user_hash, game_info) 
-						 VALUES (?1, CURRENT_TIMESTAMP, 'started', ?2, ?3, ?4, ?5, ?6)
+							`INSERT INTO game_sessions (id, started_at, state, mode, tracklist_id, country, user_hash, locale, game_info) 
+						 VALUES (?1, CURRENT_TIMESTAMP, 'started', ?2, ?3, ?4, ?5, ?6, ?7)
 						 ON CONFLICT(id) DO UPDATE SET 
 						 	started_at = COALESCE(game_sessions.started_at, CURRENT_TIMESTAMP),
 						 	mode = ?2,
 						 	tracklist_id = ?3,
 						 	country = ?4,
 						 	user_hash = ?5,
-						 	game_info = json_patch(COALESCE(game_sessions.game_info, '{}'), ?6)`
+						 	locale = ?6,
+						 	game_info = json_patch(COALESCE(game_sessions.game_info, '{}'), ?7)`
 						)
 						.bind(
 							payload.sessionId,
@@ -42,6 +43,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 							payload.tracklistId,
 							country,
 							userHash,
+							payload.locale,
 							payload.gameInfo ? JSON.stringify(payload.gameInfo) : '{}'
 						)
 						.run();

@@ -24,7 +24,7 @@
 	import SettingsIcon from 'lucide-svelte/icons/settings';
 	import BarChart from 'lucide-svelte/icons/bar-chart-3';
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';
-	import { _ } from 'svelte-i18n';
+	import { _, locale } from 'svelte-i18n';
 	import { analytics } from '$lib/game-logger';
 	import { settings } from '$lib/stores/settings';
 	import { get } from 'svelte/store';
@@ -106,6 +106,7 @@
 	// Start game session on mount
 	onMount(() => {
 		const tracklistId = get(settings).selectedTracklist || 'unknown';
+		const currentLocale = get(locale) || 'en';
 		let gameInfo: Record<string, any> | null = null;
 		
 		if (mode === 'timeline') {
@@ -120,7 +121,7 @@
 			};
 		}
 
-		analytics.startGame(mode, tracklistId, gameInfo);
+		analytics.startGame(mode, tracklistId, currentLocale, gameInfo);
 
 		gameSession.startSession(mode, players, isSoloMode);
 

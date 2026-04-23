@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS game_sessions (
   mode TEXT,
   tracklist_id TEXT,
   country TEXT,
+  locale TEXT,
   user_hash TEXT,
   game_info TEXT
 );

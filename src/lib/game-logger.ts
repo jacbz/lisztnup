@@ -49,6 +49,7 @@ class GameAnalytics {
 	public startGame(
 		mode: string,
 		tracklistId: string,
+		locale: string,
 		gameInfo: Record<string, any> | null = null
 	) {
 		this.sessionId = generateSessionId();
@@ -57,6 +58,7 @@ class GameAnalytics {
 			sessionId: this.sessionId,
 			mode,
 			tracklistId,
+			locale,
 			gameInfo
 		});
 	}
