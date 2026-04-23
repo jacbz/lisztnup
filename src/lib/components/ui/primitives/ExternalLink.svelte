@@ -3,7 +3,7 @@
 		/**
 		 * The URL to link to.
 		 */
-		href: string;
+		href?: string;
 		/**
 		 * Additional classes to apply to the link.
 		 * @default ''

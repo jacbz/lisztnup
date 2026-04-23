@@ -9,6 +9,14 @@
 		"searchOn": "Suchen auf...",
 		"playAgain": "Nochmal abspielen"
 	},
+	"report": {
+		"title": "Problem melden",
+		"prompt": "Beschreibe das Problem mit diesem Stück.",
+		"placeholder": "Was stimmt nicht? (z. B. falsches Stück, falsches Jahr, schlechter Ton...)",
+		"submit": "Meldung senden",
+		"sending": "Wird gesendet...",
+		"success": "Vielen Dank!"
+	},
 	"search": {
 		"title": "Suchen auf...",
 		"searchFor": "Suchen nach:"

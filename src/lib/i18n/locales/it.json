@@ -9,6 +9,14 @@
 		"searchOn": "Cerca su...",
 		"playAgain": "Riascolta"
 	},
+	"report": {
+		"title": "Segnala un problema",
+		"prompt": "Descrivi il problema con questo brano.",
+		"placeholder": "Cosa c'è che non va? (es. brano errato, anno errato, audio scadente...)",
+		"submit": "Invia segnalazione",
+		"sending": "Invio in corso...",
+		"success": "Grazie!"
+	},
 	"search": {
 		"title": "Cerca su...",
 		"searchFor": "Cerca:"

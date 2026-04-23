@@ -20,7 +20,8 @@ const BOT_USER_AGENTS = [
 	'exabot',
 	'mj12bot',
 	'petalbot',
-	'ltx71'
+	'ltx71',
+	'cms-checker'
 ];
 
 function isBot(userAgent: string | null) {
@@ -98,7 +99,14 @@ export const handle: Handle = async ({ event, resolve }) => {
 								`INSERT INTO pageviews (timestamp, country, path, user_hash, device, os, user_agent) 
 							 VALUES (CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?)`
 							)
-							.bind(cf.country || 'UNKNOWN', event.url.pathname, userHash, device, os, userAgent || 'UNKNOWN')
+							.bind(
+								cf.country || 'UNKNOWN',
+								event.url.pathname,
+								userHash,
+								device,
+								os,
+								userAgent || 'UNKNOWN'
+							)
 							.run();
 					}
 				} catch (e) {

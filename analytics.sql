@@ -28,3 +28,18 @@ CREATE TABLE IF NOT EXISTS timeline_placements (
   placed_correctly BOOLEAN,
   timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS problem_reports (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+  session_id TEXT,
+  user_hash TEXT,
+  country TEXT,
+  message TEXT,
+  deezer_id TEXT,
+  composer TEXT,
+  work TEXT,
+  part TEXT,
+  work_type TEXT,
+  work_years TEXT
+);

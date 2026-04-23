@@ -9,6 +9,14 @@
 		"searchOn": "Buscar en...",
 		"playAgain": "Escuchar de nuevo"
 	},
+	"report": {
+		"title": "Informar de un problema",
+		"prompt": "Describe el problema con esta pista.",
+		"placeholder": "¿Qué pasa? (p. ej. pista incorrecta, año incorrecto, mal audio...)",
+		"submit": "Enviar informe",
+		"sending": "Enviando...",
+		"success": "¡Gracias!"
+	},
 	"search": {
 		"title": "Buscar en...",
 		"searchFor": "Buscar:"

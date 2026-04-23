@@ -9,6 +9,14 @@
 		"searchOn": "Rechercher sur...",
 		"playAgain": "Réécouter"
 	},
+	"report": {
+		"title": "Signaler un problème",
+		"prompt": "Décris le problème avec cette piste.",
+		"placeholder": "Quel est le souci ? (ex. mauvaise piste, mauvaise année, mauvais son...)",
+		"submit": "Envoyer le rapport",
+		"sending": "Envoi en cours...",
+		"success": "Merci !"
+	},
 	"search": {
 		"title": "Rechercher sur...",
 		"searchFor": "Rechercher :"

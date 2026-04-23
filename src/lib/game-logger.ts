@@ -92,6 +92,32 @@ class GameAnalytics {
 		// Unset session ID so we do not pollute later.
 		this.sessionId = null;
 	}
+
+	/**
+	 * Send a problem report to the server.
+	 */
+	public async reportProblem(data: Record<string, any>) {
+		const payload = {
+			sessionId: this.sessionId,
+			...data
+		};
+
+		try {
+			const response = await fetch('/api/game/reports', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(payload)
+			});
+			return response.ok;
+		} catch (e) {
+			console.error('Failed to send problem report', e);
+			return false;
+		}
+	}
+
+	public getSessionId() {
+		return this.sessionId;
+	}
 }
 
 export const analytics = new GameAnalytics();

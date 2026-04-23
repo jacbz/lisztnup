@@ -9,6 +9,14 @@
 		"searchOn": "検索...",
 		"playAgain": "もう一度聴く"
 	},
+	"report": {
+		"title": "問題を報告する",
+		"prompt": "このトラックの問題について教えてください。",
+		"placeholder": "どのような問題ですか？（例：曲が違う、年代が違う、音質が悪いなど）",
+		"submit": "報告を送信",
+		"sending": "送信中...",
+		"success": "ありがとうございます！"
+	},
 	"search": {
 		"title": "検索...",
 		"searchFor": "検索対象:"

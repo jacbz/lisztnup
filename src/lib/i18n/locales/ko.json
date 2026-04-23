@@ -9,6 +9,14 @@
 		"searchOn": "검색...",
 		"playAgain": "다시 듣기"
 	},
+	"report": {
+		"title": "문제 신고",
+		"prompt": "이 트랙의 문제를 설명해 주세요.",
+		"placeholder": "무엇이 잘못되었나요? (예: 잘못된 트랙, 잘못된 연도, 불량 오디오...)",
+		"submit": "신고 제출",
+		"sending": "보내는 중...",
+		"success": "감사합니다!"
+	},
 	"search": {
 		"title": "검색...",
 		"searchFor": "검색 대상:"

@@ -14,9 +14,11 @@
 	import Search from 'lucide-svelte/icons/search';
 	import Play from 'lucide-svelte/icons/play';
 	import SearchPopup from '../primitives/SearchPopup.svelte';
+	import ProblemReportPopup from './ProblemReportPopup.svelte';
 	import PlayerControl from './PlayerControl.svelte';
 	import { slide } from 'svelte/transition';
 	import { onDestroy } from 'svelte';
+	import Check from 'lucide-svelte/icons/check-circle';
 
 	interface Props {
 		track: Track | null;
@@ -29,6 +31,8 @@
 	let { track = null, showMirror = true, bleed = 'lg' }: Props = $props();
 
 	let showSearchPopup = $state(false);
+	let showReportPopup = $state(false);
+	let reportSubmitted = $state(false);
 	let replayActive = $state(false);
 
 	// Self-contained preview player — completely independent of the game's DeezerPlayer singleton
@@ -46,6 +50,10 @@
 
 	function handleReplayStop() {
 		previewPlayer.stop();
+	}
+
+	function handleReportSuccess() {
+		reportSubmitted = true;
 	}
 
 	const composerName = $derived(track ? formatComposerName(track.composer.name) : '');
@@ -89,38 +97,6 @@
 		const { begin_year, end_year } = track?.work ?? {};
 		const era = getWorkEra(begin_year, end_year, track?.composer);
 		return $_(`eras.${era}`);
-	});
-
-	const reportProblemUrl = $derived.by(() => {
-		if (!track) return '';
-
-		const loadedId = $playerState.track?.id;
-		const deezerId = isLoadedTrack && loadedId ? loadedId : track.part.deezer[0];
-
-		const title = encodeURIComponent(`[Data Issue] Problem with track: ${track.work.name}`);
-		const body = encodeURIComponent(
-			`**Describe the problem:**
-(Please describe what is incorrect or missing)
-
-**Expected behavior:**
-(What should be correct?)
-
-**Actual behavior:**
-(What is currently showing?)
-
----
-
-**Debug Information:**
-- Deezer ID: [${deezerId}](https://www.deezer.com/track/${deezerId})
-- Composer: ${track.composer.name} ([\`${track.composer.gid}\`](https://musicbrainz.org/artist/${track.composer.gid}))
-- Work: ${track.work.name} ([\`${track.work.gid}\`](https://musicbrainz.org/work/${track.work.gid}))
-- Part: ${track.part.name}
-- Work Type: ${track.work.type}
-- Work Years: ${track.work.begin_year ?? 'null'} - ${track.work.end_year ?? 'null'}
-- User Agent: ${navigator.userAgent}`
-		);
-
-		return `https://github.com/jacbz/lisztnup/issues/new?title=${title}&body=${body}&labels=data`;
 	});
 
 	const bleedClasses = $derived.by(() => {
@@ -265,19 +241,25 @@
 					<Search class="h-3.5 w-3.5" />
 					<span class="text-[0.65rem] leading-tight font-medium">{$_('common.searchOn')}</span>
 				</button>
-				<!-- eslint-disable svelte/no-navigation-without-resolve -->
-				<a
-					href={reportProblemUrl}
-					target="_blank"
-					rel="noopener noreferrer external"
-					data-sveltekit-reload
-					data-sveltekit-noscroll
-					data-sveltekit-preload-data="false"
-					class="flex flex-col items-center justify-center gap-1 py-4 text-slate-400 no-underline transition-all duration-200 hover:bg-white/5 hover:text-slate-200 md:py-2.5"
-				>
-					<Flag class="h-3.5 w-3.5" />
-					<span class="text-[0.65rem] leading-tight font-medium">{$_('common.reportProblem')}</span>
-				</a>
+				{#if reportSubmitted}
+					<div
+						class="flex flex-col items-center justify-center gap-1 py-4 text-green-400 md:py-2.5"
+					>
+						<Check class="h-3.5 w-3.5" />
+						<span class="text-[0.65rem] leading-tight font-medium">{$_('report.success')}</span>
+					</div>
+				{:else}
+					<button
+						type="button"
+						onclick={() => (showReportPopup = true)}
+						class="flex flex-col items-center justify-center gap-1 py-4 text-slate-400 transition-all duration-200 hover:bg-white/5 hover:text-slate-200 md:py-2.5"
+					>
+						<Flag class="h-3.5 w-3.5" />
+						<span class="text-[0.65rem] leading-tight font-medium"
+							>{$_('common.reportProblem')}</span
+						>
+					</button>
+				{/if}
 			</div>
 		</div>
 	</div>
@@ -290,3 +272,12 @@
 	workGid={track?.work.gid}
 	onClose={() => (showSearchPopup = false)}
 />
+
+{#if track}
+	<ProblemReportPopup
+		visible={showReportPopup}
+		{track}
+		onClose={() => (showReportPopup = false)}
+		onSuccess={handleReportSuccess}
+	/>
+{/if}
