@@ -69,6 +69,19 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 							gameInfoJson
 						)
 						.run();
+				} else if (payload.type === 'game_progress') {
+					// Use UPSERT so we don't lose data if progress arrives before game_start
+					const gameInfoJson = payload.gameInfo ? JSON.stringify(payload.gameInfo) : '{}';
+					await db
+						.prepare(
+							`INSERT INTO game_sessions (id, state, country, user_hash, game_info) 
+							 VALUES (?1, 'in_progress', ?2, ?3, ?4)
+							 ON CONFLICT(id) DO UPDATE SET 
+								state = CASE WHEN game_sessions.state IN ('completed', 'abandoned') THEN game_sessions.state ELSE 'in_progress' END,
+								game_info = json_patch(COALESCE(game_sessions.game_info, '{}'), ?4)`
+						)
+						.bind(payload.sessionId, country, userHash, gameInfoJson)
+						.run();
 				} else if (payload.type === 'timeline_placement') {
 					await db
 						.prepare(

@@ -153,10 +153,15 @@
 		
 		if (mode === 'buzzer' || mode === 'classic') {
 			analytics.endGame(state, {
-				scores: get(gameSession).players.map((p) => p.score)
+				scores: get(gameSession).players.map((p) => p.score),
+				numberOfRounds: get(currentRound).currentTrackIndex
+			});
+		} else if (mode === 'bingo') {
+			analytics.endGame(state, {
+				numberOfRounds: get(currentRound).currentTrackIndex
 			});
 		} else {
-			// For Bingo or as a catch-all for other modes
+			// For catch-all for other modes (like Timeline which handles its own stats)
 			analytics.endGame(state);
 		}
 	});
@@ -366,6 +371,18 @@
 			}
 
 			nextRoundFn();
+
+			// Log progress after round increment
+			if (mode === 'classic' || mode === 'buzzer') {
+				analytics.updateProgress({
+					scores: get(gameSession).players.map((p) => p.score),
+					numberOfRounds: get(currentRound).currentTrackIndex
+				});
+			} else if (mode === 'bingo') {
+				analytics.updateProgress({
+					numberOfRounds: get(currentRound).currentTrackIndex
+				});
+			}
 
 			// Preload next track if needed
 			// For timeline, we always want to preload the "next" card when this function is called

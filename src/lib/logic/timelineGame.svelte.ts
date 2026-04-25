@@ -642,6 +642,10 @@ export class TimelineGame {
 		import('$lib/game-logger')
 			.then(({ analytics }) => {
 				analytics.logPlacement(track.work.gid, isCorrect);
+				analytics.updateProgress({
+					numberOfTurns: this.totalTurns,
+					timelines: this.timelinesYears
+				});
 			})
 			.catch(() => {});
 

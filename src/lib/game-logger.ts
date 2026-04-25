@@ -78,12 +78,23 @@ class GameAnalytics {
 	}
 
 	/**
+	 * Update the current progress of an active game.
+	 */
+	public updateProgress(gameInfo: Record<string, any>) {
+		if (!this.sessionId) return;
+
+		this.dispatch({
+			type: 'game_progress',
+			sessionId: this.sessionId,
+			state: 'in_progress',
+			gameInfo
+		});
+	}
+
+	/**
 	 * Conclude playing, saving state back.
 	 */
-	public endGame(
-		state: 'completed' | 'abandoned' = 'abandoned',
-		gameInfo: Record<string, any> | null = null
-	) {
+	public endGame(state: 'completed' | 'abandoned' = 'abandoned', gameInfo: Record<string, any> | null = null) {
 		if (!this.sessionId) return;
 
 		this.dispatch({
