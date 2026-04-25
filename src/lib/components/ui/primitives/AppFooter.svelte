@@ -4,11 +4,14 @@
 	import github from '$lib/assets/icons/github.svg?raw';
 	import musicbrainzIcon from '$lib/assets/icons/musicbrainz-icon.svg?raw';
 	import AboutPopup from './AboutPopup.svelte';
+	import FeedbackPopup from '../gameplay/FeedbackPopup.svelte';
 	import LibraryViewer from '../setup/LibraryViewer.svelte';
 	import Library from 'lucide-svelte/icons/library';
+	import MessageSquare from 'lucide-svelte/icons/message-square';
 
 	let showAboutPopup = $state(false);
 	let showLibraryViewer = $state(false);
+	let showFeedbackPopup = $state(false);
 </script>
 
 <div class="text-center text-slate-400">
@@ -32,17 +35,16 @@
 			<span>{$_('trackTable.library')}</span>
 		</button>
 		<span>|</span>
-		<a
-			href="https://github.com/jacbz/lisztnup"
-			target="_blank"
-			rel="noopener noreferrer"
+		<button
+			type="button"
+			onclick={() => (showFeedbackPopup = true)}
 			class="inline-flex items-center gap-1.5 text-cyan-400 transition-colors hover:text-cyan-300"
 		>
-			{@html github}
-			<span>GitHub</span>
-		</a>
+			<MessageSquare class="h-3.5 w-3.5" />
+			<span>{$_('feedback.title')}</span>
+		</button>
 	</div>
-	<div class="inline-flex gap-1 text-xs">
+	<div class="inline-flex items-center gap-1.5 text-xs">
 		{@html $_('footer.poweredBy', {
 			values: {
 				first: `<a href="https://musicbrainz.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-cyan-400 transition-colors hover:text-cyan-300">
@@ -55,6 +57,16 @@
 				</a>`
 			}
 		})}
+		<span>|</span>
+		<a
+			href="https://github.com/jacbz/lisztnup"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="inline-flex items-center gap-1 text-cyan-400 transition-colors hover:text-cyan-300"
+		>
+			{@html github}
+			<span>GitHub</span>
+		</a>
 	</div>
 </div>
 
@@ -69,3 +81,5 @@
 />
 
 <AboutPopup visible={showAboutPopup} onClose={() => (showAboutPopup = false)} />
+
+<FeedbackPopup visible={showFeedbackPopup} onClose={() => (showFeedbackPopup = false)} />

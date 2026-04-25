@@ -9,7 +9,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 
 	try {
 		const payload = await request.json();
-		
+
 		// Server-side length validation
 		if (!payload.message || payload.message.length < 5 || payload.message.length > 1000) {
 			return json({ success: false, error: 'Invalid message length' }, { status: 400 });
@@ -27,24 +27,18 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				const db = platform.env!.DB;
 				await db
 					.prepare(
-						`INSERT INTO problem_reports (session_id, user_hash, country, message, deezer_id, composer, work, part, work_type, work_years) 
-						 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+						`INSERT INTO feedback (session_id, user_hash, country, message) 
+						 VALUES (?, ?, ?, ?)`
 					)
 					.bind(
 						payload.sessionId,
 						userHash,
 						country,
-						payload.message,
-						payload.deezerId,
-						payload.composer,
-						payload.work,
-						payload.part,
-						payload.workType,
-						payload.workYears
+						payload.message
 					)
 					.run();
 			} catch (e) {
-				console.error('Failed to write report to analytics:', e);
+				console.error('Failed to write feedback to analytics:', e);
 			}
 		};
 
@@ -52,7 +46,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 
 		return json({ success: true });
 	} catch (e) {
-		console.error('Report payload error:', e);
+		console.error('Feedback payload error:', e);
 		return json({ success: false, error: 'Invalid payload' }, { status: 400 });
 	}
 };

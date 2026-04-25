@@ -5,6 +5,8 @@
 	import Trophy from 'lucide-svelte/icons/trophy';
 	import BarChart from 'lucide-svelte/icons/bar-chart-3';
 	import Home from 'lucide-svelte/icons/home';
+	import MessageSquare from 'lucide-svelte/icons/message-square';
+	import FeedbackPopup from '../gameplay/FeedbackPopup.svelte';
 	import { onMount } from 'svelte';
 
 	interface Props {
@@ -34,6 +36,7 @@
 		sortedPlayers.length > 1 && sortedPlayers[0].score === sortedPlayers[1].score
 	);
 
+	let showFeedbackPopup = $state(false);
 	let gameoverAudio: HTMLAudioElement | null = null;
 
 	$effect(() => {
@@ -54,7 +57,7 @@
 
 {#if visible}
 	<div
-		class="fixed inset-0 z-100 flex items-center justify-center bg-black/90 p-5"
+		class="fixed inset-0 z-40 flex items-center justify-center bg-black/90 p-5"
 		transition:fly={{ y: 50, duration: 500 }}
 	>
 		<div
@@ -168,7 +171,18 @@
 					<Home class="h-5 w-5" />
 					{$_('endGame.home')}
 				</button>
+
+				<button
+					type="button"
+					onclick={() => (showFeedbackPopup = true)}
+					class="mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-slate-700/50 bg-slate-800/30 px-6 py-3 text-base font-bold text-slate-400 transition-all duration-200 hover:border-cyan-400/50 hover:bg-slate-800 hover:text-cyan-400 hover:shadow-[0_0_15px_rgba(34,211,238,0.2)]"
+				>
+					<MessageSquare class="h-5 w-5" />
+					<span>{$_('feedback.button')}</span>
+				</button>
 			</div>
 		</div>
 	</div>
 {/if}
+
+<FeedbackPopup visible={showFeedbackPopup} onClose={() => (showFeedbackPopup = false)} />

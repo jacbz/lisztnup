@@ -24,6 +24,11 @@
 	let isSending = $state(false);
 	let error = $state<string | null>(null);
 
+	const charCount = $derived(message.length);
+	const isTooShort = $derived(charCount > 0 && charCount < 5);
+	const isTooLong = $derived(charCount > 1000);
+	const isValid = $derived(charCount >= 5 && charCount <= 1000);
+
 	const isLoadedTrack = $derived.by(() => {
 		const loadedId = $playerState.track?.id;
 		return !!loadedId && track.part.deezer.includes(loadedId);
@@ -36,7 +41,7 @@
 	const composerName = $derived(formatComposerName(track.composer.name));
 
 	async function handleSubmit() {
-		if (!message.trim() || isSending) return;
+		if (!isValid || isSending) return;
 
 		isSending = true;
 		error = null;
@@ -81,12 +86,26 @@
 				{$_('report.prompt')}
 			</p>
 
-			<textarea
-				bind:value={message}
-				placeholder={$_('report.placeholder')}
-				class="h-48 w-full rounded-xl border-2 border-slate-700/50 bg-slate-950/50 p-4 text-lg text-slate-200 placeholder:text-slate-600 focus:border-cyan-400/50 focus:outline-hidden"
-				disabled={isSending}
-			></textarea>
+			<div class="relative">
+				<textarea
+					bind:value={message}
+					placeholder={$_('report.placeholder')}
+					class="h-48 w-full rounded-xl border-2 {isTooShort || isTooLong
+						? 'border-red-500/50'
+						: 'border-slate-700/50'} bg-slate-950/50 p-4 text-lg text-slate-200 placeholder:text-slate-600 focus:border-cyan-400/50 focus:outline-hidden"
+					disabled={isSending}
+					maxlength="1100"
+				></textarea>
+				<div
+					class="absolute right-3 bottom-3 text-xs {isTooLong || isTooShort
+						? 'text-red-400'
+						: charCount > 900
+							? 'text-yellow-400'
+							: 'text-slate-500'}"
+				>
+					{charCount}/1000
+				</div>
+			</div>
 
 			{#if error}
 				<p class="text-xs text-red-400">{error}</p>
@@ -95,8 +114,8 @@
 			<button
 				type="button"
 				onclick={handleSubmit}
-				disabled={isSending || !message.trim()}
-				class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-cyan-600 py-3 font-bold text-white transition-all duration-200 hover:bg-cyan-500 disabled:cursor-not-allowed disabled:opacity-50"
+				disabled={isSending || !isValid}
+				class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-slate-900 py-3.5 font-bold text-white shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all duration-200 hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
 			>
 				{#if isSending}
 					<Loader class="h-5 w-5 animate-spin" />
@@ -106,7 +125,6 @@
 					{$_('report.submit')}
 				{/if}
 			</button>
-
 			<div
 				class="mt-2 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[0.7rem] text-slate-500"
 			>
@@ -118,25 +136,24 @@
 				>
 					{composerName}
 					<ExternalLink />
-				</a>
+					</a>
 
-				<span class="opacity-30">·</span>
+					<span class="mx-1 opacity-30">|</span>
 
-				<a
+					<a
 					href="https://musicbrainz.org/work/{track.work.gid}"
 					target="_blank"
 					rel="noopener noreferrer"
 					class="flex items-center gap-1 text-cyan-400/80 hover:text-cyan-400 hover:underline"
-				>
+					>
 					{track.work.name}
 					<ExternalLink />
-				</a>
+					</a>
 
-				<span class="opacity-30">·</span>
+					<span class="mx-1 opacity-30">|</span>
 
-				<a
-					href="https://www.deezer.com/track/{deezerId}"
-					target="_blank"
+					<a
+					href="https://www.deezer.com/track/{deezerId}"					target="_blank"
 					rel="noopener noreferrer"
 					class="flex items-center gap-1 text-cyan-400/80 hover:text-cyan-400 hover:underline"
 				>

@@ -21,7 +21,9 @@ const BOT_USER_AGENTS = [
 	'mj12bot',
 	'petalbot',
 	'ltx71',
-	'cms-checker'
+	'cms-checker',
+	'facebookexternalhit',
+	'palo alto networks'
 ];
 
 function isBot(userAgent: string | null) {

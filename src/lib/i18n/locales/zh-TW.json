@@ -17,6 +17,15 @@
 		"sending": "正在發送...",
 		"success": "謝謝！"
 	},
+	"feedback": {
+		"title": "回饋",
+		"prompt": "有什麼想法、建議或者想吐槽的？儘管說，別客氣！",
+		"placeholder": "你的留言...",
+		"submit": "傳送回饋",
+		"sending": "傳送中...",
+		"success": "感謝你的回饋！",
+		"button": "提供回饋"
+	},
 	"search": {
 		"title": "搜尋...",
 		"searchFor": "搜尋："

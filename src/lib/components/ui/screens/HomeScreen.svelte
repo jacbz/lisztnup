@@ -14,8 +14,10 @@
 	import type { Tracklist, GameMode, Player } from '$lib/types';
 	import Plus from 'lucide-svelte/icons/plus';
 	import AppFooter from '../primitives/AppFooter.svelte';
+	import FeedbackPopup from '../gameplay/FeedbackPopup.svelte';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import MessageSquare from 'lucide-svelte/icons/message-square';
 
 	interface Props {
 		onStart?: (
@@ -39,6 +41,7 @@
 	let currentIsSoloMode = $state(false);
 	let playersValid = $state(true);
 	let enableScoring = $state($settingsStore.enableScoring); // Load from settings
+	let showFeedbackPopup = $state(false);
 	let playerSetupRef: { addPlayer: () => void } | undefined = $state();
 	let startAudio: HTMLAudioElement | null = null;
 	let startAudioSources = {
@@ -370,6 +373,21 @@
 		</div>
 	</div>
 </div>
+
+<!-- Feedback FAB (Bottom Right) -->
+<div class="fixed right-6 bottom-6 z-40 hidden md:block">
+	<button
+		type="button"
+		onclick={() => (showFeedbackPopup = true)}
+		class="group flex h-14 w-14 items-center justify-center rounded-full border-2 border-cyan-400/30 bg-slate-900/80 text-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.2)] backdrop-blur-md transition-all hover:scale-110 hover:border-cyan-400 hover:bg-slate-800 hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] active:scale-95"
+		title={$_('feedback.button')}
+	>
+		<MessageSquare class="h-6 w-6" />
+	</button>
+</div>
+
+<FeedbackPopup visible={showFeedbackPopup} onClose={() => (showFeedbackPopup = false)} />
+
 <TracklistSelector
 	visible={showTracklistSelector}
 	selectedTracklist={$selectedTracklist}

@@ -17,6 +17,15 @@
 		"sending": "正在发送...",
 		"success": "谢谢！"
 	},
+	"feedback": {
+		"title": "反馈",
+		"prompt": "有什么想法、建议或者想吐槽的？尽管说，别客气！",
+		"placeholder": "你的留言...",
+		"submit": "发送反馈",
+		"sending": "发送中...",
+		"success": "感谢你的反馈！",
+		"button": "提供反馈"
+	},
 	"search": {
 		"title": "搜索...",
 		"searchFor": "搜索："

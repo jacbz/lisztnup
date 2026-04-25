@@ -17,6 +17,15 @@
 		"sending": "보내는 중...",
 		"success": "감사합니다!"
 	},
+	"feedback": {
+		"title": "피드백",
+		"prompt": "의견, 아이디어, 혹은 하고 싶은 말... 뭐든지 편하게 남겨줘!",
+		"placeholder": "메시지를 입력하세요...",
+		"submit": "피드백 보내기",
+		"sending": "보내는 중...",
+		"success": "피드백을 보내주셔서 감사합니다!",
+		"button": "피드백 보내기"
+	},
 	"search": {
 		"title": "검색...",
 		"searchFor": "검색 대상:"

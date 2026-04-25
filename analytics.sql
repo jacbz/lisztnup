@@ -44,3 +44,12 @@ CREATE TABLE IF NOT EXISTS problem_reports (
   work_type TEXT,
   work_years TEXT
 );
+
+CREATE TABLE IF NOT EXISTS feedback (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+  session_id TEXT,
+  user_hash TEXT,
+  country TEXT,
+  message TEXT
+);

@@ -17,6 +17,15 @@
 		"sending": "Envoi en cours...",
 		"success": "Merci !"
 	},
+	"feedback": {
+		"title": "Feedback",
+		"prompt": "Des idées, des envies ou un truc qui coince ? Balance tout !",
+		"placeholder": "Ton message...",
+		"submit": "Envoyer le feedback",
+		"sending": "Envoi en cours...",
+		"success": "Merci pour ton feedback !",
+		"button": "Donner ton avis"
+	},
 	"search": {
 		"title": "Rechercher sur...",
 		"searchFor": "Rechercher :"

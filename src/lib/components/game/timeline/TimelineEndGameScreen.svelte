@@ -6,6 +6,8 @@
 	import TrackInfo from '$lib/components/ui/gameplay/TrackInfo.svelte';
 	import { formatYearRange } from '$lib/utils';
 	import Home from 'lucide-svelte/icons/home';
+	import MessageSquare from 'lucide-svelte/icons/message-square';
+	import FeedbackPopup from '$lib/components/ui/gameplay/FeedbackPopup.svelte';
 	import { onMount } from 'svelte';
 
 	interface FinalTimeline {
@@ -68,6 +70,7 @@
 		});
 	});
 
+	let showFeedbackPopup = $state(false);
 	let gameoverAudio: HTMLAudioElement | null = null;
 
 	$effect(() => {
@@ -129,9 +132,20 @@
 				<Home class="h-5 w-5" />
 				{$_('endGame.home')}
 			</button>
+
+			<button
+				type="button"
+				onclick={() => (showFeedbackPopup = true)}
+				class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-slate-700/50 bg-slate-800/30 px-6 py-3 text-base font-bold text-slate-400 transition-all duration-200 hover:border-cyan-400/50 hover:bg-slate-800 hover:text-cyan-400 hover:shadow-[0_0_15px_rgba(34,211,238,0.2)]"
+			>
+				<MessageSquare class="h-5 w-5" />
+				<span>{$_('feedback.button')}</span>
+			</button>
 		</div>
 	</div>
 </Popup>
+
+<FeedbackPopup visible={showFeedbackPopup} onClose={() => (showFeedbackPopup = false)} />
 
 <Popup
 	visible={!!inspectTrack}

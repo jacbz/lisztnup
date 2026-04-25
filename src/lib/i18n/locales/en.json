@@ -17,6 +17,15 @@
 		"sending": "Sending...",
 		"success": "Thank you!"
 	},
+	"feedback": {
+		"title": "Feedback",
+		"prompt": "Love it? Hate it? Have a better idea? Fire away!",
+		"placeholder": "Your message...",
+		"submit": "Send Feedback",
+		"sending": "Sending...",
+		"success": "Thank you for your feedback!",
+		"button": "Give Feedback"
+	},
 	"search": {
 		"title": "Search on...",
 		"searchFor": "Search for:"

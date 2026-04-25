@@ -17,6 +17,15 @@
 		"sending": "Wird gesendet...",
 		"success": "Vielen Dank!"
 	},
+	"feedback": {
+		"title": "Feedback",
+		"prompt": "Ideen, Wünsche oder Kritik? Immer her damit!",
+		"placeholder": "Deine Nachricht...",
+		"submit": "Feedback senden",
+		"sending": "Wird gesendet...",
+		"success": "Vielen Dank für dein Feedback!",
+		"button": "Feedback geben"
+	},
 	"search": {
 		"title": "Suchen auf...",
 		"searchFor": "Suchen nach:"

@@ -17,6 +17,15 @@
 		"sending": "A enviar...",
 		"success": "Obrigado!"
 	},
+	"feedback": {
+		"title": "Feedback",
+		"prompt": "Ideias, sugestões ou críticas? Chuta aí!",
+		"placeholder": "A tua mensagem...",
+		"submit": "Enviar feedback",
+		"sending": "A enviar...",
+		"success": "Obrigado pelo teu feedback!",
+		"button": "Dar feedback"
+	},
 	"search": {
 		"title": "Pesquisar em...",
 		"searchFor": "Pesquisar:"

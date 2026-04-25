@@ -1,7 +1,9 @@
 <script lang="ts">
 	import Popup from './Popup.svelte';
+	import FeedbackPopup from '../gameplay/FeedbackPopup.svelte';
 	import { _ } from 'svelte-i18n';
 	import Heart from 'lucide-svelte/icons/heart';
+	import MessageSquare from 'lucide-svelte/icons/message-square';
 	import github from '$lib/assets/icons/github.svg?raw';
 
 	interface Props {
@@ -10,6 +12,8 @@
 	}
 
 	let { visible = false, onClose = () => {} }: Props = $props();
+
+	let showFeedbackPopup = $state(false);
 </script>
 
 <Popup {visible} {onClose} width="lg">
@@ -47,15 +51,28 @@
 		<!-- Divider -->
 		<div class="h-px w-24 bg-linear-to-r from-transparent via-cyan-400/40 to-transparent"></div>
 
-		<!-- GitHub link -->
-		<a
-			href="https://github.com/jacbz/lisztnup"
-			target="_blank"
-			rel="noopener noreferrer"
-			class="flex items-center gap-2 text-sm text-slate-400 transition-colors hover:text-cyan-400"
-		>
-			<span class="h-4 w-4">{@html github}</span>
-			<span>{$_('about.viewOnGithub')}</span>
-		</a>
+		<!-- Links -->
+		<div class="flex items-center gap-3 text-sm text-slate-400">
+			<a
+				href="https://github.com/jacbz/lisztnup"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="flex items-center gap-2 transition-colors hover:text-cyan-400"
+			>
+				<span class="h-4 w-4">{@html github}</span>
+				<span>{$_('about.viewOnGithub')}</span>
+			</a>
+			<span class="opacity-30">|</span>
+			<button
+				type="button"
+				onclick={() => (showFeedbackPopup = true)}
+				class="flex items-center gap-1.5 transition-colors hover:text-cyan-400"
+			>
+				<MessageSquare class="h-4 w-4" />
+				<span>{$_('feedback.title')}</span>
+			</button>
+		</div>
 	</div>
 </Popup>
+
+<FeedbackPopup visible={showFeedbackPopup} onClose={() => (showFeedbackPopup = false)} />

@@ -21,7 +21,6 @@ class GameAnalytics {
 	 * or standard fetch, prioritizing Keep-Alive.
 	 */
 	private dispatch(payload: Record<string, any>) {
-		console.log('[Analytics] Dispatching:', payload.type, payload);
 		try {
 			if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
 				// Reliable transmission even when the tab is closing
@@ -81,7 +80,10 @@ class GameAnalytics {
 	/**
 	 * Conclude playing, saving state back.
 	 */
-	public endGame(state: 'completed' | 'abandoned' = 'abandoned', gameInfo: Record<string, any> | null = null) {
+	public endGame(
+		state: 'completed' | 'abandoned' = 'abandoned',
+		gameInfo: Record<string, any> | null = null
+	) {
 		if (!this.sessionId) return;
 
 		this.dispatch({
@@ -113,6 +115,28 @@ class GameAnalytics {
 			return response.ok;
 		} catch (e) {
 			console.error('Failed to send problem report', e);
+			return false;
+		}
+	}
+
+	/**
+	 * Send feedback to the server.
+	 */
+	public async sendFeedback(message: string) {
+		const payload = {
+			sessionId: this.sessionId,
+			message
+		};
+
+		try {
+			const response = await fetch('/api/game/feedback', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(payload)
+			});
+			return response.ok;
+		} catch (e) {
+			console.error('Failed to send feedback', e);
 			return false;
 		}
 	}

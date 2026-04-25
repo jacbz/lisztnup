@@ -17,6 +17,15 @@
 		"sending": "Invio in corso...",
 		"success": "Grazie!"
 	},
+	"feedback": {
+		"title": "Feedback",
+		"prompt": "Idee, suggerimenti o critiche? Spara pure!",
+		"placeholder": "Il tuo messaggio...",
+		"submit": "Invia feedback",
+		"sending": "Invio in corso...",
+		"success": "Grazie per il tuo feedback!",
+		"button": "Dacci un feedback"
+	},
 	"search": {
 		"title": "Cerca su...",
 		"searchFor": "Cerca:"
