@@ -84,6 +84,42 @@ To get a local copy up and running, follow these steps.
 
 Unlike many trivia games with manually curated lists, _Liszt’n Up!_ uses an algorithmic approach to generate its library, with only little manual tweaking. You can inspect the generation logic in the [`/data`](data) directory. The build process compiles this into a compressed `lisztnup.json` file served to the client.
 
+### Analytics Database (Optional)
+
+The game works fully without a backend, but includes optional analytics (pageviews, game sessions, feedback, problem reports) via Cloudflare D1. To set it up:
+
+1. Install the [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/install-and-update/):
+
+   ```bash
+   pnpm add -g wrangler
+   ```
+
+2. Create a D1 database:
+
+   ```bash
+   wrangler d1 create lisztnup-analytics
+   ```
+
+3. Update `wrangler.toml` with the `database_id` from the output.
+
+4. Initialize the schema:
+
+   ```bash
+   wrangler d1 execute lisztnup-analytics --file=analytics.sql
+   ```
+
+5. (Optional) For Telegram notifications on feedback/reports, set the `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` secrets:
+
+   ```bash
+   wrangler secret put TELEGRAM_BOT_TOKEN
+   wrangler secret put TELEGRAM_CHAT_ID
+   ```
+
+Without the D1 binding, the app runs normally — analytics endpoints return 503 and the client silently ignores failures.
+
+> [!NOTE]
+> **Privacy:** Analytics are GDPR-compliant — no personal data is stored. IP addresses are hashed with a daily-rotating salt (SHA-256) and immediately discarded. No cookies, no tracking pixels, no third-party analytics.
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.

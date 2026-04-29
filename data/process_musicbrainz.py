@@ -1303,7 +1303,7 @@ def generate_markdown_report(final_output: FinalOutput) -> None:
     composer_map = {c.gid: c.name for c in final_output.composers}
     all_works = final_output.works
 
-    with open("../doc/LIBRARY.md", "w", encoding="utf-8") as f:
+    with open("../out/LIBRARY.md", "w", encoding="utf-8") as f:
         f.write("# Liszt'n Up! Curated Works\n\n")
         f.write("| Composer | Work | Score | Parts (Score) |\n")
         f.write("| :--- | :--- | :---: | :--- |\n")

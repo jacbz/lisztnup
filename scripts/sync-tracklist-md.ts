@@ -68,7 +68,7 @@ async function syncTracklistMd() {
 				const { works, composers } = generator.getFilteredData();
 				const markdown = formatWorksAsMarkdown(works, composers);
 
-				const outputPath = path.join(process.cwd(), 'doc', tl.filename);
+				const outputPath = path.join(process.cwd(), 'out', tl.filename);
 				const fileHeader = `# ${tl.title}\n\n*This file is auto-generated on every build. Do not edit manually.*\n\n`;
 				fs.writeFileSync(outputPath, fileHeader + markdown, 'utf-8');
 

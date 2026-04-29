@@ -1,6 +1,4 @@
 node_modules
-REQUIREMENTS.md
-IMPLEMENTATION.md
 
 # Data
 .mypy_cache
@@ -10,7 +8,8 @@ data/*.log
 data/musicbrainz.json
 data/DEEZER_PROCESSED_IDS
 data/downloads
-doc/LIBRARY.md
+
+out/LIBRARY.md
 
 # Output
 .output
