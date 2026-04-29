@@ -105,7 +105,20 @@
 			game.showEndGame = true;
 		}
 	});
+	// ─── Playback Timer ──────────────────────────────────
+	// Start the 10 s countdown once the track finishes playing in full.
+	// Manual stops set wasStoppedManually so the timer won't start then.
 
+	$effect(() => {
+		if (
+			$currentRound.playbackEnded &&
+			game.hasPlaybackStarted &&
+			!game.wasStoppedManually &&
+			!game.resolvingTurn
+		) {
+			game.startPlaybackTimer();
+		}
+	});
 	// ─── Auto-retry on reconnection ────────────────────────
 	// When a preload error occurred (e.g. offline during turn transition),
 	// automatically retry once the browser comes back online.
@@ -234,9 +247,10 @@
 					? $_('timeline.help.dragToPlace')
 					: $_('timeline.help.playFirst')
 			: ''}
-		showConfirm={isActive && !!game.pendingEntryId}
+		showConfirm={isActive && (!!game.pendingEntryId || game.timerSeconds !== null)}
 		confirmDisabled={!game.canConfirm}
 		confirmLabel={$_('timeline.confirm')}
+		timerSeconds={isActive ? game.timerSeconds : null}
 		onConfirm={() => game.handleConfirmPlacement()}
 		onConfirmedCardClick={(entry) => game.openInspectCard(entry.id, entry.track, rotation)}
 		onPendingPointerDown={(id, ev) => game.startDragPending(id, ev)}

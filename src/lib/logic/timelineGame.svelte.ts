@@ -72,6 +72,14 @@ export class TimelineGame {
 	hasPlaybackStarted = $state(false);
 
 	// ═══════════════════════════════════════════════════════
+	// TIMER STATE
+	// ═══════════════════════════════════════════════════════
+	/** Countdown seconds remaining, or null when timer is inactive. */
+	timerSeconds = $state<number | null>(null);
+	wasStoppedManually = $state(false);
+	#timerInterval: ReturnType<typeof setInterval> | null = null;
+
+	// ═══════════════════════════════════════════════════════
 	// STREAK STATE
 	// ═══════════════════════════════════════════════════════
 	streakFlash = $state<{ playerName: string; streak: number; rotation: number } | null>(null);
@@ -117,6 +125,8 @@ export class TimelineGame {
 	#boundOnDragMove: ((ev: PointerEvent) => void) | null = null;
 	#boundOnDragUp: ((ev: PointerEvent) => void) | null = null;
 	#pendingStreakFlash: { playerName: string; streak: number; rotation: number } | null = null;
+
+	static readonly #TIMER_DURATION = 10;
 
 	// ═══════════════════════════════════════════════════════
 	// DERIVED VALUES
@@ -371,6 +381,7 @@ export class TimelineGame {
 	// ═══════════════════════════════════════════════════════
 
 	#resetTurnState() {
+		this.#clearTimer();
 		this.pendingEntryId = null;
 		this.resolvingTurn = false;
 		this.turnPhase = 'idle';
@@ -378,6 +389,7 @@ export class TimelineGame {
 		this.drag.kind = 'none';
 		this.drag.track = null;
 		this.hasPlaybackStarted = false;
+		this.wasStoppedManually = false;
 	}
 
 	#rotateToNextPlayer() {
@@ -402,6 +414,7 @@ export class TimelineGame {
 	}
 
 	handleStop() {
+		this.wasStoppedManually = true;
 		this.#ctx.stopTrack();
 		// isPlaying becomes false via the store; hasPlaybackStarted remains true
 		// so the UI transitions to the "Drag" prompt state.
@@ -651,6 +664,7 @@ export class TimelineGame {
 
 	async handleConfirmPlacement() {
 		if (!this.pendingEntryId) return;
+		this.#clearTimer();
 		this.resolvingTurn = true;
 		this.totalTurns++;
 		this.#ctx.stopTrack();
@@ -846,8 +860,83 @@ export class TimelineGame {
 		this.showRevealPopup = true;
 	}
 
+	// ═══════════════════════════════════════════════════════
+	// PLAYBACK TIMER
+	// ═══════════════════════════════════════════════════════
+
+	/** Start the post-playback countdown. No-op if already running. */
+	startPlaybackTimer() {
+		if (this.timerSeconds !== null || this.resolvingTurn || this.showRevealPopup) return;
+		this.timerSeconds = TimelineGame.#TIMER_DURATION;
+		this.#timerInterval = setInterval(() => this.#tickTimer(), 1000);
+	}
+
+	#tickTimer() {
+		if (this.timerSeconds === null) return;
+		this.timerSeconds--;
+		if (this.timerSeconds <= 0) {
+			this.#handleTimeout();
+		}
+	}
+
+	#handleTimeout() {
+		this.#clearTimer();
+		this.resolvingTurn = true;
+		this.#ctx.stopTrack();
+
+		const audio = new Audio('/wrong.mp3');
+		audio.play().catch(() => {});
+
+		this.totalTurns++;
+		this.activePlayer.totalPlacements++;
+
+		// Snapshot streak before resetting
+		this.preRevealCurrentStreak = this.activePlayer.currentStreak;
+		this.preRevealLongestStreak = this.activePlayer.longestStreak;
+		this.streakRevealPending = true;
+		this.activePlayer.currentStreak = 0;
+
+		if (this.pendingEntryId) {
+			// Card was placed in the timeline — mark it wrong and show reveal
+			const entries = this.activePlayer.entries;
+			const idx = entries.findIndex((e) => e.id === this.pendingEntryId);
+			if (idx >= 0) {
+				entries[idx].confirmed = true;
+				entries[idx].correct = false;
+
+				this.revealEntryId = entries[idx].id;
+				this.revealTrack = entries[idx].track;
+				this.revealIsCorrect = false;
+				this.revealPurpose = 'turn';
+				this.revealReachedWin = false;
+				this.popupRotation = this.#getRotationForPlayer(this.activePlayer.player);
+				this.#pendingStreakFlash = null;
+				this.pendingEntryId = null;
+				this.showRevealPopup = true;
+				return;
+			}
+		}
+
+		// No card placed — just advance
+		this.#ctx.nextRound().catch((error) => {
+			console.error('[TimelineGame] Error advancing after timeout:', error);
+		});
+		this.streakRevealPending = false;
+		this.#finalizeTurn();
+		this.resolvingTurn = false;
+	}
+
+	#clearTimer() {
+		if (this.#timerInterval) {
+			clearInterval(this.#timerInterval);
+			this.#timerInterval = null;
+		}
+		this.timerSeconds = null;
+	}
+
 	/** Clean up any window-level event listeners (e.g. from an in-progress drag). */
 	destroy() {
+		this.#clearTimer();
 		if (this.#boundOnDragMove) {
 			window.removeEventListener('pointermove', this.#boundOnDragMove);
 			this.#boundOnDragMove = null;

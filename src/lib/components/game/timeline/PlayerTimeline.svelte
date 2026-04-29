@@ -2,6 +2,7 @@
 	import type { Track } from '$lib/types';
 	import { flip } from 'svelte/animate';
 	import { quintOut } from 'svelte/easing';
+	import { fly } from 'svelte/transition';
 	import { formatYearRange } from '$lib/utils';
 	import TimelineCard from './TimelineCard.svelte';
 	import Flame from 'lucide-svelte/icons/flame';
@@ -30,6 +31,7 @@
 		showConfirm?: boolean;
 		confirmDisabled?: boolean;
 		confirmLabel?: string;
+		timerSeconds?: number | null;
 		onConfirm?: () => void;
 		onConfirmedCardClick?: (entry: TimelineEntry) => void;
 		bindEl?: (el: HTMLDivElement | null) => void;
@@ -55,6 +57,7 @@
 		showConfirm = false,
 		confirmDisabled = true,
 		confirmLabel = 'Confirm',
+		timerSeconds = null as number | null,
 		onConfirm = () => {},
 		onConfirmedCardClick = () => {},
 		bindEl = () => {},
@@ -138,12 +141,22 @@
 			</div>
 			{#if showConfirm}
 				<button
+					in:fly={{ y: 10, duration: 300 }}
 					type="button"
 					onclick={onConfirm}
 					disabled={confirmDisabled}
 					class="text-md my-1 shrink-0 rounded-xl border-2 border-cyan-400 bg-slate-900 px-8 py-1.5 font-bold text-cyan-400 transition-all hover:bg-slate-800 hover:shadow-[0_0_18px_rgba(34,211,238,0.45)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-slate-900"
 				>
-					{confirmLabel}
+					{#if timerSeconds !== null && timerSeconds !== undefined}
+						<span class="flex items-center justify-center gap-2">
+							{#if !confirmDisabled}
+								<span>{confirmLabel}</span>
+							{/if}
+							<span class="text-sm font-black tabular-nums">{timerSeconds}</span>
+						</span>
+					{:else}
+						{confirmLabel}
+					{/if}
 				</button>
 			{/if}
 		</div>
