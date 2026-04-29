@@ -12,6 +12,7 @@
 	import BingoSetup from '../setup/BingoSetup.svelte';
 	import ShareLinkPopup from '../setup/ShareLinkPopup.svelte';
 	import type { Tracklist, GameMode, Player } from '$lib/types';
+	import { tracklistDisplayName, tracklistDescription } from '$lib/data/defaultTracklists';
 	import Plus from 'lucide-svelte/icons/plus';
 	import AppFooter from '../primitives/AppFooter.svelte';
 	import FeedbackPopup from '../gameplay/FeedbackPopup.svelte';
@@ -75,8 +76,8 @@
 	});
 
 	function handleTracklistSelect(tracklist: Tracklist) {
-		localSettings.selectedTracklist = tracklist.name;
-		settingsStore.update((s) => ({ ...s, selectedTracklist: tracklist.name }));
+		localSettings.selectedTracklist = tracklist.id;
+		settingsStore.update((s) => ({ ...s, selectedTracklist: tracklist.id }));
 	}
 
 	function handleLocaleChange(newLocale: string) {
@@ -244,17 +245,13 @@
 									</div>
 								{/if}
 								<span class="font-bold">
-									{$selectedTracklist.isDefault
-										? $_($selectedTracklist.name)
-										: $selectedTracklist.name}
+									{tracklistDisplayName($selectedTracklist, $_)}
 								</span>
 								<ChevronRight class="h-4 w-4" />
 							</button>
 						</div>
 						<p class="text-sm text-slate-500">
-							{$selectedTracklist.isDefault
-								? $_($selectedTracklist.description)
-								: $selectedTracklist.description}
+						{tracklistDescription($selectedTracklist, $_)}
 						</p>
 					</div>
 

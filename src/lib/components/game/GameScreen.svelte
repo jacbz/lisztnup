@@ -26,7 +26,7 @@
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';
 	import { _, locale } from 'svelte-i18n';
 	import { analytics } from '$lib/game-logger';
-	import { settings } from '$lib/stores/settings';
+	import { settings, selectedTracklist as selectedTracklistStore } from '$lib/stores/settings';
 	import { get } from 'svelte/store';
 
 	// Context for sharing functions with child components
@@ -105,7 +105,8 @@
 
 	// Start game session on mount
 	onMount(() => {
-		const tracklistId = get(settings).selectedTracklist || 'unknown';
+		const currentTracklist = get(selectedTracklistStore);
+		const tracklistId = currentTracklist.kind === 'custom' ? 'custom' : currentTracklist.id;
 		const currentLocale = get(locale) || 'en';
 		let gameInfo: Record<string, unknown> | null = null;
 
@@ -118,6 +119,20 @@
 			gameInfo = {
 				numberOfTracks,
 				numberOfPlayers: players.length
+			};
+		}
+
+		if (currentTracklist.kind === 'custom') {
+			const info = generator.getInfo();
+			gameInfo = {
+				...gameInfo,
+				customTracklist: {
+					name: currentTracklist.name,
+					description: currentTracklist.description,
+					composerCount: info.composers,
+					workCount: info.works,
+					trackCount: info.tracks
+				}
 			};
 		}
 

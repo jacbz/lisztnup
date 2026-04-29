@@ -7,6 +7,7 @@
 	import TrackTable from './TrackTable.svelte';
 	import ComposerCloud from './ComposerCloud.svelte';
 	import { TracklistGenerator } from '$lib/services';
+	import { tracklistDisplayName } from '$lib/data/defaultTracklists';
 	import { _ } from 'svelte-i18n';
 	import Library from 'lucide-svelte/icons/library';
 	import ListMusic from 'lucide-svelte/icons/list-music';
@@ -110,8 +111,7 @@
 				<h2 class="flex items-center gap-2 text-xl font-bold text-cyan-400 md:text-2xl">
 					{#if tracklist}
 						<ListMusic class="h-5 w-5 md:h-6 md:w-6" />
-						{tracklist.isDefault ? $_(tracklist.name) : tracklist.name}
-					{:else if viewMode === 'composer' && selectedComposer}
+						{tracklistDisplayName(tracklist, $_)}{:else if viewMode === 'composer' && selectedComposer}
 						{@html composerIcon}
 						{formatComposerName(selectedComposer.name)}
 						<span class="text-sm font-normal text-slate-400">

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Tracklist, CategoryAdjustments, TracklistConfig, ComposerFilter } from '$lib/types';
+	import type { Tracklist, CustomTracklist, CategoryAdjustments, TracklistConfig, ComposerFilter } from '$lib/types';
 	import {
 		DEFAULT_CATEGORY_ADJUSTMENTS,
 		DEFAULT_TRACKLIST_CONFIG,
@@ -7,7 +7,6 @@
 	} from '$lib/types';
 	import { gameData } from '$lib/stores';
 	import { TracklistGenerator, SettingsService } from '$lib/services';
-	import { DEFAULT_TRACKLISTS } from '$lib/data/defaultTracklists';
 	import { get } from 'svelte/store';
 	import Popup from '../primitives/Popup.svelte';
 	import Dialog from '../primitives/Dialog.svelte';
@@ -35,8 +34,8 @@
 
 	interface Props {
 		visible?: boolean;
-		tracklist?: Tracklist | null;
-		onSave?: (tracklist: Tracklist) => void;
+		tracklist?: CustomTracklist | null;
+		onSave?: (tracklist: CustomTracklist) => void;
 		onCancel?: () => void;
 	}
 
@@ -51,7 +50,7 @@
 	let name = $state('');
 	let description = $state('');
 	let config = $state<TracklistConfig>(JSON.parse(JSON.stringify(DEFAULT_TRACKLIST_CONFIG)));
-	let originalTracklist = $state<Tracklist | null>(null);
+	let originalTracklist = $state<CustomTracklist | null>(null);
 
 	// Track which filters are enabled
 	let categoryAdjustmentsEnabled = $state(false);
@@ -244,10 +243,11 @@
 		try {
 			// Build temporary tracklist for preview
 			const currentConfig = buildCurrentConfig();
-			const tempTracklist: Tracklist = {
+			const tempTracklist: CustomTracklist = {
+				kind: 'custom',
+				id: 'preview',
 				name: name || 'preview',
 				description: description || 'preview',
-				isDefault: false,
 				config: currentConfig
 			};
 
@@ -523,8 +523,8 @@
 
 	function hasUnsavedChanges(): boolean {
 		// Check if name or description changed
-		if (name !== (originalTracklist?.name || '')) return true;
-		if (description !== (originalTracklist?.description || '')) return true;
+		if (name !== (originalTracklist?.name ?? '')) return true;
+		if (description !== (originalTracklist?.description ?? '')) return true;
 
 		// Build current config and compare with original
 		const currentConfig = buildCurrentConfig();
@@ -557,13 +557,12 @@
 			return;
 		}
 
-		// Check for duplicate names (excluding the current tracklist being edited)
+		// Check for duplicate names among custom tracklists
 		const customTracklists = SettingsService.loadCustomTracklists();
-		const allTracklists = [...DEFAULT_TRACKLISTS, ...customTracklists];
 
-		// Allow saving if we're editing the same tracklist (name unchanged) or renaming to a unique name
-		const isDuplicate = allTracklists.some(
-			(t) => t.name === name.trim() && t.name !== originalTracklist?.name
+		// Allow saving if the name is unchanged or unique among custom tracklists
+		const isDuplicate = customTracklists.some(
+			(t) => t.name === name.trim() && t.id !== originalTracklist?.id
 		);
 
 		if (isDuplicate) {
@@ -573,17 +572,15 @@
 
 		nameError = null;
 
-		const savedTracklist: Tracklist = {
+		const savedTracklist: CustomTracklist = {
+			kind: 'custom',
+			id: originalTracklist?.id ?? crypto.randomUUID(),
 			name: name.trim(),
 			description: description.trim(),
-			isDefault: false,
 			config: buildCurrentConfig()
 		};
 
-		// Pass the old name if it's being renamed
-		const oldName =
-			originalTracklist?.name !== savedTracklist.name ? originalTracklist?.name : undefined;
-		SettingsService.saveCustomTracklist(savedTracklist, oldName);
+		SettingsService.saveCustomTracklist(savedTracklist);
 
 		onSave(savedTracklist);
 	}

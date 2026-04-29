@@ -42,14 +42,18 @@
 				const decompressed = await decompress(decodeURIComponent(addTracklistParam));
 				const tracklist = JSON.parse(decompressed);
 
-				// Validate tracklist structure
+				// Validate tracklist structure (custom tracklists require name and config)
 				if (!tracklist.name || !tracklist.config) {
 					throw new Error('Invalid tracklist format');
 				}
 
-				// Check if tracklist with this name already exists
+				// Ensure migrated fields are present
+				if (!tracklist.kind) tracklist.kind = 'custom';
+				if (!tracklist.id) tracklist.id = crypto.randomUUID();
+
+				// Check if tracklist with this id already exists
 				const existingTracklists = SettingsService.loadCustomTracklists();
-				const exists = existingTracklists.some((t) => t.name === tracklist.name);
+				const exists = existingTracklists.some((t) => t.id === tracklist.id);
 
 				if (exists) {
 					toast.error('A tracklist with this name already exists');

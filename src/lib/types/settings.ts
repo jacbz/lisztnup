@@ -39,14 +39,27 @@ export interface TracklistConfig {
 	excludeWorks?: string[]; // Short UUIDs (first 8 chars) of works to always exclude
 }
 
-export interface Tracklist {
-	name: string;
-	description: string;
-	isDefault: boolean; // Whether this is a built-in preset
-	icon?: string | null; // Optional SVG icon (as an inline SVG string)
-	category?: 'difficulty' | 'categories' | 'composers' | 'eras' | 'countries' | 'custom'; // Category for organization
+interface TracklistBase {
+	readonly id: string;
+	readonly icon?: string | null;
 	config: TracklistConfig;
 }
+
+/** A built-in preset tracklist. Display name/description are derived from `id` via i18n keys. */
+export interface DefaultTracklist extends TracklistBase {
+	readonly kind: 'default';
+	readonly category: 'difficulty' | 'categories' | 'composers' | 'eras' | 'countries';
+}
+
+/** A user-created tracklist stored in localStorage. */
+export interface CustomTracklist extends TracklistBase {
+	kind: 'custom';
+	name: string;
+	description: string;
+	category?: 'custom';
+}
+
+export type Tracklist = DefaultTracklist | CustomTracklist;
 
 export interface BingoGridCell {
 	category: GuessCategory;
@@ -57,7 +70,7 @@ export interface GameSettings {
 	numberOfTracks: number;
 	/// Timeline mode only: number of cards a player needs in their timeline to win.
 	timelineCardsToWin: number;
-	selectedTracklist: string; // Name of the currently selected tracklist
+	selectedTracklist: string; // id of the currently selected tracklist
 	trackLength: number; // Duration in seconds (5-30)
 	volume: number; // Volume level (0-100)
 	gameMode: 'timeline' | 'classic' | 'buzzer' | 'bingo'; // Game mode
@@ -138,7 +151,7 @@ const isWebKit =
 export const DEFAULT_SETTINGS: GameSettings = {
 	numberOfTracks: 10,
 	timelineCardsToWin: 6,
-	selectedTracklist: 'tracklists.beginner.name',
+	selectedTracklist: 'beginner',
 	trackLength: 30,
 	volume: 100,
 	gameMode: 'timeline',

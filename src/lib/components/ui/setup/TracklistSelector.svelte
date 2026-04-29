@@ -1,9 +1,14 @@
 <script lang="ts">
-	import type { Tracklist } from '$lib/types';
+	import type { Tracklist, CustomTracklist } from '$lib/types';
 	import { gameData, toast } from '$lib/stores';
 	import { TracklistGenerator } from '$lib/services';
 	import { SettingsService } from '$lib/services';
-	import { DEFAULT_TRACKLISTS, cloneTracklist } from '$lib/data/defaultTracklists';
+	import {
+		DEFAULT_TRACKLISTS,
+		cloneTracklist,
+		tracklistDisplayName,
+		tracklistDescription
+	} from '$lib/data/defaultTracklists';
 	import { get } from 'svelte/store';
 	import Popup from '../primitives/Popup.svelte';
 	import Dialog from '../primitives/Dialog.svelte';
@@ -34,7 +39,7 @@
 	}: Props = $props();
 
 	// Load custom tracklists
-	let customTracklists = $state<Tracklist[]>(SettingsService.loadCustomTracklists());
+	let customTracklists = $state<CustomTracklist[]>(SettingsService.loadCustomTracklists());
 
 	// Group tracklists by category
 	const groupedTracklists = $derived.by(() => {
@@ -49,7 +54,7 @@
 		};
 
 		allTracklists.forEach((tracklist) => {
-			const category = tracklist.category || (tracklist.isDefault ? 'difficulty' : 'custom');
+			const category = tracklist.category ?? 'custom';
 			if (groups[category]) {
 				groups[category].push(tracklist);
 			}
@@ -60,7 +65,7 @@
 
 	// Editor state
 	let showEditor = $state(false);
-	let editingTracklist = $state<Tracklist | null>(null);
+	let editingTracklist = $state<CustomTracklist | null>(null);
 
 	// Viewer state
 	let showViewer = $state(false);
@@ -94,10 +99,10 @@
 			.forEach((tracklist) => {
 				try {
 					const generator = new TracklistGenerator(data, tracklist);
-					map[tracklist.name] = generator.getInfo();
+					map[tracklist.id] = generator.getInfo();
 				} catch (error) {
-					console.error(`Error getting info for tracklist ${tracklist.name}:`, error);
-					map[tracklist.name] = { composers: 0, works: 0, tracks: 0, allFemaleComposers: false };
+					console.error(`Error getting info for tracklist ${tracklist.id}:`, error);
+					map[tracklist.id] = { composers: 0, works: 0, tracks: 0, allFemaleComposers: false };
 				}
 			});
 
@@ -110,9 +115,10 @@
 	}
 
 	function handleClone(tracklist: Tracklist) {
-		// For default tracklists, pass translated name and description
-		const translatedName = tracklist.isDefault ? $_(tracklist.name) : undefined;
-		const translatedDescription = tracklist.isDefault ? $_(tracklist.description) : undefined;
+		const translatedName =
+			tracklist.kind === 'default' ? $_(`tracklists.${tracklist.id}.name`) : undefined;
+		const translatedDescription =
+			tracklist.kind === 'default' ? $_(`tracklists.${tracklist.id}.description`) : undefined;
 
 		const cloned = cloneTracklist(
 			tracklist,
@@ -124,7 +130,7 @@
 		showEditor = true;
 	}
 
-	function handleEdit(tracklist: Tracklist) {
+	function handleEdit(tracklist: CustomTracklist) {
 		editingTracklist = tracklist;
 		showEditor = true;
 	}
@@ -165,11 +171,11 @@
 
 	function confirmDelete() {
 		if (tracklistToDelete) {
-			SettingsService.deleteCustomTracklist(tracklistToDelete.name);
+			SettingsService.deleteCustomTracklist(tracklistToDelete.id);
 			customTracklists = SettingsService.loadCustomTracklists();
 
 			// If deleted tracklist was selected, switch to Medium (default)
-			if (selectedTracklist.name === tracklistToDelete.name) {
+			if (selectedTracklist.id === tracklistToDelete.id) {
 				onSelect(DEFAULT_TRACKLISTS[1]);
 			}
 
@@ -206,7 +212,7 @@
 
 	// Helper to check if two tracklists are the same
 	function isSameTracklist(a: Tracklist, b: Tracklist): boolean {
-		return a.name === b.name && a.isDefault === b.isDefault;
+		return a.id === b.id;
 	}
 
 	// Scroll to selected tracklist (when the selector first opens)
@@ -252,7 +258,7 @@
 					{$_('tracklistEditor.categoryDifficulty')}
 				</h3>
 				<div class="grid gap-3 md:grid-cols-2">
-					{#each groupedTracklists.difficulty as tracklist (tracklist.name)}
+					{#each groupedTracklists.difficulty as tracklist (tracklist.id)}
 						{@render tracklistCard(tracklist)}
 					{/each}
 				</div>
@@ -266,7 +272,7 @@
 					{$_('tracklistEditor.categoryCategories')}
 				</h3>
 				<div class="grid gap-3 md:grid-cols-2">
-					{#each groupedTracklists.categories as tracklist (tracklist.name)}
+					{#each groupedTracklists.categories as tracklist (tracklist.id)}
 						{@render tracklistCard(tracklist)}
 					{/each}
 				</div>
@@ -280,7 +286,7 @@
 					{$_('tracklistEditor.categoryComposers')}
 				</h3>
 				<div class="grid gap-3 md:grid-cols-2">
-					{#each groupedTracklists.composers as tracklist (tracklist.name)}
+					{#each groupedTracklists.composers as tracklist (tracklist.id)}
 						{@render tracklistCard(tracklist)}
 					{/each}
 				</div>
@@ -294,7 +300,7 @@
 					{$_('tracklistEditor.categoryEras')}
 				</h3>
 				<div class="grid gap-3 md:grid-cols-2">
-					{#each groupedTracklists.eras as tracklist (tracklist.name)}
+					{#each groupedTracklists.eras as tracklist (tracklist.id)}
 						{@render tracklistCard(tracklist)}
 					{/each}
 				</div>
@@ -308,7 +314,7 @@
 					{$_('tracklistEditor.categoryCountries')}
 				</h3>
 				<div class="grid gap-3 md:grid-cols-2">
-					{#each groupedTracklists.countries as tracklist (tracklist.name)}
+					{#each groupedTracklists.countries as tracklist (tracklist.id)}
 						{@render tracklistCard(tracklist)}
 					{/each}
 				</div>
@@ -321,7 +327,7 @@
 				{$_('tracklistEditor.categoryCustom')}
 			</h3>
 			<div class="grid gap-3 md:grid-cols-2">
-				{#each groupedTracklists.custom as tracklist (tracklist.name)}
+				{#each groupedTracklists.custom as tracklist (tracklist.id)}
 					{@render tracklistCard(tracklist)}
 				{/each}
 				<!-- Create New Button -->
@@ -378,19 +384,17 @@
 						{@html tracklist.icon}
 					{/if}
 				</div>
-				<span class="text-lg font-bold"
-					>{tracklist.isDefault ? $_(tracklist.name) : tracklist.name}</span
-				>
+				<span class="text-lg font-bold">{tracklistDisplayName(tracklist, $_)}</span>
 			</div>
 			<span class="flex-1 text-sm leading-relaxed {selected ? 'text-slate-200' : 'text-slate-400'}">
-				{tracklist.isDefault ? $_(tracklist.description) : tracklist.description}
+				{tracklistDescription(tracklist, $_)}
 			</span>
-			{#if tracklistInfoMap[tracklist.name]}
+			{#if tracklistInfoMap[tracklist.id]}
 				<span class="mt-1 text-xs opacity-70">
 					{$_('settings.presetInfo.default', {
 						values: {
-							...tracklistInfoMap[tracklist.name],
-							allFemaleComposers: tracklistInfoMap[tracklist.name].allFemaleComposers
+							...tracklistInfoMap[tracklist.id],
+							allFemaleComposers: tracklistInfoMap[tracklist.id].allFemaleComposers
 								? 'true'
 								: 'false'
 						}
@@ -400,11 +404,12 @@
 		</button>
 
 		<!-- Action buttons for custom tracklists -->
-		{#if !tracklist.isDefault}
+		{#if tracklist.kind === 'custom'}
+			{@const customTracklist = tracklist}
 			<div class="mt-2 flex gap-2">
 				<button
 					type="button"
-					onclick={() => handleEdit(tracklist)}
+					onclick={() => handleEdit(customTracklist)}
 					class="flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm transition-all focus:ring-2 focus:ring-cyan-400 focus:outline-none {selected
 						? 'bg-white/20 hover:bg-white/30'
 						: 'bg-slate-600/80 hover:bg-slate-500'}"
@@ -442,7 +447,7 @@
 	visible={showDeleteDialog}
 	title={$_('tracklistSelector.deleteDialog.title')}
 	message={$_('tracklistSelector.deleteDialog.message', {
-		values: { name: tracklistToDelete?.name || '' }
+		values: { name: tracklistToDelete?.kind === 'custom' ? tracklistToDelete.name : (tracklistToDelete?.id ?? '') }
 	})}
 	confirmText={$_('tracklistSelector.deleteDialog.confirm')}
 	cancelText={$_('tracklistSelector.deleteDialog.cancel')}

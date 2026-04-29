@@ -6,6 +6,8 @@ export type { Track } from './track';
 export type {
 	GameSettings,
 	Tracklist,
+	DefaultTracklist,
+	CustomTracklist,
 	CategoryAdjustments,
 	ComposerFilter,
 	TracklistConfig,

@@ -59,17 +59,17 @@ function createSettingsStore() {
 
 export const settings = createSettingsStore();
 
-// Derived store to resolve the selected tracklist name to the actual Tracklist object
+// Derived store to resolve the selected tracklist id to the actual Tracklist object
 export const selectedTracklist = derived<typeof settings, Tracklist>(settings, ($settings) => {
 	// Try to find in default tracklists
-	const defaultTracklist = DEFAULT_TRACKLISTS.find((t) => t.name === $settings.selectedTracklist);
+	const defaultTracklist = DEFAULT_TRACKLISTS.find((t) => t.id === $settings.selectedTracklist);
 	if (defaultTracklist) {
 		return defaultTracklist;
 	}
 
 	// Try to find in custom tracklists
 	const customTracklists = SettingsService.loadCustomTracklists();
-	const customTracklist = customTracklists.find((t) => t.name === $settings.selectedTracklist);
+	const customTracklist = customTracklists.find((t) => t.id === $settings.selectedTracklist);
 	if (customTracklist) {
 		return customTracklist;
 	}

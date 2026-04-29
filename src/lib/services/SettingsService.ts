@@ -1,4 +1,4 @@
-import type { GameSettings, Tracklist } from '$lib/types';
+import type { GameSettings, CustomTracklist } from '$lib/types';
 import { DEFAULT_SETTINGS } from '$lib/types';
 
 const SETTINGS_KEY = 'lisztnup-settings';
@@ -18,7 +18,20 @@ export class SettingsService {
 			const stored = localStorage.getItem(SETTINGS_KEY);
 			if (stored) {
 				const parsed = JSON.parse(stored);
-				// Merge parsed settings with defaults to ensure all keys are present
+
+				// MIGRATION (may be removed once all users have upgraded from pre-refactor data):
+				// Old data stored i18n keys like 'tracklists.beginner.name' as selectedTracklist.
+				if (
+					typeof parsed.selectedTracklist === 'string' &&
+					parsed.selectedTracklist.startsWith('tracklists.') &&
+					parsed.selectedTracklist.endsWith('.name')
+				) {
+					parsed.selectedTracklist = parsed.selectedTracklist.slice(
+						'tracklists.'.length,
+						-'.name'.length
+					);
+				}
+
 				return { ...DEFAULT_SETTINGS, ...parsed };
 			}
 		} catch (error) {
@@ -57,9 +70,8 @@ export class SettingsService {
 
 	/**
 	 * Loads all custom tracklists from localStorage.
-	 * @returns An array of custom tracklists.
 	 */
-	static loadCustomTracklists(): Tracklist[] {
+	static loadCustomTracklists(): CustomTracklist[] {
 		if (typeof window === 'undefined') {
 			return [];
 		}
@@ -67,7 +79,25 @@ export class SettingsService {
 		try {
 			const stored = localStorage.getItem(CUSTOM_TRACKLISTS_KEY);
 			if (stored) {
-				return JSON.parse(stored);
+				const raw: unknown[] = JSON.parse(stored);
+
+				// MIGRATION (may be removed once all users have upgraded from pre-refactor data):
+				// Old custom tracklists lacked 'kind' and 'id' fields.
+				const needsMigration = raw.some(
+					(t) => typeof t === 'object' && t !== null && !('kind' in t)
+				);
+				const tracklists = raw.map((t) => {
+					const obj = t as Record<string, unknown>;
+					if (!('kind' in obj)) {
+						return { ...obj, kind: 'custom' as const, id: crypto.randomUUID() } as CustomTracklist;
+					}
+					return t as CustomTracklist;
+				});
+				if (needsMigration) {
+					this.saveCustomTracklists(tracklists);
+				}
+
+				return tracklists;
 			}
 		} catch (error) {
 			console.error('Error loading custom tracklists:', error);
@@ -78,9 +108,8 @@ export class SettingsService {
 
 	/**
 	 * Saves an array of custom tracklists to localStorage.
-	 * @param tracklists The array of tracklists to save.
 	 */
-	static saveCustomTracklists(tracklists: Tracklist[]): void {
+	static saveCustomTracklists(tracklists: CustomTracklist[]): void {
 		if (typeof window === 'undefined') {
 			return;
 		}
@@ -93,49 +122,27 @@ export class SettingsService {
 	}
 
 	/**
-	 * Adds or updates a custom tracklist in localStorage.
-	 * If `oldName` is provided and is different from the new name, it handles renaming.
-	 * @param tracklist The tracklist to save.
-	 * @param oldName The original name of the tracklist, used for renaming.
+	 * Adds or updates a custom tracklist in localStorage, identified by its stable `id`.
 	 */
-	static saveCustomTracklist(tracklist: Tracklist, oldName?: string): void {
+	static saveCustomTracklist(tracklist: CustomTracklist): void {
 		const tracklists = this.loadCustomTracklists();
+		const existingIndex = tracklists.findIndex((t) => t.id === tracklist.id);
 
-		// Handle renaming case
-		if (oldName && oldName !== tracklist.name) {
-			const filtered = tracklists.filter((t) => t.name !== oldName);
-			filtered.push(tracklist);
-			this.saveCustomTracklists(filtered);
-
-			// If the renamed tracklist was the selected one, update the settings
-			const settings = this.load();
-			if (settings.selectedTracklist === oldName) {
-				settings.selectedTracklist = tracklist.name;
-				this.save(settings);
-			}
+		if (existingIndex >= 0) {
+			tracklists[existingIndex] = tracklist;
 		} else {
-			// Find by exact name match for custom (non-default) tracklists
-			const existingIndex = tracklists.findIndex((t) => t.name === tracklist.name && !t.isDefault);
-
-			if (existingIndex >= 0) {
-				// Update existing custom tracklist
-				tracklists[existingIndex] = tracklist;
-			} else {
-				// Add new custom tracklist
-				tracklists.push(tracklist);
-			}
-
-			this.saveCustomTracklists(tracklists);
+			tracklists.push(tracklist);
 		}
+
+		this.saveCustomTracklists(tracklists);
 	}
 
 	/**
-	 * Deletes a custom tracklist from localStorage by its name.
-	 * @param name The name of the tracklist to delete.
+	 * Deletes a custom tracklist from localStorage by its `id`.
 	 */
-	static deleteCustomTracklist(name: string): void {
+	static deleteCustomTracklist(id: string): void {
 		const tracklists = this.loadCustomTracklists();
-		const filtered = tracklists.filter((t) => t.name !== name);
+		const filtered = tracklists.filter((t) => t.id !== id);
 		this.saveCustomTracklists(filtered);
 	}
 }
