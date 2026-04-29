@@ -21,6 +21,8 @@
 	import { decompress } from '$lib/utils';
 	import { toast } from '$lib/stores';
 
+	let { data } = $props();
+
 	// Store reference to the generator for the current game
 	let generator: TracklistGenerator | null = null;
 	let currentMode: GameMode | null = null;
@@ -109,9 +111,11 @@
 	}
 
 	// Auto-transition from loading to home
-	$: if ($isDataLoaded && $gameState === 'loading') {
-		gameState.set('home');
-	}
+	$effect(() => {
+		if ($isDataLoaded && $gameState === 'loading') {
+			gameState.set('home');
+		}
+	});
 </script>
 
 {#if $gameState === 'loading'}
@@ -124,7 +128,7 @@
 	</div>
 {:else if $gameState === 'home'}
 	<div in:fade={{ duration: 300, delay: 300 }} out:fade={{ duration: 300 }}>
-		<HomeScreen onStart={handleStartGame} />
+		<HomeScreen onStart={handleStartGame} pageviews24h={data.pageviews24h ?? null} />
 	</div>
 {:else if $gameState === 'game' && generator && currentMode}
 	<div in:fade={{ duration: 300, delay: 300 }} out:fade={{ duration: 300 }}>

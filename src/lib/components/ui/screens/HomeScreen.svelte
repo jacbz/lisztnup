@@ -18,6 +18,7 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import MessageSquare from 'lucide-svelte/icons/message-square';
+	import Users from 'lucide-svelte/icons/users';
 
 	interface Props {
 		onStart?: (
@@ -26,9 +27,10 @@
 			isSoloMode: boolean,
 			enableScoring?: boolean
 		) => void;
+		pageviews24h?: number | null;
 	}
 
-	let { onStart = () => {} }: Props = $props();
+	let { onStart = () => {}, pageviews24h = null }: Props = $props();
 
 	let showTracklistSelector = $state(false);
 	let showShareLinkPopup = $state(false);
@@ -373,6 +375,18 @@
 		</div>
 	</div>
 </div>
+
+<!-- Pageviews Pill (Bottom Left) -->
+{#if pageviews24h != null}
+	<div class="fixed left-2 bottom-2 z-40 hidden md:block">
+		<div
+			class="flex items-center gap-1.5 rounded-full border border-cyan-400/20 bg-slate-900/60 px-2 py-1 text-cyan-400/70 backdrop-blur-md"
+		>
+			<Users class="h-3.5 w-3.5" />
+			<span class="text-xs font-medium">{pageviews24h.toLocaleString()}</span>
+		</div>
+	</div>
+{/if}
 
 <!-- Feedback FAB (Bottom Right) -->
 <div class="fixed right-6 bottom-6 z-40 hidden md:block">
