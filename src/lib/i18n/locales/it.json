@@ -546,6 +546,7 @@
 		"dealing": "Carta a {name}",
 		"drag": "Trascina",
 		"confirm": "Conferma",
+		"accuracy": "{correct}/{total} corrette ({percentage} %)",
 		"help": {
 			"playFirst": "Gioca la carta per iniziare il turno.",
 			"dragToPlace": "Trascina la carta nella tua timeline.",

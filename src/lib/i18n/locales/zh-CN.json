@@ -546,6 +546,7 @@
 		"dealing": "正在发牌给 {name}",
 		"drag": "拖动",
 		"confirm": "确认",
+		"accuracy": "{correct}/{total} 正确（{percentage}%）",
 		"help": {
 			"playFirst": "播放卡牌以开始回合。",
 			"dragToPlace": "将卡牌拖入你的时间线。",

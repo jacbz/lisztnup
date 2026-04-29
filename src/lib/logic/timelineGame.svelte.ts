@@ -121,6 +121,15 @@ export class TimelineGame {
 		)
 	);
 
+	/** Per-player placement accuracy stats for analytics and endgame display. */
+	accuracyStats = $derived(
+		this.timelines.map((t) => ({
+			player: t.player.name,
+			total: t.totalPlacements,
+			correct: t.correctPlacements
+		}))
+	);
+
 	topStackItem = $derived(this.centerStack[0] ?? null);
 	topCard = $derived(this.topStackItem?.track ?? null);
 
@@ -277,7 +286,7 @@ export class TimelineGame {
 		this.isDealing = true;
 		this.#lastSyncedTrack = null;
 
-		this.timelines = this.#players.map((p) => ({ player: p, entries: [] }));
+		this.timelines = this.#players.map((p) => ({ player: p, entries: [], totalPlacements: 0, correctPlacements: 0 }));
 		this.activePlayerIndex = 0;
 
 		// Sample exactly one track per player for the deal
@@ -638,13 +647,17 @@ export class TimelineGame {
 		entries[idx].confirmed = true;
 		entries[idx].correct = isCorrect;
 
+		this.activePlayer.totalPlacements++;
+		if (isCorrect) this.activePlayer.correctPlacements++;
+
 		// Log placement to analytics
 		import('$lib/game-logger')
 			.then(({ analytics }) => {
 				analytics.logPlacement(track.work.gid, isCorrect);
 				analytics.updateProgress({
 					numberOfTurns: this.totalTurns,
-					timelines: this.timelinesYears
+					timelines: this.timelinesYears,
+					accuracy: this.accuracyStats
 				});
 			})
 			.catch(() => {});

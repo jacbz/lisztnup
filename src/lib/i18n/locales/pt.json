@@ -546,6 +546,7 @@
 		"dealing": "Dando cartas para {name}",
 		"drag": "Arrastar",
 		"confirm": "Confirmar",
+		"accuracy": "{correct}/{total} corretas ({percentage} %)",
 		"help": {
 			"playFirst": "Jogue a carta para começar seu turno.",
 			"dragToPlace": "Arraste a carta para sua linha do tempo.",

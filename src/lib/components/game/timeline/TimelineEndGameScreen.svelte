@@ -13,6 +13,8 @@
 	interface FinalTimeline {
 		player: Player;
 		entries: TimelineEntry[];
+		totalPlacements: number;
+		correctPlacements: number;
 	}
 
 	interface Props {
@@ -109,7 +111,7 @@
 
 		<div class="-my-4 max-h-[50vh] space-y-4 overflow-y-auto px-2 py-8">
 			{#each timelines as t (t.player.name)}
-				<div class="flex justify-center">
+				<div class="flex flex-col items-center gap-1">
 					<PlayerTimeline
 						playerName={t.player.name}
 						playerColor={t.player.color}
@@ -119,6 +121,15 @@
 						acceptingDrop={false}
 						onConfirmedCardClick={(entry) => (inspectTrack = entry.track)}
 					/>
+					<p class="text-xs text-slate-400">
+						{$_('timeline.accuracy', {
+							values: {
+								correct: t.correctPlacements,
+								total: t.totalPlacements,
+								percentage: t.totalPlacements > 0 ? Math.round((t.correctPlacements / t.totalPlacements) * 100) : 0
+							}
+						})}
+					</p>
 				</div>
 			{/each}
 		</div>

@@ -546,6 +546,7 @@
 		"dealing": "Dealing to {name}",
 		"drag": "Drag",
 		"confirm": "Confirm",
+		"accuracy": "{correct}/{total} correct ({percentage}%)",
 		"help": {
 			"playFirst": "Play the card to begin your turn.",
 			"dragToPlace": "Drag the card into your timeline.",

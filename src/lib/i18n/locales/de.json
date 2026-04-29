@@ -546,6 +546,7 @@
 		"dealing": "Austeilen an {name}...",
 		"drag": "Ziehen",
 		"confirm": "Bestätigen",
+		"accuracy": "{correct}/{total} richtig ({percentage} %)",
 		"help": {
 			"playFirst": "Spiele die Karte ab, um zu beginnen.",
 			"dragToPlace": "Ziehe die Karte in deine Timeline.",

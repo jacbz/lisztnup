@@ -546,6 +546,7 @@
 		"dealing": "Distribution à {name}",
 		"drag": "Glisser",
 		"confirm": "Confirmer",
+		"accuracy": "{correct}/{total} correct ({percentage} %)",
 		"help": {
 			"playFirst": "Joue la carte pour commencer.",
 			"dragToPlace": "Glisse la carte dans ta frise.",

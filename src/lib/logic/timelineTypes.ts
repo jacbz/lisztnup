@@ -21,6 +21,8 @@ export interface StackItem {
 export interface TimelineRow {
 	player: Player;
 	entries: TimelineEntry[];
+	totalPlacements: number;
+	correctPlacements: number;
 }
 
 // ─── Enumerations ──────────────────────────────────────────

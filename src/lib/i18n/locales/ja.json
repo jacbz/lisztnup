@@ -546,6 +546,7 @@
 		"dealing": "{name} に配る",
 		"drag": "ドラッグ",
 		"confirm": "確定",
+		"accuracy": "{correct}/{total} 正解（{percentage}%）",
 		"help": {
 			"playFirst": "カードを再生して開始します。",
 			"dragToPlace": "カードをタイムラインにドラッグしてください。",

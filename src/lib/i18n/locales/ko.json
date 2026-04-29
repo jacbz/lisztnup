@@ -546,6 +546,7 @@
 		"dealing": "{name}에게 카드 배분 중",
 		"drag": "드래그",
 		"confirm": "확정",
+		"accuracy": "{correct}/{total} 정답 ({percentage}%)",
 		"help": {
 			"playFirst": "먼저 카드를 재생하세요.",
 			"dragToPlace": "타임라인의 적절한 위치로 카드를 드래그하세요.",

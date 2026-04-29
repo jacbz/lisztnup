@@ -546,6 +546,7 @@
 		"dealing": "發牌給 {name}",
 		"drag": "拖曳",
 		"confirm": "確認",
+		"accuracy": "{correct}/{total} 正確（{percentage}%）",
 		"help": {
 			"playFirst": "播放卡牌以開始回合。",
 			"dragToPlace": "將卡牌拖入你的時間線。",

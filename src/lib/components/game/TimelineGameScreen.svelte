@@ -54,7 +54,8 @@
 		// This handles both natural game end and manual navigation.
 		analytics.endGame(game.showEndGame ? 'completed' : 'abandoned', {
 			numberOfTurns: game.totalTurns,
-			timelines: game.timelinesYears
+			timelines: game.timelinesYears,
+			accuracy: game.accuracyStats
 		});
 		game.destroy();
 	});
