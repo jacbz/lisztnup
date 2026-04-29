@@ -547,6 +547,8 @@
 		"drag": "Drag",
 		"confirm": "Confirm",
 		"accuracy": "{correct}/{total} correct ({percentage}%)",
+		"streak": "{count} in a row!",
+		"longestStreak": "Best streak: {count}",
 		"help": {
 			"playFirst": "Play the card to begin your turn.",
 			"dragToPlace": "Drag the card into your timeline.",

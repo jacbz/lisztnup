@@ -1,4 +1,3 @@
-[![Build][build-shield]][build-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Forks][forks-shield]][forks-url]
 [![Issues][issues-shield]][issues-url]
@@ -131,7 +130,6 @@ Contributions are what make the open source community such an amazing place to l
 5.  Open a Pull Request
 
 [build-shield]: https://img.shields.io/github/actions/workflow/status/jacbz/lisztnup/main.yml?style=for-the-badge
-[build-url]: https://github.com/jacbz/lisztnup/actions
 [contributors-shield]: https://img.shields.io/github/contributors/jacbz/lisztnup?style=for-the-badge
 [contributors-url]: https://github.com/jacbz/lisztnup/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/jacbz/lisztnup?style=for-the-badge

@@ -7,7 +7,9 @@
 	import { formatYearRange } from '$lib/utils';
 	import Home from 'lucide-svelte/icons/home';
 	import MessageSquare from 'lucide-svelte/icons/message-square';
+	import Flame from 'lucide-svelte/icons/flame';
 	import FeedbackPopup from '$lib/components/ui/gameplay/FeedbackPopup.svelte';
+	import { STREAK_THRESHOLD } from '$lib/logic/timelineGame.svelte';
 	import { onMount } from 'svelte';
 
 	interface FinalTimeline {
@@ -15,6 +17,8 @@
 		entries: TimelineEntry[];
 		totalPlacements: number;
 		correctPlacements: number;
+		currentStreak: number;
+		longestStreak: number;
 	}
 
 	interface Props {
@@ -121,14 +125,22 @@
 						acceptingDrop={false}
 						onConfirmedCardClick={(entry) => (inspectTrack = entry.track)}
 					/>
-					<p class="text-xs text-slate-400">
-						{$_('timeline.accuracy', {
-							values: {
-								correct: t.correctPlacements,
-								total: t.totalPlacements,
-								percentage: t.totalPlacements > 0 ? Math.round((t.correctPlacements / t.totalPlacements) * 100) : 0
-							}
-						})}
+					<p class="flex items-center gap-2 text-xs text-slate-400">
+						<span>
+							{$_('timeline.accuracy', {
+								values: {
+									correct: t.correctPlacements,
+									total: t.totalPlacements,
+									percentage: t.totalPlacements > 0 ? Math.round((t.correctPlacements / t.totalPlacements) * 100) : 0
+								}
+							})}
+						</span>
+						{#if t.longestStreak >= STREAK_THRESHOLD}
+							<span class="flex items-center gap-0.5 text-orange-400/70">
+								<Flame class="h-3 w-3" />
+								{$_('timeline.longestStreak', { values: { count: t.longestStreak } })}
+							</span>
+						{/if}
 					</p>
 				</div>
 			{/each}

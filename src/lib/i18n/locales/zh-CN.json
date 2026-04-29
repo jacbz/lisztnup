@@ -547,6 +547,8 @@
 		"drag": "拖动",
 		"confirm": "确认",
 		"accuracy": "{correct}/{total} 正确（{percentage}%）",
+		"streak": "连续{count}次正确！",
+		"longestStreak": "最长连续: {count}",
 		"help": {
 			"playFirst": "播放卡牌以开始回合。",
 			"dragToPlace": "将卡牌拖入你的时间线。",

@@ -547,6 +547,8 @@
 		"drag": "Arrastrar",
 		"confirm": "Confirmar",
 		"accuracy": "{correct}/{total} correctas ({percentage} %)",
+		"streak": "¡{count} seguidas!",
+		"longestStreak": "Mejor racha: {count}",
 		"help": {
 			"playFirst": "Juega la carta para empezar tu turno.",
 			"dragToPlace": "Arrastra la carta a tu línea de tiempo.",

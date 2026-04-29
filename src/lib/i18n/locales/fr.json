@@ -547,6 +547,8 @@
 		"drag": "Glisser",
 		"confirm": "Confirmer",
 		"accuracy": "{correct}/{total} correct ({percentage} %)",
+		"streak": "{count} d'affilée !",
+		"longestStreak": "Meilleure série : {count}",
 		"help": {
 			"playFirst": "Joue la carte pour commencer.",
 			"dragToPlace": "Glisse la carte dans ta frise.",

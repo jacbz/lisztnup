@@ -547,6 +547,8 @@
 		"drag": "Trascina",
 		"confirm": "Conferma",
 		"accuracy": "{correct}/{total} corrette ({percentage} %)",
+		"streak": "{count} di fila!",
+		"longestStreak": "Miglior serie: {count}",
 		"help": {
 			"playFirst": "Gioca la carta per iniziare il turno.",
 			"dragToPlace": "Trascina la carta nella tua timeline.",

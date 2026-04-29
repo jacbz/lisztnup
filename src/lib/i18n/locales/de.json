@@ -547,6 +547,8 @@
 		"drag": "Ziehen",
 		"confirm": "Bestätigen",
 		"accuracy": "{correct}/{total} richtig ({percentage} %)",
+		"streak": "{count} richtig hintereinander!",
+		"longestStreak": "Beste Serie: {count}",
 		"help": {
 			"playFirst": "Spiele die Karte ab, um zu beginnen.",
 			"dragToPlace": "Ziehe die Karte in deine Timeline.",

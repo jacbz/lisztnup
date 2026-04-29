@@ -4,6 +4,8 @@
 	import { quintOut } from 'svelte/easing';
 	import { formatYearRange } from '$lib/utils';
 	import TimelineCard from './TimelineCard.svelte';
+	import Flame from 'lucide-svelte/icons/flame';
+	import { STREAK_THRESHOLD } from '$lib/logic/timelineGame.svelte';
 
 	export interface TimelineEntry {
 		id: string;
@@ -34,6 +36,8 @@
 		onPendingPointerDown?: (entryId: string, ev: PointerEvent) => void;
 		rotation?: number;
 		isVertical?: boolean;
+		streakCount?: number;
+		longestStreak?: number;
 	}
 
 	let {
@@ -56,7 +60,9 @@
 		bindEl = () => {},
 		onPendingPointerDown = () => {},
 		rotation = 0,
-		isVertical = false
+		isVertical = false,
+		streakCount = 0,
+		longestStreak = 0
 	}: Props = $props();
 
 	let el: HTMLDivElement | null = $state(null);
@@ -65,6 +71,19 @@
 	});
 
 	const cardSize = $derived(active && !compact ? 'sm' : 'xs');
+
+	const flameGlow = $derived.by(() => {
+		if (streakCount < STREAK_THRESHOLD) return '';
+		// Linear interpolation: streak 3 → mild orange, streak 15+ → intense red
+		const t = Math.min((streakCount - 3) / 12, 1); // 0 at streak 3, 1 at streak 15
+		const dim = active ? 1 : 0.5; // inactive players show a subtler glow
+		const spread = (40 + t * 40) * dim; // 40px → 80px (active)
+		const opacity = (0.55 + t * 0.35) * dim; // 0.55 → 0.9 (active)
+		const r = Math.round(251 - t * 31); // 251 → 220
+		const g = Math.round(146 - t * 108); // 146 → 38
+		const b = Math.round(60 - t * 22); // 60 → 38
+		return `0 0 ${spread}px rgba(${r},${g},${b},${opacity})`;
+	});
 
 	function rotateVector(x: number, y: number, angleDeg: number) {
 		const rad = (-angleDeg * Math.PI) / 180;
@@ -132,16 +151,22 @@
 
 	<div
 		bind:this={el}
-		class={`relative flex items-center justify-center gap-1 rounded-xl border bg-slate-950/30 transition-all duration-300 md:gap-1.5 ${helpText || showConfirm ? 'mt-6' : ''} ${active ? `rounded-tl-none py-2` : 'min-w-25 px-1.5 py-1.5'} ${acceptingDrop ? 'border-cyan-400/40 shadow-[0_0_25px_rgba(34,211,238,0.35)]' : 'border-slate-700/40'}`}
+		class={`relative flex items-center justify-center gap-1 rounded-xl border bg-slate-950/30 transition-all duration-300 md:gap-1.5 ${helpText || showConfirm ? 'mt-6' : ''} ${active ? `rounded-tl-none py-2` : 'min-w-25 px-1.5 py-1.5'} ${acceptingDrop ? 'border-cyan-400/40' : 'border-slate-700/40'}`}
 		style="{active
-			? `box-shadow: 0 0 30px ${playerColor}55; min-width: ${isVertical ? '92dvh' : '92vw'}; container-type: inline-size;`
-			: ''}--entry-count: {Math.max(entries.length, 1)}; --gap: calc(var(--spacing) * 1.5);"
+			? `box-shadow: ${flameGlow || (acceptingDrop ? `0 0 25px rgba(34,211,238,0.35)` : `0 0 15px ${playerColor}44`)}; min-width: ${isVertical ? '92dvh' : '92vw'}; container-type: inline-size;`
+			: flameGlow ? `box-shadow: ${flameGlow};` : ''}--entry-count: {Math.max(entries.length, 1)}; --gap: calc(var(--spacing) * 1.5);"
 	>
 		<div
 			class={`pointer-events-none absolute flex items-center gap-2 rounded-lg border border-slate-700/50 bg-slate-950/50 px-2 transition-all ${active ? 'top-0 left-0 z-100 -translate-y-full rounded-br-none rounded-bl-none py-0.5 text-xs text-slate-200' : '-top-2 left-1/2 -translate-x-1/2 text-[10px] text-slate-300'}`}
 		>
 			<div class="h-2 w-2 rounded-full" style="background-color: {playerColor};"></div>
 			<div class="max-w-[28ch] truncate font-semibold tracking-wide select-none">{playerName}</div>
+			{#if longestStreak >= STREAK_THRESHOLD}
+				<div class="flex items-center gap-0.5 text-orange-400/60">
+					<Flame class="h-3 w-3" />
+					<span class="text-[9px] font-bold">{longestStreak}</span>
+				</div>
+			{/if}
 		</div>
 
 		<div

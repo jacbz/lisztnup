@@ -547,6 +547,8 @@
 		"drag": "ドラッグ",
 		"confirm": "確定",
 		"accuracy": "{correct}/{total} 正解（{percentage}%）",
+		"streak": "{count}連続正解！",
+		"longestStreak": "最長連続: {count}",
 		"help": {
 			"playFirst": "カードを再生して開始します。",
 			"dragToPlace": "カードをタイムラインにドラッグしてください。",

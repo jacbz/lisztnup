@@ -24,7 +24,7 @@
 - **Custom fonts**: Streamster (logo/branding), Rajdhani (UI body, 5 weights). CJK fonts loaded on-demand via `fontLoader.ts`.
 - **Scrollbars**: Cyan theme on dark background. Webkit pseudo-elements + Firefox `scrollbar-color` fallback. Defined in `app.css`.
 - **Color palette**: Cyan primary, dark purple/slate backgrounds, 10-color player palette. Category colors defined in `categories.ts`.
-- **Animations**: Custom `@keyframes` in `app.css` (`trophy-glow`, `shimmer`). Component transitions use Svelte `fly`, `slide`, `fade` with consistent durations (200-300ms).
+- **Animations**: Custom `@keyframes` in `app.css` (`trophy-glow`, `shimmer`, `streak-flash`). Component transitions use Svelte `fly`, `slide`, `fade` with consistent durations (200-300ms).
 - **Responsive**: Mobile-first. Use `md:` breakpoint for desktop-specific layouts. Fixed positioning adapts per breakpoint (e.g., bottom-center on mobile, bottom-right on desktop).
 - **Popup styling**: Use the `Popup` component with its preset system (width, padding, shadow, border, overflow). Use separate `in`/`out` transitions to prevent Safari flickering.
 

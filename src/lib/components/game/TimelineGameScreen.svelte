@@ -16,6 +16,7 @@
 	import CardStack from './timeline/CardStack.svelte';
 	import PlayerTimeline from './timeline/PlayerTimeline.svelte';
 	import TimelineEndGameScreen from './timeline/TimelineEndGameScreen.svelte';
+	import FlashingText from '$lib/components/ui/gameplay/FlashingText.svelte';
 
 	// Logic
 	import { getGameContext } from './context';
@@ -55,7 +56,8 @@
 		analytics.endGame(game.showEndGame ? 'completed' : 'abandoned', {
 			numberOfTurns: game.totalTurns,
 			timelines: game.timelinesYears,
-			accuracy: game.accuracyStats
+			accuracy: game.accuracyStats,
+			streaks: game.streakStats
 		});
 		game.destroy();
 	});
@@ -211,7 +213,9 @@
 		entries={timeline.entries}
 		active={isActive}
 		compact={!isActive}
-		acceptingDrop={isActive && game.canDragCenter}
+		acceptingDrop={isActive && game.hasPlaybackStarted && !game.pendingEntryId && !game.resolvingTurn && !game.isDealing}
+		streakCount={isActive && game.streakRevealPending ? game.preRevealCurrentStreak : timeline.currentStreak}
+		longestStreak={isActive && game.streakRevealPending ? game.preRevealLongestStreak : timeline.longestStreak}
 		{rotation}
 		isVertical={edge === 'left' || edge === 'right'}
 		draggingEntryId={isActive ? game.drag.previewEntryId : null}
@@ -342,4 +346,12 @@
 	timelines={game.timelines}
 	tracksExhausted={ctx.tracksExhausted}
 	onHome={handleQuit}
+/>
+
+<FlashingText
+	text={game.streakFlash ? $_('timeline.streak', { values: { count: game.streakFlash.streak } }) : ''}
+	visible={!!game.streakFlash}
+	rotation={game.streakFlash?.rotation ?? 0}
+	intensity={game.streakFlash ? Math.min(5, Math.max(1, Math.floor((game.streakFlash.streak - 1) / 2))) : 1}
+	onComplete={() => game.handleStreakFlashComplete()}
 />

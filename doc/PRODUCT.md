@@ -15,6 +15,7 @@ Players place tracks on a chronological timeline. Drag a card from the center st
 - 1–10 players, each assigned a screen edge (Bottom/Left/Top/Right)
 - No scoring system — win condition is card count
 - Year-required filtering ensures all tracks have valid dates
+- **Streaks**: 3+ consecutive correct placements trigger a flame flash overlay and shift the timeline glow from player color to flame (linearly intensifying). Longest streak shown in player badge and end game screen, logged to analytics.
 
 ### Classic
 
@@ -65,13 +66,13 @@ Loading → Home → [Mode Selection → Player Setup] → Game → End Game
 
 Five categories, each with a point value. Categories can be disabled per tracklist (e.g., single-composer tracklist disables "Composer").
 
-| Category | Points | Disabled when... |
-|---|---|---|
-| Composer | 20 | Single composer in tracklist |
-| Work | 30 | — |
-| Form | 10 | — |
-| Decade | 15 | Narrow year range |
-| Era | 10 | Narrow year range |
+| Category | Points | Disabled when...             |
+| -------- | ------ | ---------------------------- |
+| Composer | 20     | Single composer in tracklist |
+| Work     | 30     | —                            |
+| Form     | 10     | —                            |
+| Decade   | 15     | Narrow year range            |
+| Era      | 10     | Narrow year range            |
 
 Buzzer "Wrong" guess: -10 points.
 

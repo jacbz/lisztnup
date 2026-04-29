@@ -142,10 +142,30 @@ button {
 	}
 }
 
+@keyframes streak-flash {
+	0% {
+		opacity: 0.6;
+		filter: brightness(1);
+	}
+	30% {
+		opacity: 1;
+		filter: brightness(1.3);
+	}
+	70% {
+		opacity: 1;
+		filter: brightness(1.15);
+	}
+	100% {
+		opacity: 0.9;
+		filter: brightness(1);
+	}
+}
+
 @theme {
 	--font-sans: 'Rajdhani', system-ui, sans-serif;
 	--font-streamster: 'Streamster', cursive;
 
 	--animate-trophy-glow: trophy-glow 2s ease-in-out infinite;
 	--animate-shimmer: shimmer 2s ease-in-out infinite;
+	--animate-streak-flash: streak-flash 0.8s ease-in-out;
 }

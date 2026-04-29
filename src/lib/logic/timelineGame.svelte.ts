@@ -7,6 +7,9 @@ import type { TimelineEntry, StackItem, TimelineRow, DragKind, TurnPhase } from 
 // Re-export types for convenience
 export type { TimelineEntry, StackItem, TimelineRow, DragKind, TurnPhase };
 
+/** Minimum consecutive correct placements to activate streak visuals. */
+export const STREAK_THRESHOLD = 3;
+
 // ─── Context subset ────────────────────────────────────────
 
 /**
@@ -69,6 +72,16 @@ export class TimelineGame {
 	hasPlaybackStarted = $state(false);
 
 	// ═══════════════════════════════════════════════════════
+	// STREAK STATE
+	// ═══════════════════════════════════════════════════════
+	streakFlash = $state<{ playerName: string; streak: number; rotation: number } | null>(null);
+	/** True while the reveal popup is open and streak visuals should show pre-turn values. */
+	streakRevealPending = $state(false);
+	/** Snapshot of active player's streak before the current placement. */
+	preRevealCurrentStreak = $state(0);
+	preRevealLongestStreak = $state(0);
+
+	// ═══════════════════════════════════════════════════════
 	// REVEAL STATE
 	// ═══════════════════════════════════════════════════════
 	revealEntryId = $state<string | null>(null);
@@ -103,6 +116,7 @@ export class TimelineGame {
 	#isInitializing = false;
 	#boundOnDragMove: ((ev: PointerEvent) => void) | null = null;
 	#boundOnDragUp: ((ev: PointerEvent) => void) | null = null;
+	#pendingStreakFlash: { playerName: string; streak: number; rotation: number } | null = null;
 
 	// ═══════════════════════════════════════════════════════
 	// DERIVED VALUES
@@ -127,6 +141,14 @@ export class TimelineGame {
 			player: t.player.name,
 			total: t.totalPlacements,
 			correct: t.correctPlacements
+		}))
+	);
+
+	/** Per-player streak stats for analytics and endgame display. */
+	streakStats = $derived(
+		this.timelines.map((t) => ({
+			player: t.player.name,
+			longestStreak: t.longestStreak
 		}))
 	);
 
@@ -286,7 +308,7 @@ export class TimelineGame {
 		this.isDealing = true;
 		this.#lastSyncedTrack = null;
 
-		this.timelines = this.#players.map((p) => ({ player: p, entries: [], totalPlacements: 0, correctPlacements: 0 }));
+		this.timelines = this.#players.map((p) => ({ player: p, entries: [], totalPlacements: 0, correctPlacements: 0, currentStreak: 0, longestStreak: 0 }));
 		this.activePlayerIndex = 0;
 
 		// Sample exactly one track per player for the deal
@@ -648,7 +670,21 @@ export class TimelineGame {
 		entries[idx].correct = isCorrect;
 
 		this.activePlayer.totalPlacements++;
-		if (isCorrect) this.activePlayer.correctPlacements++;
+
+		// Snapshot streak before updating so UI can defer the visual change
+		this.preRevealCurrentStreak = this.activePlayer.currentStreak;
+		this.preRevealLongestStreak = this.activePlayer.longestStreak;
+		this.streakRevealPending = true;
+
+		if (isCorrect) {
+			this.activePlayer.correctPlacements++;
+			this.activePlayer.currentStreak++;
+			if (this.activePlayer.currentStreak > this.activePlayer.longestStreak) {
+				this.activePlayer.longestStreak = this.activePlayer.currentStreak;
+			}
+		} else {
+			this.activePlayer.currentStreak = 0;
+		}
 
 		// Log placement to analytics
 		import('$lib/game-logger')
@@ -657,7 +693,8 @@ export class TimelineGame {
 				analytics.updateProgress({
 					numberOfTurns: this.totalTurns,
 					timelines: this.timelinesYears,
-					accuracy: this.accuracyStats
+					accuracy: this.accuracyStats,
+					streaks: this.streakStats
 				});
 			})
 			.catch(() => {});
@@ -674,6 +711,16 @@ export class TimelineGame {
 		this.pendingEntryId = null;
 		this.popupRotation = this.#getRotationForPlayer(this.activePlayer.player);
 
+		// Snapshot streak for deferred display after popup close
+		this.#pendingStreakFlash =
+			isCorrect && this.activePlayer.currentStreak >= STREAK_THRESHOLD
+				? {
+						playerName: this.activePlayer.player.name,
+						streak: this.activePlayer.currentStreak,
+						rotation: this.popupRotation
+					}
+				: null;
+
 		this.showRevealPopup = true;
 	}
 
@@ -689,6 +736,10 @@ export class TimelineGame {
 		this.#isClosingRevealPopup = true;
 
 		this.showRevealPopup = false;
+
+		// Fire deferred streak flash now that the popup is closing
+		const pendingFlash = this.#pendingStreakFlash;
+		this.#pendingStreakFlash = null;
 
 		// Snapshot reveal state before async delays
 		const wasWrong = this.revealIsCorrect === false;
@@ -707,6 +758,12 @@ export class TimelineGame {
 				this.#clearRevealState();
 				this.#isClosingRevealPopup = false;
 				return;
+			}
+
+			// Reveal deferred streak visuals, then show flash
+			this.streakRevealPending = false;
+			if (pendingFlash) {
+				this.streakFlash = pendingFlash;
 			}
 
 			if (reachedWin) {
@@ -731,8 +788,13 @@ export class TimelineGame {
 			}
 
 			this.#clearRevealState();
-			this.#finalizeTurn();
-			this.#isClosingRevealPopup = false;
+			if (pendingFlash) {
+				// Turn finalization deferred until flash completes
+				this.#isClosingRevealPopup = false;
+			} else {
+				this.#finalizeTurn();
+				this.#isClosingRevealPopup = false;
+			}
 		}, 300);
 	}
 
@@ -759,6 +821,12 @@ export class TimelineGame {
 
 		this.#restockCenterStack();
 		this.#resetTurnState();
+	}
+
+	/** Called by FlashingText onComplete — clears flash and finalizes the turn. */
+	handleStreakFlashComplete() {
+		this.streakFlash = null;
+		this.#finalizeTurn();
 	}
 
 	#clearRevealState() {

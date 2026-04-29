@@ -23,6 +23,8 @@ export interface TimelineRow {
 	entries: TimelineEntry[];
 	totalPlacements: number;
 	correctPlacements: number;
+	currentStreak: number;
+	longestStreak: number;
 }
 
 // ─── Enumerations ──────────────────────────────────────────
