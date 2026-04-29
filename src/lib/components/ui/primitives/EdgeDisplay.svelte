@@ -42,7 +42,7 @@
 		margin = '20px',
 		disablePointerEvents = true
 	}: Props = $props();
-	const positions = [
+	const positions = $derived([
 		{
 			name: 'top',
 			rotation: 180,
@@ -71,7 +71,7 @@
 			hideOnNarrow: true,
 			flyParams: { x: 100, duration: 300 }
 		}
-	];
+	]);
 
 	const filteredPositions = $derived(
 		positions.filter(

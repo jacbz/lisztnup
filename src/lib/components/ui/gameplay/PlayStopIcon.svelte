@@ -35,6 +35,7 @@
 	];
 
 	// Create a single spring for all points
+	// svelte-ignore state_referenced_locally (Spring is intentionally seeded with the initial prop value; $effect keeps it in sync)
 	const shapeSpring = new Spring(isPlaying ? stopPoints : playPoints, {
 		stiffness: 0.1,
 		damping: 0.4

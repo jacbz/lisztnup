@@ -61,7 +61,7 @@
 		transition:fly={{ y: 50, duration: 500 }}
 	>
 		<div
-			class="w-full max-w-[600px] rounded-3xl border-2 border-cyan-400 bg-slate-900 p-10 shadow-[0_0_30px_rgba(34,211,238,0.3)]"
+			class="w-full max-w-150 rounded-3xl border-2 border-cyan-400 bg-slate-900 p-10 shadow-[0_0_30px_rgba(34,211,238,0.3)]"
 		>
 			<!-- Winner Announcement -->
 			{#if !isSoloMode && enableScoring}
@@ -129,7 +129,7 @@
 								style="border-color: {index === 0 ? '#fbbf24' : player.color};"
 							>
 								<div
-									class="w-10 text-xl font-bold sm:w-[30px] sm:text-base {index === 0
+									class="w-10 text-xl font-bold sm:w-7.5 sm:text-base {index === 0
 										? 'text-amber-400'
 										: 'text-slate-400'}"
 								>

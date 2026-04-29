@@ -26,10 +26,11 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 					// Use UPSERT to handle cases where game_end arrives first
 					await db
 						.prepare(
-							`INSERT INTO game_sessions (id, started_at, state, mode, tracklist_id, country, user_hash, locale, game_info) 
-						 VALUES (?1, CURRENT_TIMESTAMP, 'started', ?2, ?3, ?4, ?5, ?6, ?7)
-						 ON CONFLICT(id) DO UPDATE SET 
-						 	started_at = COALESCE(game_sessions.started_at, CURRENT_TIMESTAMP),
+					`INSERT INTO game_sessions (id, started, updated, state, mode, tracklist_id, country, user_hash, locale, game_info) 
+					 VALUES (?1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'started', ?2, ?3, ?4, ?5, ?6, ?7)
+					 ON CONFLICT(id) DO UPDATE SET 
+					 	started = COALESCE(game_sessions.started, CURRENT_TIMESTAMP),
+					 	updated = CURRENT_TIMESTAMP,
 						 	mode = ?2,
 						 	tracklist_id = ?3,
 						 	country = ?4,
@@ -54,10 +55,10 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 					
 					await db
 						.prepare(
-							`INSERT INTO game_sessions (id, ended_at, state, country, user_hash, game_info) 
-						 VALUES (?1, CURRENT_TIMESTAMP, ?2, ?3, ?4, ?5)
-						 ON CONFLICT(id) DO UPDATE SET 
-						 	ended_at = CURRENT_TIMESTAMP,
+					`INSERT INTO game_sessions (id, updated, state, country, user_hash, game_info) 
+					 VALUES (?1, CURRENT_TIMESTAMP, ?2, ?3, ?4, ?5)
+					 ON CONFLICT(id) DO UPDATE SET 
+					 	updated = CURRENT_TIMESTAMP,
 						 	state = ?2,
 						 	game_info = json_patch(COALESCE(game_sessions.game_info, '{}'), ?5)`
 						)
@@ -74,9 +75,10 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 					const gameInfoJson = payload.gameInfo ? JSON.stringify(payload.gameInfo) : '{}';
 					await db
 						.prepare(
-							`INSERT INTO game_sessions (id, state, country, user_hash, game_info) 
-							 VALUES (?1, 'in_progress', ?2, ?3, ?4)
-							 ON CONFLICT(id) DO UPDATE SET 
+					`INSERT INTO game_sessions (id, updated, state, country, user_hash, game_info) 
+						 VALUES (?1, CURRENT_TIMESTAMP, 'in_progress', ?2, ?3, ?4)
+						 ON CONFLICT(id) DO UPDATE SET 
+							updated = CURRENT_TIMESTAMP,
 								state = CASE WHEN game_sessions.state IN ('completed', 'abandoned') THEN game_sessions.state ELSE 'in_progress' END,
 								game_info = json_patch(COALESCE(game_sessions.game_info, '{}'), ?4)`
 						)

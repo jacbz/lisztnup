@@ -53,7 +53,7 @@
 
 {#if showing}
 	<div
-		class="pointer-events-none fixed inset-0 z-[999] flex items-center justify-center"
+		class="pointer-events-none fixed inset-0 z-999 flex items-center justify-center"
 	>
 		<div style="transform: rotate({rotation}deg);">
 			<div

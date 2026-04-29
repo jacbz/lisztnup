@@ -24,10 +24,10 @@
 	let { data } = $props();
 
 	// Store reference to the generator for the current game
-	let generator: TracklistGenerator | null = null;
-	let currentMode: GameMode | null = null;
-	let currentPlayers: Player[] = [];
-	let isSoloMode = false;
+	let generator: TracklistGenerator | null = $state(null);
+	let currentMode: GameMode | null = $state(null);
+	let currentPlayers: Player[] = $state([]);
+	let isSoloMode = $state(false);
 
 	/**
 	 * Processes a shared tracklist from the 'addTracklist' URL parameter.

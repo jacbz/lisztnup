@@ -36,6 +36,7 @@
 	// ─── Context & Game Logic ──────────────────────────────
 
 	const ctx = getGameContext();
+	// svelte-ignore state_referenced_locally (TimelineGame is a one-shot construct; players/cardsToWin are fixed for the game lifetime)
 	const game = new TimelineGame(
 		players,
 		cardsToWin,

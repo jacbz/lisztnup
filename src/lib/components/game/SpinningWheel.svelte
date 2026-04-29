@@ -38,6 +38,7 @@
 	let isSpinning = $state(false);
 	let showSpinText = $state(true);
 	let wheelSize = $state(600);
+	// svelte-ignore state_referenced_locally (prevRoundIndex intentionally captures the initial value; $effect below detects changes)
 	let prevRoundIndex = $state(currentRoundIndex);
 	let animationFrameId: number | null = null;
 	let currentRotation = $state(0);

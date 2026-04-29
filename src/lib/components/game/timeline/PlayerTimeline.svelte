@@ -174,10 +174,10 @@
 		>
 			<div class="h-2 w-2 rounded-full" style="background-color: {playerColor};"></div>
 			<div class="max-w-[28ch] truncate font-semibold tracking-wide select-none">{playerName}</div>
-			{#if longestStreak >= STREAK_THRESHOLD}
+			{#if streakCount >= STREAK_THRESHOLD}
 				<div class="flex items-center gap-0.5 text-orange-400/60">
 					<Flame class="h-3 w-3" />
-					<span class="text-[9px] font-bold">{longestStreak}</span>
+					<span class="text-[9px] font-bold">{streakCount}</span>
 				</div>
 			{/if}
 		</div>

@@ -722,8 +722,14 @@
 {/snippet}
 
 <style>
-	@reference "../../../../app.css";
 	.cell {
-		@apply px-2 py-2 align-top md:px-4 md:py-3;
+		padding: 0.5rem;
+		vertical-align: top;
+	}
+	@media (min-width: 768px) {
+		.cell {
+			padding-inline: 1rem;
+			padding-block: 0.75rem;
+		}
 	}
 </style>

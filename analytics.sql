@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS pageviews (
 
 CREATE TABLE IF NOT EXISTS game_sessions (
   id TEXT PRIMARY KEY,
-  started_at DATETIME,
-  ended_at DATETIME,
+  started DATETIME,
+  updated DATETIME,
   state TEXT,
   mode TEXT,
   tracklist_id TEXT,

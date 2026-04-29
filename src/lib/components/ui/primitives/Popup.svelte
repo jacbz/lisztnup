@@ -160,7 +160,7 @@
 {#if visible}
 	<!-- Backdrop -->
 	<div
-		class="fixed inset-0 z-[1000] bg-black/60"
+		class="fixed inset-0 z-1000 bg-black/60"
 		onclick={handleBackdropClick}
 		role="presentation"
 		in:fade={{ duration: 200 }}
@@ -168,7 +168,7 @@
 	></div>
 
 	<!-- Content -->
-	<div class="pointer-events-none fixed inset-0 z-[1001] flex items-center justify-center p-4">
+	<div class="pointer-events-none fixed inset-0 z-1001 flex items-center justify-center p-4">
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<div
 			class="popup-rotation pointer-events-auto relative"

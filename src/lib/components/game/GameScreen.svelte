@@ -508,7 +508,9 @@
 		get tracksExhausted() {
 			return tracksExhausted;
 		},
-		enableScoring,
+		get enableScoring() {
+			return enableScoring;
+		},
 		get isPreloading() {
 			return isPreloading;
 		},
