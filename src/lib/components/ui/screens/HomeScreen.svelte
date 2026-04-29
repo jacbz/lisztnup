@@ -378,7 +378,7 @@
 
 <!-- Pageviews Pill (Bottom Left) -->
 {#if pageviews24h != null}
-	<div class="fixed left-2 bottom-2 z-40 hidden md:block">
+	<div class="fixed left-3 bottom-3 z-40 hidden md:block">
 		<div
 			class="flex items-center gap-1.5 rounded-full border border-cyan-400/20 bg-slate-900/60 px-2 py-1 text-cyan-400/70 backdrop-blur-md"
 		>

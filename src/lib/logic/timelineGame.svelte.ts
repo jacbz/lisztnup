@@ -136,28 +136,13 @@ export class TimelineGame {
 	activePlayer = $derived(this.timelines[this.activePlayerIndex]);
 	activePlayerName = $derived(this.activePlayer?.player.name ?? '');
 
-	/** Returns all Kept cards in all timelines as an array of year arrays. */
-	timelinesYears = $derived(
-		this.timelines.map((t) =>
-			t.entries
+	/** Per-player analytics: timeline years, accuracy, and longest streak. */
+	playerStats = $derived(
+		this.timelines.map((t) => ({
+			timeline: t.entries
 				.filter((e) => e.confirmed && e.correct !== false)
-				.map((e) => this.#getTimelineYear(e.track))
-		)
-	);
-
-	/** Per-player placement accuracy stats for analytics and endgame display. */
-	accuracyStats = $derived(
-		this.timelines.map((t) => ({
-			player: t.player.name,
-			total: t.totalPlacements,
-			correct: t.correctPlacements
-		}))
-	);
-
-	/** Per-player streak stats for analytics and endgame display. */
-	streakStats = $derived(
-		this.timelines.map((t) => ({
-			player: t.player.name,
+				.map((e) => this.#getTimelineYear(e.track)),
+			accuracy: t.totalPlacements > 0 ? t.correctPlacements / t.totalPlacements : 0,
 			longestStreak: t.longestStreak
 		}))
 	);
@@ -706,9 +691,7 @@ export class TimelineGame {
 				analytics.logPlacement(track.work.gid, isCorrect);
 				analytics.updateProgress({
 					numberOfTurns: this.totalTurns,
-					timelines: this.timelinesYears,
-					accuracy: this.accuracyStats,
-					streaks: this.streakStats
+					players: this.playerStats
 				});
 			})
 			.catch(() => {});
