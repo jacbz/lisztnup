@@ -14,6 +14,7 @@
 	let { visible, onClose }: Props = $props();
 
 	let message = $state('');
+	let email = $state('');
 	let isSending = $state(false);
 	let error = $state<string | null>(null);
 	let success = $state(false);
@@ -29,13 +30,14 @@
 		isSending = true;
 		error = null;
 
-		const result = await analytics.sendFeedback(message.trim());
+		const result = await analytics.sendFeedback(message.trim(), email.trim() || undefined);
 
 		isSending = false;
 
 		if (result) {
 			success = true;
 			message = '';
+			email = '';
 			setTimeout(() => {
 				success = false;
 				onClose();
@@ -72,25 +74,35 @@
 					{$_('feedback.prompt')}
 				</p>
 
-				<div class="relative">
-					<textarea
-						bind:value={message}
-						placeholder={$_('feedback.placeholder')}
-						class="h-48 w-full rounded-xl border-2 {isTooShort || isTooLong
-							? 'border-red-500/50'
-							: 'border-slate-700/50'} bg-slate-950/50 p-4 text-lg text-slate-200 placeholder:text-slate-600 focus:border-cyan-400/50 focus:outline-hidden"
-						disabled={isSending}
-						maxlength="1100"
-					></textarea>
-					<div
-						class="absolute right-3 bottom-3 text-xs {isTooLong || isTooShort
-							? 'text-red-400'
-							: charCount > 900
-								? 'text-yellow-400'
-								: 'text-slate-500'}"
-					>
-						{charCount}/1000
+				<div class="flex flex-col gap-2">
+					<div class="relative">
+						<textarea
+							bind:value={message}
+							placeholder={$_('feedback.placeholder')}
+							class="h-48 w-full rounded-xl border-2 {isTooShort || isTooLong
+								? 'border-red-500/50'
+								: 'border-slate-700/50'} bg-slate-950/50 p-4 text-lg text-slate-200 placeholder:text-slate-600 focus:border-cyan-400/50 focus:outline-hidden"
+							disabled={isSending}
+							maxlength="1100"
+						></textarea>
+						<div
+							class="absolute right-3 bottom-3 text-xs {isTooLong || isTooShort
+								? 'text-red-400'
+								: charCount > 900
+									? 'text-yellow-400'
+									: 'text-slate-500'}"
+						>
+							{charCount}/1000
+						</div>
 					</div>
+					<input
+						type="email"
+						bind:value={email}
+						placeholder={$_('common.emailPlaceholder')}
+						class="w-full rounded-xl border-2 border-slate-700/50 bg-slate-950/50 px-4 py-3 text-sm text-slate-200 placeholder:text-slate-600 focus:border-cyan-400/50 focus:outline-hidden"
+						disabled={isSending}
+						maxlength="254"
+					/>
 				</div>
 
 				{#if error}

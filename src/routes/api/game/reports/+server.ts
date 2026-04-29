@@ -1,6 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { hashUser, getCurrentSalt } from '$lib/server/analytics';
+import { sendTelegramMessage, formatReportMessage } from '$lib/server/telegram';
 
 export const POST: RequestHandler = async ({ request, platform, getClientAddress }) => {
 	if (!platform?.env?.DB) {
@@ -21,20 +22,22 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		const currentDay = getCurrentSalt();
 		const userHash = await hashUser(ip, currentDay);
 		const country = cf?.country || 'UNKNOWN';
+		const email = typeof payload.email === 'string' ? payload.email.trim().slice(0, 254) : null;
 
 		const dbOp = async () => {
 			try {
 				const db = platform.env!.DB;
 				await db
 					.prepare(
-						`INSERT INTO problem_reports (session_id, user_hash, country, message, deezer_id, composer, work, part, work_type, work_years) 
-						 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+						`INSERT INTO problem_reports (session_id, user_hash, country, message, email, deezer_id, composer, work, part, work_type, work_years) 
+						 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 					)
 					.bind(
 						payload.sessionId,
 						userHash,
 						country,
 						payload.message,
+						email,
 						payload.deezerId,
 						payload.composer,
 						payload.work,
@@ -48,7 +51,24 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 			}
 		};
 
-		platform.context?.waitUntil(dbOp());
+		const telegramOp = async () => {
+			const token = platform.env!.TELEGRAM_BOT_TOKEN;
+			const chatId = platform.env!.TELEGRAM_CHAT_ID;
+			if (token && chatId) {
+				const text = formatReportMessage(
+					payload.message,
+					payload.composer || '',
+					payload.work || '',
+					payload.part || '',
+					payload.deezerId || '',
+					country,
+					email || undefined
+				);
+				await sendTelegramMessage(token, chatId, text);
+			}
+		};
+
+		platform.context?.waitUntil(Promise.all([dbOp(), telegramOp()]));
 
 		return json({ success: true });
 	} catch (e) {

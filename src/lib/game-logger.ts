@@ -133,11 +133,12 @@ class GameAnalytics {
 	/**
 	 * Send feedback to the server.
 	 */
-	public async sendFeedback(message: string) {
-		const payload = {
+	public async sendFeedback(message: string, email?: string) {
+		const payload: Record<string, unknown> = {
 			sessionId: this.sessionId,
 			message
 		};
+		if (email) payload.email = email;
 
 		try {
 			const response = await fetch('/api/game/feedback', {

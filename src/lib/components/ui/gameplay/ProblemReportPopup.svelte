@@ -21,6 +21,7 @@
 	let { visible, track, onClose, onSuccess }: Props = $props();
 
 	let message = $state('');
+	let email = $state('');
 	let isSending = $state(false);
 	let error = $state<string | null>(null);
 
@@ -48,6 +49,7 @@
 
 		const success = await analytics.reportProblem({
 			message: message.trim(),
+			email: email.trim() || undefined,
 			deezerId,
 			composer: track.composer.name,
 			work: track.work.name,
@@ -62,6 +64,7 @@
 			onSuccess();
 			onClose();
 			message = '';
+			email = '';
 		} else {
 			error = 'Failed to send report. Please try again.';
 		}
@@ -86,25 +89,35 @@
 				{$_('report.prompt')}
 			</p>
 
-			<div class="relative">
-				<textarea
-					bind:value={message}
-					placeholder={$_('report.placeholder')}
-					class="h-48 w-full rounded-xl border-2 {isTooShort || isTooLong
-						? 'border-red-500/50'
-						: 'border-slate-700/50'} bg-slate-950/50 p-4 text-lg text-slate-200 placeholder:text-slate-600 focus:border-cyan-400/50 focus:outline-hidden"
-					disabled={isSending}
-					maxlength="1100"
-				></textarea>
-				<div
-					class="absolute right-3 bottom-3 text-xs {isTooLong || isTooShort
-						? 'text-red-400'
-						: charCount > 900
-							? 'text-yellow-400'
-							: 'text-slate-500'}"
-				>
-					{charCount}/1000
+			<div class="flex flex-col gap-2">
+				<div class="relative">
+					<textarea
+						bind:value={message}
+						placeholder={$_('report.placeholder')}
+						class="h-48 w-full rounded-xl border-2 {isTooShort || isTooLong
+							? 'border-red-500/50'
+							: 'border-slate-700/50'} bg-slate-950/50 p-4 text-lg text-slate-200 placeholder:text-slate-600 focus:border-cyan-400/50 focus:outline-hidden"
+						disabled={isSending}
+						maxlength="1100"
+					></textarea>
+					<div
+						class="absolute right-3 bottom-3 text-xs {isTooLong || isTooShort
+							? 'text-red-400'
+							: charCount > 900
+								? 'text-yellow-400'
+								: 'text-slate-500'}"
+					>
+						{charCount}/1000
+					</div>
 				</div>
+				<input
+					type="email"
+					bind:value={email}
+					placeholder={$_('common.emailPlaceholder')}
+					class="w-full rounded-xl border-2 border-slate-700/50 bg-slate-950/50 px-4 py-3 text-sm text-slate-200 placeholder:text-slate-600 focus:border-cyan-400/50 focus:outline-hidden"
+					disabled={isSending}
+					maxlength="254"
+				/>
 			</div>
 
 			{#if error}

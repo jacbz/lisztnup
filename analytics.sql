@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS problem_reports (
   user_hash TEXT,
   country TEXT,
   message TEXT,
+  email TEXT,
   deezer_id TEXT,
   composer TEXT,
   work TEXT,
@@ -51,5 +52,6 @@ CREATE TABLE IF NOT EXISTS feedback (
   session_id TEXT,
   user_hash TEXT,
   country TEXT,
-  message TEXT
+  message TEXT,
+  email TEXT
 );

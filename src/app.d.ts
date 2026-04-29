@@ -10,6 +10,8 @@ declare global {
 		interface Platform {
 			env: {
 				DB: D1Database;
+				TELEGRAM_BOT_TOKEN: string;
+				TELEGRAM_CHAT_ID: string;
 			};
 			context: {
 				waitUntil(promise: Promise<any>): void;

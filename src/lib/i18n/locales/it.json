@@ -7,7 +7,8 @@
 		"confirm": "Conferma",
 		"reportProblem": "Segnala un problema",
 		"searchOn": "Cerca su...",
-		"playAgain": "Riascolta"
+		"playAgain": "Riascolta",
+		"emailPlaceholder": "Email (facoltativo)"
 	},
 	"report": {
 		"title": "Segnala un problema",

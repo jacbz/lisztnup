@@ -7,7 +7,8 @@
 		"confirm": "Confirm",
 		"reportProblem": "Report a problem",
 		"searchOn": "Search on...",
-		"playAgain": "Play again"
+		"playAgain": "Play again",
+		"emailPlaceholder": "Email (optional)"
 	},
 	"report": {
 		"title": "Report a problem",

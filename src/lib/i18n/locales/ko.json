@@ -7,7 +7,8 @@
 		"confirm": "확인",
 		"reportProblem": "문제 신고",
 		"searchOn": "검색...",
-		"playAgain": "다시 듣기"
+		"playAgain": "다시 듣기",
+		"emailPlaceholder": "이메일 (선택 사항)"
 	},
 	"report": {
 		"title": "문제 신고",
