@@ -20,7 +20,7 @@ class GameAnalytics {
 	 * Fire-and-forget payload dispatcher using the browser's Background Sync
 	 * or standard fetch, prioritizing Keep-Alive.
 	 */
-	private dispatch(payload: Record<string, any>) {
+	private dispatch(payload: Record<string, unknown>) {
 		try {
 			if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
 				// Reliable transmission even when the tab is closing
@@ -34,9 +34,9 @@ class GameAnalytics {
 					keepalive: true,
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify(payload)
-				}).catch((e) => console.log('Analytics dropped', e));
+				}).catch((err) => console.log('Analytics dropped', err));
 			}
-		} catch (e) {
+		} catch {
 			// Fail completely silently on the client
 		}
 	}
@@ -49,7 +49,7 @@ class GameAnalytics {
 		mode: string,
 		tracklistId: string,
 		locale: string,
-		gameInfo: Record<string, any> | null = null
+		gameInfo: Record<string, unknown> | null = null
 	) {
 		this.sessionId = generateSessionId();
 		this.dispatch({
@@ -80,7 +80,7 @@ class GameAnalytics {
 	/**
 	 * Update the current progress of an active game.
 	 */
-	public updateProgress(gameInfo: Record<string, any>) {
+	public updateProgress(gameInfo: Record<string, unknown>) {
 		if (!this.sessionId) return;
 
 		this.dispatch({
@@ -94,7 +94,7 @@ class GameAnalytics {
 	/**
 	 * Conclude playing, saving state back.
 	 */
-	public endGame(state: 'completed' | 'abandoned' = 'abandoned', gameInfo: Record<string, any> | null = null) {
+	public endGame(state: 'completed' | 'abandoned' = 'abandoned', gameInfo: Record<string, unknown> | null = null) {
 		if (!this.sessionId) return;
 
 		this.dispatch({
@@ -111,7 +111,7 @@ class GameAnalytics {
 	/**
 	 * Send a problem report to the server.
 	 */
-	public async reportProblem(data: Record<string, any>) {
+	public async reportProblem(data: Record<string, unknown>) {
 		const payload = {
 			sessionId: this.sessionId,
 			...data

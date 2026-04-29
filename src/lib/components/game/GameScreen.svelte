@@ -107,8 +107,8 @@
 	onMount(() => {
 		const tracklistId = get(settings).selectedTracklist || 'unknown';
 		const currentLocale = get(locale) || 'en';
-		let gameInfo: Record<string, any> | null = null;
-		
+		let gameInfo: Record<string, unknown> | null = null;
+
 		if (mode === 'timeline') {
 			gameInfo = {
 				cardsToWin: get(settings).timelineCardsToWin,
@@ -150,7 +150,7 @@
 		// If we are destroying and the session is still active, it means the user quit early
 		// or we are capturing the natural end state.
 		const state = showEndGameScreen ? 'completed' : 'abandoned';
-		
+
 		if (mode === 'buzzer' || mode === 'classic') {
 			analytics.endGame(state, {
 				scores: get(gameSession).players.map((p) => p.score),
@@ -565,7 +565,7 @@
 			class="fixed bottom-4 left-1/2 z-10 -translate-x-1/2 md:right-6 md:left-auto md:translate-x-0"
 		>
 			<div
-				class="flex min-w-[140px] flex-col gap-1.5 rounded-xl border-2 border-slate-700 bg-slate-800 px-3 py-2 md:mr-20 md:min-w-[180px] md:gap-2 md:px-4 md:py-3"
+				class="flex min-w-35 flex-col gap-1.5 rounded-xl border-2 border-slate-700 bg-slate-800 px-3 py-2 md:mr-20 md:min-w-45 md:gap-2 md:px-4 md:py-3"
 			>
 				{#each sortedPlayers as player (player.name)}
 					<div class="flex items-center gap-1.5 md:gap-2">

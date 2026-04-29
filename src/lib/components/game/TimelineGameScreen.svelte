@@ -159,7 +159,7 @@
 			<div class="absolute inset-0 flex flex-col items-center justify-center gap-4 p-4">
 				{#if !game.hasPlaybackStarted}
 					<!-- Fresh card — show play button -->
-					<div class="relative h-[170px] w-[170px]">
+					<div class="relative h-42.5 w-42.5">
 						<PlayerControl
 							visible={true}
 							isPlaying={false}
@@ -180,7 +180,7 @@
 					</div>
 				{:else}
 					<!-- Playing -->
-					<div class="relative h-[170px] w-[170px]">
+					<div class="relative h-42.5 w-42.5">
 						<PlayerControl
 							visible={true}
 							isPlaying={true}
@@ -268,7 +268,7 @@
 							(edge === 'left' && rotation === 90) ||
 							(edge === 'right' && rotation === -90)}
 						{#if isCorrectRotation}
-							<div class="mx-auto flex max-w-[900px] flex-col items-center gap-2 px-2 pb-4">
+							<div class="mx-auto flex max-w-225 flex-col items-center gap-2 px-2 pb-4">
 								{#each edgeTimelines as t (t.player.name)}
 									<div animate:flip={{ duration: 500 }}>
 										{@render timelineDisplay(t, rotation, edge)}

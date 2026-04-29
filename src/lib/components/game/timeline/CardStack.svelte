@@ -57,6 +57,7 @@
 		{@const activeX = isTop && dragging ? dragTranslate.x : 0}
 		{@const activeY = isTop && dragging ? dragTranslate.y : 0}
 
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<div
 			class="absolute"
 			class:pointer-events-none={!isTop}

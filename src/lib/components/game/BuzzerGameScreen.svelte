@@ -319,7 +319,7 @@
 					>
 						{#if isPlaceholder}
 							<div class="text-4xl font-bold text-gray-400 md:text-5xl">?</div>
-							<div class="min-w-[60px] text-center text-4xl font-bold text-gray-400 md:text-5xl">
+							<div class="min-w-15 text-center text-4xl font-bold text-gray-400 md:text-5xl">
 								{Math.ceil(timeRemaining)}
 							</div>
 						{:else}
@@ -351,7 +351,7 @@
 							</div>
 							{#if isCurrent}
 								<div
-									class="relative z-10 min-w-[60px] text-center text-4xl font-bold text-white md:text-5xl"
+									class="relative z-10 min-w-15 text-center text-4xl font-bold text-white md:text-5xl"
 								>
 									{Math.ceil(trackDuration - playbackTime)}
 								</div>
@@ -364,7 +364,7 @@
 		<div class="relative z-50 flex items-center justify-center">
 			<button
 				type="button"
-				class="relative z-100 flex aspect-square w-80 max-w-[80vw] cursor-pointer items-center justify-center rounded-full border-8 px-8 transition-all duration-200 hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 md:w-[500px] {buzzerButtonClasses}"
+				class="relative z-100 flex aspect-square w-80 max-w-[80vw] cursor-pointer items-center justify-center rounded-full border-8 px-8 transition-all duration-200 hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 md:w-125 {buzzerButtonClasses}"
 				onmousedown={hasTouch ? undefined : handleBuzzerDown}
 				ontouchstart={hasTouch ? handleBuzzerDown : undefined}
 				disabled={isBuzzerPressed && !showReveal}
