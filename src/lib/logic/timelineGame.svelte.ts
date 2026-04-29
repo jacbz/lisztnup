@@ -767,6 +767,18 @@ export class TimelineGame {
 				this.#clearRevealState();
 				this.showEndGame = true;
 				this.#isClosingRevealPopup = false;
+
+				// Eagerly send game_end on win so the event isn't lost if the tab closes.
+				// endGame() is idempotent — it no-ops if already sent.
+				import('$lib/game-logger')
+					.then(({ analytics }) => {
+						analytics.endGame('completed', {
+							numberOfTurns: this.totalTurns,
+							players: this.playerStats
+						});
+					})
+					.catch(() => {});
+
 				return;
 			}
 
