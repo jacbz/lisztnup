@@ -10,7 +10,7 @@
 
 ### Timeline
 
-Players place tracks on a chronological timeline. Drag a card from the center stack to the correct position in your timeline. Correct placement = keep the card. Wrong = discard. First to reach the target card count wins (default 10, configurable 10/15/20).
+Players take clock-wise turns placing tracks on their own chronological timeline. Drag a card from the center stack to the correct position in your timeline. Correct placement = keep the card. Wrong = discard. First to reach the target card count wins (default 6, configurable 6/10/15).
 
 - 1–10 players, each assigned a screen edge (Bottom/Left/Top/Right)
 - No scoring system — win condition is card count

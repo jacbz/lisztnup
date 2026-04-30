@@ -23,7 +23,15 @@ const BOT_USER_AGENTS = [
 	'ltx71',
 	'cms-checker',
 	'facebookexternalhit',
-	'palo alto networks'
+	'palo alto networks',
+	'python-requests',
+	'aiohttp',
+	'axios',
+	'go-http-client',
+	'internet-measurement',
+	'whatsapp',
+	'l9scan',
+	'leakix'
 ];
 
 function isBot(userAgent: string | null) {
@@ -39,7 +47,9 @@ function getOS(userAgent: string | null): string {
 	if (ua.includes('android')) return 'Android';
 	if (ua.includes('iphone') || ua.includes('ipad') || ua.includes('ipod')) return 'iOS';
 	if (ua.includes('macintosh') || ua.includes('mac os x')) return 'macOS';
+	if (ua.includes('cros')) return 'ChromeOS';
 	if (ua.includes('linux')) return 'Linux';
+	if (ua.includes('freebsd') || ua.includes('openbsd') || ua.includes('netbsd')) return 'BSD';
 	return 'OTHER';
 }
 
