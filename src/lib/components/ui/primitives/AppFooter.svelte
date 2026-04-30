@@ -15,7 +15,7 @@
 </script>
 
 <div class="text-center text-slate-400">
-	<div class="flex items-center justify-center gap-2 text-sm">
+	<div class="flex items-center justify-center gap-2 text-sm flex-wrap gap-y-0">
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<span onclick={() => (showAboutPopup = true)} class="cursor-pointer">
@@ -44,7 +44,7 @@
 			<span>{$_('feedback.title')}</span>
 		</button>
 	</div>
-	<div class="inline-flex items-center gap-1.5 text-xs">
+	<div class="inline-flex items-center justify-center gap-1.5 text-xs  flex-wrap gap-y-0">
 		{@html $_('footer.poweredBy', {
 			values: {
 				first: `<a href="https://musicbrainz.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-cyan-400 transition-colors hover:text-cyan-300">
@@ -68,10 +68,6 @@
 			<span>GitHub</span>
 		</a>
 	</div>
-</div>
-
-<div class="fixed right-2 bottom-1 text-[10px] text-slate-600 select-none">
-	v{__BUILD_DATE__}
 </div>
 
 <LibraryViewer

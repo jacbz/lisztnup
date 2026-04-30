@@ -369,21 +369,25 @@
 		<!-- Footer -->
 		<div class="mt-16 mb-6">
 			<AppFooter />
+			<!-- Player count + build date: in-flow on mobile, fixed corners on desktop -->
+			<div class="mt-3 flex items-center justify-end md:contents">
+				{#if pageviews24h != null}
+					<div class="md:fixed md:left-3 md:bottom-3 md:z-40">
+						<div
+							class="flex items-center gap-1.5 rounded-full border border-cyan-400/20 bg-slate-900/60 px-2 py-1 text-cyan-400/70 backdrop-blur-md"
+						>
+							<Users class="h-3.5 w-3.5" />
+							<span class="text-xs font-medium">{pageviews24h.toLocaleString()}</span>
+						</div>
+					</div>
+				{/if}
+				<div class="ml-auto text-[10px] text-slate-600 select-none md:fixed md:right-2 md:bottom-1 md:ml-0">
+					v{__BUILD_DATE__}
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
-
-<!-- Pageviews Pill (Bottom Left) -->
-{#if pageviews24h != null}
-	<div class="fixed left-3 bottom-3 z-40 hidden md:block">
-		<div
-			class="flex items-center gap-1.5 rounded-full border border-cyan-400/20 bg-slate-900/60 px-2 py-1 text-cyan-400/70 backdrop-blur-md"
-		>
-			<Users class="h-3.5 w-3.5" />
-			<span class="text-xs font-medium">{pageviews24h.toLocaleString()}</span>
-		</div>
-	</div>
-{/if}
 
 <!-- Feedback FAB (Bottom Right) -->
 <div class="fixed right-6 bottom-6 z-40 hidden md:block">
