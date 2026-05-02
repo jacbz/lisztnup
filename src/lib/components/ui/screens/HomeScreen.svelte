@@ -21,11 +21,20 @@
 	import MessageSquare from 'lucide-svelte/icons/message-square';
 	import Users from 'lucide-svelte/icons/users';
 
-	/** Convert ISO 3166-1 alpha-2 country code to flag emoji */
-	function countryToFlag(code: string | undefined | null): string {
+	/** Get flag SVG URL for an ISO 3166-1 alpha-2 country code */
+	function countryFlagUrl(code: string | undefined | null): string | null {
+		if (!code || code.length !== 2 || code === 'UNKNOWN') return null;
+		return `https://purecatamphetamine.github.io/country-flag-icons/3x2/${code.toUpperCase()}.svg`;
+	}
+
+	/** Get localized country name for a country code */
+	function countryName(code: string | undefined | null, loc: string): string {
 		if (!code || code.length !== 2 || code === 'UNKNOWN') return '';
-		const upper = code.toUpperCase();
-		return String.fromCodePoint(...[...upper].map((c) => 0x1f1e6 + c.charCodeAt(0) - 65));
+		try {
+			return new Intl.DisplayNames([loc], { type: 'region' }).of(code.toUpperCase()) ?? '';
+		} catch {
+			return '';
+		}
 	}
 
 	interface LeaderboardEntry {
@@ -329,9 +338,9 @@
 							{:else}
 								<div class="grid grid-cols-[auto_2fr_1fr_1fr] items-center gap-x-1.5 gap-y-1 text-xs text-left">
 									{#each leaderboardEntries as entry, i (i)}
-										{@const flag = countryToFlag(entry.country)}
-										<span class="text-center font-bold text-slate-500 mr-2">{i + 1}</span>
-										<span class="truncate text-slate-300">{#if flag}<span class="text-[11px] leading-none">{flag}</span>{/if} {entry.player_name}</span>
+								{@const flagUrl = countryFlagUrl(entry.country)}
+								<span class="text-center font-bold text-slate-500 mr-2">{i + 1}</span>
+								<span class="truncate text-slate-300">{#if flagUrl}<img src={flagUrl} alt="" title={countryName(entry.country, currentLocale)} class="mr-0.5 inline-block h-2.5 w-3.75 rounded-xs border-[0.5px] border-slate-600 align-baseline select-none" draggable="false" oncontextmenu={(e) => e.preventDefault()} />{/if} {entry.player_name}</span>
 										<span class="text-right font-bold tabular-nums">{$_('scoring.pts', { values: { points: entry.score.toLocaleString() } })}</span>
 										<span class="text-right tabular-nums text-slate-500">{formatEntryDate(entry.timestamp, currentLocale)}</span>
 									{/each}
