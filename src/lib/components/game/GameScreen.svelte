@@ -594,7 +594,7 @@
 							>{player.name}</span
 						>
 						<span class="text-xs font-bold text-cyan-400 md:text-sm"
-							>{$_('scoring.pts', { values: { points: player.score } })}</span
+							>{$_('scoring.pts', { values: { points: player.score.toLocaleString() } })}</span
 						>
 					</div>
 				{/each}
@@ -661,7 +661,7 @@
 >
 	<div class="flex flex-col">
 		<div class="min-h-0 flex-1 rounded-2xl border border-slate-700/50 bg-slate-950/30 p-4">
-			<TrackInfo track={currentTrack} showMirror={$gameSession.players.length > 1} bleed="sm" />
+			<TrackInfo track={currentTrack} bleed="sm" />
 		</div>
 
 		<!-- Continue button -->

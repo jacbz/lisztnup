@@ -26,7 +26,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 					// Use UPSERT to handle cases where game_end arrives first
 					await db
 						.prepare(
-					`INSERT INTO game_sessions (id, started, updated, state, mode, tracklist_id, country, user_hash, locale, game_info) 
+							`INSERT INTO game_sessions (id, started, updated, state, mode, tracklist_id, country, user_hash, locale, game_info) 
 					 VALUES (?1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'started', ?2, ?3, ?4, ?5, ?6, ?7)
 					 ON CONFLICT(id) DO UPDATE SET 
 					 	started = COALESCE(game_sessions.started, CURRENT_TIMESTAMP),
@@ -52,30 +52,24 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 					// Use UPSERT to handle cases where game_end arrives before game_start
 					const gameInfoJson = payload.gameInfo ? JSON.stringify(payload.gameInfo) : '{}';
 					const newState = payload.state || 'ended';
-					
+
 					await db
 						.prepare(
-					`INSERT INTO game_sessions (id, updated, state, country, user_hash, game_info) 
+							`INSERT INTO game_sessions (id, updated, state, country, user_hash, game_info) 
 					 VALUES (?1, CURRENT_TIMESTAMP, ?2, ?3, ?4, ?5)
 					 ON CONFLICT(id) DO UPDATE SET 
 					 	updated = CURRENT_TIMESTAMP,
 						 	state = ?2,
 						 	game_info = json_patch(COALESCE(game_sessions.game_info, '{}'), ?5)`
 						)
-						.bind(
-							payload.sessionId,
-							newState,
-							country,
-							userHash,
-							gameInfoJson
-						)
+						.bind(payload.sessionId, newState, country, userHash, gameInfoJson)
 						.run();
 				} else if (payload.type === 'game_progress') {
 					// Use UPSERT so we don't lose data if progress arrives before game_start
 					const gameInfoJson = payload.gameInfo ? JSON.stringify(payload.gameInfo) : '{}';
 					await db
 						.prepare(
-					`INSERT INTO game_sessions (id, updated, state, country, user_hash, game_info) 
+							`INSERT INTO game_sessions (id, updated, state, country, user_hash, game_info) 
 						 VALUES (?1, CURRENT_TIMESTAMP, 'in_progress', ?2, ?3, ?4)
 						 ON CONFLICT(id) DO UPDATE SET 
 							updated = CURRENT_TIMESTAMP,

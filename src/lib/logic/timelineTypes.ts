@@ -25,6 +25,27 @@ export interface TimelineRow {
 	correctPlacements: number;
 	currentStreak: number;
 	longestStreak: number;
+	score: number;
+	reachedTarget: boolean;
+	efficiencyBonus: number;
+}
+
+/** Full breakdown of a single turn's score computation. */
+export interface TurnScoreBreakdown {
+	baseScore: number;
+	difficultyBonus: number;
+	gap: number;
+	/** True when the card was placed at the start or end of the timeline. */
+	isEdgePlacement: boolean;
+	masteryBonus: number;
+	correctSoFar: number;
+	attemptsSoFar: number;
+	speedMult: number;
+	secondsTaken: number;
+	streakMult: number;
+	streakCount: number;
+	rawScore: number;
+	totalScore: number;
 }
 
 // ─── Enumerations ──────────────────────────────────────────

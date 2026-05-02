@@ -151,7 +151,7 @@
 			{:else if currentMode === 'buzzer'}
 				<BuzzerGameScreen />
 			{:else if currentMode === 'timeline'}
-				<TimelineGameScreen players={currentPlayers} cardsToWin={$settings.timelineCardsToWin} />
+				<TimelineGameScreen players={currentPlayers} cardsToWin={$settings.timelineCardsToWin} {isSoloMode} />
 			{:else}
 				<BingoGameScreen />
 			{/if}

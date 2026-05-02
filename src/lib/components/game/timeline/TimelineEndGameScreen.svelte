@@ -8,8 +8,12 @@
 	import Home from 'lucide-svelte/icons/home';
 	import MessageSquare from 'lucide-svelte/icons/message-square';
 	import Flame from 'lucide-svelte/icons/flame';
+	import BarChart from 'lucide-svelte/icons/bar-chart-3';
 	import FeedbackPopup from '$lib/components/ui/gameplay/FeedbackPopup.svelte';
+	import LeaderboardSubmitPopup, { type LeaderboardPlayer } from '$lib/components/ui/screens/LeaderboardSubmitPopup.svelte';
 	import { STREAK_THRESHOLD } from '$lib/logic/timelineGame.svelte';
+	import Send from 'lucide-svelte/icons/send';
+	import Crown from 'lucide-svelte/icons/crown';
 	import { onMount } from 'svelte';
 
 	interface FinalTimeline {
@@ -19,6 +23,9 @@
 		correctPlacements: number;
 		currentStreak: number;
 		longestStreak: number;
+		score: number;
+		reachedTarget: boolean;
+		efficiencyBonus: number;
 	}
 
 	interface Props {
@@ -26,7 +33,9 @@
 		cardsToWin: number;
 		timelines: FinalTimeline[];
 		tracksExhausted?: boolean;
+		tracklistId?: string | null;
 		onHome?: () => void;
+		onViewStats?: () => void;
 	}
 
 	let {
@@ -34,39 +43,34 @@
 		cardsToWin,
 		timelines,
 		tracksExhausted = false,
-		onHome = () => {}
+		tracklistId = null,
+		onHome = () => {},
+		onViewStats
 	}: Props = $props();
 
 	let inspectTrack = $state<Track | null>(null);
 
-	// Winner: player who reached cardsToWin, or if tracks exhausted, player with most cards
+	// Winner: player with highest score (already includes efficiencyBonus)
+	// score already includes efficiencyBonus — no need to add it again
+	const sortedTimelines = $derived(
+		[...timelines].sort((a, b) => b.score - a.score)
+	);
+
 	const winner = $derived.by(() => {
-		// First check for a player who reached the target
-		const targetWinner = timelines
-			.filter((t) => t.entries.length >= cardsToWin)
-			.sort((a, b) => b.entries.length - a.entries.length)[0]?.player;
-		if (targetWinner) return targetWinner;
-
-		// If tracks exhausted, find the leader(s)
-		if (tracksExhausted && timelines.length > 0) {
-			const sorted = [...timelines].sort((a, b) => b.entries.length - a.entries.length);
-			const maxCards = sorted[0].entries.length;
-			const leaders = sorted.filter((t) => t.entries.length === maxCards);
-			// Only declare a winner if there's a single leader
-			if (leaders.length === 1) return leaders[0].player;
+		if (sortedTimelines.length === 0) return null;
+		const top = sortedTimelines[0];
+		if (top.score === 0) return null;
+		// Check for tie
+		if (sortedTimelines.length >= 2) {
+			if (sortedTimelines[1].score === top.score) return null;
 		}
-
-		return null;
+		return top.player;
 	});
 
 	const isDraw = $derived(
-		tracksExhausted &&
-			!winner &&
-			timelines.length > 1 &&
-			(() => {
-				const sorted = [...timelines].sort((a, b) => b.entries.length - a.entries.length);
-				return sorted.length >= 2 && sorted[0].entries.length === sorted[1].entries.length;
-			})()
+		sortedTimelines.length >= 2 &&
+			sortedTimelines[0].score > 0 &&
+			sortedTimelines[0].score === sortedTimelines[1].score
 	);
 
 	const revealYearText = $derived.by(() => {
@@ -76,11 +80,29 @@
 		});
 	});
 
+	const leaderboardPlayers = $derived<LeaderboardPlayer[]>(
+		sortedTimelines
+			.filter((t) => t.score > 0)
+			.map((t) => ({
+				name: t.player.name,
+				color: t.player.color,
+				score: t.score,
+				cards: t.entries.length,
+				accuracy: t.totalPlacements > 0 ? t.correctPlacements / t.totalPlacements : 0,
+				longestStreak: t.longestStreak
+			}))
+	);
+
 	let showFeedbackPopup = $state(false);
+	let showLeaderboardSubmit = $state(false);
 	let gameoverAudio: HTMLAudioElement | null = null;
+	let gameoverPlayed = false;
+	let isNewHighScore = $state(false);
+	let existingScoresByName = $state<Record<string, number>>({});
 
 	$effect(() => {
-		if (visible && gameoverAudio) {
+		if (visible && gameoverAudio && !gameoverPlayed) {
+			gameoverPlayed = true;
 			setTimeout(() => {
 				if (gameoverAudio) {
 					gameoverAudio.currentTime = 0;
@@ -89,6 +111,44 @@
 			}, 300);
 		}
 	});
+
+	// Fetch leaderboard: check for new global high score + existing per-player scores
+	$effect(() => {
+		if (!visible || sortedTimelines.length === 0) return;
+
+		const params = new URLSearchParams();
+		if (tracklistId) params.set('tracklist', tracklistId);
+		params.set('cardsToWin', String(cardsToWin));
+		params.set('limit', '50');
+
+		fetch(`/api/game/leaderboard?${params}`)
+			.then((r) => r.json())
+			.then((data: { entries?: { player_name: string; score: number }[] }) => {
+				const entries = data.entries ?? [];
+				// New global high score?
+				const topScore = Math.round(sortedTimelines[0].score);
+				if (topScore > 0 && (entries.length === 0 || topScore > entries[0].score)) {
+					isNewHighScore = true;
+				}
+				// Build map of existing best scores by player name
+				const map: Record<string, number> = {};
+				for (const e of entries) {
+					if (!map[e.player_name] || e.score > map[e.player_name]) {
+						map[e.player_name] = e.score;
+					}
+				}
+				existingScoresByName = map;
+			})
+			.catch(() => {}); // silent
+	});
+
+	// Players whose score beats their existing leaderboard score
+	const publishablePlayers = $derived(
+		leaderboardPlayers.filter((p) => {
+			const existing = existingScoresByName[p.name];
+			return existing === undefined || Math.round(p.score) > existing;
+		})
+	);
 
 	onMount(() => {
 		gameoverAudio = new Audio('/gameover.mp3');
@@ -113,62 +173,125 @@
 			{/if}
 		</div>
 
+		{#if isNewHighScore}
+			<div class="flex items-center justify-center gap-2 rounded-lg border border-amber-400/30 bg-amber-400/10 px-4 py-2">
+				<Crown class="h-5 w-5 text-amber-400" />
+				<span class="text-sm font-bold text-amber-400">{$_('leaderboard.newHighScore')}</span>
+				<Crown class="h-5 w-5 text-amber-400" />
+			</div>
+		{/if}
+
 		<div class="-my-4 max-h-[50vh] space-y-4 overflow-y-auto px-2 py-8">
-			{#each timelines as t (t.player.name)}
-				<div class="flex flex-col items-center gap-1">
-					<PlayerTimeline
-						playerName={t.player.name}
-						playerColor={t.player.color}
-						entries={t.entries}
-						active={false}
-						compact={false}
-						acceptingDrop={false}
-						onConfirmedCardClick={(entry) => (inspectTrack = entry.track)}
-					/>
-					<p class="flex items-center gap-2 text-xs text-slate-400">
-						<span>
-							{$_('timeline.accuracy', {
-								values: {
-									correct: t.correctPlacements,
-									total: t.totalPlacements,
-									percentage: t.totalPlacements > 0 ? Math.round((t.correctPlacements / t.totalPlacements) * 100) : 0
-								}
-							})}
-						</span>
-						{#if t.longestStreak >= STREAK_THRESHOLD}
-							<span class="flex items-center gap-0.5 text-orange-400/70">
-								<Flame class="h-3 w-3" />
-								{$_('timeline.longestStreak', { values: { count: t.longestStreak } })}
+			{#each sortedTimelines as t, index (t.player.name)}
+				{@const totalScore = Math.round(t.score)}
+				{@const isWinner = index === 0 && totalScore > 0}
+				<div
+					class="rounded-2xl border px-4 py-3 {isWinner ? 'border-amber-400/40 bg-amber-400/5' : 'border-slate-700/40 bg-slate-800/40'}"
+					style={isWinner ? 'box-shadow: 0 0 20px rgba(251,191,36,0.1);' : ''}
+				>
+					<div class="flex flex-col gap-2">
+						<!-- Rank + Score header -->
+						<div class="flex items-center justify-between">
+							<div class="flex items-center gap-2">
+								<span class="text-lg font-bold {isWinner ? 'text-amber-400' : 'text-slate-400'}">
+									#{index + 1}
+								</span>
+								<div class="h-3 w-3 rounded-full" style="background-color: {t.player.color};"></div>
+								<span class="font-semibold text-white">{t.player.name}</span>
+							</div>
+							<span class="text-xl font-bold text-cyan-400 tabular-nums">
+								{$_('scoring.pts', { values: { points: totalScore.toLocaleString() } })}
 							</span>
-						{/if}
-					</p>
+						</div>
+
+						<PlayerTimeline
+							playerName={t.player.name}
+							playerColor={t.player.color}
+							entries={t.entries}
+							active={false}
+							compact={false}
+							acceptingDrop={false}
+							onConfirmedCardClick={(entry) => (inspectTrack = entry.track)}
+						/>
+						<p class="flex items-center gap-2 text-xs text-slate-400">
+							<span>
+								{$_('timeline.accuracy', {
+									values: {
+										correct: t.correctPlacements,
+										total: t.totalPlacements,
+										percentage: t.totalPlacements > 0 ? Math.round((t.correctPlacements / t.totalPlacements) * 100) : 0
+									}
+								})}
+							</span>
+							{#if t.longestStreak >= STREAK_THRESHOLD}
+								<span class="flex items-center gap-0.5 text-orange-400/70">
+									<Flame class="h-3 w-3" />
+									{$_('timeline.longestStreak', { values: { count: t.longestStreak } })}
+								</span>
+							{/if}
+						</p>
+					</div>
 				</div>
 			{/each}
 		</div>
 
 		<div class="flex flex-col gap-3">
-			<button
-				type="button"
-				onclick={onHome}
-				class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3.5 text-base font-bold text-cyan-400 transition-all duration-200 hover:border-cyan-400 hover:bg-slate-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)]"
-			>
-				<Home class="h-5 w-5" />
-				{$_('endGame.home')}
-			</button>
+			{#if publishablePlayers.length > 0}
+				<button
+					type="button"
+					onclick={() => (showLeaderboardSubmit = true)}
+					class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-amber-400 bg-slate-900 px-6 py-3.5 text-base font-bold text-amber-400 transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_0_20px_rgba(251,191,36,0.4)]"
+				>
+					<Send class="h-5 w-5" />
+					{$_('leaderboard.publishScore')}
+				</button>
+			{/if}
 
-			<button
-				type="button"
-				onclick={() => (showFeedbackPopup = true)}
-				class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-slate-700/50 bg-slate-800/30 px-6 py-3 text-base font-bold text-slate-400 transition-all duration-200 hover:border-cyan-400/50 hover:bg-slate-800 hover:text-cyan-400 hover:shadow-[0_0_15px_rgba(34,211,238,0.2)]"
-			>
-				<MessageSquare class="h-5 w-5" />
-				<span>{$_('feedback.button')}</span>
-			</button>
+			<div class="flex items-center gap-2">
+				{#if onViewStats}
+					<button
+						type="button"
+						onclick={onViewStats}
+						class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all duration-200 hover:border-slate-500 hover:bg-slate-700/60 hover:text-white"
+					>
+						<BarChart class="h-4 w-4 shrink-0" />
+						{$_('stats.title')}
+					</button>
+				{/if}
+
+				<button
+					type="button"
+					onclick={onHome}
+					class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all duration-200 hover:border-slate-500 hover:bg-slate-700/60 hover:text-white"
+				>
+					<Home class="h-4 w-4 shrink-0" />
+					{$_('endGame.home')}
+				</button>
+
+				<button
+					type="button"
+					onclick={() => (showFeedbackPopup = true)}
+					class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all duration-200 hover:border-slate-500 hover:bg-slate-700/60 hover:text-white"
+				>
+					<MessageSquare class="h-4 w-4 shrink-0" />
+					{$_('feedback.title')}
+				</button>
+			</div>
 		</div>
 	</div>
 </Popup>
 
 <FeedbackPopup visible={showFeedbackPopup} onClose={() => (showFeedbackPopup = false)} />
+
+{#if publishablePlayers.length > 0}
+	<LeaderboardSubmitPopup
+		visible={showLeaderboardSubmit}
+		players={publishablePlayers}
+		{tracklistId}
+		{cardsToWin}
+		onClose={() => (showLeaderboardSubmit = false)}
+	/>
+{/if}
 
 <Popup
 	visible={!!inspectTrack}
@@ -184,7 +307,7 @@
 			<div
 				class="min-h-0 flex-1 overflow-y-auto rounded-2xl border border-slate-700/50 bg-slate-950/30 p-4"
 			>
-				<TrackInfo track={inspectTrack} showMirror={false} bleed="sm" />
+				<TrackInfo track={inspectTrack} bleed="sm" />
 			</div>
 		</div>
 	{/if}

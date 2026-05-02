@@ -337,8 +337,7 @@ export function cloneTracklist(
 	translatedName?: string,
 	translatedDescription?: string
 ): CustomTracklist {
-	const baseName =
-		translatedName ?? (tracklist.kind === 'custom' ? tracklist.name : tracklist.id);
+	const baseName = translatedName ?? (tracklist.kind === 'custom' ? tracklist.name : tracklist.id);
 	const baseDescription =
 		translatedDescription ?? (tracklist.kind === 'custom' ? tracklist.description : '');
 

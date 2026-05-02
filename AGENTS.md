@@ -8,17 +8,17 @@
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | SvelteKit 5 (Svelte Runes) |
-| Language | TypeScript (strict) |
-| Styling | Tailwind CSS 4 |
-| State | Svelte Stores + localStorage |
-| Audio | Web Audio API + HTML Audio fallback |
-| Icons | `lucide-svelte` |
-| i18n | `svelte-i18n` (10 languages) |
-| Deploy | Cloudflare Pages + D1 |
-| Build | Vite 7, pnpm |
+| Layer     | Technology                          |
+| --------- | ----------------------------------- |
+| Framework | SvelteKit 5 (Svelte Runes)          |
+| Language  | TypeScript (strict)                 |
+| Styling   | Tailwind CSS 4                      |
+| State     | Svelte Stores + localStorage        |
+| Audio     | Web Audio API + HTML Audio fallback |
+| Icons     | `lucide-svelte`                     |
+| i18n      | `svelte-i18n` (10 languages)        |
+| Deploy    | Cloudflare Pages + D1               |
+| Build     | Vite 7, pnpm                        |
 
 ## Commands
 
@@ -34,27 +34,28 @@ pnpm sync:tracklist   # Regenerate tracklist docs in out/
 
 ## Documentation Map
 
-| Document | Purpose |
-|---|---|
-| [ARCHITECTURE.md](ARCHITECTURE.md) | **Start here for code navigation.** Directory map, layer architecture, data flow, singletons, server & analytics layer, database schema, API endpoints. |
-| [doc/DESIGN.md](doc/DESIGN.md) | Design principles, Svelte 5 patterns, Tailwind/styling rules, TypeScript conventions, i18n rules. |
-| [doc/FRONTEND.md](doc/FRONTEND.md) | Component hierarchy, GameScreen base pattern, Popup conventions, SpinningWheel physics, animation patterns, component catalog. |
-| [doc/PRODUCT.md](doc/PRODUCT.md) | Game modes & rules, game flow state machine, scoring system, tracklist system, data pipeline, user-facing features. |
-| [doc/RELIABILITY.md](doc/RELIABILITY.md) | Network resilience, audio fallbacks, Safari handling, state integrity guards, resource cleanup. |
+| Document                                 | Purpose                                                                                                                                                 |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [ARCHITECTURE.md](ARCHITECTURE.md)       | **Start here for code navigation.** Directory map, layer architecture, data flow, singletons, server & analytics layer, database schema, API endpoints. |
+| [doc/DESIGN.md](doc/DESIGN.md)           | Design principles, Svelte 5 patterns, Tailwind/styling rules, TypeScript conventions, i18n rules.                                                       |
+| [doc/FRONTEND.md](doc/FRONTEND.md)       | Component hierarchy, GameScreen base pattern, Popup conventions, SpinningWheel physics, animation patterns, component catalog.                          |
+| [doc/PRODUCT.md](doc/PRODUCT.md)         | Game modes & rules, game flow state machine, scoring system, tracklist system, data pipeline, user-facing features.                                     |
+| [doc/RELIABILITY.md](doc/RELIABILITY.md) | Network resilience, audio fallbacks, Safari handling, state integrity guards, resource cleanup.                                                         |
 
 ## Documentation Maintenance
 
 After implementing changes, **update the relevant doc file** — not all of them, just the one that covers the area you changed:
 
-| What changed | Update |
-|---|---|
-| New/moved files, layers, stores, services, API endpoints, DB tables | [ARCHITECTURE.md](ARCHITECTURE.md) |
-| Coding patterns, styling rules, i18n conventions | [doc/DESIGN.md](doc/DESIGN.md) |
-| Components, popups, animations, UI patterns | [doc/FRONTEND.md](doc/FRONTEND.md) |
-| Game rules, flow, scoring, tracklists, user features | [doc/PRODUCT.md](doc/PRODUCT.md) |
-| Error handling, resilience, cleanup, Safari workarounds | [doc/RELIABILITY.md](doc/RELIABILITY.md) |
+| What changed                                                        | Update                                   |
+| ------------------------------------------------------------------- | ---------------------------------------- |
+| New/moved files, layers, stores, services, API endpoints, DB tables | [ARCHITECTURE.md](ARCHITECTURE.md)       |
+| Coding patterns, styling rules, i18n conventions                    | [doc/DESIGN.md](doc/DESIGN.md)           |
+| Components, popups, animations, UI patterns                         | [doc/FRONTEND.md](doc/FRONTEND.md)       |
+| Game rules, flow, scoring, tracklists, user features                | [doc/PRODUCT.md](doc/PRODUCT.md)         |
+| Error handling, resilience, cleanup, Safari workarounds             | [doc/RELIABILITY.md](doc/RELIABILITY.md) |
 
 **Anti-bloat rules:**
+
 - Each doc must stay **under 150 lines**. If a doc is approaching the limit, tighten prose — don't split into more files.
 - Write **what** and **why**, not implementation play-by-play. Agent-legible means concise and navigable, not exhaustive.
 - Never duplicate information across docs. Each fact lives in exactly one file.
@@ -76,16 +77,16 @@ After implementing changes, **update the relevant doc file** — not all of them
 
 ## Key Files
 
-| File | Role |
-|---|---|
-| `src/lib/services/DeezerPlayer.ts` | Audio playback singleton + LUFS normalization + NetworkError |
-| `src/lib/services/TracklistGenerator.ts` | O(1) weighted track sampling + manual curation |
-| `src/lib/components/game/GameScreen.svelte` | Base game infrastructure (all modes extend this) |
-| `src/lib/components/game/context.ts` | Typed context interface for GameScreen ↔ mode communication |
-| `src/lib/logic/timelineGame.svelte.ts` | Timeline game state + logic (Svelte 5 reactive class) |
-| `src/lib/stores/` | All reactive state (gameData, settings, gameState, etc.) |
-| `src/lib/game-logger.ts` | Client analytics singleton (sendBeacon delivery) |
-| `src/hooks.server.ts` | Server-side pageview tracking |
-| `src/routes/api/game/` | Analytics + feedback + reports API endpoints |
-| `analytics.sql` | Database schema (5 tables) |
-| `static/lisztnup.json` | 2.5MB compiled music database |
+| File                                        | Role                                                         |
+| ------------------------------------------- | ------------------------------------------------------------ |
+| `src/lib/services/DeezerPlayer.ts`          | Audio playback singleton + LUFS normalization + NetworkError |
+| `src/lib/services/TracklistGenerator.ts`    | O(1) weighted track sampling + manual curation               |
+| `src/lib/components/game/GameScreen.svelte` | Base game infrastructure (all modes extend this)             |
+| `src/lib/components/game/context.ts`        | Typed context interface for GameScreen ↔ mode communication  |
+| `src/lib/logic/timelineGame.svelte.ts`      | Timeline game state + logic (Svelte 5 reactive class)        |
+| `src/lib/stores/`                           | All reactive state (gameData, settings, gameState, etc.)     |
+| `src/lib/game-logger.ts`                    | Client analytics singleton (sendBeacon delivery)             |
+| `src/hooks.server.ts`                       | Server-side pageview tracking                                |
+| `src/routes/api/game/`                      | Analytics + feedback + reports API endpoints                 |
+| `analytics.sql`                             | Database schema (5 tables)                                   |
+| `static/lisztnup.json`                      | 2.5MB compiled music database                                |

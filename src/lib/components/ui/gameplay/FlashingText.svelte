@@ -7,21 +7,27 @@
 	interface Props {
 		/** The text to display. */
 		text: string;
+		/** Optional smaller second line below the main text. */
+		secondLine?: string;
 		/** Whether the flash is visible. */
 		visible?: boolean;
 		/** Rotation angle (from EdgeDisplay) to orient the text correctly. */
 		rotation?: number;
 		/** Intensity level 1–5. Controls glow size and text scale. */
 		intensity?: number;
+		/** Icon component to display. Defaults to Flame. */
+		icon?: typeof Flame;
 		/** Called when the flash animation completes and the text should hide. */
 		onComplete?: () => void;
 	}
 
 	let {
 		text,
+		secondLine = '',
 		visible = false,
 		rotation = 0,
 		intensity = 1,
+		icon: IconComponent = Flame,
 		onComplete = () => {}
 	}: Props = $props();
 
@@ -53,7 +59,7 @@
 
 {#if showing}
 	<div
-		class="pointer-events-none fixed inset-0 z-999 flex items-center justify-center"
+		class="pointer-events-none fixed inset-0 z-1100 flex items-center justify-center"
 	>
 		<div style="transform: rotate({rotation}deg);">
 			<div
@@ -64,17 +70,22 @@
 			>
 				<div class="flex items-center gap-3">
 					<div class="animate-streak-flash shrink-0">
-						<Flame
+						<IconComponent
 							class="text-orange-400"
 							style="width: {iconSize}em; height: {iconSize}em; filter: drop-shadow(0 0 6px rgba(251,146,60,0.8));"
 						/>
 					</div>
-					<span
-						class="whitespace-nowrap font-extrabold tracking-wide text-orange-300 select-none"
-						style="font-size: {1.5 + intensity * 0.25}rem;"
-					>
-						{text}
-					</span>
+					<div class="flex flex-col">
+						<span
+							class="whitespace-nowrap font-extrabold tracking-wide text-orange-300 select-none"
+							style="font-size: {1.5 + intensity * 0.25}rem;"
+						>
+							{text}
+						</span>
+						{#if secondLine}
+							<span class="text-sm text-orange-400/70">{secondLine}</span>
+						{/if}
+					</div>
 				</div>
 			</div>
 		</div>

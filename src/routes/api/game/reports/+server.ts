@@ -10,7 +10,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 
 	try {
 		const payload = await request.json();
-		
+
 		// Server-side length validation
 		if (!payload.message || payload.message.length < 5 || payload.message.length > 1000) {
 			return json({ success: false, error: 'Invalid message length' }, { status: 400 });

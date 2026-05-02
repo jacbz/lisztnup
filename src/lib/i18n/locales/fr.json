@@ -24,8 +24,7 @@
 		"placeholder": "Ton message...",
 		"submit": "Envoyer le feedback",
 		"sending": "Envoi en cours...",
-		"success": "Merci pour ton feedback !",
-		"button": "Donner ton avis"
+		"success": "Merci pour ton feedback !"
 	},
 	"search": {
 		"title": "Rechercher sur...",
@@ -539,7 +538,6 @@
 		"tie": "Égalité parfaite !",
 		"noMoreTracks": "Plus de morceaux disponibles.",
 		"finalScores": "Scores finaux",
-		"viewStats": "Voir les stats",
 		"home": "Accueil"
 	},
 	"timeline": {
@@ -553,7 +551,22 @@
 			"playFirst": "Joue la carte pour commencer.",
 			"dragToPlace": "Glisse la carte dans ta frise.",
 			"reorder": "Réorganise la carte, puis confirme."
-		}
+		},
+		"scoring": {
+			"base": "Base",
+			"difficulty": "Difficulté",
+			"gap": "écart {years}a",
+			"speed": "Vitesse",
+			"streak": "Série",
+			"streakCount": "{count} d'affilée",
+			"completionBonus": "Bonus de complétion",
+			"turnTotal": "Total du tour",
+			"score": "Score",
+			"streakMultiplier": "multiplicateur {mult}",
+			"mastery": "Maîtrise"
+		},
+		"targetReached": "Objectif atteint !",
+		"finalRound": "Dernière manche !"
 	},
 	"bingo": {
 		"setupDescription": "Chaque joueur a besoin de sa propre grille unique.",
@@ -590,6 +603,20 @@
 		"donateHint": "C’est gratuit et ça le restera. Mais si le cœur t’en dit, un petit café fait toujours plaisir.",
 		"donateButton": "Offrir un café",
 		"viewOnGithub": "Voir sur GitHub"
+	},
+	"leaderboard": {
+		"title": "Classement",
+		"loading": "Chargement\u2026",
+		"noScores": "Aucun score \u2014 sois le premier !",
+		"cards": "cartes",
+		"publishScore": "Publier au classement",
+		"submitted": "Score publi\u00e9 !",
+		"error": "\u00c9chec de l'envoi. R\u00e9essayer ?",
+		"submitting": "Envoi en cours\u2026",
+		"submit": "Envoyer",
+		"enterName": "Entre ton nom",
+		"namePlaceholder": "Ton nom",
+		"newHighScore": "Nouveau record mondial !"
 	},
 	"eras": {
 		"ancient": "Antiquité",

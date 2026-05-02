@@ -3,10 +3,12 @@
 	import { flip } from 'svelte/animate';
 	import { quintOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
+	import { _ } from 'svelte-i18n';
 	import { formatYearRange } from '$lib/utils';
 	import TimelineCard from './TimelineCard.svelte';
 	import Flame from 'lucide-svelte/icons/flame';
 	import { STREAK_THRESHOLD } from '$lib/logic/timelineGame.svelte';
+	import { getStreakMultiplier } from '$lib/logic/timelineScoring';
 
 	export interface TimelineEntry {
 		id: string;
@@ -40,6 +42,7 @@
 		isVertical?: boolean;
 		streakCount?: number;
 		longestStreak?: number;
+		score?: number;
 	}
 
 	let {
@@ -65,7 +68,8 @@
 		rotation = 0,
 		isVertical = false,
 		streakCount = 0,
-		longestStreak = 0
+		longestStreak = 0,
+		score = 0
 	}: Props = $props();
 
 	let el: HTMLDivElement | null = $state(null);
@@ -74,6 +78,8 @@
 	});
 
 	const cardSize = $derived(active && !compact ? 'sm' : 'xs');
+
+	const streakMult = $derived(getStreakMultiplier(streakCount));
 
 	const flameGlow = $derived.by(() => {
 		if (streakCount < STREAK_THRESHOLD) return '';
@@ -170,14 +176,19 @@
 			: flameGlow ? `box-shadow: ${flameGlow};` : ''}--entry-count: {Math.max(entries.length, 1)}; --gap: calc(var(--spacing) * 1.5);"
 	>
 		<div
-			class={`pointer-events-none absolute flex items-center gap-2 rounded-lg border border-slate-700/50 bg-slate-950/50 px-2 transition-all ${active ? 'top-0 left-0 z-100 -translate-y-full rounded-br-none rounded-bl-none py-0.5 text-xs text-slate-200' : '-top-2 left-1/2 -translate-x-1/2 text-[10px] text-slate-300'}`}
+			class={`pointer-events-none absolute flex items-center gap-1 whitespace-nowrap rounded-lg border border-slate-700/50 bg-slate-950/50 px-2 transition-all ${active ? 'top-0 left-0 z-100 -translate-y-full rounded-br-none rounded-bl-none py-0.5 text-xs text-slate-200' : '-top-2 left-1/2 -translate-x-1/2 text-[10px] text-slate-300'}`}
 		>
-			<div class="h-2 w-2 rounded-full" style="background-color: {playerColor};"></div>
+			<div class="h-2 w-2 shrink-0 rounded-full" style="background-color: {playerColor};"></div>
 			<div class="max-w-[28ch] truncate font-semibold tracking-wide select-none">{playerName}</div>
-			{#if streakCount >= STREAK_THRESHOLD}
-				<div class="flex items-center gap-0.5 text-orange-400/60">
-					<Flame class="h-3 w-3" />
-					<span class="text-[9px] font-bold">{streakCount}</span>
+			{#if score > 0}
+				<span class="text-slate-600">|</span>
+				<div class="font-bold text-cyan-400 tabular-nums">{$_('scoring.pts', { values: { points: Math.round(score).toLocaleString() } })}</div>
+			{/if}
+			{#if streakCount >= STREAK_THRESHOLD && active}
+				<span class="text-slate-600">|</span>
+				<div class="flex items-center gap-0.5 text-orange-400">
+					<Flame class="h-3.5 w-3.5" />
+					<span class="text-xs font-bold">{streakCount}</span>
 				</div>
 			{/if}
 		</div>
@@ -210,6 +221,8 @@
 				data-entry-id={entry.id}
 				animate:flip={{ duration: 250 }}
 				class="relative"
+				class:z-50={isPendingMove}
+				class:z-10={!entry.confirmed && !isPendingMove}
 			>
 				<div
 					class="transition-all duration-500 ease-in-out"

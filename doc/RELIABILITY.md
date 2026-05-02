@@ -12,6 +12,7 @@
 ### Fetch & Preload Timeouts
 
 All network operations use 15-second `AbortController`-based timeouts:
+
 - `fetch()` for audio data
 - HTML Audio `canplaythrough` preloads
 
@@ -30,6 +31,7 @@ This prevents indefinite hangs on stalled connections.
 ### Exponential Backoff Retry
 
 `GameScreen.sampleAndPreloadTrack()` on `NetworkError`:
+
 1. Retry same Deezer ID up to 3 times
 2. Backoff: 1s → 2s → 4s
 3. If `navigator.onLine` is false during retry, await `waitForOnline()` first
@@ -39,6 +41,7 @@ Context exposes `isPreloading`, `hasPreloadError`, and `retryPreload()` for chil
 ### Network Status Banner
 
 `NetworkStatusBanner.svelte` shows contextual in-game banners (z-50, below header):
+
 - **Red** (`WifiOff`): "You are offline"
 - **Amber** (spinning `Loader`): "Failed to load track. Retrying…"
 - **Green** (auto-hide 2s): "Back online!"
@@ -58,6 +61,7 @@ All `nextRound()` calls wrapped in try/catch with i18n toast messages.
 ### Multi-ID Fallback
 
 Each track part has up to 5 Deezer IDs. On load failure:
+
 1. Try another random ID from the same part
 2. If all IDs fail, discard track and sample a new one
 
@@ -96,11 +100,11 @@ Timeline and Classic apply `requireWorkYear` filtering at game start, removing w
 
 ## Resource Cleanup
 
-| Component | What's cleaned up |
-|---|---|
-| Classic/Buzzer/Bingo/Timeline | `audioProgress.subscribe()` unsubscribe in `onDestroy` |
-| `TimelineGame.destroy()` | `pointermove`/`pointerup`/`pointercancel` window listeners |
-| `BuzzerGameScreen` | `AudioContext` close, `buzzerAudio` pause+null, `keydown` listener, `audioProgress` unsub |
-| `GameScreen` | `beforeunload` listener removal, `deezerPlayer.destroy()` (via `onMount` return) |
-| `ReplayPlayer` | `destroy()` method stops playback, nulls `HTMLAudioElement`. Generation-based cancellation discards stale async ops. |
-| `Visualizer` | `$effect` cleanup cancels `requestAnimationFrame` |
+| Component                     | What's cleaned up                                                                                                    |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| Classic/Buzzer/Bingo/Timeline | `audioProgress.subscribe()` unsubscribe in `onDestroy`                                                               |
+| `TimelineGame.destroy()`      | `pointermove`/`pointerup`/`pointercancel` window listeners                                                           |
+| `BuzzerGameScreen`            | `AudioContext` close, `buzzerAudio` pause+null, `keydown` listener, `audioProgress` unsub                            |
+| `GameScreen`                  | `beforeunload` listener removal, `deezerPlayer.destroy()` (via `onMount` return)                                     |
+| `ReplayPlayer`                | `destroy()` method stops playback, nulls `HTMLAudioElement`. Generation-based cancellation discards stale async ops. |
+| `Visualizer`                  | `$effect` cleanup cancels `requestAnimationFrame`                                                                    |

@@ -24,8 +24,7 @@
 		"placeholder": "Tu mensaje...",
 		"submit": "Enviar feedback",
 		"sending": "Enviando...",
-		"success": "¡Gracias por tu feedback!",
-		"button": "Danos tu opinión"
+		"success": "¡Gracias por tu feedback!"
 	},
 	"search": {
 		"title": "Buscar en...",
@@ -539,7 +538,6 @@
 		"tie": "¡Empate!",
 		"noMoreTracks": "No quedan más pistas.",
 		"finalScores": "Puntuaciones finales",
-		"viewStats": "Ver estadísticas",
 		"home": "Inicio"
 	},
 	"timeline": {
@@ -553,7 +551,22 @@
 			"playFirst": "Juega la carta para empezar tu turno.",
 			"dragToPlace": "Arrastra la carta a tu línea de tiempo.",
 			"reorder": "Reordena la carta en tu línea, luego confirma."
-		}
+		},
+		"scoring": {
+			"base": "Base",
+			"difficulty": "Dificultad",
+			"gap": "brecha de {years}a",
+			"speed": "Velocidad",
+			"streak": "Racha",
+			"streakCount": "{count} seguidos",
+			"completionBonus": "Bonus de finalización",
+			"turnTotal": "Total del turno",
+			"score": "Puntuación",
+			"streakMultiplier": "multiplicador {mult}",
+			"mastery": "Maestría"
+		},
+		"targetReached": "¡Objetivo alcanzado!",
+		"finalRound": "¡Ronda final!"
 	},
 	"bingo": {
 		"setupDescription": "Cada jugador necesita su propio cartón de bingo único.",
@@ -590,6 +603,20 @@
 		"donateHint": "Esto es y siempre será gratis. Pero si te apetece, un cafecito siempre se agradece.",
 		"donateButton": "Invitarme a un café",
 		"viewOnGithub": "Ver en GitHub"
+	},
+	"leaderboard": {
+		"title": "Clasificaci\u00f3n",
+		"loading": "Cargando\u2026",
+		"noScores": "A\u00fan sin puntuaciones \u2014 \u00a1s\u00e9 el primero!",
+		"cards": "cartas",
+		"publishScore": "Publicar en clasificaci\u00f3n",
+		"submitted": "\u00a1Puntuaci\u00f3n publicada!",
+		"error": "Error al enviar. \u00bfReintentar?",
+		"submitting": "Enviando\u2026",
+		"submit": "Enviar",
+		"enterName": "Escribe tu nombre",
+		"namePlaceholder": "Tu nombre",
+		"newHighScore": "¡Nuevo récord global!"
 	},
 	"eras": {
 		"ancient": "Antigüedad",

@@ -38,9 +38,11 @@
 
 	let showFeedbackPopup = $state(false);
 	let gameoverAudio: HTMLAudioElement | null = null;
+	let gameoverPlayed = false;
 
 	$effect(() => {
-		if (visible && gameoverAudio) {
+		if (visible && gameoverAudio && !gameoverPlayed) {
+			gameoverPlayed = true;
 			setTimeout(() => {
 				if (gameoverAudio) {
 					gameoverAudio.currentTime = 0;
@@ -95,7 +97,7 @@
 					{/if}
 					{#if sortedPlayers.length > 0}
 						<p class="mt-4 text-3xl font-bold text-white">
-							{$_('scoring.pts', { values: { points: sortedPlayers[0].score } })}
+							{$_('scoring.pts', { values: { points: sortedPlayers[0].score.toLocaleString() } })}
 						</p>
 					{/if}
 				</div>
@@ -143,7 +145,7 @@
 									{player.name}
 								</div>
 								<div class="text-xl font-bold text-cyan-400 sm:text-lg">
-									{$_('scoring.pts', { values: { points: player.score } })}
+									{$_('scoring.pts', { values: { points: player.score.toLocaleString() } })}
 								</div>
 							</div>
 						{/each}
@@ -152,33 +154,33 @@
 			{/if}
 
 			<!-- Action Buttons -->
-			<div class="flex flex-col gap-3">
-				{#if !isSoloMode && enableScoring}
+			<div class="flex items-center gap-2">
+				{#if enableScoring}
 					<button
 						type="button"
 						onclick={onViewStats}
-						class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400/50 bg-slate-800 px-6 py-3.5 text-base font-bold text-cyan-400 transition-all duration-200 hover:border-cyan-400 hover:bg-slate-700 hover:shadow-[0_0_15px_rgba(34,211,238,0.3)]"
+						class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all duration-200 hover:border-slate-500 hover:bg-slate-700/60 hover:text-white"
 					>
-						<BarChart class="h-5 w-5" />
-						{$_('endGame.viewStats')}
+						<BarChart class="h-4 w-4 shrink-0" />
+						{$_('stats.title')}
 					</button>
 				{/if}
 				<button
 					type="button"
 					onclick={onHome}
-					class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3.5 text-base font-bold text-cyan-400 transition-all duration-200 hover:border-cyan-400 hover:bg-slate-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)]"
+					class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all duration-200 hover:border-slate-500 hover:bg-slate-700/60 hover:text-white"
 				>
-					<Home class="h-5 w-5" />
+					<Home class="h-4 w-4 shrink-0" />
 					{$_('endGame.home')}
 				</button>
 
 				<button
 					type="button"
 					onclick={() => (showFeedbackPopup = true)}
-					class="mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-slate-700/50 bg-slate-800/30 px-6 py-3 text-base font-bold text-slate-400 transition-all duration-200 hover:border-cyan-400/50 hover:bg-slate-800 hover:text-cyan-400 hover:shadow-[0_0_15px_rgba(34,211,238,0.2)]"
+					class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all duration-200 hover:border-slate-500 hover:bg-slate-700/60 hover:text-white"
 				>
-					<MessageSquare class="h-5 w-5" />
-					<span>{$_('feedback.button')}</span>
+					<MessageSquare class="h-4 w-4 shrink-0" />
+					{$_('feedback.title')}
 				</button>
 			</div>
 		</div>

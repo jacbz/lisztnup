@@ -24,6 +24,7 @@ src/
 │   │   └── PreviewPlayer.svelte.ts Audio preview for tracklist viewer
 │   ├── logic/                 Game logic classes
 │   │   ├── timelineGame.svelte.ts  Timeline game state + logic (Svelte 5 reactive class)
+│   │   ├── timelineScoring.ts      Pure scoring functions (difficulty, speed, streak, efficiency)
 │   │   └── timelineTypes.ts        Timeline type definitions
 │   ├── server/                Server-only code (Cloudflare Workers)
 │   │   ├── analytics.ts         User hashing (GDPR-compliant daily-rotating salt)
@@ -39,6 +40,7 @@ src/
 │   └── api/game/
 │       ├── events/+server.ts  Game telemetry (start, progress, end, placements)
 │       ├── feedback/+server.ts User feedback collection
+│       ├── leaderboard/+server.ts Timeline leaderboard (GET top N, POST with anti-cheat)
 │       └── reports/+server.ts  Problem report collection
 static/
 ├── lisztnup.json              2.5MB compiled music database
@@ -109,23 +111,26 @@ Cloudflare Pages with D1 database. Config in `wrangler.toml`:
 
 ### Database Schema (analytics.sql)
 
-| Table                 | Purpose                 | Key columns                                                                |
-| --------------------- | ----------------------- | -------------------------------------------------------------------------- |
-| `pageviews`           | Server-side page views  | `user_hash`, `country`, `path`, `device`, `os`, `user_agent`               |
-| `game_sessions`       | Game lifecycle tracking | `id` (UUID), `state`, `mode`, `tracklist_id`, `locale`, `game_info` (JSON) |
-| `timeline_placements` | Per-placement tracking  | `session_id`, `work_gid`, `placed_correctly`                               |
-| `problem_reports`     | User-reported issues    | `session_id`, `message`, `deezer_id`, `composer`, `work`, `part`           |
-| `feedback`            | General user feedback   | `session_id`, `message`, `email`                                           |
+| Table                 | Purpose                 | Key columns                                                                   |
+| --------------------- | ----------------------- | ----------------------------------------------------------------------------- |
+| `pageviews`           | Server-side page views  | `user_hash`, `country`, `path`, `device`, `os`, `user_agent`                  |
+| `game_sessions`       | Game lifecycle tracking | `id` (UUID), `state`, `mode`, `tracklist_id`, `locale`, `game_info` (JSON)    |
+| `timeline_placements` | Per-placement tracking  | `session_id`, `work_gid`, `placed_correctly`                                  |
+| `problem_reports`     | User-reported issues    | `session_id`, `message`, `deezer_id`, `composer`, `work`, `part`              |
+| `feedback`            | General user feedback   | `session_id`, `message`, `email`                                              |
+| `leaderboard`         | Timeline solo scores    | `player_token`, `player_name`, `score`, `cards`, `accuracy`, `longest_streak` |
 
 All tables include `user_hash` (SHA-256 of IP + daily-rotating salt — never stores raw IPs) and `country` (from Cloudflare headers).
 
 ### API Endpoints
 
-| Endpoint                  | Purpose                                       | Key behavior                                            |
-| ------------------------- | --------------------------------------------- | ------------------------------------------------------- |
-| `POST /api/game/events`   | Game telemetry (start/progress/end/placement) | UPSERT + `json_patch()`, non-blocking via `waitUntil()` |
-| `POST /api/game/feedback` | User feedback (5–1000 chars)                  | Validates, writes DB, sends Telegram notification       |
-| `POST /api/game/reports`  | Problem reports with Deezer/work metadata     | Same as feedback + detailed Telegram message            |
+| Endpoint                     | Purpose                                       | Key behavior                                            |
+| ---------------------------- | --------------------------------------------- | ------------------------------------------------------- |
+| `POST /api/game/events`      | Game telemetry (start/progress/end/placement) | UPSERT + `json_patch()`, non-blocking via `waitUntil()` |
+| `POST /api/game/feedback`    | User feedback (5–1000 chars)                  | Validates, writes DB, sends Telegram notification       |
+| `POST /api/game/reports`     | Problem reports with Deezer/work metadata     | Same as feedback + detailed Telegram message            |
+| `GET /api/game/leaderboard`  | Top N timeline scores                         | Returns sorted entries, max 50                          |
+| `POST /api/game/leaderboard` | Submit solo timeline score                    | Anti-cheat: validates score ceiling per card count      |
 
 ### Server Hooks (hooks.server.ts)
 

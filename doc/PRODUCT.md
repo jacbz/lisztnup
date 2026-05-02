@@ -13,9 +13,11 @@
 Players take clock-wise turns placing tracks on their own chronological timeline. Drag a card from the center stack to the correct position in your timeline. Correct placement = keep the card. Wrong = discard. First to reach the target card count wins (default 6, configurable 6/10/15).
 
 - 1–10 players, each assigned a screen edge (Bottom/Left/Top/Right)
-- No scoring system — win condition is card count
 - Year-required filtering ensures all tracks have valid dates
-- **Streaks**: 3+ consecutive correct placements trigger a flame flash overlay and shift the timeline glow from player color to flame (linearly intensifying). Longest streak shown in player badge and end game screen, logged to analytics.
+- **Scoring**: Each correct placement earns `(1000 + DifficultyBonus + MasteryBonus) × SpeedMult × StreakMult`. DifficultyBonus = `2310 × (10/(gap+10))` where gap = year distance to nearest neighbor. MasteryBonus = `500 × (correct/attempts)²`. SpeedMult = `1 + 0.25 × (max(0,20-s)/19)²`. StreakMult tiers: 1→1.0, 2→1.05, 3→1.2, 4→1.3, 5→1.4, 6+→1.5. Completion Bonus at target = `(target/attempts) × (target×500)`.
+- **Streaks**: 3+ consecutive correct placements trigger flame flash overlay with multiplier subtitle. Wrong placement decays streak by 2 (not reset to 0). Longest streak shown in player badge and end game screen. Streak multiplier always visible in scoring popup (1.00× when no streak).
+- **Endgame**: When any player reaches target, endgame activates. In multiplayer, current round completes (all players finish). Winner = highest total score (not card count). Amber edge glow + "FINAL ROUND" badges during endgame.
+- **Leaderboard**: Solo mode can publish scores to server-side leaderboard (`leaderboard` D1 table). Anti-cheat: server validates score ceiling per card count.
 
 ### Classic
 

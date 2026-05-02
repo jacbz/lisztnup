@@ -24,8 +24,7 @@
 		"placeholder": "你的留言...",
 		"submit": "发送反馈",
 		"sending": "发送中...",
-		"success": "感谢你的反馈！",
-		"button": "提供反馈"
+		"success": "感谢你的反馈！"
 	},
 	"search": {
 		"title": "搜索...",
@@ -539,7 +538,6 @@
 		"tie": "平局！",
 		"noMoreTracks": "没有更多曲目了。",
 		"finalScores": "最终得分",
-		"viewStats": "查看统计",
 		"home": "返回主页"
 	},
 	"timeline": {
@@ -553,7 +551,22 @@
 			"playFirst": "播放卡牌以开始回合。",
 			"dragToPlace": "将卡牌拖入你的时间线。",
 			"reorder": "调整位置后再确认。"
-		}
+		},
+		"scoring": {
+			"base": "基础",
+			"difficulty": "难度",
+			"gap": "{years}年差距",
+			"speed": "速度",
+			"streak": "连续",
+			"streakCount": "连续{count}次",
+			"completionBonus": "通关奖励",
+			"turnTotal": "回合总分",
+			"score": "分数",
+			"streakMultiplier": "{mult}倍",
+			"mastery": "熟练度"
+		},
+		"targetReached": "目标达成！",
+		"finalRound": "最后一轮！"
 	},
 	"bingo": {
 		"setupDescription": "每位玩家需要拥有自己独特的宾果盘。",
@@ -590,6 +603,20 @@
 		"donateHint": "这个应用永远免费。但如果你愿意请我喝杯咖啡，也非常感谢。",
 		"donateButton": "请我喝咖啡",
 		"viewOnGithub": "在 GitHub 上查看"
+	},
+	"leaderboard": {
+		"title": "排行榜",
+		"loading": "加载中\u2026",
+		"noScores": "还没有分数\u2014\u2014成为第一个吧！",
+		"cards": "张",
+		"publishScore": "发布到排行榜",
+		"submitted": "分数已发布！",
+		"error": "提交失败，再试一次？",
+		"submitting": "提交中\u2026",
+		"submit": "提交",
+		"enterName": "输入名字",
+		"namePlaceholder": "你的名字",
+		"newHighScore": "新全球纪录！"
 	},
 	"eras": {
 		"ancient": "远古时期",

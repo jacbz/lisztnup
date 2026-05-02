@@ -55,3 +55,18 @@ CREATE TABLE IF NOT EXISTS feedback (
   message TEXT,
   email TEXT
 );
+
+CREATE TABLE IF NOT EXISTS leaderboard (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+  player_token TEXT NOT NULL,
+  player_name TEXT NOT NULL,
+  score INTEGER NOT NULL,
+  cards INTEGER NOT NULL,
+  accuracy REAL NOT NULL,
+  longest_streak INTEGER NOT NULL DEFAULT 0,
+  tracklist_id TEXT,
+  cards_to_win INTEGER NOT NULL,
+  country TEXT,
+  user_hash TEXT
+);

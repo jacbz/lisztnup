@@ -65,7 +65,17 @@ class GameAnalytics {
 	/**
 	 * Log a placement action immediately.
 	 */
-	public logPlacement(workGid: string, placedCorrectly: boolean) {
+	public logPlacement(
+		workGid: string,
+		placedCorrectly: boolean,
+		scoreData?: {
+			turnScore: number;
+			secondsTaken: number;
+			streakCount: number;
+			gap: number;
+			playerName: string;
+		}
+	) {
 		// Do not force log if no session exists or user has adblock explicitly hard-blocking the file
 		if (!this.sessionId) return;
 
@@ -73,7 +83,8 @@ class GameAnalytics {
 			type: 'timeline_placement',
 			sessionId: this.sessionId,
 			workGid,
-			placedCorrectly
+			placedCorrectly,
+			...(scoreData ?? {})
 		});
 	}
 
@@ -94,7 +105,10 @@ class GameAnalytics {
 	/**
 	 * Conclude playing, saving state back.
 	 */
-	public endGame(state: 'completed' | 'abandoned' = 'abandoned', gameInfo: Record<string, unknown> | null = null) {
+	public endGame(
+		state: 'completed' | 'abandoned' = 'abandoned',
+		gameInfo: Record<string, unknown> | null = null
+	) {
 		if (!this.sessionId) return;
 
 		this.dispatch({

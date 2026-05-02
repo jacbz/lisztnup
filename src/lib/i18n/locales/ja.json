@@ -24,8 +24,7 @@
 		"placeholder": "メッセージを入力...",
 		"submit": "フィードバックを送信",
 		"sending": "送信中...",
-		"success": "フィードバックありがとうございます！",
-		"button": "フィードバックを送る"
+		"success": "フィードバックありがとうございます！"
 	},
 	"search": {
 		"title": "検索...",
@@ -539,7 +538,6 @@
 		"tie": "引き分け！",
 		"noMoreTracks": "再生できる曲がなくなりました。",
 		"finalScores": "最終スコア",
-		"viewStats": "詳細データを見る",
 		"home": "ホームへ戻る"
 	},
 	"timeline": {
@@ -553,7 +551,22 @@
 			"playFirst": "カードを再生して開始します。",
 			"dragToPlace": "カードをタイムラインにドラッグしてください。",
 			"reorder": "配置を調整してから確定してください。"
-		}
+		},
+		"scoring": {
+			"base": "基本",
+			"difficulty": "難易度",
+			"gap": "{years}年差",
+			"speed": "スピード",
+			"streak": "連続",
+			"streakCount": "{count}連続",
+			"completionBonus": "達成ボーナス",
+			"turnTotal": "ターン合計",
+			"score": "スコア",
+			"streakMultiplier": "{mult}倍",
+			"mastery": "熟練度"
+		},
+		"targetReached": "目標達成！",
+		"finalRound": "最終ラウンド！"
 	},
 	"bingo": {
 		"setupDescription": "各プレイヤーは自分の端末で専用のビンゴカードを開く必要があります。",
@@ -590,6 +603,20 @@
 		"donateHint": "このアプリはずっと無料です。でももしよかったら、コーヒー一杯おごってください。",
 		"donateButton": "コーヒーをおごる",
 		"viewOnGithub": "GitHubで見る"
+	},
+	"leaderboard": {
+		"title": "リーダーボード",
+		"loading": "読み込み中\u2026",
+		"noScores": "まだスコアなし \u2014 最初の一人に！",
+		"cards": "枚",
+		"publishScore": "リーダーボードに登録",
+		"submitted": "スコア公開完了！",
+		"error": "送信に失敗。もう一度？",
+		"submitting": "送信中\u2026",
+		"submit": "送信",
+		"enterName": "名前を入力",
+		"namePlaceholder": "あなたの名前",
+		"newHighScore": "世界新記録！"
 	},
 	"eras": {
 		"ancient": "古代",

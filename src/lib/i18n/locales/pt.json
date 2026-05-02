@@ -24,8 +24,7 @@
 		"placeholder": "A tua mensagem...",
 		"submit": "Enviar feedback",
 		"sending": "A enviar...",
-		"success": "Obrigado pelo teu feedback!",
-		"button": "Dar feedback"
+		"success": "Obrigado pelo teu feedback!"
 	},
 	"search": {
 		"title": "Pesquisar em...",
@@ -539,7 +538,6 @@
 		"tie": "Empate!",
 		"noMoreTracks": "Não há mais faixas disponíveis.",
 		"finalScores": "Placar Final",
-		"viewStats": "Ver Estatísticas",
 		"home": "Início"
 	},
 	"timeline": {
@@ -553,7 +551,22 @@
 			"playFirst": "Jogue a carta para começar seu turno.",
 			"dragToPlace": "Arraste a carta para sua linha do tempo.",
 			"reorder": "Reordene a carta na sua linha do tempo, depois confirme."
-		}
+		},
+		"scoring": {
+			"base": "Base",
+			"difficulty": "Dificuldade",
+			"gap": "intervalo de {years}a",
+			"speed": "Velocidade",
+			"streak": "Sequência",
+			"streakCount": "{count} seguidos",
+			"completionBonus": "Bônus de conclusão",
+			"turnTotal": "Total da rodada",
+			"score": "Pontuação",
+			"streakMultiplier": "multiplicador {mult}",
+			"mastery": "Maestria"
+		},
+		"targetReached": "Objetivo alcançado!",
+		"finalRound": "Rodada final!"
 	},
 	"bingo": {
 		"setupDescription": "Cada jogador precisa de sua própria cartela de bingo única.",
@@ -590,6 +603,20 @@
 		"donateHint": "Isso aqui é e sempre vai ser de graça. Mas se quiser me pagar um café, aceito com prazer.",
 		"donateButton": "Me pagar um café",
 		"viewOnGithub": "Ver no GitHub"
+	},
+	"leaderboard": {
+		"title": "Placar",
+		"loading": "Carregando\u2026",
+		"noScores": "Nenhuma pontua\u00e7\u00e3o ainda \u2014 seja o primeiro!",
+		"cards": "cartas",
+		"publishScore": "Publicar no placar",
+		"submitted": "Pontua\u00e7\u00e3o publicada!",
+		"error": "Falha ao enviar. Tentar de novo?",
+		"submitting": "Enviando\u2026",
+		"submit": "Enviar",
+		"enterName": "Digite seu nome",
+		"namePlaceholder": "Seu nome",
+		"newHighScore": "Novo recorde global!"
 	},
 	"eras": {
 		"ancient": "Antiga",

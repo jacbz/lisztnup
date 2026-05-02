@@ -24,8 +24,7 @@
 		"placeholder": "Deine Nachricht...",
 		"submit": "Feedback senden",
 		"sending": "Wird gesendet...",
-		"success": "Vielen Dank für dein Feedback!",
-		"button": "Feedback geben"
+		"success": "Vielen Dank für dein Feedback!"
 	},
 	"search": {
 		"title": "Suchen auf...",
@@ -539,7 +538,6 @@
 		"tie": "Unentschieden!",
 		"noMoreTracks": "Keine weiteren Tracks verfügbar.",
 		"finalScores": "Endstand",
-		"viewStats": "Statistik ansehen",
 		"home": "Start"
 	},
 	"timeline": {
@@ -553,7 +551,22 @@
 			"playFirst": "Spiele die Karte ab, um zu beginnen.",
 			"dragToPlace": "Ziehe die Karte in deine Timeline.",
 			"reorder": "Verschiebe die Karte in deiner Timeline und bestätige."
-		}
+		},
+		"scoring": {
+			"base": "Grundwert",
+			"difficulty": "Schwierigkeit",
+			"gap": "{years}J Abstand",
+			"speed": "Geschwindigkeit",
+			"streak": "Serie",
+			"streakCount": "{count} am Stück",
+			"completionBonus": "Abschlussbonus",
+			"turnTotal": "Rundenwertung",
+			"score": "Punkte",
+			"streakMultiplier": "{mult} Multiplikator",
+			"mastery": "Präzision"
+		},
+		"targetReached": "Ziel erreicht!",
+		"finalRound": "Letzte Runde!"
 	},
 	"bingo": {
 		"setupDescription": "Jeder Spieler benötigt seine eigene Bingo-Karte.",
@@ -590,6 +603,20 @@
 		"donateHint": "Die App ist und bleibt kostenlos. Aber wenn du magst, freue ich mich über einen Kaffee.",
 		"donateButton": "Kaffee spendieren",
 		"viewOnGithub": "Auf GitHub ansehen"
+	},
+	"leaderboard": {
+		"title": "Bestenliste",
+		"loading": "Laden\u2026",
+		"noScores": "Noch keine Eintr\u00e4ge \u2014 sei der Erste!",
+		"cards": "Karten",
+		"publishScore": "In Bestenliste eintragen",
+		"submitted": "Ergebnis ver\u00f6ffentlicht!",
+		"error": "Fehler beim Senden. Nochmal?",
+		"submitting": "Wird gesendet\u2026",
+		"submit": "Absenden",
+		"enterName": "Name eingeben",
+		"namePlaceholder": "Dein Name",
+		"newHighScore": "Neuer globaler Highscore!"
 	},
 	"eras": {
 		"ancient": "Antike",

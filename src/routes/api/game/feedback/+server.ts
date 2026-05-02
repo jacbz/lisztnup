@@ -32,13 +32,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 						`INSERT INTO feedback (session_id, user_hash, country, message, email) 
 						 VALUES (?, ?, ?, ?, ?)`
 					)
-					.bind(
-						payload.sessionId,
-						userHash,
-						country,
-						payload.message,
-						email
-					)
+					.bind(payload.sessionId, userHash, country, payload.message, email)
 					.run();
 			} catch (e) {
 				console.error('Failed to write feedback to analytics:', e);

@@ -24,8 +24,7 @@
 		"placeholder": "Your message...",
 		"submit": "Send Feedback",
 		"sending": "Sending...",
-		"success": "Thank you for your feedback!",
-		"button": "Give Feedback"
+		"success": "Thank you for your feedback!"
 	},
 	"search": {
 		"title": "Search on...",
@@ -539,7 +538,6 @@
 		"tie": "It's a Tie!",
 		"noMoreTracks": "No more tracks available.",
 		"finalScores": "Final Scores",
-		"viewStats": "View Statistics",
 		"home": "Home"
 	},
 	"timeline": {
@@ -553,7 +551,22 @@
 			"playFirst": "Play the card to begin your turn.",
 			"dragToPlace": "Drag the card into your timeline.",
 			"reorder": "Reorder the card in your timeline, then confirm."
-		}
+		},
+		"scoring": {
+			"base": "Base",
+			"difficulty": "Difficulty",
+			"gap": "{years}yr gap",
+			"speed": "Speed",
+			"streak": "Streak",
+			"streakCount": "{count} in a row",
+			"completionBonus": "Completion Bonus",
+			"turnTotal": "Turn Total",
+			"score": "Score",
+			"streakMultiplier": "{mult} multiplier",
+			"mastery": "Mastery"
+		},
+		"targetReached": "Target Reached!",
+		"finalRound": "Final Round!"
 	},
 	"bingo": {
 		"setupDescription": "Each player needs their own unique bingo grid.",
@@ -590,6 +603,20 @@
 		"donateHint": "This is and always will be free. But if you're feeling generous, a coffee never hurts.",
 		"donateButton": "Buy me a coffee",
 		"viewOnGithub": "View on GitHub"
+	},
+	"leaderboard": {
+		"title": "Leaderboard",
+		"loading": "Loading…",
+		"noScores": "No scores yet — be the first!",
+		"cards": "cards",
+		"publishScore": "Publish to Leaderboard",
+		"submitted": "Score published!",
+		"error": "Failed to submit. Try again?",
+		"submitting": "Submitting…",
+		"submit": "Submit",
+		"enterName": "Enter name",
+		"namePlaceholder": "Your name",
+		"newHighScore": "New Global High Score!"
 	},
 	"eras": {
 		"ancient": "Ancient",

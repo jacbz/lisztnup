@@ -21,6 +21,29 @@
 	import MessageSquare from 'lucide-svelte/icons/message-square';
 	import Users from 'lucide-svelte/icons/users';
 
+	/** Convert ISO 3166-1 alpha-2 country code to flag emoji */
+	function countryToFlag(code: string | undefined | null): string {
+		if (!code || code.length !== 2 || code === 'UNKNOWN') return '';
+		const upper = code.toUpperCase();
+		return String.fromCodePoint(...[...upper].map((c) => 0x1f1e6 + c.charCodeAt(0) - 65));
+	}
+
+	interface LeaderboardEntry {
+		player_name: string;
+		score: number;
+		cards: number;
+		accuracy: number;
+		country?: string;
+		timestamp?: string;
+	}
+
+	function formatEntryDate(timestamp: string | undefined, locale: string): string {
+		if (!timestamp) return '';
+		const d = new Date(timestamp.includes('T') ? timestamp : timestamp.replace(' ', 'T'));
+		if (isNaN(d.getTime())) return '';
+		return d.toLocaleDateString(locale, { year: 'numeric', month: 'numeric', day: 'numeric' });
+	}
+
 	interface Props {
 		onStart?: (
 			mode: GameMode,
@@ -45,6 +68,7 @@
 	let playersValid = $state(true);
 	let enableScoring = $state($settingsStore.enableScoring); // Load from settings
 	let showFeedbackPopup = $state(false);
+	let leaderboardEntries = $state<LeaderboardEntry[]>([]);
 	let playerSetupRef: { addPlayer: () => void } | undefined = $state();
 	let startAudio: HTMLAudioElement | null = null;
 	let startAudioSources = {
@@ -72,6 +96,21 @@
 	$effect(() => {
 		if (browser) {
 			bingoUrl = `${window.location.origin}/bingo`;
+		}
+	});
+
+	// Load leaderboard when timeline mode is selected or settings change
+	$effect(() => {
+		if (selectedMode === 'timeline' && browser) {
+			const tracklist = localSettings.selectedTracklist;
+			const cards = localSettings.timelineCardsToWin;
+			const parts = ['limit=5'];
+			if (tracklist) parts.push(`tracklist=${encodeURIComponent(tracklist)}`);
+			if (cards) parts.push(`cardsToWin=${encodeURIComponent(cards)}`);
+			fetch(`/api/game/leaderboard?${parts.join('&')}`)
+				.then((res) => (res.ok ? res.json() : { entries: [] }))
+				.then((data) => { leaderboardEntries = data.entries ?? []; })
+				.catch(() => { leaderboardEntries = []; });
 		}
 	});
 
@@ -279,6 +318,26 @@
 								onChange={handleTimelineCardsToWinChange}
 							/>
 						</div>
+
+						<!-- Inline Leaderboard -->
+						<div class="mt-1">
+							<div class="mb-2 flex text-sm font-semibold text-slate-400">
+								{$_('leaderboard.title')}
+							</div>
+							{#if leaderboardEntries.length === 0}
+								<p class="py-2 text-xs text-slate-500">{$_('leaderboard.noScores')}</p>
+							{:else}
+								<div class="grid grid-cols-[auto_2fr_1fr_1fr] items-center gap-x-1.5 gap-y-1 text-xs text-left">
+									{#each leaderboardEntries as entry, i (i)}
+										{@const flag = countryToFlag(entry.country)}
+										<span class="text-center font-bold text-slate-500 mr-2">{i + 1}</span>
+										<span class="truncate text-slate-300">{#if flag}<span class="text-[11px] leading-none">{flag}</span>{/if} {entry.player_name}</span>
+										<span class="text-right font-bold tabular-nums">{$_('scoring.pts', { values: { points: entry.score.toLocaleString() } })}</span>
+										<span class="text-right tabular-nums text-slate-500">{formatEntryDate(entry.timestamp, currentLocale)}</span>
+									{/each}
+								</div>
+							{/if}
+						</div>
 					{/if}
 				</div>
 
@@ -391,14 +450,16 @@
 
 <!-- Feedback FAB (Bottom Right) -->
 <div class="fixed right-6 bottom-6 z-40 hidden md:block">
-	<button
-		type="button"
-		onclick={() => (showFeedbackPopup = true)}
-		class="group flex h-14 w-14 items-center justify-center rounded-full border-2 border-cyan-400/30 bg-slate-900/80 text-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.2)] backdrop-blur-md transition-all hover:scale-110 hover:border-cyan-400 hover:bg-slate-800 hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] active:scale-95"
-		title={$_('feedback.button')}
-	>
-		<MessageSquare class="h-6 w-6" />
-	</button>
+	<div class="flex flex-col gap-3">
+		<button
+			type="button"
+			onclick={() => (showFeedbackPopup = true)}
+			class="group flex h-14 w-14 items-center justify-center rounded-full border-2 border-cyan-400/30 bg-slate-900/80 text-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.2)] backdrop-blur-md transition-all hover:scale-110 hover:border-cyan-400 hover:bg-slate-800 hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] active:scale-95"
+			title={$_('feedback.title')}
+		>
+			<MessageSquare class="h-6 w-6" />
+		</button>
+	</div>
 </div>
 
 <FeedbackPopup visible={showFeedbackPopup} onClose={() => (showFeedbackPopup = false)} />

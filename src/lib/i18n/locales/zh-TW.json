@@ -24,8 +24,7 @@
 		"placeholder": "你的留言...",
 		"submit": "傳送回饋",
 		"sending": "傳送中...",
-		"success": "感謝你的回饋！",
-		"button": "提供回饋"
+		"success": "感謝你的回饋！"
 	},
 	"search": {
 		"title": "搜尋...",
@@ -539,7 +538,6 @@
 		"tie": "平手！",
 		"noMoreTracks": "沒有更多曲目了。",
 		"finalScores": "最終得分",
-		"viewStats": "檢視統計",
 		"home": "返回首頁"
 	},
 	"timeline": {
@@ -553,7 +551,22 @@
 			"playFirst": "播放卡牌以開始回合。",
 			"dragToPlace": "將卡牌拖入你的時間線。",
 			"reorder": "調整位置後再確認。"
-		}
+		},
+		"scoring": {
+			"base": "基礎",
+			"difficulty": "難度",
+			"gap": "{years}年差距",
+			"speed": "速度",
+			"streak": "連續",
+			"streakCount": "連續{count}次",
+			"completionBonus": "通關獎勵",
+			"turnTotal": "回合總分",
+			"score": "分數",
+			"streakMultiplier": "{mult}倍",
+			"mastery": "熟練度"
+		},
+		"targetReached": "目標達成！",
+		"finalRound": "最後一輪！"
 	},
 	"bingo": {
 		"setupDescription": "每位玩家需要擁有自己獨特的賓果盤。",
@@ -590,6 +603,20 @@
 		"donateHint": "這個應用永遠免費。但如果你願意請我喝杯咖啡，也非常感謝。",
 		"donateButton": "請我喝咖啡",
 		"viewOnGithub": "在 GitHub 上查看"
+	},
+	"leaderboard": {
+		"title": "排行榜",
+		"loading": "載入中\u2026",
+		"noScores": "還沒有分數\u2014\u2014成為第一個吧！",
+		"cards": "張",
+		"publishScore": "發佈到排行榜",
+		"submitted": "分數已發佈！",
+		"error": "提交失敗，再試一次？",
+		"submitting": "提交中\u2026",
+		"submit": "提交",
+		"enterName": "輸入名字",
+		"namePlaceholder": "你的名字",
+		"newHighScore": "新全球紀錄！"
 	},
 	"eras": {
 		"ancient": "遠古時期",

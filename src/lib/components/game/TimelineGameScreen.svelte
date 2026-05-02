@@ -5,22 +5,26 @@
 	import type { Player, PlayerEdge } from '$lib/types';
 	import { ALL_EDGES } from '$lib/types';
 	import { currentRound, resetGame, gameSession, lastReconnectedAt } from '$lib/stores';
+	import { settings } from '$lib/stores/settings';
 	import { _ } from 'svelte-i18n';
 	import { analytics } from '$lib/game-logger';
+	import BarChart from 'lucide-svelte/icons/bar-chart-3';
+	import TriangleAlert from 'lucide-svelte/icons/triangle-alert';
 
 	// Components
 	import EdgeDisplay from '$lib/components/ui/primitives/EdgeDisplay.svelte';
-	import Popup from '$lib/components/ui/primitives/Popup.svelte';
 	import PlayerControl from '$lib/components/ui/gameplay/PlayerControl.svelte';
-	import TrackInfo from '$lib/components/ui/gameplay/TrackInfo.svelte';
 	import CardStack from './timeline/CardStack.svelte';
 	import PlayerTimeline from './timeline/PlayerTimeline.svelte';
 	import TimelineEndGameScreen from './timeline/TimelineEndGameScreen.svelte';
+	import TimelineRevealPopup from './timeline/TimelineRevealPopup.svelte';
 	import FlashingText from '$lib/components/ui/gameplay/FlashingText.svelte';
+	import StatsScreen from '$lib/components/ui/screens/StatsScreen.svelte';
 
 	// Logic
 	import { getGameContext } from './context';
 	import { TimelineGame } from '$lib/logic/timelineGame.svelte';
+	import { getStreakMultiplier } from '$lib/logic/timelineScoring';
 	import type { TimelineRow } from '$lib/logic/timelineTypes';
 
 	// ─── Props ─────────────────────────────────────────────
@@ -28,10 +32,11 @@
 	interface Props {
 		players: Player[];
 		cardsToWin: number;
+		isSoloMode?: boolean;
 		onHome?: () => void;
 	}
 
-	let { players, cardsToWin, onHome = () => {} }: Props = $props();
+	let { players, cardsToWin, isSoloMode = false, onHome = () => {} }: Props = $props();
 
 	// ─── Context & Game Logic ──────────────────────────────
 
@@ -46,7 +51,8 @@
 			nextRound: ctx.nextRound,
 			sampleRawTrack: ctx.sampleRawTrack
 		},
-		() => ctx.currentTrack
+		() => ctx.currentTrack,
+		isSoloMode
 	);
 
 	// ─── Audio Progress ────────────────────────────────────
@@ -131,6 +137,10 @@
 	});
 
 	// ─── Orchestration Handlers ────────────────────────────
+
+	// ─── Stats popup ───────────────────────────────────────
+	let showStatsPopup = $state(false);
+	let statsOpenedFromEndgame = $state(false);
 
 	function handleQuit() {
 		ctx.stopTrack();
@@ -218,6 +228,21 @@
 {#snippet timelineDisplay(timeline: TimelineRow, rotation: number, edge: PlayerEdge)}
 	{@const isTurnOwner = timeline.player.name === game.activePlayerName}
 	{@const isActive = !game.isDealing && isTurnOwner}
+	{@const isEndgameTrigger = game.endgameActive && game.timelines.indexOf(timeline) === game.timelines.findIndex((t) => t.reachedTarget)}
+
+	{#if game.endgameActive && !isSoloMode && !game.showEndGame}
+		<div class="mb-1 text-center">
+			{#if isEndgameTrigger}
+				<span class="inline-block animate-pulse rounded-full bg-amber-500/20 px-3 py-0.5 text-[10px] font-bold tracking-wider text-amber-400 uppercase">
+					{$_('timeline.targetReached')}
+				</span>
+			{:else}
+				<span class="inline-block animate-pulse rounded-full bg-red-500/15 px-3 py-0.5 text-[10px] font-bold tracking-wider text-red-400 uppercase">
+					{$_('timeline.finalRound')}
+				</span>
+			{/if}
+		</div>
+	{/if}
 
 	<PlayerTimeline
 		playerName={timeline.player.name}
@@ -228,6 +253,7 @@
 		acceptingDrop={isActive && game.hasPlaybackStarted && !game.pendingEntryId && !game.resolvingTurn && !game.isDealing}
 		streakCount={isActive && game.streakRevealPending ? game.preRevealCurrentStreak : timeline.currentStreak}
 		longestStreak={isActive && game.streakRevealPending ? game.preRevealLongestStreak : timeline.longestStreak}
+		score={timeline.score}
 		{rotation}
 		isVertical={edge === 'left' || edge === 'right'}
 		draggingEntryId={isActive ? game.drag.previewEntryId : null}
@@ -260,7 +286,7 @@
 <!-- LAYOUT                                                  -->
 <!-- ═══════════════════════════════════════════════════════ -->
 
-<div class="fixed inset-0 overflow-hidden text-white">
+<div class="fixed inset-0 overflow-hidden text-white" class:endgame-glow={game.endgameActive && !isSoloMode && !game.showEndGame}>
 	{#if game.isMdHeight}
 		<!-- Standard centred layout for taller screens -->
 		<div
@@ -324,47 +350,92 @@
 <!-- POPUPS & OVERLAYS                                       -->
 <!-- ═══════════════════════════════════════════════════════ -->
 
-<Popup
+<TimelineRevealPopup
 	visible={game.showRevealPopup && !!game.revealTrack}
-	onClose={() => game.handleCloseRevealPopup()}
-	width="w-[480px] max-w-[90vw]"
-	borderColor={game.revealIsCorrect === true
-		? 'border-green-400'
-		: game.revealIsCorrect === false
-			? 'border-red-400'
-			: 'border-cyan-400'}
+	track={game.revealTrack}
+	yearText={game.revealYearText}
+	isCorrect={game.revealIsCorrect}
+	purpose={game.revealPurpose}
+	scoreBreakdown={game.lastTurnScoreBreakdown}
+	efficiencyBonus={game.activePlayer?.efficiencyBonus ?? 0}
+	reachedTarget={game.revealReachedWin}
+	scoreBeforeTurn={game.scoreBeforeTurn}
 	rotation={game.popupRotation}
->
-	{#if game.revealTrack}
-		<div class="flex h-full w-full flex-col gap-5">
-			<div class="text-center text-5xl font-black tracking-wide text-slate-200">
-				{game.revealYearText}
-			</div>
-			<div
-				class="min-h-0 flex-1 overflow-y-auto rounded-2xl border border-slate-700/50 bg-slate-950/30 p-4"
-			>
-				<TrackInfo
-					track={game.revealTrack}
-					showMirror={players.some((player) => player.edge === 'top')}
-					bleed="sm"
-				/>
-			</div>
-		</div>
-	{/if}
-</Popup>
+	onClose={() => game.handleCloseRevealPopup()}
+/>
 
 <TimelineEndGameScreen
 	visible={game.showEndGame}
 	{cardsToWin}
 	timelines={game.timelines}
 	tracksExhausted={ctx.tracksExhausted}
+	tracklistId={$settings.selectedTracklist}
 	onHome={handleQuit}
+	onViewStats={() => { game.showEndGame = false; statsOpenedFromEndgame = true; showStatsPopup = true; }}
 />
 
 <FlashingText
 	text={game.streakFlash ? $_('timeline.streak', { values: { count: game.streakFlash.streak } }) : ''}
+	secondLine={game.streakFlash ? $_('timeline.scoring.streakMultiplier', { values: { mult: getStreakMultiplier(game.streakFlash.streak).toFixed(2) + '×' } }) : ''}
 	visible={!!game.streakFlash}
 	rotation={game.streakFlash?.rotation ?? 0}
 	intensity={game.streakFlash ? Math.min(5, Math.max(1, Math.floor((game.streakFlash.streak - 1) / 2))) : 1}
 	onComplete={() => game.handleStreakFlashComplete()}
 />
+
+<FlashingText
+	text={$_('timeline.finalRound')}
+	visible={game.endgameFlash}
+	intensity={3}
+	icon={TriangleAlert}
+	onComplete={() => (game.endgameFlash = false)}
+/>
+
+<!-- Stats FAB (always visible during gameplay) -->
+{#if !game.isDealing && !game.showEndGame}
+	<div class="fixed right-6 bottom-6 z-10">
+		<button
+			type="button"
+			onclick={() => (showStatsPopup = true)}
+			class="flex cursor-pointer items-center justify-center rounded-full border-2 border-cyan-400 p-3 text-cyan-400 shadow-[0_4px_20px_rgba(34,211,238,0.4)] transition-all duration-200 hover:scale-110 hover:shadow-[0_6px_30px_rgba(34,211,238,0.6)] active:scale-95 md:p-3.5"
+			aria-label={$_('stats.title')}
+		>
+			<BarChart class="h-5 w-5 md:h-6 md:w-6" />
+		</button>
+	</div>
+{/if}
+
+<!-- Stats Popup -->
+<StatsScreen
+	visible={showStatsPopup}
+	{players}
+	rounds={game.roundScores}
+	onClose={() => {
+		showStatsPopup = false;
+		if (statsOpenedFromEndgame) {
+			statsOpenedFromEndgame = false;
+			game.showEndGame = true;
+		}
+	}}
+/>
+
+<style>
+	.endgame-glow {
+		animation: endgame-pulse 1.5s ease-in-out infinite;
+	}
+
+	@keyframes endgame-pulse {
+		0%, 100% {
+			box-shadow:
+				inset 0 0 40px rgba(251, 191, 36, 0.2),
+				inset 0 0 80px rgba(251, 191, 36, 0.08),
+				0 0 30px rgba(251, 191, 36, 0.1);
+		}
+		50% {
+			box-shadow:
+				inset 0 0 70px rgba(251, 191, 36, 0.4),
+				inset 0 0 120px rgba(251, 191, 36, 0.15),
+				0 0 50px rgba(251, 191, 36, 0.2);
+		}
+	}
+</style>

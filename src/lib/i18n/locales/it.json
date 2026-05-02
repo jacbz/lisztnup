@@ -24,8 +24,7 @@
 		"placeholder": "Il tuo messaggio...",
 		"submit": "Invia feedback",
 		"sending": "Invio in corso...",
-		"success": "Grazie per il tuo feedback!",
-		"button": "Dacci un feedback"
+		"success": "Grazie per il tuo feedback!"
 	},
 	"search": {
 		"title": "Cerca su...",
@@ -539,7 +538,6 @@
 		"tie": "Pareggio!",
 		"noMoreTracks": "Nessuna altra traccia disponibile.",
 		"finalScores": "Punteggi Finali",
-		"viewStats": "Vedi Statistiche",
 		"home": "Home"
 	},
 	"timeline": {
@@ -553,7 +551,22 @@
 			"playFirst": "Gioca la carta per iniziare il turno.",
 			"dragToPlace": "Trascina la carta nella tua timeline.",
 			"reorder": "Riordina la carta nella timeline, poi conferma."
-		}
+		},
+		"scoring": {
+			"base": "Base",
+			"difficulty": "Difficoltà",
+			"gap": "divario {years}a",
+			"speed": "Velocità",
+			"streak": "Serie",
+			"streakCount": "{count} di fila",
+			"completionBonus": "Bonus completamento",
+			"turnTotal": "Totale turno",
+			"score": "Punteggio",
+			"streakMultiplier": "moltiplicatore {mult}",
+			"mastery": "Padronanza"
+		},
+		"targetReached": "Obiettivo raggiunto!",
+		"finalRound": "Ultimo giro!"
 	},
 	"bingo": {
 		"setupDescription": "Ogni giocatore ha bisogno della propria cartella bingo unica.",
@@ -590,6 +603,20 @@
 		"donateHint": "L'app è e resterà sempre gratuita. Ma se ti va, un caffè fa sempre piacere.",
 		"donateButton": "Offrimi un caffè",
 		"viewOnGithub": "Vedi su GitHub"
+	},
+	"leaderboard": {
+		"title": "Classifica",
+		"loading": "Caricamento\u2026",
+		"noScores": "Nessun punteggio \u2014 sii il primo!",
+		"cards": "carte",
+		"publishScore": "Pubblica in classifica",
+		"submitted": "Punteggio pubblicato!",
+		"error": "Invio fallito. Riprovare?",
+		"submitting": "Invio in corso\u2026",
+		"submit": "Invia",
+		"enterName": "Inserisci il nome",
+		"namePlaceholder": "Il tuo nome",
+		"newHighScore": "Nuovo record globale!"
 	},
 	"eras": {
 		"ancient": "Antica",

@@ -2,10 +2,18 @@ import type { Player, Track, PlayerEdge } from '$lib/types';
 import { ALL_EDGES } from '$lib/types';
 import { formatYearRange } from '$lib/utils';
 import { SvelteMap } from 'svelte/reactivity';
-import type { TimelineEntry, StackItem, TimelineRow, DragKind, TurnPhase } from './timelineTypes';
+import type {
+	TimelineEntry,
+	StackItem,
+	TimelineRow,
+	DragKind,
+	TurnPhase,
+	TurnScoreBreakdown
+} from './timelineTypes';
+import { calculateTurnScore, calculateGap, calculateEfficiencyBonus } from './timelineScoring';
 
 // Re-export types for convenience
-export type { TimelineEntry, StackItem, TimelineRow, DragKind, TurnPhase };
+export type { TimelineEntry, StackItem, TimelineRow, DragKind, TurnPhase, TurnScoreBreakdown };
 
 /** Minimum consecutive correct placements to activate streak visuals. */
 export const STREAK_THRESHOLD = 3;
@@ -100,6 +108,38 @@ export class TimelineGame {
 	popupRotation = $state(0);
 
 	// ═══════════════════════════════════════════════════════
+	// SCORING STATE
+	// ═══════════════════════════════════════════════════════
+	/** Last computed turn score breakdown, used by the reveal popup. */
+	lastTurnScoreBreakdown = $state<TurnScoreBreakdown | null>(null);
+	/** Score the active player had before this turn (for the reveal popup "Score" row). */
+	scoreBeforeTurn = $state(0);
+	/** Client-side timestamp (ms) when the current turn's playback started. */
+	#turnStartTime: number = 0;
+	/**
+	 * Per-turn score deltas for every player, used by the stats graph.
+	 * Each entry is one complete rotation (round) of all players.
+	 * Structure: { roundIndex, playerScores: { playerName: scoreThisRound } }
+	 */
+	roundScores = $state<Array<{ roundIndex: number; playerScores: Record<string, number> }>>([]);
+	/** Accumulates score deltas for the current (in-progress) round. */
+	#currentRoundScores: Record<string, number> = {};
+	/** Tracks which rotation index we're on (0-based). */
+	#roundCounter = 0;
+
+	// ═══════════════════════════════════════════════════════
+	// ENDGAME STATE
+	// ═══════════════════════════════════════════════════════
+	/** True once any player reaches the target — triggers "final round" visuals. */
+	endgameActive = $state(false);
+	/** One-shot flash when endgame activates (multiplayer only). */
+	endgameFlash = $state(false);
+	/** Deferred endgame flash — fires after popup closes so it's not hidden by streak flash. */
+	#pendingEndgameFlash = false;
+	/** Whether this is a solo game (1 player). Solo ends immediately on target. */
+	readonly #isSoloMode: boolean;
+
+	// ═══════════════════════════════════════════════════════
 	// DRAG STATE  (grouped — many coordinate fields travel together)
 	// ═══════════════════════════════════════════════════════
 	drag = $state({
@@ -124,7 +164,6 @@ export class TimelineGame {
 	#isInitializing = false;
 	#boundOnDragMove: ((ev: PointerEvent) => void) | null = null;
 	#boundOnDragUp: ((ev: PointerEvent) => void) | null = null;
-	#pendingStreakFlash: { playerName: string; streak: number; rotation: number } | null = null;
 
 	static readonly #TIMER_DURATION = 10;
 
@@ -215,12 +254,14 @@ export class TimelineGame {
 		players: Player[],
 		cardsToWin: number,
 		ctx: TimelineGameActions,
-		getCurrentTrack: () => Track | null
+		getCurrentTrack: () => Track | null,
+		isSoloMode: boolean = false
 	) {
 		this.#players = players;
 		this.#cardsToWin = cardsToWin;
 		this.#ctx = ctx;
 		this.#getCurrentTrack = getCurrentTrack;
+		this.#isSoloMode = isSoloMode;
 	}
 
 	// ═══════════════════════════════════════════════════════
@@ -303,8 +344,24 @@ export class TimelineGame {
 		this.isDealing = true;
 		this.#lastSyncedTrack = null;
 
-		this.timelines = this.#players.map((p) => ({ player: p, entries: [], totalPlacements: 0, correctPlacements: 0, currentStreak: 0, longestStreak: 0 }));
+		this.timelines = this.#players.map((p) => ({
+			player: p,
+			entries: [],
+			totalPlacements: 0,
+			correctPlacements: 0,
+			currentStreak: 0,
+			longestStreak: 0,
+			score: 0,
+			reachedTarget: false,
+			efficiencyBonus: 0
+		}));
 		this.activePlayerIndex = 0;
+		this.endgameActive = false;
+		this.lastTurnScoreBreakdown = null;
+		this.scoreBeforeTurn = 0;
+		this.roundScores = [];
+		this.#currentRoundScores = {};
+		this.#roundCounter = 0;
 
 		// Sample exactly one track per player for the deal
 		const dealTracks: Track[] = [];
@@ -387,6 +444,7 @@ export class TimelineGame {
 
 		this.turnPhase = 'playing';
 		this.hasPlaybackStarted = true;
+		this.#turnStartTime = Date.now();
 
 		try {
 			await this.#ctx.playTrack();
@@ -675,20 +733,71 @@ export class TimelineGame {
 		this.preRevealLongestStreak = this.activePlayer.longestStreak;
 		this.streakRevealPending = true;
 
+		// ── Scoring ──────────────────────────────────────────
+		const secondsTaken = (Date.now() - this.#turnStartTime) / 1000;
+		this.scoreBeforeTurn = this.activePlayer.score;
+
 		if (isCorrect) {
 			this.activePlayer.correctPlacements++;
 			this.activePlayer.currentStreak++;
 			if (this.activePlayer.currentStreak > this.activePlayer.longestStreak) {
 				this.activePlayer.longestStreak = this.activePlayer.currentStreak;
 			}
+
+			// Calculate year gap for difficulty bonus
+			const droppedYear = this.#getTimelineYear(entries[idx].track);
+			const prevYear = idx > 0 ? this.#getTimelineYear(entries[idx - 1].track) : null;
+			const nextYear =
+				idx < entries.length - 1 ? this.#getTimelineYear(entries[idx + 1].track) : null;
+			const gap = calculateGap(prevYear, nextYear, droppedYear);
+			const isEdgePlacement = prevYear === null || nextYear === null;
+
+			const breakdown = calculateTurnScore({
+				gap,
+				secondsTaken,
+				streakCount: this.activePlayer.currentStreak,
+				isEdgePlacement,
+				correctSoFar: this.activePlayer.correctPlacements,
+				attemptsSoFar: this.activePlayer.totalPlacements
+			});
+			this.lastTurnScoreBreakdown = breakdown;
+			this.activePlayer.score += breakdown.totalScore;
+
+			// Check if this player just reached the target (cards on timeline including dealt card)
+			const cardsOnTimeline = this.activePlayer.entries.filter(
+				(e) => e.confirmed && e.correct !== false
+			).length;
+			if (cardsOnTimeline >= this.#cardsToWin && !this.activePlayer.reachedTarget) {
+				const effBonus = calculateEfficiencyBonus(
+					this.#cardsToWin,
+					this.activePlayer.totalPlacements
+				);
+				this.activePlayer.efficiencyBonus = effBonus;
+				this.activePlayer.score += effBonus;
+				this.activePlayer.reachedTarget = true;
+			}
 		} else {
-			this.activePlayer.currentStreak = 0;
+			// Soft decay: reduce streak by 2, min 0
+			this.activePlayer.currentStreak = Math.max(0, this.activePlayer.currentStreak - 2);
+			this.lastTurnScoreBreakdown = null;
 		}
 
-		// Log placement to analytics
+		// Track per-round scores for the stats graph
+		const scoreDelta = this.activePlayer.score - this.scoreBeforeTurn;
+		this.#currentRoundScores[this.activePlayer.player.name] =
+			(this.#currentRoundScores[this.activePlayer.player.name] ?? 0) + scoreDelta;
+
+		// Log placement to analytics (enhanced with scoring data)
+		const scoreBreakdown = this.lastTurnScoreBreakdown;
 		import('$lib/game-logger')
 			.then(({ analytics }) => {
-				analytics.logPlacement(track.work.gid, isCorrect);
+				analytics.logPlacement(track.work.gid, isCorrect, {
+					turnScore: scoreBreakdown?.totalScore ?? 0,
+					secondsTaken,
+					streakCount: this.activePlayer.currentStreak,
+					gap: scoreBreakdown?.gap ?? 0,
+					playerName: this.activePlayer.player.name
+				});
 				analytics.updateProgress({
 					numberOfTurns: this.totalTurns,
 					players: this.playerStats
@@ -699,24 +808,33 @@ export class TimelineGame {
 		const audio = isCorrect ? new Audio('/correct.mp3') : new Audio('/wrong.mp3');
 		audio.play().catch(() => {});
 
+		// Determine if endgame should trigger
+		const reachedWin = isCorrect && this.activePlayer.reachedTarget;
+
 		this.revealEntryId = entries[idx].id;
 		this.revealTrack = track;
 		this.revealIsCorrect = isCorrect;
 		this.revealPurpose = 'turn';
-		this.revealReachedWin =
-			isCorrect && entries.filter((e) => e.correct !== false).length >= this.#cardsToWin;
+		this.revealReachedWin = reachedWin;
 		this.pendingEntryId = null;
 		this.popupRotation = this.#getRotationForPlayer(this.activePlayer.player);
 
-		// Snapshot streak for deferred display after popup close
-		this.#pendingStreakFlash =
-			isCorrect && this.activePlayer.currentStreak >= STREAK_THRESHOLD
-				? {
-						playerName: this.activePlayer.player.name,
-						streak: this.activePlayer.currentStreak,
-						rotation: this.popupRotation
-					}
-				: null;
+		// Activate endgame trigger (multiplayer: round must finish first)
+		if (reachedWin && !this.endgameActive) {
+			this.endgameActive = true;
+			if (!this.#isSoloMode) {
+				this.#pendingEndgameFlash = true;
+			}
+		}
+
+		// Show streak flash immediately (appears on top of popup)
+		if (isCorrect && this.activePlayer.currentStreak >= STREAK_THRESHOLD) {
+			this.streakFlash = {
+				playerName: this.activePlayer.player.name,
+				streak: this.activePlayer.currentStreak,
+				rotation: this.popupRotation
+			};
+		}
 
 		this.showRevealPopup = true;
 	}
@@ -733,16 +851,16 @@ export class TimelineGame {
 		this.#isClosingRevealPopup = true;
 
 		this.showRevealPopup = false;
-
-		// Fire deferred streak flash now that the popup is closing
-		const pendingFlash = this.#pendingStreakFlash;
-		this.#pendingStreakFlash = null;
+		// Dismiss streak flash immediately (it was shown on top of popup)
+		this.streakFlash = null;
 
 		// Snapshot reveal state before async delays
 		const wasWrong = this.revealIsCorrect === false;
 		const entryId = this.revealEntryId;
 		const purpose = this.revealPurpose;
 		const reachedWin = this.revealReachedWin;
+		const shouldFlashEndgame = this.#pendingEndgameFlash;
+		this.#pendingEndgameFlash = false;
 
 		if (purpose === 'turn') {
 			this.#ctx.nextRound().catch((error) => {
@@ -757,30 +875,24 @@ export class TimelineGame {
 				return;
 			}
 
-			// Reveal deferred streak visuals, then show flash
-			this.streakRevealPending = false;
-			if (pendingFlash) {
-				this.streakFlash = pendingFlash;
+			// Fire deferred endgame flash now that popup + streak flash are gone
+			if (shouldFlashEndgame) {
+				this.endgameFlash = true;
 			}
 
-			if (reachedWin) {
+			// Reveal deferred streak visuals
+			this.streakRevealPending = false;
+
+			if (reachedWin && this.#isSoloMode) {
+				// Solo mode: end immediately, no round to complete
 				this.#clearRevealState();
-				this.showEndGame = true;
+				this.#endGameNow();
 				this.#isClosingRevealPopup = false;
-
-				// Eagerly send game_end on win so the event isn't lost if the tab closes.
-				// endGame() is idempotent — it no-ops if already sent.
-				import('$lib/game-logger')
-					.then(({ analytics }) => {
-						analytics.endGame('completed', {
-							numberOfTurns: this.totalTurns,
-							players: this.playerStats
-						});
-					})
-					.catch(() => {});
-
 				return;
 			}
+
+			// Multiplayer endgame: round continues via #finalizeTurn() which
+			// checks endgameActive and ends when the round completes.
 
 			if (wasWrong && entryId) {
 				const entry = this.activePlayer.entries.find((e) => e.id === entryId);
@@ -797,13 +909,8 @@ export class TimelineGame {
 			}
 
 			this.#clearRevealState();
-			if (pendingFlash) {
-				// Turn finalization deferred until flash completes
-				this.#isClosingRevealPopup = false;
-			} else {
-				this.#finalizeTurn();
-				this.#isClosingRevealPopup = false;
-			}
+			this.#finalizeTurn();
+			this.#isClosingRevealPopup = false;
 		}, 300);
 	}
 
@@ -813,6 +920,23 @@ export class TimelineGame {
 		});
 
 		this.#rotateToNextPlayer();
+
+		// If we've completed a full round (back to player 0), commit round scores
+		if (this.activePlayerIndex === 0) {
+			this.roundScores.push({
+				roundIndex: this.#roundCounter,
+				playerScores: { ...this.#currentRoundScores }
+			});
+			this.#currentRoundScores = {};
+			this.#roundCounter++;
+		}
+
+		// Endgame check: if the round is now complete, end the game.
+		// The round is complete when we've rotated back to the starting player.
+		if (this.endgameActive && this.activePlayerIndex === 0) {
+			this.#endGameNow();
+			return;
+		}
 
 		// Safety-net sync: ensure centerStack[0] reflects the current track.
 		// The component's $effect normally handles this, but if the identity
@@ -832,10 +956,38 @@ export class TimelineGame {
 		this.#resetTurnState();
 	}
 
-	/** Called by FlashingText onComplete — clears flash and finalizes the turn. */
+	/** End the game, send analytics, and show the end screen. */
+	#endGameNow() {
+		// Flush any incomplete round scores
+		if (Object.keys(this.#currentRoundScores).length > 0) {
+			this.roundScores.push({
+				roundIndex: this.#roundCounter,
+				playerScores: { ...this.#currentRoundScores }
+			});
+			this.#currentRoundScores = {};
+		}
+
+		this.showEndGame = true;
+
+		// Eagerly send game_end so the event isn't lost if the tab closes.
+		import('$lib/game-logger')
+			.then(({ analytics }) => {
+				analytics.endGame('completed', {
+					numberOfTurns: this.totalTurns,
+					players: this.playerStats,
+					scores: this.timelines.map((t) => ({
+						name: t.player.name,
+						score: t.score,
+						efficiencyBonus: t.efficiencyBonus
+					}))
+				});
+			})
+			.catch(() => {});
+	}
+
+	/** Called by FlashingText onComplete — clears flash (turn already finalized). */
 	handleStreakFlashComplete() {
 		this.streakFlash = null;
-		this.#finalizeTurn();
 	}
 
 	#clearRevealState() {
@@ -885,11 +1037,12 @@ export class TimelineGame {
 		this.totalTurns++;
 		this.activePlayer.totalPlacements++;
 
-		// Snapshot streak before resetting
+		// Snapshot streak before applying soft decay
 		this.preRevealCurrentStreak = this.activePlayer.currentStreak;
 		this.preRevealLongestStreak = this.activePlayer.longestStreak;
 		this.streakRevealPending = true;
-		this.activePlayer.currentStreak = 0;
+		this.activePlayer.currentStreak = Math.max(0, this.activePlayer.currentStreak - 2);
+		this.lastTurnScoreBreakdown = null;
 
 		if (this.pendingEntryId) {
 			// Card was placed in the timeline — mark it wrong and show reveal
@@ -905,17 +1058,26 @@ export class TimelineGame {
 				this.revealPurpose = 'turn';
 				this.revealReachedWin = false;
 				this.popupRotation = this.#getRotationForPlayer(this.activePlayer.player);
-				this.#pendingStreakFlash = null;
 				this.pendingEntryId = null;
 				this.showRevealPopup = true;
 				return;
 			}
 		}
 
-		// No card placed — just advance
-		this.#ctx.nextRound().catch((error) => {
-			console.error('[TimelineGame] Error advancing after timeout:', error);
-		});
+		// No card placed — show reveal popup for the forfeited track
+		const currentTrack = this.#getCurrentTrack();
+		if (currentTrack) {
+			this.revealEntryId = null;
+			this.revealTrack = currentTrack;
+			this.revealIsCorrect = false;
+			this.revealPurpose = 'turn';
+			this.revealReachedWin = false;
+			this.popupRotation = this.#getRotationForPlayer(this.activePlayer.player);
+			this.showRevealPopup = true;
+			return;
+		}
+
+		// Fallback: no track available — just advance
 		this.streakRevealPending = false;
 		this.#finalizeTurn();
 		this.resolvingTurn = false;

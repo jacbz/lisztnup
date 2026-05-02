@@ -24,8 +24,7 @@
 		"placeholder": "메시지를 입력하세요...",
 		"submit": "피드백 보내기",
 		"sending": "보내는 중...",
-		"success": "피드백을 보내주셔서 감사합니다!",
-		"button": "피드백 보내기"
+		"success": "피드백을 보내주셔서 감사합니다!"
 	},
 	"search": {
 		"title": "검색...",
@@ -539,7 +538,6 @@
 		"tie": "무승부!",
 		"noMoreTracks": "더 이상 재생할 곡이 없습니다.",
 		"finalScores": "최종 점수",
-		"viewStats": "통계 보기",
 		"home": "홈으로"
 	},
 	"timeline": {
@@ -553,7 +551,22 @@
 			"playFirst": "먼저 카드를 재생하세요.",
 			"dragToPlace": "타임라인의 적절한 위치로 카드를 드래그하세요.",
 			"reorder": "위치를 조정한 뒤 확정 버튼을 누르세요."
-		}
+		},
+		"scoring": {
+			"base": "기본",
+			"difficulty": "난이도",
+			"gap": "{years}년 차이",
+			"speed": "속도",
+			"streak": "연속",
+			"streakCount": "{count}연속",
+			"completionBonus": "완료 보너스",
+			"turnTotal": "턴 합계",
+			"score": "점수",
+			"streakMultiplier": "{mult} 배율",
+			"mastery": "숙련도"
+		},
+		"targetReached": "목표 달성!",
+		"finalRound": "마지막 라운드!"
 	},
 	"bingo": {
 		"setupDescription": "각 플레이어는 자신만의 빙고판이 필요합니다.",
@@ -590,6 +603,20 @@
 		"donateHint": "이 앱은 영원히 무료입니다. 하지만 별 커피 한 잔 사주신다면 감사히 받겠습니다.",
 		"donateButton": "커피 한 잔 사주기",
 		"viewOnGithub": "GitHub에서 보기"
+	},
+	"leaderboard": {
+		"title": "리더보드",
+		"loading": "로딩 중\u2026",
+		"noScores": "아직 점수 없음 \u2014 첨 번째가 되세요!",
+		"cards": "장",
+		"publishScore": "리더보드에 등록",
+		"submitted": "점수 공개 완료!",
+		"error": "전송 실패. 다시 시도?",
+		"submitting": "전송 중\u2026",
+		"submit": "전송",
+		"enterName": "이름 입력",
+		"namePlaceholder": "이름",
+		"newHighScore": "세계 신기록!"
 	},
 	"eras": {
 		"ancient": "고대",

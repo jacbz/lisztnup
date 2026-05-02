@@ -8,7 +8,7 @@ src/lib/components/
 │   ├── primitives/     Toast, Popup, Dialog, EdgeDisplay, Slider, RangeSlider,
 │   │                   ToggleButton, NumberSelector, ScoringCard, Logo, QRCode,
 │   │                   ExternalLink, SearchPopup, AboutPopup, AppFooter
-│   ├── screens/        HomeScreen, LoadingScreen, EndGameScreen, StatsScreen, ScoringScreen
+│   ├── screens/        HomeScreen, LoadingScreen, EndGameScreen, StatsScreen, ScoringScreen, LeaderboardPanel, LeaderboardSubmitPopup
 │   ├── setup/          ModeSelector, ModeRulesPopup, PlayerSetup, TracklistSelector,
 │   │                   TracklistEditor, TrackTable, ComposerCloud, LibraryViewer,
 │   │                   WorkSelectorPopup, BingoSetup, ShareLinkPopup
@@ -22,7 +22,7 @@ src/lib/components/
 │   ├── BingoGameScreen.svelte    Wheel-based, no scoring
 │   ├── TimelineGameScreen.svelte Thin wrapper — logic in TimelineGame class
 │   ├── SpinningWheel.svelte      Canvas + SVG, physics-based
-│   └── timeline/                 TimelineCard, PlayerTimeline, CardStack
+│   └── timeline/                 TimelineCard, PlayerTimeline, CardStack, TimelineRevealPopup, TimelineEndGameScreen
 ```
 
 All UI components re-exported from `src/lib/components/ui/index.ts`.

@@ -22,13 +22,11 @@
 
 	interface Props {
 		track: Track | null;
-		/** If true, shows the upside-down compact info section above the main info, for players seated across from the screen. */
-		showMirror: boolean;
 		/** Controls horizontal bleed to break out of parent padding. */
 		bleed?: 'none' | 'sm' | 'md' | 'lg';
 	}
 
-	let { track = null, showMirror = true, bleed = 'lg' }: Props = $props();
+	let { track = null, bleed = 'lg' }: Props = $props();
 
 	let showSearchPopup = $state(false);
 	let showReportPopup = $state(false);
@@ -114,30 +112,6 @@
 </script>
 
 {#if track}
-	{#if showMirror}
-		<!-- Compact upside-down info -->
-		<div
-			class="mb-3 flex rotate-180 flex-col gap-1 border-t border-slate-600 pt-4 text-center text-sm font-semibold text-slate-300 opacity-90"
-		>
-			<div>
-				<span class="font-bold text-cyan-400">{composerName}</span>
-				<span class="text-xs text-slate-400">({lifespan})</span>
-			</div>
-			{#if era || displayYear}
-				<div>
-					<span class="text-purple-400">{era}</span> ·
-					<span class="text-green-400">{displayYear}</span>
-				</div>
-			{/if}
-			<div>
-				<div class="text-pink-400">{track.work.name}</div>
-				{#if shouldShowPart}
-					<div class="text-xs">{displayPartName}</div>
-				{/if}
-			</div>
-		</div>
-	{/if}
-
 	<div class="flex h-full flex-col justify-center gap-5">
 		<!-- Composer -->
 		<div class="flex flex-col gap-1.5">
@@ -193,10 +167,10 @@
 				data-sveltekit-reload
 				data-sveltekit-noscroll
 				data-sveltekit-preload-data="false"
-				class="text-center text-sm no-underline transition-all duration-200 hover:underline"
+				class="text-center text-xs no-underline transition-all duration-200 hover:underline"
 				style="color: rgb(162, 56, 255)"
 			>
-				<div class="mr-[0.1em] mb-[0.2em] inline-flex h-[0.9em] w-[0.9em] align-middle">
+				<div class="mr-[0.1em] mb-[0.2em] inline-flex h-[0.7em] w-[0.7em] align-middle">
 					<!-- eslint-disable-next-line svelte/no-at-html-tags -->{@html deezer}
 				</div>
 				{artists.join(', ')}

@@ -42,8 +42,7 @@
 - **All 10 locales**: en, de, es, fr, it, pt, ja, ko, zh-CN, zh-TW. Every new key must be added to all locale files.
 - **Reuse keys**: Check existing locale files before creating new keys. Reuse `common.*`, `game.*`, etc.
 - **Interpolation**: Use `{variable}` syntax in locale strings for dynamic values.
-- **Tone**: Informal, friendly. Translations should feel natural in each language, not robotic.
-- **CJK fonts**: When `ja`, `zh-CN`, or `zh-TW` locales are selected, `fontLoader.ts` dynamically loads appropriate Google Fonts (Noto Sans JP/SC/TC).
+- **Tone**: Informal, friendly. Translations must feel natural and highly idiomatic in each language, not robotic. They may not be literal translations of the English text if that would sound unnatural.
 
 ## Data Conventions
 
