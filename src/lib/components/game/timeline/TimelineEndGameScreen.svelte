@@ -152,6 +152,12 @@
 
 	onMount(() => {
 		gameoverAudio = new Audio('/gameover.mp3');
+		return () => {
+			if (gameoverAudio) {
+				gameoverAudio.pause();
+				gameoverAudio.src = '';
+			}
+		};
 	});
 </script>
 

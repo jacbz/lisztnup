@@ -31,11 +31,12 @@ export function calculateDifficultyBonus(gap: number): number {
 /**
  * Speed multiplier based on how quickly the player placed the card.
  * Uses a quadratic curve: sub-3s answers are dramatically more rewarding.
- * Returns exactly 1.0 for times ≥ 20s.
+ * Divides by (MAX_SPEED_TIME - 1) so that 1s taken yields the maximum bonus
+ * while 0s (instant) is only marginally better. Returns exactly 1.0 for times ≥ 20s.
  */
 export function calculateSpeedMultiplier(secondsTaken: number): number {
 	const clamped = Math.max(0, MAX_SPEED_TIME - secondsTaken);
-	return 1.0 + SPEED_BONUS_COEFFICIENT * (clamped / 19) ** 2;
+	return 1.0 + SPEED_BONUS_COEFFICIENT * (clamped / (MAX_SPEED_TIME - 1)) ** 2;
 }
 
 /**
@@ -67,34 +68,29 @@ export function calculateMasteryBonus(correctSoFar: number, attemptsSoFar: numbe
 	return 500 * ratio * ratio;
 }
 
+const MIN_GAP = 25;
+
 /**
  * Calculate the year gap between the two neighbours of a newly placed card.
- * For edge placements (one neighbour missing), mirrors the gap from the
- * existing neighbour — e.g. if the right card is 1820 and the dropped card
- * is 1800, the virtual left boundary becomes 1780 (gap = 40).
+ * For edge placements (one neighbour missing), uses the dataset boundary
+ * (MIN_WORK_YEAR / MAX_WORK_YEAR) as the virtual neighbour so that edge
+ * cards are scored against a realistic range rather than a mirrored gap.
+ * Enforces a minimum gap of MIN_GAP to prevent extreme difficulty bonuses
+ * from near-identical placements.
  */
 export function calculateGap(
 	leftYear: number | null,
-	rightYear: number | null,
-	droppedYear: number
+	rightYear: number | null
 ): number {
-	let left = leftYear;
-	let right = rightYear;
+	const left = leftYear ?? MIN_WORK_YEAR;
+	const right = rightYear ?? MAX_WORK_YEAR;
 
-	if (left === null && right !== null) {
-		// Leftmost edge: mirror the right gap
-		left = droppedYear - (right - droppedYear);
-	}
-	if (right === null && left !== null) {
-		// Rightmost edge: mirror the left gap
-		right = droppedYear + (droppedYear - left);
-	}
-	if (left === null && right === null) {
+	if (leftYear === null && rightYear === null) {
 		// First card on the timeline — use full span
 		return TOTAL_SPAN;
 	}
 
-	return Math.max(0, right! - left!);
+	return Math.max(MIN_GAP, right - left);
 }
 
 // ─── Composite score calculation ───────────────────────────

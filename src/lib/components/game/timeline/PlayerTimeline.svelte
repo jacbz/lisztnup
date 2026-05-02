@@ -231,7 +231,6 @@
 						: 'transform: translateY(0) rotate(0) scale(1); opacity: 1;'}
 				>
 					<div
-						class:z-50={isPendingMove}
 						class:will-change-transform={isPendingMove}
 						style={isPendingMove
 							? `transform: translate3d(${localDragTranslate.x}px, ${localDragTranslate.y}px, 0);`

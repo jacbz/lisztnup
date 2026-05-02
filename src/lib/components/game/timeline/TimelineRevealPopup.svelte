@@ -48,10 +48,27 @@
 	// Track which rows have started animating (for fade-in of multipliers)
 	let rowVisible = $state<Record<string, boolean>>({});
 	let animFrame: number | null = null;
+	let pendingTimeouts: ReturnType<typeof setTimeout>[] = [];
 	let scoreTableEl: HTMLDivElement | undefined = $state();
+
+	function clearAllTimers() {
+		pendingTimeouts.forEach((id) => clearTimeout(id));
+		pendingTimeouts = [];
+		if (animFrame) {
+			cancelAnimationFrame(animFrame);
+			animFrame = null;
+		}
+	}
+
+	function scheduleTimeout(fn: () => void, delay: number) {
+		const id = setTimeout(fn, delay);
+		pendingTimeouts.push(id);
+		return id;
+	}
 
 	$effect(() => {
 		if (visible && isCorrect && scoreBreakdown) {
+			clearAllTimers();
 			const turnTotal = scoreBreakdown.totalScore + efficiencyBonus;
 			displayedValues = {};
 			displayedTurnTotal = 0;
@@ -60,7 +77,7 @@
 			turnTotalOpacity = 1;
 			rowVisible = {};
 
-			setTimeout(() => {
+			scheduleTimeout(() => {
 				// Smoothly scroll score table into view using the parent scroll container
 				if (scoreTableEl) {
 					const scrollParent = scoreTableEl.closest('.overflow-y-auto') ?? scoreTableEl.parentElement;
@@ -98,12 +115,12 @@
 				};
 
 				// Schedule speed & streak to appear while mastery is still counting
-				setTimeout(() => {
+				scheduleTimeout(() => {
 					rowVisible.speed = true;
 					rowVisible = rowVisible;
 					displayedValues = { ...displayedValues, speed: scoreBreakdown!.speedMult };
 				}, 1100);
-				setTimeout(() => {
+				scheduleTimeout(() => {
 					rowVisible.streak = true;
 					rowVisible = rowVisible;
 					displayedValues = { ...displayedValues, streak: scoreBreakdown!.streakMult };
@@ -134,7 +151,7 @@
 
 						if (hasCompletion) {
 							// Brief pause then completion bonus
-							setTimeout(() => {
+							scheduleTimeout(() => {
 								rowVisible.completion = true;
 								rowVisible = rowVisible;
 								// Count up completion bonus
@@ -165,7 +182,7 @@
 					rowVisible = rowVisible;
 					displayedTurnTotal = turnTotal;
 					// Phase 4: Count up score with opacity transitions
-					setTimeout(() => {
+					scheduleTimeout(() => {
 						const countStart = performance.now();
 						const countDuration = 600;
 						function countTick(now: number) {
@@ -196,16 +213,13 @@
 			scoreOpacity = 0.3;
 			turnTotalOpacity = 1;
 			rowVisible = {};
-			if (animFrame) {
-				cancelAnimationFrame(animFrame);
-				animFrame = null;
-			}
+			clearAllTimers();
 		}
 	});
 
 	onMount(() => {
 		return () => {
-			if (animFrame) cancelAnimationFrame(animFrame);
+			clearAllTimers();
 		};
 	});
 

@@ -35,7 +35,7 @@
 		try {
 			const res = await fetch('/api/game/leaderboard?limit=10');
 			if (res.ok) {
-				const data = await res.json();
+				const data: { entries?: LeaderboardEntry[] } = await res.json();
 				entries = data.entries ?? [];
 			}
 		} catch {

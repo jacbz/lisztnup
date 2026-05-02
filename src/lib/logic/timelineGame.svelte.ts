@@ -745,11 +745,10 @@ export class TimelineGame {
 			}
 
 			// Calculate year gap for difficulty bonus
-			const droppedYear = this.#getTimelineYear(entries[idx].track);
 			const prevYear = idx > 0 ? this.#getTimelineYear(entries[idx - 1].track) : null;
 			const nextYear =
 				idx < entries.length - 1 ? this.#getTimelineYear(entries[idx + 1].track) : null;
-			const gap = calculateGap(prevYear, nextYear, droppedYear);
+			const gap = calculateGap(prevYear, nextYear);
 			const isEdgePlacement = prevYear === null || nextYear === null;
 
 			const breakdown = calculateTurnScore({
@@ -1034,6 +1033,7 @@ export class TimelineGame {
 		const audio = new Audio('/wrong.mp3');
 		audio.play().catch(() => {});
 
+		this.scoreBeforeTurn = this.activePlayer.score;
 		this.totalTurns++;
 		this.activePlayer.totalPlacements++;
 

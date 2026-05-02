@@ -85,13 +85,16 @@
 		await Promise.all(pending.map((i) => submitPlayer(i)));
 	}
 
-	// Reset state when popup opens
+	// Reset state when popup opens (preserve submitted status)
 	$effect(() => {
 		if (visible) {
 			editedNames = players.map((p) => (isDefaultName(p.name) ? '' : p.name));
 			submitting = players.map(() => false);
-			submitted = players.map(() => false);
 			errors = players.map(() => false);
+			// Only reset submitted if player list changed (new game)
+			if (submitted.length !== players.length) {
+				submitted = players.map(() => false);
+			}
 		}
 	});
 

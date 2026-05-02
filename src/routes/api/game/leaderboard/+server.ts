@@ -93,9 +93,15 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		) {
 			return json({ success: false, reason: 'Invalid name' }, { status: 400 });
 		}
+		if (typeof longestStreak === 'number' && (longestStreak < 0 || longestStreak > cards)) {
+			return json({ success: false, reason: 'Streak out of range' }, { status: 400 });
+		}
+		if (typeof cardsToWin === 'number' && (cardsToWin < 1 || cardsToWin > cards)) {
+			return json({ success: false, reason: 'Cards-to-win out of range' }, { status: 400 });
+		}
 
-		// Rough score-per-card ceiling: max ~3500 per card (base 1000 + diff 2310 + speed bonus + streak)
-		const maxScorePerCard = 4000;
+		// Rough score-per-card ceiling: max ~5500 per card (base 1000 + diff 2310 + mastery 500 + speed/streak + efficiency)
+		const maxScorePerCard = 6000;
 		if (score > cards * maxScorePerCard) {
 			return json({ success: false, reason: 'Score implausible' }, { status: 400 });
 		}

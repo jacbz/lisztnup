@@ -32,15 +32,21 @@
 	}: Props = $props();
 
 	let showing = $state(false);
-	let timer: ReturnType<typeof setTimeout> | null = null;
+	let outerTimer: ReturnType<typeof setTimeout> | null = null;
+	let innerTimer: ReturnType<typeof setTimeout> | null = null;
+
+	function clearTimers() {
+		if (outerTimer) { clearTimeout(outerTimer); outerTimer = null; }
+		if (innerTimer) { clearTimeout(innerTimer); innerTimer = null; }
+	}
 
 	$effect(() => {
 		if (visible) {
 			showing = true;
-			if (timer) clearTimeout(timer);
-			timer = setTimeout(() => {
+			clearTimers();
+			outerTimer = setTimeout(() => {
 				showing = false;
-				timer = setTimeout(() => {
+				innerTimer = setTimeout(() => {
 					onComplete();
 				}, 400);
 			}, 1800);
@@ -52,7 +58,7 @@
 
 	onMount(() => {
 		return () => {
-			if (timer) clearTimeout(timer);
+			clearTimers();
 		};
 	});
 </script>
