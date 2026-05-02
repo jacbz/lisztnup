@@ -425,7 +425,7 @@
 	"modes": {
 		"timeline": {
 			"name": "Timeline",
-			"description": "Baue eine chronologische Timeline, indem du Tracks in die richtige Jahres-Reihenfolge legst.",
+			"description": "Ordne Tracks chronologisch und sammle Punkte durch Schwierigkeits-, Präzisions-, Tempo- und Serien-Boni.",
 			"step1": {
 				"title": "Karte abspielen",
 				"desc": "Starte deinen Zug, indem du die oberste Karte aus dem Stapel abspielst."
@@ -435,8 +435,12 @@
 				"desc": "Ziehe die Karte an die Stelle, wo du sie vermutest, und bestätige dann."
 			},
 			"step3": {
-				"title": "Erster am Limit gewinnt",
-				"desc": "Richtige Platzierungen lassen deine Timeline wachsen. Wer zuerst das Karten-Limit erreicht, gewinnt!"
+				"title": "Punkte sammeln",
+				"desc": "Jede richtige Platzierung bringt Punkte. Je enger die Nachbarkarten beieinanderliegen, desto höher dein Schwierigkeitsbonus. Je weniger Fehler du machst, desto stärker dein Präzisionsbonus. Schnelle Entscheidungen pushen deinen Tempo-Bonus, und mehrere Treffer am Stück steigern deinen Serien-Multiplikator."
+			},
+			"step4": {
+				"title": "Wettlauf zum Sieg",
+				"desc": "Wer zuerst genug Karten gesammelt hat, löst die letzte Runde aus. Ein Abschlussbonus belohnt Effizienz — je weniger Versuche du gebraucht hast, desto größer die Belohnung."
 			}
 		},
 		"classic": {

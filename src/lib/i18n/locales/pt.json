@@ -425,7 +425,7 @@
 	"modes": {
 		"timeline": {
 			"name": "Timeline",
-			"description": "Construa uma linha do tempo cronológica posicionando as faixas na ordem correta dos anos.",
+			"description": "Coloque as faixas em ordem cronológica e acumule pontos com bônus de Dificuldade, Maestria, Velocidade e Sequência.",
 			"step1": {
 				"title": "Jogue a Carta",
 				"desc": "Comece seu turno jogando a carta do topo do baralho."
@@ -435,8 +435,12 @@
 				"desc": "Arraste a carta para sua linha do tempo onde você acha que ela pertence, depois confirme."
 			},
 			"step3": {
-				"title": "Primeiro a Atingir o Limite Vence",
-				"desc": "Posicionamentos corretos ajudam a crescer sua linha do tempo. O primeiro jogador a atingir o limite de cartas vence."
+				"title": "Marque Pontos",
+				"desc": "Cada posicionamento correto rende pontos. Quanto mais próximas forem as cartas vizinhas, maior o bônus de Dificuldade. Quanto menos erros você cometer, maior o seu bônus de Maestria. Decisões rápidas turbizam sua Velocidade, e acertos consecutivos ativam um multiplicador de Sequência."
+			},
+			"step4": {
+				"title": "Corrida pela Vitória",
+				"desc": "O primeiro jogador a juntar cartas suficientes dispara a rodada final. Um Bônus de Conclusão premia a eficiência — quanto menos tentativas você precisou, maior a recompensa."
 			}
 		},
 		"classic": {

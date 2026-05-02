@@ -37,6 +37,11 @@
 						image: '/screenshots/timeline-3.jpg',
 						titleKey: 'modes.timeline.step3.title',
 						descKey: 'modes.timeline.step3.desc'
+					},
+					{
+						image: '/screenshots/timeline-4.jpg',
+						titleKey: 'modes.timeline.step4.title',
+						descKey: 'modes.timeline.step4.desc'
 					}
 				]
 			},

@@ -425,7 +425,7 @@
 	"modes": {
 		"timeline": {
 			"name": "Timeline",
-			"description": "Costruisci una linea temporale cronologica posizionando i brani nell'anno corretto.",
+			"description": "Disponi i brani in ordine cronologico e accumula punti con i bonus Difficoltà, Padronanza, Velocità e Serie.",
 			"step1": {
 				"title": "Gioca la Carta",
 				"desc": "Inizia il turno giocando la carta in cima al mazzo."
@@ -435,8 +435,12 @@
 				"desc": "Trascina la carta nella tua linea temporale dove pensi che vada, poi conferma."
 			},
 			"step3": {
-				"title": "Vince chi Arriva al Limite",
-				"desc": "I posizionamenti corretti allungano la tua linea. Il primo giocatore a raggiungere l'obiettivo vince."
+				"title": "Fai Punti",
+				"desc": "Ogni piazzamento corretto vale punti. Più le carte vicine sono ravvicinate, più alto è il bonus Difficoltà. Meno errori fai, più sale il tuo bonus Padronanza. Le decisioni rapide premiano la Velocità, e le risposte giuste consecutive attivano un moltiplicatore Serie."
+			},
+			"step4": {
+				"title": "Corsa alla Vittoria",
+				"desc": "Il primo giocatore a raccogliere abbastanza carte fa scattare l'ultimo giro. Un Bonus Completamento premia l'efficienza: meno tentativi hai fatto, più grande è il premio."
 			}
 		},
 		"classic": {

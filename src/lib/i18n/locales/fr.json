@@ -425,7 +425,7 @@
 	"modes": {
 		"timeline": {
 			"name": "Timeline",
-			"description": "Construis une frise chronologique en plaçant les morceaux dans le bon ordre.",
+			"description": "Place les morceaux dans l'ordre chronologique et engrange des points grâce aux bonus de Difficulté, Maîtrise, Vitesse et Série.",
 			"step1": {
 				"title": "Jouer la carte",
 				"desc": "Commence ton tour en jouant la carte du dessus."
@@ -435,8 +435,12 @@
 				"desc": "Fais glisser la carte dans ta frise, puis confirme ton placement."
 			},
 			"step3": {
-				"title": "Le premier au but l’emporte",
-				"desc": "Le premier joueur à atteindre la limite de cartes remporte la partie."
+				"title": "Marquer des points",
+				"desc": "Chaque placement correct rapporte des points. Plus l'écart entre les cartes voisines est serré, plus le bonus de Difficulté est juteux. Moins tu fais d'erreurs, plus ton bonus de Maîtrise grimpe. La rapidité booste ta Vitesse, et les bonnes réponses à la suite gonflent ton multiplicateur de Série."
+			},
+			"step4": {
+				"title": "La course à la victoire",
+				"desc": "Le premier joueur à réunir assez de cartes déclenche la manche finale. Un Bonus de Complétion récompense l'efficacité — moins tu as eu besoin d'essais, plus la récompense est grosse."
 			}
 		},
 		"classic": {

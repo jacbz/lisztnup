@@ -425,7 +425,7 @@
 	"modes": {
 		"timeline": {
 			"name": "Timeline",
-			"description": "Construye una línea cronológica colocando las pistas en el orden correcto de años.",
+			"description": "Coloca las pistas en orden cronológico y acumula puntos con bonificaciones de Dificultad, Maestría, Velocidad y Racha.",
 			"step1": {
 				"title": "Juega la carta",
 				"desc": "Empieza tu turno jugando la carta superior del mazo."
@@ -435,8 +435,12 @@
 				"desc": "Arrastra la carta a tu línea de tiempo donde creas que encaja, luego confirma su colocación."
 			},
 			"step3": {
-				"title": "El primero en llegar gana",
-				"desc": "Las colocaciones correctas hacen crecer tu línea. El primer jugador en alcanzar el límite de cartas gana."
+				"title": "Suma puntos",
+				"desc": "Cada colocación correcta te da puntos. Cuanto más juntas estén las cartas vecinas, mayor es el bonus de Dificultad. Cuantos menos errores cometas, mayor será tu bonus de Maestría. Las decisiones rápidas mejoran tu Velocidad, y los aciertos consecutivos activan un multiplicador de Racha."
+			},
+			"step4": {
+				"title": "Carrera a la victoria",
+				"desc": "El primer jugador en reunir suficientes cartas activa la ronda final. Un Bonus de Finalización premia la eficiencia: cuantos menos intentos hayas necesitado, mayor será la recompensa."
 			}
 		},
 		"classic": {

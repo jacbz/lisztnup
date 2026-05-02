@@ -425,7 +425,7 @@
 	"modes": {
 		"timeline": {
 			"name": "Timeline",
-			"description": "Build a chronological timeline by placing tracks in the right year order.",
+			"description": "Place tracks in chronological order and rack up points through Difficulty, Mastery, Speed, and Streak bonuses.",
 			"step1": {
 				"title": "Play the Card",
 				"desc": "Start your turn by playing the top card from the deck."
@@ -435,8 +435,12 @@
 				"desc": "Drag the card into your timeline where you think it belongs, then confirm your placement."
 			},
 			"step3": {
-				"title": "First to the Limit Wins",
-				"desc": "Correct placements help you grow your timeline. The first player to reach the cards-to-win limit wins."
+				"title": "Score Points",
+				"desc": "Every correct placement scores points. Tighter gaps between neighboring cards earn a bigger Difficulty bonus. The fewer mistakes you make, the higher your Mastery bonus. Quick decisions boost your Speed, and correct answers in a row build a Streak multiplier."
+			},
+			"step4": {
+				"title": "Race to Win",
+				"desc": "The first player to collect enough cards triggers the final round. A Completion Bonus rewards efficiency — the fewer attempts it took you, the bigger the reward."
 			}
 		},
 		"classic": {
