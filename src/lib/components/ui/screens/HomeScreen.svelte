@@ -327,9 +327,9 @@
 					<Sparkles class="h-5 w-5" />
 				</div>
 				<div class="min-w-0 flex-1 flex flex-col gap-0.5">
-					<div class="flex items-center gap-2">
+					<div class="flex md:items-center md:gap-2 flex-col md:flex-row">
 						<span class="text-sm font-bold text-amber-400">{$_('dailyChallenge.title')}</span>
-						<span class="text-xs text-slate-500">{$_('dailyChallenge.subtitle')}</span>
+						<span class="text-xs text-amber-400/60">{$_('dailyChallenge.subtitle')}</span>
 					</div>
 					<div class="mt-0.5 flex items-center gap-1.5">
 						{#if dailyTracklist.icon}
@@ -338,8 +338,12 @@
 						<span class="truncate font-semibold text-amber-200">{tracklistDisplayName(dailyTracklist, $_)}</span>
 					</div>
 					{#if dailyHighScore}
+						{@const escapeName = dailyHighScore.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}
 						<p class="mt-0.5 text-xs text-amber-400/60">
-							{$_('dailyChallenge.highScore', { values: { name: dailyHighScore.name, score: dailyHighScore.score.toLocaleString() } })}
+							{@html $_(
+								'dailyChallenge.highScore',
+								{ values: { name: `<strong style="font-weight:500;color:rgb(252 211 77/0.8)">${escapeName}</strong>`, score: `<strong style="font-weight:700;color:rgb(252 211 77/0.8)">${dailyHighScore.score.toLocaleString()}</strong>` } }
+							)}
 						</p>
 					{/if}
 				</div>
