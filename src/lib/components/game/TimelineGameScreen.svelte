@@ -370,6 +370,7 @@
 	timelines={game.timelines}
 	tracksExhausted={ctx.tracksExhausted}
 	tracklistId={$settings.selectedTracklist}
+	sessionId={game.endgameSessionId}
 	onHome={handleQuit}
 	onViewStats={() => { game.showEndGame = false; statsOpenedFromEndgame = true; showStatsPopup = true; }}
 />

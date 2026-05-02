@@ -19,6 +19,7 @@
 		players: LeaderboardPlayer[];
 		tracklistId?: string | null;
 		cardsToWin: number;
+		sessionId?: string | null;
 		onClose?: () => void;
 	}
 
@@ -27,6 +28,7 @@
 		players,
 		tracklistId = null,
 		cardsToWin,
+		sessionId = null,
 		onClose = () => {}
 	}: Props = $props();
 
@@ -65,7 +67,8 @@
 					accuracy: p.accuracy,
 					longestStreak: p.longestStreak,
 					tracklistId,
-					cardsToWin
+					cardsToWin,
+					sessionId
 				})
 			});
 			if (res.ok) {

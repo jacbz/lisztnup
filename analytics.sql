@@ -27,6 +27,10 @@ CREATE TABLE IF NOT EXISTS timeline_placements (
   session_id TEXT,
   work_gid TEXT,
   placed_correctly BOOLEAN,
+  turn_score INTEGER,
+  seconds_taken REAL,
+  streak_count INTEGER,
+  gap INTEGER,
   timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -68,5 +72,6 @@ CREATE TABLE IF NOT EXISTS leaderboard (
   tracklist_id TEXT,
   cards_to_win INTEGER NOT NULL,
   country TEXT,
-  user_hash TEXT
+  user_hash TEXT,
+  session_id TEXT
 );

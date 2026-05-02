@@ -5,6 +5,8 @@ import { hashUser, getCurrentSalt } from '$lib/server/analytics';
 const MAX_NAME_LENGTH = 30;
 const MAX_SCORE = 1_000_000;
 const MAX_CARDS = 500;
+const MAX_SCORE_PER_CARD = 6000;
+const MAX_SUBMISSIONS_PER_HOUR = 10;
 
 export const GET: RequestHandler = async ({ url, platform }) => {
 	if (!platform?.env?.DB) {
@@ -75,15 +77,16 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 			accuracy,
 			longestStreak,
 			tracklistId,
-			cardsToWin
+			cardsToWin,
+			sessionId
 		} = body;
 
-		// Validate required fields
+		// ── Required field validation ──────────────────────
 		if (!playerToken || !playerName || typeof score !== 'number' || typeof cards !== 'number') {
 			return json({ success: false, reason: 'Invalid payload' }, { status: 400 });
 		}
 
-		// Anti-cheat: basic sanity checks
+		// ── Range checks ──────────────────────────────────
 		if (score < 0 || score > MAX_SCORE) {
 			return json({ success: false, reason: 'Score out of range' }, { status: 400 });
 		}
@@ -106,21 +109,98 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		if (typeof cardsToWin === 'number' && (cardsToWin < 1 || cardsToWin > cards)) {
 			return json({ success: false, reason: 'Cards-to-win out of range' }, { status: 400 });
 		}
-
-		// Rough score-per-card ceiling: max ~5500 per card (base 1000 + diff 2310 + mastery 500 + speed/streak + efficiency)
-		const maxScorePerCard = 6000;
-		if (score > cards * maxScorePerCard) {
+		if (score > cards * MAX_SCORE_PER_CARD) {
 			return json({ success: false, reason: 'Score implausible' }, { status: 400 });
 		}
 
+		const db = platform.env.DB;
 		const ip = getClientAddress() || request.headers.get('cf-connecting-ip') || '0.0.0.0';
 		const userHash = await hashUser(ip, getCurrentSalt());
 		const country = platform.cf?.country || 'UNKNOWN';
 
-		await platform.env.DB.prepare(
-			`INSERT INTO leaderboard (player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, user_hash)
-			 VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)`
-		)
+		// ── Rate limit: max submissions per IP per hour ───
+		const rateCheck = await db
+			.prepare(
+				`SELECT COUNT(*) AS cnt FROM leaderboard
+				 WHERE user_hash = ?1 AND timestamp > datetime('now', '-1 hour')`
+			)
+			.bind(userHash)
+			.first<{ cnt: number }>();
+		if (rateCheck && rateCheck.cnt >= MAX_SUBMISSIONS_PER_HOUR) {
+			return json({ success: false, reason: 'Rate limited' }, { status: 429 });
+		}
+
+		// ── Session cross-checks (when sessionId provided) ─
+		if (sessionId && typeof sessionId === 'string') {
+			// Prevent duplicate submissions for the same session
+			const dupCheck = await db
+				.prepare(`SELECT COUNT(*) AS cnt FROM leaderboard WHERE session_id = ?1`)
+				.bind(sessionId)
+				.first<{ cnt: number }>();
+			if (dupCheck && dupCheck.cnt > 0) {
+				return json({ success: false, reason: 'Already submitted' }, { status: 409 });
+			}
+
+			// Verify session exists, is completed, and is timeline mode
+			const session = await db
+				.prepare(`SELECT state, mode, user_hash FROM game_sessions WHERE id = ?1`)
+				.bind(sessionId)
+				.first<{ state: string; mode: string; user_hash: string }>();
+			if (session) {
+				if (session.state !== 'completed') {
+					return json({ success: false, reason: 'Session not completed' }, { status: 400 });
+				}
+				if (session.mode !== 'timeline') {
+					return json({ success: false, reason: 'Not a timeline session' }, { status: 400 });
+				}
+				// Verify same origin (IP hash matches)
+				if (session.user_hash !== userHash) {
+					return json({ success: false, reason: 'Session mismatch' }, { status: 403 });
+				}
+
+				// Cross-check placement data
+				const placements = await db
+					.prepare(
+						`SELECT COUNT(*) AS total,
+						        SUM(CASE WHEN placed_correctly = 1 THEN 1 ELSE 0 END) AS correct,
+						        SUM(CASE WHEN turn_score IS NOT NULL THEN turn_score ELSE 0 END) AS score_sum
+						 FROM timeline_placements WHERE session_id = ?1`
+					)
+					.bind(sessionId)
+					.first<{ total: number; correct: number; score_sum: number }>();
+
+				if (placements && placements.total > 0) {
+					// Placement count should be reasonable relative to claimed cards
+					// (total placements includes wrong answers, cards = correct placements only)
+					if (cards > placements.total) {
+						return json(
+							{ success: false, reason: 'Cards exceed placements' },
+							{ status: 400 }
+						);
+					}
+
+					// If we have per-turn scores, verify the total is plausible
+					// Allow generous tolerance for efficiency bonus (one-time, up to ~cards*500)
+					if (placements.score_sum > 0) {
+						const maxEfficiencyBonus = cards * 500;
+						if (score > placements.score_sum + maxEfficiencyBonus) {
+							return json(
+								{ success: false, reason: 'Score exceeds tracked total' },
+								{ status: 400 }
+							);
+						}
+					}
+				}
+			}
+			// If session doesn't exist yet (analytics event delayed), allow submission
+			// but still store the session_id for later audit
+		}
+
+		await db
+			.prepare(
+				`INSERT INTO leaderboard (player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, user_hash, session_id)
+			 VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11)`
+			)
 			.bind(
 				playerToken,
 				playerName.slice(0, MAX_NAME_LENGTH),
@@ -131,7 +211,8 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				tracklistId ?? null,
 				cardsToWin ?? 0,
 				country,
-				userHash
+				userHash,
+				sessionId ?? null
 			)
 			.run();
 

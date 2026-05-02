@@ -63,6 +63,8 @@ export class TimelineGame {
 	// UI STATE
 	// ═══════════════════════════════════════════════════════
 	showEndGame = $state(false);
+	/** Analytics session ID captured at game end, for leaderboard submission. */
+	endgameSessionId = $state<string | null>(null);
 	showRevealPopup = $state(false);
 	isDealing = $state(true);
 	dealingToName = $state<string | null>(null);
@@ -968,9 +970,11 @@ export class TimelineGame {
 
 		this.showEndGame = true;
 
+		// Capture session ID before endGame() clears it — needed for leaderboard submission.
 		// Eagerly send game_end so the event isn't lost if the tab closes.
 		import('$lib/game-logger')
 			.then(({ analytics }) => {
+				this.endgameSessionId = analytics.getSessionId();
 				analytics.endGame('completed', {
 					numberOfTurns: this.totalTurns,
 					players: this.playerStats,

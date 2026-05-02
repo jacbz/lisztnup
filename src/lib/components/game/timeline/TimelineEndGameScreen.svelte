@@ -34,6 +34,7 @@
 		timelines: FinalTimeline[];
 		tracksExhausted?: boolean;
 		tracklistId?: string | null;
+		sessionId?: string | null;
 		onHome?: () => void;
 		onViewStats?: () => void;
 	}
@@ -44,6 +45,7 @@
 		timelines,
 		tracksExhausted = false,
 		tracklistId = null,
+		sessionId = null,
 		onHome = () => {},
 		onViewStats
 	}: Props = $props();
@@ -295,6 +297,7 @@
 		players={publishablePlayers}
 		{tracklistId}
 		{cardsToWin}
+		{sessionId}
 		onClose={() => (showLeaderboardSubmit = false)}
 	/>
 {/if}
