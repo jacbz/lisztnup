@@ -73,7 +73,6 @@ class GameAnalytics {
 			secondsTaken: number;
 			streakCount: number;
 			gap: number;
-			playerName: string;
 		}
 	) {
 		// Do not force log if no session exists or user has adblock explicitly hard-blocking the file

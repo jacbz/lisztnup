@@ -170,9 +170,11 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 					.first<{ total: number; correct: number; score_sum: number }>();
 
 				if (placements && placements.total > 0) {
-					// Placement count should be reasonable relative to claimed cards
-					// (total placements includes wrong answers, cards = correct placements only)
-					if (cards > placements.total) {
+					// cards = entries on one player's timeline (includes 1 dealt starter card)
+					// placements.total = all placement attempts across ALL players in the session
+					// Allow +2 tolerance: +1 for the dealt card, +1 for sendBeacon race conditions
+					// (placement events are fire-and-forget and may still be in-flight)
+					if (cards > placements.total + 2) {
 						return json(
 							{ success: false, reason: 'Cards exceed placements' },
 							{ status: 400 }

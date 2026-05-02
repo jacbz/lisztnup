@@ -796,8 +796,7 @@ export class TimelineGame {
 					turnScore: scoreBreakdown?.totalScore ?? 0,
 					secondsTaken,
 					streakCount: this.activePlayer.currentStreak,
-					gap: scoreBreakdown?.gap ?? 0,
-					playerName: this.activePlayer.player.name
+					gap: scoreBreakdown?.gap ?? 0
 				});
 				analytics.updateProgress({
 					numberOfTurns: this.totalTurns,
@@ -979,7 +978,6 @@ export class TimelineGame {
 					numberOfTurns: this.totalTurns,
 					players: this.playerStats,
 					scores: this.timelines.map((t) => ({
-						name: t.player.name,
 						score: t.score,
 						efficiencyBonus: t.efficiencyBonus
 					}))
