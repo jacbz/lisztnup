@@ -425,7 +425,7 @@
 	"modes": {
 		"timeline": {
 			"name": "Timeline",
-			"description": "Coloque as faixas em ordem cronológica e acumule pontos com bônus de Dificuldade, Maestria, Velocidade e Sequência.",
+			"description": "Construa uma linha do tempo cronológica posicionando as faixas na ordem correta dos anos.",
 			"step1": {
 				"title": "Jogue a Carta",
 				"desc": "Comece seu turno jogando a carta do topo do baralho."

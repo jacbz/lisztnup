@@ -425,7 +425,7 @@
 	"modes": {
 		"timeline": {
 			"name": "Timeline",
-			"description": "Place les morceaux dans l'ordre chronologique et engrange des points grâce aux bonus de Difficulté, Maîtrise, Vitesse et Série.",
+			"description": "Construis une frise chronologique en plaçant les morceaux dans le bon ordre.",
 			"step1": {
 				"title": "Jouer la carte",
 				"desc": "Commence ton tour en jouant la carte du dessus."

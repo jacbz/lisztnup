@@ -425,7 +425,7 @@
 	"modes": {
 		"timeline": {
 			"name": "Timeline",
-			"description": "Ordne Tracks chronologisch und sammle Punkte durch Schwierigkeits-, Präzisions-, Tempo- und Serien-Boni.",
+			"description": "Baue eine chronologische Timeline, indem du Tracks in die richtige Jahres-Reihenfolge legst.",
 			"step1": {
 				"title": "Karte abspielen",
 				"desc": "Starte deinen Zug, indem du die oberste Karte aus dem Stapel abspielst."

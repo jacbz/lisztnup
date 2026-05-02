@@ -425,7 +425,7 @@
 	"modes": {
 		"timeline": {
 			"name": "Timeline",
-			"description": "Disponi i brani in ordine cronologico e accumula punti con i bonus Difficoltà, Padronanza, Velocità e Serie.",
+			"description": "Costruisci una linea temporale cronologica posizionando i brani nell'anno corretto.",
 			"step1": {
 				"title": "Gioca la Carta",
 				"desc": "Inizia il turno giocando la carta in cima al mazzo."

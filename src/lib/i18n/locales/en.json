@@ -425,7 +425,7 @@
 	"modes": {
 		"timeline": {
 			"name": "Timeline",
-			"description": "Place tracks in chronological order and rack up points through Difficulty, Mastery, Speed, and Streak bonuses.",
+			"description": "Build a chronological timeline by placing tracks in the right year order.",
 			"step1": {
 				"title": "Play the Card",
 				"desc": "Start your turn by playing the top card from the deck."

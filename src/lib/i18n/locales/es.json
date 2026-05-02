@@ -425,7 +425,7 @@
 	"modes": {
 		"timeline": {
 			"name": "Timeline",
-			"description": "Coloca las pistas en orden cronológico y acumula puntos con bonificaciones de Dificultad, Maestría, Velocidad y Racha.",
+			"description": "Construye una línea cronológica colocando las pistas en el orden correcto de años.",
 			"step1": {
 				"title": "Juega la carta",
 				"desc": "Empieza tu turno jugando la carta superior del mazo."
