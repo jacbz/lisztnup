@@ -567,7 +567,8 @@
 			"turnTotal": "Total da rodada",
 			"score": "Pontuação",
 			"streakMultiplier": "multiplicador {mult}",
-			"mastery": "Maestria"
+			"mastery": "Maestria",
+			"consolation": "Quase!"
 		},
 		"targetReached": "Objetivo alcançado!",
 		"finalRound": "Rodada final!"

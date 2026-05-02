@@ -567,7 +567,8 @@
 			"turnTotal": "回合总分",
 			"score": "分数",
 			"streakMultiplier": "{mult}倍",
-			"mastery": "熟练度"
+			"mastery": "熟练度",
+			"consolation": "差一点！"
 		},
 		"targetReached": "目标达成！",
 		"finalRound": "最后一轮！"

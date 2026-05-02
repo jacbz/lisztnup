@@ -567,7 +567,8 @@
 			"turnTotal": "Rundenwertung",
 			"score": "Punkte",
 			"streakMultiplier": "{mult} Multiplikator",
-			"mastery": "Präzision"
+			"mastery": "Präzision",
+			"consolation": "Knapp daneben!"
 		},
 		"targetReached": "Ziel erreicht!",
 		"finalRound": "Letzte Runde!"

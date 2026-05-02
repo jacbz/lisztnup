@@ -567,7 +567,8 @@
 			"turnTotal": "Total du tour",
 			"score": "Score",
 			"streakMultiplier": "multiplicateur {mult}",
-			"mastery": "Maîtrise"
+			"mastery": "Maîtrise",
+			"consolation": "Pas loin !"
 		},
 		"targetReached": "Objectif atteint !",
 		"finalRound": "Dernière manche !"

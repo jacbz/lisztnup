@@ -1,5 +1,5 @@
 import { MIN_WORK_YEAR, MAX_WORK_YEAR } from '$lib/types/settings';
-import type { TurnScoreBreakdown } from './timelineTypes';
+import type { TurnScoreBreakdown, ConsolationBreakdown } from './timelineTypes';
 
 // ─── Constants ─────────────────────────────────────────────
 
@@ -136,4 +136,37 @@ export function calculateTurnScore(input: TurnScoreInput): TurnScoreBreakdown {
 		rawScore,
 		totalScore
 	};
+}
+
+// ─── Consolation score for incorrect placements ────────────
+
+/**
+ * Small consolation bonus for incorrect placements, scaled by how
+ * genuinely difficult the correct slot was.
+ *
+ * Formula: max(1, round(75 × gapFactor × edgeFactor))
+ *   gapFactor  = max(0, (150 - gap) / 150)
+ *   edgeFactor = max(0, (50 - edgeDist) / 50)
+ *
+ * @param gap        Year distance between the two boundary cards of the correct slot.
+ * @param cardYear   The true year of the placed card.
+ * @param leftYear   Year of the left boundary card (null if card belongs at far left).
+ * @param rightYear  Year of the right boundary card (null if card belongs at far right).
+ */
+export function calculateConsolationScore(
+	gap: number,
+	cardYear: number,
+	leftYear: number | null,
+	rightYear: number | null
+): ConsolationBreakdown {
+	const left = leftYear ?? MIN_WORK_YEAR;
+	const right = rightYear ?? MAX_WORK_YEAR;
+	const edgeDist = Math.min(cardYear - left, right - cardYear);
+
+	const gapFactor = Math.max(0, (150 - gap) / 150);
+	const edgeFactor = Math.max(0, (50 - edgeDist) / 50);
+
+	const consolationScore = Math.max(1, Math.round(75 * gapFactor * edgeFactor));
+
+	return { consolationScore, gap, gapFactor, edgeDist, edgeFactor };
 }

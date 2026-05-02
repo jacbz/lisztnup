@@ -567,7 +567,8 @@
 			"turnTotal": "턴 합계",
 			"score": "점수",
 			"streakMultiplier": "{mult} 배율",
-			"mastery": "숙련도"
+			"mastery": "숙련도",
+			"consolation": "아깝다!"
 		},
 		"targetReached": "목표 달성!",
 		"finalRound": "마지막 라운드!"

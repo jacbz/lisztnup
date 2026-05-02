@@ -8,9 +8,15 @@ import type {
 	TimelineRow,
 	DragKind,
 	TurnPhase,
-	TurnScoreBreakdown
+	TurnScoreBreakdown,
+	ConsolationBreakdown
 } from './timelineTypes';
-import { calculateTurnScore, calculateGap, calculateEfficiencyBonus } from './timelineScoring';
+import {
+	calculateTurnScore,
+	calculateGap,
+	calculateEfficiencyBonus,
+	calculateConsolationScore
+} from './timelineScoring';
 
 // Re-export types for convenience
 export type { TimelineEntry, StackItem, TimelineRow, DragKind, TurnPhase, TurnScoreBreakdown };
@@ -114,6 +120,8 @@ export class TimelineGame {
 	// ═══════════════════════════════════════════════════════
 	/** Last computed turn score breakdown, used by the reveal popup. */
 	lastTurnScoreBreakdown = $state<TurnScoreBreakdown | null>(null);
+	/** Consolation breakdown for incorrect placements. */
+	lastConsolationBreakdown = $state<ConsolationBreakdown | null>(null);
 	/** Score the active player had before this turn (for the reveal popup "Score" row). */
 	scoreBeforeTurn = $state(0);
 	/** Client-side timestamp (ms) when the current turn's playback started. */
@@ -360,6 +368,7 @@ export class TimelineGame {
 		this.activePlayerIndex = 0;
 		this.endgameActive = false;
 		this.lastTurnScoreBreakdown = null;
+		this.lastConsolationBreakdown = null;
 		this.scoreBeforeTurn = 0;
 		this.roundScores = [];
 		this.#currentRoundScores = {};
@@ -762,6 +771,7 @@ export class TimelineGame {
 				attemptsSoFar: this.activePlayer.totalPlacements
 			});
 			this.lastTurnScoreBreakdown = breakdown;
+			this.lastConsolationBreakdown = null;
 			this.activePlayer.score += breakdown.totalScore;
 
 			// Check if this player just reached the target (cards on timeline including dealt card)
@@ -781,6 +791,32 @@ export class TimelineGame {
 			// Soft decay: reduce streak by 2, min 0
 			this.activePlayer.currentStreak = Math.max(0, this.activePlayer.currentStreak - 2);
 			this.lastTurnScoreBreakdown = null;
+
+			// Consolation: find the correct slot (excluding the misplaced card)
+			const otherEntries = entries.filter((_, i) => i !== idx);
+			let correctLeftYear: number | null = null;
+			let correctRightYear: number | null = null;
+			for (let j = 0; j <= otherEntries.length; j++) {
+				const leftY = j > 0 ? this.#getTimelineYear(otherEntries[j - 1].track) : -Infinity;
+				const rightY =
+					j < otherEntries.length
+						? this.#getTimelineYear(otherEntries[j].track)
+						: Infinity;
+				if (year >= leftY && year <= rightY) {
+					correctLeftYear = j > 0 ? leftY : null;
+					correctRightYear = j < otherEntries.length ? rightY : null;
+					break;
+				}
+			}
+			const correctGap = calculateGap(correctLeftYear, correctRightYear);
+			const consolation = calculateConsolationScore(
+				correctGap,
+				year,
+				correctLeftYear,
+				correctRightYear
+			);
+			this.lastConsolationBreakdown = consolation;
+			this.activePlayer.score += consolation.consolationScore;
 		}
 
 		// Track per-round scores for the stats graph
@@ -1045,6 +1081,7 @@ export class TimelineGame {
 		this.streakRevealPending = true;
 		this.activePlayer.currentStreak = Math.max(0, this.activePlayer.currentStreak - 2);
 		this.lastTurnScoreBreakdown = null;
+		this.lastConsolationBreakdown = null;
 
 		if (this.pendingEntryId) {
 			// Card was placed in the timeline — mark it wrong and show reveal

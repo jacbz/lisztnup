@@ -567,7 +567,8 @@
 			"turnTotal": "Totale turno",
 			"score": "Punteggio",
 			"streakMultiplier": "moltiplicatore {mult}",
-			"mastery": "Padronanza"
+			"mastery": "Padronanza",
+			"consolation": "Quasi!"
 		},
 		"targetReached": "Obiettivo raggiunto!",
 		"finalRound": "Ultimo giro!"

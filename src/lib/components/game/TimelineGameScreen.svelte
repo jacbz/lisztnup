@@ -357,6 +357,7 @@
 	isCorrect={game.revealIsCorrect}
 	purpose={game.revealPurpose}
 	scoreBreakdown={game.lastTurnScoreBreakdown}
+	consolationScore={game.lastConsolationBreakdown?.consolationScore ?? 0}
 	efficiencyBonus={game.activePlayer?.efficiencyBonus ?? 0}
 	reachedTarget={game.revealReachedWin}
 	scoreBeforeTurn={game.scoreBeforeTurn}

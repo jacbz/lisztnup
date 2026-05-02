@@ -567,7 +567,8 @@
 			"turnTotal": "Turn Total",
 			"score": "Score",
 			"streakMultiplier": "{mult} multiplier",
-			"mastery": "Mastery"
+			"mastery": "Mastery",
+			"consolation": "Nice Try!"
 		},
 		"targetReached": "Target Reached!",
 		"finalRound": "Final Round!"

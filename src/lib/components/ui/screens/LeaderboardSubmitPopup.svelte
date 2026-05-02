@@ -151,10 +151,10 @@
 							type="button"
 							onclick={() => submitPlayer(i)}
 							disabled={!canSubmit(i)}
-							class="shrink-0 cursor-pointer rounded-md border border-cyan-400/50 p-1.5 text-cyan-400 transition-all hover:bg-cyan-400/10 disabled:cursor-not-allowed disabled:opacity-30"
-							aria-label={$_('leaderboard.submit')}
+							class="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md border border-cyan-400/50 px-2.5 py-1.5 text-sm font-semibold text-cyan-400 transition-all hover:bg-cyan-400/10 disabled:cursor-not-allowed disabled:opacity-30"
 						>
 							<Send class="h-3.5 w-3.5" />
+							{$_('leaderboard.submit')}
 						</button>
 					{/if}
 				</div>

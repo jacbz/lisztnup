@@ -567,7 +567,8 @@
 			"turnTotal": "Total del turno",
 			"score": "Puntuación",
 			"streakMultiplier": "multiplicador {mult}",
-			"mastery": "Maestría"
+			"mastery": "Maestría",
+			"consolation": "¡Casi!"
 		},
 		"targetReached": "¡Objetivo alcanzado!",
 		"finalRound": "¡Ronda final!"

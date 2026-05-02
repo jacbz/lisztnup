@@ -567,7 +567,8 @@
 			"turnTotal": "ターン合計",
 			"score": "スコア",
 			"streakMultiplier": "{mult}倍",
-			"mastery": "熟練度"
+			"mastery": "熟練度",
+			"consolation": "惜しい！"
 		},
 		"targetReached": "目標達成！",
 		"finalRound": "最終ラウンド！"

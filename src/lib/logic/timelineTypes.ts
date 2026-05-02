@@ -48,6 +48,15 @@ export interface TurnScoreBreakdown {
 	totalScore: number;
 }
 
+/** Breakdown of consolation points awarded on an incorrect placement. */
+export interface ConsolationBreakdown {
+	consolationScore: number;
+	gap: number;
+	gapFactor: number;
+	edgeDist: number;
+	edgeFactor: number;
+}
+
 // ─── Enumerations ──────────────────────────────────────────
 
 /** Drag-and-drop flavours. */

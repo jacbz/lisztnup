@@ -18,6 +18,7 @@
 		isCorrect?: boolean | null;
 		purpose?: 'turn' | 'inspect';
 		scoreBreakdown?: TurnScoreBreakdown | null;
+		consolationScore?: number;
 		efficiencyBonus?: number;
 		reachedTarget?: boolean;
 		scoreBeforeTurn?: number;
@@ -32,6 +33,7 @@
 		isCorrect = null,
 		purpose = 'turn',
 		scoreBreakdown = null,
+		consolationScore = 0,
 		efficiencyBonus = 0,
 		reachedTarget = false,
 		scoreBeforeTurn = 0,
@@ -203,9 +205,60 @@
 				animFrame = requestAnimationFrame(tickPoints);
 			}, 350);
 		} else if (visible && isCorrect === false) {
+			clearAllTimers();
+			displayedValues = {};
+			displayedTurnTotal = 0;
 			displayedScore = scoreBeforeTurn;
-			scoreOpacity = 1;
+			scoreOpacity = 0.3;
 			turnTotalOpacity = 1;
+			rowVisible = {};
+
+			const turnTotal = consolationScore;
+
+			if (turnTotal > 0) {
+				// Phase 1: Count up consolation points
+				scheduleTimeout(() => {
+					rowVisible.consolation = true;
+					rowVisible = rowVisible;
+					const startTime = performance.now();
+					const countDuration = 800;
+					function tickConsolation(now: number) {
+						const elapsed = now - startTime;
+						const progress = Math.min(elapsed / countDuration, 1);
+						const eased = 1 - Math.pow(1 - progress, 3);
+						displayedValues = { ...displayedValues, consolation: turnTotal * eased };
+						if (progress < 1) {
+							animFrame = requestAnimationFrame(tickConsolation);
+						} else {
+							// Phase 2: Show turn total
+							rowVisible.turnTotal = true;
+							rowVisible = rowVisible;
+							displayedTurnTotal = turnTotal;
+							// Phase 3: Count up score with crossfade
+							scheduleTimeout(() => {
+								const countStart = performance.now();
+								const scoreDuration = 600;
+								function countTick(now: number) {
+									const elapsed = now - countStart;
+									const progress = Math.min(elapsed / scoreDuration, 1);
+									const eased = 1 - Math.pow(1 - progress, 3);
+									displayedScore = Math.round(scoreBeforeTurn + turnTotal * eased);
+									scoreOpacity = 0.3 + 0.7 * eased;
+									turnTotalOpacity = 1 - 0.6 * eased;
+									if (progress < 1) {
+										animFrame = requestAnimationFrame(countTick);
+									}
+								}
+								animFrame = requestAnimationFrame(countTick);
+							}, 800);
+						}
+					}
+					animFrame = requestAnimationFrame(tickConsolation);
+				}, 350);
+			} else {
+				displayedScore = scoreBeforeTurn;
+				scoreOpacity = 1;
+			}
 		} else {
 			displayedValues = {};
 			displayedTurnTotal = 0;
@@ -328,13 +381,36 @@
 			<!-- Wrong Placement / Forfeit -->
 			{#if purpose === 'turn' && isCorrect === false}
 				<div class="flex flex-col gap-1.5 rounded-xl border border-slate-700/40 bg-slate-900/60 px-4 py-3" in:fly={{ y: 10, duration: 300, easing: cubicOut }}>
-					<div class="flex items-center justify-between text-sm">
+					<!-- Consolation row -->
+					{#if rowVisible.consolation}
+						<div class="flex items-center justify-between text-sm" in:fly={{ y: 10, duration: 300, easing: cubicOut }}>
+							<span class="font-bold text-yellow-700">{$_('timeline.scoring.consolation')}</span>
+							<span class="font-bold text-yellow-700 tabular-nums">+{$_('scoring.pts', { values: { points: fmtNum(displayedValues.consolation) } })}</span>
+						</div>
+
+						<div class="my-0.5 border-t border-slate-700/60"></div>
+					{/if}
+
+					<!-- Turn Total -->
+					<div class="flex items-center justify-between text-sm" style="opacity: {turnTotalOpacity};">
 						<span class="font-bold text-slate-200">{$_('timeline.scoring.turnTotal')}</span>
-						<span class="font-bold text-red-400 tabular-nums">+{$_('scoring.pts', { values: { points: '0' } })}</span>
+						{#if rowVisible.turnTotal}
+							<span class="font-bold tabular-nums text-slate-200" in:fade={{ duration: 400 }}>
+								+{$_('scoring.pts', { values: { points: displayedTurnTotal.toLocaleString() } })}
+							</span>
+						{:else}
+							<span class="font-bold text-red-400 tabular-nums">+{$_('scoring.pts', { values: { points: '0' } })}</span>
+						{/if}
 					</div>
-					<div class="flex items-center justify-between">
+
+					<!-- Total Score -->
+					<div class="flex items-center justify-between" style="opacity: {scoreOpacity};">
 						<span class="text-base font-bold text-slate-200">{$_('timeline.scoring.score')}</span>
-						<span class="font-black text-cyan-400 tabular-nums">{$_('scoring.pts', { values: { points: Math.round(scoreBeforeTurn).toLocaleString() } })}</span>
+						{#if rowVisible.turnTotal}
+							<span class="font-black text-cyan-400 tabular-nums" in:fade={{ duration: 400, delay: 200 }}>{$_('scoring.pts', { values: { points: Math.round(displayedScore).toLocaleString() } })}</span>
+						{:else}
+							<span class="font-black text-cyan-400 tabular-nums">{$_('scoring.pts', { values: { points: Math.round(scoreBeforeTurn).toLocaleString() } })}</span>
+						{/if}
 					</div>
 				</div>
 			{/if}
