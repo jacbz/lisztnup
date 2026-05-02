@@ -2,6 +2,7 @@
 	import Popup from '$lib/components/ui/primitives/Popup.svelte';
 	import { _ } from 'svelte-i18n';
 	import Trophy from 'lucide-svelte/icons/trophy';
+	import { getPlayerToken } from '$lib/stores/identity';
 
 	interface LeaderboardEntry {
 		player_name: string;
@@ -12,6 +13,7 @@
 		tracklist_id: string | null;
 		cards_to_win: number;
 		timestamp: string;
+		is_me?: boolean;
 	}
 
 	interface Props {
@@ -33,7 +35,7 @@
 	async function loadLeaderboard() {
 		loading = true;
 		try {
-			const res = await fetch('/api/game/leaderboard?limit=10');
+			const res = await fetch(`/api/game/leaderboard?limit=10&token=${encodeURIComponent(getPlayerToken())}`);
 			if (res.ok) {
 				const data: { entries?: LeaderboardEntry[] } = await res.json();
 				entries = data.entries ?? [];
@@ -63,7 +65,7 @@
 			<div class="flex flex-col gap-2">
 				{#each entries as entry, i (i)}
 					<div
-						class="flex items-center gap-3 rounded-xl border border-slate-700/50 bg-slate-800/50 px-3 py-2"
+						class="flex items-center gap-3 rounded-xl border px-3 py-2 {entry.is_me ? 'border-cyan-500/30 bg-cyan-950/30' : 'border-slate-700/50 bg-slate-800/50'}"
 					>
 						<span
 							class="w-7 text-center text-sm font-bold {i < 3 ? MEDAL_COLORS[i] : 'text-slate-500'}"

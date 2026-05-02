@@ -14,11 +14,12 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 	const limit = Math.min(Number(url.searchParams.get('limit')) || 10, 50);
 	const tracklistId = url.searchParams.get('tracklist') || null;
 	const cardsToWin = Number(url.searchParams.get('cardsToWin')) || null;
+	const playerToken = url.searchParams.get('token') || null;
 
 	try {
 		// Use ROW_NUMBER() to keep only each player's best score per config
 		// Partition by token+name to allow multiple entries from local multiplayer
-		let innerSql = `SELECT player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, timestamp,
+		let innerSql = `SELECT player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, timestamp,
 			ROW_NUMBER() OVER (PARTITION BY player_token, player_name ORDER BY score DESC) AS rn
 			FROM leaderboard`;
 		const binds: (string | number)[] = [];
@@ -37,7 +38,7 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 			innerSql += ` WHERE ${conditions.join(' AND ')}`;
 		}
 
-		const sql = `SELECT player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, timestamp
+		const sql = `SELECT player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, timestamp
 			FROM (${innerSql}) WHERE rn = 1
 			ORDER BY score DESC LIMIT ?${binds.length + 1}`;
 		binds.push(limit);
@@ -46,7 +47,13 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 			.bind(...binds)
 			.all();
 
-		return json({ entries: results.results ?? [] });
+		// Map results: replace raw token with is_me flag for privacy
+		const entries = (results.results ?? []).map((row: Record<string, unknown>) => {
+			const { player_token, ...rest } = row;
+			return { ...rest, is_me: playerToken ? player_token === playerToken : false };
+		});
+
+		return json({ entries });
 	} catch (err) {
 		console.error('Leaderboard GET error:', err);
 		return json({ entries: [] });

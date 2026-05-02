@@ -20,6 +20,7 @@
 	import { browser } from '$app/environment';
 	import MessageSquare from 'lucide-svelte/icons/message-square';
 	import Users from 'lucide-svelte/icons/users';
+	import { getPlayerToken } from '$lib/stores/identity';
 
 	/** Get flag SVG URL for an ISO 3166-1 alpha-2 country code */
 	function countryFlagUrl(code: string | undefined | null): string | null {
@@ -44,6 +45,7 @@
 		accuracy: number;
 		country?: string;
 		timestamp?: string;
+		is_me?: boolean;
 	}
 
 	function formatEntryDate(timestamp: string | undefined, locale: string): string {
@@ -116,6 +118,7 @@
 			const parts = ['limit=5'];
 			if (tracklist) parts.push(`tracklist=${encodeURIComponent(tracklist)}`);
 			if (cards) parts.push(`cardsToWin=${encodeURIComponent(cards)}`);
+			parts.push(`token=${encodeURIComponent(getPlayerToken())}`);
 			fetch(`/api/game/leaderboard?${parts.join('&')}`)
 				.then((res) => (res.ok ? res.json() : { entries: [] }))
 				.then((data) => { leaderboardEntries = data.entries ?? []; })
@@ -339,9 +342,9 @@
 								<div class="grid grid-cols-[auto_2fr_1fr_1fr] items-center gap-x-1.5 gap-y-1 text-xs text-left">
 									{#each leaderboardEntries as entry, i (i)}
 								{@const flagUrl = countryFlagUrl(entry.country)}
-								<span class="text-center font-bold text-slate-500 mr-2">{i + 1}</span>
-								<span class="truncate text-slate-300">{#if flagUrl}<img src={flagUrl} alt="" title={countryName(entry.country, currentLocale)} class="mr-0.5 inline-block h-2.5 w-3.75 rounded-xs border-[0.5px] border-slate-600 align-baseline select-none" draggable="false" oncontextmenu={(e) => e.preventDefault()} />{/if} {entry.player_name}</span>
-										<span class="text-right font-bold tabular-nums">{$_('scoring.pts', { values: { points: entry.score.toLocaleString() } })}</span>
+								<span class="text-center font-bold mr-2" class:text-cyan-400={entry.is_me} class:text-slate-500={!entry.is_me}>{i + 1}</span>
+								<span class="truncate" class:text-cyan-300={entry.is_me} class:text-slate-300={!entry.is_me}>{#if flagUrl}<img src={flagUrl} alt="" title={countryName(entry.country, currentLocale)} class="mr-0.5 inline-block h-2.5 w-3.75 rounded-xs border-[0.5px] border-slate-600 align-baseline select-none" draggable="false" oncontextmenu={(e) => e.preventDefault()} />{/if} {entry.player_name}</span>
+									<span class="text-right font-bold tabular-nums" class:text-cyan-400={entry.is_me}>{$_('scoring.pts', { values: { points: entry.score.toLocaleString() } })}</span>
 										<span class="text-right tabular-nums text-slate-500">{formatEntryDate(entry.timestamp, currentLocale)}</span>
 									{/each}
 								</div>
