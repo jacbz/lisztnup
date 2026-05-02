@@ -425,7 +425,8 @@ export const RENAISSANCE_CONFIG: TracklistConfig = {
 
 export const BAROQUE_CONFIG: TracklistConfig = {
 	yearFilter: [1600, 1750],
-	limitWorksFromComposer: 0.3
+	limitWorksFromComposer: 0.25,
+	topWorksCount: 1000,
 };
 
 export const CLASSICAL_CONFIG: TracklistConfig = {

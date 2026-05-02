@@ -620,7 +620,8 @@
 		"submit": "Envoyer",
 		"enterName": "Entre ton nom",
 		"namePlaceholder": "Ton nom",
-		"newHighScore": "Nouveau record mondial !"
+		"newHighScore": "Nouveau record mondial !",
+		"newHighScoreSubtitle": "Publie ton score au classement mondial !"
 	},
 	"eras": {
 		"ancient": "Antiquité",

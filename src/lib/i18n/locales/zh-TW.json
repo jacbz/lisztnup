@@ -620,7 +620,8 @@
 		"submit": "提交",
 		"enterName": "輸入名字",
 		"namePlaceholder": "你的名字",
-		"newHighScore": "新全球紀錄！"
+		"newHighScore": "新全球紀錄！",
+		"newHighScoreSubtitle": "快來提交你的成績，登上全球排行榜！"
 	},
 	"eras": {
 		"ancient": "遠古時期",

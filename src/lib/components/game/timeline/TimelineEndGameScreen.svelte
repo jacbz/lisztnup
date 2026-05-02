@@ -182,10 +182,13 @@
 		</div>
 
 		{#if isNewHighScore}
-			<div class="flex items-center justify-center gap-2 rounded-lg border border-amber-400/30 bg-amber-400/10 px-4 py-2">
-				<Crown class="h-5 w-5 text-amber-400" />
-				<span class="text-sm font-bold text-amber-400">{$_('leaderboard.newHighScore')}</span>
-				<Crown class="h-5 w-5 text-amber-400" />
+			<div class="flex flex-col items-center gap-1 rounded-lg border border-amber-400/30 bg-amber-400/10 px-4 py-2">
+				<div class="flex items-center gap-2">
+					<Crown class="h-5 w-5 text-amber-400" />
+					<span class="text-sm font-bold text-amber-400">{$_('leaderboard.newHighScore')}</span>
+					<Crown class="h-5 w-5 text-amber-400" />
+				</div>
+				<span class="text-xs text-amber-400/70">{$_('leaderboard.newHighScoreSubtitle')}</span>
 			</div>
 		{/if}
 

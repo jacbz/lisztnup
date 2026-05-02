@@ -620,7 +620,8 @@
 		"submit": "送信",
 		"enterName": "名前を入力",
 		"namePlaceholder": "あなたの名前",
-		"newHighScore": "世界新記録！"
+		"newHighScore": "世界新記録！",
+		"newHighScoreSubtitle": "世界ランキングにスコアを登録しよう！"
 	},
 	"eras": {
 		"ancient": "古代",

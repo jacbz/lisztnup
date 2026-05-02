@@ -620,7 +620,8 @@
 		"submit": "Invia",
 		"enterName": "Inserisci il nome",
 		"namePlaceholder": "Il tuo nome",
-		"newHighScore": "Nuovo record globale!"
+		"newHighScore": "Nuovo record globale!",
+		"newHighScoreSubtitle": "Pubblica il tuo punteggio nella classifica globale!"
 	},
 	"eras": {
 		"ancient": "Antica",

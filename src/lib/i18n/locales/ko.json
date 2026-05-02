@@ -620,7 +620,8 @@
 		"submit": "전송",
 		"enterName": "이름 입력",
 		"namePlaceholder": "이름",
-		"newHighScore": "세계 신기록!"
+		"newHighScore": "세계 신기록!",
+		"newHighScoreSubtitle": "글로벌 리더보드에 점수를 등록하세요!"
 	},
 	"eras": {
 		"ancient": "고대",
