@@ -642,5 +642,11 @@
 		"secondVienneseSchool": "新ウィーン楽派",
 		"modernism": "モダニズム",
 		"minimalism": "ミニマリズム"
+	},
+	"dailyChallenge": {
+		"title": "今日のチャレンジ",
+		"subtitle": "本日のおすすめプレイリスト",
+		"highScore": "{name}の{score}点を超えられる？",
+		"play": "プレイ"
 	}
 }

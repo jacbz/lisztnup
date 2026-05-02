@@ -79,6 +79,8 @@ export interface GameSettings {
 	bingoGrid?: BingoGridCell[][]; // 5x5 grid for Bingo mode
 	enableAudioNormalization: boolean; // Whether to use Web Audio API with LUFS normalization (defaults to false on WebKit)
 	buzzerVolume: number; // Buzzer volume level (0-1)
+	gamesPlayed: number; // Total number of games started (used to detect new users)
+	dailyChallengePlayedDate: string | null; // YYYY-MM-DD when the daily challenge was last started
 }
 
 /**
@@ -159,5 +161,7 @@ export const DEFAULT_SETTINGS: GameSettings = {
 	enableScoring: true,
 	bingoGrid: undefined,
 	enableAudioNormalization: !isWebKit, // Default to true, but false on WebKit browsers
-	buzzerVolume: 0.75
+	buzzerVolume: 0.75,
+	gamesPlayed: 0,
+	dailyChallengePlayedDate: null
 };

@@ -642,5 +642,11 @@
 		"secondVienneseSchool": "Zweite Wiener Schule",
 		"modernism": "Modernismus",
 		"minimalism": "Minimalismus"
+	},
+	"dailyChallenge": {
+		"title": "Tagesherausforderung",
+		"subtitle": "Die Tracklist des Tages",
+		"highScore": "Knackst du {name}s Rekord von {score} Pkt.?",
+		"play": "Spielen"
 	}
 }

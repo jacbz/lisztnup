@@ -642,5 +642,11 @@
 		"secondVienneseSchool": "Segunda Escuela de Viena",
 		"modernism": "Modernismo",
 		"minimalism": "Minimalismo"
+	},
+	"dailyChallenge": {
+		"title": "Reto del día",
+		"subtitle": "La lista destacada de hoy",
+		"highScore": "¿Podrás superar los {score} pts de {name}?",
+		"play": "Jugar"
 	}
 }

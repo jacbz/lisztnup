@@ -642,5 +642,11 @@
 		"secondVienneseSchool": "第二維也納樂派",
 		"modernism": "現代主義",
 		"minimalism": "極簡主義"
+	},
+	"dailyChallenge": {
+		"title": "每日挑戰",
+		"subtitle": "今日精選歌單",
+		"highScore": "能超越{name}的{score}分嗎？",
+		"play": "開始"
 	}
 }

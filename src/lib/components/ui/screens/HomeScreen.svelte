@@ -20,7 +20,9 @@
 	import { browser } from '$app/environment';
 	import MessageSquare from 'lucide-svelte/icons/message-square';
 	import Users from 'lucide-svelte/icons/users';
+	import Sparkles from 'lucide-svelte/icons/sparkles';
 	import { getPlayerToken } from '$lib/stores/identity';
+	import { getDailyTracklist, getTodayDateString } from '$lib/utils/dailyChallenge';
 
 	/** Get flag SVG URL for an ISO 3166-1 alpha-2 country code */
 	function countryFlagUrl(code: string | undefined | null): string | null {
@@ -89,6 +91,14 @@
 		bingo: '/start_bingo.mp3'
 	};
 
+	// Daily challenge state
+	let dailyTracklist = getDailyTracklist();
+	let dailyHighScore = $state<{ name: string; score: number } | null>(null);
+	let showDailyChallenge = $derived(
+		selectedMode === 'timeline' &&
+			localSettings.dailyChallengePlayedDate !== getTodayDateString()
+	);
+
 	// Update local settings when store changes
 	$effect(() => {
 		localSettings = { ...$settingsStore };
@@ -123,6 +133,26 @@
 				.then((res) => (res.ok ? res.json() : { entries: [] }))
 				.then((data) => { leaderboardEntries = data.entries ?? []; })
 				.catch(() => { leaderboardEntries = []; });
+		}
+	});
+
+	// Fetch the #1 score for the daily challenge tracklist
+	$effect(() => {
+		if (showDailyChallenge && browser) {
+			const cards = localSettings.timelineCardsToWin;
+			const parts = [
+				'limit=1',
+				`tracklist=${encodeURIComponent(dailyTracklist.id)}`,
+				`cardsToWin=${encodeURIComponent(cards)}`,
+				`token=${encodeURIComponent(getPlayerToken())}`
+			];
+			fetch(`/api/game/leaderboard?${parts.join('&')}`)
+				.then((res) => (res.ok ? res.json() : { entries: [] }))
+				.then((data) => {
+					const top = data.entries?.[0];
+					dailyHighScore = top ? { name: top.player_name, score: top.score } : null;
+				})
+				.catch(() => { dailyHighScore = null; });
 		}
 	});
 
@@ -173,6 +203,18 @@
 
 		// Don't allow starting with invalid player names
 		if (!playersValid) return;
+
+		// Track games played (for new-user detection) and daily challenge completion
+		settingsStore.update((s) => {
+			const updates: Partial<typeof s> = { gamesPlayed: (s.gamesPlayed ?? 0) + 1 };
+			if (
+				selectedMode === 'timeline' &&
+				localSettings.selectedTracklist === dailyTracklist.id
+			) {
+				updates.dailyChallengePlayedDate = getTodayDateString();
+			}
+			return { ...s, ...updates };
+		});
 
 		// Play start sound to initialize audio context for Safari
 		playStartSound();
@@ -274,9 +316,42 @@
 		<!-- Mode Selection -->
 		<ModeSelector {selectedMode} onModeSelect={handleModeSelect} />
 
+		<!-- Daily Challenge Banner -->
+		{#if showDailyChallenge}
+			<button
+				type="button"
+				onclick={() => handleTracklistSelect(dailyTracklist)}
+				class="group mx-auto mt-8 flex w-full max-w-2xl cursor-pointer items-center gap-4 rounded-2xl border-2 border-amber-400/40 bg-linear-to-r from-amber-950/30 via-amber-900/20 to-amber-950/30 px-5 py-4 text-left shadow-[0_0_20px_rgba(251,191,36,0.15)] backdrop-blur-sm transition-all duration-300 hover:border-amber-400/70 hover:shadow-[0_0_30px_rgba(251,191,36,0.3)] active:scale-[0.98]"
+			>
+				<div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-400/15 text-amber-400 transition-colors group-hover:bg-amber-400/25">
+					<Sparkles class="h-5 w-5" />
+				</div>
+				<div class="min-w-0 flex-1 flex flex-col gap-0.5">
+					<div class="flex items-center gap-2">
+						<span class="text-sm font-bold text-amber-400">{$_('dailyChallenge.title')}</span>
+						<span class="text-xs text-slate-500">{$_('dailyChallenge.subtitle')}</span>
+					</div>
+					<div class="mt-0.5 flex items-center gap-1.5">
+						{#if dailyTracklist.icon}
+							<div class="text-amber-300/70">{@html dailyTracklist.icon}</div>
+						{/if}
+						<span class="truncate font-semibold text-amber-200">{tracklistDisplayName(dailyTracklist, $_)}</span>
+					</div>
+					{#if dailyHighScore}
+						<p class="mt-0.5 text-xs text-amber-400/60">
+							{$_('dailyChallenge.highScore', { values: { name: dailyHighScore.name, score: dailyHighScore.score.toLocaleString() } })}
+						</p>
+					{/if}
+				</div>
+				<span class="shrink-0 rounded-lg border border-amber-400/40 bg-amber-400/10 px-3 py-1.5 text-sm font-bold text-amber-400 transition-colors group-hover:bg-amber-400/20">
+					{$_('dailyChallenge.play')}
+				</span>
+			</button>
+		{/if}
+
 		<!-- Game Parameters Container -->
 		<div
-			class="mx-auto mt-10 max-w-2xl rounded-2xl border-2 border-cyan-400/30 bg-slate-900/50 p-6 backdrop-blur-sm"
+			class="mx-auto mt-8 max-w-2xl rounded-2xl border-2 border-cyan-400/30 bg-slate-900/50 p-6 backdrop-blur-sm"
 		>
 			<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
 				<!-- Left Column -->

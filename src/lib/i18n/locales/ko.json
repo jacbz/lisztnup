@@ -642,5 +642,11 @@
 		"secondVienneseSchool": "제2빈 악파",
 		"modernism": "모더니즘",
 		"minimalism": "미니멀리즘"
+	},
+	"dailyChallenge": {
+		"title": "오늘의 도전",
+		"subtitle": "오늘의 추천 플레이리스트",
+		"highScore": "{name}의 {score}점을 넘을 수 있을까?",
+		"play": "플레이"
 	}
 }
