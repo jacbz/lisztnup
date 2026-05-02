@@ -161,6 +161,16 @@ button {
 	}
 }
 
+@keyframes publish-glow {
+	0%,
+	100% {
+		box-shadow: 0 0 8px rgba(251, 191, 36, 0.3);
+	}
+	50% {
+		box-shadow: 0 0 20px rgba(251, 191, 36, 0.6);
+	}
+}
+
 @theme {
 	--font-sans: 'Rajdhani', system-ui, sans-serif;
 	--font-streamster: 'Streamster', cursive;
@@ -168,4 +178,5 @@ button {
 	--animate-trophy-glow: trophy-glow 2s ease-in-out infinite;
 	--animate-shimmer: shimmer 2s ease-in-out infinite;
 	--animate-streak-flash: streak-flash 0.8s ease-in-out;
+	--animate-publish-glow: publish-glow 2s ease-in-out infinite;
 }

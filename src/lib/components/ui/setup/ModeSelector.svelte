@@ -51,7 +51,7 @@
 	];
 </script>
 
-<div class="mx-auto w-full max-w-[1200px]">
+<div class="mx-auto w-full max-w-300">
 	<div class="flex flex-col justify-center gap-4 md:flex-row">
 		{#each modes as mode (mode.id)}
 			{@const isSelected = selectedMode === mode.id}

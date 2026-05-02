@@ -82,6 +82,7 @@
 		});
 	});
 
+	// All players with a positive score can publish
 	const leaderboardPlayers = $derived<LeaderboardPlayer[]>(
 		sortedTimelines
 			.filter((t) => t.score > 0)
@@ -100,7 +101,6 @@
 	let gameoverAudio: HTMLAudioElement | null = null;
 	let gameoverPlayed = false;
 	let isNewHighScore = $state(false);
-	let existingScoresByName = $state<Record<string, number>>({});
 
 	$effect(() => {
 		if (visible && gameoverAudio && !gameoverPlayed) {
@@ -132,25 +132,9 @@
 				if (topScore > 0 && (entries.length === 0 || topScore > entries[0].score)) {
 					isNewHighScore = true;
 				}
-				// Build map of existing best scores by player name
-				const map: Record<string, number> = {};
-				for (const e of entries) {
-					if (!map[e.player_name] || e.score > map[e.player_name]) {
-						map[e.player_name] = e.score;
-					}
-				}
-				existingScoresByName = map;
 			})
 			.catch(() => {}); // silent
 	});
-
-	// Players whose score beats their existing leaderboard score
-	const publishablePlayers = $derived(
-		leaderboardPlayers.filter((p) => {
-			const existing = existingScoresByName[p.name];
-			return existing === undefined || Math.round(p.score) > existing;
-		})
-	);
 
 	onMount(() => {
 		gameoverAudio = new Audio('/gameover.mp3');
@@ -247,11 +231,11 @@
 		</div>
 
 		<div class="flex flex-col gap-3">
-			{#if publishablePlayers.length > 0}
+			{#if leaderboardPlayers.length > 0}
 				<button
 					type="button"
 					onclick={() => (showLeaderboardSubmit = true)}
-					class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-amber-400 bg-slate-900 px-6 py-3.5 text-base font-bold text-amber-400 transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_0_20px_rgba(251,191,36,0.4)]"
+					class="flex w-full animate-publish-glow cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-amber-400 bg-slate-900 px-6 py-3.5 text-base font-bold text-amber-400 transition-all duration-200 hover:bg-slate-800"
 				>
 					<Send class="h-5 w-5" />
 					{$_('leaderboard.publishScore')}
@@ -294,10 +278,10 @@
 
 <FeedbackPopup visible={showFeedbackPopup} onClose={() => (showFeedbackPopup = false)} />
 
-{#if publishablePlayers.length > 0}
+{#if leaderboardPlayers.length > 0}
 	<LeaderboardSubmitPopup
 		visible={showLeaderboardSubmit}
-		players={publishablePlayers}
+		players={leaderboardPlayers}
 		{tracklistId}
 		{cardsToWin}
 		{sessionId}

@@ -2,6 +2,7 @@
 	import Popup from '$lib/components/ui/primitives/Popup.svelte';
 	import { _ } from 'svelte-i18n';
 	import { getPlayerToken } from '$lib/stores/identity';
+	import { settings } from '$lib/stores';
 	import Send from 'lucide-svelte/icons/send';
 	import Check from 'lucide-svelte/icons/check';
 
@@ -56,6 +57,13 @@
 		submitting[index] = true;
 		errors[index] = false;
 		try {
+			// Persist edited name back to player setup so it sticks for future games
+			settings.update((s) => ({
+				...s,
+				players: s.players.map((sp) =>
+					sp.color === p.color ? { ...sp, name: finalName } : sp
+				)
+			}));
 			const res = await fetch('/api/game/leaderboard', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -163,7 +171,7 @@
 				type="button"
 				onclick={submitAll}
 				disabled={!anySubmittable}
-				class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3 text-base font-bold text-cyan-400 transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] disabled:cursor-not-allowed disabled:opacity-50"
+				class="flex w-full animate-publish-glow cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3 text-base font-bold text-cyan-400 transition-all duration-200 hover:bg-slate-800 disabled:cursor-not-allowed disabled:animate-none disabled:opacity-50"
 			>
 				<Send class="h-5 w-5" />
 				{$_('leaderboard.submit')}
