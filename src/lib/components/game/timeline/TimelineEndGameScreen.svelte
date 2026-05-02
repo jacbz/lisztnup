@@ -11,10 +11,12 @@
 	import BarChart from 'lucide-svelte/icons/bar-chart-3';
 	import FeedbackPopup from '$lib/components/ui/gameplay/FeedbackPopup.svelte';
 	import LeaderboardSubmitPopup, { type LeaderboardPlayer } from '$lib/components/ui/screens/LeaderboardSubmitPopup.svelte';
+	import { getPlayerToken } from '$lib/stores/identity';
 	import { STREAK_THRESHOLD } from '$lib/logic/timelineGame.svelte';
 	import Send from 'lucide-svelte/icons/send';
 	import Crown from 'lucide-svelte/icons/crown';
 	import { onMount } from 'svelte';
+	import { SvelteURLSearchParams } from 'svelte/reactivity';
 
 	interface FinalTimeline {
 		player: Player;
@@ -118,10 +120,11 @@
 	$effect(() => {
 		if (!visible || sortedTimelines.length === 0) return;
 
-		const params = new URLSearchParams();
+		const params = new SvelteURLSearchParams();
 		if (tracklistId) params.set('tracklist', tracklistId);
 		params.set('cardsToWin', String(cardsToWin));
 		params.set('limit', '50');
+		params.set('token', getPlayerToken());
 
 		fetch(`/api/game/leaderboard?${params}`)
 			.then((r) => r.json())

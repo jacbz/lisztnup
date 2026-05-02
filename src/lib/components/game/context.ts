@@ -48,6 +48,8 @@ export interface GameScreenContext {
 	readonly isPreloading: boolean;
 	/** True when the last preload attempt failed due to a network error (retries exhausted). */
 	readonly hasPreloadError: boolean;
+	/** Register a stats click handler from a child game mode (e.g. Timeline). Pass null to unregister. */
+	registerStatsHandler: (handler: (() => void) | null) => void;
 }
 
 /**

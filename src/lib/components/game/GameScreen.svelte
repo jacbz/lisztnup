@@ -92,6 +92,20 @@
 	// Options passed by the game mode via revealTrack(options)
 	let revealOptions = $state<RevealOptions>({});
 
+	// Stats handler registered by child game modes (e.g. Timeline)
+	let childStatsHandler = $state<(() => void) | null>(null);
+
+	// Whether the stats icon should appear in the top-right pill
+	const showStatsInPill = $derived(
+		childStatsHandler !== null ||
+			(mode !== 'timeline' &&
+				mode !== 'bingo' &&
+				!isSoloMode &&
+				!isGameOver &&
+				!showScoringScreen &&
+				enableScoring)
+	);
+
 	// Maximum number of retry attempts for a single preload when network errors occur
 	const MAX_PRELOAD_RETRIES = 3;
 
@@ -516,6 +530,9 @@
 		},
 		get hasPreloadError() {
 			return hasPreloadError;
+		},
+		registerStatsHandler(handler: (() => void) | null) {
+			childStatsHandler = handler;
 		}
 	} satisfies GameScreenContext);
 </script>
@@ -529,15 +546,27 @@
 		<Logo onClick={handleHomeClick} size="medium" />
 	</div>
 
-	<!-- Settings -->
-	<button
-		type="button"
-		onclick={() => (showInGameSettings = true)}
-		class="absolute top-6 right-6 z-20 flex items-center gap-2 rounded-lg bg-slate-800/80 px-4 py-2 text-cyan-400 backdrop-blur-sm
-                 transition-colors hover:bg-slate-700/80"
-	>
-		<SettingsIcon class="h-5 w-5" />
-	</button>
+	<!-- Top-right pill: Stats (conditional) | Settings -->
+	<div class="absolute top-6 right-6 z-20 flex items-center overflow-hidden rounded-lg">
+		{#if showStatsInPill}
+			<button
+				type="button"
+				onclick={() => (childStatsHandler ? childStatsHandler() : handleShowStats())}
+				class="flex items-center px-2.5 py-1.5 text-cyan-400 transition-all duration-200 hover:text-cyan-300 active:scale-90"
+				aria-label="View statistics"
+			>
+				<BarChart class="h-5 w-5" />
+			</button>
+			<div class="h-4 w-px bg-slate-600/40"></div>
+		{/if}
+		<button
+			type="button"
+			onclick={() => (showInGameSettings = true)}
+			class="flex items-center px-2.5 py-1.5 text-cyan-400 transition-all duration-200 hover:text-cyan-300 active:scale-90"
+		>
+			<SettingsIcon class="h-5 w-5" />
+		</button>
+	</div>
 
 	<!-- Round Indicator (Standard Modes) -->
 	{#if !isGameOver && mode !== 'bingo' && mode !== 'timeline'}
@@ -575,14 +604,13 @@
 		</div>
 	{/if}
 
-	<!-- Stats Button (for multiplayer modes with scoring) -->
+	<!-- Game Summary (for multiplayer modes with scoring, not timeline) -->
 	{#if !isSoloMode && !isGameOver && !showScoringScreen && enableScoring && mode !== 'timeline'}
-		<!-- Game Summary (bottom-center on mobile, bottom-right on desktop) -->
 		<div
 			class="fixed bottom-4 left-1/2 z-10 -translate-x-1/2 md:right-6 md:left-auto md:translate-x-0"
 		>
 			<div
-				class="flex min-w-35 flex-col gap-1.5 rounded-xl border-2 border-slate-700 bg-slate-800 px-3 py-2 md:mr-20 md:min-w-45 md:gap-2 md:px-4 md:py-3"
+				class="flex min-w-35 flex-col gap-1.5 rounded-xl border-2 border-slate-700 bg-slate-800 px-3 py-2 md:min-w-45 md:gap-2 md:px-4 md:py-3"
 			>
 				{#each sortedPlayers as player (player.name)}
 					<div class="flex items-center gap-1.5 md:gap-2">
@@ -599,18 +627,6 @@
 					</div>
 				{/each}
 			</div>
-		</div>
-
-		<!-- Stats Button (always bottom-right) -->
-		<div class="fixed right-6 bottom-6 z-10">
-			<button
-				type="button"
-				onclick={handleShowStats}
-				class="flex cursor-pointer items-center justify-center rounded-full border-2 border-cyan-400 p-3 text-cyan-400 shadow-[0_4px_20px_rgba(34,211,238,0.4)] transition-all duration-200 hover:scale-110 hover:shadow-[0_6px_30px_rgba(34,211,238,0.6)] active:scale-95 md:p-3.5"
-				aria-label="View statistics"
-			>
-				<BarChart class="h-5 w-5 md:h-6 md:w-6" />
-			</button>
 		</div>
 	{/if}
 

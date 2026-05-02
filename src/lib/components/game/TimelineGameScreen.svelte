@@ -8,7 +8,6 @@
 	import { settings } from '$lib/stores/settings';
 	import { _ } from 'svelte-i18n';
 	import { analytics } from '$lib/game-logger';
-	import BarChart from 'lucide-svelte/icons/bar-chart-3';
 	import TriangleAlert from 'lucide-svelte/icons/triangle-alert';
 
 	// Components
@@ -142,6 +141,13 @@
 	let showStatsPopup = $state(false);
 	let statsOpenedFromEndgame = $state(false);
 
+	// Register stats handler in the top-right pill (managed by GameScreen)
+	$effect(() => {
+		const visible = !game.isDealing && !game.showEndGame;
+		ctx.registerStatsHandler(visible ? () => (showStatsPopup = true) : null);
+	});
+	onDestroy(() => ctx.registerStatsHandler(null));
+
 	function handleQuit() {
 		ctx.stopTrack();
 		resetGame();
@@ -252,7 +258,6 @@
 		compact={!isActive}
 		acceptingDrop={isActive && game.hasPlaybackStarted && !game.pendingEntryId && !game.resolvingTurn && !game.isDealing}
 		streakCount={isActive && game.streakRevealPending ? game.preRevealCurrentStreak : timeline.currentStreak}
-		longestStreak={isActive && game.streakRevealPending ? game.preRevealLongestStreak : timeline.longestStreak}
 		score={timeline.score}
 		{rotation}
 		isVertical={edge === 'left' || edge === 'right'}
@@ -392,20 +397,6 @@
 	icon={TriangleAlert}
 	onComplete={() => (game.endgameFlash = false)}
 />
-
-<!-- Stats FAB (always visible during gameplay) -->
-{#if !game.isDealing && !game.showEndGame}
-	<div class="fixed right-6 bottom-6 z-10">
-		<button
-			type="button"
-			onclick={() => (showStatsPopup = true)}
-			class="flex cursor-pointer items-center justify-center rounded-full border-2 border-cyan-400 p-3 text-cyan-400 shadow-[0_4px_20px_rgba(34,211,238,0.4)] transition-all duration-200 hover:scale-110 hover:shadow-[0_6px_30px_rgba(34,211,238,0.6)] active:scale-95 md:p-3.5"
-			aria-label={$_('stats.title')}
-		>
-			<BarChart class="h-5 w-5 md:h-6 md:w-6" />
-		</button>
-	</div>
-{/if}
 
 <!-- Stats Popup -->
 <StatsScreen

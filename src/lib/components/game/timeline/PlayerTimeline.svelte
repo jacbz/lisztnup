@@ -8,7 +8,6 @@
 	import TimelineCard from './TimelineCard.svelte';
 	import Flame from 'lucide-svelte/icons/flame';
 	import { STREAK_THRESHOLD } from '$lib/logic/timelineGame.svelte';
-	import { getStreakMultiplier } from '$lib/logic/timelineScoring';
 
 	export interface TimelineEntry {
 		id: string;
@@ -41,7 +40,6 @@
 		rotation?: number;
 		isVertical?: boolean;
 		streakCount?: number;
-		longestStreak?: number;
 		score?: number;
 	}
 
@@ -68,7 +66,6 @@
 		rotation = 0,
 		isVertical = false,
 		streakCount = 0,
-		longestStreak = 0,
 		score = 0
 	}: Props = $props();
 
@@ -78,8 +75,6 @@
 	});
 
 	const cardSize = $derived(active && !compact ? 'sm' : 'xs');
-
-	const streakMult = $derived(getStreakMultiplier(streakCount));
 
 	const flameGlow = $derived.by(() => {
 		if (streakCount < STREAK_THRESHOLD) return '';
@@ -140,7 +135,7 @@
 >
 	{#if helpText || showConfirm}
 		<div
-			class="absolute right-0 bottom-[calc(100%)] left-0 z-10 flex flex-col items-center justify-center gap-0.5 p-1 backdrop-blur-xs"
+			class="absolute right-0 bottom-[calc(100%+1rem)] left-0 z-10 flex flex-col items-center justify-center gap-0.5 p-1 backdrop-blur-xs md:bottom-[calc(100%)]"
 		>
 			<div class="min-w-0 truncate text-[11px] font-semibold text-slate-300 select-none">
 				{helpText}

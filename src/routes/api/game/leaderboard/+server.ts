@@ -132,10 +132,10 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 
 		// ── Session cross-checks (when sessionId provided) ─
 		if (sessionId && typeof sessionId === 'string') {
-			// Prevent duplicate submissions for the same session
+			// Prevent duplicate submissions for the same session + player
 			const dupCheck = await db
-				.prepare(`SELECT COUNT(*) AS cnt FROM leaderboard WHERE session_id = ?1`)
-				.bind(sessionId)
+				.prepare(`SELECT COUNT(*) AS cnt FROM leaderboard WHERE session_id = ?1 AND player_token = ?2`)
+				.bind(sessionId, playerToken)
 				.first<{ cnt: number }>();
 			if (dupCheck && dupCheck.cnt > 0) {
 				return json({ success: false, reason: 'Already submitted' }, { status: 409 });
@@ -153,8 +153,10 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				if (session.mode !== 'timeline') {
 					return json({ success: false, reason: 'Not a timeline session' }, { status: 400 });
 				}
-				// Verify same origin (IP hash matches)
-				if (session.user_hash !== userHash) {
+				// Verify same origin (IP hash matches, tolerating daily salt rotation)
+				const yesterday = new Date(Date.now() - 86_400_000).toISOString().split('T')[0];
+				const yesterdayHash = await hashUser(ip, yesterday);
+				if (session.user_hash !== userHash && session.user_hash !== yesterdayHash) {
 					return json({ success: false, reason: 'Session mismatch' }, { status: 403 });
 				}
 

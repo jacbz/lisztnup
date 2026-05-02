@@ -418,13 +418,13 @@
 							{#if leaderboardEntries.length === 0}
 								<p class="py-2 text-xs text-slate-500">{$_('leaderboard.noScores')}</p>
 							{:else}
-								<div class="grid grid-cols-[auto_2fr_1fr_1fr] items-center gap-x-1.5 gap-y-1 text-xs text-left">
+								<div class="grid grid-cols-[auto_minmax(0,1fr)_auto_auto] items-center gap-x-[clamp(0.375rem,2vw,1.5rem)] gap-y-1 text-xs text-left">
 									{#each leaderboardEntries as entry, i (i)}
 								{@const flagUrl = countryFlagUrl(entry.country)}
 								<span class="text-center font-bold mr-2" class:text-cyan-400={entry.is_me} class:text-slate-500={!entry.is_me}>{i + 1}</span>
 								<span class="truncate" class:text-cyan-300={entry.is_me} class:text-slate-300={!entry.is_me}>{#if flagUrl}<img src={flagUrl} alt="" title={countryName(entry.country, currentLocale)} class="mr-0.5 inline-block h-2.5 w-3.75 rounded-xs border-[0.5px] border-slate-600 align-baseline select-none" draggable="false" oncontextmenu={(e) => e.preventDefault()} />{/if} {entry.player_name}</span>
-									<span class="text-right font-bold tabular-nums" class:text-cyan-400={entry.is_me}>{$_('scoring.pts', { values: { points: entry.score.toLocaleString() } })}</span>
-										<span class="text-right tabular-nums text-slate-500">{formatEntryDate(entry.timestamp, currentLocale)}</span>
+									<span class="whitespace-nowrap text-right font-bold tabular-nums" class:text-cyan-400={entry.is_me}>{$_('scoring.pts', { values: { points: entry.score.toLocaleString() } })}</span>
+										<span class="whitespace-nowrap text-right tabular-nums text-slate-500">{formatEntryDate(entry.timestamp, currentLocale)}</span>
 									{/each}
 								</div>
 							{/if}
