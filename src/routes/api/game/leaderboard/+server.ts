@@ -182,9 +182,12 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 					}
 
 					// If we have per-turn scores, verify the total is plausible
-					// Allow generous tolerance for efficiency bonus (one-time, up to ~cards*500)
+					// Efficiency bonus = (target / totalAttempts) * target * 500
+					// With perfect play totalAttempts = target - 1 (dealt card is free),
+					// so max bonus = target² * 500 / (target - 1)
 					if (placements.score_sum > 0) {
-						const maxEfficiencyBonus = cards * 500;
+						const ctw = typeof cardsToWin === 'number' && cardsToWin > 1 ? cardsToWin : cards;
+						const maxEfficiencyBonus = Math.ceil((ctw * ctw * 500) / Math.max(1, ctw - 1));
 						if (score > placements.score_sum + maxEfficiencyBonus) {
 							return json(
 								{ success: false, reason: 'Score exceeds tracked total' },
