@@ -24,51 +24,49 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		const country = cf?.country || 'UNKNOWN';
 		const email = typeof payload.email === 'string' ? payload.email.trim().slice(0, 254) : null;
 
-		const dbOp = async () => {
-			try {
-				const db = platform.env!.DB;
-				await db
-					.prepare(
-						`INSERT INTO problem_reports (session_id, user_hash, country, message, email, deezer_id, composer, work, part, work_type, work_years) 
-						 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-					)
-					.bind(
-						payload.sessionId,
-						userHash,
-						country,
-						payload.message,
-						email,
-						payload.deezerId,
-						payload.composer,
-						payload.work,
-						payload.part,
-						payload.workType,
-						payload.workYears
-					)
-					.run();
-			} catch (e) {
-				console.error('Failed to write report to analytics:', e);
-			}
-		};
+		const db = platform.env!.DB;
+		await db
+			.prepare(
+				`INSERT INTO problem_reports (session_id, user_hash, country, message, email, deezer_id, composer, work, part, work_type, work_years) 
+				 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+			)
+			.bind(
+				payload.sessionId,
+				userHash,
+				country,
+				payload.message,
+				email,
+				payload.deezerId,
+				payload.composer,
+				payload.work,
+				payload.part,
+				payload.workType,
+				payload.workYears
+			)
+			.run();
 
 		const telegramOp = async () => {
-			const token = platform.env!.TELEGRAM_BOT_TOKEN;
-			const chatId = platform.env!.TELEGRAM_CHAT_ID;
-			if (token && chatId) {
-				const text = formatReportMessage(
-					payload.message,
-					payload.composer || '',
-					payload.work || '',
-					payload.part || '',
-					payload.deezerId || '',
-					country,
-					email || undefined
-				);
-				await sendTelegramMessage(token, chatId, text);
+			try {
+				const token = platform.env!.TELEGRAM_BOT_TOKEN;
+				const chatId = platform.env!.TELEGRAM_CHAT_ID;
+				if (token && chatId) {
+					const text = formatReportMessage(
+						payload.message,
+						payload.composer || '',
+						payload.work || '',
+						payload.part || '',
+						String(payload.deezerId ?? ''),
+						country,
+						email || undefined
+					);
+					await sendTelegramMessage(token, chatId, text);
+				}
+			} catch (e) {
+				console.error('Failed to send report to Telegram:', e);
 			}
 		};
 
-		platform.context?.waitUntil(Promise.all([dbOp(), telegramOp()]));
+		platform.context?.waitUntil(telegramOp());
 
 		return json({ success: true });
 	} catch (e) {

@@ -24,31 +24,29 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		const country = cf?.country || 'UNKNOWN';
 		const email = typeof payload.email === 'string' ? payload.email.trim().slice(0, 254) : null;
 
-		const dbOp = async () => {
-			try {
-				const db = platform.env!.DB;
-				await db
-					.prepare(
-						`INSERT INTO feedback (session_id, user_hash, country, message, email) 
-						 VALUES (?, ?, ?, ?, ?)`
-					)
-					.bind(payload.sessionId, userHash, country, payload.message, email)
-					.run();
-			} catch (e) {
-				console.error('Failed to write feedback to analytics:', e);
-			}
-		};
+		const db = platform.env!.DB;
+		await db
+			.prepare(
+				`INSERT INTO feedback (session_id, user_hash, country, message, email) 
+				 VALUES (?, ?, ?, ?, ?)`
+			)
+			.bind(payload.sessionId, userHash, country, payload.message, email)
+			.run();
 
 		const telegramOp = async () => {
-			const token = platform.env!.TELEGRAM_BOT_TOKEN;
-			const chatId = platform.env!.TELEGRAM_CHAT_ID;
-			if (token && chatId) {
-				const text = formatFeedbackMessage(payload.message, country, email || undefined);
-				await sendTelegramMessage(token, chatId, text);
+			try {
+				const token = platform.env!.TELEGRAM_BOT_TOKEN;
+				const chatId = platform.env!.TELEGRAM_CHAT_ID;
+				if (token && chatId) {
+					const text = formatFeedbackMessage(payload.message, country, email || undefined);
+					await sendTelegramMessage(token, chatId, text);
+				}
+			} catch (e) {
+				console.error('Failed to send feedback to Telegram:', e);
 			}
 		};
 
-		platform.context?.waitUntil(Promise.all([dbOp(), telegramOp()]));
+		platform.context?.waitUntil(telegramOp());
 
 		return json({ success: true });
 	} catch (e) {
