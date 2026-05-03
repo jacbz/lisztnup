@@ -29,6 +29,7 @@ export { default as TrackTable } from './setup/TrackTable.svelte';
 export { default as LibraryViewer } from './setup/LibraryViewer.svelte';
 export { default as ComposerCloud } from './setup/ComposerCloud.svelte';
 export { default as WorkSelectorPopup } from './setup/WorkSelectorPopup.svelte';
+export { default as TimelineLeaderboard } from './setup/TimelineLeaderboard.svelte';
 export { default as BingoSetup } from './setup/BingoSetup.svelte';
 export { default as ShareLinkPopup } from './setup/ShareLinkPopup.svelte';
 

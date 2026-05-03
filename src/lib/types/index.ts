@@ -3,6 +3,7 @@ export type { Composer } from './composer';
 export type { Work, Part, WorkCategory } from './work';
 export type { LisztnupData } from './data';
 export type { Track } from './track';
+export type { LeaderboardEntry } from './leaderboard';
 export type {
 	GameSettings,
 	Tracklist,

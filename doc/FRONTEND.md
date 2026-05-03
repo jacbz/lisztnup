@@ -11,7 +11,7 @@ src/lib/components/
 │   ├── screens/        HomeScreen, LoadingScreen, EndGameScreen, StatsScreen, ScoringScreen, LeaderboardSubmitPopup
 │   ├── setup/          ModeSelector, ModeRulesPopup, PlayerSetup, TracklistSelector,
 │   │                   TracklistEditor, TrackTable, ComposerCloud, LibraryViewer,
-│   │                   WorkSelectorPopup, BingoSetup, ShareLinkPopup
+│   │                   WorkSelectorPopup, TimelineLeaderboard, BingoSetup, ShareLinkPopup
 │   └── gameplay/       PlayerControl, PlayStopIcon, Visualizer, InGameSettings,
 │                       TrackInfo, NetworkStatusBanner, FeedbackPopup, ProblemReportPopup,
 │                       FlashingText
