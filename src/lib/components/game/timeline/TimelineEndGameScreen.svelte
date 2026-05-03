@@ -280,10 +280,13 @@
 				<button
 					type="button"
 					onclick={() => (showLeaderboardSubmit = true)}
-					class="flex w-full animate-publish-glow cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-amber-400 bg-slate-900 px-6 py-3.5 text-base font-bold text-amber-400 transition-all duration-200 hover:bg-slate-800"
+					class="flex w-full animate-publish-glow cursor-pointer flex-col items-center rounded-xl border-2 border-amber-400 bg-slate-900 px-6 py-3.5 transition-all duration-200 hover:bg-slate-800"
 				>
-					<PenLine class="h-5 w-5" />
-					{$_('leaderboard.nameYourScore')}
+					<span class="flex items-center gap-2 text-base font-bold text-amber-400">
+						<PenLine class="h-5 w-5" />
+						{$_('leaderboard.nameYourScore')}
+					</span>
+					<span class="text-xs font-normal text-amber-400/60">{$_('leaderboard.nameYourScoreSubtitle')}</span>
 				</button>
 			{/if}
 

@@ -615,6 +615,7 @@
 		"noScores": "Aucun score \u2014 sois le premier !",
 		"cards": "cartes",
 		"nameYourScore": "Signe ton score",
+		"nameYourScoreSubtitle": "Enregistré anonymement — ajoute ta signature",
 		"named": "Nom enregistré !",
 		"error": "Échec de l'enregistrement. Réessayer ?",
 		"submitting": "Enregistrement…",

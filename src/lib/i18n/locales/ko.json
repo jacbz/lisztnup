@@ -615,6 +615,7 @@
 		"noScores": "아직 점수 없음 \u2014 첨 번째가 되세요!",
 		"cards": "장",
 		"nameYourScore": "이름 등록하기",
+		"nameYourScoreSubtitle": "익명으로 저장 완료 — 이름을 남겨보세요",
 		"named": "이름이 등록되었어요!",
 		"error": "저장 실패. 다시 시도할까요?",
 		"submitting": "저장 중\u2026",

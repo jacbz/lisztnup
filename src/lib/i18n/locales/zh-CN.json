@@ -615,6 +615,7 @@
 		"noScores": "还没有分数\u2014\u2014成为第一个吧！",
 		"cards": "张",
 		"nameYourScore": "留下你的名字",
+		"nameYourScoreSubtitle": "已匿名保存——署上你的名字吧",
 		"named": "名字已登记！",
 		"error": "保存失败，再试一次？",
 		"submitting": "保存中\u2026",

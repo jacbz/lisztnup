@@ -615,6 +615,7 @@
 		"noScores": "まだスコアなし \u2014 最初の一人に！",
 		"cards": "枚",
 		"nameYourScore": "名前を登録する",
+		"nameYourScoreSubtitle": "匿名で保存済み — 名前を残そう",
 		"named": "名前を登録しました！",
 		"error": "保存に失敗しました。もう一度？",
 		"submitting": "保存中\u2026",
