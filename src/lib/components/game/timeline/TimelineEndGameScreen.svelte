@@ -13,7 +13,7 @@
 	import LeaderboardSubmitPopup, { type LeaderboardPlayer } from '$lib/components/ui/screens/LeaderboardSubmitPopup.svelte';
 	import { getPlayerToken } from '$lib/stores/identity';
 	import { STREAK_THRESHOLD } from '$lib/logic/timelineGame.svelte';
-	import Send from 'lucide-svelte/icons/send';
+	import PenLine from 'lucide-svelte/icons/pen-line';
 	import Crown from 'lucide-svelte/icons/crown';
 	import { onMount } from 'svelte';
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
@@ -101,13 +101,15 @@
 	let showFeedbackPopup = $state(false);
 	let showLeaderboardSubmit = $state(false);
 	let showHomeConfirm = $state(false);
-	let hasSubmittedScore = $state(false);
+	let hasNamedScore = $state(false);
 	let gameoverAudio: HTMLAudioElement | null = null;
 	let gameoverPlayed = false;
 	let isNewHighScore = $state(false);
+	let autoSubmitted = $state(false);
+	let entryIds = $state<(number | null)[]>([]);
 
 	function handleHomeClick() {
-		if (isNewHighScore && !hasSubmittedScore) {
+		if (leaderboardPlayers.length > 0 && !hasNamedScore) {
 			showHomeConfirm = true;
 		} else {
 			onHome();
@@ -126,7 +128,7 @@
 		}
 	});
 
-	// Fetch leaderboard: check for new global high score + existing per-player scores
+	// Fetch leaderboard + auto-submit all players with score > 0
 	$effect(() => {
 		if (!visible || sortedTimelines.length === 0) return;
 
@@ -138,7 +140,7 @@
 
 		fetch(`/api/game/leaderboard?${params}`)
 			.then((r) => r.json())
-			.then((data: { entries?: { player_name: string; score: number }[] }) => {
+			.then((data: { entries?: { player_name: string | null; score: number }[] }) => {
 				const entries = data.entries ?? [];
 				// New global high score?
 				const topScore = Math.round(sortedTimelines[0].score);
@@ -147,6 +149,36 @@
 				}
 			})
 			.catch(() => {}); // silent
+
+		// Auto-submit all players with score > 0 (anonymous)
+		if (!autoSubmitted && leaderboardPlayers.length > 0) {
+			autoSubmitted = true;
+			const token = getPlayerToken();
+			Promise.all(
+				leaderboardPlayers.map((p) =>
+					fetch('/api/game/leaderboard', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							playerToken: token,
+							playerName: null,
+							score: Math.round(p.score),
+							cards: p.cards,
+							accuracy: p.accuracy,
+							longestStreak: p.longestStreak,
+							tracklistId,
+							cardsToWin,
+							sessionId
+						})
+					})
+						.then((r) => (r.ok ? r.json() : null))
+						.then((data) => data?.id ?? null)
+						.catch(() => null)
+				)
+			).then((ids) => {
+				entryIds = ids;
+			});
+		}
 	});
 
 	onMount(() => {
@@ -244,14 +276,14 @@
 		</div>
 
 		<div class="flex flex-col gap-3">
-			{#if leaderboardPlayers.length > 0}
+			{#if leaderboardPlayers.length > 0 && !hasNamedScore}
 				<button
 					type="button"
 					onclick={() => (showLeaderboardSubmit = true)}
 					class="flex w-full animate-publish-glow cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-amber-400 bg-slate-900 px-6 py-3.5 text-base font-bold text-amber-400 transition-all duration-200 hover:bg-slate-800"
 				>
-					<Send class="h-5 w-5" />
-					{$_('leaderboard.publishScore')}
+					<PenLine class="h-5 w-5" />
+					{$_('leaderboard.nameYourScore')}
 				</button>
 			{/if}
 
@@ -295,11 +327,9 @@
 	<LeaderboardSubmitPopup
 		visible={showLeaderboardSubmit}
 		players={leaderboardPlayers}
-		{tracklistId}
-		{cardsToWin}
-		{sessionId}
+		{entryIds}
 		onClose={() => (showLeaderboardSubmit = false)}
-		onSubmitted={() => (hasSubmittedScore = true)}
+		onNamed={() => (hasNamedScore = true)}
 	/>
 {/if}
 
@@ -325,9 +355,9 @@
 
 <Popup visible={showHomeConfirm} onClose={() => (showHomeConfirm = false)} width="md">
 	<div class="flex flex-col gap-4 text-center">
-		<Crown class="mx-auto h-10 w-10 text-amber-400" />
-		<h3 class="text-lg font-bold text-white">{$_('leaderboard.unsavedHighScore')}</h3>
-		<p class="text-sm text-slate-400">{$_('leaderboard.unsavedHighScoreMessage')}</p>
+		<PenLine class="mx-auto h-10 w-10 text-amber-400" />
+		<h3 class="text-lg font-bold text-white">{$_('leaderboard.unnamedScore')}</h3>
+		<p class="text-sm text-slate-400">{$_('leaderboard.namePrompt')}</p>
 		<div class="flex gap-2">
 			<button
 				type="button"
@@ -341,7 +371,7 @@
 				onclick={() => { showHomeConfirm = false; showLeaderboardSubmit = true; }}
 				class="flex-1 cursor-pointer rounded-xl border-2 border-amber-400 bg-slate-900 px-4 py-3 text-sm font-bold text-amber-400 transition-all hover:bg-slate-800"
 			>
-				{$_('leaderboard.publishScore')}
+				{$_('leaderboard.nameYourScore')}
 			</button>
 		</div>
 	</div>

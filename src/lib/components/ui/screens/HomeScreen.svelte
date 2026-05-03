@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ChevronRight from 'lucide-svelte/icons/chevron-right';
+	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 	import Languages from 'lucide-svelte/icons/languages';
 	import { _, locale } from 'svelte-i18n';
 	import { settings as settingsStore, selectedTracklist } from '$lib/stores';
@@ -17,6 +18,7 @@
 	import AppFooter from '../primitives/AppFooter.svelte';
 	import FeedbackPopup from '../gameplay/FeedbackPopup.svelte';
 	import { onMount } from 'svelte';
+	import { slide } from 'svelte/transition';
 	import { browser } from '$app/environment';
 	import MessageSquare from 'lucide-svelte/icons/message-square';
 	import Users from 'lucide-svelte/icons/users';
@@ -41,7 +43,7 @@
 	}
 
 	interface LeaderboardEntry {
-		player_name: string;
+		player_name: string | null;
 		score: number;
 		cards: number;
 		accuracy: number;
@@ -82,6 +84,7 @@
 	let enableScoring = $state($settingsStore.enableScoring); // Load from settings
 	let showFeedbackPopup = $state(false);
 	let leaderboardEntries = $state<LeaderboardEntry[]>([]);
+	let showExpandedLeaderboard = $state(false);
 	let playerSetupRef: { addPlayer: () => void } | undefined = $state();
 	let startAudio: HTMLAudioElement | null = null;
 	let startAudioSources = {
@@ -93,7 +96,7 @@
 
 	// Daily challenge state
 	let dailyTracklist = getDailyTracklist();
-	let dailyHighScore = $state<{ name: string; score: number } | null>(null);
+	let dailyHighScore = $state<{ name: string | null; score: number } | null>(null);
 	let showDailyChallenge = $derived(
 		selectedMode === 'timeline' &&
 			localSettings.dailyChallengePlayedDate !== getTodayDateString()
@@ -125,7 +128,8 @@
 		if (selectedMode === 'timeline' && browser) {
 			const tracklist = localSettings.selectedTracklist;
 			const cards = localSettings.timelineCardsToWin;
-			const parts = ['limit=5'];
+			const limit = showExpandedLeaderboard ? 20 : 6;
+			const parts = [`limit=${limit}`];
 			if (tracklist) parts.push(`tracklist=${encodeURIComponent(tracklist)}`);
 			if (cards) parts.push(`cardsToWin=${encodeURIComponent(cards)}`);
 			parts.push(`token=${encodeURIComponent(getPlayerToken())}`);
@@ -337,15 +341,17 @@
 						{/if}
 						<span class="truncate font-semibold text-amber-200">{tracklistDisplayName(dailyTracklist, $_)}</span>
 					</div>
-					{#if dailyHighScore}
-						{@const escapeName = dailyHighScore.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}
-						<p class="mt-0.5 text-xs text-amber-400/60">
-							{@html $_(
-								'dailyChallenge.highScore',
-								{ values: { name: `<strong style="font-weight:500;color:rgb(252 211 77/0.8)">${escapeName}</strong>`, score: `<strong style="font-weight:700;color:rgb(252 211 77/0.8)">${dailyHighScore.score.toLocaleString()}</strong>` } }
-							)}
-						</p>
-					{/if}
+				{#if dailyHighScore}
+					{@const rawName = dailyHighScore.name ?? $_('leaderboard.anonymous')}
+					{@const escapeName = rawName.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}
+					{@const nameStyle = dailyHighScore.name ? 'font-weight:500;color:rgb(252 211 77/0.8)' : 'font-weight:400;color:rgb(148 163 184/0.8)'}
+					<p class="mt-0.5 text-xs text-amber-400/60">
+						{@html $_(
+							'dailyChallenge.highScore',
+							{ values: { name: `<strong style="${nameStyle}">${escapeName}</strong>`, score: `<strong style="font-weight:700;color:rgb(252 211 77/0.8)">${dailyHighScore.score.toLocaleString()}</strong>` } }
+						)}
+					</p>
+				{/if}
 				</div>
 				<span class="shrink-0 rounded-lg border border-amber-400/40 bg-amber-400/10 px-3 py-1.5 text-sm font-bold text-amber-400 transition-colors group-hover:bg-amber-400/20">
 					{$_('dailyChallenge.play')}
@@ -419,14 +425,36 @@
 								<p class="py-2 text-xs text-slate-500">{$_('leaderboard.noScores')}</p>
 							{:else}
 								<div class="grid grid-cols-[auto_minmax(0,1fr)_auto_auto] items-center gap-x-[clamp(0.375rem,2vw,1.5rem)] gap-y-1 text-xs text-left">
-									{#each leaderboardEntries as entry, i (i)}
+							{#each leaderboardEntries.slice(0, 5) as entry, i (i)}
 								{@const flagUrl = countryFlagUrl(entry.country)}
 								<span class="text-center font-bold mr-2" class:text-cyan-400={entry.is_me} class:text-slate-500={!entry.is_me}>{i + 1}</span>
-								<span class="truncate" class:text-cyan-300={entry.is_me} class:text-slate-300={!entry.is_me}>{#if flagUrl}<img src={flagUrl} alt="" title={countryName(entry.country, currentLocale)} class="mr-0.5 inline-block h-2.5 w-3.75 rounded-xs border-[0.5px] border-slate-600 align-baseline select-none" draggable="false" oncontextmenu={(e) => e.preventDefault()} />{/if} {entry.player_name}</span>
+								<span class="truncate" class:text-cyan-300={entry.is_me && entry.player_name} class:text-slate-300={!entry.is_me && entry.player_name} class:text-slate-500={!entry.player_name}>{#if flagUrl}<img src={flagUrl} alt="" title={countryName(entry.country, currentLocale)} class="mr-0.5 inline-block h-2.5 w-3.75 rounded-xs border-[0.5px] border-slate-600 align-baseline select-none" class:opacity-50={!entry.player_name} draggable="false" oncontextmenu={(e) => e.preventDefault()} />{/if} {entry.player_name ?? $_('leaderboard.anonymous')}</span>
 									<span class="whitespace-nowrap text-right font-bold tabular-nums" class:text-cyan-400={entry.is_me}>{$_('scoring.pts', { values: { points: entry.score.toLocaleString() } })}</span>
 										<span class="whitespace-nowrap text-right tabular-nums text-slate-500">{formatEntryDate(entry.timestamp, currentLocale)}</span>
 									{/each}
 								</div>
+								{#if showExpandedLeaderboard && leaderboardEntries.length > 5}
+									<div transition:slide={{ duration: 200 }}>
+										<div class="grid grid-cols-[auto_minmax(0,1fr)_auto_auto] items-center gap-x-[clamp(0.375rem,2vw,1.5rem)] gap-y-1 text-xs text-left mt-1">
+										{#each leaderboardEntries.slice(5) as entry, i (i)}
+											{@const flagUrl = countryFlagUrl(entry.country)}
+											<span class="text-center font-bold mr-2" class:text-cyan-400={entry.is_me} class:text-slate-500={!entry.is_me}>{i + 6}</span>
+											<span class="truncate" class:text-cyan-300={entry.is_me && entry.player_name} class:text-slate-300={!entry.is_me && entry.player_name} class:text-slate-500={!entry.player_name}>{#if flagUrl}<img src={flagUrl} alt="" title={countryName(entry.country, currentLocale)} class="mr-0.5 inline-block h-2.5 w-3.75 rounded-xs border-[0.5px] border-slate-600 align-baseline select-none" class:opacity-50={!entry.player_name} draggable="false" oncontextmenu={(e) => e.preventDefault()} />{/if} {entry.player_name ?? $_('leaderboard.anonymous')}</span>
+											<span class="whitespace-nowrap text-right font-bold tabular-nums" class:text-cyan-400={entry.is_me}>{$_('scoring.pts', { values: { points: entry.score.toLocaleString() } })}</span>
+											<span class="whitespace-nowrap text-right tabular-nums text-slate-500">{formatEntryDate(entry.timestamp, currentLocale)}</span>
+										{/each}
+										</div>
+									</div>
+								{/if}
+								{#if !showExpandedLeaderboard && leaderboardEntries.length > 5}
+									<button
+										type="button"
+										onclick={() => (showExpandedLeaderboard = true)}
+										class="mx-auto mt-1 flex cursor-pointer items-center justify-center rounded-md px-2 py-0.5 text-slate-500 transition-colors hover:bg-slate-800 hover:text-slate-400"
+									>
+										<ChevronDown class="h-4 w-4" />
+									</button>
+								{/if}
 							{/if}
 						</div>
 					{/if}

@@ -60,11 +60,11 @@ CREATE TABLE IF NOT EXISTS feedback (
   email TEXT
 );
 
-CREATE TABLE IF NOT EXISTS leaderboard (
+CREATE TABLE IF NOT EXISTS scores (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
   player_token TEXT NOT NULL,
-  player_name TEXT NOT NULL,
+  player_name TEXT,
   score INTEGER NOT NULL,
   cards INTEGER NOT NULL,
   accuracy REAL NOT NULL,

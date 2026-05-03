@@ -21,9 +21,10 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 	try {
 		// Use ROW_NUMBER() to keep only each player's best score per config
 		// Partition by token+name to allow multiple entries from local multiplayer
+		// NULL player_name entries collapse per token (anonymous best-of-device)
 		let innerSql = `SELECT player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, timestamp,
 			ROW_NUMBER() OVER (PARTITION BY player_token, player_name ORDER BY score DESC) AS rn
-			FROM leaderboard`;
+			FROM scores`;
 		const binds: (string | number)[] = [];
 		const conditions: string[] = [];
 
@@ -82,14 +83,12 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		} = body;
 
 		// ── Required field validation ──────────────────────
-		if (!playerToken || !playerName || typeof score !== 'number' || typeof cards !== 'number') {
+		if (!playerToken || typeof score !== 'number' || typeof cards !== 'number') {
 			return json({ success: false, reason: 'Invalid payload' }, { status: 400 });
 		}
-		if (
-			typeof playerName !== 'string' ||
-			playerName.length === 0 ||
-			playerName.length > MAX_NAME_LENGTH
-		) {
+		// playerName is optional — null means anonymous submission
+		const nameProvided = playerName != null && typeof playerName === 'string' && playerName.length > 0;
+		if (nameProvided && playerName.length > MAX_NAME_LENGTH) {
 			return json({ success: false, reason: 'Invalid name' }, { status: 400 });
 		}
 
@@ -115,13 +114,14 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		const userHash = await hashUser(ip, getCurrentSalt());
 		const country = platform.cf?.country || 'UNKNOWN';
 
-		// ── Duplicate check: same session + player ────────
-		// This is the only hard rejection based on DB state.
-		if (sessionId && typeof sessionId === 'string') {
+		// ── Duplicate check: same session + player (named submissions only) ──
+		// Anonymous auto-submits skip dedup — rate limiter prevents abuse,
+		// and GET collapses anonymous entries per token anyway.
+		if (nameProvided && sessionId && typeof sessionId === 'string') {
 			const dupCheck = await db
 				.prepare(
-					`SELECT COUNT(*) AS cnt FROM leaderboard
-					 WHERE session_id = ?1 AND player_token = ?2`
+					`SELECT COUNT(*) AS cnt FROM scores
+					 WHERE session_id = ?1 AND player_token = ?2 AND player_name IS NOT NULL`
 				)
 				.bind(sessionId, playerToken)
 				.first<{ cnt: number }>();
@@ -133,7 +133,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		// ── Rate limit: max submissions per IP per hour ───
 		const rateCheck = await db
 			.prepare(
-				`SELECT COUNT(*) AS cnt FROM leaderboard
+				`SELECT COUNT(*) AS cnt FROM scores
 				 WHERE user_hash = ?1 AND timestamp > datetime('now', '-1 hour')`
 			)
 			.bind(userHash)
@@ -143,14 +143,14 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		}
 
 		// ── Insert ────────────────────────────────────────
-		await db
+		const result = await db
 			.prepare(
-				`INSERT INTO leaderboard (player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, user_hash, session_id)
+				`INSERT INTO scores (player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, user_hash, session_id)
 			 VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11)`
 			)
 			.bind(
 				playerToken,
-				playerName.slice(0, MAX_NAME_LENGTH),
+				nameProvided ? playerName.slice(0, MAX_NAME_LENGTH) : null,
 				Math.round(score),
 				cards,
 				Math.round(accuracy * 1000) / 1000,
@@ -163,9 +163,60 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 			)
 			.run();
 
-		return json({ success: true });
+		return json({ success: true, id: result.meta.last_row_id });
 	} catch (err) {
 		console.error('Leaderboard POST error:', err);
+		return json({ success: false, reason: 'Server error' }, { status: 500 });
+	}
+};
+
+export const PATCH: RequestHandler = async ({ request, platform }) => {
+	if (!platform?.env?.DB) {
+		return json({ success: false, reason: 'No DB configured' }, { status: 503 });
+	}
+
+	try {
+		const body = await request.json();
+		const { id, playerToken, playerName } = body;
+
+		if (!id || !playerToken) {
+			return json({ success: false, reason: 'Invalid payload' }, { status: 400 });
+		}
+		if (
+			typeof playerName !== 'string' ||
+			playerName.trim().length === 0 ||
+			playerName.trim().length > MAX_NAME_LENGTH
+		) {
+			return json({ success: false, reason: 'Invalid name' }, { status: 400 });
+		}
+
+		const db = platform.env.DB;
+		const trimmedName = playerName.trim().slice(0, MAX_NAME_LENGTH);
+
+		// Only allow naming entries that belong to this player and are still anonymous
+		const result = await db
+			.prepare(
+				`UPDATE scores SET player_name = ?1
+				 WHERE id = ?2 AND player_token = ?3 AND player_name IS NULL`
+			)
+			.bind(trimmedName, id, playerToken)
+			.run();
+
+		if (result.meta.changes === 0) {
+			// Either entry doesn't exist, wrong token, or already named
+			const existing = await db
+				.prepare(`SELECT player_name FROM scores WHERE id = ?1 AND player_token = ?2`)
+				.bind(id, playerToken)
+				.first<{ player_name: string | null }>();
+			if (existing && existing.player_name !== null) {
+				return json({ success: false, reason: 'Already named' }, { status: 409 });
+			}
+			return json({ success: false, reason: 'Not found' }, { status: 404 });
+		}
+
+		return json({ success: true });
+	} catch (err) {
+		console.error('Leaderboard PATCH error:', err);
 		return json({ success: false, reason: 'Server error' }, { status: 500 });
 	}
 };
