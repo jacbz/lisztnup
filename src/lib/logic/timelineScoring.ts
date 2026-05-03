@@ -11,12 +11,12 @@ export const TOTAL_SPAN = MAX_WORK_YEAR - MIN_WORK_YEAR;
 /** Streak multiplier tiers. Index = streak count. */
 const STREAK_MULTIPLIERS: Record<number, number> = {
 	1: 1.0,
-	2: 1.05,
-	3: 1.2,
-	4: 1.3,
-	5: 1.4
+	2: 1.1,
+	3: 1.35,
+	4: 1.55,
+	5: 1.75
 };
-const STREAK_CAP_MULTIPLIER = 1.5;
+const STREAK_CAP_MULTIPLIER = 2.0;
 
 // ─── Pure scoring functions ────────────────────────────────
 
@@ -55,7 +55,7 @@ export function getStreakMultiplier(streakCount: number): number {
  */
 export function calculateEfficiencyBonus(target: number, totalAttempts: number): number {
 	if (totalAttempts <= 0) return 0;
-	return Math.round((target / totalAttempts) * (target * 500));
+	return Math.round((target / totalAttempts) * (target * 750));
 }
 
 /**

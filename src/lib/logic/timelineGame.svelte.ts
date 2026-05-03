@@ -788,8 +788,9 @@ export class TimelineGame {
 				this.activePlayer.reachedTarget = true;
 			}
 		} else {
-			// Soft decay: reduce streak by 2, min 0
-			this.activePlayer.currentStreak = Math.max(0, this.activePlayer.currentStreak - 2);
+			// Soft decay: Min(½, −3) — drop to min(streak//2, streak−3), floor 0
+			const s = this.activePlayer.currentStreak;
+			this.activePlayer.currentStreak = Math.max(0, Math.min(Math.floor(s / 2), s - 3));
 			this.lastTurnScoreBreakdown = null;
 
 			// Consolation: find the correct slot (excluding the misplaced card)
@@ -1079,7 +1080,8 @@ export class TimelineGame {
 		this.preRevealCurrentStreak = this.activePlayer.currentStreak;
 		this.preRevealLongestStreak = this.activePlayer.longestStreak;
 		this.streakRevealPending = true;
-		this.activePlayer.currentStreak = Math.max(0, this.activePlayer.currentStreak - 2);
+		const s = this.activePlayer.currentStreak;
+		this.activePlayer.currentStreak = Math.max(0, Math.min(Math.floor(s / 2), s - 3));
 		this.lastTurnScoreBreakdown = null;
 		this.lastConsolationBreakdown = null;
 
