@@ -59,13 +59,14 @@ export function calculateEfficiencyBonus(target: number, totalAttempts: number):
 }
 
 /**
- * Mastery bonus based on current accuracy (correct / attempts)².
- * Rewards sustained accuracy throughout the game.
+ * Mastery bonus based on accuracy with a one-mistake grace.
+ * Mastery_Acc = min(1, correct / max(correct, attempts - 1))
+ * Mastery_Bonus = 500 × Mastery_Acc²
  */
 export function calculateMasteryBonus(correctSoFar: number, attemptsSoFar: number): number {
 	if (attemptsSoFar <= 0) return 0;
-	const ratio = correctSoFar / attemptsSoFar;
-	return 500 * ratio * ratio;
+	const acc = Math.min(1, correctSoFar / Math.max(correctSoFar, attemptsSoFar - 1));
+	return 500 * acc * acc;
 }
 
 const MIN_GAP = 25;
