@@ -36,17 +36,15 @@ function createSettingsStore() {
 		},
 		load: () => {
 			if (typeof window !== 'undefined') {
-				const stored = localStorage.getItem(SETTINGS_KEY);
-				if (stored) {
-					try {
-						const parsed = JSON.parse(stored);
-						const merged = { ...DEFAULT_SETTINGS, ...parsed };
-						set(merged);
-						deezerPlayer.setEnableAudioNormalization(merged.enableAudioNormalization);
-						deezerPlayer.setTrackLength(merged.trackLengthLimit);
-					} catch (error) {
-						console.error('Error loading settings:', error);
-					}
+				try {
+					const loaded = SettingsService.load();
+					// SettingsService.load() already merges with DEFAULT_SETTINGS and performs migrations.
+					set(loaded);
+					persist(loaded); // Save the migrated settings back to localStorage
+					deezerPlayer.setEnableAudioNormalization(loaded.enableAudioNormalization);
+					deezerPlayer.setTrackLength(loaded.trackLength);
+				} catch (error) {
+					console.error('Error loading settings:', error);
 				}
 			}
 		},
