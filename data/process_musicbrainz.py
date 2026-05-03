@@ -1095,7 +1095,8 @@ class MusicbrainzProcessor:
                       work.name, work.gid, work.type, composer_name)
             return "piano"
 
-        if "ballet" in work_name_normalized.lower():
+        # match only the whole word "ballet", not variants like "ballett"
+        if re.search(r"\bballet\b", work_name_normalized, re.IGNORECASE):
             log.debug("TYPE RESOLVED (ballet keyword) | %s (%s) | %s -> ballet | Composer: %s",
                       work.name, work.gid, work.type, composer_name)
             return "ballet"

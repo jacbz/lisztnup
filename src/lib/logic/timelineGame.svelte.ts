@@ -1004,8 +1004,6 @@ export class TimelineGame {
 			this.#currentRoundScores = {};
 		}
 
-		this.showEndGame = true;
-
 		// Capture session ID before endGame() clears it — needed for leaderboard submission.
 		// Eagerly send game_end so the event isn't lost if the tab closes.
 		import('$lib/game-logger')
@@ -1020,7 +1018,10 @@ export class TimelineGame {
 					}))
 				});
 			})
-			.catch(() => {});
+			.catch(() => {})
+			.finally(() => {
+				this.showEndGame = true;
+			});
 	}
 
 	/** Called by FlashingText onComplete — clears flash (turn already finalized). */

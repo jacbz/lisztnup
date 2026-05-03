@@ -466,7 +466,7 @@
       "death_year": 1910,
       "gender": "male",
       "country": "RU",
-      "score": 33.73
+      "score": 33.52
     },
     {
       "gid": "8480a69d-c982-4b2f-aad5-b30019555d72",
@@ -37253,22 +37253,6 @@
         {
           "name": "Fantasia on Themes From Glinka's ''A Life for the Tsar''",
           "deezer": [135368812, 3254268571],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "e2ed5b10-7bd6-4b06-8c5d-ec270556e592",
-      "composer": "482dc0a4-0c39-40dc-9d6d-ca250a5ef833",
-      "name": "Nocturne no. 1 in B-flat minor",
-      "type": "piano",
-      "begin_year": 1898,
-      "end_year": 1898,
-      "score": 1.61,
-      "parts": [
-        {
-          "name": "Nocturne no. 1 in B-flat minor",
-          "deezer": [854419252],
           "score": 100.0
         }
       ]
@@ -143940,7 +143924,7 @@
       "gid": "b28d4c4b-56c8-4341-9267-c9a286b23a7f",
       "composer": "a913ed8a-d348-4364-aae2-28f661b921dd",
       "name": "Balletts to Five Voices",
-      "type": "ballet",
+      "type": "vocal",
       "begin_year": 1595,
       "end_year": 1595,
       "score": 1.79,

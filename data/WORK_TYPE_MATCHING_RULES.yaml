@@ -2223,6 +2223,8 @@ composer_specific_rules:
       - sechsstimmige Chöre
     chamber:
       - Theme of Beethoven
+    ballet:
+      - Eine Ballettsuite
   'Reich, Steve':
     chamber:
       - Clapping Music|Music for Pieces of Wood|Drumming|Piano Phase|Six Pianos|Different Trains|Eight Lines|Nagoya Marimbas|Cello Counterpoint|2x5|WTC 9/11
