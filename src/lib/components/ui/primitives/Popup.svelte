@@ -156,28 +156,35 @@
 </script>
 
 {#if visible}
-	<!-- Backdrop -->
+	<!-- Single fixed wrapper per popup. All popups share z-index 1000; CSS DOM order
+	     (later-opened = later in DOM = on top) ensures the second popup's backdrop
+	     covers the first popup's dialog box, so the lower popup is properly darkened. -->
+	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<div
-		class="fixed inset-0 z-1000 bg-black/60"
+		class="fixed inset-0 z-1000"
 		onclick={handleBackdropClick}
 		role="presentation"
-		in:fade={{ duration: 200 }}
-		out:fade={{ duration: 200, delay: 100 }}
-	></div>
-
-	<!-- Content -->
-	<div class="pointer-events-none fixed inset-0 z-1001 flex items-center justify-center p-4">
-		<!-- svelte-ignore a11y_click_events_have_key_events -->
+	>
+		<!-- Backdrop -->
 		<div
-			class="popup-rotation pointer-events-auto relative"
-			onclick={(e) => e.stopPropagation()}
-			role="dialog"
-			aria-modal="true"
-			tabindex="-1"
-			in:scale={{ duration: 300, easing: cubicOut, start: 0.9 }}
-			out:scale={{ duration: 200, easing: cubicOut, start: 0.9 }}
-			style="--rotation: {rotation}deg;"
-		>
+			class="absolute inset-0 bg-black/60"
+			in:fade={{ duration: 200 }}
+			out:fade={{ duration: 200, delay: 100 }}
+		></div>
+
+		<!-- Content -->
+		<div class="pointer-events-none absolute inset-0 flex items-center justify-center p-4">
+			<!-- svelte-ignore a11y_click_events_have_key_events -->
+			<div
+				class="popup-rotation pointer-events-auto relative"
+				onclick={(e) => e.stopPropagation()}
+				role="dialog"
+				aria-modal="true"
+				tabindex="-1"
+				in:scale={{ duration: 300, easing: cubicOut, start: 0.9 }}
+				out:scale={{ duration: 200, easing: cubicOut, start: 0.9 }}
+				style="--rotation: {rotation}deg;"
+			>
 			{#if showCloseButton}
 				<button
 					type="button"
@@ -189,8 +196,9 @@
 				</button>
 			{/if}
 
-			<div class={containerClasses} style={containerStyle}>
-				{@render children?.()}
+				<div class={containerClasses} style={containerStyle}>
+					{@render children?.()}
+				</div>
 			</div>
 		</div>
 	</div>
