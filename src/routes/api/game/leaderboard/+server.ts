@@ -85,8 +85,15 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		if (!playerToken || !playerName || typeof score !== 'number' || typeof cards !== 'number') {
 			return json({ success: false, reason: 'Invalid payload' }, { status: 400 });
 		}
+		if (
+			typeof playerName !== 'string' ||
+			playerName.length === 0 ||
+			playerName.length > MAX_NAME_LENGTH
+		) {
+			return json({ success: false, reason: 'Invalid name' }, { status: 400 });
+		}
 
-		// ── Range checks ──────────────────────────────────
+		// ── Range checks (self-contained, no DB dependency) ─
 		if (score < 0 || score > MAX_SCORE) {
 			return json({ success: false, reason: 'Score out of range' }, { status: 400 });
 		}
@@ -96,18 +103,8 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		if (typeof accuracy !== 'number' || accuracy < 0 || accuracy > 1) {
 			return json({ success: false, reason: 'Invalid accuracy' }, { status: 400 });
 		}
-		if (
-			typeof playerName !== 'string' ||
-			playerName.length === 0 ||
-			playerName.length > MAX_NAME_LENGTH
-		) {
-			return json({ success: false, reason: 'Invalid name' }, { status: 400 });
-		}
 		if (typeof longestStreak === 'number' && (longestStreak < 0 || longestStreak > cards)) {
 			return json({ success: false, reason: 'Streak out of range' }, { status: 400 });
-		}
-		if (typeof cardsToWin === 'number' && (cardsToWin < 1 || cardsToWin > cards)) {
-			return json({ success: false, reason: 'Cards-to-win out of range' }, { status: 400 });
 		}
 		if (score > cards * MAX_SCORE_PER_CARD) {
 			return json({ success: false, reason: 'Score implausible' }, { status: 400 });
@@ -117,6 +114,21 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		const ip = getClientAddress() || request.headers.get('cf-connecting-ip') || '0.0.0.0';
 		const userHash = await hashUser(ip, getCurrentSalt());
 		const country = platform.cf?.country || 'UNKNOWN';
+
+		// ── Duplicate check: same session + player ────────
+		// This is the only hard rejection based on DB state.
+		if (sessionId && typeof sessionId === 'string') {
+			const dupCheck = await db
+				.prepare(
+					`SELECT COUNT(*) AS cnt FROM leaderboard
+					 WHERE session_id = ?1 AND player_token = ?2`
+				)
+				.bind(sessionId, playerToken)
+				.first<{ cnt: number }>();
+			if (dupCheck && dupCheck.cnt > 0) {
+				return json({ success: false, reason: 'Already submitted' }, { status: 409 });
+			}
+		}
 
 		// ── Rate limit: max submissions per IP per hour ───
 		const rateCheck = await db
@@ -130,79 +142,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 			return json({ success: false, reason: 'Rate limited' }, { status: 429 });
 		}
 
-		// ── Session cross-checks (when sessionId provided) ─
-		if (sessionId && typeof sessionId === 'string') {
-			// Prevent duplicate submissions for the same session + player
-			const dupCheck = await db
-				.prepare(`SELECT COUNT(*) AS cnt FROM leaderboard WHERE session_id = ?1 AND player_token = ?2`)
-				.bind(sessionId, playerToken)
-				.first<{ cnt: number }>();
-			if (dupCheck && dupCheck.cnt > 0) {
-				return json({ success: false, reason: 'Already submitted' }, { status: 409 });
-			}
-
-			// Verify session exists, is completed, and is timeline mode
-			const session = await db
-				.prepare(`SELECT state, mode, user_hash FROM game_sessions WHERE id = ?1`)
-				.bind(sessionId)
-				.first<{ state: string; mode: string; user_hash: string }>();
-			if (session) {
-				if (session.state !== 'completed') {
-					return json({ success: false, reason: 'Session not completed' }, { status: 400 });
-				}
-				if (session.mode !== 'timeline') {
-					return json({ success: false, reason: 'Not a timeline session' }, { status: 400 });
-				}
-				// Verify same origin (IP hash matches, tolerating daily salt rotation)
-				const yesterday = new Date(Date.now() - 86_400_000).toISOString().split('T')[0];
-				const yesterdayHash = await hashUser(ip, yesterday);
-				if (session.user_hash !== userHash && session.user_hash !== yesterdayHash) {
-					return json({ success: false, reason: 'Session mismatch' }, { status: 403 });
-				}
-
-				// Cross-check placement data
-				const placements = await db
-					.prepare(
-						`SELECT COUNT(*) AS total,
-						        SUM(CASE WHEN placed_correctly = 1 THEN 1 ELSE 0 END) AS correct,
-						        SUM(CASE WHEN turn_score IS NOT NULL THEN turn_score ELSE 0 END) AS score_sum
-						 FROM timeline_placements WHERE session_id = ?1`
-					)
-					.bind(sessionId)
-					.first<{ total: number; correct: number; score_sum: number }>();
-
-				if (placements && placements.total > 0) {
-					// cards = entries on one player's timeline (includes 1 dealt starter card)
-					// placements.total = all placement attempts across ALL players in the session
-					// Allow +2 tolerance: +1 for the dealt card, +1 for sendBeacon race conditions
-					// (placement events are fire-and-forget and may still be in-flight)
-					if (cards > placements.total + 2) {
-						return json(
-							{ success: false, reason: 'Cards exceed placements' },
-							{ status: 400 }
-						);
-					}
-
-					// If we have per-turn scores, verify the total is plausible
-					// Efficiency bonus = (target / totalAttempts) * target * 500
-					// With perfect play totalAttempts = target - 1 (dealt card is free),
-					// so max bonus = target² * 500 / (target - 1)
-					if (placements.score_sum > 0) {
-						const ctw = typeof cardsToWin === 'number' && cardsToWin > 1 ? cardsToWin : cards;
-						const maxEfficiencyBonus = Math.ceil((ctw * ctw * 500) / Math.max(1, ctw - 1));
-						if (score > placements.score_sum + maxEfficiencyBonus) {
-							return json(
-								{ success: false, reason: 'Score exceeds tracked total' },
-								{ status: 400 }
-							);
-						}
-					}
-				}
-			}
-			// If session doesn't exist yet (analytics event delayed), allow submission
-			// but still store the session_id for later audit
-		}
-
+		// ── Insert ────────────────────────────────────────
 		await db
 			.prepare(
 				`INSERT INTO leaderboard (player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, user_hash, session_id)
