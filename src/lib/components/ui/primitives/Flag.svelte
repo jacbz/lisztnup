@@ -18,7 +18,7 @@
 
 	const flagUrl = $derived(() => {
 		if (!country || country.length !== 2 || country === 'UNKNOWN') return null;
-		return `https://purecatamphetamine.github.io/country-flag-icons/3x2/${country.toUpperCase()}.svg`;
+		return `/flags/${country.toUpperCase()}.svg`;
 	});
 
 	const title = $derived(() => {
