@@ -107,6 +107,7 @@
 	$effect(() => {
 		if (selectedMode === 'timeline' && browser) {
 			leaderboardLoading = true;
+			leaderboardEntries = [];
 			const tracklist = localSettings.selectedTracklist;
 			const cards = localSettings.timelineCardsToWin;
 			const limit = showExpandedLeaderboard ? 20 : 6;
