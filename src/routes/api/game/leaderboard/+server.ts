@@ -23,9 +23,8 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 		// Partition by token+name to allow multiple entries from local multiplayer
 		// NULL player_name entries collapse per token (anonymous best-of-device)
 		// We prefer entries with a timeline, then higher scores, then newer entries
-		let innerSql = `SELECT player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, timestamp, timeline,
-			ROW_NUMBER() OVER (PARTITION BY player_token, player_name ORDER BY score DESC, timeline IS NOT NULL DESC, timestamp DESC) AS rn
-			FROM scores`;
+		// Anonymous entries are excluded when a named entry for the same token exists
+		// with an equal or higher score (if the named entry scores lower, both appear)
 		const binds: (string | number)[] = [];
 		const conditions: string[] = [];
 
@@ -38,13 +37,27 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 			binds.push(cardsToWin);
 		}
 
-		if (conditions.length > 0) {
-			innerSql += ` WHERE ${conditions.join(' AND ')}`;
-		}
+		const whereClause = conditions.length > 0 ? ` WHERE ${conditions.join(' AND ')}` : '';
+		const cols = `player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, timestamp, timeline`;
 
-		const sql = `SELECT player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, timestamp, timeline
-			FROM (${innerSql}) WHERE rn = 1
-			ORDER BY score DESC LIMIT ?${binds.length + 1}`;
+		const sql = `WITH best AS (
+				SELECT ${cols},
+					ROW_NUMBER() OVER (PARTITION BY player_token, player_name ORDER BY score DESC, timeline IS NOT NULL DESC, timestamp DESC) AS rn
+				FROM scores${whereClause}
+			), deduped AS (
+				SELECT ${cols} FROM best WHERE rn = 1
+			), max_named AS (
+				SELECT player_token, MAX(score) AS max_named_score
+				FROM deduped WHERE player_name IS NOT NULL
+				GROUP BY player_token
+			)
+			SELECT d.player_token, d.player_name, d.score, d.cards, d.accuracy, d.longest_streak, d.tracklist_id, d.cards_to_win, d.country, d.timestamp, d.timeline
+			FROM deduped d
+			LEFT JOIN max_named mn ON d.player_token = mn.player_token
+			WHERE d.player_name IS NOT NULL
+				OR mn.player_token IS NULL
+				OR d.score > mn.max_named_score
+			ORDER BY d.score DESC LIMIT ?${binds.length + 1}`;
 		binds.push(limit);
 
 		const results = await platform.env.DB.prepare(sql)
