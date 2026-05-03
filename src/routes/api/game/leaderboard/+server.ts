@@ -196,25 +196,33 @@ export const PATCH: RequestHandler = async ({ request, platform }) => {
 		const db = platform.env.DB;
 		const trimmedName = playerName.trim().slice(0, MAX_NAME_LENGTH);
 
-		// Only allow naming entries that belong to this player and are still anonymous
+		// Only allow naming entries that belong to this player, are still anonymous,
+		// AND were created in the last hour.
 		const result = await db
 			.prepare(
 				`UPDATE scores SET player_name = ?1
-				 WHERE id = ?2 AND player_token = ?3 AND player_name IS NULL`
+				 WHERE id = ?2 AND player_token = ?3 AND player_name IS NULL
+				 AND timestamp > datetime('now', '-1 hour')`
 			)
 			.bind(trimmedName, id, playerToken)
 			.run();
 
 		if (result.meta.changes === 0) {
-			// Either entry doesn't exist, wrong token, or already named
+			// Either entry doesn't exist, wrong token, already named, or expired (> 1h)
 			const existing = await db
-				.prepare(`SELECT player_name FROM scores WHERE id = ?1 AND player_token = ?2`)
+				.prepare(`SELECT player_name, timestamp FROM scores WHERE id = ?1 AND player_token = ?2`)
 				.bind(id, playerToken)
-				.first<{ player_name: string | null }>();
-			if (existing && existing.player_name !== null) {
+				.first<{ player_name: string | null; timestamp: string }>();
+
+			if (!existing) {
+				return json({ success: false, reason: 'Not found' }, { status: 404 });
+			}
+			if (existing.player_name !== null) {
 				return json({ success: false, reason: 'Already named' }, { status: 409 });
 			}
-			return json({ success: false, reason: 'Not found' }, { status: 404 });
+			
+			// If we reach here, it must be expired
+			return json({ success: false, reason: 'Expired' }, { status: 403 });
 		}
 
 		return json({ success: true });

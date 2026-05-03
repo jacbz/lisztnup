@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { _ } from 'svelte-i18n';
-	import { fly, fade } from 'svelte/transition';
+	import { fly, fade, slide } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import Popup from '$lib/components/ui/primitives/Popup.svelte';
 	import TrackInfo from '$lib/components/ui/gameplay/TrackInfo.svelte';
 	import type { Track } from '$lib/types';
@@ -10,6 +10,7 @@
 	import Flame from 'lucide-svelte/icons/flame';
 	import Zap from 'lucide-svelte/icons/zap';
 	import Trophy from 'lucide-svelte/icons/trophy';
+	import { ArrowRight } from 'lucide-svelte';
 
 	interface Props {
 		visible?: boolean;
@@ -47,6 +48,7 @@
 	let displayedScore = $state(0);
 	let scoreOpacity = $state(0.3);
 	let turnTotalOpacity = $state(1);
+	let animationsFinished = $state(false);
 	// Track which rows have started animating (for fade-in of multipliers)
 	let rowVisible = $state<Record<string, boolean>>({});
 	let animFrame: number | null = null;
@@ -68,6 +70,35 @@
 		return id;
 	}
 
+	/** Smoothly scroll to bottom, optionally following a growing container. */
+	function scrollToBottom(duration: number = 600, follow: boolean = false) {
+		if (!scoreTableEl) return;
+		const scrollParent = scoreTableEl.closest('.overflow-y-auto') ?? scoreTableEl.parentElement;
+		if (!scrollParent) return;
+
+		const start = performance.now();
+		const startScroll = scrollParent.scrollTop;
+
+		function step(now: number) {
+			const elapsed = now - start;
+			const progress = Math.min(elapsed / duration, 1);
+			const eased = 1 - Math.pow(1 - progress, 3);
+
+			// Re-calculate target in every step if we are following a growing element
+			const targetScroll = scrollParent!.scrollHeight - scrollParent!.clientHeight;
+			const delta = targetScroll - startScroll;
+
+			if (delta > 0) {
+				scrollParent!.scrollTop = startScroll + delta * eased;
+			}
+
+			if (progress < 1 || (follow && elapsed < duration + 100)) {
+				animFrame = requestAnimationFrame(step);
+			}
+		}
+		animFrame = requestAnimationFrame(step);
+	}
+
 	$effect(() => {
 		if (visible && isCorrect && scoreBreakdown) {
 			clearAllTimers();
@@ -78,29 +109,10 @@
 			scoreOpacity = 0.3;
 			turnTotalOpacity = 1;
 			rowVisible = {};
+			animationsFinished = false;
 
 			scheduleTimeout(() => {
-				// Smoothly scroll score table into view using the parent scroll container
-				if (scoreTableEl) {
-					const scrollParent = scoreTableEl.closest('.overflow-y-auto') ?? scoreTableEl.parentElement;
-					if (scrollParent) {
-						const targetScroll = scrollParent.scrollHeight - scrollParent.clientHeight;
-						const startScroll = scrollParent.scrollTop;
-						const delta = targetScroll - startScroll;
-						if (delta > 0) {
-							const scrollDuration = 600;
-							const scrollStart = performance.now();
-							function scrollStep(now: number) {
-								const elapsed = now - scrollStart;
-								const progress = Math.min(elapsed / scrollDuration, 1);
-								const eased = 1 - Math.pow(1 - progress, 3);
-								scrollParent!.scrollTop = startScroll + delta * eased;
-								if (progress < 1) requestAnimationFrame(scrollStep);
-							}
-							requestAnimationFrame(scrollStep);
-						}
-					}
-				}
+				scrollToBottom();
 
 				// Phase 1: Count up point rows (base, difficulty, mastery)
 				const startTime = performance.now();
@@ -196,6 +208,8 @@
 							turnTotalOpacity = 1 - 0.6 * eased;
 							if (progress < 1) {
 								animFrame = requestAnimationFrame(countTick);
+							} else {
+								animationsFinished = true;
 							}
 						}
 						animFrame = requestAnimationFrame(countTick);
@@ -212,6 +226,7 @@
 			scoreOpacity = 0.3;
 			turnTotalOpacity = 1;
 			rowVisible = {};
+			animationsFinished = false;
 
 			const turnTotal = consolationScore;
 
@@ -247,6 +262,8 @@
 									turnTotalOpacity = 1 - 0.6 * eased;
 									if (progress < 1) {
 										animFrame = requestAnimationFrame(countTick);
+									} else {
+										animationsFinished = true;
 									}
 								}
 								animFrame = requestAnimationFrame(countTick);
@@ -258,6 +275,7 @@
 			} else {
 				displayedScore = scoreBeforeTurn;
 				scoreOpacity = 1;
+				animationsFinished = true;
 			}
 		} else {
 			displayedValues = {};
@@ -266,7 +284,18 @@
 			scoreOpacity = 0.3;
 			turnTotalOpacity = 1;
 			rowVisible = {};
+			animationsFinished = false;
 			clearAllTimers();
+		}
+	});
+
+	// Smoothly scroll to bottom when animations finish and button appears
+	$effect(() => {
+		if (animationsFinished && visible && purpose === 'turn') {
+			tick().then(() => {
+				// Duration matches the slide transition (400ms) + buffer
+				scrollToBottom(500, true);
+			});
 		}
 	});
 
@@ -361,57 +390,65 @@
 					<!-- Turn Total -->
 					<div class="flex items-center justify-between text-sm" style="opacity: {turnTotalOpacity};">
 						<span class="font-bold text-slate-200">{$_('timeline.scoring.turnTotal')}</span>
-						{#if rowVisible.turnTotal}
-							<span class="font-bold tabular-nums text-slate-200" in:fade={{ duration: 400 }}>
-								+{$_('scoring.pts', { values: { points: displayedTurnTotal.toLocaleString() } })}
-							</span>
-						{/if}
+						<span class="font-bold tabular-nums text-slate-200 transition-opacity duration-300" style="opacity: {rowVisible.turnTotal ? 1 : 0};">
+							+{$_('scoring.pts', { values: { points: displayedTurnTotal.toLocaleString() } })}
+						</span>
 					</div>
           
 					<!-- Total Score (prominent, at the very bottom) -->
 					<div class="flex items-center justify-between" style="opacity: {scoreOpacity};">
 						<span class="text-base font-bold text-slate-200">{$_('timeline.scoring.score')}</span>
-						{#if rowVisible.turnTotal}
-							<span class="font-black text-cyan-400 tabular-nums" in:fade={{ duration: 400, delay: 200 }}>{$_('scoring.pts', { values: { points: Math.round(displayedScore).toLocaleString() } })}</span>
-						{/if}
+						<span class="font-black text-cyan-400 tabular-nums transition-opacity duration-300" style="opacity: {rowVisible.turnTotal ? 1 : 0};">
+							{$_('scoring.pts', { values: { points: Math.round(displayedScore).toLocaleString() } })}
+						</span>
 					</div>
 				</div>
 			{/if}
 
 			<!-- Wrong Placement / Forfeit -->
 			{#if purpose === 'turn' && isCorrect === false}
-				<div class="flex flex-col gap-1.5 rounded-xl border border-slate-700/40 bg-slate-900/60 px-4 py-3" in:fly={{ y: 10, duration: 300, easing: cubicOut }}>
+				<div bind:this={scoreTableEl} class="flex flex-col gap-1.5 rounded-xl border border-slate-700/40 bg-slate-900/60 px-4 py-3" in:fly={{ y: 10, duration: 300, easing: cubicOut }}>
 					<!-- Consolation row -->
 					{#if rowVisible.consolation}
-						<div class="flex items-center justify-between text-sm" in:fly={{ y: 10, duration: 300, easing: cubicOut }}>
-							<span class="font-bold text-yellow-700">{$_('timeline.scoring.consolation')}</span>
-							<span class="font-bold text-yellow-700 tabular-nums">+{$_('scoring.pts', { values: { points: fmtNum(displayedValues.consolation) } })}</span>
-						</div>
+						<div transition:slide={{ duration: 400, easing: cubicOut }}>
+							<div class="flex items-center justify-between text-sm">
+								<span class="font-bold text-yellow-700">{$_('timeline.scoring.consolation')}</span>
+								<span class="font-bold text-yellow-700 tabular-nums">+{$_('scoring.pts', { values: { points: fmtNum(displayedValues.consolation) } })}</span>
+							</div>
 
-						<div class="my-0.5 border-t border-slate-700/60"></div>
+							<div class="my-0.5 border-t border-slate-700/60"></div>
+						</div>
 					{/if}
 
 					<!-- Turn Total -->
 					<div class="flex items-center justify-between text-sm" style="opacity: {turnTotalOpacity};">
 						<span class="font-bold text-slate-200">{$_('timeline.scoring.turnTotal')}</span>
-						{#if rowVisible.turnTotal}
-							<span class="font-bold tabular-nums text-slate-200" in:fade={{ duration: 400 }}>
-								+{$_('scoring.pts', { values: { points: displayedTurnTotal.toLocaleString() } })}
-							</span>
-						{:else}
-							<span class="font-bold text-red-400 tabular-nums">+{$_('scoring.pts', { values: { points: '0' } })}</span>
-						{/if}
+						<span class="font-bold tabular-nums transition-all duration-300 {rowVisible.turnTotal ? 'text-slate-200' : 'text-red-400'}">
+							+{$_('scoring.pts', { values: { points: (rowVisible.turnTotal ? displayedTurnTotal : 0).toLocaleString() } })}
+						</span>
 					</div>
 
 					<!-- Total Score -->
 					<div class="flex items-center justify-between" style="opacity: {scoreOpacity};">
 						<span class="text-base font-bold text-slate-200">{$_('timeline.scoring.score')}</span>
-						{#if rowVisible.turnTotal}
-							<span class="font-black text-cyan-400 tabular-nums" in:fade={{ duration: 400, delay: 200 }}>{$_('scoring.pts', { values: { points: Math.round(displayedScore).toLocaleString() } })}</span>
-						{:else}
-							<span class="font-black text-cyan-400 tabular-nums">{$_('scoring.pts', { values: { points: Math.round(scoreBeforeTurn).toLocaleString() } })}</span>
-						{/if}
+						<span class="font-black text-cyan-400 tabular-nums">
+							{$_('scoring.pts', { values: { points: Math.round(displayedScore).toLocaleString() } })}
+						</span>
 					</div>
+				</div>
+			{/if}
+
+			<!-- Continue Button (animates in when finished, scrolls into view) -->
+			{#if purpose === 'turn' && animationsFinished}
+				<div class="pt-2" transition:slide={{ duration: 400, easing: cubicOut }}>
+					<button
+						type="button"
+						onclick={() => onClose()}
+						class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3 font-bold text-cyan-400 transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_0_20px_rgba(34,211,238,0.6)]"
+					>
+						{$_('scoring.continue')}
+						<ArrowRight class="h-5 w-5" />
+					</button>
 				</div>
 			{/if}
 		</div>

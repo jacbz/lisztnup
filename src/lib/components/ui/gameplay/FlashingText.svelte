@@ -50,6 +50,9 @@
 					onComplete();
 				}, 400);
 			}, 1800);
+		} else {
+			showing = false;
+			clearTimers();
 		}
 	});
 

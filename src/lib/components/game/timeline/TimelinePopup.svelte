@@ -50,7 +50,7 @@
 	});
 </script>
 
-<Popup {visible} {onClose} width="5xl">
+<Popup {visible} {onClose} width="md">
 	<div class="flex flex-col gap-6">
 		<div class="text-center">
 			<div class="flex flex-col items-center gap-1">

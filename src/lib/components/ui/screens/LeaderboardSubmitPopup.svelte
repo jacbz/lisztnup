@@ -5,6 +5,7 @@
 	import { settings } from '$lib/stores';
 	import PenLine from 'lucide-svelte/icons/pen-line';
 	import Check from 'lucide-svelte/icons/check';
+	import Loader2 from 'lucide-svelte/icons/loader-2';
 
 	export interface LeaderboardPlayer {
 		name: string;
@@ -45,7 +46,7 @@
 	}
 
 	function canSubmit(index: number): boolean {
-		return !submitted[index] && !submitting[index] && entryIds[index] != null && editedNames[index]?.trim().length > 0;
+		return !submitted[index] && !submitting[index] && entryIds[index] != null && (editedNames[index]?.trim() ?? '').length > 0;
 	}
 
 	async function namePlayer(index: number) {
@@ -93,13 +94,19 @@
 	// Reset state when popup opens (preserve submitted status)
 	$effect(() => {
 		if (visible) {
-			editedNames = players.map((p) => (isDefaultName(p.name) ? '' : p.name));
+			// Only initialize editedNames if empty to avoid overwriting user input on re-renders
+			if (editedNames.length !== players.length) {
+				editedNames = players.map((p) => (isDefaultName(p.name) ? '' : p.name));
+			}
 			submitting = players.map(() => false);
 			errors = players.map(() => false);
 			// Only reset submitted if player list changed (new game)
 			if (submitted.length !== players.length) {
 				submitted = players.map(() => false);
 			}
+		} else {
+			// Clear on close so next open re-initializes
+			editedNames = [];
 		}
 	});
 
@@ -142,6 +149,10 @@
 					<!-- Name button per player -->
 					{#if submitted[i]}
 						<Check class="h-4 w-4 shrink-0 text-emerald-400" />
+					{:else if entryIds[i] == null}
+						<div class="flex shrink-0 items-center justify-center px-4 py-1.5">
+							<Loader2 class="h-4 w-4 animate-spin text-slate-500" />
+						</div>
 					{:else}
 						<button
 							type="button"
@@ -169,7 +180,11 @@
 				disabled={!anyNameable}
 				class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-cyan-400 bg-slate-900 px-6 py-3 text-base font-bold text-cyan-400 transition-all duration-200 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
 			>
-				<PenLine class="h-5 w-5" />
+				{#if submitting.some(Boolean)}
+					<Loader2 class="h-5 w-5 animate-spin" />
+				{:else}
+					<PenLine class="h-5 w-5" />
+				{/if}
 				{$_('leaderboard.nameAll')}
 			</button>
 		{/if}
