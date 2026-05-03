@@ -16,6 +16,7 @@
 	import PenLine from 'lucide-svelte/icons/pen-line';
 	import Crown from 'lucide-svelte/icons/crown';
 	import { onMount } from 'svelte';
+	import { scale, slide } from 'svelte/transition';
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
 
 	interface FinalTimeline {
@@ -219,7 +220,10 @@
 		</div>
 
 		{#if isNewHighScore}
-			<div class="flex flex-col items-center gap-1 rounded-lg border border-amber-400/30 bg-amber-400/10 px-4 py-2">
+			<div
+				class="flex flex-col items-center gap-1 rounded-lg border border-amber-400/30 bg-amber-400/10 px-4 py-2"
+				in:scale={{ duration: 200, start: 0.9 }}
+			>
 				<div class="flex items-center gap-2">
 					<Crown class="h-5 w-5 text-amber-400" />
 					<span class="text-sm font-bold text-amber-400">{$_('leaderboard.newHighScore')}</span>
@@ -289,6 +293,7 @@
 					type="button"
 					onclick={() => (showLeaderboardSubmit = true)}
 					class="flex w-full animate-publish-glow cursor-pointer flex-col items-center rounded-xl border-2 border-amber-400 bg-slate-900 px-6 py-3.5 transition-all duration-200 hover:bg-slate-800"
+					out:slide={{ duration: 200 }}
 				>
 					<span class="flex items-center gap-2 text-base font-bold text-amber-400">
 						<PenLine class="h-5 w-5" />

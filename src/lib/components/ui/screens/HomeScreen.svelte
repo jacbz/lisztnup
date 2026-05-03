@@ -11,7 +11,7 @@
 	import PlayerSetup from '../setup/PlayerSetup.svelte';
 	import BingoSetup from '../setup/BingoSetup.svelte';
 	import ShareLinkPopup from '../setup/ShareLinkPopup.svelte';
-	import type { Tracklist, GameMode, Player } from '$lib/types';
+	import type { Tracklist, GameMode, Player, LeaderboardEntry } from '$lib/types';
 	import { tracklistDisplayName, tracklistDescription } from '$lib/data/defaultTracklists';
 	import Plus from 'lucide-svelte/icons/plus';
 	import AppFooter from '../primitives/AppFooter.svelte';
@@ -23,7 +23,13 @@
 	import Sparkles from 'lucide-svelte/icons/sparkles';
 	import { getPlayerToken } from '$lib/stores/identity';
 	import { getDailyTracklist, getTodayDateString } from '$lib/utils/dailyChallenge';
+	import { resolveTimelineTracks } from '$lib/utils/search';
+	import { gameData } from '$lib/stores/gameData';
+	import { get } from 'svelte/store';
+	import type { Track } from '$lib/types';
+	import TimelinePopup from '$lib/components/game/timeline/TimelinePopup.svelte';
 	import TimelineLeaderboard from '$lib/components/ui/setup/TimelineLeaderboard.svelte';
+	import { fade, slide } from 'svelte/transition';
 
 	interface Props {
 		onStart?: (
@@ -49,6 +55,15 @@
 	let playersValid = $state(true);
 	let enableScoring = $state($settingsStore.enableScoring); // Load from settings
 	let showFeedbackPopup = $state(false);
+	let leaderboardEntries = $state<LeaderboardEntry[]>([]);
+	let leaderboardLoading = $state(false);
+	let showExpandedLeaderboard = $state(false);
+	let showTimelinePopup = $state(false);
+	let timelineTracks = $state<Track[]>([]);
+	let timelinePlayerName = $state('');
+	let timelineCountry = $state<string | undefined>();
+	let timelineScore = $state(0);
+	let timelineTimestamp = $state<string | undefined>();
 	let playerSetupRef: { addPlayer: () => void } | undefined = $state();
 	let startAudio: HTMLAudioElement | null = null;
 	let startAudioSources = {
@@ -63,6 +78,7 @@
 	let dailyHighScore = $state<{ name: string | null; score: number } | null>(null);
 	let showDailyChallenge = $derived(
 		selectedMode === 'timeline' &&
+			(localSettings.gamesPlayed ?? 0) > 0 &&
 			localSettings.dailyChallengePlayedDate !== getTodayDateString()
 	);
 
@@ -84,6 +100,33 @@
 	$effect(() => {
 		if (browser) {
 			bingoUrl = `${window.location.origin}/bingo`;
+		}
+	});
+
+	// Load leaderboard when timeline mode is selected or settings change
+	$effect(() => {
+		if (selectedMode === 'timeline' && browser) {
+			leaderboardLoading = true;
+			const tracklist = localSettings.selectedTracklist;
+			const cards = localSettings.timelineCardsToWin;
+			const limit = showExpandedLeaderboard ? 20 : 6;
+			const parts = [`limit=${limit}`];
+			if (tracklist) parts.push(`tracklist=${encodeURIComponent(tracklist)}`);
+			if (cards) parts.push(`cardsToWin=${encodeURIComponent(cards)}`);
+			parts.push(`token=${encodeURIComponent(getPlayerToken())}`);
+			fetch(`/api/game/leaderboard?${parts.join('&')}`)
+				.then((res) => (res.ok ? res.json() : { entries: [] }))
+				.then((data) => {
+					leaderboardEntries = data.entries ?? [];
+				})
+				.catch(() => {
+					leaderboardEntries = [];
+				})
+				.finally(() => {
+					leaderboardLoading = false;
+				});
+		} else {
+			leaderboardLoading = false;
 		}
 	});
 
@@ -193,6 +236,24 @@
 		playersValid = isValid;
 	}
 
+	function handleShowTimeline(entry: LeaderboardEntry) {
+		if (!entry.timeline || entry.timeline === '[]') return;
+		try {
+			const gids = JSON.parse(entry.timeline) as [string, string][];
+			const data = get(gameData);
+			if (data && gids.length > 0) {
+				timelineTracks = resolveTimelineTracks(data, gids);
+				timelinePlayerName = entry.player_name || $_('leaderboard.anonymous');
+				timelineCountry = entry.country ?? undefined;
+				timelineScore = entry.score;
+				timelineTimestamp = entry.timestamp;
+				showTimelinePopup = true;
+			}
+		} catch (e) {
+			console.error('Failed to parse timeline', e);
+		}
+	}
+
 	function handleAddPlayer() {
 		// Trigger add player in PlayerSetup via binding
 	}
@@ -269,41 +330,46 @@
 
 		<!-- Daily Challenge Banner -->
 		{#if showDailyChallenge}
-			<button
-				type="button"
-				onclick={() => handleTracklistSelect(dailyTracklist)}
-				class="group mx-auto mt-8 flex w-full max-w-2xl cursor-pointer items-center gap-4 rounded-2xl border-2 border-amber-400/40 bg-linear-to-r from-amber-950/30 via-amber-900/20 to-amber-950/30 px-5 py-4 text-left shadow-[0_0_20px_rgba(251,191,36,0.15)] backdrop-blur-sm transition-all duration-300 hover:border-amber-400/70 hover:shadow-[0_0_30px_rgba(251,191,36,0.3)] active:scale-[0.98]"
-			>
-				<div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-400/15 text-amber-400 transition-colors group-hover:bg-amber-400/25">
-					<Sparkles class="h-5 w-5" />
-				</div>
-				<div class="min-w-0 flex-1 flex flex-col gap-0.5">
-					<div class="flex md:items-center md:gap-2 flex-col md:flex-row">
-						<span class="text-sm font-bold text-amber-400">{$_('dailyChallenge.title')}</span>
-						<span class="text-xs text-amber-400/60">{$_('dailyChallenge.subtitle')}</span>
+			<div class="mt-8" transition:slide={{ duration: 220 }}>
+				<button
+					type="button"
+					onclick={() => handleTracklistSelect(dailyTracklist)}
+					class="group mx-auto flex w-full max-w-2xl cursor-pointer items-center gap-4 rounded-2xl border-2 border-amber-400/40 bg-linear-to-r from-amber-950/30 via-amber-900/20 to-amber-950/30 px-5 py-4 text-left shadow-[0_0_20px_rgba(251,191,36,0.15)] backdrop-blur-sm transition-all duration-300 hover:border-amber-400/70 hover:shadow-[0_0_30px_rgba(251,191,36,0.3)] active:scale-[0.98]"
+					in:fade={{ delay: 300, duration: 300 }}
+				>
+					<div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-400/15 text-amber-400 transition-colors group-hover:bg-amber-400/25">
+						<Sparkles class="h-5 w-5" />
 					</div>
-					<div class="mt-0.5 flex items-center gap-1.5">
-						{#if dailyTracklist.icon}
-							<div class="text-amber-300/70">{@html dailyTracklist.icon}</div>
+					<div class="min-w-0 flex-1 flex flex-col gap-0.5">
+						<div class="flex md:items-center md:gap-2 flex-col md:flex-row">
+							<span class="text-sm font-bold text-amber-400">{$_('dailyChallenge.title')}</span>
+							<span class="text-xs text-amber-400/60">{$_('dailyChallenge.subtitle')}</span>
+						</div>
+						<div class="mt-0.5 flex items-center gap-1.5">
+							{#if dailyTracklist.icon}
+								<div class="text-amber-300/70">{@html dailyTracklist.icon}</div>
+							{/if}
+							<span class="truncate font-semibold text-amber-200">{tracklistDisplayName(dailyTracklist, $_)}</span>
+						</div>
+						{#if dailyHighScore}
+							{@const rawName = dailyHighScore.name ?? $_('leaderboard.anonymous')}
+							{@const escapeName = rawName.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}
+							{@const nameStyle = dailyHighScore.name ? 'font-weight:500;color:rgb(252 211 77/0.8)' : 'font-weight:400;color:rgb(148 163 184/0.8)'}
+							<div transition:slide={{ duration: 180 }}>
+								<p class="mt-0.5 text-xs text-amber-400/60" in:fade={{ delay: 180, duration: 160 }}>
+									{@html $_(
+										'dailyChallenge.highScore',
+										{ values: { name: `<strong style="${nameStyle}">${escapeName}</strong>`, score: `<strong style="font-weight:700;color:rgb(252 211 77/0.8)">${dailyHighScore.score.toLocaleString()}</strong>` } }
+									)}
+								</p>
+							</div>
 						{/if}
-						<span class="truncate font-semibold text-amber-200">{tracklistDisplayName(dailyTracklist, $_)}</span>
 					</div>
-				{#if dailyHighScore}
-					{@const rawName = dailyHighScore.name ?? $_('leaderboard.anonymous')}
-					{@const escapeName = rawName.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}
-					{@const nameStyle = dailyHighScore.name ? 'font-weight:500;color:rgb(252 211 77/0.8)' : 'font-weight:400;color:rgb(148 163 184/0.8)'}
-					<p class="mt-0.5 text-xs text-amber-400/60">
-						{@html $_(
-							'dailyChallenge.highScore',
-							{ values: { name: `<strong style="${nameStyle}">${escapeName}</strong>`, score: `<strong style="font-weight:700;color:rgb(252 211 77/0.8)">${dailyHighScore.score.toLocaleString()}</strong>` } }
-						)}
-					</p>
-				{/if}
-				</div>
-				<span class="shrink-0 rounded-lg border border-amber-400/40 bg-amber-400/10 px-3 py-1.5 text-sm font-bold text-amber-400 transition-colors group-hover:bg-amber-400/20">
-					{$_('dailyChallenge.play')}
-				</span>
-			</button>
+					<span class="shrink-0 rounded-lg border border-amber-400/40 bg-amber-400/10 px-3 py-1.5 text-sm font-bold text-amber-400 transition-colors group-hover:bg-amber-400/20">
+						{$_('dailyChallenge.play')}
+					</span>
+				</button>
+			</div>
 		{/if}
 
 		<!-- Game Parameters Container -->
@@ -365,10 +431,11 @@
 
 						<!-- Inline Leaderboard -->
 						<TimelineLeaderboard
-								tracklistId={localSettings.selectedTracklist}
-								cardsToWin={localSettings.timelineCardsToWin}
+							entries={leaderboardEntries}
 							currentLocale={currentLocale}
-								enabled={selectedMode === 'timeline'}
+							isLoading={leaderboardLoading}
+							bind:showExpanded={showExpandedLeaderboard}
+							onShowTimeline={handleShowTimeline}
 						/>
 					{/if}
 				</div>
@@ -509,6 +576,16 @@
 	onClose={() => (showShareLinkPopup = false)}
 	shareTitle={$_('bingo.shareTitle')}
 	shareText={$_('bingo.shareText')}
+/>
+
+<TimelinePopup
+	visible={showTimelinePopup}
+	playerName={timelinePlayerName}
+	country={timelineCountry}
+	score={timelineScore}
+	timestamp={timelineTimestamp}
+	tracks={timelineTracks}
+	onClose={() => (showTimelinePopup = false)}
 />
 
 <style>

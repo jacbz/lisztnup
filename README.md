@@ -107,7 +107,14 @@ The game works fully without a backend, but includes optional analytics (pagevie
    wrangler d1 execute lisztnup-analytics --file=analytics.sql
    ```
 
-5. (Optional) For Telegram notifications on feedback/reports, set the `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` secrets:
+5. (Optional) Copy the remote database into your local D1:
+
+   ```bash
+   wrangler d1 export lisztnup-analytics --remote --output=./d1-remote.sql
+   wrangler d1 execute lisztnup-analytics --local --file=./d1-remote.sql
+   ```
+
+6. (Optional) For Telegram notifications on feedback/reports, set the `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` secrets:
 
    ```bash
    wrangler secret put TELEGRAM_BOT_TOKEN
