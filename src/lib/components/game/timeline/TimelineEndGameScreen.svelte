@@ -155,26 +155,34 @@
 			autoSubmitted = true;
 			const token = getPlayerToken();
 			Promise.all(
-				leaderboardPlayers.map((p) =>
-					fetch('/api/game/leaderboard', {
-						method: 'POST',
-						headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify({
-							playerToken: token,
-							playerName: null,
-							score: Math.round(p.score),
-							cards: p.cards,
-							accuracy: p.accuracy,
-							longestStreak: p.longestStreak,
-							tracklistId,
-							cardsToWin,
-							sessionId
+				sortedTimelines
+					.filter((t) => t.score > 0)
+					.map((t) => {
+						const p = leaderboardPlayers.find((lp) => lp.name === t.player.name)!;
+						const timelineGids = t.entries
+							.filter((e) => e.confirmed && e.correct !== false)
+							.map((e) => [e.track.work.gid, e.track.part.gid]);
+
+						return fetch('/api/game/leaderboard', {
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' },
+							body: JSON.stringify({
+								playerToken: token,
+								playerName: null,
+								score: Math.round(p.score),
+								cards: p.cards,
+								accuracy: p.accuracy,
+								longestStreak: p.longestStreak,
+								tracklistId,
+								cardsToWin,
+								sessionId,
+								timeline: timelineGids
+							})
 						})
+							.then((r) => (r.ok ? r.json() : null))
+							.then((data) => data?.id ?? null)
+							.catch(() => null);
 					})
-						.then((r) => (r.ok ? r.json() : null))
-						.then((data) => data?.id ?? null)
-						.catch(() => null)
-				)
 			).then((ids) => {
 				entryIds = ids;
 			});

@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS timeline_placements (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   session_id TEXT,
   work_gid TEXT,
+  part_gid TEXT,
   placed_correctly BOOLEAN,
   turn_score INTEGER,
   seconds_taken REAL,
@@ -73,5 +74,6 @@ CREATE TABLE IF NOT EXISTS scores (
   cards_to_win INTEGER NOT NULL,
   country TEXT,
   user_hash TEXT,
-  session_id TEXT
+  session_id TEXT,
+  timeline TEXT
 );

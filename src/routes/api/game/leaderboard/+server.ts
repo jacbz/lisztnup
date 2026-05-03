@@ -22,8 +22,9 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 		// Use ROW_NUMBER() to keep only each player's best score per config
 		// Partition by token+name to allow multiple entries from local multiplayer
 		// NULL player_name entries collapse per token (anonymous best-of-device)
-		let innerSql = `SELECT player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, timestamp,
-			ROW_NUMBER() OVER (PARTITION BY player_token, player_name ORDER BY score DESC) AS rn
+		// We prefer entries with a timeline, then higher scores, then newer entries
+		let innerSql = `SELECT player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, timestamp, timeline,
+			ROW_NUMBER() OVER (PARTITION BY player_token, player_name ORDER BY score DESC, timeline IS NOT NULL DESC, timestamp DESC) AS rn
 			FROM scores`;
 		const binds: (string | number)[] = [];
 		const conditions: string[] = [];
@@ -41,7 +42,7 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 			innerSql += ` WHERE ${conditions.join(' AND ')}`;
 		}
 
-		const sql = `SELECT player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, timestamp
+		const sql = `SELECT player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, timestamp, timeline
 			FROM (${innerSql}) WHERE rn = 1
 			ORDER BY score DESC LIMIT ?${binds.length + 1}`;
 		binds.push(limit);
@@ -79,7 +80,8 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 			longestStreak,
 			tracklistId,
 			cardsToWin,
-			sessionId
+			sessionId,
+			timeline
 		} = body;
 
 		// ── Required field validation ──────────────────────
@@ -145,8 +147,8 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		// ── Insert ────────────────────────────────────────
 		const result = await db
 			.prepare(
-				`INSERT INTO scores (player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, user_hash, session_id)
-			 VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11)`
+				`INSERT INTO scores (player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, user_hash, session_id, timeline)
+			 VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)`
 			)
 			.bind(
 				playerToken,
@@ -159,7 +161,8 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				cardsToWin ?? 0,
 				country,
 				userHash,
-				sessionId ?? null
+				sessionId ?? null,
+				timeline ? JSON.stringify(timeline) : null
 			)
 			.run();
 

@@ -67,6 +67,7 @@ class GameAnalytics {
 	 */
 	public logPlacement(
 		workGid: string,
+		partGid: string,
 		placedCorrectly: boolean,
 		scoreData?: {
 			turnScore: number;
@@ -82,6 +83,7 @@ class GameAnalytics {
 			type: 'timeline_placement',
 			sessionId: this.sessionId,
 			workGid,
+			partGid,
 			placedCorrectly,
 			...(scoreData ?? {})
 		});

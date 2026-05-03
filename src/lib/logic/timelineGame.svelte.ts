@@ -799,9 +799,7 @@ export class TimelineGame {
 			for (let j = 0; j <= otherEntries.length; j++) {
 				const leftY = j > 0 ? this.#getTimelineYear(otherEntries[j - 1].track) : -Infinity;
 				const rightY =
-					j < otherEntries.length
-						? this.#getTimelineYear(otherEntries[j].track)
-						: Infinity;
+					j < otherEntries.length ? this.#getTimelineYear(otherEntries[j].track) : Infinity;
 				if (year >= leftY && year <= rightY) {
 					correctLeftYear = j > 0 ? leftY : null;
 					correctRightYear = j < otherEntries.length ? rightY : null;
@@ -829,7 +827,7 @@ export class TimelineGame {
 		const consolationBreakdown = this.lastConsolationBreakdown;
 		import('$lib/game-logger')
 			.then(({ analytics }) => {
-				analytics.logPlacement(track.work.gid, isCorrect, {
+				analytics.logPlacement(track.work.gid, track.part.gid, isCorrect, {
 					turnScore: scoreBreakdown?.totalScore ?? consolationBreakdown?.consolationScore ?? 0,
 					secondsTaken,
 					streakCount: this.activePlayer.currentStreak,

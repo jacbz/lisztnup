@@ -1,5 +1,40 @@
 // MiniSearch based flexible fuzzy search utility
 import MiniSearch, { type SearchOptions } from 'minisearch';
+import type { LisztnupData, Track } from '$lib/types';
+
+/**
+ * Resolves an array of [workGid, partGid] into full Track objects.
+ * Uses Map-based lookups for O(N) efficiency relative to data size.
+ */
+export function resolveTimelineTracks(data: LisztnupData, gids: [string, string][]): Track[] {
+	if (!data || !gids || gids.length === 0) return [];
+
+	const workMap = new Map<string, LisztnupData['works'][0]>();
+	for (const work of data.works) {
+		workMap.set(work.gid, work);
+	}
+
+	const composerMap = new Map<string, LisztnupData['composers'][0]>();
+	for (const composer of data.composers) {
+		composerMap.set(composer.gid, composer);
+	}
+
+	const tracks: Track[] = [];
+	for (const [workGid, partGid] of gids) {
+		const work = workMap.get(workGid);
+		if (!work) continue;
+
+		const part = work.parts.find((p) => p.gid === partGid);
+		if (!part) continue;
+
+		const composer = composerMap.get(work.composer);
+		if (!composer) continue;
+
+		tracks.push({ composer, work, part });
+	}
+
+	return tracks;
+}
 
 export interface SearchItem {
 	composer: string;
