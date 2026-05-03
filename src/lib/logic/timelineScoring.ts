@@ -79,10 +79,7 @@ const MIN_GAP = 25;
  * Enforces a minimum gap of MIN_GAP to prevent extreme difficulty bonuses
  * from near-identical placements.
  */
-export function calculateGap(
-	leftYear: number | null,
-	rightYear: number | null
-): number {
+export function calculateGap(leftYear: number | null, rightYear: number | null): number {
 	const left = leftYear ?? MIN_WORK_YEAR;
 	const right = rightYear ?? MAX_WORK_YEAR;
 
@@ -164,10 +161,14 @@ export function calculateConsolationScore(
 	const right = rightYear ?? MAX_WORK_YEAR;
 	const edgeDist = Math.min(cardYear - left, right - cardYear);
 
-	const gapFactor = Math.max(0, (150 - gap) / 150);
+	const isEdgeSlot = leftYear === null || rightYear === null;
+	const boundaryYear = leftYear ?? rightYear ?? cardYear;
+	const effectiveGap = isEdgeSlot ? Math.abs(boundaryYear - cardYear) * 4 : gap;
+
+	const gapFactor = Math.max(0, (150 - effectiveGap) / 150);
 	const edgeFactor = Math.max(0, (50 - edgeDist) / 50);
 
 	const consolationScore = Math.max(1, Math.round(75 * gapFactor * edgeFactor));
 
-	return { consolationScore, gap, gapFactor, edgeDist, edgeFactor };
+	return { consolationScore, gap: effectiveGap, gapFactor, edgeDist, edgeFactor };
 }
