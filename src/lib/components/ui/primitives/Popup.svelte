@@ -22,7 +22,7 @@
 		 * Width preset or custom width class.
 		 * @default 'md'
 		 */
-		width?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '5xl' | '6xl' | 'screen' | string;
+		width?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '5xl' | '6xl' | 'screen' | 'auto' | string;
 		/**
 		 * Padding.
 		 * @default 'responsive'
@@ -100,11 +100,9 @@
 			return width;
 		}
 
-		if (width === 'screen') {
-			// let inline style control the exact width; keep classes permissive
-			return 'w-dvw max-w-[95vw] h-dvh max-h-[95vh]';
-		}
 		const widthMap: Record<string, string> = {
+			screen: 'w-dvw max-w-[95vw] h-dvh max-h-[95vh]',
+			auto: 'w-auto',
 			sm: 'w-full max-w-sm',
 			md: 'w-full max-w-md',
 			lg: 'w-full max-w-lg',

@@ -41,7 +41,9 @@
 		isVertical?: boolean;
 		streakCount?: number;
 		score?: number;
-	}
+		hideHeader?: boolean;
+		hideCount?: boolean;
+}
 
 	let {
 		playerName,
@@ -66,7 +68,9 @@
 		rotation = 0,
 		isVertical = false,
 		streakCount = 0,
-		score = 0
+		score = 0,
+		hideHeader = false,
+		hideCount = false
 	}: Props = $props();
 
 	let el: HTMLDivElement | null = $state(null);
@@ -170,6 +174,7 @@
 			? `box-shadow: ${flameGlow || (acceptingDrop ? `0 0 25px rgba(34,211,238,0.35)` : `0 0 15px ${playerColor}44`)}; min-width: ${isVertical ? '92dvh' : '92vw'}; container-type: inline-size;`
 			: flameGlow ? `box-shadow: ${flameGlow};` : ''}--entry-count: {Math.max(entries.length, 1)}; --gap: calc(var(--spacing) * 1.5);"
 	>
+		{#if !hideHeader}
 		<div
 			class={`pointer-events-none absolute flex items-center gap-1 whitespace-nowrap rounded-lg border border-slate-700/50 bg-slate-950/50 px-2 transition-all ${active ? 'top-0 left-0 z-100 -translate-y-full rounded-br-none rounded-bl-none py-0.5 text-xs text-slate-200' : '-top-2 left-1/2 -translate-x-1/2 text-[10px] text-slate-300'}`}
 		>
@@ -187,12 +192,15 @@
 				</div>
 			{/if}
 		</div>
+		{/if}
 
+		{#if !hideCount}
 		<div
 			class={`absolute transition-all ${active ? 'top-1 left-2 text-xs' : 'top-0.75 left-1 text-[10px]'} opacity-50`}
 		>
 			{entries.length}
 		</div>
+		{/if}
 		<!-- Dummy card to maintain spacing when empty -->
 		{#if entries.length === 0}
 			<div class="pointer-events-none opacity-0">

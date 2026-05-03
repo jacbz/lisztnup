@@ -32,22 +32,7 @@
 	import type { Track } from '$lib/types';
 	import TimelinePopup from '$lib/components/game/timeline/TimelinePopup.svelte';
 	import { SquareStack } from 'lucide-svelte';
-
-	/** Get flag SVG URL for an ISO 3166-1 alpha-2 country code */
-	function countryFlagUrl(code: string | undefined | null): string | null {
-		if (!code || code.length !== 2 || code === 'UNKNOWN') return null;
-		return `https://purecatamphetamine.github.io/country-flag-icons/3x2/${code.toUpperCase()}.svg`;
-	}
-
-	/** Get localized country name for a country code */
-	function countryName(code: string | undefined | null, loc: string): string {
-		if (!code || code.length !== 2 || code === 'UNKNOWN') return '';
-		try {
-			return new Intl.DisplayNames([loc], { type: 'region' }).of(code.toUpperCase()) ?? '';
-		} catch {
-			return '';
-		}
-	}
+	import Flag from '$lib/components/ui/primitives/Flag.svelte';
 
 	interface LeaderboardEntry {
 		player_name: string | null;
@@ -96,6 +81,7 @@
 	let showTimelinePopup = $state(false);
 	let timelineTracks = $state<Track[]>([]);
 	let timelinePlayerName = $state('');
+	let timelineCountry = $state<string | undefined>();
 	let timelineScore = $state(0);
 	let timelineTimestamp = $state<string | undefined>();
 	let playerSetupRef: { addPlayer: () => void } | undefined = $state();
@@ -267,6 +253,7 @@
 			if (data && gids.length > 0) {
 				timelineTracks = resolveTimelineTracks(data, gids);
 				timelinePlayerName = entry.player_name || $_('leaderboard.anonymous');
+				timelineCountry = entry.country ?? undefined;
 				timelineScore = entry.score;
 				timelineTimestamp = entry.timestamp;
 				showTimelinePopup = true;
@@ -456,9 +443,8 @@
 {:else}
 								<div class="grid grid-cols-[auto_minmax(0,1fr)_auto_auto_auto] items-center gap-x-[clamp(0.375rem,1.5vw,1.5rem)] gap-y-1 text-xs text-left">
 							{#each leaderboardEntries.slice(0, 5) as entry, i (i)}
-								{@const flagUrl = countryFlagUrl(entry.country)}
-								<span class="text-center font-bold mr-2" class:text-cyan-400={entry.is_me} class:text-slate-500={!entry.is_me}>{i + 1}</span>
-								<span class="truncate" class:text-cyan-300={entry.is_me && entry.player_name} class:text-slate-300={!entry.is_me && entry.player_name} class:text-slate-500={!entry.player_name}>{#if flagUrl}<img src={flagUrl} alt="" title={countryName(entry.country, currentLocale)} class="mr-0.5 inline-block h-2.5 w-3.75 rounded-xs border-[0.5px] border-slate-600 align-baseline select-none" class:opacity-50={!entry.player_name} draggable="false" oncontextmenu={(e) => e.preventDefault()} />{/if} {entry.player_name ?? $_('leaderboard.anonymous')}</span>
+						<span class="text-center font-bold mr-2" class:text-cyan-400={entry.is_me} class:text-slate-500={!entry.is_me}>{i + 1}</span>
+						<span class="truncate" class:text-cyan-300={entry.is_me && entry.player_name} class:text-slate-300={!entry.is_me && entry.player_name} class:text-slate-500={!entry.player_name}><Flag country={entry.country} class="mr-0.5" faded={!entry.player_name} />{entry.player_name ?? $_('leaderboard.anonymous')}</span>
 								<span class="whitespace-nowrap text-right font-bold tabular-nums" class:text-cyan-400={entry.is_me}>{$_('scoring.pts', { values: { points: entry.score.toLocaleString() } })}</span>
 								<span class="whitespace-nowrap text-right tabular-nums text-slate-500">{formatEntryDate(entry.timestamp, currentLocale)}</span>
 								<div class="flex">
@@ -478,9 +464,8 @@
 									<div transition:slide={{ duration: 200 }}>
 										<div class="grid grid-cols-[auto_minmax(0,1fr)_auto_auto_auto] items-center gap-x-[clamp(0.375rem,1.5vw,1.5rem)] gap-y-1 text-xs text-left mt-1">
 										{#each leaderboardEntries.slice(5) as entry, i (i)}
-											{@const flagUrl = countryFlagUrl(entry.country)}
-											<span class="text-center font-bold mr-2" class:text-cyan-400={entry.is_me} class:text-slate-500={!entry.is_me}>{i + 6}</span>
-											<span class="truncate" class:text-cyan-300={entry.is_me && entry.player_name} class:text-slate-300={!entry.is_me && entry.player_name} class:text-slate-500={!entry.player_name}>{#if flagUrl}<img src={flagUrl} alt="" title={countryName(entry.country, currentLocale)} class="mr-0.5 inline-block h-2.5 w-3.75 rounded-xs border-[0.5px] border-slate-600 align-baseline select-none" class:opacity-50={!entry.player_name} draggable="false" oncontextmenu={(e) => e.preventDefault()} />{/if} {entry.player_name ?? $_('leaderboard.anonymous')}</span>
+										<span class="text-center font-bold mr-2" class:text-cyan-400={entry.is_me} class:text-slate-500={!entry.is_me}>{i + 6}</span>
+										<span class="truncate" class:text-cyan-300={entry.is_me && entry.player_name} class:text-slate-300={!entry.is_me && entry.player_name} class:text-slate-500={!entry.player_name}><Flag country={entry.country} class="mr-0.5" faded={!entry.player_name} />{entry.player_name ?? $_('leaderboard.anonymous')}</span>
 											<span class="text-right">
 												{#if entry.timeline && entry.timeline !== '[]'}
 													<button
@@ -653,6 +638,7 @@
 <TimelinePopup
 	visible={showTimelinePopup}
 	playerName={timelinePlayerName}
+	country={timelineCountry}
 	score={timelineScore}
 	timestamp={timelineTimestamp}
 	tracks={timelineTracks}

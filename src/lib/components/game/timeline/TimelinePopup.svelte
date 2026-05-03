@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Popup from '$lib/components/ui/primitives/Popup.svelte';
+	import Flag from '$lib/components/ui/primitives/Flag.svelte';
 	import { _, locale } from 'svelte-i18n';
 	import type { Track } from '$lib/types';
 	import PlayerTimeline, { type TimelineEntry } from './PlayerTimeline.svelte';
@@ -9,6 +10,7 @@
 	interface Props {
 		visible?: boolean;
 		playerName: string;
+		country?: string | null;
 		score: number;
 		timestamp?: string;
 		tracks: Track[];
@@ -18,6 +20,7 @@
 	let {
 		visible = false,
 		playerName,
+		country,
 		score,
 		timestamp,
 		tracks,
@@ -50,11 +53,14 @@
 	});
 </script>
 
-<Popup {visible} {onClose} width="md">
+<Popup {visible} {onClose} width="auto">
 	<div class="flex flex-col gap-6">
 		<div class="text-center">
 			<div class="flex flex-col items-center gap-1">
-				<h2 class="text-2xl font-bold text-white">{playerName}</h2>
+				<h2 class="flex items-center gap-3 text-2xl font-bold text-white">
+					<Flag {country} size="md" />
+					{playerName}
+				</h2>
 				<div class="flex items-center gap-3 text-sm font-medium text-slate-400">
 					<span class="text-cyan-400">{$_('scoring.pts', { values: { points: score.toLocaleString() } })}</span>
 					{#if timestamp}
@@ -73,6 +79,8 @@
 				active={false}
 				compact={false}
 				acceptingDrop={false}
+				hideCount={true}
+				hideHeader={true}
 				onConfirmedCardClick={(entry) => (inspectTrack = entry.track)}
 			/>
 		</div>

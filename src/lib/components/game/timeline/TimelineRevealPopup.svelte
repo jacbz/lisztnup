@@ -213,7 +213,7 @@
 							}
 						}
 						animFrame = requestAnimationFrame(countTick);
-					}, 1100);
+					}, 900);
 				}
 
 				animFrame = requestAnimationFrame(tickPoints);
@@ -395,7 +395,7 @@
 						</span>
 					</div>
           
-					<!-- Total Score (prominent, at the very bottom) -->
+					<!-- Total Score -->
 					<div class="flex items-center justify-between" style="opacity: {scoreOpacity};">
 						<span class="text-base font-bold text-slate-200">{$_('timeline.scoring.score')}</span>
 						<span class="font-black text-cyan-400 tabular-nums transition-opacity duration-300" style="opacity: {rowVisible.turnTotal ? 1 : 0};">

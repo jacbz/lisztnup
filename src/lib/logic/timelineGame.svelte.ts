@@ -185,14 +185,15 @@ export class TimelineGame {
 	activePlayer = $derived(this.timelines[this.activePlayerIndex]);
 	activePlayerName = $derived(this.activePlayer?.player.name ?? '');
 
-	/** Per-player analytics: timeline years, accuracy, and longest streak. */
+	/** Per-player analytics: timeline years, accuracy, longest streak, and score. */
 	playerStats = $derived(
 		this.timelines.map((t) => ({
 			timeline: t.entries
 				.filter((e) => e.confirmed && e.correct !== false)
 				.map((e) => this.#getTimelineYear(e.track)),
 			accuracy: t.totalPlacements > 0 ? t.correctPlacements / t.totalPlacements : 0,
-			longestStreak: t.longestStreak
+			longestStreak: t.longestStreak,
+			score: t.score
 		}))
 	);
 
