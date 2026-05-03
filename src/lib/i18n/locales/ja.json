@@ -622,7 +622,9 @@
 		"enterName": "名前を入力",
 		"namePlaceholder": "あなたの名前",
 		"newHighScore": "世界新記録！",
-		"newHighScoreSubtitle": "世界ランキングにスコアを登録しよう！"
+		"newHighScoreSubtitle": "世界ランキングにスコアを登録しよう！",
+		"unsavedHighScore": "世界新記録達成！",
+		"unsavedHighScoreMessage": "まだランキングに登録されていません。保存せずに終了しますか？"
 	},
 	"eras": {
 		"ancient": "古代",

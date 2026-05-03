@@ -622,7 +622,9 @@
 		"enterName": "Name eingeben",
 		"namePlaceholder": "Dein Name",
 		"newHighScore": "Neuer globaler Highscore!",
-		"newHighScoreSubtitle": "Trag dein Ergebnis in die Bestenliste ein!"
+		"newHighScoreSubtitle": "Trag dein Ergebnis in die Bestenliste ein!",
+		"unsavedHighScore": "Du hast gerade den Weltrekord geknackt!",
+		"unsavedHighScoreMessage": "Dein Ergebnis steht noch nicht in der Bestenliste. Wirklich ohne Speichern verlassen?"
 	},
 	"eras": {
 		"ancient": "Antike",

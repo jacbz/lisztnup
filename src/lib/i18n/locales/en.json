@@ -622,7 +622,9 @@
 		"enterName": "Enter name",
 		"namePlaceholder": "Your name",
 		"newHighScore": "New Global High Score!",
-		"newHighScoreSubtitle": "Submit your score to the global leaderboard!"
+		"newHighScoreSubtitle": "Submit your score to the global leaderboard!",
+		"unsavedHighScore": "You just set a new global record!",
+		"unsavedHighScoreMessage": "Your score hasn't been published to the leaderboard yet. Leave without saving?"
 	},
 	"eras": {
 		"ancient": "Ancient",

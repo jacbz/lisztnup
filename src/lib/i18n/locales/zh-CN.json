@@ -622,7 +622,9 @@
 		"enterName": "输入名字",
 		"namePlaceholder": "你的名字",
 		"newHighScore": "新全球纪录！",
-		"newHighScoreSubtitle": "快来提交你的成绩，登上全球排行榜！"
+		"newHighScoreSubtitle": "快来提交你的成绩，登上全球排行榜！",
+		"unsavedHighScore": "你刚刚打破了全球纪录！",
+		"unsavedHighScoreMessage": "成绩还没有发布到排行榜，确定不保存就离开吗？"
 	},
 	"eras": {
 		"ancient": "远古时期",

@@ -622,7 +622,9 @@
 		"enterName": "Escribe tu nombre",
 		"namePlaceholder": "Tu nombre",
 		"newHighScore": "¡Nuevo récord global!",
-		"newHighScoreSubtitle": "¡Publica tu puntuación en la tabla global!"
+		"newHighScoreSubtitle": "¡Publica tu puntuación en la tabla global!",
+		"unsavedHighScore": "¡Acabas de batir el récord mundial!",
+		"unsavedHighScoreMessage": "Tu puntuación aún no aparece en la tabla. ¿Salir sin publicarla?"
 	},
 	"eras": {
 		"ancient": "Antigüedad",

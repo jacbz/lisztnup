@@ -100,9 +100,19 @@
 
 	let showFeedbackPopup = $state(false);
 	let showLeaderboardSubmit = $state(false);
+	let showHomeConfirm = $state(false);
+	let hasSubmittedScore = $state(false);
 	let gameoverAudio: HTMLAudioElement | null = null;
 	let gameoverPlayed = false;
 	let isNewHighScore = $state(false);
+
+	function handleHomeClick() {
+		if (isNewHighScore && !hasSubmittedScore) {
+			showHomeConfirm = true;
+		} else {
+			onHome();
+		}
+	}
 
 	$effect(() => {
 		if (visible && gameoverAudio && !gameoverPlayed) {
@@ -259,7 +269,7 @@
 
 				<button
 					type="button"
-					onclick={onHome}
+					onclick={handleHomeClick}
 					class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all duration-200 hover:border-slate-500 hover:bg-slate-700/60 hover:text-white"
 				>
 					<Home class="h-4 w-4 shrink-0" />
@@ -289,6 +299,7 @@
 		{cardsToWin}
 		{sessionId}
 		onClose={() => (showLeaderboardSubmit = false)}
+		onSubmitted={() => (hasSubmittedScore = true)}
 	/>
 {/if}
 
@@ -310,4 +321,28 @@
 			</div>
 		</div>
 	{/if}
+</Popup>
+
+<Popup visible={showHomeConfirm} onClose={() => (showHomeConfirm = false)} width="md">
+	<div class="flex flex-col gap-4 text-center">
+		<Crown class="mx-auto h-10 w-10 text-amber-400" />
+		<h3 class="text-lg font-bold text-white">{$_('leaderboard.unsavedHighScore')}</h3>
+		<p class="text-sm text-slate-400">{$_('leaderboard.unsavedHighScoreMessage')}</p>
+		<div class="flex gap-2">
+			<button
+				type="button"
+				onclick={() => { showHomeConfirm = false; onHome(); }}
+				class="flex-1 cursor-pointer rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all hover:bg-slate-700/60 hover:text-white"
+			>
+				{$_('endGame.home')}
+			</button>
+			<button
+				type="button"
+				onclick={() => { showHomeConfirm = false; showLeaderboardSubmit = true; }}
+				class="flex-1 cursor-pointer rounded-xl border-2 border-amber-400 bg-slate-900 px-4 py-3 text-sm font-bold text-amber-400 transition-all hover:bg-slate-800"
+			>
+				{$_('leaderboard.publishScore')}
+			</button>
+		</div>
+	</div>
 </Popup>

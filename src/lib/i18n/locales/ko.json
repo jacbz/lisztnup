@@ -622,7 +622,9 @@
 		"enterName": "이름 입력",
 		"namePlaceholder": "이름",
 		"newHighScore": "세계 신기록!",
-		"newHighScoreSubtitle": "글로벌 리더보드에 점수를 등록하세요!"
+		"newHighScoreSubtitle": "글로벌 리더보드에 점수를 등록하세요!",
+		"unsavedHighScore": "세계 신기록을 세웠어요!",
+		"unsavedHighScoreMessage": "아직 리더보드에 등록되지 않았어요. 저장하지 않고 나가시겠어요?"
 	},
 	"eras": {
 		"ancient": "고대",

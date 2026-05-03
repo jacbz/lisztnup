@@ -22,6 +22,7 @@
 		cardsToWin: number;
 		sessionId?: string | null;
 		onClose?: () => void;
+		onSubmitted?: () => void;
 	}
 
 	let {
@@ -30,7 +31,8 @@
 		tracklistId = null,
 		cardsToWin,
 		sessionId = null,
-		onClose = () => {}
+		onClose = () => {},
+		onSubmitted = () => {}
 	}: Props = $props();
 
 	let editedNames = $state<string[]>([]);
@@ -81,6 +83,7 @@
 			});
 			if (res.ok) {
 				submitted[index] = true;
+				onSubmitted();
 			} else {
 				errors[index] = true;
 			}

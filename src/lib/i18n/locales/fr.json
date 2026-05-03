@@ -622,7 +622,9 @@
 		"enterName": "Entre ton nom",
 		"namePlaceholder": "Ton nom",
 		"newHighScore": "Nouveau record mondial !",
-		"newHighScoreSubtitle": "Publie ton score au classement mondial !"
+		"newHighScoreSubtitle": "Publie ton score au classement mondial !",
+		"unsavedHighScore": "Tu viens de décrocher le record mondial !",
+		"unsavedHighScoreMessage": "Ton score n'est pas encore au classement. Partir sans le publier ?"
 	},
 	"eras": {
 		"ancient": "Antiquité",

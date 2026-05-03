@@ -826,13 +826,14 @@ export class TimelineGame {
 
 		// Log placement to analytics (enhanced with scoring data)
 		const scoreBreakdown = this.lastTurnScoreBreakdown;
+		const consolationBreakdown = this.lastConsolationBreakdown;
 		import('$lib/game-logger')
 			.then(({ analytics }) => {
 				analytics.logPlacement(track.work.gid, isCorrect, {
-					turnScore: scoreBreakdown?.totalScore ?? 0,
+					turnScore: scoreBreakdown?.totalScore ?? consolationBreakdown?.consolationScore ?? 0,
 					secondsTaken,
 					streakCount: this.activePlayer.currentStreak,
-					gap: scoreBreakdown?.gap ?? 0
+					gap: scoreBreakdown?.gap ?? consolationBreakdown?.gap ?? 0
 				});
 				analytics.updateProgress({
 					numberOfTurns: this.totalTurns,
