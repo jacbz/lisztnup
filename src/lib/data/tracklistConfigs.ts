@@ -180,7 +180,8 @@ export const OPERA_CONFIG: TracklistConfig = {
 		organ: -MAX_WORK_SCORE_ROUNDED,
 		solo: -MAX_WORK_SCORE_ROUNDED
 	},
-	limitWorksFromComposer: 0.1
+	limitWorksFromComposer: 0.1,
+	maxTracksFromSingleWork: 2
 };
 
 export const CONCERTO_CONFIG: TracklistConfig = {
@@ -426,7 +427,7 @@ export const RENAISSANCE_CONFIG: TracklistConfig = {
 export const BAROQUE_CONFIG: TracklistConfig = {
 	yearFilter: [1600, 1750],
 	limitWorksFromComposer: 0.25,
-	topWorksCount: 1000,
+	topWorksCount: 1000
 };
 
 export const CLASSICAL_CONFIG: TracklistConfig = {
