@@ -154,7 +154,7 @@
 					<span class="mx-1 opacity-30">|</span>
 
 					<a
-					href="https://musicbrainz.org/work/{track.work.gid}"
+						href="https://musicbrainz.org/search?query=wid%3A{track.work.gid}-*&type=work&limit=25&method=advanced"
 					target="_blank"
 					rel="noopener noreferrer"
 					class="flex items-center gap-1 text-cyan-400/80 hover:text-cyan-400 hover:underline"

@@ -10,7 +10,6 @@ import {
 	type GuessCategory
 } from '$lib/types';
 import { weightedRandom } from '$lib/utils/random';
-import { buildShortUuidMap, resolveShortUuids } from '$lib/utils/uuid';
 
 /**
  * Tracklist generator that uses swap-and-pop sampling
@@ -24,7 +23,6 @@ export class TracklistGenerator {
 	private filteredWorks: Work[] = [];
 	private filteredComposers: Composer[] = [];
 	private readonly composerMap: Map<string, Composer> = new Map();
-	private readonly shortUuidMap: Map<string, string>;
 
 	constructor(data: LisztnupData, tracklist: Tracklist, options?: { requireWorkYear?: boolean }) {
 		this.data = data;
@@ -34,8 +32,6 @@ export class TracklistGenerator {
 		for (const composer of this.data.composers) {
 			this.composerMap.set(composer.gid, composer);
 		}
-
-		this.shortUuidMap = buildShortUuidMap(data.works.map((w) => w.gid));
 		this.initializeData();
 	}
 
@@ -46,12 +42,8 @@ export class TracklistGenerator {
 		const config = this.tracklist.config;
 		const enableFilters = config.enableFilters !== false;
 
-		const includeWorkGids = new Set(
-			config.includeWorks ? resolveShortUuids(config.includeWorks, this.shortUuidMap) : []
-		);
-		const excludeWorkGids = new Set(
-			config.excludeWorks ? resolveShortUuids(config.excludeWorks, this.shortUuidMap) : []
-		);
+		const includeWorkGids = new Set(config.includeWorks ?? []);
+		const excludeWorkGids = new Set(config.excludeWorks ?? []);
 
 		const isEligibleWork = (w: Work) =>
 			!excludeWorkGids.has(w.gid) &&
@@ -330,13 +322,6 @@ export class TracklistGenerator {
 	 */
 	getFilteredData(): { composers: Composer[]; works: Work[] } {
 		return { composers: this.filteredComposers, works: this.filteredWorks };
-	}
-
-	/**
-	 * Gets the short UUID map for resolving manual curation entries
-	 */
-	getShortUuidMap(): Map<string, string> {
-		return this.shortUuidMap;
 	}
 
 	/**

@@ -59,6 +59,9 @@ MINIMUM_WSS = 1.4               # The absolute minimum Work Significance Score f
 POPULARITY_ALPHA = 0.5          # Balances peak vs. average part popularity in the WSS formula.
                                 # 0.0 = pure average; 1.0 = pure peak.
 
+# --- Output GID Compression ---
+SHORT_GID_LENGTH = 8
+
 # --- Dynamic Part Score Filter Configuration ---
 # This creates a sliding scale for the minimum part score. A work with a low WSS
 # requires its parts to be highly significant (closer to 100), while a work with a
@@ -239,7 +242,7 @@ class MBComposer:
 class FinalPart:
     """
     Represents a single, curated part of a work in the final dataset.
-    Holds the MB GID for internal deduplication, but excludes it from output.
+    Holds the MB GID for internal deduplication, and outputs a short GID.
     """
     gid: str  # Internal use: MusicBrainz GID for deduplication
     name: str
@@ -247,8 +250,9 @@ class FinalPart:
     score: float  # Relative score (0-100) compared to the work's most popular part.
 
     def to_dict(self) -> Dict[str, Any]:
-        """Returns dictionary representation, excluding internal fields."""
+        """Returns dictionary representation for output."""
         return {
+            "gid": short_gid(self.gid),
             "name": self.name,
             "deezer": self.deezer,
             "score": self.score
@@ -267,7 +271,16 @@ class FinalWork:
     parts: List[FinalPart]
 
     def to_dict(self) -> Dict[str, Any]:
-        return {**self.__dict__, "parts": [p.to_dict() for p in self.parts]}
+        return {
+            "gid": short_gid(self.gid),
+            "composer": self.composer,
+            "name": self.name,
+            "type": self.type,
+            "begin_year": self.begin_year,
+            "end_year": self.end_year,
+            "score": self.score,
+            "parts": [p.to_dict() for p in self.parts]
+        }
 
 @dataclass
 class FinalComposer:
@@ -1291,6 +1304,9 @@ def compact_json_dumps(data, indent=2):
         lambda m: re.sub(r'\s+', ' ', m.group(0)).replace('[ ', '[').replace(' ]', ']'), 
         pretty
     )
+
+def short_gid(gid: str, length: int = SHORT_GID_LENGTH) -> str:
+    return gid[:length]
 
 def load_id_set(filename: str) -> Set[int]:
     """Loads a set of integers from a newline-delimited file."""

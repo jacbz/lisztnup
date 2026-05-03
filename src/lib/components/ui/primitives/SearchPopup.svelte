@@ -109,7 +109,7 @@
 		},
 		{
 			url: workGid
-				? `https://musicbrainz.org/work/${workGid}`
+				? `https://musicbrainz.org/search?query=wid%3A${workGid}-*&type=work&limit=25&method=advanced`
 				: `https://musicbrainz.org/search?query=${encodeURIComponent(searchQuery)}&type=work`,
 			color: '#eb743b',
 			glowColor: 'rgba(235, 116, 59, 0.4)',

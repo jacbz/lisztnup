@@ -15,13 +15,7 @@
 	import ToggleButton from '../primitives/ToggleButton.svelte';
 	import WorkSelectorPopup from './WorkSelectorPopup.svelte';
 	import { _ } from 'svelte-i18n';
-	import {
-		formatComposerName,
-		formatLifespan,
-		getComposerLastName,
-		getShortUuid
-	} from '$lib/utils';
-	import { resolveShortUuids, buildShortUuidMap } from '$lib/utils/uuid';
+	import { formatComposerName, formatLifespan, getComposerLastName } from '$lib/utils';
 	import SquareCheck from 'lucide-svelte/icons/square-check';
 	import SquareX from 'lucide-svelte/icons/square-x';
 	import Plus from 'lucide-svelte/icons/plus';
@@ -67,14 +61,11 @@
 	let enableFilters = $state(true);
 
 	// Manual curation state
-	let includeWorkGids = $state<string[]>([]); // Full GIDs for UI
-	let excludeWorkGids = $state<string[]>([]); // Full GIDs for UI
+	let includeWorkGids = $state<string[]>([]); // Work GIDs for UI
+	let excludeWorkGids = $state<string[]>([]); // Work GIDs for UI
 	let showIncludeSelector = $state(false);
 	let showExcludeSelector = $state(false);
 	let showTrackList = $state(false);
-
-	// Short UUID map for converting between short and full UUIDs
-	let shortUuidMap = $state<Map<string, string>>(new Map());
 
 	// Composer filter mode state
 	let composerFilterMode = $state<
@@ -130,12 +121,6 @@
 			originalTracklist = tracklist;
 			nameError = null; // Clear any previous errors
 
-			// Build short UUID map from game data
-			const data = get(gameData);
-			if (data) {
-				shortUuidMap = buildShortUuidMap(data.works.map((w) => w.gid));
-			}
-
 			if (tracklist) {
 				name = tracklist.name;
 				description = tracklist.description;
@@ -152,13 +137,9 @@
 				enablePopularityWeighting = config.enablePopularityWeighting ?? false;
 				enableFilters = config.enableFilters !== false;
 
-				// Manual curation: resolve short UUIDs to full GIDs
-				includeWorkGids = config.includeWorks
-					? resolveShortUuids(config.includeWorks, shortUuidMap)
-					: [];
-				excludeWorkGids = config.excludeWorks
-					? resolveShortUuids(config.excludeWorks, shortUuidMap)
-					: [];
+				// Manual curation: use stored work GIDs directly
+				includeWorkGids = config.includeWorks ? [...config.includeWorks] : [];
+				excludeWorkGids = config.excludeWorks ? [...config.excludeWorks] : [];
 
 				// Name filter
 				nameFilters = config.nameFilter ? [...config.nameFilter] : [];
@@ -374,12 +355,12 @@
 			newConfig.enableFilters = false;
 		}
 
-		// Manual curation: store as short UUIDs
+		// Manual curation: store work GIDs
 		if (includeWorkGids.length > 0) {
-			newConfig.includeWorks = includeWorkGids.map((gid) => getShortUuid(gid));
+			newConfig.includeWorks = [...includeWorkGids];
 		}
 		if (excludeWorkGids.length > 0) {
-			newConfig.excludeWorks = excludeWorkGids.map((gid) => getShortUuid(gid));
+			newConfig.excludeWorks = [...excludeWorkGids];
 		}
 
 		return newConfig;

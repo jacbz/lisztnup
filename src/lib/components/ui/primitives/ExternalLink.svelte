@@ -14,16 +14,28 @@
 		 * @default false
 		 */
 		hideOnMobile?: boolean;
+		/**
+		 * Whether the link should only appear on group hover.
+		 * @default false
+		 */
+		hoverOnly?: boolean;
 	}
 
-	let { href, class: className = '', hideOnMobile = false }: Props = $props();
+		let { href, class: className = '', hideOnMobile = false, hoverOnly = false }: Props = $props();
+
+		const baseClasses =
+			'items-center align-middle pb-0.5 transition-opacity';
+		const visibilityClasses = hoverOnly
+			? 'opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto'
+			: 'opacity-70 hover:opacity-100';
 </script>
 
 <a
 	{href}
 	target="_blank"
 	rel="noopener noreferrer"
-	class="items-center align-middle opacity-70 transition-opacity hover:opacity-100 {className} pb-0.5 {hideOnMobile
+	on:click|stopPropagation
+	class="{baseClasses} {visibilityClasses} {className} {hideOnMobile
 		? 'hidden md:inline-flex'
 		: ''}"
 	title="Open in MusicBrainz"

@@ -206,7 +206,7 @@ export function formatWorksAsMarkdown(works: Work[], composers: Composer[]): str
 	const rows = works.map((work) => {
 		const composer = composerMap.get(work.composer);
 		const composerLastName = composer ? getComposerLastName(composer.name) : 'Unknown Composer';
-		const gidPrefix = work.gid.split('-')[0];
+		const gidPrefix = work.gid;
 		const composerWork = `${composerLastName} – ${work.name}`;
 		const partsList = work.parts.map((part) => `* ${part.name}`).join('<br>');
 		let year = formatYearRange(work.begin_year, work.end_year);

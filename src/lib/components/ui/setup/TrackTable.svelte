@@ -77,7 +77,7 @@
 		workGid: string;
 		work: string;
 		type: WorkCategory;
-		parts: { name: string; score: number; deezerIds: number[] }[];
+		parts: { gid: string; name: string; score: number; deezerIds: number[] }[];
 		popularity: number; // Work score
 		year: string;
 	}
@@ -303,6 +303,7 @@
 					work: work.name,
 					type: work.type,
 					parts: work.parts.map((p: Part) => ({
+						gid: p.gid,
 						name: p.name,
 						score: p.score,
 						deezerIds: p.deezer
@@ -573,10 +574,11 @@
 									{/if}
 									{#if !selectedComposerGid}
 										<td class="cell text-sm">
-											<div class="text-slate-300">
+											<div class="group text-slate-300">
 												<span>{row.composer}</span>
 												<ExternalLink
 													href="https://musicbrainz.org/artist/{row.composerGid}"
+													hoverOnly={true}
 													hideOnMobile={true}
 												/>
 											</div>
@@ -591,7 +593,7 @@
 												<button
 													type="button"
 													onclick={() => handlePlayPart(row.parts[0].deezerIds)}
-													class="cursor-pointer text-left transition-colors hover:text-cyan-400 {previewPlayer.currentDeezerId &&
+													class="group cursor-pointer text-left transition-colors hover:text-cyan-400 {previewPlayer.currentDeezerId &&
 													row.parts[0].deezerIds.includes(previewPlayer.currentDeezerId)
 														? 'font-semibold text-cyan-400'
 														: ''}"
@@ -602,38 +604,52 @@
 														<span class="text-xs opacity-80 md:hidden"> ({row.year})</span>
 													{/if}
 													<ExternalLink
-														href="https://musicbrainz.org/work/{row.workGid}"
+														href="https://musicbrainz.org/search?query=wid%3A{row.workGid}-*&type=work&limit=25&method=advanced"
+														hoverOnly={true}
 														hideOnMobile={true}
 													/>
 												</button>
 											{:else}
-												<span title={$_('settings.categories.' + row.type)}>{row.work}</span>
+												<span
+													class="group inline-flex items-center gap-1"
+													title={$_('settings.categories.' + row.type)}
+												>
+													<span>{row.work}</span>
+													<ExternalLink
+														href="https://musicbrainz.org/search?query=wid%3A{row.workGid}-*&type=work&limit=25&method=advanced"
+														hoverOnly={true}
+														hideOnMobile={true}
+													/>
+												</span>
 												{#if row.year}
 													<span class="text-xs opacity-80 md:hidden"> ({row.year})</span>
 												{/if}
-												<ExternalLink
-													href="https://musicbrainz.org/work/{row.workGid}"
-													hideOnMobile={true}
-												/>
 											{/if}
 										</div>
 										{#if row.parts.length > 1 || (row.parts.length === 1 && row.work !== row.parts[0].name)}
 											<ul class="mt-1 space-y-0.5 pl-2 text-slate-400 md:pl-4">
 												{#each row.parts as part (part.name)}
-													<li class="flex items-center gap-2">
+													<li class="group flex items-center gap-2">
 														{#if row.parts.length > 1}
 															{@html renderPartScore(part.score)}
 														{/if}
-														<button
-															type="button"
-															onclick={() => handlePlayPart(part.deezerIds)}
-															class="flex-1 cursor-pointer text-left transition-colors hover:text-cyan-400 {previewPlayer.currentDeezerId &&
-															part.deezerIds.includes(previewPlayer.currentDeezerId)
-																? 'font-semibold text-cyan-400'
-																: ''}"
-														>
-															{part.name}
-														</button>
+														<div class="inline-flex items-center gap-1">
+															<button
+																type="button"
+																onclick={() => handlePlayPart(part.deezerIds)}
+																class="cursor-pointer text-left transition-colors hover:text-cyan-400 {previewPlayer.currentDeezerId &&
+																part.deezerIds.includes(previewPlayer.currentDeezerId)
+																	? 'font-semibold text-cyan-400'
+																	: ''}"
+															>
+																{part.name}
+															</button>
+															<ExternalLink
+																href="https://musicbrainz.org/search?query=wid%3A{part.gid}-*&type=work&limit=25&method=advanced"
+																hoverOnly={true}
+																hideOnMobile={true}
+															/>
+														</div>
 													</li>
 												{/each}
 											</ul>
