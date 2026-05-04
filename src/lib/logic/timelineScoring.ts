@@ -7,6 +7,7 @@ export const BASE_SCORE = 1000;
 export const MAX_SPEED_TIME = 20;
 export const SPEED_BONUS_COEFFICIENT = 0.25;
 export const TOTAL_SPAN = MAX_WORK_YEAR - MIN_WORK_YEAR;
+export const DIFFICULTY_EDGE_WEIGHT = 0.15;
 
 /** Streak multiplier tiers. Index = streak count. */
 const STREAK_MULTIPLIERS: Record<number, number> = {
@@ -21,11 +22,17 @@ const STREAK_CAP_MULTIPLIER = 2.0;
 // ─── Pure scoring functions ────────────────────────────────
 
 /**
- * Difficulty bonus based on the year gap between adjacent cards.
- * Narrow gaps are dramatically more rewarding.
+ * Difficulty bonus based on total slot gap, blended toward boundary closeness.
+ * Close calls near an existing card are more rewarding than centered placements.
  */
-export function calculateDifficultyBonus(gap: number): number {
-	return 2310 * (10 / (gap + 10));
+export function calculateDifficultyBonus(
+	totalGap: number,
+	boundaryDistance: number,
+	edgeWeight = DIFFICULTY_EDGE_WEIGHT
+): number {
+	const basePts = 2310 * (10 / (totalGap + 10));
+	const edgePts = 2310 * (10 / (boundaryDistance * 2 + 10));
+	return basePts + edgeWeight * (edgePts - basePts);
 }
 
 /**
@@ -55,7 +62,7 @@ export function getStreakMultiplier(streakCount: number): number {
  */
 export function calculateEfficiencyBonus(target: number, totalAttempts: number): number {
 	if (totalAttempts <= 0) return 0;
-	return Math.round((target / totalAttempts) * (target * 750));
+	return Math.round((target / totalAttempts) ** 2 * (target * 750));
 }
 
 /**
@@ -91,10 +98,29 @@ export function calculateGap(leftYear: number | null, rightYear: number | null):
 	return Math.max(MIN_GAP, right - left);
 }
 
+/**
+ * Distance from the placed card to the nearest real boundary card.
+ * Edge placements have one boundary card; the first card has none and falls
+ * back to the total slot gap to keep its difficulty near the minimum.
+ */
+export function calculateBoundaryDistance(
+	cardYear: number,
+	leftYear: number | null,
+	rightYear: number | null,
+	totalGap: number
+): number {
+	const distances: number[] = [];
+	if (leftYear !== null) distances.push(Math.abs(cardYear - leftYear));
+	if (rightYear !== null) distances.push(Math.abs(rightYear - cardYear));
+
+	return distances.length > 0 ? Math.max(0, Math.min(...distances)) : totalGap;
+}
+
 // ─── Composite score calculation ───────────────────────────
 
 export interface TurnScoreInput {
 	gap: number;
+	boundaryDistance: number;
 	secondsTaken: number;
 	/** Streak count *after* incrementing for this correct turn. */
 	streakCount: number;
@@ -111,7 +137,7 @@ export interface TurnScoreInput {
  * All intermediate values are kept at full precision; round only for display.
  */
 export function calculateTurnScore(input: TurnScoreInput): TurnScoreBreakdown {
-	const difficultyBonus = Math.round(calculateDifficultyBonus(input.gap));
+	const difficultyBonus = Math.round(calculateDifficultyBonus(input.gap, input.boundaryDistance));
 	const masteryBonus = Math.round(calculateMasteryBonus(input.correctSoFar, input.attemptsSoFar));
 	const speedMult = calculateSpeedMultiplier(input.secondsTaken);
 	const streakMult = getStreakMultiplier(input.streakCount);
@@ -123,6 +149,7 @@ export function calculateTurnScore(input: TurnScoreInput): TurnScoreBreakdown {
 		baseScore: BASE_SCORE,
 		difficultyBonus,
 		gap: input.gap,
+		boundaryDistance: input.boundaryDistance,
 		isEdgePlacement: input.isEdgePlacement ?? false,
 		masteryBonus,
 		correctSoFar: input.correctSoFar,
@@ -142,20 +169,25 @@ export function calculateTurnScore(input: TurnScoreInput): TurnScoreBreakdown {
  * Small consolation bonus for incorrect placements, scaled by how
  * genuinely difficult the correct slot was.
  *
- * Formula: max(1, round(75 × gapFactor × edgeFactor))
+ * Formula: round(max(1, round(75 × gapFactor × edgeFactor)) × timeMult)
  *   gapFactor  = max(0, (150 - gap) / 150)
  *   edgeFactor = max(0, (50 - edgeDist) / 50)
+ *   timeMult   = max(0, min(1, (3 × target - attempts) / target))
  *
  * @param gap        Year distance between the two boundary cards of the correct slot.
  * @param cardYear   The true year of the placed card.
  * @param leftYear   Year of the left boundary card (null if card belongs at far left).
  * @param rightYear  Year of the right boundary card (null if card belongs at far right).
+ * @param target     Target card count for the game.
+ * @param attempts   Player attempts so far, including this miss.
  */
 export function calculateConsolationScore(
 	gap: number,
 	cardYear: number,
 	leftYear: number | null,
-	rightYear: number | null
+	rightYear: number | null,
+	target: number,
+	attempts: number
 ): ConsolationBreakdown {
 	const left = leftYear ?? MIN_WORK_YEAR;
 	const right = rightYear ?? MAX_WORK_YEAR;
@@ -167,8 +199,11 @@ export function calculateConsolationScore(
 
 	const gapFactor = Math.max(0, (150 - effectiveGap) / 150);
 	const edgeFactor = Math.max(0, (50 - edgeDist) / 50);
+	const timeMultiplier =
+		target > 0 ? Math.max(0, Math.min(1, (3 * target - attempts) / target)) : 0;
 
-	const consolationScore = Math.max(1, Math.round(75 * gapFactor * edgeFactor));
+	const baseConsolation = Math.max(1, Math.round(75 * gapFactor * edgeFactor));
+	const consolationScore = Math.round(baseConsolation * timeMultiplier);
 
-	return { consolationScore, gap: effectiveGap, gapFactor, edgeDist, edgeFactor };
+	return { consolationScore, gap: effectiveGap, gapFactor, edgeDist, edgeFactor, timeMultiplier };
 }

@@ -35,6 +35,7 @@ export interface TurnScoreBreakdown {
 	baseScore: number;
 	difficultyBonus: number;
 	gap: number;
+	boundaryDistance: number;
 	/** True when the card was placed at the start or end of the timeline. */
 	isEdgePlacement: boolean;
 	masteryBonus: number;
@@ -55,6 +56,7 @@ export interface ConsolationBreakdown {
 	gapFactor: number;
 	edgeDist: number;
 	edgeFactor: number;
+	timeMultiplier: number;
 }
 
 // ─── Enumerations ──────────────────────────────────────────

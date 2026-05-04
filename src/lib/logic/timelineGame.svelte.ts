@@ -14,6 +14,7 @@ import type {
 import {
 	calculateTurnScore,
 	calculateGap,
+	calculateBoundaryDistance,
 	calculateEfficiencyBonus,
 	calculateConsolationScore
 } from './timelineScoring';
@@ -761,10 +762,12 @@ export class TimelineGame {
 			const nextYear =
 				idx < entries.length - 1 ? this.#getTimelineYear(entries[idx + 1].track) : null;
 			const gap = calculateGap(prevYear, nextYear);
+			const boundaryDistance = calculateBoundaryDistance(year, prevYear, nextYear, gap);
 			const isEdgePlacement = prevYear === null || nextYear === null;
 
 			const breakdown = calculateTurnScore({
 				gap,
+				boundaryDistance,
 				secondsTaken,
 				streakCount: this.activePlayer.currentStreak,
 				isEdgePlacement,
@@ -813,7 +816,9 @@ export class TimelineGame {
 				correctGap,
 				year,
 				correctLeftYear,
-				correctRightYear
+				correctRightYear,
+				this.#cardsToWin,
+				this.activePlayer.totalPlacements
 			);
 			this.lastConsolationBreakdown = consolation;
 			this.activePlayer.score += consolation.consolationScore;

@@ -48,12 +48,12 @@
 		{entry.player_name ?? $_('leaderboard.anonymous')}
 	</span>
 	<span
-		class="whitespace-nowrap text-right font-bold tabular-nums"
+		class="text-right font-bold whitespace-nowrap tabular-nums"
 		class:text-cyan-400={entry.is_me}
 	>
 		{$_('scoring.pts', { values: { points: entry.score.toLocaleString() } })}
 	</span>
-	<span class="whitespace-nowrap text-right tabular-nums text-slate-500">
+	<span class="text-right whitespace-nowrap text-slate-500 tabular-nums">
 		{formatEntryDate(entry.timestamp, currentLocale)}
 	</span>
 	<div class="flex">
@@ -78,14 +78,18 @@
 	{:else if entries.length === 0}
 		<p class="py-2 text-xs text-slate-500">{$_('leaderboard.noScores')}</p>
 	{:else}
-		<div class="grid grid-cols-[auto_minmax(0,1fr)_auto_auto_auto] items-center gap-x-[clamp(0.375rem,1.5vw,1.5rem)] gap-y-1 text-xs text-left">
+		<div
+			class="grid grid-cols-[auto_minmax(0,1fr)_auto_auto_auto] items-center gap-x-[clamp(0.375rem,1.5vw,1.5rem)] gap-y-1 text-left text-xs"
+		>
 			{#each entries.slice(0, 5) as entry, i (i)}
 				{@render leaderboardRow(entry, i + 1)}
 			{/each}
 		</div>
 		{#if showExpanded && entries.length > 5}
 			<div in:slide={{ duration: 200 }} out:slide={{ duration: 150 }}>
-				<div class="mt-1 grid grid-cols-[auto_minmax(0,1fr)_auto_auto_auto] items-center gap-x-[clamp(0.375rem,1.5vw,1.5rem)] gap-y-1 text-xs text-left">
+				<div
+					class="mt-1 grid grid-cols-[auto_minmax(0,1fr)_auto_auto_auto] items-center gap-x-[clamp(0.375rem,1.5vw,1.5rem)] gap-y-1 text-left text-xs"
+				>
 					{#each entries.slice(5) as entry, i (i)}
 						{@render leaderboardRow(entry, i + 6)}
 					{/each}

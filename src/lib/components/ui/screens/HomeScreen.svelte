@@ -161,7 +161,9 @@
 					const top = data.entries?.[0];
 					dailyHighScore = top ? { name: top.player_name, score: top.score } : null;
 				})
-				.catch(() => { dailyHighScore = null; });
+				.catch(() => {
+					dailyHighScore = null;
+				});
 		}
 	});
 
@@ -216,10 +218,7 @@
 		// Track games played (for new-user detection) and daily challenge completion
 		settingsStore.update((s) => {
 			const updates: Partial<typeof s> = { gamesPlayed: (s.gamesPlayed ?? 0) + 1 };
-			if (
-				selectedMode === 'timeline' &&
-				localSettings.selectedTracklist === dailyTracklist.id
-			) {
+			if (selectedMode === 'timeline' && localSettings.selectedTracklist === dailyTracklist.id) {
 				updates.dailyChallengePlayedDate = getTodayDateString();
 			}
 			return { ...s, ...updates };
@@ -352,11 +351,13 @@
 					class="group mx-auto flex w-full max-w-2xl cursor-pointer items-center gap-4 rounded-2xl border-2 border-amber-400/40 bg-linear-to-r from-amber-950/30 via-amber-900/20 to-amber-950/30 px-5 py-4 text-left shadow-[0_0_20px_rgba(251,191,36,0.15)] backdrop-blur-sm transition-all duration-300 hover:border-amber-400/70 hover:shadow-[0_0_30px_rgba(251,191,36,0.3)] active:scale-[0.98]"
 					in:fade={{ delay: 300, duration: 300 }}
 				>
-					<div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-400/15 text-amber-400 transition-colors group-hover:bg-amber-400/25">
+					<div
+						class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-400/15 text-amber-400 transition-colors group-hover:bg-amber-400/25"
+					>
 						<Sparkles class="h-5 w-5" />
 					</div>
-					<div class="min-w-0 flex-1 flex flex-col gap-0.5">
-						<div class="flex md:items-center md:gap-2 flex-col md:flex-row">
+					<div class="flex min-w-0 flex-1 flex-col gap-0.5">
+						<div class="flex flex-col md:flex-row md:items-center md:gap-2">
 							<span class="text-sm font-bold text-amber-400">{$_('dailyChallenge.title')}</span>
 							<span class="text-xs text-amber-400/60">{$_('dailyChallenge.subtitle')}</span>
 						</div>
@@ -364,23 +365,34 @@
 							{#if dailyTracklist.icon}
 								<div class="text-amber-300/70">{@html dailyTracklist.icon}</div>
 							{/if}
-							<span class="truncate font-semibold text-amber-200">{tracklistDisplayName(dailyTracklist, $_)}</span>
+							<span class="truncate font-semibold text-amber-200"
+								>{tracklistDisplayName(dailyTracklist, $_)}</span
+							>
 						</div>
 						{#if dailyHighScore}
 							{@const rawName = dailyHighScore.name ?? $_('leaderboard.anonymous')}
-							{@const escapeName = rawName.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}
-							{@const nameStyle = dailyHighScore.name ? 'font-weight:500;color:rgb(252 211 77/0.8)' : 'font-weight:400;color:rgb(148 163 184/0.8)'}
+							{@const escapeName = rawName
+								.replace(/&/g, '&amp;')
+								.replace(/</g, '&lt;')
+								.replace(/>/g, '&gt;')}
+							{@const nameStyle = dailyHighScore.name
+								? 'font-weight:500;color:rgb(252 211 77/0.8)'
+								: 'font-weight:400;color:rgb(148 163 184/0.8)'}
 							<div transition:slide={{ duration: 180 }}>
 								<p class="mt-0.5 text-xs text-amber-400/60" in:fade={{ delay: 180, duration: 160 }}>
-									{@html $_(
-										'dailyChallenge.highScore',
-										{ values: { name: `<strong style="${nameStyle}">${escapeName}</strong>`, score: `<strong style="font-weight:700;color:rgb(252 211 77/0.8)">${dailyHighScore.score.toLocaleString()}</strong>` } }
-									)}
+									{@html $_('dailyChallenge.highScore', {
+										values: {
+											name: `<strong style="${nameStyle}">${escapeName}</strong>`,
+											score: `<strong style="font-weight:700;color:rgb(252 211 77/0.8)">${dailyHighScore.score.toLocaleString()}</strong>`
+										}
+									})}
 								</p>
 							</div>
 						{/if}
 					</div>
-					<span class="shrink-0 rounded-lg border border-amber-400/40 bg-amber-400/10 px-3 py-1.5 text-sm font-bold text-amber-400 transition-colors group-hover:bg-amber-400/20">
+					<span
+						class="shrink-0 rounded-lg border border-amber-400/40 bg-amber-400/10 px-3 py-1.5 text-sm font-bold text-amber-400 transition-colors group-hover:bg-amber-400/20"
+					>
 						{$_('dailyChallenge.play')}
 					</span>
 				</button>
@@ -415,7 +427,7 @@
 							</button>
 						</div>
 						<p class="text-sm text-slate-500">
-						{tracklistDescription($selectedTracklist, $_)}
+							{tracklistDescription($selectedTracklist, $_)}
 						</p>
 					</div>
 
@@ -447,7 +459,7 @@
 						<!-- Inline Leaderboard -->
 						<TimelineLeaderboard
 							entries={leaderboardEntries}
-							currentLocale={currentLocale}
+							{currentLocale}
 							isLoading={leaderboardLoading}
 							bind:showExpanded={showExpandedLeaderboard}
 							onShowTimeline={handleShowTimeline}
@@ -545,7 +557,7 @@
 			<!-- Player count + build date: in-flow on mobile, fixed corners on desktop -->
 			<div class="mt-3 flex items-center justify-end md:contents">
 				{#if pageviews24h != null}
-					<div class="md:fixed md:left-3 md:bottom-3 md:z-40">
+					<div class="md:fixed md:bottom-3 md:left-3 md:z-40">
 						<div
 							class="flex items-center gap-1.5 rounded-full border border-cyan-400/20 bg-slate-900/60 px-2 py-1 text-cyan-400/70 backdrop-blur-md"
 						>
@@ -554,7 +566,9 @@
 						</div>
 					</div>
 				{/if}
-				<div class="ml-auto text-[10px] text-slate-600 select-none md:fixed md:right-2 md:bottom-1 md:ml-0">
+				<div
+					class="ml-auto text-[10px] text-slate-600 select-none md:fixed md:right-2 md:bottom-1 md:ml-0"
+				>
 					v{__BUILD_DATE__}
 				</div>
 			</div>

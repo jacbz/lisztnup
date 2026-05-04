@@ -107,28 +107,28 @@ Uses `$effect` to watch `analyserNode`, starts visualization when available (han
 
 ## Reusable Component Catalog
 
-| Component             | Purpose                                                    | Used by                                          |
-| --------------------- | ---------------------------------------------------------- | ------------------------------------------------ |
-| `PlayerControl`       | Multi-state play button with visualizer                    | GameScreen, TrackTable, TrackInfo                |
-| `PlayStopIcon`        | Morphing play↔stop SVG with spring animation               | PlayerControl                                    |
-| `TrackInfo`           | Track metadata display with replay, report, search         | Scoring flow, Timeline card inspect; optional `showMirror` for mirrored tabletop layouts |
-| `ScoringCard`         | Per-player scoring with category toggles                   | ScoringScreen                                    |
-| `TrackTable`          | Sortable work table with audio preview playback            | LibraryViewer, WorkSelectorPopup                 |
-| `ComposerCloud`       | Word cloud with filters (country, gender, years)           | LibraryViewer                                    |
-| `LibraryViewer`       | Multi-view library browser (cloud/composer/table)          | TracklistSelector, TracklistEditor               |
-| `WorkSelectorPopup`   | Work selection for manual curation                         | TracklistEditor                                  |
-| `ShareLinkPopup`      | QR code + copy/share link                                  | BingoSetup, TracklistSelector                    |
-| `NetworkStatusBanner` | Offline/loading/reconnected banner                         | GameScreen                                       |
-| `Logo`                | Branding with glow effect, configurable size               | GameScreen, Bingo route                          |
-| `QRCode`              | QR code generator (cyan on dark gray)                      | ShareLinkPopup, BingoSetup                       |
-| `SearchPopup`         | External search (12 providers incl. streaming, reference)  | TrackInfo                                        |
-| `ModeRulesPopup`      | Game rules with screenshots                                | ModeSelector                                     |
-| `TimelineLeaderboard` | Top + expanded timeline scores; keeps rows mounted while expansion fetches | HomeScreen                                       |
-| `AboutPopup`          | App info, donation link, feedback launcher                 | HomeScreen                                       |
-| `AppFooter`           | Attribution footer with library/feedback links             | HomeScreen                                       |
-| `FeedbackPopup`       | User feedback submission                                   | HomeScreen, EndGameScreen, AboutPopup, AppFooter |
-| `FlashingText`        | Rotation-aware text flash overlay (streaks, future points) | TimelineGameScreen                               |
-| `ProblemReportPopup`  | Track problem report with metadata                         | TrackInfo                                        |
+| Component             | Purpose                                                                    | Used by                                                                                  |
+| --------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `PlayerControl`       | Multi-state play button with visualizer                                    | GameScreen, TrackTable, TrackInfo                                                        |
+| `PlayStopIcon`        | Morphing play↔stop SVG with spring animation                               | PlayerControl                                                                            |
+| `TrackInfo`           | Track metadata display with replay, report, search                         | Scoring flow, Timeline card inspect; optional `showMirror` for mirrored tabletop layouts |
+| `ScoringCard`         | Per-player scoring with category toggles                                   | ScoringScreen                                                                            |
+| `TrackTable`          | Sortable work table with audio preview playback                            | LibraryViewer, WorkSelectorPopup                                                         |
+| `ComposerCloud`       | Word cloud with filters (country, gender, years)                           | LibraryViewer                                                                            |
+| `LibraryViewer`       | Multi-view library browser (cloud/composer/table)                          | TracklistSelector, TracklistEditor                                                       |
+| `WorkSelectorPopup`   | Work selection for manual curation                                         | TracklistEditor                                                                          |
+| `ShareLinkPopup`      | QR code + copy/share link                                                  | BingoSetup, TracklistSelector                                                            |
+| `NetworkStatusBanner` | Offline/loading/reconnected banner                                         | GameScreen                                                                               |
+| `Logo`                | Branding with glow effect, configurable size                               | GameScreen, Bingo route                                                                  |
+| `QRCode`              | QR code generator (cyan on dark gray)                                      | ShareLinkPopup, BingoSetup                                                               |
+| `SearchPopup`         | External search (12 providers incl. streaming, reference)                  | TrackInfo                                                                                |
+| `ModeRulesPopup`      | Game rules with screenshots                                                | ModeSelector                                                                             |
+| `TimelineLeaderboard` | Top + expanded timeline scores; keeps rows mounted while expansion fetches | HomeScreen                                                                               |
+| `AboutPopup`          | App info, donation link, feedback launcher                                 | HomeScreen                                                                               |
+| `AppFooter`           | Attribution footer with library/feedback links                             | HomeScreen                                                                               |
+| `FeedbackPopup`       | User feedback submission                                                   | HomeScreen, EndGameScreen, AboutPopup, AppFooter                                         |
+| `FlashingText`        | Rotation-aware text flash overlay (streaks, future points)                 | TimelineGameScreen                                                                       |
+| `ProblemReportPopup`  | Track problem report with metadata                                         | TrackInfo                                                                                |
 
 ## Responsive Design
 
