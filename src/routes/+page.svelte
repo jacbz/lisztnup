@@ -80,30 +80,24 @@
 	});
 
 	function handleStartGame(mode: GameMode, players: Player[], solo: boolean) {
+		if (!$gameData) return;
+
 		currentMode = mode;
 		currentPlayers = players;
 		isSoloMode = solo;
 
-		// Show loading state
-		gameState.set('generating');
+		// Create a generator with filtered data using selected tracklist
+		generator = new TracklistGenerator($gameData, $selectedTracklist, {
+			requireWorkYear: mode === 'classic' || mode === 'timeline'
+		});
 
-		// Use setTimeout to allow UI to update before heavy computation
-		setTimeout(() => {
-			if ($gameData) {
-				// Create a generator with filtered data using selected tracklist
-				generator = new TracklistGenerator($gameData, $selectedTracklist, {
-					requireWorkYear: mode === 'classic' || mode === 'timeline'
-				});
+		// Initialize empty tracklist - we'll sample tracks on demand
+		tracklist.set([]);
 
-				// Initialize empty tracklist - we'll sample tracks on demand
-				tracklist.set([]);
+		// Initialize player with settings
+		deezerPlayer.setTrackLength($settings.trackLength);
 
-				// Initialize player with settings
-				deezerPlayer.setTrackLength($settings.trackLength);
-
-				gameState.set('game');
-			}
-		}, 50);
+		gameState.set('game');
 	}
 
 	function handleBackToHome() {
@@ -123,10 +117,6 @@
 </script>
 
 {#if $gameState === 'loading'}
-	<div in:fade={{ duration: 300, delay: 300 }} out:fade={{ duration: 300 }}>
-		<LoadingScreen />
-	</div>
-{:else if $gameState === 'generating'}
 	<div in:fade={{ duration: 300, delay: 300 }} out:fade={{ duration: 300 }}>
 		<LoadingScreen />
 	</div>

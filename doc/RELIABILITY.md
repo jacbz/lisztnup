@@ -26,17 +26,17 @@ This prevents indefinite hangs on stalled connections.
 - `waitForOnline()` — promise that resolves immediately if online, or when connectivity resumes
 - `lastReconnectedAt` — timestamp of last offline→online transition, enables `$effect`-based auto-retry
 
-`DeezerPlayer._load()` checks `navigator.onLine` before loading and awaits `waitForOnline()` if offline.
+`DeezerPlayer.preload()` checks `navigator.onLine` before loading and awaits `waitForOnline()` if offline.
 
 ### Exponential Backoff Retry
 
-`GameScreen.sampleAndPreloadTrack()` on `NetworkError`:
+`PlayableTrackBuffer` on `NetworkError`:
 
 1. Retry same Deezer ID up to 3 times
 2. Backoff: 1s → 2s → 4s
 3. If `navigator.onLine` is false during retry, await `waitForOnline()` first
 
-Context exposes `isPreloading`, `hasPreloadError`, and `retryPreload()` for child components.
+Context exposes `isPreloading`, `hasPreloadError`, and `retryPreload()` for child components. Background buffer refill is silent while a ready future track exists; the banner is used only for slow initial load or when gameplay is blocked waiting for the next track.
 
 ### Network Status Banner
 
@@ -48,7 +48,7 @@ Context exposes `isPreloading`, `hasPreloadError`, and `retryPreload()` for chil
 
 ### Auto-Retry on Reconnect
 
-Timeline's `$effect` watches `lastReconnectedAt` + `hasPreloadError`. On reconnection after a failure, automatically calls `retryPreload()`.
+The shared buffer awaits `waitForOnline()` during visible and silent retry loops, so all modes resume loading after reconnection.
 
 ### Error Messages
 
@@ -69,7 +69,7 @@ Failed tracks removed by **identity-based filtering** (not index-based) to preve
 
 ### Automatic Track Replacement
 
-If a track can't load after exhausting all Deezer IDs, `sampleAndPreloadTrack()` samples a fresh track automatically. Gameplay continues uninterrupted.
+If a track can't load after exhausting all Deezer IDs, `PlayableTrackBuffer` samples a fresh track automatically. Transient failures stop consuming new tracks and retry the same load path.
 
 ### Safari / WebKit Handling
 
@@ -77,9 +77,9 @@ If a track can't load after exhausting all Deezer IDs, `sampleAndPreloadTrack()`
 - **Audio context initialization**: `start.mp3` played on user gesture (Start Game button) to satisfy Safari autoplay restrictions.
 - **LUFS normalization**: Both modes analyze loudness (ITU-R BS.1770-4, target -23 LUFS). Web Audio uses `GainNode`; HTML Audio translates gain to volume (gain 2 → volume 1.0).
 
-### Concurrency Guard
+### Buffered Preloading
 
-`sampleAndPreloadTrack()` uses a `preloadInProgress` flag to prevent overlapping calls from fighting over the singleton `DeezerPlayer` (which calls `destroy()` on each `load()`). Reset on Play Again / `prepareNewGame`.
+`PlayableTrackBuffer` owns a current playable track plus two ready future tracks. A generation token cancels stale fills on reset/unmount, and only one fill loop runs at a time. `DeezerPlayer` plays a supplied loaded asset, so future assets can stay preloaded without being destroyed by active playback.
 
 ### Year Filtering
 
@@ -102,9 +102,9 @@ Timeline and Classic apply `requireWorkYear` filtering at game start, removing w
 
 | Component                     | What's cleaned up                                                                                                    |
 | ----------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| Classic/Buzzer/Bingo/Timeline | `audioProgress.subscribe()` unsubscribe in `onDestroy`                                                               |
+| Classic/Buzzer/Bingo/Timeline | Mode-specific timers/listeners and context registrations                                                             |
 | `TimelineGame.destroy()`      | `pointermove`/`pointerup`/`pointercancel` window listeners                                                           |
-| `BuzzerGameScreen`            | `AudioContext` close, `buzzerAudio` pause+null, `keydown` listener, `audioProgress` unsub                            |
+| `BuzzerGameScreen`            | `AudioContext` close, `buzzerAudio` pause+null, `keydown` listener                                                   |
 | `GameScreen`                  | `beforeunload` listener removal, `deezerPlayer.destroy()` (via `onMount` return)                                     |
 | `ReplayPlayer`                | `destroy()` method stops playback, nulls `HTMLAudioElement`. Generation-based cancellation discards stale async ops. |
 | `Visualizer`                  | `$effect` cleanup cancels `requestAnimationFrame`                                                                    |

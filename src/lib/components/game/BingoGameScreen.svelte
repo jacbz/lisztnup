@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { scale } from 'svelte/transition';
 	import type { GuessCategory } from '$lib/types';
 	import { currentRound } from '$lib/stores';
 	import SpinningWheel from './SpinningWheel.svelte';
@@ -47,32 +48,37 @@
 </script>
 
 <!-- Main Game Area -->
-{#if ctx.currentTrack}
-	<div class="relative flex h-screen items-center justify-center">
-		<!-- Spinning Wheel (fills screen) - only in Bingo mode -->
-		<SpinningWheel
-			currentRoundIndex={$currentRound.currentTrackIndex}
-			{disabledCategories}
-			hasValidYears={ctx.hasValidYears}
-			onCategorySelected={handleCategorySelected}
-			onSpinStart={handleSpinStart}
-			onSpinEnd={handleSpinEnd}
-		/>
+<div class="relative flex h-screen items-center justify-center">
+	{#if ctx.currentTrack}
+		<div
+			class="relative flex h-full w-full items-center justify-center"
+			transition:scale={{ duration: 300, start: 0.5 }}
+		>
+			<!-- Spinning Wheel (fills screen) - only in Bingo mode -->
+			<SpinningWheel
+				currentRoundIndex={$currentRound.currentTrackIndex}
+				{disabledCategories}
+				hasValidYears={ctx.hasValidYears}
+				onCategorySelected={handleCategorySelected}
+				onSpinStart={handleSpinStart}
+				onSpinEnd={handleSpinEnd}
+			/>
 
-		<!-- Player Control (overlaid on wheel center) -->
-		<PlayerControl
-			visible={hasSpunOnce && !$currentRound.isSpinning && $currentRound.category !== null}
-			isPlaying={$currentRound.isPlaying}
-			playbackEnded={$currentRound.playbackEnded}
-			isRevealed={$currentRound.isRevealed}
-			progress={ctx.audioProgressValue}
-			onPlay={ctx.playTrack}
-			onStop={ctx.stopTrack}
-			onReveal={handleReveal}
-			onReplay={ctx.replayTrack}
-		/>
-	</div>
-{/if}
+			<!-- Player Control (overlaid on wheel center) -->
+			<PlayerControl
+				visible={hasSpunOnce && !$currentRound.isSpinning && $currentRound.category !== null}
+				isPlaying={$currentRound.isPlaying}
+				playbackEnded={$currentRound.playbackEnded}
+				isRevealed={$currentRound.isRevealed}
+				progress={ctx.audioProgressValue}
+				onPlay={ctx.playTrack}
+				onStop={ctx.stopTrack}
+				onReveal={handleReveal}
+				onReplay={ctx.replayTrack}
+			/>
+		</div>
+	{/if}
+</div>
 
 <!-- Category Display (shown briefly when wheel stops) -->
 <EdgeDisplay

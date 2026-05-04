@@ -34,17 +34,21 @@ export interface GameScreenContext {
 	prepareNewGame: () => void;
 	/** Manually trigger a preload retry after a network failure. */
 	retryPreload: () => void;
+	/** Drop future preloads and refill with current audio settings. */
+	invalidateBufferedTracks: () => void;
 	onHome: () => void;
 	/** The track at the current round index, or null if not yet loaded. */
 	readonly currentTrack: Track | null;
 	/** Current playback progress (0–1), updated reactively by GameScreen. */
 	readonly audioProgressValue: number;
+	/** Duration in seconds for the active loaded track. */
+	readonly currentTrackDuration: number;
 	readonly activeCategories: readonly GuessCategory[];
 	readonly disabledCategories: readonly GuessCategory[];
 	readonly hasValidYears: boolean;
 	readonly tracksExhausted: boolean;
 	readonly enableScoring: boolean;
-	/** True while sampleAndPreloadTrack is in-flight. */
+	/** True while initial load or a depleted buffer blocks gameplay. */
 	readonly isPreloading: boolean;
 	/** True when the last preload attempt failed due to a network error (retries exhausted). */
 	readonly hasPreloadError: boolean;

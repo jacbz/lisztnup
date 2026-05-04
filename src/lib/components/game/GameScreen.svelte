@@ -5,13 +5,12 @@
 	import {
 		gameSession,
 		currentRound,
-		tracklist,
 		nextRound as nextRoundFn,
 		resetGame,
-		toast,
-		waitForOnline
+		tracklist,
+		toast
 	} from '$lib/stores';
-	import { deezerPlayer, progress, NetworkError } from '$lib/services';
+	import { deezerPlayer, progress, PlayableTrackBuffer } from '$lib/services';
 	import ScoringScreen from '../ui/screens/ScoringScreen.svelte';
 	import StatsScreen from '../ui/screens/StatsScreen.svelte';
 	import EndGameScreen from '../ui/screens/EndGameScreen.svelte';
@@ -57,7 +56,20 @@
 		children
 	}: Props = $props();
 
-	const currentTrack = $derived($tracklist[$currentRound.currentTrackIndex] || null);
+	const maxPlayableTracks = $derived(
+		mode === 'classic' || mode === 'buzzer' ? numberOfTracks : null
+	);
+	// svelte-ignore state_referenced_locally (GameScreen props are fixed for the lifetime of a game instance)
+	const playableBuffer = new PlayableTrackBuffer({
+		generator,
+		maxPlayableTracks,
+		targetReadyAhead: 2
+	});
+	const currentTrack = $derived(playableBuffer.currentTrack);
+	const isWaitingForPlayableTrack = $derived(
+		!$currentRound.isPlaying &&
+			((playableBuffer.isInitialLoading && currentTrack === null) || playableBuffer.isBlockedOnTrack)
+	);
 
 	// Timeline and Bingo don't end based on fixed track count
 	const isGameOver = $derived(
@@ -74,6 +86,12 @@
 	);
 	const disabledCategories = $derived(generator.getDisabledCategories());
 
+	$effect(() => {
+		if (playableBuffer.tracksExhausted && !playableBuffer.currentTrack && mode !== 'timeline') {
+			showEndGameScreen = true;
+		}
+	});
+
 	// Check if current track has valid year data for era/decade categories
 	const hasValidYears = $derived(
 		currentTrack != null &&
@@ -85,9 +103,6 @@
 	let showEndGameScreen = $state(false);
 	let showInGameSettings = $state(false);
 	let showQuitDialog = $state(false);
-	let tracksExhausted = $state(false);
-	let isPreloading = $state(false);
-	let hasPreloadError = $state(false);
 
 	// Options passed by the game mode via revealTrack(options)
 	let revealOptions = $state<RevealOptions>({});
@@ -105,13 +120,6 @@
 				!showScoringScreen &&
 				enableScoring)
 	);
-
-	// Maximum number of retry attempts for a single preload when network errors occur
-	const MAX_PRELOAD_RETRIES = 3;
-
-	// Concurrency guard: prevents overlapping sampleAndPreloadTrack calls
-	// from corrupting the tracklist or fighting over the DeezerPlayer singleton.
-	let preloadInProgress = false;
 
 	// Guard: prevents double-advancement caused by double-tapping Continue
 	// during the popup out-transition.
@@ -157,7 +165,7 @@
 		// Set track length behavior based on mode
 		deezerPlayer.setIgnoreTrackLength(ignoreTrackLength);
 
-		sampleAndPreloadTrack();
+		playableBuffer.start();
 
 		// Set up playback end callback
 		deezerPlayer.setOnPlaybackEnd(handlePlaybackEnd);
@@ -171,6 +179,7 @@
 
 		return () => {
 			window.removeEventListener('beforeunload', handleBeforeUnload);
+			playableBuffer.destroy();
 			deezerPlayer.destroy();
 		};
 	});
@@ -195,135 +204,19 @@
 		}
 	});
 
-	function sampleNextTrack(): Track | null {
-		const track = generator.sample();
-		if (track) {
-			tracklist.update((t) => [...t, track]);
-		}
-		return track;
-	}
-
 	// Just return a track from the generator without adding to tracklist/loading audio
 	// Useful for Timeline deck filling
 	function sampleRawTrack(): Track | null {
-		return generator.sample();
-	}
-
-	async function sampleAndPreloadTrack(): Promise<void> {
-		// Prevent concurrent calls from corrupting tracklist / DeezerPlayer state.
-		// If a preload is already running, skip — the in-progress call will
-		// populate the tracklist and load audio.
-		if (preloadInProgress) return;
-		preloadInProgress = true;
-		isPreloading = true;
-		hasPreloadError = false;
-
-		try {
-			// If a track already exists for the current round index (e.g. due to
-			// a retry or a duplicated call), just re-load it instead of sampling
-			// a brand-new track. This prevents phantom tracks piling up in the
-			// tracklist while the DeezerPlayer singleton advances past the UI.
-			const existingTrack = $tracklist[$currentRound.currentTrackIndex];
-			if (existingTrack) {
-				const availableDeezerIds = [...existingTrack.part.deezer];
-				while (availableDeezerIds.length > 0) {
-					const randomIndex = Math.floor(Math.random() * availableDeezerIds.length);
-					const deezerId = availableDeezerIds[randomIndex];
-					try {
-						await deezerPlayer.load(deezerId);
-						return;
-					} catch {
-						availableDeezerIds.splice(randomIndex, 1);
-					}
-				}
-				// All deezer IDs failed for existing track — fall through to sample new
-				tracklist.update((t) => t.filter((item) => item !== existingTrack));
-			}
-
-			while (true) {
-				const track = sampleNextTrack();
-				if (!track) {
-					// No more tracks available - end the game
-					if (mode === 'timeline') {
-						tracksExhausted = true;
-					} else {
-						showEndGameScreen = true;
-					}
-					return;
-				}
-
-				// Try each available deezer ID for this track, with network-aware retry
-				const availableDeezerIds = [...track.part.deezer]; // Create a copy to modify
-				let trackLoaded = false;
-
-				while (availableDeezerIds.length > 0) {
-					// Pick a random deezer ID from the available ones
-					const randomIndex = Math.floor(Math.random() * availableDeezerIds.length);
-					const deezerId = availableDeezerIds[randomIndex];
-
-					// Retry loop for transient network errors on a single Deezer ID
-					for (let attempt = 1; attempt <= MAX_PRELOAD_RETRIES; attempt++) {
-						try {
-							await deezerPlayer.load(deezerId);
-							trackLoaded = true;
-							break; // Successfully loaded
-						} catch (error) {
-							const isNetworkErr = error instanceof NetworkError;
-
-							if (isNetworkErr && attempt < MAX_PRELOAD_RETRIES) {
-								// Transient network failure — wait and retry
-								console.warn(
-									`[GameScreen] Network error loading Deezer ID ${deezerId}, ` +
-										`attempt ${attempt}/${MAX_PRELOAD_RETRIES}. Retrying…`
-								);
-
-								// If offline, wait for connectivity before retrying
-								if (!navigator.onLine) {
-									await waitForOnline();
-								} else {
-									// Exponential backoff: 1s, 2s, 4s
-									await new Promise((r) => setTimeout(r, 1000 * Math.pow(2, attempt - 1)));
-								}
-								continue;
-							}
-
-							if (isNetworkErr && attempt === MAX_PRELOAD_RETRIES) {
-								// All retries exhausted for this Deezer ID due to network
-								console.error(`[GameScreen] Network retries exhausted for Deezer ID ${deezerId}`);
-								hasPreloadError = true;
-								toast.show('warning', $_('network.loadFailedFinal'), 5000);
-							}
-
-							// Non-network error or retries exhausted — remove this ID and try next
-							break;
-						}
-					}
-
-					if (trackLoaded) break;
-
-					// Remove this deezer ID from the available list
-					availableDeezerIds.splice(randomIndex, 1);
-				}
-
-				if (trackLoaded) {
-					hasPreloadError = false;
-					return;
-				} else {
-					// All deezer IDs failed — remove this specific track from the tracklist.
-					console.warn('All deezer IDs failed for track, sampling another:', track.work.name);
-					tracklist.update((t) => t.filter((item) => item !== track));
-				}
-			}
-		} finally {
-			preloadInProgress = false;
-			isPreloading = false;
-		}
+		return playableBuffer.sampleSilentTrack();
 	}
 
 	// Shared audio control functions
 	async function playTrack(): Promise<void> {
 		try {
-			deezerPlayer.play();
+			if (isWaitingForPlayableTrack) return;
+			const loadedTrack = playableBuffer.currentLoadedTrack;
+			if (!loadedTrack) return;
+			await deezerPlayer.playLoaded(loadedTrack);
 
 			currentRound.update((state) => ({
 				...state,
@@ -347,7 +240,7 @@
 
 	async function replayTrack(): Promise<void> {
 		try {
-			deezerPlayer.replay();
+			await deezerPlayer.replay();
 
 			currentRound.update((state) => ({
 				...state,
@@ -399,7 +292,17 @@
 				return;
 			}
 
-			nextRoundFn();
+				const nextTrack = await playableBuffer.advance();
+				if (!nextTrack) {
+					if (mode === 'timeline') {
+						// Timeline observes tracksExhausted through context and owns its end screen.
+						return;
+					}
+					showEndGameScreen = true;
+					return;
+				}
+
+				nextRoundFn();
 
 			// Log progress after round increment
 			if (mode === 'classic' || mode === 'buzzer') {
@@ -413,14 +316,10 @@
 				});
 			}
 
-			// Preload next track if needed
-			// For timeline, we always want to preload the "next" card when this function is called
-			if ($currentRound.currentTrackIndex >= $tracklist.length) {
-				await sampleAndPreloadTrack();
+				playableBuffer.ensureFilled();
+			} finally {
+				isAdvancingRound = false;
 			}
-		} finally {
-			isAdvancingRound = false;
-		}
 	}
 
 	function handleScoreSubmit(scores: Record<string, number>): void {
@@ -466,21 +365,21 @@
 	 * (reset) index. Used by TimelineGameScreen on Play Again.
 	 */
 	function prepareNewGame(): void {
-		tracksExhausted = false;
-		hasPreloadError = false;
-		preloadInProgress = false;
 		isAdvancingRound = false;
-		sampleAndPreloadTrack();
+		tracklist.set([]);
+		playableBuffer.start();
 	}
 
 	/**
 	 * Manually retry preloading after a network failure.
-	 * Resets error state and re-runs sampleAndPreloadTrack.
+	 * Resets visible error state and lets the shared buffer continue.
 	 */
 	function retryPreload(): void {
-		hasPreloadError = false;
-		preloadInProgress = false;
-		sampleAndPreloadTrack();
+		playableBuffer.retryVisible();
+	}
+
+	function invalidateBufferedTracks(): void {
+		playableBuffer.invalidateFutureTracks();
 	}
 
 	function handleHomeClick(): void {
@@ -503,12 +402,16 @@
 		sampleRawTrack,
 		prepareNewGame,
 		retryPreload,
+		invalidateBufferedTracks,
 		onHome: handleHome,
 		get currentTrack() {
 			return currentTrack;
 		},
 		get audioProgressValue() {
 			return $progress;
+		},
+		get currentTrackDuration() {
+			return playableBuffer.currentDuration;
 		},
 		get activeCategories() {
 			return activeCategories;
@@ -520,16 +423,16 @@
 			return hasValidYears;
 		},
 		get tracksExhausted() {
-			return tracksExhausted;
+			return playableBuffer.tracksExhausted;
 		},
 		get enableScoring() {
 			return enableScoring;
 		},
 		get isPreloading() {
-			return isPreloading;
+			return isWaitingForPlayableTrack;
 		},
 		get hasPreloadError() {
-			return hasPreloadError;
+			return playableBuffer.hasVisibleError;
 		},
 		registerStatsHandler(handler: (() => void) | null) {
 			childStatsHandler = handler;
@@ -539,7 +442,10 @@
 
 <div class="fixed inset-0 overflow-hidden text-white">
 	<!-- Network Status Banner -->
-	<NetworkStatusBanner isLoading={isPreloading} hasError={hasPreloadError} />
+	<NetworkStatusBanner
+		isLoading={isWaitingForPlayableTrack}
+		hasError={isWaitingForPlayableTrack && playableBuffer.hasVisibleError}
+	/>
 
 	<!-- Logo -->
 	<div class="absolute top-6 left-6 z-20">
@@ -708,7 +614,7 @@
 	players={$gameSession.players}
 	{isSoloMode}
 	{enableScoring}
-	{tracksExhausted}
+	tracksExhausted={playableBuffer.tracksExhausted}
 	onViewStats={handleViewStatsFromEndGame}
 	onHome={handleHome}
 />

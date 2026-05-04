@@ -8,6 +8,7 @@
 	import AppFooter from '../primitives/AppFooter.svelte';
 	import { _ } from 'svelte-i18n';
 	import type { GameMode } from '$lib/types';
+	import { getGameContext } from '$lib/components/game/context';
 
 	interface Props {
 		visible?: boolean;
@@ -16,6 +17,7 @@
 	}
 
 	let { visible = false, onClose = () => {}, mode }: Props = $props();
+	const ctx = getGameContext();
 
 	let trackLength = $state(30);
 	let enableAudioNormalization = $state(true);
@@ -43,6 +45,7 @@
 		deezerPlayer.stop();
 		deezerPlayer.setEnableAudioNormalization(enableAudioNormalization);
 		settingsStore.update((s) => ({ ...s, enableAudioNormalization }));
+		ctx.invalidateBufferedTracks();
 	}
 
 	function handleBuzzerVolumeChange(value: number) {

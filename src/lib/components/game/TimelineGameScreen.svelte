@@ -4,7 +4,7 @@
 	import { fly } from 'svelte/transition';
 	import type { Player, PlayerEdge } from '$lib/types';
 	import { ALL_EDGES } from '$lib/types';
-	import { currentRound, resetGame, gameSession, lastReconnectedAt } from '$lib/stores';
+	import { currentRound, resetGame, gameSession } from '$lib/stores';
 	import { settings } from '$lib/stores/settings';
 	import { _ } from 'svelte-i18n';
 	import { analytics } from '$lib/game-logger';
@@ -123,18 +123,6 @@
 			game.startPlaybackTimer();
 		}
 	});
-	// ─── Auto-retry on reconnection ────────────────────────
-	// When a preload error occurred (e.g. offline during turn transition),
-	// automatically retry once the browser comes back online.
-	$effect(() => {
-		// Reading $lastReconnectedAt makes this effect re-run on every
-		// offline→online transition.
-		const _reconnected = $lastReconnectedAt;
-		if (_reconnected > 0 && ctx.hasPreloadError && !ctx.isPreloading) {
-			ctx.retryPreload();
-		}
-	});
-
 	// ─── Orchestration Handlers ────────────────────────────
 
 	// ─── Stats popup ───────────────────────────────────────
@@ -196,9 +184,10 @@
 							isPlaying={false}
 							playbackEnded={false}
 							isRevealed={false}
-							progress={ctx.audioProgressValue}
-							playerSize={120}
-							onPlay={() => game.handlePlay()}
+								progress={ctx.audioProgressValue}
+								playerSize={120}
+								disabled={ctx.isPreloading}
+								onPlay={() => game.handlePlay()}
 							onStop={() => game.handleStop()}
 							onReveal={() => {}}
 							onReplay={() => game.handlePlay()}
@@ -217,9 +206,10 @@
 							isPlaying={true}
 							playbackEnded={false}
 							isRevealed={false}
-							progress={ctx.audioProgressValue}
-							playerSize={120}
-							onPlay={() => {}}
+								progress={ctx.audioProgressValue}
+								playerSize={120}
+								disabled={ctx.isPreloading}
+								onPlay={() => {}}
 							onStop={() => game.handleStop()}
 							onReveal={() => {}}
 							onReplay={() => {}}

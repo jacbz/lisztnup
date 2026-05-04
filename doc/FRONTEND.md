@@ -31,25 +31,27 @@ All UI components re-exported from `src/lib/components/ui/index.ts`.
 
 `GameScreen.svelte` provides shared infrastructure that all game modes extend:
 
-- Audio playback (play/stop/replay via DeezerPlayer singleton)
-- Track sampling and preloading (with network retry logic)
+- Audio playback (play/stop/replay via DeezerPlayer active controller)
+- Track sampling and buffered preloading (`PlayableTrackBuffer`: current + 2 future ready tracks)
 - Common UI: header, round indicator, quit dialog, in-game settings, scoring screen, track-info popup, stats screen, end game screen, network status banner
 - Typed context exposed to child mode components via `setContext`
 
 **Mode components access shared functionality through context** (`getGameContext()`):
 
-| Context getter/method       | Purpose                                               |
-| --------------------------- | ----------------------------------------------------- |
-| `ctx.currentTrack`          | Reactive getter — track at current round index        |
-| `ctx.audioProgressValue`    | Reactive getter — playback progress 0–1               |
-| `ctx.playTrack()`           | Start audio playback                                  |
-| `ctx.stopTrack()`           | Stop audio playback                                   |
-| `ctx.replayTrack()`         | Replay current track                                  |
-| `ctx.revealTrack(options?)` | Trigger reveal flow with `RevealOptions`              |
-| `ctx.nextRound()`           | Advance to next round (samples + preloads next track) |
-| `ctx.isPreloading`          | True while track is loading                           |
-| `ctx.hasPreloadError`       | True when all retries exhausted                       |
-| `ctx.retryPreload()`        | Manual retry trigger                                  |
+| Context getter/method            | Purpose                                             |
+| -------------------------------- | --------------------------------------------------- |
+| `ctx.currentTrack`               | Reactive getter — track at current round index      |
+| `ctx.audioProgressValue`         | Reactive getter — playback progress 0–1             |
+| `ctx.playTrack()`                | Start audio playback                                |
+| `ctx.stopTrack()`                | Stop audio playback                                 |
+| `ctx.replayTrack()`              | Replay current track                                |
+| `ctx.revealTrack(options?)`      | Trigger reveal flow with `RevealOptions`            |
+| `ctx.nextRound()`                | Advance to the next buffered track                  |
+| `ctx.currentTrackDuration`       | Active loaded track duration in seconds             |
+| `ctx.isPreloading`               | True only for initial/depleted visible waits        |
+| `ctx.hasPreloadError`            | True when visible loading is retrying after failure |
+| `ctx.retryPreload()`             | Manual retry trigger                                |
+| `ctx.invalidateBufferedTracks()` | Drop future preloads after audio setting changes    |
 
 **`RevealOptions`** lets modes customize post-reveal behavior:
 

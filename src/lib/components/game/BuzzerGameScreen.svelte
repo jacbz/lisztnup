@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import { fly } from 'svelte/transition';
+	import { fly, scale } from 'svelte/transition';
 	import type { GuessCategory } from '$lib/types';
 	import { BUZZER_TIME_PERCENTAGES, CATEGORY_POINTS } from '$lib/types';
 	import { currentRound, settings } from '$lib/stores';
@@ -11,7 +11,6 @@
 	import { shuffle } from '$lib/utils/random';
 	import { playerState } from '$lib/services';
 	import { gameSession, toast } from '$lib/stores';
-	import { deezerPlayer } from '$lib/services';
 	import { BUZZER_PREVIEW_COUNTDOWN } from '$lib/types/game';
 
 	const ctx = getGameContext();
@@ -70,7 +69,7 @@
 			(playbackTime >= trackDuration || (!$playerState.isPlaying && ctx.audioProgressValue >= 0.99))
 		) {
 			// Time's up - auto-buzz and reveal immediately (but wasManuallyBuzzed stays false)
-			deezerPlayer.stop();
+			ctx.stopTrack();
 			isBuzzerPressed = true;
 			wasManuallyBuzzed = false;
 
@@ -182,11 +181,11 @@
 		if (!hasStartedPlaying) {
 			// Start playback on first press
 			try {
-				await deezerPlayer.play();
+				await ctx.playTrack();
 				hasStartedPlaying = true;
 
 				// Get the track duration from the player
-				trackDuration = deezerPlayer.getDuration();
+				trackDuration = ctx.currentTrackDuration;
 			} catch (error) {
 				console.error('Error playing track:', error);
 				toast.error($_('network.playFailed'));
@@ -201,7 +200,7 @@
 		} else if (!isBuzzerPressed) {
 			// Buzzer pressed during playback - pause and show reveal button
 			playBuzzerSound();
-			deezerPlayer.stop();
+			ctx.stopTrack();
 			isBuzzerPressed = true;
 			wasManuallyBuzzed = true; // Mark that someone actually pressed the buzzer
 			showReveal = true;
@@ -215,6 +214,8 @@
 	}
 
 	function handleBuzzerDown() {
+		if (!ctx.currentTrack) return;
+
 		if (showReveal) {
 			handleBuzzerReveal();
 		} else {
@@ -223,6 +224,8 @@
 	}
 
 	function handleKeyDown(event: KeyboardEvent) {
+		if (!ctx.currentTrack) return;
+
 		// Only trigger buzzer if button is not disabled
 		if (!isBuzzerPressed || showReveal) {
 			event.preventDefault();
@@ -286,106 +289,111 @@
 </script>
 
 <!-- Main Game Area -->
-{#if ctx.currentTrack}
-	<div class="flex h-screen flex-col items-center justify-center">
-		<!-- Buzzer Button (always centered) with floating countdown -->
-		<!-- Category & Time Display -->
-		<EdgeDisplay
-			visible={hasStartedPlaying && !isBuzzerPressed}
-			hideTop={$gameSession.players.length < 2}
-			hideLeftRight={$gameSession.players.length < 3}
+<div class="flex h-screen flex-col items-center justify-center">
+	{#if ctx.currentTrack}
+		<div
+			class="flex h-full w-full flex-col items-center justify-center"
+			transition:scale={{ duration: 300, start: 0.5 }}
 		>
-			<div class="flex max-w-[90vw] items-center justify-center gap-2 md:gap-3">
-				{#each categoriesToDisplay as category (category)}
-					{@const currentIndex = categoryProgression.indexOf(currentCategory)}
-					{@const next =
-						currentIndex >= 0 && currentIndex < categoryProgression.length - 1
-							? categoryProgression[currentIndex + 1]
-							: null}
-					{@const isPlaceholder = timeRemaining < BUZZER_PREVIEW_COUNTDOWN && category === next}
-					{@const categoryDef = isPlaceholder
-						? null
-						: getCategoryDefinition(category as GuessCategory)}
-					{@const isCurrent = category === currentCategory}
-					<div
-						in:fly={{ x: 100, duration: 300 }}
-						out:fly={{ x: -100, duration: 300 }}
-						class="relative flex flex-col items-center gap-2 overflow-hidden rounded-[20px] border-[3px] px-4 py-3 shadow-[0_0_40px] backdrop-blur-xs transition-all duration-300 md:flex-row md:gap-6 md:px-8"
-						style="border-color: {isPlaceholder
-							? '#6b7280'
-							: categoryDef!.color2}; box-shadow: 0 0 40px {isPlaceholder
-							? 'rgba(107, 114, 128, 0.6)'
-							: categoryDef!.glowColor};"
-					>
-						{#if isPlaceholder}
-							<div class="text-4xl font-bold text-gray-400 md:text-5xl">?</div>
-							<div class="min-w-15 text-center text-4xl font-bold text-gray-400 md:text-5xl">
-								{Math.ceil(timeRemaining)}
-							</div>
-						{:else}
-							<!-- Background Icon -->
-							<svg
-								class="pointer-events-none absolute inset-0 h-full w-full p-2 opacity-25"
-								viewBox="0 0 24 24"
-								fill="currentColor"
-								preserveAspectRatio="xMidYMid meet"
-								style="color: {categoryDef!.color1};"
-							>
-								{#each categoryDef!.iconPaths as pathData (pathData)}
-									<path d={pathData} />
-								{/each}
-							</svg>
-							<div
-								class="relative z-10 text-2xl font-bold tracking-wider uppercase"
-								style="color: {categoryDef!.color1};"
-							>
-								{$_(`game.categories.${category}`)}
-							</div>
-							<div
-								class="relative z-10 text-lg font-semibold text-nowrap"
-								style="color: {categoryDef!.color2};"
-							>
-								{$_('scoring.pointsAwarded', {
-									values: { points: CATEGORY_POINTS[category as GuessCategory] }
-								})}
-							</div>
-							{#if isCurrent}
-								<div
-									class="relative z-10 min-w-15 text-center text-4xl font-bold text-white md:text-5xl"
-								>
-									{Math.ceil(trackDuration - playbackTime)}
-								</div>
-							{/if}
-						{/if}
-					</div>
-				{/each}
-			</div>
-		</EdgeDisplay>
-		<div class="relative z-50 flex items-center justify-center">
-			<button
-				type="button"
-				class="relative z-100 flex aspect-square w-80 max-w-[80vw] cursor-pointer items-center justify-center rounded-full border-8 px-8 transition-all duration-200 hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 md:w-125 {buzzerButtonClasses}"
-				onmousedown={hasTouch ? undefined : handleBuzzerDown}
-				ontouchstart={hasTouch ? handleBuzzerDown : undefined}
-				disabled={isBuzzerPressed && !showReveal}
+			<!-- Buzzer Button (always centered) with floating countdown -->
+			<!-- Category & Time Display -->
+			<EdgeDisplay
+				visible={hasStartedPlaying && !isBuzzerPressed}
+				hideTop={$gameSession.players.length < 2}
+				hideLeftRight={$gameSession.players.length < 3}
 			>
-				{#if showReveal}
-					<span
-						class="font-bold tracking-[0.15em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
-						style="font-size: clamp(2rem, 8vw, 4rem);">{$_('game.reveal')}</span
-					>
-				{:else if !hasStartedPlaying}
-					<span
-						class="font-bold tracking-[0.15em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
-						style="font-size: clamp(2rem, 8vw, 4rem);">{$_('game.buzzer.pressToStart')}</span
-					>
-				{:else}
-					<span
-						class="font-bold tracking-[0.15em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
-						style="font-size: clamp(3rem, 10vw, 5rem);">{$_('game.buzzer.buzz')}</span
-					>
-				{/if}
-			</button>
+				<div class="flex max-w-[90vw] items-center justify-center gap-2 md:gap-3">
+					{#each categoriesToDisplay as category (category)}
+						{@const currentIndex = categoryProgression.indexOf(currentCategory)}
+						{@const next =
+							currentIndex >= 0 && currentIndex < categoryProgression.length - 1
+								? categoryProgression[currentIndex + 1]
+								: null}
+						{@const isPlaceholder = timeRemaining < BUZZER_PREVIEW_COUNTDOWN && category === next}
+						{@const categoryDef = isPlaceholder
+							? null
+							: getCategoryDefinition(category as GuessCategory)}
+						{@const isCurrent = category === currentCategory}
+						<div
+							in:fly={{ x: 100, duration: 300 }}
+							out:fly={{ x: -100, duration: 300 }}
+							class="relative flex flex-col items-center gap-2 overflow-hidden rounded-[20px] border-[3px] px-4 py-3 shadow-[0_0_40px] backdrop-blur-xs transition-all duration-300 md:flex-row md:gap-6 md:px-8"
+							style="border-color: {isPlaceholder
+								? '#6b7280'
+								: categoryDef!.color2}; box-shadow: 0 0 40px {isPlaceholder
+								? 'rgba(107, 114, 128, 0.6)'
+								: categoryDef!.glowColor};"
+						>
+							{#if isPlaceholder}
+								<div class="text-4xl font-bold text-gray-400 md:text-5xl">?</div>
+								<div class="min-w-15 text-center text-4xl font-bold text-gray-400 md:text-5xl">
+									{Math.ceil(timeRemaining)}
+								</div>
+							{:else}
+								<!-- Background Icon -->
+								<svg
+									class="pointer-events-none absolute inset-0 h-full w-full p-2 opacity-25"
+									viewBox="0 0 24 24"
+									fill="currentColor"
+									preserveAspectRatio="xMidYMid meet"
+									style="color: {categoryDef!.color1};"
+								>
+									{#each categoryDef!.iconPaths as pathData (pathData)}
+										<path d={pathData} />
+									{/each}
+								</svg>
+								<div
+									class="relative z-10 text-2xl font-bold tracking-wider uppercase"
+									style="color: {categoryDef!.color1};"
+								>
+									{$_(`game.categories.${category}`)}
+								</div>
+								<div
+									class="relative z-10 text-lg font-semibold text-nowrap"
+									style="color: {categoryDef!.color2};"
+								>
+									{$_('scoring.pointsAwarded', {
+										values: { points: CATEGORY_POINTS[category as GuessCategory] }
+									})}
+								</div>
+								{#if isCurrent}
+									<div
+										class="relative z-10 min-w-15 text-center text-4xl font-bold text-white md:text-5xl"
+									>
+										{Math.ceil(trackDuration - playbackTime)}
+									</div>
+								{/if}
+							{/if}
+						</div>
+					{/each}
+				</div>
+			</EdgeDisplay>
+			<div class="relative z-50 flex items-center justify-center">
+				<button
+					type="button"
+					class="relative z-100 flex aspect-square w-80 max-w-[80vw] cursor-pointer items-center justify-center rounded-full border-8 px-8 transition-all duration-200 hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 md:w-125 {buzzerButtonClasses}"
+					onmousedown={hasTouch ? undefined : handleBuzzerDown}
+					ontouchstart={hasTouch ? handleBuzzerDown : undefined}
+					disabled={isBuzzerPressed && !showReveal}
+				>
+					{#if showReveal}
+						<span
+							class="font-bold tracking-[0.15em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
+							style="font-size: clamp(2rem, 8vw, 4rem);">{$_('game.reveal')}</span
+						>
+					{:else if !hasStartedPlaying}
+						<span
+							class="font-bold tracking-[0.15em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
+							style="font-size: clamp(2rem, 8vw, 4rem);">{$_('game.buzzer.pressToStart')}</span
+						>
+					{:else}
+						<span
+							class="font-bold tracking-[0.15em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
+							style="font-size: clamp(3rem, 10vw, 5rem);">{$_('game.buzzer.buzz')}</span
+						>
+					{/if}
+				</button>
+			</div>
 		</div>
-	</div>
-{/if}
+	{/if}
+</div>

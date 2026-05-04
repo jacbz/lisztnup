@@ -6,7 +6,7 @@ export const ALL_CATEGORIES: GuessCategory[] = ['composer', 'decade', 'era', 'wo
 
 export type GameMode = 'timeline' | 'bingo' | 'buzzer' | 'classic';
 
-export type GameState = 'loading' | 'home' | 'settings' | 'generating' | 'game';
+export type GameState = 'loading' | 'home' | 'settings' | 'game';
 
 export type PlayerEdge = 'bottom' | 'left' | 'top' | 'right';
 

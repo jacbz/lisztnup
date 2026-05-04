@@ -17,7 +17,8 @@ src/
 │   ├── utils/                 Pure utilities (compression, formatters, random, uuid, svg, fontLoader, search)
 │   ├── i18n/                  svelte-i18n setup + 10 locale JSON files
 │   ├── services/              Business logic singletons
-│   │   ├── DeezerPlayer.ts      Audio playback + LUFS normalization + NetworkError
+│   │   ├── DeezerPlayer.ts      Active playback + preloadable audio assets
+│   │   ├── PlayableTrackBuffer.svelte.ts Shared current+2 playable preload queue
 │   │   ├── ReplayPlayer.svelte.ts  Independent replay (Svelte 5 reactive)
 │   │   ├── TracklistGenerator.ts   O(1) weighted sampling + curation
 │   │   ├── SettingsService.ts      localStorage persistence
@@ -82,8 +83,8 @@ static/lisztnup.json
   → LoadingScreen (streamed with progress bar)
   → gameData store (2.5MB in memory)
   → TracklistGenerator (filters on init, O(1) sampling)
-  → GameScreen.sampleAndPreloadTrack() (on-demand per round)
-  → DeezerPlayer.load() (fetch preview from Deezer API, LUFS analysis)
+  → PlayableTrackBuffer (current track + 2 ready future tracks)
+  → DeezerPlayer.preload() (fetch preview from Deezer API, LUFS analysis)
   → playerState store (isPlaying, progress, track, analyserNode)
   → UI components (PlayerControl, Visualizer, TrackInfo)
 ```
@@ -92,7 +93,7 @@ static/lisztnup.json
 
 | Singleton            | Module                  | Scope                                                                                  |
 | -------------------- | ----------------------- | -------------------------------------------------------------------------------------- |
-| `deezerPlayer`       | `DeezerPlayer.ts`       | One per app — created in GameScreen, destroyed on unmount                              |
+| `deezerPlayer`       | `DeezerPlayer.ts`       | One active playback controller; buffered assets are owned by `PlayableTrackBuffer`     |
 | `playerState`        | `DeezerPlayer.ts`       | Store exported alongside player — reactive playback state                              |
 | `analytics`          | `game-logger.ts`        | One per app — fire-and-forget telemetry via sendBeacon                                 |
 | `settings`           | `stores/settings.ts`    | Custom store wrapping `SettingsService` (static class) — auto-persists to localStorage |
@@ -138,14 +139,7 @@ Pageview tracking: bot filtering (UA + Cloudflare Bot Management), 10-min dedup 
 
 ### Client Analytics (game-logger.ts)
 
-`GameAnalytics` class (exported as `analytics` singleton):
-
-- `startGame()`, `logPlacement()`, `updateProgress()`, `endGame()` → `POST /api/game/events`
-- `reportProblem()` → `POST /api/game/reports`
-- `sendFeedback()` → `POST /api/game/feedback`
-- Delivery: `navigator.sendBeacon()` with `fetch(..., { keepalive: true })` fallback
-- Completely silent failures — never blocks gameplay
-- Session ID via `crypto.randomUUID()` (with fallback)
+`GameAnalytics` sends game lifecycle, placement, report, and feedback events with `sendBeacon()` / keepalive fetch. Failures are silent and never block gameplay.
 
 ### Telegram Notifications (server/telegram.ts)
 

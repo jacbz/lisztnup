@@ -9,7 +9,10 @@ import { writable, derived } from 'svelte/store';
  */
 
 /** Whether the browser reports an active network connection. */
-export const isOnline = writable(typeof navigator !== 'undefined' ? navigator.onLine : true);
+const initialOnline = typeof navigator !== 'undefined' ? navigator.onLine : true;
+let currentOnline = initialOnline;
+
+export const isOnline = writable(initialOnline);
 
 /** Timestamp (ms) of the last observed offline→online transition, or 0. */
 export const lastReconnectedAt = writable(0);
@@ -20,10 +23,15 @@ export const isOffline = derived(isOnline, ($online) => !$online);
 // Register window listeners once (module scope, guarded for SSR)
 if (typeof window !== 'undefined') {
 	window.addEventListener('online', () => {
+		const wasOffline = !currentOnline;
+		currentOnline = true;
 		isOnline.set(true);
-		lastReconnectedAt.set(Date.now());
+		if (wasOffline) {
+			lastReconnectedAt.set(Date.now());
+		}
 	});
 	window.addEventListener('offline', () => {
+		currentOnline = false;
 		isOnline.set(false);
 	});
 }

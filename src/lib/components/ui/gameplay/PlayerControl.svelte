@@ -17,6 +17,7 @@
 		onStop?: () => void;
 		onReveal?: () => void;
 		onReplay?: () => void;
+		disabled?: boolean;
 	}
 
 	let {
@@ -29,7 +30,8 @@
 		onPlay = () => {},
 		onStop = () => {},
 		onReveal = () => {},
-		onReplay = () => {}
+		onReplay = () => {},
+		disabled = false
 	}: Props = $props();
 
 	let isHoldingReveal = $state(false);
@@ -58,6 +60,8 @@
 	});
 
 	function handleClick() {
+		if (disabled) return;
+
 		if (isRevealed) {
 			// In revealed state, clicking doesn't do anything (use continue button)
 			return;
@@ -76,6 +80,8 @@
 	}
 
 	function handlePointerDown() {
+		if (disabled) return;
+
 		if (playbackEnded && !isRevealed) {
 			// Start hold timer for replay
 			holdTimer = window.setTimeout(() => {
@@ -139,15 +145,18 @@
 			<!-- Play button -->
 			<button
 				type="button"
-				class="relative z-2 flex cursor-pointer touch-none items-center justify-center overflow-hidden rounded-full border-4 border-cyan-400 bg-black/20 shadow-[0_0_30px_rgba(34,211,238,0.6)] transition-all duration-200 hover:shadow-[0_0_40px_rgba(34,211,238,0.8)] active:scale-95"
-				style="width: {progressPath.buttonSize}px; height: {progressPath.buttonSize}px; font-size: {progressPath.buttonSize *
-					0.15}px;"
-				onclick={handleClick}
+					class="relative z-2 flex cursor-pointer touch-none items-center justify-center overflow-hidden rounded-full border-4 border-cyan-400 bg-black/20 shadow-[0_0_30px_rgba(34,211,238,0.6)] transition-all duration-200 hover:shadow-[0_0_40px_rgba(34,211,238,0.8)] active:scale-95"
+					class:cursor-not-allowed={disabled}
+					class:opacity-60={disabled}
+					style="width: {progressPath.buttonSize}px; height: {progressPath.buttonSize}px; font-size: {progressPath.buttonSize *
+						0.15}px;"
+					onclick={handleClick}
 				onpointerdown={handlePointerDown}
 				onpointerup={handlePointerUp}
-				onpointerleave={handlePointerUp}
-				aria-label={isPlaying ? 'Stop' : playbackEnded ? 'Reveal' : 'Play'}
-			>
+					onpointerleave={handlePointerUp}
+					{disabled}
+					aria-label={isPlaying ? 'Stop' : playbackEnded ? 'Reveal' : 'Play'}
+				>
 				{#if isPlaying && (!playerSize || playerSize > 100)}
 					<Visualizer
 						analyserNode={$playerState.analyserNode}
