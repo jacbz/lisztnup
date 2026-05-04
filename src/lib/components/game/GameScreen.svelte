@@ -583,7 +583,7 @@
 >
 	<div class="flex flex-col">
 		<div class="min-h-0 flex-1 rounded-2xl border border-slate-700/50 bg-slate-950/30 p-4">
-			<TrackInfo track={currentTrack} bleed="sm" />
+			<TrackInfo track={currentTrack} showMirror={$gameSession.players.length > 1} bleed="sm" />
 		</div>
 
 		<!-- Continue button -->

@@ -86,7 +86,7 @@
 		<!-- Left: Track Info -->
 		<div>
 			<div class="flex flex-col gap-3 rounded-2xl border border-slate-700 bg-slate-900 p-5">
-				<TrackInfo {track} bleed="md" />
+				<TrackInfo {track} bleed="md" showMirror={players.length > 1} />
 			</div>
 		</div>
 

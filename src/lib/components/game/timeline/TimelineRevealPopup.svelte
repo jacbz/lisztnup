@@ -325,7 +325,7 @@
 		<div class="flex h-full w-full flex-col gap-4">
 			<div class="text-center text-5xl font-black tracking-wide text-slate-200">{yearText}</div>
 			<div class="min-h-0 overflow-hidden rounded-2xl border border-slate-700/50 bg-slate-950/30 p-3">
-				<TrackInfo {track} bleed="sm" />
+				<TrackInfo {track} bleed="sm" showMirror={false} />
 			</div>
 
 			{#if purpose === 'turn' && isCorrect && scoreBreakdown}

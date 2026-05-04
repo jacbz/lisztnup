@@ -111,7 +111,7 @@ Uses `$effect` to watch `analyserNode`, starts visualization when available (han
 | --------------------- | ---------------------------------------------------------- | ------------------------------------------------ |
 | `PlayerControl`       | Multi-state play button with visualizer                    | GameScreen, TrackTable, TrackInfo                |
 | `PlayStopIcon`        | Morphing play↔stop SVG with spring animation               | PlayerControl                                    |
-| `TrackInfo`           | Track metadata display with replay, report, search         | Scoring flow, Timeline card inspect              |
+| `TrackInfo`           | Track metadata display with replay, report, search         | Scoring flow, Timeline card inspect; optional `showMirror` for mirrored tabletop layouts |
 | `ScoringCard`         | Per-player scoring with category toggles                   | ScoringScreen                                    |
 | `TrackTable`          | Sortable work table with audio preview playback            | LibraryViewer, WorkSelectorPopup                 |
 | `ComposerCloud`       | Word cloud with filters (country, gender, years)           | LibraryViewer                                    |
