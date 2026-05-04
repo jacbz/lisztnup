@@ -436,7 +436,7 @@
 			},
 			"step3": {
 				"title": "Punkte sammeln",
-				"desc": "Jede richtige Platzierung bringt Punkte. Je enger die Nachbarkarten beieinanderliegen, desto höher dein Schwierigkeitsbonus. Je weniger Fehler du machst, desto stärker dein Präzisionsbonus. Schnelle Entscheidungen pushen deinen Tempo-Bonus, und mehrere Treffer am Stück steigern deinen Serien-Multiplikator."
+				"desc": "Jede richtige Platzierung bringt Punkte. Je enger die Nachbarkarten beieinanderliegen, desto höher dein Schwierigkeitsbonus. Je weniger Fehler du machst, desto stärker dein Präzisionsbonus. Schnelle Entscheidungen pushen deinen Tempo-Bonus, und mehrere Treffer am Stück steigern deinen Streak-Multiplikator."
 			},
 			"step4": {
 				"title": "Wettlauf zum Sieg",
@@ -549,8 +549,8 @@
 		"drag": "Ziehen",
 		"confirm": "Bestätigen",
 		"accuracy": "{correct}/{total} richtig ({percentage} %)",
-		"streak": "{count} richtig hintereinander!",
-		"longestStreak": "Beste Serie: {count}",
+		"streak": "{count}-er Streak",
+		"longestStreak": "Beste Streak: {count}",
 		"help": {
 			"playFirst": "Spiele die Karte ab, um zu beginnen.",
 			"dragToPlace": "Ziehe die Karte in deine Timeline.",
@@ -561,7 +561,7 @@
 			"difficulty": "Schwierigkeit",
 			"gap": "{years}J Abstand",
 			"speed": "Geschwindigkeit",
-			"streak": "Serie",
+			"streak": "Streak",
 			"streakCount": "{count} am Stück",
 			"completionBonus": "Abschlussbonus",
 			"turnTotal": "Rundenwertung",

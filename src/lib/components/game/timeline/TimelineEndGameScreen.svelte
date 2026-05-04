@@ -10,7 +10,9 @@
 	import Flame from 'lucide-svelte/icons/flame';
 	import BarChart from 'lucide-svelte/icons/bar-chart-3';
 	import FeedbackPopup from '$lib/components/ui/gameplay/FeedbackPopup.svelte';
-	import LeaderboardSubmitPopup, { type LeaderboardPlayer } from '$lib/components/ui/screens/LeaderboardSubmitPopup.svelte';
+	import LeaderboardSubmitPopup, {
+		type LeaderboardPlayer
+	} from '$lib/components/ui/screens/LeaderboardSubmitPopup.svelte';
 	import { getPlayerToken } from '$lib/stores/identity';
 	import { STREAK_THRESHOLD } from '$lib/logic/timelineGame.svelte';
 	import PenLine from 'lucide-svelte/icons/pen-line';
@@ -57,9 +59,7 @@
 
 	// Winner: player with highest score (already includes efficiencyBonus)
 	// score already includes efficiencyBonus — no need to add it again
-	const sortedTimelines = $derived(
-		[...timelines].sort((a, b) => b.score - a.score)
-	);
+	const sortedTimelines = $derived([...timelines].sort((a, b) => b.score - a.score));
 
 	const winner = $derived.by(() => {
 		if (sortedTimelines.length === 0) return null;
@@ -85,10 +85,10 @@
 		});
 	});
 
-	// All players with a positive score can publish
+	// Only players who completed their timeline can publish or claim their score.
 	const leaderboardPlayers = $derived<LeaderboardPlayer[]>(
 		sortedTimelines
-			.filter((t) => t.score > 0)
+			.filter((t) => t.score > 0 && t.reachedTarget)
 			.map((t) => ({
 				name: t.player.name,
 				color: t.player.color,
@@ -129,7 +129,7 @@
 		}
 	});
 
-	// Fetch leaderboard + auto-submit all players with score > 0
+	// Fetch leaderboard + auto-submit completed timelines
 	$effect(() => {
 		if (!visible || sortedTimelines.length === 0) return;
 
@@ -149,14 +149,14 @@
 			})
 			.catch(() => {}); // silent
 
-		// Auto-submit all players with score > 0 (anonymous)
+		// Auto-submit only players who finished their timeline.
 		if (!autoSubmitted && leaderboardPlayers.length > 0) {
 			autoSubmitted = true;
 			const token = getPlayerToken();
 			const occurredAt = new Date().toISOString();
 			Promise.all(
 				sortedTimelines
-					.filter((t) => t.score > 0)
+					.filter((t) => t.score > 0 && t.reachedTarget)
 					.map((t) => {
 						const p = leaderboardPlayers.find((lp) => lp.name === t.player.name)!;
 						const timelineGids: [string, string][] = t.entries
@@ -235,7 +235,9 @@
 				{@const totalScore = Math.round(t.score)}
 				{@const isWinner = index === 0 && totalScore > 0}
 				<div
-					class="rounded-2xl border px-4 py-3 {isWinner ? 'border-amber-400/40 bg-amber-400/5' : 'border-slate-700/40 bg-slate-800/40'}"
+					class="rounded-2xl border px-4 py-3 {isWinner
+						? 'border-amber-400/40 bg-amber-400/5'
+						: 'border-slate-700/40 bg-slate-800/40'}"
 					style={isWinner ? 'box-shadow: 0 0 20px rgba(251,191,36,0.1);' : ''}
 				>
 					<div class="flex flex-col gap-2">
@@ -268,7 +270,10 @@
 									values: {
 										correct: t.correctPlacements,
 										total: t.totalPlacements,
-										percentage: t.totalPlacements > 0 ? Math.round((t.correctPlacements / t.totalPlacements) * 100) : 0
+										percentage:
+											t.totalPlacements > 0
+												? Math.round((t.correctPlacements / t.totalPlacements) * 100)
+												: 0
 									}
 								})}
 							</span>
@@ -296,7 +301,9 @@
 						<PenLine class="h-5 w-5" />
 						{$_('leaderboard.nameYourScore')}
 					</span>
-					<span class="text-xs font-normal text-amber-400/60">{$_('leaderboard.nameYourScoreSubtitle')}</span>
+					<span class="text-xs font-normal text-amber-400/60"
+						>{$_('leaderboard.nameYourScoreSubtitle')}</span
+					>
 				</button>
 			{/if}
 
@@ -374,14 +381,20 @@
 		<div class="flex gap-2">
 			<button
 				type="button"
-				onclick={() => { showHomeConfirm = false; onHome(); }}
+				onclick={() => {
+					showHomeConfirm = false;
+					onHome();
+				}}
 				class="flex-1 cursor-pointer rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all hover:bg-slate-700/60 hover:text-white"
 			>
 				{$_('endGame.home')}
 			</button>
 			<button
 				type="button"
-				onclick={() => { showHomeConfirm = false; showLeaderboardSubmit = true; }}
+				onclick={() => {
+					showHomeConfirm = false;
+					showLeaderboardSubmit = true;
+				}}
 				class="flex-1 cursor-pointer rounded-xl border-2 border-amber-400 bg-slate-900 px-4 py-3 text-sm font-bold text-amber-400 transition-all hover:bg-slate-800"
 			>
 				{$_('leaderboard.nameYourScore')}

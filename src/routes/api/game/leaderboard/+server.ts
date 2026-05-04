@@ -18,6 +18,14 @@ function parseClientTimestamp(value: unknown): string | null {
 	return new Date(ms).toISOString().slice(0, 19).replace('T', ' ');
 }
 
+function isCompletedTimeline(timeline: unknown, cardsToWin: unknown): boolean {
+	if (!Array.isArray(timeline)) return false;
+	if (typeof cardsToWin !== 'number' || !Number.isFinite(cardsToWin) || cardsToWin <= 0) {
+		return false;
+	}
+	return timeline.length >= cardsToWin;
+}
+
 export const GET: RequestHandler = async ({ url, platform }) => {
 	if (!platform?.env?.DB) {
 		return json({ entries: [] });
@@ -135,6 +143,9 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		if (score > cards * MAX_SCORE_PER_CARD) {
 			return json({ success: false, reason: 'Score implausible' }, { status: 400 });
 		}
+		if (timeline && !isCompletedTimeline(timeline, cardsToWin)) {
+			return json({ success: false, reason: 'Incomplete timeline' }, { status: 400 });
+		}
 
 		const db = platform.env.DB;
 		const ip = getClientAddress() || request.headers.get('cf-connecting-ip') || '0.0.0.0';
@@ -235,11 +246,19 @@ export const PATCH: RequestHandler = async ({ request, platform }) => {
 			.run();
 
 		if (result.meta.changes === 0) {
-			// Either entry doesn't exist, wrong token, already named, or expired (> 1h)
+			// Either entry doesn't exist, wrong token, already named, incomplete, or expired (> 1h)
 			const existing = await db
-				.prepare(`SELECT player_name, timestamp FROM scores WHERE id = ?1 AND player_token = ?2`)
+				.prepare(
+					`SELECT player_name, timestamp > datetime('now', '-1 hour') AS is_recent, cards_to_win, timeline
+					 FROM scores WHERE id = ?1 AND player_token = ?2`
+				)
 				.bind(id, playerToken)
-				.first<{ player_name: string | null; timestamp: string }>();
+				.first<{
+					player_name: string | null;
+					is_recent: number;
+					cards_to_win: number;
+					timeline: string | null;
+				}>();
 
 			if (!existing) {
 				return json({ success: false, reason: 'Not found' }, { status: 404 });
@@ -248,8 +267,21 @@ export const PATCH: RequestHandler = async ({ request, platform }) => {
 				return json({ success: false, reason: 'Already named' }, { status: 409 });
 			}
 
-			// If we reach here, it must be expired
-			return json({ success: false, reason: 'Expired' }, { status: 403 });
+			const timeline = (() => {
+				try {
+					return JSON.parse(existing.timeline ?? '[]');
+				} catch {
+					return null;
+				}
+			})();
+			if (!isCompletedTimeline(timeline, existing.cards_to_win)) {
+				return json({ success: false, reason: 'Incomplete timeline' }, { status: 403 });
+			}
+			if (!existing.is_recent) {
+				return json({ success: false, reason: 'Expired' }, { status: 403 });
+			}
+
+			return json({ success: false, reason: 'Already named' }, { status: 409 });
 		}
 
 		return json({ success: true });
