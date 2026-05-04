@@ -59,6 +59,8 @@
 	let leaderboardEntries = $state<LeaderboardEntry[]>([]);
 	let leaderboardLoading = $state(false);
 	let showExpandedLeaderboard = $state(false);
+	let leaderboardRequestId = 0;
+	let leaderboardFilterKey = '';
 	let showTimelinePopup = $state(false);
 	let timelineTracks = $state<Track[]>([]);
 	let timelinePlayerName = $state('');
@@ -107,11 +109,18 @@
 	// Load leaderboard when timeline mode is selected or settings change
 	$effect(() => {
 		if (selectedMode === 'timeline' && browser) {
-			leaderboardLoading = true;
-			leaderboardEntries = [];
 			const tracklist = localSettings.selectedTracklist;
 			const cards = localSettings.timelineCardsToWin;
 			const limit = showExpandedLeaderboard ? 20 : 6;
+			const filterKey = `${tracklist}:${cards}`;
+			const requestId = ++leaderboardRequestId;
+
+			leaderboardLoading = true;
+			if (filterKey !== leaderboardFilterKey) {
+				leaderboardEntries = [];
+				leaderboardFilterKey = filterKey;
+			}
+
 			getLeaderboard({
 				limit,
 				tracklist,
@@ -119,15 +128,21 @@
 				token: getPlayerToken()
 			})
 				.then((data) => {
+					if (requestId !== leaderboardRequestId) return;
 					leaderboardEntries = data.entries ?? [];
 				})
 				.catch(() => {
+					if (requestId !== leaderboardRequestId) return;
 					leaderboardEntries = [];
 				})
 				.finally(() => {
+					if (requestId !== leaderboardRequestId) return;
 					leaderboardLoading = false;
 				});
 		} else {
+			leaderboardRequestId += 1;
+			leaderboardFilterKey = '';
+			leaderboardEntries = [];
 			leaderboardLoading = false;
 		}
 	});

@@ -123,7 +123,7 @@ Uses `$effect` to watch `analyserNode`, starts visualization when available (han
 | `QRCode`              | QR code generator (cyan on dark gray)                      | ShareLinkPopup, BingoSetup                       |
 | `SearchPopup`         | External search (12 providers incl. streaming, reference)  | TrackInfo                                        |
 | `ModeRulesPopup`      | Game rules with screenshots                                | ModeSelector                                     |
-| `TimelineLeaderboard` | Shared row snippet for top + expanded rows (single layout) | HomeScreen                                       |
+| `TimelineLeaderboard` | Top + expanded timeline scores; keeps rows mounted while expansion fetches | HomeScreen                                       |
 | `AboutPopup`          | App info, donation link, feedback launcher                 | HomeScreen                                       |
 | `AppFooter`           | Attribution footer with library/feedback links             | HomeScreen                                       |
 | `FeedbackPopup`       | User feedback submission                                   | HomeScreen, EndGameScreen, AboutPopup, AppFooter |

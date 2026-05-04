@@ -84,7 +84,7 @@
 			{/each}
 		</div>
 		{#if showExpanded && entries.length > 5}
-			<div transition:slide={{ duration: 200 }}>
+			<div in:slide={{ duration: 200 }} out:slide={{ duration: 150 }}>
 				<div class="mt-1 grid grid-cols-[auto_minmax(0,1fr)_auto_auto_auto] items-center gap-x-[clamp(0.375rem,1.5vw,1.5rem)] gap-y-1 text-xs text-left">
 					{#each entries.slice(5) as entry, i (i)}
 						{@render leaderboardRow(entry, i + 6)}
