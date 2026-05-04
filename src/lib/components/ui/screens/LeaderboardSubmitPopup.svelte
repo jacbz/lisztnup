@@ -6,6 +6,7 @@
 	import PenLine from 'lucide-svelte/icons/pen-line';
 	import Check from 'lucide-svelte/icons/check';
 	import Loader2 from 'lucide-svelte/icons/loader-2';
+	import { patchLeaderboardName } from '$lib/services/client';
 
 	export interface LeaderboardPlayer {
 		name: string;
@@ -64,21 +65,13 @@
 					sp.color === p.color ? { ...sp, name: finalName } : sp
 				)
 			}));
-			const res = await fetch('/api/game/leaderboard', {
-				method: 'PATCH',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					id: entryId,
-					playerToken: getPlayerToken(),
-					playerName: finalName
-				})
+			await patchLeaderboardName({
+				id: entryId,
+				playerToken: getPlayerToken(),
+				playerName: finalName
 			});
-			if (res.ok) {
-				submitted[index] = true;
-				onNamed();
-			} else {
-				errors[index] = true;
-			}
+			submitted[index] = true;
+			onNamed();
 		} catch {
 			errors[index] = true;
 		} finally {

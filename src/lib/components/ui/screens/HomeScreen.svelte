@@ -30,6 +30,7 @@
 	import TimelinePopup from '$lib/components/game/timeline/TimelinePopup.svelte';
 	import TimelineLeaderboard from '$lib/components/ui/setup/TimelineLeaderboard.svelte';
 	import { fade, slide } from 'svelte/transition';
+	import { getLeaderboard } from '$lib/services/client';
 
 	interface Props {
 		onStart?: (
@@ -111,12 +112,12 @@
 			const tracklist = localSettings.selectedTracklist;
 			const cards = localSettings.timelineCardsToWin;
 			const limit = showExpandedLeaderboard ? 20 : 6;
-			const parts = [`limit=${limit}`];
-			if (tracklist) parts.push(`tracklist=${encodeURIComponent(tracklist)}`);
-			if (cards) parts.push(`cardsToWin=${encodeURIComponent(cards)}`);
-			parts.push(`token=${encodeURIComponent(getPlayerToken())}`);
-			fetch(`/api/game/leaderboard?${parts.join('&')}`)
-				.then((res) => (res.ok ? res.json() : { entries: [] }))
+			getLeaderboard({
+				limit,
+				tracklist,
+				cardsToWin: cards,
+				token: getPlayerToken()
+			})
 				.then((data) => {
 					leaderboardEntries = data.entries ?? [];
 				})
@@ -135,14 +136,12 @@
 	$effect(() => {
 		if (showDailyChallenge && browser) {
 			const cards = localSettings.timelineCardsToWin;
-			const parts = [
-				'limit=1',
-				`tracklist=${encodeURIComponent(dailyTracklist.id)}`,
-				`cardsToWin=${encodeURIComponent(cards)}`,
-				`token=${encodeURIComponent(getPlayerToken())}`
-			];
-			fetch(`/api/game/leaderboard?${parts.join('&')}`)
-				.then((res) => (res.ok ? res.json() : { entries: [] }))
+			getLeaderboard({
+				limit: 1,
+				tracklist: dailyTracklist.id,
+				cardsToWin: cards,
+				token: getPlayerToken()
+			})
 				.then((data) => {
 					const top = data.entries?.[0];
 					dailyHighScore = top ? { name: top.player_name, score: top.score } : null;

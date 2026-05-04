@@ -2,6 +2,16 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { hashUser, getCurrentSalt } from '$lib/server/analytics';
 
+function parseClientTimestamp(value: unknown): string | null {
+	if (typeof value !== 'string') return null;
+	const ms = Date.parse(value);
+	if (!Number.isFinite(ms)) return null;
+	const now = Date.now();
+	if (ms > now + 5 * 60_000) return null;
+	if (ms < now - 30 * 24 * 60 * 60_000) return null;
+	return new Date(ms).toISOString().slice(0, 19).replace('T', ' ');
+}
+
 export const POST: RequestHandler = async ({ request, platform, getClientAddress }) => {
 	// Fast exit if no D1 binding
 	if (!platform?.env?.DB) {
@@ -16,6 +26,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		const currentDay = getCurrentSalt();
 		const userHash = await hashUser(ip, currentDay);
 		const country = cf?.country || 'UNKNOWN';
+		const occurredAt = parseClientTimestamp(payload.occurredAt);
 
 		// Fire-and-forget the database operations using execution context
 		const dbOp = async () => {
@@ -27,10 +38,10 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 					await db
 						.prepare(
 							`INSERT INTO game_sessions (id, started, updated, state, mode, tracklist_id, country, user_hash, locale, game_info) 
-					 VALUES (?1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'started', ?2, ?3, ?4, ?5, ?6, ?7)
+					 VALUES (?1, COALESCE(?8, CURRENT_TIMESTAMP), COALESCE(?8, CURRENT_TIMESTAMP), 'started', ?2, ?3, ?4, ?5, ?6, ?7)
 					 ON CONFLICT(id) DO UPDATE SET 
-					 	started = COALESCE(game_sessions.started, CURRENT_TIMESTAMP),
-					 	updated = CURRENT_TIMESTAMP,
+					 	started = COALESCE(game_sessions.started, COALESCE(?8, CURRENT_TIMESTAMP)),
+					 	updated = COALESCE(?8, CURRENT_TIMESTAMP),
 						 	mode = ?2,
 						 	tracklist_id = ?3,
 						 	country = ?4,
@@ -45,7 +56,8 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 							country,
 							userHash,
 							payload.locale,
-							payload.gameInfo ? JSON.stringify(payload.gameInfo) : '{}'
+							payload.gameInfo ? JSON.stringify(payload.gameInfo) : '{}',
+							occurredAt
 						)
 						.run();
 				} else if (payload.type === 'game_end') {
@@ -56,13 +68,13 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 					await db
 						.prepare(
 							`INSERT INTO game_sessions (id, updated, state, country, user_hash, game_info) 
-					 VALUES (?1, CURRENT_TIMESTAMP, ?2, ?3, ?4, ?5)
+					 VALUES (?1, COALESCE(?6, CURRENT_TIMESTAMP), ?2, ?3, ?4, ?5)
 					 ON CONFLICT(id) DO UPDATE SET 
-					 	updated = CURRENT_TIMESTAMP,
+					 	updated = COALESCE(?6, CURRENT_TIMESTAMP),
 						 	state = ?2,
 						 	game_info = json_patch(COALESCE(game_sessions.game_info, '{}'), ?5)`
 						)
-						.bind(payload.sessionId, newState, country, userHash, gameInfoJson)
+						.bind(payload.sessionId, newState, country, userHash, gameInfoJson, occurredAt)
 						.run();
 				} else if (payload.type === 'game_progress') {
 					// Use UPSERT so we don't lose data if progress arrives before game_start
@@ -70,19 +82,19 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 					await db
 						.prepare(
 							`INSERT INTO game_sessions (id, updated, state, country, user_hash, game_info) 
-						 VALUES (?1, CURRENT_TIMESTAMP, 'in_progress', ?2, ?3, ?4)
+						 VALUES (?1, COALESCE(?5, CURRENT_TIMESTAMP), 'in_progress', ?2, ?3, ?4)
 						 ON CONFLICT(id) DO UPDATE SET 
-							updated = CURRENT_TIMESTAMP,
+							updated = COALESCE(?5, CURRENT_TIMESTAMP),
 								state = CASE WHEN game_sessions.state IN ('completed', 'abandoned') THEN game_sessions.state ELSE 'in_progress' END,
 								game_info = json_patch(COALESCE(game_sessions.game_info, '{}'), ?4)`
 						)
-						.bind(payload.sessionId, country, userHash, gameInfoJson)
+						.bind(payload.sessionId, country, userHash, gameInfoJson, occurredAt)
 						.run();
 				} else if (payload.type === 'timeline_placement') {
 					await db
 						.prepare(
-							`INSERT INTO timeline_placements (session_id, work_gid, part_gid, placed_correctly, turn_score, seconds_taken, streak_count, gap) 
-						 VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)`
+							`INSERT INTO timeline_placements (session_id, work_gid, part_gid, placed_correctly, turn_score, seconds_taken, streak_count, gap, timestamp) 
+						 VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, COALESCE(?9, CURRENT_TIMESTAMP))`
 						)
 						.bind(
 							payload.sessionId,
@@ -92,7 +104,8 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 							payload.turnScore ?? null,
 							payload.secondsTaken ?? null,
 							payload.streakCount ?? null,
-							payload.gap ?? null
+							payload.gap ?? null,
+							occurredAt
 						)
 						.run();
 				}

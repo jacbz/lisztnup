@@ -17,6 +17,7 @@ src/
 │   ├── utils/                 Pure utilities (compression, formatters, random, uuid, svg, fontLoader, search)
 │   ├── i18n/                  svelte-i18n setup + 10 locale JSON files
 │   ├── services/              Business logic singletons
+│   │   ├── client.ts           Browser API client + leaderboard cache + background retry queue
 │   │   ├── DeezerPlayer.ts      Active playback + preloadable audio assets
 │   │   ├── PlayableTrackBuffer.svelte.ts Shared current+2 playable preload queue
 │   │   ├── ReplayPlayer.svelte.ts  Independent replay (Svelte 5 reactive)

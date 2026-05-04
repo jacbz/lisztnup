@@ -8,6 +8,16 @@ const MAX_CARDS = 500;
 const MAX_SCORE_PER_CARD = 6000;
 const MAX_SUBMISSIONS_PER_HOUR = 10;
 
+function parseClientTimestamp(value: unknown): string | null {
+	if (typeof value !== 'string') return null;
+	const ms = Date.parse(value);
+	if (!Number.isFinite(ms)) return null;
+	const now = Date.now();
+	if (ms > now + 5 * 60_000) return null;
+	if (ms < now - 30 * 24 * 60 * 60_000) return null;
+	return new Date(ms).toISOString().slice(0, 19).replace('T', ' ');
+}
+
 export const GET: RequestHandler = async ({ url, platform }) => {
 	if (!platform?.env?.DB) {
 		return json({ entries: [] });
@@ -94,7 +104,8 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 			tracklistId,
 			cardsToWin,
 			sessionId,
-			timeline
+			timeline,
+			occurredAt
 		} = body;
 
 		// ── Required field validation ──────────────────────
@@ -102,7 +113,8 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 			return json({ success: false, reason: 'Invalid payload' }, { status: 400 });
 		}
 		// playerName is optional — null means anonymous submission
-		const nameProvided = playerName != null && typeof playerName === 'string' && playerName.length > 0;
+		const nameProvided =
+			playerName != null && typeof playerName === 'string' && playerName.length > 0;
 		if (nameProvided && playerName.length > MAX_NAME_LENGTH) {
 			return json({ success: false, reason: 'Invalid name' }, { status: 400 });
 		}
@@ -128,6 +140,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		const ip = getClientAddress() || request.headers.get('cf-connecting-ip') || '0.0.0.0';
 		const userHash = await hashUser(ip, getCurrentSalt());
 		const country = platform.cf?.country || 'UNKNOWN';
+		const timestamp = parseClientTimestamp(occurredAt);
 
 		// ── Duplicate check: same session + player (named submissions only) ──
 		// Anonymous auto-submits skip dedup — rate limiter prevents abuse,
@@ -160,10 +173,11 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		// ── Insert ────────────────────────────────────────
 		const result = await db
 			.prepare(
-				`INSERT INTO scores (player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, user_hash, session_id, timeline)
-			 VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)`
+				`INSERT INTO scores (timestamp, player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, user_hash, session_id, timeline)
+			 VALUES (COALESCE(?1, CURRENT_TIMESTAMP), ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13)`
 			)
 			.bind(
+				timestamp,
 				playerToken,
 				nameProvided ? playerName.slice(0, MAX_NAME_LENGTH) : null,
 				Math.round(score),
@@ -233,7 +247,7 @@ export const PATCH: RequestHandler = async ({ request, platform }) => {
 			if (existing.player_name !== null) {
 				return json({ success: false, reason: 'Already named' }, { status: 409 });
 			}
-			
+
 			// If we reach here, it must be expired
 			return json({ success: false, reason: 'Expired' }, { status: 403 });
 		}

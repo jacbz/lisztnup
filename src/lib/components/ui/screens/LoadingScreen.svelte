@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { loadGameData, dataLoadProgress } from '$lib/stores';
 	import { _ } from 'svelte-i18n';
+	import { preloadAsset } from '$lib/services/client';
 
 	const SOUND_FILES = [
 		'/correct.mp3',
@@ -20,11 +21,7 @@
 		// Preload all sound effects into the browser HTTP cache in parallel.
 		// Runs concurrently with the JSON load; failures are silently ignored so a
 		// missing audio file never blocks the game from starting.
-		SOUND_FILES.forEach((url) =>
-			fetch(url)
-				.then((r) => r.blob())
-				.catch(() => {})
-		);
+		SOUND_FILES.forEach(preloadAsset);
 
 		try {
 			await loadGameData();

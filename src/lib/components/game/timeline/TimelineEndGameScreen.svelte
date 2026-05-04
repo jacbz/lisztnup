@@ -17,7 +17,7 @@
 	import Crown from 'lucide-svelte/icons/crown';
 	import { onMount } from 'svelte';
 	import { scale, slide } from 'svelte/transition';
-	import { SvelteURLSearchParams } from 'svelte/reactivity';
+	import { getLeaderboard, submitLeaderboard } from '$lib/services/client';
 
 	interface FinalTimeline {
 		player: Player;
@@ -133,14 +133,12 @@
 	$effect(() => {
 		if (!visible || sortedTimelines.length === 0) return;
 
-		const params = new SvelteURLSearchParams();
-		if (tracklistId) params.set('tracklist', tracklistId);
-		params.set('cardsToWin', String(cardsToWin));
-		params.set('limit', '50');
-		params.set('token', getPlayerToken());
-
-		fetch(`/api/game/leaderboard?${params}`)
-			.then((r) => r.json())
+		getLeaderboard({
+			tracklist: tracklistId,
+			cardsToWin,
+			limit: 50,
+			token: getPlayerToken()
+		})
 			.then((data: { entries?: { player_name: string | null; score: number }[] }) => {
 				const entries = data.entries ?? [];
 				// New global high score?
@@ -155,19 +153,18 @@
 		if (!autoSubmitted && leaderboardPlayers.length > 0) {
 			autoSubmitted = true;
 			const token = getPlayerToken();
+			const occurredAt = new Date().toISOString();
 			Promise.all(
 				sortedTimelines
 					.filter((t) => t.score > 0)
 					.map((t) => {
 						const p = leaderboardPlayers.find((lp) => lp.name === t.player.name)!;
-						const timelineGids = t.entries
+						const timelineGids: [string, string][] = t.entries
 							.filter((e) => e.confirmed && e.correct !== false)
 							.map((e) => [e.track.work.gid, e.track.part.gid]);
 
-						return fetch('/api/game/leaderboard', {
-							method: 'POST',
-							headers: { 'Content-Type': 'application/json' },
-							body: JSON.stringify({
+						return submitLeaderboard(
+							{
 								playerToken: token,
 								playerName: null,
 								score: Math.round(p.score),
@@ -178,9 +175,9 @@
 								cardsToWin,
 								sessionId,
 								timeline: timelineGids
-							})
-						})
-							.then((r) => (r.ok ? r.json() : null))
+							},
+							{ queueOnTransient: true, occurredAt }
+						)
 							.then((data) => data?.id ?? null)
 							.catch(() => null);
 					})

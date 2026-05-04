@@ -4,6 +4,16 @@ import { hashUser, getCurrentSalt } from '$lib/server/analytics';
 import { sendTelegramMessage, formatReportMessage, formatSessionBlock } from '$lib/server/telegram';
 import type { GameSessionRow } from '$lib/server/telegram';
 
+function parseClientTimestamp(value: unknown): string | null {
+	if (typeof value !== 'string') return null;
+	const ms = Date.parse(value);
+	if (!Number.isFinite(ms)) return null;
+	const now = Date.now();
+	if (ms > now + 5 * 60_000) return null;
+	if (ms < now - 30 * 24 * 60 * 60_000) return null;
+	return new Date(ms).toISOString().slice(0, 19).replace('T', ' ');
+}
+
 export const POST: RequestHandler = async ({ request, platform, getClientAddress }) => {
 	if (!platform?.env?.DB) {
 		return json({ success: false, reason: 'No DB configured' }, { status: 503 });
@@ -24,6 +34,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		const userHash = await hashUser(ip, currentDay);
 		const country = cf?.country || 'UNKNOWN';
 		const email = typeof payload.email === 'string' ? payload.email.trim().slice(0, 254) : null;
+		const timestamp = parseClientTimestamp(payload.occurredAt);
 
 		const db = platform.env!.DB;
 		const sessionId = typeof payload.sessionId === 'string' ? payload.sessionId : null;
@@ -40,10 +51,11 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 
 		await db
 			.prepare(
-				`INSERT INTO problem_reports (session_id, user_hash, country, message, email, deezer_id, composer, work, part, work_type, work_years) 
-				 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+				`INSERT INTO problem_reports (timestamp, session_id, user_hash, country, message, email, deezer_id, composer, work, part, work_type, work_years) 
+				 VALUES (COALESCE(?, CURRENT_TIMESTAMP), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 			)
 			.bind(
+				timestamp,
 				sessionId,
 				userHash,
 				country,

@@ -3,6 +3,8 @@
  * Ensures the network requests never block the main JS thread while playing.
  */
 
+import { postBackgroundJson, postJson } from '$lib/services/client';
+
 // Basic generator for simple secure random UUIDs without heavy crypto deps
 function generateSessionId(): string {
 	if (typeof crypto !== 'undefined' && crypto.randomUUID) {
@@ -21,20 +23,16 @@ class GameAnalytics {
 	 * or standard fetch, prioritizing Keep-Alive.
 	 */
 	private dispatch(payload: Record<string, unknown>) {
+		const stampedPayload = { ...payload, occurredAt: new Date().toISOString() };
 		try {
 			if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
 				// Reliable transmission even when the tab is closing
 				navigator.sendBeacon(
 					this.endpoint,
-					new Blob([JSON.stringify(payload)], { type: 'application/json' })
+					new Blob([JSON.stringify(stampedPayload)], { type: 'application/json' })
 				);
 			} else {
-				fetch(this.endpoint, {
-					method: 'POST',
-					keepalive: true,
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify(payload)
-				}).catch((err) => console.log('Analytics dropped', err));
+				postBackgroundJson(this.endpoint, stampedPayload, { keepalive: true });
 			}
 		} catch {
 			// Fail completely silently on the client
@@ -133,12 +131,8 @@ class GameAnalytics {
 		};
 
 		try {
-			const response = await fetch('/api/game/reports', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(payload)
-			});
-			return response.ok;
+			await postJson('/api/game/reports', payload);
+			return true;
 		} catch (e) {
 			console.error('Failed to send problem report', e);
 			return false;
@@ -156,12 +150,8 @@ class GameAnalytics {
 		if (email) payload.email = email;
 
 		try {
-			const response = await fetch('/api/game/feedback', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(payload)
-			});
-			return response.ok;
+			await postJson('/api/game/feedback', payload);
+			return true;
 		} catch (e) {
 			console.error('Failed to send feedback', e);
 			return false;

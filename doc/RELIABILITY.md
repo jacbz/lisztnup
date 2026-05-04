@@ -28,6 +28,26 @@ This prevents indefinite hangs on stalled connections.
 
 `DeezerPlayer.preload()` checks `navigator.onLine` before loading and awaits `waitForOnline()` if offline.
 
+### Browser API Client
+
+`services/client.ts` centralizes browser API fetches:
+
+- `ApiNetworkError` wraps transient fetch failures like offline/disconnected requests
+- Leaderboard GETs are cached in memory for 1 minute and deduplicated while in flight
+- Successful leaderboard POST/PATCH invalidates cached leaderboard reads
+- Explicit user actions (name PATCH, feedback, reports) are single-attempt; the UI decides if the user retries
+
+### Background Write Retry
+
+Only fire-and-forget writes are persisted for retry:
+
+- Analytics fetch fallback events when `sendBeacon` is unavailable
+- Timeline anonymous leaderboard auto-submit POSTs
+
+Queued writes are stored in localStorage with FIFO `clientSequence`, `occurredAt`, `createdAt`, `lastAttemptAt`, `nextAttemptAt`, and `attempts`. A single drain loop replays in order on startup, enqueue, and browser `online`; one blocked item prevents later items from replaying out of order. Retries use capped backoff and skip permanent 400/403/409 responses.
+
+Queued payloads include UTC `occurredAt`; server routes validate it and use it for analytics/score timestamps while rate limits still use server receive time.
+
 ### Exponential Backoff Retry
 
 `PlayableTrackBuffer` on `NetworkError`:

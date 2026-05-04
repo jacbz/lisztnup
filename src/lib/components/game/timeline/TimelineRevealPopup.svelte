@@ -440,7 +440,7 @@
 
 			<!-- Continue Button (animates in when finished, scrolls into view) -->
 			{#if purpose === 'turn' && animationsFinished}
-				<div class="pt-2" transition:slide={{ duration: 400, easing: cubicOut }}>
+				<div transition:slide={{ duration: 400, easing: cubicOut }}>
 					<button
 						type="button"
 						onclick={() => onClose()}
