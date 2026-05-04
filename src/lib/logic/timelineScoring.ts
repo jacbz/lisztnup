@@ -7,7 +7,7 @@ export const BASE_SCORE = 1000;
 export const MAX_SPEED_TIME = 20;
 export const SPEED_BONUS_COEFFICIENT = 0.25;
 export const TOTAL_SPAN = MAX_WORK_YEAR - MIN_WORK_YEAR;
-export const DIFFICULTY_EDGE_WEIGHT = 0.15;
+export const DIFFICULTY_COMPRESSION_CONSTANT = 100;
 
 /** Streak multiplier tiers. Index = streak count. */
 const STREAK_MULTIPLIERS: Record<number, number> = {
@@ -22,17 +22,17 @@ const STREAK_CAP_MULTIPLIER = 2.0;
 // ─── Pure scoring functions ────────────────────────────────
 
 /**
- * Difficulty bonus based on total slot gap, blended toward boundary closeness.
- * Close calls near an existing card are more rewarding than centered placements.
+ * Difficulty bonus based on an effective gap that compresses wide slots when
+ * the placement is close to a boundary card.
  */
 export function calculateDifficultyBonus(
 	totalGap: number,
 	boundaryDistance: number,
-	edgeWeight = DIFFICULTY_EDGE_WEIGHT
+	compressionConstant = DIFFICULTY_COMPRESSION_CONSTANT
 ): number {
-	const basePts = 2310 * (10 / (totalGap + 10));
-	const edgePts = 2310 * (10 / (boundaryDistance * 2 + 10));
-	return basePts + edgeWeight * (edgePts - basePts);
+	const effectiveGap =
+		totalGap * ((2 * boundaryDistance + compressionConstant) / (totalGap + compressionConstant));
+	return 2310 * (10 / (effectiveGap + 10));
 }
 
 /**
@@ -172,7 +172,7 @@ export function calculateTurnScore(input: TurnScoreInput): TurnScoreBreakdown {
  * Formula: round(max(1, round(75 × gapFactor × edgeFactor)) × timeMult)
  *   gapFactor  = max(0, (150 - gap) / 150)
  *   edgeFactor = max(0, (50 - edgeDist) / 50)
- *   timeMult   = max(0, min(1, (3 × target - attempts) / target))
+ *   timeMult   = max(0, min(1, (4 × target - attempts) / target))
  *
  * @param gap        Year distance between the two boundary cards of the correct slot.
  * @param cardYear   The true year of the placed card.
@@ -200,7 +200,7 @@ export function calculateConsolationScore(
 	const gapFactor = Math.max(0, (150 - effectiveGap) / 150);
 	const edgeFactor = Math.max(0, (50 - edgeDist) / 50);
 	const timeMultiplier =
-		target > 0 ? Math.max(0, Math.min(1, (3 * target - attempts) / target)) : 0;
+		target > 0 ? Math.max(0, Math.min(1, (4 * target - attempts) / target)) : 0;
 
 	const baseConsolation = Math.max(1, Math.round(75 * gapFactor * edgeFactor));
 	const consolationScore = Math.round(baseConsolation * timeMultiplier);

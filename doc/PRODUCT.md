@@ -14,32 +14,7 @@ Players take clock-wise turns placing tracks on their own chronological timeline
 
 - 1–10 players, each assigned a screen edge (Bottom/Left/Top/Right)
 - Year-required filtering ensures all tracks have valid dates
-- **Scoring**: Correct placements combine base points, difficulty, mastery, speed, and streak.
-  - Turn score: $$\text{Score}_{\text{turn}} = \left(1000 + D + M\right) \times \text{Sp} \times \text{Str}$$
-  - Difficulty $D$ blends two values: $$D = \text{Base} + W\left(\text{Edge} - \text{Base}\right)$$
-    - $\text{Base}$ rewards tight correct slots using total gap $G$: $$\text{Base} = 2310 \times \frac{10}{G + 10}$$
-    - $\text{Edge}$ rewards closeness to the nearest boundary card $d_{\min}$: $$\text{Edge} = 2310 \times \frac{10}{2d_{\min} + 10}$$
-    - $W$ is a weighting factor, currently $W = 0.15$.
-  - Mastery $M$ uses correct placements $C$ and attempts $A$: $$\text{Mastery} = 500 \times \text{min}\left(1, \frac{C}{\text{max}\left(C, A - 1\right)}\right)^2$$
-  - Speed $\text{Sp}$ uses seconds taken $s$: $$\text{Speed} = 1 + 0.25 \times \left(\frac{\text{max}\left(0, 20 - s\right)}{19}\right)^2$$
-  - Streak multiplier $Str$ is a function of streak count $S$:
-    $$
-    	ext{Str}(S)=
-    \begin{cases}
-    1.00,& S\le 1\\
-    1.10,& S=2\\
-    1.35,& S=3\\
-    1.55,& S=4\\
-    1.75,& S=5\\
-    2.00,& S\ge 6
-    \end{cases}
-    $$
-    Wrong placements decay streak count $S$ by $\text{max}\left(0, \text{min}\left(\frac{S}{2}, S - 3\right)\right)$.
-  - Completion bonus uses target cards $T$ and attempts $A$: $$\text{Completion} = \left(\frac{T}{A}\right)^2 \times \left(T \times 750\right)$$
-- **Consolation**: Misses can still score consolation, but it weakens in long games: $$\text{Score}_{\text{turn}} = \text{max}\left(1, \text{round}\left(75 \times \text{gapF} \times \text{edgeF}\right)\right) \times \text{timeMult}$$
-  - Gap factor $\text{gapF}$ rewards narrow correct slots using total gap $G$: $$\text{gapF} = \text{max}\left(0, \frac{150 - G}{150}\right)$$
-  - Edge factor $\text{edgeF}$ rewards closeness to the correct-slot boundary $d_{\text{edge}}$: $$\text{edgeF} = \text{max}\left(0, \frac{50 - d_{\text{edge}}}{50}\right)$$
-  - Time multiplier $\text{timeMult}$ stays at 1 through $2T$ attempts, then fades linearly to 0 at $3T$: $$\text{timeMult} = \text{max}\left(0, \text{min}\left(1, \frac{3T - A}{T}\right)\right)$$
+- **Scoring**: Rewards correct placement, tight chronological gaps, close boundary calls, accuracy, speed, and streaks. Misses can earn early consolation so near-correct attempts still matter, but repeated misses fade out. Detailed formulas live in [SCORING.md](SCORING.md).
 - **Endgame**: When any player reaches target, endgame activates. In multiplayer, current round completes (all players finish). Winner = highest total score (not card count). Amber edge glow + "FINAL ROUND" badges during endgame.
 - **Leaderboard**: Only players who complete their timeline can publish or claim scores on the server-side leaderboard (`leaderboard` D1 table). Anti-cheat: server validates score ceiling per card count and rejects incomplete timelines.
 
