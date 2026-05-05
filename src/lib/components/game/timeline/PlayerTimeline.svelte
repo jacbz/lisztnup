@@ -52,7 +52,7 @@
 		hideHeader?: boolean;
 		hideCount?: boolean;
 		animateCards?: boolean;
-		minSlots?: number;
+		fixedWidth?: number | null;
 	}
 
 	let {
@@ -82,7 +82,7 @@
 		hideHeader = false,
 		hideCount = false,
 		animateCards = true,
-		minSlots = 0
+		fixedWidth = null
 	}: Props = $props();
 
 	let el: HTMLDivElement | null = $state(null);
@@ -91,8 +91,9 @@
 	});
 
 	const cardSize = $derived(active && !compact ? 'sm' : 'xs');
-	const reservedSlotCount = $derived(Math.max(entries.length, minSlots, 1));
-	const placeholderSlots = $derived(range(Math.max(0, reservedSlotCount - entries.length)));
+	const fixedWidthStyle = $derived(
+		typeof fixedWidth === 'number' && fixedWidth > 0 ? `width: ${Math.ceil(fixedWidth)}px;` : ''
+	);
 
 	const flameGlow = $derived.by(() => {
 		return getStreakGlow(streakCount, active);
@@ -107,15 +108,12 @@
 			duration: animateCards ? (params.duration ?? 400) : 0
 		});
 	}
-
-	function range(length: number): number[] {
-		return Array.from(Array(length).keys());
-	}
 </script>
 
 <div
 	class={`relative w-fit transition-all duration-300 ease-out ${isVertical ? 'max-w-[92dvh]' : 'max-w-[92vw]'}`}
 	data-rotation={rotation}
+	style={fixedWidthStyle}
 >
 	{#if helpText || showConfirm}
 		<div
@@ -154,7 +152,7 @@
 			? `box-shadow: ${flameGlow || (acceptingDrop ? `0 0 25px rgba(34,211,238,0.35)` : `0 0 15px ${playerColor}44`)}; min-width: ${isVertical ? '92dvh' : '92vw'}; container-type: inline-size;`
 			: flameGlow
 				? `box-shadow: ${flameGlow};`
-				: ''}--entry-count: {reservedSlotCount}; --gap: calc(var(--spacing) * 1.5);"
+				: ''}--entry-count: {Math.max(entries.length, 1)}; --gap: calc(var(--spacing) * 1.5);"
 	>
 		{#if !hideHeader}
 			<div
@@ -240,17 +238,6 @@
 						/>
 					</div>
 				</div>
-			</div>
-		{/each}
-		{#each placeholderSlots as slot (slot)}
-			<div class="pointer-events-none opacity-0">
-				<TimelineCard
-					state="revealed"
-					draggable={false}
-					size={cardSize}
-					borderVariant="neutral"
-					yearText=""
-				/>
 			</div>
 		{/each}
 	</div>

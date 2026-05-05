@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tick } from 'svelte';
 	import Popup from '$lib/components/ui/primitives/Popup.svelte';
 	import Flag from '$lib/components/ui/primitives/Flag.svelte';
 	import { _, locale } from 'svelte-i18n';
@@ -46,10 +47,15 @@
 	let selectedStep = $state(0);
 	let touchedSlider = $state(false);
 	let sliderOpenKey = $state(0);
+	let timelineEl: HTMLDivElement | null = $state(null);
+	let finalTimelineWidth = $state(0);
 	let sliderOpenCounter = 0;
 	let wasVisible = false;
+	let measureTimelineTimeout: ReturnType<typeof setTimeout> | null = null;
 
-	const turns = $derived<TimelineReplayTurn[]>(log?.turns ?? []);
+	const turns = $derived<TimelineReplayTurn[]>(
+		Array.isArray(log?.turns) ? log.turns.filter(isReplayTurn) : []
+	);
 	const maxStep = $derived(turns.length);
 	const correctCount = $derived(turns.filter((turn) => turn.ok).length);
 	const accuracyPercent = $derived(attempts > 0 ? Math.round((correctCount / attempts) * 100) : 0);
@@ -69,8 +75,16 @@
 			selectedStep = maxStep;
 			touchedSlider = false;
 			sliderOpenKey = ++sliderOpenCounter;
+			finalTimelineWidth = 0;
+			if (measureTimelineTimeout) clearTimeout(measureTimelineTimeout);
+			measureTimelineTimeout = setTimeout(measureVisibleTimelineWidth, 320);
 		} else if (!visible) {
 			wasVisible = false;
+			finalTimelineWidth = 0;
+			if (measureTimelineTimeout) {
+				clearTimeout(measureTimelineTimeout);
+				measureTimelineTimeout = null;
+			}
 		}
 	});
 
@@ -96,6 +110,27 @@
 		return !!track?.part?.gid && !!track.work;
 	}
 
+	function isReplayTurn(turn: unknown): turn is TimelineReplayTurn {
+		if (!turn || typeof turn !== 'object') return false;
+		const candidate = turn as Partial<TimelineReplayTurn>;
+		return (
+			typeof candidate.part === 'string' &&
+			(candidate.index === null || typeof candidate.index === 'number') &&
+			typeof candidate.ok === 'boolean' &&
+			(candidate.seconds === null || typeof candidate.seconds === 'number') &&
+			typeof candidate.points === 'number' &&
+			typeof candidate.streak === 'number' &&
+			typeof candidate.score === 'number'
+		);
+	}
+
+	async function measureVisibleTimelineWidth() {
+		await tick();
+		requestAnimationFrame(() => {
+			finalTimelineWidth = timelineEl?.getBoundingClientRect().width ?? 0;
+		});
+	}
+
 	function insertAt<T>(items: T[], index: number | null, item: T) {
 		const bounded = Math.max(0, Math.min(index ?? items.length, items.length));
 		items.splice(bounded, 0, item);
@@ -114,17 +149,17 @@
 				]
 			: [];
 
-		for (let i = 0; i < step; i++) {
-			const turn = replay.turns[i];
+		for (let i = 0; i < Math.min(step, turns.length); i++) {
+			const turn = turns[i];
 			const track = trackByPart.get(turn.part);
-			if (!turn || !track) continue;
+			if (!track) continue;
 			const isActiveStep = i === step - 1;
 			if (turn.ok) {
 				insertAt(result, turn.index, {
 					id: `turn-${i}-${turn.part}`,
 					track,
 					confirmed: true,
-					correct: isActiveStep && (step < replay.turns.length || showFinalBorder) ? true : null
+					correct: isActiveStep && (step < turns.length || showFinalBorder) ? true : null
 				});
 			} else if (isActiveStep && turn.index !== null) {
 				insertAt(result, turn.index, {
@@ -235,7 +270,7 @@
 			</div>
 		</div>
 
-		<div class="flex justify-center">
+		<div class="relative flex justify-center">
 			<PlayerTimeline
 				{playerName}
 				playerColor="#22d3ee"
@@ -246,6 +281,8 @@
 				hideCount={true}
 				hideHeader={true}
 				animateCards={touchedSlider}
+				fixedWidth={finalTimelineWidth}
+				bindEl={(el) => (timelineEl = el)}
 				onConfirmedCardClick={(entry) => (inspectTrack = entry.track)}
 			/>
 		</div>

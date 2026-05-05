@@ -132,9 +132,7 @@
 		const tracklistChanged = nextSettings.selectedTracklist !== previousSelectedTracklist;
 		localSettings = nextSettings;
 		if (tracklistChanged) {
-			showTimelinePopup = false;
-			timelineTracks = [];
-			timelineLog = null;
+			resetTimelinePopup();
 			previousSelectedTracklist = nextSettings.selectedTracklist;
 		}
 		// Only sync enableScoring if we're not in Bingo/Timeline (where scoring is forced off/on)
@@ -166,6 +164,7 @@
 
 			leaderboardLoading = true;
 			if (filterKey !== leaderboardFilterKey) {
+				resetTimelinePopup();
 				leaderboardEntries = [];
 				leaderboardFilterKey = filterKey;
 			}
@@ -302,12 +301,48 @@
 		playersValid = isValid;
 	}
 
+	function resetTimelinePopup() {
+		showTimelinePopup = false;
+		timelineTracks = [];
+		timelineLog = null;
+	}
+
+	function isReplayTurn(turn: unknown): turn is TimelineReplayLog['turns'][number] {
+		if (!turn || typeof turn !== 'object') return false;
+		const candidate = turn as Partial<TimelineReplayLog['turns'][number]>;
+		return (
+			typeof candidate.part === 'string' &&
+			(candidate.index === null || typeof candidate.index === 'number') &&
+			typeof candidate.ok === 'boolean' &&
+			(candidate.seconds === null || typeof candidate.seconds === 'number') &&
+			typeof candidate.points === 'number' &&
+			typeof candidate.streak === 'number' &&
+			typeof candidate.score === 'number'
+		);
+	}
+
+	function parseTimelineReplayLog(value: string): TimelineReplayLog | null {
+		const parsed = JSON.parse(value) as Partial<TimelineReplayLog> | null;
+		if (!parsed || parsed.v !== 1 || !Array.isArray(parsed.turns)) return null;
+		const turns = parsed.turns.filter(isReplayTurn);
+		if (turns.length === 0) return null;
+		return {
+			v: 1,
+			initial: typeof parsed.initial === 'string' ? parsed.initial : null,
+			completionBonus:
+				typeof parsed.completionBonus === 'number' && Number.isFinite(parsed.completionBonus)
+					? parsed.completionBonus
+					: 0,
+			turns
+		};
+	}
+
 	function handleShowTimeline(entry: LeaderboardEntry) {
 		if (!entry.log) return;
 		try {
-			const log = JSON.parse(entry.log) as TimelineReplayLog;
+			const log = parseTimelineReplayLog(entry.log);
 			const data = get(gameData);
-			if (data && log.v === 1 && log.turns.length > 0) {
+			if (data && log) {
 				const allPartGids = [...new Set([log.initial, ...log.turns.map((t) => t.part)])].filter(
 					(gid): gid is string => typeof gid === 'string' && gid.length > 0
 				);
