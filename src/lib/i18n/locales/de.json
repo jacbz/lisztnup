@@ -549,7 +549,7 @@
 		"drag": "Ziehen",
 		"confirm": "Bestätigen",
 		"accuracy": "{correct}/{total} richtig ({percentage} %)",
-		"averageTime": "Ø Zeit: {seconds}s",
+		"averageTime": "Ø-Zeit: {seconds}s",
 		"secondsShort": "{seconds}s",
 		"replayStep": "Replay-Schritt {step}",
 		"streak": "{count}-er Streak",
@@ -618,6 +618,13 @@
 		"noScores": "Noch keine Eintr\u00e4ge \u2014 sei der Erste!",
 		"tracklistRecordsTitle": "Tracklist-Rekorde",
 		"tracklistRecordsNoScores": "Noch keine Tracklist-Rekorde.",
+		"tracklistRecordsSort": {
+			"label": "Rekorde sortieren",
+			"date": "Datum",
+			"tracklist": "Tracklist",
+			"country": "Land",
+			"points": "Punkte"
+		},
 		"showTimeline": "Timeline anzeigen",
 		"publishTitle": "In Bestenliste veröffentlichen",
 		"renameTitle": "In Bestenliste umbenennen",

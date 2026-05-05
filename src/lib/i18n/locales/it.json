@@ -618,6 +618,13 @@
 		"noScores": "Nessun punteggio \u2014 sii il primo!",
 		"tracklistRecordsTitle": "Record delle tracklist",
 		"tracklistRecordsNoScores": "Ancora nessun record delle tracklist.",
+		"tracklistRecordsSort": {
+			"label": "Ordina record",
+			"date": "Data",
+			"tracklist": "Tracklist",
+			"country": "Paese",
+			"points": "Punti"
+		},
 		"showTimeline": "Mostra timeline",
 		"publishTitle": "Pubblica in classifica",
 		"renameTitle": "Rinomina in classifica",

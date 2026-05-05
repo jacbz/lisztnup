@@ -618,6 +618,13 @@
 		"noScores": "Nenhuma pontua\u00e7\u00e3o ainda \u2014 seja o primeiro!",
 		"tracklistRecordsTitle": "Recordes das tracklists",
 		"tracklistRecordsNoScores": "Ainda não há recordes de tracklists.",
+		"tracklistRecordsSort": {
+			"label": "Ordenar recordes",
+			"date": "Data",
+			"tracklist": "Tracklist",
+			"country": "País",
+			"points": "Pontos"
+		},
 		"showTimeline": "Mostrar linha do tempo",
 		"publishTitle": "Publicar no ranking",
 		"renameTitle": "Renomear no ranking",

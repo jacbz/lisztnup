@@ -618,6 +618,13 @@
 		"noScores": "还没有分数\u2014\u2014成为第一个吧！",
 		"tracklistRecordsTitle": "曲目列表纪录",
 		"tracklistRecordsNoScores": "还没有曲目列表纪录。",
+		"tracklistRecordsSort": {
+			"label": "排序纪录",
+			"date": "日期",
+			"tracklist": "曲目列表",
+			"country": "国家/地区",
+			"points": "分数"
+		},
 		"showTimeline": "显示时间线",
 		"publishTitle": "发布到排行榜",
 		"renameTitle": "修改排行榜名称",

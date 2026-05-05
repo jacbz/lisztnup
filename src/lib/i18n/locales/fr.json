@@ -618,6 +618,13 @@
 		"noScores": "Aucun score \u2014 sois le premier !",
 		"tracklistRecordsTitle": "Records par tracklist",
 		"tracklistRecordsNoScores": "Aucun record de tracklist pour l’instant.",
+		"tracklistRecordsSort": {
+			"label": "Trier les records",
+			"date": "Date",
+			"tracklist": "Tracklist",
+			"country": "Pays",
+			"points": "Points"
+		},
 		"showTimeline": "Afficher la frise",
 		"publishTitle": "Publier au classement",
 		"renameTitle": "Renommer dans le classement",

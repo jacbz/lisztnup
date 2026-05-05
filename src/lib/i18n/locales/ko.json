@@ -618,6 +618,13 @@
 		"noScores": "아직 점수 없음 \u2014 첨 번째가 되세요!",
 		"tracklistRecordsTitle": "트랙리스트 기록",
 		"tracklistRecordsNoScores": "아직 트랙리스트 기록이 없습니다.",
+		"tracklistRecordsSort": {
+			"label": "기록 정렬",
+			"date": "날짜",
+			"tracklist": "트랙리스트",
+			"country": "국가",
+			"points": "점수"
+		},
 		"showTimeline": "타임라인 보기",
 		"publishTitle": "리더보드에 올리기",
 		"renameTitle": "리더보드 이름 바꾸기",

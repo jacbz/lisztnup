@@ -618,6 +618,13 @@
 		"noScores": "No scores yet — be the first!",
 		"tracklistRecordsTitle": "Tracklist Records",
 		"tracklistRecordsNoScores": "No tracklist records yet.",
+		"tracklistRecordsSort": {
+			"label": "Sort records",
+			"date": "Date",
+			"tracklist": "Tracklist",
+			"country": "Country",
+			"points": "Points"
+		},
 		"showTimeline": "Show timeline",
 		"publishTitle": "Publish to Leaderboard",
 		"renameTitle": "Rename in Leaderboard",

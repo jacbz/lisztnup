@@ -618,6 +618,13 @@
 		"noScores": "まだスコアなし \u2014 最初の一人に！",
 		"tracklistRecordsTitle": "トラックリスト記録",
 		"tracklistRecordsNoScores": "トラックリスト記録はまだありません。",
+		"tracklistRecordsSort": {
+			"label": "記録を並べ替え",
+			"date": "日付",
+			"tracklist": "トラックリスト",
+			"country": "国",
+			"points": "ポイント"
+		},
 		"showTimeline": "タイムラインを表示",
 		"publishTitle": "ランキングに公開",
 		"renameTitle": "ランキング名を変更",

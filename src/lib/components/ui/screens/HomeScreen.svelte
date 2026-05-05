@@ -257,6 +257,17 @@
 		settingsStore.update((s) => ({ ...s, selectedTracklist: tracklist.id }));
 	}
 
+	function handleTracklistRecordSelect(tracklist: Tracklist, target: number) {
+		localSettings.selectedTracklist = tracklist.id;
+		localSettings.timelineTarget = target;
+		settingsStore.update((s) => ({
+			...s,
+			selectedTracklist: tracklist.id,
+			timelineTarget: target
+		}));
+		showTracklistRecords = false;
+	}
+
 	function handleLocaleChange(newLocale: string) {
 		currentLocale = newLocale;
 		locale.set(newLocale);
@@ -771,6 +782,7 @@
 	tracklists={allTracklists}
 	onClose={() => (showTracklistRecords = false)}
 	onShowTimeline={handleShowTimeline}
+	onSelectRecord={handleTracklistRecordSelect}
 />
 
 <TimelinePopup

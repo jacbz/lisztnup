@@ -618,6 +618,13 @@
 		"noScores": "A\u00fan sin puntuaciones \u2014 \u00a1s\u00e9 el primero!",
 		"tracklistRecordsTitle": "Récords de tracklists",
 		"tracklistRecordsNoScores": "Aún no hay récords de tracklists.",
+		"tracklistRecordsSort": {
+			"label": "Ordenar récords",
+			"date": "Fecha",
+			"tracklist": "Tracklist",
+			"country": "País",
+			"points": "Puntos"
+		},
 		"showTimeline": "Mostrar cronología",
 		"publishTitle": "Publicar en la clasificación",
 		"renameTitle": "Cambiar nombre en la clasificación",
