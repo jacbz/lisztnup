@@ -12,16 +12,15 @@
 	import Clock3 from 'lucide-svelte/icons/clock-3';
 	import BarChart from 'lucide-svelte/icons/bar-chart-3';
 	import FeedbackPopup from '$lib/components/ui/gameplay/FeedbackPopup.svelte';
-	import LeaderboardSubmitPopup, {
-		type LeaderboardPlayer
-	} from '$lib/components/ui/screens/LeaderboardSubmitPopup.svelte';
 	import { getPlayerToken } from '$lib/stores/identity';
 	import PenLine from 'lucide-svelte/icons/pen-line';
+	import UploadCloud from 'lucide-svelte/icons/upload-cloud';
 	import Crown from 'lucide-svelte/icons/crown';
 	import { onMount } from 'svelte';
-	import { scale, slide } from 'svelte/transition';
-	import { getLeaderboard, submitLeaderboard } from '$lib/services/client';
+	import { scale } from 'svelte/transition';
+	import { getLeaderboard, patchLeaderboardName, submitLeaderboard } from '$lib/services/client';
 	import type { TimelineReplayLog, TimelineReplayTurn } from '$lib/types';
+	import { settings } from '$lib/stores/settings';
 
 	interface FinalTimeline {
 		player: Player;
@@ -88,6 +87,16 @@
 		});
 	});
 
+	interface LeaderboardPlayer {
+		name: string;
+		color: string;
+		score: number;
+		target: number;
+		accuracy: number;
+		longestStreak: number;
+		averageTime: number | null;
+	}
+
 	// Only players who completed their timeline can publish or claim their score.
 	const leaderboardPlayers = $derived<LeaderboardPlayer[]>(
 		sortedTimelines
@@ -104,14 +113,25 @@
 	);
 
 	let showFeedbackPopup = $state(false);
-	let showLeaderboardSubmit = $state(false);
+	let showNamePopup = $state(false);
+	let namePopupMode = $state<'publish' | 'rename'>('publish');
+	let selectedLeaderboardPlayer = $state<LeaderboardPlayer | null>(null);
+	let selectedLeaderboardIndex = $state<number | null>(null);
+	let leaderboardNameInput = $state('');
+	let leaderboardNameSubmitting = $state(false);
+	let leaderboardNameError = $state(false);
+	let showPublishPermission = $state(false);
 	let showHomeConfirm = $state(false);
-	let hasNamedScore = $state(false);
+	let namedLeaderboardKeys = $state<string[]>([]);
+	let publishedLeaderboardNames = $state<Record<number, string>>({});
+	let permissionNames = $state<string[]>([]);
+	let pendingPermissionPublishes = $state<Record<number, string>>({});
 	let gameoverAudio: HTMLAudioElement | null = null;
 	let gameoverPlayed = false;
 	let isNewHighScore = $state(false);
 	let autoSubmitted = $state(false);
 	let entryIds = $state<(number | null)[]>([]);
+	let permissionAskedForKey = $state('');
 
 	function getAverageTime(turns: TimelineReplayTurn[]): number | null {
 		const times = turns
@@ -132,8 +152,233 @@
 		};
 	}
 
+	const completedPermissionNames = $derived(
+		leaderboardPlayers.map((player) => player.name.trim()).filter((name) => name.length > 0)
+	);
+
+	const unknownPermissionNames = $derived.by(() => {
+		const publishing = $settings.leaderboardPublishing ?? { allowedNames: [], deniedNames: [] };
+		return completedPermissionNames.filter((name) => {
+			const key = normalizeName(name);
+			return (
+				!publishing.allowedNames.some((allowed) => normalizeName(allowed) === key) &&
+				!publishing.deniedNames.some((denied) => normalizeName(denied) === key)
+			);
+		});
+	});
+
+	const unknownPermissionPlayers = $derived.by(() =>
+		leaderboardPlayers.filter((player) =>
+			unknownPermissionNames.some((name) => normalizeName(name) === normalizeName(player.name))
+		)
+	);
+
+	function normalizeName(name: string): string {
+		return name.trim().toLocaleLowerCase();
+	}
+
+	function isDefaultName(name: string): boolean {
+		for (let i = 1; i <= 10; i++) {
+			if (name === $_('players.playerName', { values: { number: i } })) return true;
+		}
+		return false;
+	}
+
+	function hasAllowedName(name: string): boolean {
+		const publishing = $settings.leaderboardPublishing ?? { allowedNames: [], deniedNames: [] };
+		const key = normalizeName(name);
+		return publishing.allowedNames.some((allowed) => normalizeName(allowed) === key);
+	}
+
+	function updatePublishingNames(names: string[], decision: 'allow' | 'deny'): void {
+		const cleanNames = names.map((name) => name.trim()).filter((name) => name.length > 0);
+		if (cleanNames.length === 0) return;
+
+		settings.update((s) => {
+			const publishing = s.leaderboardPublishing ?? { allowedNames: [], deniedNames: [] };
+			const cleanKeys = cleanNames.map(normalizeName);
+			const allowedNames = publishing.allowedNames.filter(
+				(name) => decision === 'allow' || !cleanKeys.includes(normalizeName(name))
+			);
+			const deniedNames = publishing.deniedNames.filter(
+				(name) => decision === 'deny' || !cleanKeys.includes(normalizeName(name))
+			);
+
+			for (const name of cleanNames) {
+				const key = normalizeName(name);
+				const target = decision === 'allow' ? allowedNames : deniedNames;
+				if (!target.some((existing) => normalizeName(existing) === key)) {
+					target.push(name);
+				}
+			}
+
+			return {
+				...s,
+				leaderboardPublishing: { allowedNames, deniedNames }
+			};
+		});
+	}
+
+	function savePlayerName(color: string, name: string): void {
+		settings.update((s) => ({
+			...s,
+			players: s.players.map((player) => (player.color === color ? { ...player, name } : player))
+		}));
+	}
+
+	function markNamed(index: number | null, name: string, entryId: number | null): void {
+		if (index == null) return;
+		const key = `${index}:${normalizeName(name)}:${entryId ?? 'pending'}`;
+		if (!namedLeaderboardKeys.includes(key)) {
+			namedLeaderboardKeys = [...namedLeaderboardKeys, key];
+		}
+		publishedLeaderboardNames = { ...publishedLeaderboardNames, [index]: name };
+	}
+
+	function wasNamed(index: number, name: string, entryId: number | null): boolean {
+		const key = `${index}:${normalizeName(name)}:${entryId ?? 'pending'}`;
+		return namedLeaderboardKeys.includes(key);
+	}
+
+	function isNamedInCurrentRound(index: number): boolean {
+		return namedLeaderboardKeys.some((key) => key.startsWith(`${index}:`));
+	}
+
+	function getPublishedLeaderboardName(index: number, fallback: string): string {
+		return publishedLeaderboardNames[index] ?? fallback;
+	}
+
+	function getLeaderboardIndex(timeline: FinalTimeline): number {
+		return leaderboardPlayers.findIndex(
+			(player) => player.name === timeline.player.name && player.color === timeline.player.color
+		);
+	}
+
+	function openLeaderboardNameDialog(
+		player: LeaderboardPlayer,
+		index: number,
+		mode: 'publish' | 'rename'
+	): void {
+		selectedLeaderboardPlayer = player;
+		selectedLeaderboardIndex = index;
+		namePopupMode = mode;
+		const displayName = getPublishedLeaderboardName(index, player.name);
+		leaderboardNameInput = isDefaultName(displayName) ? '' : displayName;
+		leaderboardNameError = false;
+		showNamePopup = true;
+	}
+
+	function canSubmitLeaderboardName(): boolean {
+		const name = leaderboardNameInput.trim();
+		return name.length > 0 && !isDefaultName(name) && !leaderboardNameSubmitting;
+	}
+
+	async function submitLeaderboardName(): Promise<void> {
+		if (
+			!selectedLeaderboardPlayer ||
+			selectedLeaderboardIndex == null ||
+			!canSubmitLeaderboardName()
+		) {
+			return;
+		}
+		const finalName = leaderboardNameInput.trim();
+		leaderboardNameSubmitting = true;
+		leaderboardNameError = false;
+		try {
+			savePlayerName(selectedLeaderboardPlayer.color, finalName);
+			updatePublishingNames([finalName], 'allow');
+			if (normalizeName(finalName) !== normalizeName(selectedLeaderboardPlayer.name)) {
+				updatePublishingNames([selectedLeaderboardPlayer.name], 'deny');
+			}
+			await publishPlayerAs(selectedLeaderboardPlayer, selectedLeaderboardIndex, finalName);
+			showNamePopup = false;
+		} catch {
+			leaderboardNameError = true;
+		} finally {
+			leaderboardNameSubmitting = false;
+		}
+	}
+
+	async function publishPlayerAs(
+		player: LeaderboardPlayer,
+		index: number,
+		playerName: string
+	): Promise<void> {
+		const entryId = entryIds[index] ?? null;
+		if (wasNamed(index, playerName, entryId)) return;
+		await patchLeaderboardName({
+			id: entryId ?? undefined,
+			playerToken: getPlayerToken(),
+			playerName
+		});
+		markNamed(index, playerName, entryId);
+	}
+
+	async function publishAllowedPlayer(player: LeaderboardPlayer, index: number): Promise<void> {
+		try {
+			await publishPlayerAs(player, index, player.name);
+		} catch {
+			// Publishing is a convenience path; the explicit button remains available.
+		}
+	}
+
+	function canAcceptPublishPermission(): boolean {
+		return permissionNames.every((name) => {
+			const trimmed = name.trim();
+			return trimmed.length > 0 && !isDefaultName(trimmed);
+		});
+	}
+
+	async function acceptPublishPermission(): Promise<void> {
+		if (!canAcceptPublishPermission()) return;
+		const finalNames = permissionNames.map((name) => name.trim());
+		updatePublishingNames(finalNames, 'allow');
+		updatePublishingNames(
+			unknownPermissionPlayers
+				.map((player) => player.name)
+				.filter((name, i) => normalizeName(name) !== normalizeName(finalNames[i])),
+			'deny'
+		);
+		pendingPermissionPublishes = {
+			...pendingPermissionPublishes,
+			...Object.fromEntries(
+				unknownPermissionPlayers
+					.map((player, i) => {
+						const index = leaderboardPlayers.findIndex(
+							(candidate) => candidate.name === player.name && candidate.color === player.color
+						);
+						return index >= 0 ? ([index, finalNames[i]] as const) : null;
+					})
+					.filter((entry): entry is readonly [number, string] => entry !== null)
+			)
+		};
+		for (const [index, player] of unknownPermissionPlayers.entries()) {
+			savePlayerName(player.color, finalNames[index]);
+		}
+		showPublishPermission = false;
+		await Promise.all(
+			unknownPermissionPlayers.map((player, i) => {
+				const index = leaderboardPlayers.findIndex(
+					(candidate) => candidate.name === player.name && candidate.color === player.color
+				);
+				if (index < 0) return Promise.resolve();
+				return publishPlayerAs(player, index, finalNames[i]).catch(() => undefined);
+			})
+		);
+	}
+
+	function denyPublishPermission(): void {
+		updatePublishingNames(unknownPermissionNames, 'deny');
+		permissionNames = [];
+		showPublishPermission = false;
+	}
+
 	function handleHomeClick() {
-		if (leaderboardPlayers.length > 0 && !hasNamedScore) {
+		if (
+			isNewHighScore &&
+			leaderboardPlayers.length > 0 &&
+			!leaderboardPlayers.some((p) => hasAllowedName(p.name))
+		) {
 			showHomeConfirm = true;
 		} else {
 			onHome();
@@ -181,16 +426,15 @@
 				sortedTimelines
 					.filter((t) => t.score > 0 && t.reachedTarget)
 					.map((t) => {
-						const p = leaderboardPlayers.find((lp) => lp.name === t.player.name)!;
 						return submitLeaderboard(
 							{
 								playerToken: token,
 								playerName: null,
-								score: Math.round(p.score),
-								target: p.target,
+								score: Math.round(t.score),
+								target: t.entries.length,
 								attempts: t.totalPlacements,
-								averageTime: p.averageTime,
-								longestStreak: p.longestStreak,
+								averageTime: getAverageTime(t.replayTurns),
+								longestStreak: t.longestStreak,
 								tracklistId,
 								sessionId,
 								log: getReplayLog(t)
@@ -202,6 +446,52 @@
 					})
 			).then((ids) => {
 				entryIds = ids;
+			});
+		}
+	});
+
+	$effect(() => {
+		if (!visible || leaderboardPlayers.length === 0 || unknownPermissionNames.length === 0) return;
+		const key = unknownPermissionNames.map(normalizeName).sort().join('|');
+		if (key === permissionAskedForKey) return;
+		permissionNames = unknownPermissionPlayers.map((player) =>
+			isDefaultName(player.name) ? '' : player.name
+		);
+		const timer = setTimeout(() => {
+			permissionAskedForKey = key;
+			showPublishPermission = true;
+		}, 900);
+		return () => clearTimeout(timer);
+	});
+
+	$effect(() => {
+		if (visible) return;
+		showPublishPermission = false;
+		showNamePopup = false;
+		permissionAskedForKey = '';
+	});
+
+	$effect(() => {
+		if (!visible || leaderboardPlayers.length === 0) return;
+		for (let i = 0; i < leaderboardPlayers.length; i++) {
+			const player = leaderboardPlayers[i];
+			if (hasAllowedName(player.name) && !isDefaultName(player.name)) {
+				void publishAllowedPlayer(player, i);
+			}
+		}
+	});
+
+	$effect(() => {
+		if (!visible) return;
+		for (const [rawIndex, playerName] of Object.entries(pendingPermissionPublishes)) {
+			const index = Number(rawIndex);
+			const player = leaderboardPlayers[index];
+			if (!player || entryIds[index] == null || wasNamed(index, playerName, entryIds[index]))
+				continue;
+			void publishPlayerAs(player, index, playerName).then(() => {
+				const remaining = { ...pendingPermissionPublishes };
+				delete remaining[index];
+				pendingPermissionPublishes = remaining;
 			});
 		}
 	});
@@ -311,29 +601,40 @@
 								</span>
 							{/if}
 						</p>
+						{#if t.reachedTarget && t.score > 0}
+							{@const leaderboardIndex = getLeaderboardIndex(t)}
+							{@const leaderboardPlayer = leaderboardPlayers[leaderboardIndex]}
+							{#if leaderboardPlayer}
+								<div class="flex justify-end">
+									<button
+										type="button"
+										onclick={() =>
+											openLeaderboardNameDialog(
+												leaderboardPlayer,
+												leaderboardIndex,
+												hasAllowedName(t.player.name) || isNamedInCurrentRound(leaderboardIndex)
+													? 'rename'
+													: 'publish'
+											)}
+										class="flex cursor-pointer items-center gap-2 rounded-lg border border-amber-400/60 bg-amber-400/10 px-3 py-2 text-sm font-bold text-amber-300 transition-all hover:bg-amber-400/20"
+									>
+										{#if hasAllowedName(t.player.name) || isNamedInCurrentRound(leaderboardIndex)}
+											<PenLine class="h-4 w-4" />
+											{$_('leaderboard.rename')}
+										{:else}
+											<UploadCloud class="h-4 w-4" />
+											{$_('leaderboard.publish')}
+										{/if}
+									</button>
+								</div>
+							{/if}
+						{/if}
 					</div>
 				</div>
 			{/each}
 		</div>
 
 		<div class="flex flex-col gap-3">
-			{#if leaderboardPlayers.length > 0 && !hasNamedScore}
-				<button
-					type="button"
-					onclick={() => (showLeaderboardSubmit = true)}
-					class="flex w-full animate-publish-glow cursor-pointer flex-col items-center rounded-xl border-2 border-amber-400 bg-slate-900 px-6 py-3.5 transition-all duration-200 hover:bg-slate-800"
-					out:slide={{ duration: 200 }}
-				>
-					<span class="flex items-center gap-2 text-base font-bold text-amber-400">
-						<PenLine class="h-5 w-5" />
-						{$_('leaderboard.nameYourScore')}
-					</span>
-					<span class="text-xs font-normal text-amber-400/60"
-						>{$_('leaderboard.nameYourScoreSubtitle')}</span
-					>
-				</button>
-			{/if}
-
 			<div class="flex items-center gap-2">
 				{#if onViewStats}
 					<button
@@ -370,15 +671,100 @@
 
 <FeedbackPopup visible={showFeedbackPopup} onClose={() => (showFeedbackPopup = false)} />
 
-{#if leaderboardPlayers.length > 0}
-	<LeaderboardSubmitPopup
-		visible={showLeaderboardSubmit}
-		players={leaderboardPlayers}
-		{entryIds}
-		onClose={() => (showLeaderboardSubmit = false)}
-		onNamed={() => (hasNamedScore = true)}
-	/>
-{/if}
+<Popup visible={showNamePopup} onClose={() => (showNamePopup = false)} width="sm">
+	<div class="flex flex-col gap-4 text-center">
+		<PenLine class="mx-auto h-9 w-9 text-amber-400" />
+		<h3 class="text-lg font-bold text-white">
+			{#if namePopupMode === 'rename'}
+				{$_('leaderboard.renameTitle')}
+			{:else}
+				{$_('leaderboard.publishTitle')}
+			{/if}
+		</h3>
+		<p class="text-sm text-slate-400">{$_('leaderboard.namePrompt')}</p>
+		<input
+			type="text"
+			bind:value={leaderboardNameInput}
+			placeholder={$_('leaderboard.namePlaceholder')}
+			class="rounded-md border border-slate-600 bg-slate-800 px-3 py-2 text-center text-base font-semibold text-white placeholder-slate-500 outline-none focus:border-amber-400"
+		/>
+		{#if leaderboardNameInput.trim().length > 0 && isDefaultName(leaderboardNameInput.trim())}
+			<p class="text-xs text-amber-300">{$_('leaderboard.defaultNameError')}</p>
+		{/if}
+		{#if leaderboardNameError}
+			<p class="text-xs text-red-400">{$_('leaderboard.error')}</p>
+		{/if}
+		<div class="flex gap-2">
+			<button
+				type="button"
+				onclick={() => (showNamePopup = false)}
+				class="flex-1 cursor-pointer rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all hover:bg-slate-700/60 hover:text-white"
+			>
+				{$_('leaderboard.cancel')}
+			</button>
+			<button
+				type="button"
+				onclick={submitLeaderboardName}
+				disabled={!canSubmitLeaderboardName()}
+				class="flex-1 cursor-pointer rounded-xl border-2 border-amber-400 bg-slate-900 px-4 py-3 text-sm font-bold text-amber-400 transition-all hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40"
+			>
+				{#if leaderboardNameSubmitting}
+					{$_('leaderboard.submitting')}
+				{:else if namePopupMode === 'rename'}
+					{$_('leaderboard.rename')}
+				{:else}
+					{$_('leaderboard.publish')}
+				{/if}
+			</button>
+		</div>
+	</div>
+</Popup>
+
+<Popup visible={showPublishPermission} onClose={denyPublishPermission} width="md">
+	<div class="flex flex-col gap-4 text-center">
+		<UploadCloud class="mx-auto h-10 w-10 text-amber-400" />
+		<h3 class="text-lg font-bold text-white">{$_('leaderboard.publishTitle')}</h3>
+		<p class="text-sm text-slate-400">
+			{$_('leaderboard.namePrompt')}
+		</p>
+		<div class="flex flex-col gap-2 text-left">
+			{#each unknownPermissionPlayers as player, i (`${player.color}-${i}`)}
+				<label
+					class="flex items-center gap-3 rounded-lg border border-slate-700/30 bg-slate-900/50 px-3 py-2.5"
+				>
+					<span class="h-3 w-3 shrink-0 rounded-full" style="background-color: {player.color};"
+					></span>
+					<input
+						type="text"
+						bind:value={permissionNames[i]}
+						placeholder={$_('leaderboard.namePlaceholder')}
+						class="min-w-0 flex-1 rounded-md border border-slate-600 bg-slate-800 px-2 py-1 text-sm font-semibold text-white placeholder-slate-500 outline-none focus:border-amber-400"
+					/>
+				</label>
+				{#if (permissionNames[i]?.trim() ?? '').length > 0 && isDefaultName(permissionNames[i].trim())}
+					<p class="text-center text-xs text-amber-300">{$_('leaderboard.defaultNameError')}</p>
+				{/if}
+			{/each}
+		</div>
+		<div class="flex gap-2">
+			<button
+				type="button"
+				onclick={denyPublishPermission}
+				class="flex-1 cursor-pointer rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all hover:bg-slate-700/60 hover:text-white"
+			>
+				{$_('leaderboard.dontPublish')}
+			</button>
+			<button
+				type="button"
+				onclick={acceptPublishPermission}
+				disabled={!canAcceptPublishPermission()}
+				class="flex-1 cursor-pointer rounded-xl border-2 border-amber-400 bg-slate-900 px-4 py-3 text-sm font-bold text-amber-400 transition-all hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40"
+			>
+				{$_('leaderboard.allowPublishing')}
+			</button>
+		</div>
+	</div>
+</Popup>
 
 <Popup
 	visible={!!inspectTrack}
@@ -404,7 +790,7 @@
 	<div class="flex flex-col gap-4 text-center">
 		<PenLine class="mx-auto h-10 w-10 text-amber-400" />
 		<h3 class="text-lg font-bold text-white">{$_('leaderboard.unnamedScore')}</h3>
-		<p class="text-sm text-slate-400">{$_('leaderboard.namePrompt')}</p>
+		<p class="text-sm text-slate-400">{$_('leaderboard.highScoreAnonymousPrompt')}</p>
 		<div class="flex gap-2">
 			<button
 				type="button"
@@ -420,11 +806,18 @@
 				type="button"
 				onclick={() => {
 					showHomeConfirm = false;
-					showLeaderboardSubmit = true;
+					const player = leaderboardPlayers[0];
+					if (player) {
+						openLeaderboardNameDialog(
+							player,
+							0,
+							hasAllowedName(player.name) ? 'rename' : 'publish'
+						);
+					}
 				}}
 				class="flex-1 cursor-pointer rounded-xl border-2 border-amber-400 bg-slate-900 px-4 py-3 text-sm font-bold text-amber-400 transition-all hover:bg-slate-800"
 			>
-				{$_('leaderboard.nameYourScore')}
+				{$_('leaderboard.publish')}
 			</button>
 		</div>
 	</div>

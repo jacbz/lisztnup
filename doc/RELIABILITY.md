@@ -42,7 +42,7 @@ This prevents indefinite hangs on stalled connections.
 Only fire-and-forget writes are persisted for retry:
 
 - Analytics fetch fallback events when `sendBeacon` is unavailable
-- Timeline anonymous leaderboard auto-submit POSTs
+- Timeline anonymous leaderboard auto-submit POSTs; explicit publish/rename PATCHes stay user-driven retries
 
 Queued writes are stored in localStorage with FIFO `clientSequence`, `occurredAt`, `createdAt`, `lastAttemptAt`, `nextAttemptAt`, and `attempts`. A single drain loop replays in order on startup, enqueue, and browser `online`; one blocked item prevents later items from replaying out of order. Retries use capped backoff and skip permanent 400/403/409 responses.
 

@@ -304,7 +304,7 @@ export async function submitLeaderboard(
 }
 
 export async function patchLeaderboardName(payload: {
-	id: number;
+	id?: number | null;
 	playerToken: string;
 	playerName: string;
 }) {

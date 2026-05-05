@@ -8,7 +8,7 @@ src/lib/components/
 │   ├── primitives/     Toast, Popup, Dialog, EdgeDisplay, Slider, RangeSlider,
 │   │                   ToggleButton, NumberSelector, ScoringCard, Logo, QRCode,
 │   │                   ExternalLink, SearchPopup, AboutPopup, AppFooter
-│   ├── screens/        HomeScreen, LoadingScreen, EndGameScreen, StatsScreen, ScoringScreen, LeaderboardSubmitPopup
+│   ├── screens/        HomeScreen, LoadingScreen, EndGameScreen, StatsScreen, ScoringScreen
 │   ├── setup/          ModeSelector, ModeRulesPopup, PlayerSetup, TracklistSelector,
 │   │                   TracklistEditor, TrackTable, ComposerCloud, LibraryViewer,
 │   │                   WorkSelectorPopup, TimelineLeaderboard, BingoSetup, ShareLinkPopup

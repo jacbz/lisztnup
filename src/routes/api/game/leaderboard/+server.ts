@@ -178,16 +178,16 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		const country = platform.cf?.country || 'UNKNOWN';
 		const timestamp = parseClientTimestamp(occurredAt);
 
-		// ── Duplicate check: same session + player (named submissions only) ──
+		// ── Duplicate check: same session + player name (named submissions only) ──
 		// Anonymous auto-submits skip dedup — rate limiter prevents abuse,
 		// and GET collapses anonymous entries per token anyway.
 		if (nameProvided && sessionId && typeof sessionId === 'string') {
 			const dupCheck = await db
 				.prepare(
 					`SELECT COUNT(*) AS cnt FROM timeline_scores
-					 WHERE session_id = ?1 AND player_token = ?2 AND player_name IS NOT NULL`
+					 WHERE session_id = ?1 AND player_token = ?2 AND player_name = ?3`
 				)
-				.bind(sessionId, playerToken)
+				.bind(sessionId, playerToken, playerName.slice(0, MAX_NAME_LENGTH))
 				.first<{ cnt: number }>();
 			if (dupCheck && dupCheck.cnt > 0) {
 				return json({ success: false, reason: 'Already submitted' }, { status: 409 });
@@ -245,7 +245,7 @@ export const PATCH: RequestHandler = async ({ request, platform }) => {
 		const body = await request.json();
 		const { id, playerToken, playerName } = body;
 
-		if (!id || !playerToken) {
+		if (!playerToken) {
 			return json({ success: false, reason: 'Invalid payload' }, { status: 400 });
 		}
 		if (
@@ -258,55 +258,32 @@ export const PATCH: RequestHandler = async ({ request, platform }) => {
 
 		const db = platform.env.DB;
 		const trimmedName = playerName.trim().slice(0, MAX_NAME_LENGTH);
+		const numericId = typeof id === 'number' && Number.isFinite(id) ? Math.round(id) : null;
 
-		// Only allow naming entries that belong to this player, are still anonymous,
-		// AND were created in the last hour.
+		// Claim all anonymous history for this browser token. When the current row id is known,
+		// rename it too so local multiplayer rows can keep their own published names.
 		const result = await db
 			.prepare(
 				`UPDATE timeline_scores SET player_name = ?1
-				 WHERE id = ?2 AND player_token = ?3 AND player_name IS NULL
-				 AND timestamp > datetime('now', '-1 hour')`
+				 WHERE player_token = ?2 AND (player_name IS NULL OR id = ?3)`
 			)
-			.bind(trimmedName, id, playerToken)
+			.bind(trimmedName, playerToken, numericId)
 			.run();
 
 		if (result.meta.changes === 0) {
-			// Either entry doesn't exist, wrong token, already named, incomplete, or expired (> 1h)
+			if (numericId == null) {
+				return json({ success: false, reason: 'No anonymous scores' }, { status: 404 });
+			}
+
 			const existing = await db
-				.prepare(
-					`SELECT player_name, timestamp > datetime('now', '-1 hour') AS is_recent, target, log
-					 FROM timeline_scores WHERE id = ?1 AND player_token = ?2`
-				)
-				.bind(id, playerToken)
-				.first<{
-					player_name: string | null;
-					is_recent: number;
-					target: number;
-					log: string | null;
-				}>();
+				.prepare(`SELECT player_name FROM timeline_scores WHERE id = ?1 AND player_token = ?2`)
+				.bind(numericId, playerToken)
+				.first<{ player_name: string | null }>();
 
 			if (!existing) {
 				return json({ success: false, reason: 'Not found' }, { status: 404 });
 			}
-			if (existing.player_name !== null) {
-				return json({ success: false, reason: 'Already named' }, { status: 409 });
-			}
-
-			const log = (() => {
-				try {
-					return JSON.parse(existing.log ?? 'null');
-				} catch {
-					return null;
-				}
-			})();
-			if (!isCompletedLog(log, existing.target)) {
-				return json({ success: false, reason: 'Incomplete timeline' }, { status: 403 });
-			}
-			if (!existing.is_recent) {
-				return json({ success: false, reason: 'Expired' }, { status: 403 });
-			}
-
-			return json({ success: false, reason: 'Already named' }, { status: 409 });
+			return json({ success: true });
 		}
 
 		return json({ success: true });

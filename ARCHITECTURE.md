@@ -128,13 +128,13 @@ All tables include `user_hash` (SHA-256 of IP + daily-rotating salt — never st
 
 ### API Endpoints
 
-| Endpoint                     | Purpose                                       | Key behavior                                                |
-| ---------------------------- | --------------------------------------------- | ----------------------------------------------------------- |
-| `POST /api/game/events`      | Game telemetry (start/progress/end/placement) | UPSERT + `json_patch()`, non-blocking via `waitUntil()`     |
-| `POST /api/game/feedback`    | User feedback (5–1000 chars)                  | Validates, writes DB, sends Telegram notification           |
-| `POST /api/game/reports`     | Problem reports with Deezer/work metadata     | Same as feedback + detailed Telegram message                |
-| `GET /api/game/leaderboard`  | Top N timeline scores                         | Max 50; strips tokens and returns Berlin `YYYY-MM-DD` dates |
-| `POST /api/game/leaderboard` | Submit solo timeline score                    | Validates completion + stores compact replay log            |
+| Endpoint                           | Purpose                                       | Key behavior                                                                    |
+| ---------------------------------- | --------------------------------------------- | ------------------------------------------------------------------------------- |
+| `POST /api/game/events`            | Game telemetry (start/progress/end/placement) | UPSERT + `json_patch()`, non-blocking via `waitUntil()`                         |
+| `POST /api/game/feedback`          | User feedback (5–1000 chars)                  | Validates, writes DB, sends Telegram notification                               |
+| `POST /api/game/reports`           | Problem reports with Deezer/work metadata     | Same as feedback + detailed Telegram message                                    |
+| `GET /api/game/leaderboard`        | Top N timeline scores                         | Max 50; strips tokens and returns Berlin `YYYY-MM-DD` dates                     |
+| `POST/PATCH /api/game/leaderboard` | Submit, publish, or rename timeline scores    | POST validates replay logs; PATCH rewrites anonymous rows for the browser token |
 
 ### Server Hooks (hooks.server.ts)
 
