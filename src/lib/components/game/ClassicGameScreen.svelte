@@ -23,9 +23,7 @@
 		hideTop={$gameSession.players.length < 2}
 		hideLeftRight={$gameSession.players.length < 3}
 	>
-		<div
-			class="flex w-[80vw] flex-wrap justify-center gap-1.5 md:max-w-[60vmin] md:min-w-[60vmin]"
-		>
+		<div class="flex w-[80vw] flex-wrap justify-center gap-1.5 md:max-w-[60vmin] md:min-w-[60vmin]">
 			{#each activeCategories as category (category)}
 				{@const categoryDef = getCategoryDefinition(category)}
 				<div

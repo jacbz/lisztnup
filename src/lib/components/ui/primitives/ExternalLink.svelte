@@ -21,13 +21,12 @@
 		hoverOnly?: boolean;
 	}
 
-		let { href, class: className = '', hideOnMobile = false, hoverOnly = false }: Props = $props();
+	let { href, class: className = '', hideOnMobile = false, hoverOnly = false }: Props = $props();
 
-		const baseClasses =
-			'items-center align-middle pb-0.5 transition-opacity';
-		const visibilityClasses = hoverOnly
-			? 'opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto'
-			: 'opacity-70 hover:opacity-100';
+	const baseClasses = 'items-center align-middle pb-0.5 transition-opacity';
+	const visibilityClasses = hoverOnly
+		? 'opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto'
+		: 'opacity-70 hover:opacity-100';
 </script>
 
 <a

@@ -25,6 +25,7 @@ export interface TimelineRow {
 	totalPlacements: number;
 	correctPlacements: number;
 	currentStreak: number;
+	absoluteStreak: number;
 	longestStreak: number;
 	score: number;
 	reachedTarget: boolean;

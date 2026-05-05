@@ -447,7 +447,12 @@
 	visible={showDeleteDialog}
 	title={$_('tracklistSelector.deleteDialog.title')}
 	message={$_('tracklistSelector.deleteDialog.message', {
-		values: { name: tracklistToDelete?.kind === 'custom' ? tracklistToDelete.name : (tracklistToDelete?.id ?? '') }
+		values: {
+			name:
+				tracklistToDelete?.kind === 'custom'
+					? tracklistToDelete.name
+					: (tracklistToDelete?.id ?? '')
+		}
 	})}
 	confirmText={$_('tracklistSelector.deleteDialog.confirm')}
 	cancelText={$_('tracklistSelector.deleteDialog.cancel')}

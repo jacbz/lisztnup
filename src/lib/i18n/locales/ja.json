@@ -566,7 +566,7 @@
 			"completionBonus": "達成ボーナス",
 			"turnTotal": "ターン合計",
 			"score": "スコア",
-			"streakMultiplier": "{mult}倍",
+			"streakMultiplier": "連続倍率 {mult}",
 			"mastery": "熟練度",
 			"consolation": "惜しい！"
 		},

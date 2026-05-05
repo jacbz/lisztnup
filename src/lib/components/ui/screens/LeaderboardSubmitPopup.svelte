@@ -47,7 +47,12 @@
 	}
 
 	function canSubmit(index: number): boolean {
-		return !submitted[index] && !submitting[index] && entryIds[index] != null && (editedNames[index]?.trim() ?? '').length > 0;
+		return (
+			!submitted[index] &&
+			!submitting[index] &&
+			entryIds[index] != null &&
+			(editedNames[index]?.trim() ?? '').length > 0
+		);
 	}
 
 	async function namePlayer(index: number) {
@@ -61,9 +66,7 @@
 			// Persist edited name back to player setup so it sticks for future games
 			settings.update((s) => ({
 				...s,
-				players: s.players.map((sp) =>
-					sp.color === p.color ? { ...sp, name: finalName } : sp
-				)
+				players: s.players.map((sp) => (sp.color === p.color ? { ...sp, name: finalName } : sp))
 			}));
 			await patchLeaderboardName({
 				id: entryId,
@@ -115,7 +118,9 @@
 		<!-- Player table -->
 		<div class="flex flex-col gap-2">
 			{#each players as p, i (i)}
-				<div class="flex items-center gap-3 rounded-lg border border-slate-700/30 bg-slate-900/50 px-3 py-2.5">
+				<div
+					class="flex items-center gap-3 rounded-lg border border-slate-700/30 bg-slate-900/50 px-3 py-2.5"
+				>
 					<!-- Color dot -->
 					<div class="h-3 w-3 shrink-0 rounded-full" style="background-color: {p.color};"></div>
 

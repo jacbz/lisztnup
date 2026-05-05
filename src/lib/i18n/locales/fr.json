@@ -566,7 +566,7 @@
 			"completionBonus": "Bonus de complétion",
 			"turnTotal": "Total du tour",
 			"score": "Score",
-			"streakMultiplier": "multiplicateur {mult}",
+			"streakMultiplier": "Multiplicateur de série {mult}",
 			"mastery": "Maîtrise",
 			"consolation": "Pas loin !"
 		},

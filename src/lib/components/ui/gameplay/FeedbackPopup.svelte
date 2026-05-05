@@ -64,7 +64,9 @@
 		<div class="flex flex-col gap-4">
 			{#if success}
 				<div class="flex flex-col items-center justify-center gap-4 py-8 text-center">
-					<div class="flex h-16 w-16 items-center justify-center rounded-full bg-green-500/20 text-green-400">
+					<div
+						class="flex h-16 w-16 items-center justify-center rounded-full bg-green-500/20 text-green-400"
+					>
 						<Send class="h-8 w-8" />
 					</div>
 					<p class="text-lg font-medium text-slate-200">{$_('feedback.success')}</p>

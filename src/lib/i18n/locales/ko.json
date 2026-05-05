@@ -566,7 +566,7 @@
 			"completionBonus": "완료 보너스",
 			"turnTotal": "턴 합계",
 			"score": "점수",
-			"streakMultiplier": "{mult} 배율",
+			"streakMultiplier": "연속 배율 {mult}",
 			"mastery": "숙련도",
 			"consolation": "아깝다!"
 		},

@@ -13,7 +13,13 @@
 	let { visible = false, players = [], rounds = [], onClose = () => {} }: Props = $props();
 
 	// Hover state
-	let hoveredPoint = $state<{ playerName: string; roundIndex: number; score: number; x: number; y: number } | null>(null);
+	let hoveredPoint = $state<{
+		playerName: string;
+		roundIndex: number;
+		score: number;
+		x: number;
+		y: number;
+	} | null>(null);
 
 	// Calculate cumulative scores for each player over rounds (no leading 0)
 	const chartData = $derived.by(() => {
@@ -73,11 +79,13 @@
 
 	function createPath(scores: number[]): string {
 		if (scores.length === 0) return '';
-		return scores.map((score, i) => {
-			const x = getX(i, scores.length);
-			const y = getY(score);
-			return `${i === 0 ? 'M' : 'L'} ${x},${y}`;
-		}).join(' ');
+		return scores
+			.map((score, i) => {
+				const x = getX(i, scores.length);
+				const y = getY(score);
+				return `${i === 0 ? 'M' : 'L'} ${x},${y}`;
+			})
+			.join(' ');
 	}
 </script>
 
@@ -155,8 +163,18 @@
 							stroke="white"
 							stroke-width="2"
 							class="cursor-pointer transition-[r] duration-200"
-							onpointerenter={() => { hoveredPoint = { playerName: player.name, roundIndex: i, score, x: getX(i, scores.length), y: getY(score) }; }}
-							onpointerleave={() => { hoveredPoint = null; }}
+							onpointerenter={() => {
+								hoveredPoint = {
+									playerName: player.name,
+									roundIndex: i,
+									score,
+									x: getX(i, scores.length),
+									y: getY(score)
+								};
+							}}
+							onpointerleave={() => {
+								hoveredPoint = null;
+							}}
 						/>
 					{/each}
 				{/each}
@@ -192,9 +210,16 @@
 		<div class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3">
 			{#each chartData as { player, scores } (player.name)}
 				<div class="flex items-center gap-2 rounded-lg bg-slate-700 p-2">
-					<div class="h-5 w-5 shrink-0 rounded-full" style="background-color: {player.color};"></div>
+					<div
+						class="h-5 w-5 shrink-0 rounded-full"
+						style="background-color: {player.color};"
+					></div>
 					<span class="flex-1 text-sm font-semibold text-white">{player.name}</span>
-					<span class="text-sm font-bold text-cyan-400">{$_('scoring.pts', { values: { points: Math.round(scores[scores.length - 1]).toLocaleString() } })}</span>
+					<span class="text-sm font-bold text-cyan-400"
+						>{$_('scoring.pts', {
+							values: { points: Math.round(scores[scores.length - 1]).toLocaleString() }
+						})}</span
+					>
 				</div>
 			{/each}
 		</div>

@@ -392,9 +392,6 @@
 
 <FlashingText
 	text={game.streakFlash
-		? $_('timeline.streak', { values: { count: game.streakFlash.streak } })
-		: ''}
-	secondLine={game.streakFlash
 		? $_('timeline.scoring.streakMultiplier', {
 				values: { mult: calculateStreakMult(game.streakFlash.streak).toFixed(2) + '×' }
 			})

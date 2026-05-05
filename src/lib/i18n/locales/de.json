@@ -566,7 +566,7 @@
 			"completionBonus": "Abschlussbonus",
 			"turnTotal": "Rundenwertung",
 			"score": "Punkte",
-			"streakMultiplier": "{mult} Multiplikator",
+			"streakMultiplier": "{mult} Streak-Multiplikator",
 			"mastery": "Präzision",
 			"consolation": "Knapp daneben!"
 		},

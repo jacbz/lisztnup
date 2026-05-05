@@ -8,6 +8,7 @@
 	import TimelineCard from './TimelineCard.svelte';
 	import Flame from 'lucide-svelte/icons/flame';
 	import { STREAK_THRESHOLD } from '$lib/logic/timelineGame.svelte';
+	import { calculateStreakMult } from '$lib/logic/timelineScoring';
 
 	export interface TimelineEntry {
 		id: string;
@@ -194,7 +195,7 @@
 					<span class="text-slate-600">|</span>
 					<div class="flex items-center gap-0.5 text-orange-400">
 						<Flame class="h-3.5 w-3.5" />
-						<span class="text-xs font-bold">{streakCount}</span>
+						<span class="text-xs font-bold">{calculateStreakMult(streakCount).toFixed(2)}×</span>
 					</div>
 				{/if}
 			</div>

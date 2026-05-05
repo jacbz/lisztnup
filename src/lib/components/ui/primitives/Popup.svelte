@@ -160,11 +160,7 @@
 	     (later-opened = later in DOM = on top) ensures the second popup's backdrop
 	     covers the first popup's dialog box, so the lower popup is properly darkened. -->
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
-	<div
-		class="fixed inset-0 z-1000"
-		onclick={handleBackdropClick}
-		role="presentation"
-	>
+	<div class="fixed inset-0 z-1000" onclick={handleBackdropClick} role="presentation">
 		<!-- Backdrop -->
 		<div
 			class="absolute inset-0 bg-black/60"
@@ -185,16 +181,16 @@
 				out:scale={{ duration: 200, easing: cubicOut, start: 0.9 }}
 				style="--rotation: {rotation}deg;"
 			>
-			{#if showCloseButton}
-				<button
-					type="button"
-					class="absolute top-4 right-4 z-10 rounded-full p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
-					onclick={handleCloseClick}
-					aria-label="Close"
-				>
-					<X class="h-6 w-6" />
-				</button>
-			{/if}
+				{#if showCloseButton}
+					<button
+						type="button"
+						class="absolute top-4 right-4 z-10 rounded-full p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+						onclick={handleCloseClick}
+						aria-label="Close"
+					>
+						<X class="h-6 w-6" />
+					</button>
+				{/if}
 
 				<div class={containerClasses} style={containerStyle}>
 					{@render children?.()}

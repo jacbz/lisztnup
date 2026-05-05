@@ -363,6 +363,7 @@ export class TimelineGame {
 			totalPlacements: 0,
 			correctPlacements: 0,
 			currentStreak: 0,
+			absoluteStreak: 0,
 			longestStreak: 0,
 			score: 0,
 			reachedTarget: false,
@@ -754,8 +755,9 @@ export class TimelineGame {
 		if (isCorrect) {
 			this.activePlayer.correctPlacements++;
 			this.activePlayer.currentStreak++;
-			if (this.activePlayer.currentStreak > this.activePlayer.longestStreak) {
-				this.activePlayer.longestStreak = this.activePlayer.currentStreak;
+			this.activePlayer.absoluteStreak++;
+			if (this.activePlayer.absoluteStreak > this.activePlayer.longestStreak) {
+				this.activePlayer.longestStreak = this.activePlayer.absoluteStreak;
 			}
 
 			const prevYear = idx > 0 ? this.#getTimelineYear(entries[idx - 1].track) : null;
@@ -789,9 +791,10 @@ export class TimelineGame {
 				this.activePlayer.reachedTarget = true;
 			}
 		} else {
-			// Soft decay: Min(½, −3) — drop to min(streak//2, streak−3), floor 0
+			// Soft decay: Min(½, −3) — drop to min(streak//2, streak−3), floor 0 for multiplier tier
 			const s = this.activePlayer.currentStreak;
 			this.activePlayer.currentStreak = Math.max(0, Math.min(Math.floor(s / 2), s - 3));
+			this.activePlayer.absoluteStreak = 0;
 			this.lastTurnScoreBreakdown = null;
 
 			// Consolation: find the correct slot (excluding the misplaced card)

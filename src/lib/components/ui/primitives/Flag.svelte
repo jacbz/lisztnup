@@ -24,7 +24,9 @@
 	const title = $derived(() => {
 		if (!country || country.length !== 2 || country === 'UNKNOWN') return '';
 		try {
-			return new Intl.DisplayNames([$locale ?? 'en'], { type: 'region' }).of(country.toUpperCase()) ?? '';
+			return (
+				new Intl.DisplayNames([$locale ?? 'en'], { type: 'region' }).of(country.toUpperCase()) ?? ''
+			);
 		} catch {
 			return '';
 		}
@@ -36,7 +38,9 @@
 		src={flagUrl()}
 		alt=""
 		title={title()}
-		class="inline-block border-[0.5px] border-slate-600 align-baseline select-none {sizeClasses[size]} {cls}"
+		class="inline-block border-[0.5px] border-slate-600 align-baseline select-none {sizeClasses[
+			size
+		]} {cls}"
 		class:opacity-50={faded}
 		draggable="false"
 		oncontextmenu={(e) => e.preventDefault()}

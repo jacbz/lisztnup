@@ -277,7 +277,7 @@
 									}
 								})}
 							</span>
-							{#if t.longestStreak >= STREAK_THRESHOLD}
+							{#if t.longestStreak > 0}
 								<span class="flex items-center gap-0.5 text-orange-400/70">
 									<Flame class="h-3 w-3" />
 									{$_('timeline.longestStreak', { values: { count: t.longestStreak } })}

@@ -566,7 +566,7 @@
 			"completionBonus": "通关奖励",
 			"turnTotal": "回合总分",
 			"score": "分数",
-			"streakMultiplier": "{mult}倍",
+			"streakMultiplier": "连续倍数 {mult}",
 			"mastery": "熟练度",
 			"consolation": "差一点！"
 		},
