@@ -54,6 +54,7 @@
 	});
 
 	const scoreRange = $derived(maxScore - minScore);
+	const roundIndices = $derived([...rounds.keys()]);
 	const chartHeight = 300;
 	const chartWidth = $derived(
 		typeof window !== 'undefined' ? Math.min(window.innerWidth - 100, 600) : 600
@@ -119,7 +120,7 @@
 
 				<!-- X-axis labels (rounds starting at 1) -->
 				<g class="x-axis">
-					{#each rounds as _, i (i)}
+					{#each roundIndices as i (i)}
 						{@const x = getX(i, rounds.length)}
 						<text
 							{x}

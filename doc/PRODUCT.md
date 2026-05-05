@@ -85,7 +85,7 @@ Five difficulty levels (Beginner → Expert) with pre-configured filters. Genera
 
 ### Daily Challenge
 
-The daily challenge uses a global UTC month schedule so every player sees the same tracklist on the same day without server storage. There are some pre-defined tracklists for specific dates (e.g., composer birthdays, national days).
+The daily challenge uses a global UTC month schedule so every player sees the same tracklist on the same day without server storage. Fixed dates reserve composer birthdays, national days, and Women’s Day; monthly filler excludes some tracklists, repeating allowed filler only when the month needs more days.
 
 ### Custom Tracklists
 

@@ -43,12 +43,7 @@ CREATE TABLE IF NOT EXISTS problem_reports (
   country TEXT,
   message TEXT,
   email TEXT,
-  deezer_id TEXT,
-  composer TEXT,
-  work TEXT,
-  part TEXT,
-  work_type TEXT,
-  work_years TEXT
+  track_metadata TEXT
 );
 
 CREATE TABLE IF NOT EXISTS feedback (

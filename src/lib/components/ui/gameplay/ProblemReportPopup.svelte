@@ -50,12 +50,17 @@
 		const success = await analytics.reportProblem({
 			message: message.trim(),
 			email: email.trim() || undefined,
-			deezerId,
-			composer: track.composer.name,
-			work: track.work.name,
-			part: track.part.name,
-			workType: track.work.type,
-			workYears: `${track.work.begin_year ?? 'null'} - ${track.work.end_year ?? 'null'}`
+			trackMetadata: {
+				deezerId,
+				composer: track.composer.name,
+				work: track.work.name,
+				part: track.part.name,
+				workType: track.work.type,
+				workYears: `${track.work.begin_year ?? 'null'} - ${track.work.end_year ?? 'null'}`,
+				composerGid: track.composer.gid,
+				workGid: track.work.gid,
+				partGid: track.part.gid
+			}
 		});
 
 		isSending = false;

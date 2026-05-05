@@ -75,13 +75,14 @@ function validateAnchorsForMonth(
 /**
  * Builds a deterministic UTC schedule for the month of `date`.
  *
- * Fixed themed dates are reserved first, then the remaining days are filled from the unused pool.
- * This guarantees each candidate appears at most once per month.
+ * Fixed themed dates are reserved first, then the remaining days are filled from the rotation pool.
+ * If the month has more open days than rotation candidates, filler candidates repeat deterministically.
  */
 export function buildDailyChallengeSchedule<T extends DailyChallengeCandidate>(
 	candidates: readonly T[],
 	anchors: readonly DailyChallengeAnchor[],
-	date = new Date()
+	date = new Date(),
+	rotationCandidates: readonly T[] = candidates
 ): DailyChallengeScheduleEntry<T>[] {
 	const year = date.getUTCFullYear();
 	const month = date.getUTCMonth();
@@ -115,14 +116,21 @@ export function buildDailyChallengeSchedule<T extends DailyChallengeCandidate>(
 	}
 
 	const remainingCandidates = seededShuffle(
-		candidates.filter((item) => !usedCandidateIds.has(item.id)),
+		rotationCandidates.filter((item) => !usedCandidateIds.has(item.id)),
 		hashString(`${year}-${String(monthNumber).padStart(2, '0')}`)
+	);
+	const repeatCandidates = seededShuffle(
+		rotationCandidates,
+		hashString(`${year}-${String(monthNumber).padStart(2, '0')}-repeat`)
 	);
 
 	let remainingIndex = 0;
+	let repeatIndex = 0;
 	for (let i = 0; i < schedule.length; i++) {
 		if (schedule[i] !== null) continue;
-		const nextCandidate = remainingCandidates[remainingIndex++];
+		const nextCandidate =
+			remainingCandidates[remainingIndex++] ??
+			repeatCandidates[repeatIndex++ % repeatCandidates.length];
 		if (!nextCandidate) {
 			throw new Error('Daily challenge schedule ran out of candidates for the current month');
 		}

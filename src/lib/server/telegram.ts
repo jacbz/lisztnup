@@ -18,6 +18,10 @@ function esc(s: string) {
 	return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
+function escAttr(s: string) {
+	return esc(s).replace(/"/g, '&quot;');
+}
+
 export type GameSessionRow = {
 	id: string | null;
 	started: string | null;
@@ -73,18 +77,40 @@ export function formatFeedbackMessage(message: string, country: string, email?: 
 
 export function formatReportMessage(
 	message: string,
-	composer: string,
-	work: string,
-	part: string,
-	deezerId: string,
+	metadata: Record<string, unknown>,
 	country: string,
 	email?: string
 ) {
+	const composer = formatSessionValue(metadata.composer);
+	const work = formatSessionValue(metadata.work);
+	const part = formatSessionValue(metadata.part);
+	const deezerId = formatSessionValue(metadata.deezerId);
+	const composerGid = formatSessionValue(metadata.composerGid);
+	const workGid = formatSessionValue(metadata.workGid);
+	const partGid = formatSessionValue(metadata.partGid);
+	const workType = formatSessionValue(metadata.workType);
+	const workYears = formatSessionValue(metadata.workYears);
+	const composerLink =
+		composerGid === 'n/a'
+			? esc(composer)
+			: `<a href="https://musicbrainz.org/artist/${escAttr(composerGid)}">${esc(composer)}</a>`;
+	const workLink =
+		workGid === 'n/a'
+			? esc(work)
+			: `<a href="https://musicbrainz.org/search?query=wid%3A${escAttr(workGid)}-*&amp;type=work&amp;limit=25&amp;method=advanced">${esc(work)}</a>`;
+	const deezerLink =
+		deezerId === 'n/a'
+			? esc(deezerId)
+			: `<a href="https://www.deezer.com/track/${escAttr(deezerId)}">${esc(deezerId)}</a>`;
+
 	let text = `🚩 <b>Problem Report</b>\n\n`;
-	text += `<b>Composer:</b> ${esc(composer)}\n`;
-	text += `<b>Work:</b> ${esc(work)}\n`;
+	text += `<b>Composer:</b> ${composerLink}\n`;
+	text += `<b>Work:</b> ${workLink}\n`;
 	text += `<b>Part:</b> ${esc(part)}\n`;
-	text += `<b>Deezer:</b> ${esc(deezerId)}\n`;
+	text += `<b>Type:</b> ${esc(workType)}\n`;
+	text += `<b>Years:</b> ${esc(workYears)}\n`;
+	text += `<b>Part GID:</b> ${esc(partGid)}\n`;
+	text += `<b>Deezer:</b> ${deezerLink}\n`;
 	text += `<b>Message:</b> ${esc(message)}\n`;
 	if (email) text += `<b>Email:</b> ${esc(email)}\n`;
 	text += `<b>Country:</b> ${esc(country)}`;

@@ -869,7 +869,7 @@
 | `142c8c19` | Bruckner – Symphony no. 2 in C minor, WAB 102 | * I. Moderato<br>* II. Andante: Feierlich, etwas bewegt<br>* III. Scherzo: Mäßig schnell - Trio: Gleiches Tempo | 1877 |
 | `a59ded02` | Bruckner – Symphony no. 3 in D minor, WAB 103 | * II. Adagio, bewegt, quasi andante<br>* III. Scherzo: Ziemlich schnell<br>* IV. Finale: Allegro | 1873 |
 | `e92e5c6d` | Bruckner – Symphony No. 4 in E flat major, WAB 104 "Romantic" | * I. Bewegt, nicht zu schnell<br>* II. Andante, quasi allegretto<br>* IV. Finale. Bewegt, doch nicht zu schnell | 1873‑1874 |
-| `859e2b62` | Bruckner – Symphony no. 4 in E-flat major, WAB 104 "Romantische" | * I. Bewegt, nicht zu schnell<br>* II. Andante, quasi allegretto<br>* III. Scherzo (Bewegt) - Trio (Nicht zu schnell, Keinesfalls schleppend) | 1974 |
+| `859e2b62` | Bruckner – Symphony no. 4 in E-flat major, WAB 104 "Romantische" | * I. Bewegt, nicht zu schnell<br>* II. Andante, quasi allegretto<br>* III. Scherzo (Bewegt) - Trio (Nicht zu schnell, Keinesfalls schleppend) | 1874 |
 | `ecbdf41a` | Bruckner – Symphony no. 5 in B flat major, WAB 105 "Tragic" | * I. Introduction (Adagio) - Allegro.<br>* III. Scherzo. Molto vivace<br>* IV. Finale: Adagio - Allegro moderato. | 1876 |
 | `d9d63557` | Bruckner – Symphony no. 5 in B-flat major, WAB 105 "Tragische" | * I. Introduction (Adagio) - Allegro.<br>* II. Adagio. Sehr langsam.<br>* IV. Finale: Adagio - Allegro moderato. | 1876 |
 | `1ffc0743` | Bruckner – Symphony no. 6 in A-major, WAB 106 | * I. Majestoso<br>* II. Adagio. Sehr feierlich<br>* III. Scherzo. Nicht schnell – Trio. Langsam | 1879‑1881 |

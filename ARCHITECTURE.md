@@ -120,7 +120,7 @@ Cloudflare Pages with D1 database. Config in `wrangler.toml`:
 | `pageviews`           | Server-side page views  | `user_hash`, `country`, `path`, `device`, `os`, `user_agent`               |
 | `game_sessions`       | Game lifecycle tracking | `id` (UUID), `state`, `mode`, `tracklist_id`, `locale`, `game_info` (JSON) |
 | `timeline_placements` | Per-placement tracking  | `session_id`, `work_gid`, `placed_correctly`                               |
-| `problem_reports`     | User-reported issues    | `session_id`, `message`, `deezer_id`, `composer`, `work`, `part`           |
+| `problem_reports`     | User-reported issues    | `session_id`, `message`, `track_metadata` (JSON: MB/Deezer ids + labels)   |
 | `feedback`            | General user feedback   | `session_id`, `message`, `email`                                           |
 | `timeline_scores`     | Timeline solo scores    | `player_token`, `score`, `attempts`, `target`, `average_time`, `log`       |
 
@@ -132,7 +132,7 @@ All tables include `user_hash` (SHA-256 of IP + daily-rotating salt — never st
 | ---------------------------------- | --------------------------------------------- | ------------------------------------------------------------------------------- |
 | `POST /api/game/events`            | Game telemetry (start/progress/end/placement) | UPSERT + `json_patch()`, non-blocking via `waitUntil()`                         |
 | `POST /api/game/feedback`          | User feedback (5–1000 chars)                  | Validates, writes DB, sends Telegram notification                               |
-| `POST /api/game/reports`           | Problem reports with Deezer/work metadata     | Same as feedback + detailed Telegram message                                    |
+| `POST /api/game/reports`           | Problem reports with track metadata JSON      | Same as feedback + Telegram message with MusicBrainz/Deezer links               |
 | `GET /api/game/leaderboard`        | Top N timeline scores                         | Max 50; strips tokens and returns Berlin `YYYY-MM-DD` dates                     |
 | `POST/PATCH /api/game/leaderboard` | Submit, publish, or rename timeline scores    | POST validates replay logs; PATCH rewrites anonymous rows for the browser token |
 

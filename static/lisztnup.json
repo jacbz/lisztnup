@@ -70193,8 +70193,8 @@
       "composer_gid": "9debb4c3-dc10-440f-9c96-b777d51ea998",
       "name": "Symphony no. 4 in E-flat major, WAB 104 \"Romantische\"",
       "type": "orchestral",
-      "begin_year": 1974,
-      "end_year": 1974,
+      "begin_year": null,
+      "end_year": 1874,
       "score": 2.61,
       "parts": [
         {

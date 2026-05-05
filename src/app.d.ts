@@ -14,7 +14,7 @@ declare global {
 				TELEGRAM_CHAT_ID: string;
 			};
 			context: {
-				waitUntil(promise: Promise<any>): void;
+				waitUntil(promise: Promise<unknown>): void;
 			};
 			cf: CfProperties;
 		}

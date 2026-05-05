@@ -71,6 +71,8 @@
 
 	// Guard against double-fire during out-transition (e.g. mobile double-taps)
 	let closing = $state(false);
+	let dialogEl: HTMLDivElement | null = $state(null);
+	let pointerDownInsideDialog = false;
 
 	// Reset the closing guard whenever the popup becomes visible again
 	$effect(() => {
@@ -79,7 +81,15 @@
 		}
 	});
 
+	function handleRootPointerDown(event: PointerEvent) {
+		pointerDownInsideDialog = !!dialogEl && event.composedPath().includes(dialogEl);
+	}
+
 	function handleBackdropClick() {
+		if (pointerDownInsideDialog) {
+			pointerDownInsideDialog = false;
+			return;
+		}
 		if (closing) return;
 		closing = true;
 		onClose();
@@ -160,7 +170,12 @@
 	     (later-opened = later in DOM = on top) ensures the second popup's backdrop
 	     covers the first popup's dialog box, so the lower popup is properly darkened. -->
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
-	<div class="fixed inset-0 z-1000" onclick={handleBackdropClick} role="presentation">
+	<div
+		class="fixed inset-0 z-1000"
+		onpointerdown={handleRootPointerDown}
+		onclick={handleBackdropClick}
+		role="presentation"
+	>
 		<!-- Backdrop -->
 		<div
 			class="absolute inset-0 bg-black/60"
@@ -172,6 +187,7 @@
 		<div class="pointer-events-none absolute inset-0 flex items-center justify-center p-4">
 			<!-- svelte-ignore a11y_click_events_have_key_events -->
 			<div
+				bind:this={dialogEl}
 				class="popup-rotation pointer-events-auto relative"
 				onclick={(e) => e.stopPropagation()}
 				role="dialog"

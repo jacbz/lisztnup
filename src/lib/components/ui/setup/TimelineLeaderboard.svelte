@@ -1,7 +1,6 @@
 <script lang="ts">
 	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 	import { SquareStack } from 'lucide-svelte';
-	import { slide } from 'svelte/transition';
 	import { _ } from 'svelte-i18n';
 	import Flag from '../primitives/Flag.svelte';
 	import type { LeaderboardEntry } from '$lib/types';
@@ -25,42 +24,48 @@
 </script>
 
 {#snippet leaderboardRow(entry: LeaderboardEntry, rank: number)}
-	<span
-		class="mr-2 text-center font-bold"
-		class:text-cyan-400={entry.is_me}
-		class:text-slate-500={!entry.is_me}
-	>
-		{rank}
-	</span>
-	<span
-		class="truncate"
-		class:text-cyan-300={entry.is_me && entry.player_name}
-		class:text-slate-300={!entry.is_me && entry.player_name}
-		class:text-slate-500={!entry.player_name}
-	>
-		<Flag country={entry.country} class="mr-0.5" faded={!entry.player_name} />
-		{entry.player_name ?? $_('leaderboard.anonymous')}
-	</span>
-	<span
-		class="text-right font-bold whitespace-nowrap tabular-nums"
-		class:text-cyan-400={entry.is_me}
-	>
-		{$_('scoring.pts', { values: { points: entry.score.toLocaleString() } })}
-	</span>
-	<span class="text-right whitespace-nowrap text-slate-500 tabular-nums">
-		{formatDateString(entry.timestamp, currentLocale)}
-	</span>
-	<div class="flex">
-		{#if entry.log}
-			<button
-				type="button"
-				onclick={() => onShowTimeline(entry)}
-				class="cursor-pointer text-slate-500 transition-colors hover:text-cyan-400"
-			>
-				<SquareStack class="h-3.5 w-3.5" />
-			</button>
-		{/if}
-	</div>
+	<tr>
+		<td
+			class="pr-2 text-center font-bold"
+			class:text-cyan-400={entry.is_me}
+			class:text-slate-500={!entry.is_me}
+		>
+			{rank}
+		</td>
+		<td
+			class="max-w-0 truncate"
+			class:text-cyan-300={entry.is_me}
+			class:text-slate-300={!entry.is_me && entry.player_name}
+			class:text-slate-500={!entry.is_me && !entry.player_name}
+		>
+			<Flag country={entry.country} class="mr-0.5" faded={!entry.player_name} />
+			{entry.player_name ?? $_('leaderboard.anonymous')}
+		</td>
+		<td
+			class="pl-[clamp(0.375rem,1.5vw,1.5rem)] text-right font-bold whitespace-nowrap tabular-nums"
+			class:text-cyan-400={entry.is_me}
+		>
+			{$_('scoring.pts', { values: { points: entry.score.toLocaleString() } })}
+		</td>
+		<td
+			class="pl-[clamp(0.375rem,1.5vw,1.5rem)] text-right whitespace-nowrap text-slate-500 tabular-nums"
+		>
+			{formatDateString(entry.timestamp, currentLocale)}
+		</td>
+		<td class="pl-[clamp(0.375rem,1.5vw,1.5rem)]">
+			<div class="flex">
+				{#if entry.log}
+					<button
+						type="button"
+						onclick={() => onShowTimeline(entry)}
+						class="cursor-pointer text-slate-500 transition-colors hover:text-cyan-400"
+					>
+						<SquareStack class="h-3.5 w-3.5" />
+					</button>
+				{/if}
+			</div>
+		</td>
+	</tr>
 {/snippet}
 
 <div class="mt-1">
@@ -72,24 +77,25 @@
 	{:else if entries.length === 0}
 		<p class="py-2 text-xs text-slate-500">{$_('leaderboard.noScores')}</p>
 	{:else}
-		<div
-			class="grid grid-cols-[auto_minmax(0,1fr)_auto_auto_auto] items-center gap-x-[clamp(0.375rem,1.5vw,1.5rem)] gap-y-1 text-left text-xs"
-		>
-			{#each entries.slice(0, 5) as entry, i (i)}
-				{@render leaderboardRow(entry, i + 1)}
-			{/each}
-		</div>
-		{#if showExpanded && entries.length > 5}
-			<div in:slide={{ duration: 200 }} out:slide={{ duration: 150 }}>
-				<div
-					class="mt-1 grid grid-cols-[auto_minmax(0,1fr)_auto_auto_auto] items-center gap-x-[clamp(0.375rem,1.5vw,1.5rem)] gap-y-1 text-left text-xs"
-				>
+		<table class="w-full table-fixed border-separate border-spacing-y-1 text-left text-xs">
+			<colgroup>
+				<col class="w-6" />
+				<col />
+				<col class="w-22" />
+				<col class="w-18" />
+				<col class="w-5" />
+			</colgroup>
+			<tbody>
+				{#each entries.slice(0, 5) as entry, i (i)}
+					{@render leaderboardRow(entry, i + 1)}
+				{/each}
+				{#if showExpanded && entries.length > 5}
 					{#each entries.slice(5) as entry, i (i)}
 						{@render leaderboardRow(entry, i + 6)}
 					{/each}
-				</div>
-			</div>
-		{/if}
+				{/if}
+			</tbody>
+		</table>
 		{#if !showExpanded && entries.length > 5}
 			<button
 				type="button"

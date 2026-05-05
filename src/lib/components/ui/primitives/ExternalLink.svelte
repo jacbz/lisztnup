@@ -24,16 +24,16 @@
 	let { href, class: className = '', hideOnMobile = false, hoverOnly = false }: Props = $props();
 
 	const baseClasses = 'items-center align-middle pb-0.5 transition-opacity';
-	const visibilityClasses = hoverOnly
+	const visibilityClasses = $derived(hoverOnly
 		? 'opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto'
-		: 'opacity-70 hover:opacity-100';
+		: 'opacity-70 hover:opacity-100');
 </script>
 
 <a
 	{href}
 	target="_blank"
-	rel="noopener noreferrer"
-	on:click|stopPropagation
+	rel="external noopener noreferrer"
+	onclick={(event) => event.stopPropagation()}
 	class="{baseClasses} {visibilityClasses} {className} {hideOnMobile
 		? 'hidden md:inline-flex'
 		: ''}"

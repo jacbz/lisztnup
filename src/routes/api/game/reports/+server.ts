@@ -14,6 +14,32 @@ function parseClientTimestamp(value: unknown): string | null {
 	return new Date(ms).toISOString().slice(0, 19).replace('T', ' ');
 }
 
+function normalizeTrackMetadata(value: unknown): Record<string, unknown> {
+	if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
+	const source = value as Record<string, unknown>;
+	const metadata: Record<string, unknown> = {};
+	const keys = [
+		'composer',
+		'composerGid',
+		'work',
+		'workGid',
+		'part',
+		'partGid',
+		'workType',
+		'workYears',
+		'deezerId'
+	];
+
+	for (const key of keys) {
+		const raw = source[key];
+		if (typeof raw === 'string') metadata[key] = raw.slice(0, 500);
+		else if (typeof raw === 'number' && Number.isFinite(raw)) metadata[key] = raw;
+		else if (raw === null) metadata[key] = null;
+	}
+
+	return metadata;
+}
+
 export const POST: RequestHandler = async ({ request, platform, getClientAddress }) => {
 	if (!platform?.env?.DB) {
 		return json({ success: false, reason: 'No DB configured' }, { status: 503 });
@@ -35,6 +61,8 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		const country = cf?.country || 'UNKNOWN';
 		const email = typeof payload.email === 'string' ? payload.email.trim().slice(0, 254) : null;
 		const timestamp = parseClientTimestamp(payload.occurredAt);
+		const trackMetadata = normalizeTrackMetadata(payload.trackMetadata);
+		const trackMetadataJson = JSON.stringify(trackMetadata);
 
 		const db = platform.env!.DB;
 		const sessionId = typeof payload.sessionId === 'string' ? payload.sessionId : null;
@@ -51,23 +79,10 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 
 		await db
 			.prepare(
-				`INSERT INTO problem_reports (timestamp, session_id, user_hash, country, message, email, deezer_id, composer, work, part, work_type, work_years) 
-				 VALUES (COALESCE(?, CURRENT_TIMESTAMP), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+				`INSERT INTO problem_reports (timestamp, session_id, user_hash, country, message, email, track_metadata) 
+				 VALUES (COALESCE(?, CURRENT_TIMESTAMP), ?, ?, ?, ?, ?, ?)`
 			)
-			.bind(
-				timestamp,
-				sessionId,
-				userHash,
-				country,
-				payload.message,
-				email,
-				payload.deezerId,
-				payload.composer,
-				payload.work,
-				payload.part,
-				payload.workType,
-				payload.workYears
-			)
+			.bind(timestamp, sessionId, userHash, country, payload.message, email, trackMetadataJson)
 			.run();
 
 		const telegramOp = async () => {
@@ -77,10 +92,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				if (token && chatId) {
 					let text = formatReportMessage(
 						payload.message,
-						payload.composer || '',
-						payload.work || '',
-						payload.part || '',
-						String(payload.deezerId ?? ''),
+						trackMetadata,
 						country,
 						email || undefined
 					);
