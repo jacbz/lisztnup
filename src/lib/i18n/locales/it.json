@@ -549,6 +549,9 @@
 		"drag": "Trascina",
 		"confirm": "Conferma",
 		"accuracy": "{correct}/{total} corrette ({percentage} %)",
+		"averageTime": "Tempo medio: {seconds}s",
+		"secondsShort": "{seconds}s",
+		"replayStep": "Passaggio replay {step}",
 		"streak": "{count} di fila!",
 		"longestStreak": "Miglior serie: {count}",
 		"help": {

@@ -61,19 +61,20 @@ CREATE TABLE IF NOT EXISTS feedback (
   email TEXT
 );
 
-CREATE TABLE IF NOT EXISTS scores (
+CREATE TABLE IF NOT EXISTS timeline_scores (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
   player_token TEXT NOT NULL,
   player_name TEXT,
   score INTEGER NOT NULL,
-  cards INTEGER NOT NULL,
-  accuracy REAL NOT NULL,
-  longest_streak INTEGER NOT NULL DEFAULT 0,
-  tracklist_id TEXT,
+  attempts INTEGER NOT NULL,
+  target INTEGER NOT NULL,
+  average_time REAL,
+  longest_streak INTEGER,
+  tracklist_id TEXT NOT NULL,
   cards_to_win INTEGER NOT NULL,
   country TEXT,
   user_hash TEXT,
   session_id TEXT,
-  timeline TEXT
+  log TEXT
 );

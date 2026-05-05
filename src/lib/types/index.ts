@@ -1,5 +1,6 @@
 // Re-export non-catalog shared types for easy importing
 export type { LeaderboardEntry } from './leaderboard';
+export type { TimelineReplayLog, TimelineReplayTurn } from './timelineReplay';
 export type {
 	GameSettings,
 	Tracklist,

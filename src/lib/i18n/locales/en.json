@@ -549,6 +549,9 @@
 		"drag": "Drag",
 		"confirm": "Confirm",
 		"accuracy": "{correct}/{total} correct ({percentage}%)",
+		"averageTime": "Avg. time: {seconds}s",
+		"secondsShort": "{seconds}s",
+		"replayStep": "Replay step {step}",
 		"streak": "{count} in a row!",
 		"longestStreak": "Best streak: {count}",
 		"help": {

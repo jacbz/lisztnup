@@ -549,6 +549,9 @@
 		"drag": "Ziehen",
 		"confirm": "Bestätigen",
 		"accuracy": "{correct}/{total} richtig ({percentage} %)",
+		"averageTime": "Ø Zeit: {seconds}s",
+		"secondsShort": "{seconds}s",
+		"replayStep": "Replay-Schritt {step}",
 		"streak": "{count}-er Streak",
 		"longestStreak": "Beste Streak: {count}",
 		"help": {

@@ -1,5 +1,6 @@
 import type { Track } from '$lib/models';
 import type { Player } from '$lib/types';
+import type { TimelineReplayTurn } from '$lib/types/timelineReplay';
 
 // ─── Data types ────────────────────────────────────────────
 
@@ -30,6 +31,8 @@ export interface TimelineRow {
 	score: number;
 	reachedTarget: boolean;
 	completionBonus: number;
+	initialPartGid: string | null;
+	replayTurns: TimelineReplayTurn[];
 }
 
 /** Full breakdown of a single turn's score computation. */

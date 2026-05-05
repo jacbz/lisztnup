@@ -19,12 +19,18 @@ function parseClientTimestamp(value: unknown): string | null {
 	return new Date(ms).toISOString().slice(0, 19).replace('T', ' ');
 }
 
-function isCompletedTimeline(timeline: unknown, cardsToWin: unknown): boolean {
-	if (!Array.isArray(timeline)) return false;
+function isCompletedLog(log: unknown, cardsToWin: unknown): boolean {
+	if (!log || typeof log !== 'object') return false;
+	const replay = log as { v?: unknown; initial?: unknown; turns?: unknown };
+	if (replay.v !== 1 || !Array.isArray(replay.turns)) return false;
 	if (typeof cardsToWin !== 'number' || !Number.isFinite(cardsToWin) || cardsToWin <= 0) {
 		return false;
 	}
-	return timeline.length >= cardsToWin;
+	const initialCount = typeof replay.initial === 'string' && replay.initial.length > 0 ? 1 : 0;
+	const correctTurns = replay.turns.filter(
+		(turn) => !!turn && typeof turn === 'object' && (turn as { ok?: unknown }).ok === true
+	).length;
+	return initialCount + correctTurns >= cardsToWin;
 }
 
 export const GET: RequestHandler = async ({ url, platform }) => {
@@ -41,7 +47,7 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 		// Use ROW_NUMBER() to keep only each player's best score per config
 		// Partition by token+name to allow multiple entries from local multiplayer
 		// NULL player_name entries collapse per token (anonymous best-of-device)
-		// We prefer entries with a timeline, then higher scores, then newer entries
+		// We prefer entries with a replay log, then higher scores, then newer entries
 		// Anonymous entries are excluded when a named entry for the same token exists
 		// with an equal or higher score (if the named entry scores lower, both appear)
 		const binds: (string | number)[] = [];
@@ -57,12 +63,12 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 		}
 
 		const whereClause = conditions.length > 0 ? ` WHERE ${conditions.join(' AND ')}` : '';
-		const cols = `player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, timestamp, timeline`;
+		const cols = `player_token, player_name, score, attempts, target, average_time, longest_streak, tracklist_id, cards_to_win, country, timestamp, log`;
 
 		const sql = `WITH best AS (
 				SELECT ${cols},
-					ROW_NUMBER() OVER (PARTITION BY player_token, player_name ORDER BY score DESC, timeline IS NOT NULL DESC, timestamp DESC) AS rn
-				FROM scores${whereClause}
+					ROW_NUMBER() OVER (PARTITION BY player_token, player_name ORDER BY score DESC, log IS NOT NULL DESC, timestamp DESC) AS rn
+				FROM timeline_scores${whereClause}
 			), deduped AS (
 				SELECT ${cols} FROM best WHERE rn = 1
 			), max_named AS (
@@ -70,7 +76,7 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 				FROM deduped WHERE player_name IS NOT NULL
 				GROUP BY player_token
 			)
-			SELECT d.player_token, d.player_name, d.score, d.cards, d.accuracy, d.longest_streak, d.tracklist_id, d.cards_to_win, d.country, d.timestamp, d.timeline
+			SELECT d.player_token, d.player_name, d.score, d.attempts, d.target, d.average_time, d.longest_streak, d.tracklist_id, d.cards_to_win, d.country, d.timestamp, d.log
 			FROM deduped d
 			LEFT JOIN max_named mn ON d.player_token = mn.player_token
 			WHERE d.player_name IS NOT NULL
@@ -111,18 +117,24 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 			playerToken,
 			playerName,
 			score,
-			cards,
-			accuracy,
+			target,
+			attempts,
+			averageTime,
 			longestStreak,
 			tracklistId,
 			cardsToWin,
 			sessionId,
-			timeline,
+			log,
 			occurredAt
 		} = body;
 
 		// ── Required field validation ──────────────────────
-		if (!playerToken || typeof score !== 'number' || typeof cards !== 'number') {
+		if (
+			!playerToken ||
+			typeof score !== 'number' ||
+			typeof target !== 'number' ||
+			typeof attempts !== 'number'
+		) {
 			return json({ success: false, reason: 'Invalid payload' }, { status: 400 });
 		}
 		// playerName is optional — null means anonymous submission
@@ -136,20 +148,32 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		if (score < 0 || score > MAX_SCORE) {
 			return json({ success: false, reason: 'Score out of range' }, { status: 400 });
 		}
-		if (cards < 1 || cards > MAX_CARDS) {
-			return json({ success: false, reason: 'Cards out of range' }, { status: 400 });
+		if (target < 1 || target > MAX_CARDS) {
+			return json({ success: false, reason: 'Target out of range' }, { status: 400 });
 		}
-		if (typeof accuracy !== 'number' || accuracy < 0 || accuracy > 1) {
-			return json({ success: false, reason: 'Invalid accuracy' }, { status: 400 });
+		if (typeof tracklistId !== 'string' || tracklistId.length === 0) {
+			return json({ success: false, reason: 'Invalid tracklist' }, { status: 400 });
 		}
-		if (typeof longestStreak === 'number' && (longestStreak < 0 || longestStreak > cards)) {
+		if (typeof cardsToWin !== 'number' || cardsToWin < 1 || cardsToWin > MAX_CARDS) {
+			return json({ success: false, reason: 'Invalid cards to win' }, { status: 400 });
+		}
+		if (attempts < Math.max(0, target - 1) || attempts > MAX_CARDS * 5) {
+			return json({ success: false, reason: 'Attempts out of range' }, { status: 400 });
+		}
+		if (
+			typeof averageTime === 'number' &&
+			(averageTime < 0 || averageTime > 3600 || !Number.isFinite(averageTime))
+		) {
+			return json({ success: false, reason: 'Average time out of range' }, { status: 400 });
+		}
+		if (typeof longestStreak === 'number' && (longestStreak < 0 || longestStreak > attempts)) {
 			return json({ success: false, reason: 'Streak out of range' }, { status: 400 });
 		}
-		if (score > cards * MAX_SCORE_PER_CARD) {
+		if (score > target * MAX_SCORE_PER_CARD) {
 			return json({ success: false, reason: 'Score implausible' }, { status: 400 });
 		}
-		if (timeline && !isCompletedTimeline(timeline, cardsToWin)) {
-			return json({ success: false, reason: 'Incomplete timeline' }, { status: 400 });
+		if (log && !isCompletedLog(log, cardsToWin)) {
+			return json({ success: false, reason: 'Incomplete replay' }, { status: 400 });
 		}
 
 		const db = platform.env.DB;
@@ -164,7 +188,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		if (nameProvided && sessionId && typeof sessionId === 'string') {
 			const dupCheck = await db
 				.prepare(
-					`SELECT COUNT(*) AS cnt FROM scores
+					`SELECT COUNT(*) AS cnt FROM timeline_scores
 					 WHERE session_id = ?1 AND player_token = ?2 AND player_name IS NOT NULL`
 				)
 				.bind(sessionId, playerToken)
@@ -177,7 +201,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		// ── Rate limit: max submissions per IP per hour ───
 		const rateCheck = await db
 			.prepare(
-				`SELECT COUNT(*) AS cnt FROM scores
+				`SELECT COUNT(*) AS cnt FROM timeline_scores
 				 WHERE user_hash = ?1 AND timestamp > datetime('now', '-1 hour')`
 			)
 			.bind(userHash)
@@ -189,23 +213,24 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		// ── Insert ────────────────────────────────────────
 		const result = await db
 			.prepare(
-				`INSERT INTO scores (timestamp, player_token, player_name, score, cards, accuracy, longest_streak, tracklist_id, cards_to_win, country, user_hash, session_id, timeline)
-			 VALUES (COALESCE(?1, CURRENT_TIMESTAMP), ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13)`
+				`INSERT INTO timeline_scores (timestamp, player_token, player_name, score, attempts, target, average_time, longest_streak, tracklist_id, cards_to_win, country, user_hash, session_id, log)
+			 VALUES (COALESCE(?1, CURRENT_TIMESTAMP), ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14)`
 			)
 			.bind(
 				timestamp,
 				playerToken,
 				nameProvided ? playerName.slice(0, MAX_NAME_LENGTH) : null,
 				Math.round(score),
-				cards,
-				Math.round(accuracy * 1000) / 1000,
+				Math.round(attempts),
+				Math.round(target),
+				typeof averageTime === 'number' ? Math.round(averageTime * 10) / 10 : null,
 				longestStreak ?? 0,
-				tracklistId ?? null,
-				cardsToWin ?? 0,
+				tracklistId,
+				Math.round(cardsToWin),
 				country,
 				userHash,
 				sessionId ?? null,
-				timeline ? JSON.stringify(timeline) : null
+				log ? JSON.stringify(log) : null
 			)
 			.run();
 
@@ -243,7 +268,7 @@ export const PATCH: RequestHandler = async ({ request, platform }) => {
 		// AND were created in the last hour.
 		const result = await db
 			.prepare(
-				`UPDATE scores SET player_name = ?1
+				`UPDATE timeline_scores SET player_name = ?1
 				 WHERE id = ?2 AND player_token = ?3 AND player_name IS NULL
 				 AND timestamp > datetime('now', '-1 hour')`
 			)
@@ -254,15 +279,15 @@ export const PATCH: RequestHandler = async ({ request, platform }) => {
 			// Either entry doesn't exist, wrong token, already named, incomplete, or expired (> 1h)
 			const existing = await db
 				.prepare(
-					`SELECT player_name, timestamp > datetime('now', '-1 hour') AS is_recent, cards_to_win, timeline
-					 FROM scores WHERE id = ?1 AND player_token = ?2`
+					`SELECT player_name, timestamp > datetime('now', '-1 hour') AS is_recent, cards_to_win, log
+					 FROM timeline_scores WHERE id = ?1 AND player_token = ?2`
 				)
 				.bind(id, playerToken)
 				.first<{
 					player_name: string | null;
 					is_recent: number;
 					cards_to_win: number;
-					timeline: string | null;
+					log: string | null;
 				}>();
 
 			if (!existing) {
@@ -272,14 +297,14 @@ export const PATCH: RequestHandler = async ({ request, platform }) => {
 				return json({ success: false, reason: 'Already named' }, { status: 409 });
 			}
 
-			const timeline = (() => {
+			const log = (() => {
 				try {
-					return JSON.parse(existing.timeline ?? '[]');
+					return JSON.parse(existing.log ?? 'null');
 				} catch {
 					return null;
 				}
 			})();
-			if (!isCompletedTimeline(timeline, existing.cards_to_win)) {
+			if (!isCompletedLog(log, existing.cards_to_win)) {
 				return json({ success: false, reason: 'Incomplete timeline' }, { status: 403 });
 			}
 			if (!existing.is_recent) {

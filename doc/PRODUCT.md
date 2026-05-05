@@ -16,7 +16,7 @@ Players take clock-wise turns placing tracks on their own chronological timeline
 - Year-required filtering ensures all tracks have valid dates
 - **Scoring**: Rewards correct placement, tight chronological gaps, close boundary calls, accuracy, speed, and streaks. Misses can earn early consolation so near-correct attempts still matter, but repeated misses fade out. Detailed formulas live in [SCORING.md](SCORING.md).
 - **Endgame**: When any player reaches target, endgame activates. In multiplayer, current round completes (all players finish). Winner = highest total score (not card count). Amber edge glow + "FINAL ROUND" badges during endgame.
-- **Leaderboard**: Only players who complete their timeline can publish or claim scores on the server-side leaderboard (`leaderboard` D1 table). Anti-cheat: server validates score ceiling per card count and rejects incomplete timelines.
+- **Leaderboard**: Only players who complete their timeline can publish or claim scores on the server-side leaderboard (`timeline_scores` D1 table). Entries store attempts, average time, longest streak, and a compact replay log of part GIDs plus placement outcomes.
 
 ### Classic
 

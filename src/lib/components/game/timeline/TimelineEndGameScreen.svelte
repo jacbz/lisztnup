@@ -9,18 +9,19 @@
 	import Home from 'lucide-svelte/icons/home';
 	import MessageSquare from 'lucide-svelte/icons/message-square';
 	import Flame from 'lucide-svelte/icons/flame';
+	import Clock3 from 'lucide-svelte/icons/clock-3';
 	import BarChart from 'lucide-svelte/icons/bar-chart-3';
 	import FeedbackPopup from '$lib/components/ui/gameplay/FeedbackPopup.svelte';
 	import LeaderboardSubmitPopup, {
 		type LeaderboardPlayer
 	} from '$lib/components/ui/screens/LeaderboardSubmitPopup.svelte';
 	import { getPlayerToken } from '$lib/stores/identity';
-	import { STREAK_THRESHOLD } from '$lib/logic/timelineGame.svelte';
 	import PenLine from 'lucide-svelte/icons/pen-line';
 	import Crown from 'lucide-svelte/icons/crown';
 	import { onMount } from 'svelte';
 	import { scale, slide } from 'svelte/transition';
 	import { getLeaderboard, submitLeaderboard } from '$lib/services/client';
+	import type { TimelineReplayLog, TimelineReplayTurn } from '$lib/types';
 
 	interface FinalTimeline {
 		player: Player;
@@ -32,6 +33,8 @@
 		score: number;
 		reachedTarget: boolean;
 		completionBonus: number;
+		initialPartGid: string | null;
+		replayTurns: TimelineReplayTurn[];
 	}
 
 	interface Props {
@@ -93,9 +96,10 @@
 				name: t.player.name,
 				color: t.player.color,
 				score: t.score,
-				cards: t.entries.length,
+				target: t.entries.length,
 				accuracy: t.totalPlacements > 0 ? t.correctPlacements / t.totalPlacements : 0,
-				longestStreak: t.longestStreak
+				longestStreak: t.longestStreak,
+				averageTime: getAverageTime(t.replayTurns)
 			}))
 	);
 
@@ -108,6 +112,25 @@
 	let isNewHighScore = $state(false);
 	let autoSubmitted = $state(false);
 	let entryIds = $state<(number | null)[]>([]);
+
+	function getAverageTime(turns: TimelineReplayTurn[]): number | null {
+		const times = turns
+			.map((turn) => turn.seconds)
+			.filter(
+				(seconds): seconds is number => typeof seconds === 'number' && Number.isFinite(seconds)
+			);
+		if (times.length === 0) return null;
+		return Math.round((times.reduce((sum, seconds) => sum + seconds, 0) / times.length) * 10) / 10;
+	}
+
+	function getReplayLog(t: FinalTimeline): TimelineReplayLog {
+		return {
+			v: 1,
+			initial: t.initialPartGid,
+			completionBonus: Math.round(t.completionBonus),
+			turns: t.replayTurns
+		};
+	}
 
 	function handleHomeClick() {
 		if (leaderboardPlayers.length > 0 && !hasNamedScore) {
@@ -159,22 +182,19 @@
 					.filter((t) => t.score > 0 && t.reachedTarget)
 					.map((t) => {
 						const p = leaderboardPlayers.find((lp) => lp.name === t.player.name)!;
-						const timelineGids: [string, string][] = t.entries
-							.filter((e) => e.confirmed && e.correct !== false)
-							.map((e) => [e.track.work.gid, e.track.part.gid]);
-
 						return submitLeaderboard(
 							{
 								playerToken: token,
 								playerName: null,
 								score: Math.round(p.score),
-								cards: p.cards,
-								accuracy: p.accuracy,
+								target: p.target,
+								attempts: t.totalPlacements,
+								averageTime: p.averageTime,
 								longestStreak: p.longestStreak,
 								tracklistId,
 								cardsToWin,
 								sessionId,
-								timeline: timelineGids
+								log: getReplayLog(t)
 							},
 							{ queueOnTransient: true, occurredAt }
 						)
@@ -277,6 +297,14 @@
 									}
 								})}
 							</span>
+							{#if getAverageTime(t.replayTurns) !== null}
+								<span class="flex items-center gap-1 tabular-nums">
+									<Clock3 class="h-3 w-3 text-cyan-400/80" />
+									{$_('timeline.averageTime', {
+										values: { seconds: getAverageTime(t.replayTurns)!.toFixed(1) }
+									})}
+								</span>
+							{/if}
 							{#if t.longestStreak > 0}
 								<span class="flex items-center gap-0.5 text-orange-400/70">
 									<Flame class="h-3 w-3" />

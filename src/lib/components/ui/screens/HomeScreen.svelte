@@ -11,7 +11,13 @@
 	import PlayerSetup from '../setup/PlayerSetup.svelte';
 	import BingoSetup from '../setup/BingoSetup.svelte';
 	import ShareLinkPopup from '../setup/ShareLinkPopup.svelte';
-	import type { Tracklist, GameMode, Player, LeaderboardEntry } from '$lib/types';
+	import type {
+		Tracklist,
+		GameMode,
+		Player,
+		LeaderboardEntry,
+		TimelineReplayLog
+	} from '$lib/types';
 	import { tracklistDisplayName, tracklistDescription } from '$lib/data/defaultTracklists';
 	import Plus from 'lucide-svelte/icons/plus';
 	import AppFooter from '../primitives/AppFooter.svelte';
@@ -62,9 +68,13 @@
 	let leaderboardFilterKey = '';
 	let showTimelinePopup = $state(false);
 	let timelineTracks = $state<Track[]>([]);
+	let timelineLog = $state<TimelineReplayLog | null>(null);
 	let timelinePlayerName = $state('');
 	let timelineCountry = $state<string | undefined>();
 	let timelineScore = $state(0);
+	let timelineAttempts = $state(0);
+	let timelineAverageTime = $state<number | null>(null);
+	let timelineLongestStreak = $state<number | null>(null);
 	let timelineTimestamp = $state<string | undefined>();
 	let playerSetupRef: { addPlayer: () => void } | undefined = $state();
 	let startAudio: HTMLAudioElement | null = null;
@@ -284,20 +294,27 @@
 	}
 
 	function handleShowTimeline(entry: LeaderboardEntry) {
-		if (!entry.timeline || entry.timeline === '[]') return;
+		if (!entry.log) return;
 		try {
-			const gids = JSON.parse(entry.timeline) as [string, string][];
+			const log = JSON.parse(entry.log) as TimelineReplayLog;
 			const data = get(gameData);
-			if (data && gids.length > 0) {
-				timelineTracks = data.resolveTimelineTracks(gids);
+			if (data && log.v === 1 && log.turns.length > 0) {
+				const allPartGids = [...new Set([log.initial, ...log.turns.map((t) => t.part)])].filter(
+					(gid): gid is string => typeof gid === 'string' && gid.length > 0
+				);
+				timelineTracks = data.resolveTimelineTracks(allPartGids);
+				timelineLog = log;
 				timelinePlayerName = entry.player_name || $_('leaderboard.anonymous');
 				timelineCountry = entry.country ?? undefined;
 				timelineScore = entry.score;
+				timelineAttempts = entry.attempts;
+				timelineAverageTime = entry.average_time ?? null;
+				timelineLongestStreak = entry.longest_streak ?? null;
 				timelineTimestamp = entry.timestamp;
 				showTimelinePopup = true;
 			}
 		} catch (e) {
-			console.error('Failed to parse timeline', e);
+			console.error('Failed to parse timeline log', e);
 		}
 	}
 
@@ -664,8 +681,12 @@
 	playerName={timelinePlayerName}
 	country={timelineCountry}
 	score={timelineScore}
+	attempts={timelineAttempts}
+	averageTime={timelineAverageTime}
+	longestStreak={timelineLongestStreak}
 	timestamp={timelineTimestamp}
 	tracks={timelineTracks}
+	log={timelineLog}
 	onClose={() => (showTimelinePopup = false)}
 />
 

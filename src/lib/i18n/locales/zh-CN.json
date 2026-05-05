@@ -549,6 +549,9 @@
 		"drag": "拖动",
 		"confirm": "确认",
 		"accuracy": "{correct}/{total} 正确（{percentage}%）",
+		"averageTime": "平均用时：{seconds}秒",
+		"secondsShort": "{seconds}秒",
+		"replayStep": "回放步骤 {step}",
 		"streak": "连续{count}次正确！",
 		"longestStreak": "最长连续: {count}",
 		"help": {

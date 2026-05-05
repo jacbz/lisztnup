@@ -549,6 +549,9 @@
 		"drag": "ドラッグ",
 		"confirm": "確定",
 		"accuracy": "{correct}/{total} 正解（{percentage}%）",
+		"averageTime": "平均時間：{seconds}秒",
+		"secondsShort": "{seconds}秒",
+		"replayStep": "リプレイ手順 {step}",
 		"streak": "{count}連続正解！",
 		"longestStreak": "最長連続: {count}",
 		"help": {

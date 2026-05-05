@@ -271,10 +271,19 @@ export class GameCatalog {
 		return { composer: work.composer, work, part };
 	}
 
-	resolveTimelineTracks(gids: readonly (readonly [string, string])[]) {
+	resolveTrackForPart(partGid: string) {
+		const part = this.getPart(partGid);
+		const work = part ? this.getWorkForPart(partGid) : undefined;
+		if (!part || !work) return null;
+
+		return { composer: work.composer, work, part };
+	}
+
+	resolveTimelineTracks(gids: readonly (readonly [string, string] | string)[]) {
 		const tracks = [];
-		for (const [workGid, partGid] of gids) {
-			const track = this.resolveTrack(workGid, partGid);
+		for (const gid of gids) {
+			const track =
+				typeof gid === 'string' ? this.resolveTrackForPart(gid) : this.resolveTrack(gid[0], gid[1]);
 			if (track) tracks.push(track);
 		}
 		return tracks;

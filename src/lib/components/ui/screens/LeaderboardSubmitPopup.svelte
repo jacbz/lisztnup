@@ -12,8 +12,9 @@
 		name: string;
 		color: string;
 		score: number;
-		cards: number;
 		accuracy: number;
+		target: number;
+		averageTime: number | null;
 		longestStreak: number;
 	}
 

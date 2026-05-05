@@ -3,17 +3,28 @@
 	import Flag from '$lib/components/ui/primitives/Flag.svelte';
 	import { _, locale } from 'svelte-i18n';
 	import type { Track } from '$lib/models';
+	import type { TimelineReplayLog, TimelineReplayTurn } from '$lib/types';
 	import PlayerTimeline, { type TimelineEntry } from './PlayerTimeline.svelte';
 	import TrackInfo from '$lib/components/ui/gameplay/TrackInfo.svelte';
 	import { formatDateString, formatYearRange } from '$lib/utils';
+	import Flame from 'lucide-svelte/icons/flame';
+	import Clock3 from 'lucide-svelte/icons/clock-3';
+	import { get } from 'svelte/store';
+	import { getStreakTextStyle } from '$lib/logic/timelineMotion';
+
+	const POINT_LABEL_Y_OFFSETS = [0, -8];
 
 	interface Props {
 		visible?: boolean;
 		playerName: string;
 		country?: string | null;
 		score: number;
+		attempts?: number;
+		averageTime?: number | null;
+		longestStreak?: number | null;
 		timestamp?: string;
 		tracks: Track[];
+		log?: TimelineReplayLog | null;
 		onClose?: () => void;
 	}
 
@@ -22,21 +33,43 @@
 		playerName,
 		country,
 		score,
+		attempts = 0,
+		averageTime = null,
+		longestStreak = null,
 		timestamp,
 		tracks,
+		log = null,
 		onClose = () => {}
 	}: Props = $props();
 
 	let inspectTrack = $state<Track | null>(null);
+	let selectedStep = $state(0);
+	let touchedSlider = $state(false);
+	let sliderOpenKey = $state(0);
+	let sliderOpenCounter = 0;
+	let wasVisible = false;
+
+	const turns = $derived<TimelineReplayTurn[]>(log?.turns ?? []);
+	const maxStep = $derived(turns.length);
+	const correctCount = $derived(turns.filter((turn) => turn.ok).length);
+	const accuracyPercent = $derived(attempts > 0 ? Math.round((correctCount / attempts) * 100) : 0);
+	const trackByPart = $derived(new Map(tracks.map((track) => [track.part.gid, track])));
+	const replaySteps = $derived(range(turns.length + 1));
 
 	const entries = $derived<TimelineEntry[]>(
-		tracks.map((track, i) => ({
-			id: `saved-${i}`,
-			track,
-			confirmed: true,
-			correct: null
-		}))
+		log ? buildReplayEntries(log, selectedStep, touchedSlider) : buildFinalEntries()
 	);
+
+	$effect(() => {
+		if (visible && !wasVisible) {
+			wasVisible = true;
+			selectedStep = maxStep;
+			touchedSlider = false;
+			sliderOpenKey = ++sliderOpenCounter;
+		} else if (!visible) {
+			wasVisible = false;
+		}
+	});
 
 	const formatEntryDate = formatDateString;
 
@@ -46,6 +79,110 @@
 			preferEndYearWhenRange: true
 		});
 	});
+
+	function buildFinalEntries(): TimelineEntry[] {
+		return tracks.map((track, i) => ({
+			id: `saved-${i}`,
+			track,
+			confirmed: true,
+			correct: null
+		}));
+	}
+
+	function insertAt<T>(items: T[], index: number | null, item: T) {
+		const bounded = Math.max(0, Math.min(index ?? items.length, items.length));
+		items.splice(bounded, 0, item);
+	}
+
+	function buildReplayEntries(replay: TimelineReplayLog, step: number, showFinalBorder: boolean) {
+		const initialTrack = replay.initial ? trackByPart.get(replay.initial) : null;
+		const result: TimelineEntry[] = initialTrack
+			? [
+					{
+						id: `initial-${initialTrack.part.gid}`,
+						track: initialTrack,
+						confirmed: true,
+						correct: null
+					}
+				]
+			: [];
+
+		for (let i = 0; i < step; i++) {
+			const turn = replay.turns[i];
+			const track = trackByPart.get(turn.part);
+			if (!turn || !track) continue;
+			const isActiveStep = i === step - 1;
+			if (turn.ok) {
+				insertAt(result, turn.index, {
+					id: `turn-${i}-${turn.part}`,
+					track,
+					confirmed: true,
+					correct: isActiveStep && (step < replay.turns.length || showFinalBorder) ? true : null
+				});
+			} else if (isActiveStep && turn.index !== null) {
+				insertAt(result, turn.index, {
+					id: `turn-${i}-${turn.part}`,
+					track,
+					confirmed: true,
+					correct: false
+				});
+			}
+		}
+
+		return result;
+	}
+
+	function stepTimeLabel(turn: TimelineReplayTurn): string {
+		return turn.seconds === null
+			? ''
+			: $_('timeline.secondsShort', { values: { seconds: turn.seconds.toFixed(1) } });
+	}
+
+	function replayStepLabel(step: number): string {
+		return get(_)('timeline.replayStep', { values: { step } });
+	}
+
+	function range(length: number): number[] {
+		return Array.from(Array(length).keys());
+	}
+
+	function pointWeight(points: number): number {
+		const magnitude = Math.min(Math.abs(points), 3000);
+		return 500 + Math.round((magnitude / 3000) * 400);
+	}
+
+	function pointLabelOffset(index: number): number {
+		return POINT_LABEL_Y_OFFSETS[index % POINT_LABEL_Y_OFFSETS.length];
+	}
+
+	function pointClass(turn: TimelineReplayTurn): string {
+		if (turn.streak >= 3) return '';
+		return turn.points > 0 ? 'text-cyan-300' : 'text-slate-500';
+	}
+
+	function pointStyle(turn: TimelineReplayTurn): string {
+		const color = turn.streak >= 3 ? getStreakTextStyle(turn.streak) : '';
+		return `${color} font-weight: ${pointWeight(turn.points)};`;
+	}
+
+	function stepCircleClass(step: number): string {
+		const isSelected = selectedStep === step;
+		const isPastOrSelected = selectedStep >= step;
+		const glow = isSelected ? 'shadow-[0_0_10px_rgba(34,211,238,0.5)]' : '';
+		const fill = isPastOrSelected ? stepCircleFillClass(step) : 'bg-slate-950';
+
+		if (step === 0) return `border-slate-600 ${fill} ${glow}`;
+		if (step === turns.length) return `border-amber-400 ${fill} ${glow}`;
+		return `${turns[step - 1]?.ok ? 'border-green-400' : 'border-red-400'} ${fill} ${glow}`;
+	}
+
+	function stepCircleFillClass(step: number): string {
+		if (step === 0) return 'bg-slate-600';
+		if (step === turns.length) return 'bg-amber-400';
+		return turns[step - 1]?.ok ? 'bg-green-400' : 'bg-red-400';
+	}
+
+	const sliderProgress = $derived(maxStep > 0 ? (selectedStep / maxStep) * 100 : 0);
 </script>
 
 <Popup {visible} {onClose} width="auto">
@@ -65,6 +202,33 @@
 						<span class="tabular-nums">{formatEntryDate(timestamp, $locale || 'en')}</span>
 					{/if}
 				</div>
+				<div
+					class="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-slate-400"
+				>
+					{#if attempts > 0}
+						<span>
+							{$_('timeline.accuracy', {
+								values: {
+									correct: correctCount,
+									total: attempts,
+									percentage: accuracyPercent
+								}
+							})}
+						</span>
+					{/if}
+					{#if averageTime !== null}
+						<span class="flex items-center gap-1 tabular-nums">
+							<Clock3 class="h-3 w-3 text-cyan-400/80" />
+							{$_('timeline.averageTime', { values: { seconds: averageTime.toFixed(1) } })}
+						</span>
+					{/if}
+					{#if longestStreak}
+						<span class="flex items-center gap-0.5 text-orange-400/80">
+							<Flame class="h-3 w-3" />
+							{$_('timeline.longestStreak', { values: { count: longestStreak } })}
+						</span>
+					{/if}
+				</div>
 			</div>
 		</div>
 
@@ -78,9 +242,108 @@
 				acceptingDrop={false}
 				hideCount={true}
 				hideHeader={true}
+				animateCards={touchedSlider}
 				onConfirmedCardClick={(entry) => (inspectTrack = entry.track)}
 			/>
 		</div>
+
+		{#if log && turns.length > 0}
+			<div
+				class="relative mx-auto w-full max-w-4xl px-2 pt-0"
+				style="--step-count: {turns.length + 1};"
+			>
+				<div
+					class="grid items-end gap-1"
+					style="grid-template-columns: repeat({turns.length + 1}, minmax(2.25rem, 1fr));"
+				>
+					<div></div>
+					{#each turns as turn, i (i)}
+						<div
+							class="flex flex-col justify-end text-center text-[11px] leading-none tabular-nums"
+						>
+							<div
+								class="flex flex-col items-center gap-0.5"
+								style="transform: translateY({pointLabelOffset(i)}px);"
+							>
+								<div
+									class="flex items-center justify-center {pointClass(turn)}"
+									style={pointStyle(turn)}
+								>
+									<span>+{turn.points.toLocaleString()}</span>
+									{#if turn.streak >= 3}
+										<Flame class="h-3 w-3 shrink-0" />
+									{/if}
+								</div>
+								{#if i === turns.length - 1 && log.completionBonus > 0}
+									<div class="font-bold text-amber-400">
+										+{log.completionBonus.toLocaleString()}
+									</div>
+								{/if}
+							</div>
+						</div>
+					{/each}
+				</div>
+
+				{#key sliderOpenKey}
+					<div class="relative h-5">
+						<div
+							class="absolute top-1/2 h-1 -translate-y-1/2 rounded-full bg-slate-700/80"
+							style="left: calc(50% / var(--step-count)); right: calc(50% / var(--step-count));"
+						>
+							<div
+								class="h-full rounded-full bg-cyan-400/70 shadow-[0_0_14px_rgba(34,211,238,0.45)] transition-[width] ease-out {touchedSlider
+									? 'duration-200'
+									: 'duration-1000'}"
+								style="width: {touchedSlider ? sliderProgress : 100}%; animation: {touchedSlider
+									? 'none'
+									: 'replay-rail-fill 1000ms ease-out both'}; transform-origin: left;"
+							></div>
+						</div>
+						<div
+							class="absolute inset-0 grid items-center"
+							style="grid-template-columns: repeat({turns.length + 1}, minmax(2.25rem, 1fr));"
+						>
+							{#each replaySteps as i (i)}
+								<button
+									type="button"
+									onclick={() => {
+										selectedStep = i;
+										touchedSlider = true;
+									}}
+									class="relative z-10 flex h-5 cursor-pointer items-center justify-center"
+									aria-label={replayStepLabel(i)}
+								>
+									<span class="h-3 w-3 rounded-full border-2 transition-all {stepCircleClass(i)}"
+									></span>
+								</button>
+							{/each}
+						</div>
+						<input
+							type="range"
+							min="0"
+							max={maxStep}
+							step="1"
+							bind:value={selectedStep}
+							oninput={() => (touchedSlider = true)}
+							aria-label={replayStepLabel(selectedStep)}
+							class="absolute inset-0 z-20 h-5 w-full cursor-pointer opacity-0"
+						/>
+					</div>
+				{/key}
+
+				<div
+					class="grid items-start gap-1"
+					style="grid-template-columns: repeat({turns.length + 1}, minmax(2.25rem, 1fr));"
+				>
+					<div></div>
+					{#each turns as turn, i (turn.part + '-' + i)}
+						<div class="min-h-4 text-center text-[11px] leading-tight text-slate-500 tabular-nums">
+							<div>{stepTimeLabel(turn)}</div>
+						</div>
+					{/each}
+				</div>
+			</div>
+		{/if}
 	</div>
 </Popup>
 
@@ -103,3 +366,14 @@
 		</div>
 	{/if}
 </Popup>
+
+<style>
+	@keyframes replay-rail-fill {
+		from {
+			transform: scaleX(0);
+		}
+		to {
+			transform: scaleX(1);
+		}
+	}
+</style>

@@ -549,6 +549,9 @@
 		"drag": "Glisser",
 		"confirm": "Confirmer",
 		"accuracy": "{correct}/{total} correct ({percentage} %)",
+		"averageTime": "Temps moy. : {seconds}s",
+		"secondsShort": "{seconds}s",
+		"replayStep": "Étape de replay {step}",
 		"streak": "{count} d’affilée !",
 		"longestStreak": "Meilleure série : {count}",
 		"help": {

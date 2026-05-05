@@ -549,6 +549,9 @@
 		"drag": "드래그",
 		"confirm": "확정",
 		"accuracy": "{correct}/{total} 정답 ({percentage}%)",
+		"averageTime": "평균 시간: {seconds}초",
+		"secondsShort": "{seconds}초",
+		"replayStep": "리플레이 단계 {step}",
 		"streak": "{count}연속 정답!",
 		"longestStreak": "최장 연속: {count}",
 		"help": {

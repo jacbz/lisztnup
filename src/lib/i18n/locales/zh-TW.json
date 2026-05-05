@@ -549,6 +549,9 @@
 		"drag": "拖曳",
 		"confirm": "確認",
 		"accuracy": "{correct}/{total} 正確（{percentage}%）",
+		"averageTime": "平均用時：{seconds}秒",
+		"secondsShort": "{seconds}秒",
+		"replayStep": "重播步驟 {step}",
 		"streak": "連續{count}次正確！",
 		"longestStreak": "最長連續: {count}",
 		"help": {

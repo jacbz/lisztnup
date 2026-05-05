@@ -549,6 +549,9 @@
 		"drag": "Arrastrar",
 		"confirm": "Confirmar",
 		"accuracy": "{correct}/{total} correctas ({percentage} %)",
+		"averageTime": "Tiempo medio: {seconds}s",
+		"secondsShort": "{seconds}s",
+		"replayStep": "Paso de repetición {step}",
 		"streak": "¡{count} seguidas!",
 		"longestStreak": "Mejor racha: {count}",
 		"help": {

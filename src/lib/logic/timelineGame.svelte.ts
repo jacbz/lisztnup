@@ -366,7 +366,9 @@ export class TimelineGame {
 			longestStreak: 0,
 			score: 0,
 			reachedTarget: false,
-			completionBonus: 0
+			completionBonus: 0,
+			initialPartGid: null,
+			replayTurns: []
 		}));
 		this.activePlayerIndex = 0;
 		this.endgameActive = false;
@@ -411,6 +413,7 @@ export class TimelineGame {
 				isDiscarding: false
 			};
 			this.timelines[i].entries.push(entry);
+			this.timelines[i].initialPartGid = dealTracks[i].part.gid;
 
 			await new Promise((r) => setTimeout(r, 800));
 		}
@@ -750,6 +753,7 @@ export class TimelineGame {
 		// ── Scoring ──────────────────────────────────────────
 		const secondsTaken = (Date.now() - this.#turnStartTime) / 1000;
 		this.scoreBeforeTurn = this.activePlayer.score;
+		let placementPoints: number;
 
 		if (isCorrect) {
 			this.activePlayer.correctPlacements++;
@@ -776,6 +780,7 @@ export class TimelineGame {
 			this.lastTurnScoreBreakdown = breakdown;
 			this.lastConsolationBreakdown = null;
 			this.activePlayer.score += breakdown.score;
+			placementPoints = breakdown.score;
 
 			// Check if this player just reached the target (cards on timeline including dealt card)
 			const cardsOnTimeline = this.activePlayer.entries.filter(
@@ -819,10 +824,20 @@ export class TimelineGame {
 			);
 			this.lastConsolationBreakdown = consolation;
 			this.activePlayer.score += consolation.consolation;
+			placementPoints = consolation.consolation;
 		}
 
 		// Track per-round scores for the stats graph
 		const scoreDelta = this.activePlayer.score - this.scoreBeforeTurn;
+		this.activePlayer.replayTurns.push({
+			part: track.part.gid,
+			index: idx,
+			ok: isCorrect,
+			seconds: Math.round(secondsTaken * 10) / 10,
+			points: Math.round(placementPoints),
+			streak: this.activePlayer.absoluteStreak,
+			score: Math.round(this.activePlayer.score)
+		});
 		this.#currentRoundScores[this.activePlayer.player.name] =
 			(this.#currentRoundScores[this.activePlayer.player.name] ?? 0) + scoreDelta;
 
@@ -1087,6 +1102,7 @@ export class TimelineGame {
 		this.activePlayer.currentStreak = Math.max(0, Math.min(Math.floor(s / 2), s - 3));
 		this.lastTurnScoreBreakdown = null;
 		this.lastConsolationBreakdown = null;
+		const secondsTaken = this.#turnStartTime > 0 ? (Date.now() - this.#turnStartTime) / 1000 : null;
 
 		if (this.pendingEntryId) {
 			// Card was placed in the timeline — mark it wrong and show reveal
@@ -1095,6 +1111,15 @@ export class TimelineGame {
 			if (idx >= 0) {
 				entries[idx].confirmed = true;
 				entries[idx].correct = false;
+				this.activePlayer.replayTurns.push({
+					part: entries[idx].track.part.gid,
+					index: idx,
+					ok: false,
+					seconds: secondsTaken === null ? null : Math.round(secondsTaken * 10) / 10,
+					points: 0,
+					streak: 0,
+					score: Math.round(this.activePlayer.score)
+				});
 
 				this.revealEntryId = entries[idx].id;
 				this.revealTrack = entries[idx].track;
@@ -1111,6 +1136,15 @@ export class TimelineGame {
 		// No card placed — show reveal popup for the forfeited track
 		const currentTrack = this.#getCurrentTrack();
 		if (currentTrack) {
+			this.activePlayer.replayTurns.push({
+				part: currentTrack.part.gid,
+				index: null,
+				ok: false,
+				seconds: secondsTaken === null ? null : Math.round(secondsTaken * 10) / 10,
+				points: 0,
+				streak: 0,
+				score: Math.round(this.activePlayer.score)
+			});
 			this.revealEntryId = null;
 			this.revealTrack = currentTrack;
 			this.revealIsCorrect = false;

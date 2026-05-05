@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { Track } from '$lib/models';
 	import { flip } from 'svelte/animate';
-	import { quintOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 	import { _ } from 'svelte-i18n';
 	import { formatYearRange } from '$lib/utils';
@@ -9,6 +8,14 @@
 	import Flame from 'lucide-svelte/icons/flame';
 	import { STREAK_THRESHOLD } from '$lib/logic/timelineGame.svelte';
 	import { calculateStreakMult } from '$lib/logic/timelineScoring';
+	import {
+		discardTimelineCard,
+		flyTimelineCardFromCenter,
+		getStreakGlow,
+		rotateVector,
+		timelineCardDiscardStyle,
+		timelineCardRestStyle
+	} from '$lib/logic/timelineMotion';
 
 	export interface TimelineEntry {
 		id: string;
@@ -44,6 +51,8 @@
 		score?: number;
 		hideHeader?: boolean;
 		hideCount?: boolean;
+		animateCards?: boolean;
+		minSlots?: number;
 	}
 
 	let {
@@ -71,7 +80,9 @@
 		streakCount = 0,
 		score = 0,
 		hideHeader = false,
-		hideCount = false
+		hideCount = false,
+		animateCards = true,
+		minSlots = 0
 	}: Props = $props();
 
 	let el: HTMLDivElement | null = $state(null);
@@ -80,57 +91,25 @@
 	});
 
 	const cardSize = $derived(active && !compact ? 'sm' : 'xs');
+	const reservedSlotCount = $derived(Math.max(entries.length, minSlots, 1));
+	const placeholderSlots = $derived(range(Math.max(0, reservedSlotCount - entries.length)));
 
 	const flameGlow = $derived.by(() => {
-		if (streakCount < STREAK_THRESHOLD) return '';
-		// Linear interpolation: streak 3 → mild orange, streak 15+ → intense red
-		const t = Math.min((streakCount - 3) / 12, 1); // 0 at streak 3, 1 at streak 15
-		const dim = active ? 1 : 0.5; // inactive players show a subtler glow
-		const spread = (40 + t * 40) * dim; // 40px → 80px (active)
-		const opacity = (0.55 + t * 0.35) * dim; // 0.55 → 0.9 (active)
-		const r = Math.round(251 - t * 31); // 251 → 220
-		const g = Math.round(146 - t * 108); // 146 → 38
-		const b = Math.round(60 - t * 22); // 60 → 38
-		return `0 0 ${spread}px rgba(${r},${g},${b},${opacity})`;
+		return getStreakGlow(streakCount, active);
 	});
-
-	function rotateVector(x: number, y: number, angleDeg: number) {
-		const rad = (-angleDeg * Math.PI) / 180;
-		const cos = Math.cos(rad);
-		const sin = Math.sin(rad);
-		return {
-			x: x * cos - y * sin,
-			y: x * sin + y * cos
-		};
-	}
 
 	const localDragTranslate = $derived(rotateVector(dragTranslate.x, dragTranslate.y, rotation));
 
-	// Custom transition to simulate flying from the stack (center screen)
-	function flyFromCenter(node: Element, { delay = 0, duration = 400, easing = quintOut }) {
-		const rect = node.getBoundingClientRect();
-		// Screen center
-		const centerX = window.innerWidth / 2;
-		const centerY = window.innerHeight / 2;
+	function flyFromCenter(node: Element, params: { delay?: number; duration?: number } = {}) {
+		return flyTimelineCardFromCenter(node, {
+			...params,
+			rotation,
+			duration: animateCards ? (params.duration ?? 400) : 0
+		});
+	}
 
-		// Target center
-		const targetX = rect.left + rect.width / 2;
-		const targetY = rect.top + rect.height / 2;
-
-		const dx = centerX - targetX;
-		const dy = centerY - targetY;
-
-		const local = rotateVector(dx, dy, rotation);
-
-		return {
-			delay,
-			duration,
-			easing,
-			css: (t: number, u: number) => `
-				transform: translate(${u * local.x}px, ${u * local.y}px) scale(${0.2 + 0.8 * t});
-				opacity: ${t};
-			`
-		};
+	function range(length: number): number[] {
+		return Array.from(Array(length).keys());
 	}
 </script>
 
@@ -175,7 +154,7 @@
 			? `box-shadow: ${flameGlow || (acceptingDrop ? `0 0 25px rgba(34,211,238,0.35)` : `0 0 15px ${playerColor}44`)}; min-width: ${isVertical ? '92dvh' : '92vw'}; container-type: inline-size;`
 			: flameGlow
 				? `box-shadow: ${flameGlow};`
-				: ''}--entry-count: {Math.max(entries.length, 1)}; --gap: calc(var(--spacing) * 1.5);"
+				: ''}--entry-count: {reservedSlotCount}; --gap: calc(var(--spacing) * 1.5);"
 	>
 		{#if !hideHeader}
 			<div
@@ -229,16 +208,15 @@
 			<div
 				data-timeline-entry
 				data-entry-id={entry.id}
-				animate:flip={{ duration: 250 }}
+				animate:flip={{ duration: animateCards ? 250 : 0 }}
 				class="relative"
 				class:z-50={isPendingMove}
 				class:z-10={!entry.confirmed && !isPendingMove}
 			>
 				<div
 					class="transition-all duration-500 ease-in-out"
-					style={entry.isDiscarding
-						? 'transform: translateY(120px) rotate(15deg) scale(0.9); opacity: 0; pointer-events: none;'
-						: 'transform: translateY(0) rotate(0) scale(1); opacity: 1;'}
+					style={entry.isDiscarding ? timelineCardDiscardStyle : timelineCardRestStyle}
+					out:discardTimelineCard={{ duration: animateCards ? 600 : 0 }}
 				>
 					<div
 						class:will-change-transform={isPendingMove}
@@ -262,6 +240,17 @@
 						/>
 					</div>
 				</div>
+			</div>
+		{/each}
+		{#each placeholderSlots as slot (slot)}
+			<div class="pointer-events-none opacity-0">
+				<TimelineCard
+					state="revealed"
+					draggable={false}
+					size={cardSize}
+					borderVariant="neutral"
+					yearText=""
+				/>
 			</div>
 		{/each}
 	</div>

@@ -51,7 +51,7 @@
 		{formatDateString(entry.timestamp, currentLocale)}
 	</span>
 	<div class="flex">
-		{#if entry.timeline && entry.timeline !== '[]'}
+		{#if entry.log}
 			<button
 				type="button"
 				onclick={() => onShowTimeline(entry)}

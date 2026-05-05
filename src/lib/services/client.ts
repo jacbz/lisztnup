@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import type { LeaderboardEntry } from '$lib/types';
+import type { LeaderboardEntry, TimelineReplayLog } from '$lib/types';
 
 const LEADERBOARD_CACHE_TTL_MS = 60_000;
 const QUEUE_KEY = 'lisztnup:api-write-queue:v1';
@@ -38,13 +38,14 @@ export interface LeaderboardSubmission {
 	playerToken: string;
 	playerName: string | null;
 	score: number;
-	cards: number;
-	accuracy: number;
+	target: number;
+	attempts: number;
+	averageTime?: number | null;
 	longestStreak: number;
 	tracklistId?: string | null;
 	cardsToWin: number;
 	sessionId?: string | null;
-	timeline?: [string, string][];
+	log?: TimelineReplayLog;
 }
 
 export class ApiNetworkError extends Error {

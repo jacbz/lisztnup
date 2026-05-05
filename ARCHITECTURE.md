@@ -26,7 +26,7 @@ src/
 │   ├── logic/                 Game logic classes
 │   │   ├── timelineGame.svelte.ts  Timeline game state + logic (Svelte 5 reactive class)
 │   │   ├── timelineScoring.ts      Pure scoring functions (difficulty, speed, streak, efficiency)
-│   │   └── timelineTypes.ts        Timeline type definitions
+│   │   └── timelineTypes.ts, timelineMotion.ts  Timeline types + shared card motion helpers
 │   ├── server/                Server-only code (Cloudflare Workers)
 │   │   ├── analytics.ts         User hashing (GDPR-compliant daily-rotating salt)
 │   │   └── telegram.ts          Telegram Bot API notifications
@@ -115,14 +115,14 @@ Cloudflare Pages with D1 database. Config in `wrangler.toml`:
 
 ### Database Schema (analytics.sql)
 
-| Table                 | Purpose                 | Key columns                                                                   |
-| --------------------- | ----------------------- | ----------------------------------------------------------------------------- |
-| `pageviews`           | Server-side page views  | `user_hash`, `country`, `path`, `device`, `os`, `user_agent`                  |
-| `game_sessions`       | Game lifecycle tracking | `id` (UUID), `state`, `mode`, `tracklist_id`, `locale`, `game_info` (JSON)    |
-| `timeline_placements` | Per-placement tracking  | `session_id`, `work_gid`, `placed_correctly`                                  |
-| `problem_reports`     | User-reported issues    | `session_id`, `message`, `deezer_id`, `composer`, `work`, `part`              |
-| `feedback`            | General user feedback   | `session_id`, `message`, `email`                                              |
-| `leaderboard`         | Timeline solo scores    | `player_token`, `player_name`, `score`, `cards`, `accuracy`, `longest_streak` |
+| Table                 | Purpose                 | Key columns                                                                |
+| --------------------- | ----------------------- | -------------------------------------------------------------------------- |
+| `pageviews`           | Server-side page views  | `user_hash`, `country`, `path`, `device`, `os`, `user_agent`               |
+| `game_sessions`       | Game lifecycle tracking | `id` (UUID), `state`, `mode`, `tracklist_id`, `locale`, `game_info` (JSON) |
+| `timeline_placements` | Per-placement tracking  | `session_id`, `work_gid`, `placed_correctly`                               |
+| `problem_reports`     | User-reported issues    | `session_id`, `message`, `deezer_id`, `composer`, `work`, `part`           |
+| `feedback`            | General user feedback   | `session_id`, `message`, `email`                                           |
+| `timeline_scores`     | Timeline solo scores    | `player_token`, `score`, `attempts`, `target`, `average_time`, `log`       |
 
 All tables include `user_hash` (SHA-256 of IP + daily-rotating salt — never stores raw IPs) and `country` (from Cloudflare headers).
 
@@ -134,7 +134,7 @@ All tables include `user_hash` (SHA-256 of IP + daily-rotating salt — never st
 | `POST /api/game/feedback`    | User feedback (5–1000 chars)                  | Validates, writes DB, sends Telegram notification           |
 | `POST /api/game/reports`     | Problem reports with Deezer/work metadata     | Same as feedback + detailed Telegram message                |
 | `GET /api/game/leaderboard`  | Top N timeline scores                         | Max 50; strips tokens and returns Berlin `YYYY-MM-DD` dates |
-| `POST /api/game/leaderboard` | Submit solo timeline score                    | Anti-cheat: validates score ceiling per card count          |
+| `POST /api/game/leaderboard` | Submit solo timeline score                    | Validates completion + stores compact replay log            |
 
 ### Server Hooks (hooks.server.ts)
 
