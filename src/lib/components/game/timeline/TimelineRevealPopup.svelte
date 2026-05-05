@@ -8,9 +8,8 @@
 	import type { Track } from '$lib/models';
 	import type { TurnScoreBreakdown } from '$lib/logic/timelineTypes';
 	import Flame from 'lucide-svelte/icons/flame';
-	import Clock3 from 'lucide-svelte/icons/clock-3';
 	import Trophy from 'lucide-svelte/icons/trophy';
-	import { ArrowRight } from 'lucide-svelte';
+	import { ArrowRight, Zap } from 'lucide-svelte';
 
 	interface Props {
 		visible?: boolean;
@@ -405,10 +404,10 @@
 						in:fly={{ y: 10, duration: 300, delay: 320, easing: cubicOut }}
 					>
 						<span class="flex items-center gap-1 text-slate-400">
+							<Zap class="h-3.5 w-3.5 text-cyan-400" />
 							{$_('timeline.scoring.speed')}
-							<span class="ml-1 flex items-center gap-0.5 text-[0.7rem] text-slate-500">
-								(<Clock3 class="h-3 w-3 text-cyan-400/80" />
-								<span class="tabular-nums">{fmtSeconds(scoreBreakdown.seconds)}</span>)
+							<span class="ml-1 flex items-center text-[0.7rem] text-slate-500">
+								(<span class="tabular-nums">{fmtSeconds(scoreBreakdown.seconds)}</span>)
 							</span>
 						</span>
 						{#if rowVisible.speed}
@@ -434,10 +433,6 @@
 									: 'text-slate-500'}"
 							/>
 							{$_('timeline.scoring.streak')}
-							<span class="ml-1 flex items-center gap-0.5 text-[0.7rem] text-slate-500">
-								(<Flame class="h-3 w-3 text-orange-400/80" />
-								<span class="tabular-nums">{scoreBreakdown.streak}</span>)
-							</span>
 						</span>
 						{#if rowVisible.streak}
 							<span

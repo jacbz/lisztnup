@@ -18,7 +18,11 @@
 		LeaderboardEntry,
 		TimelineReplayLog
 	} from '$lib/types';
-	import { tracklistDisplayName, tracklistDescription } from '$lib/data/defaultTracklists';
+	import {
+		DEFAULT_TRACKLISTS,
+		tracklistDisplayName,
+		tracklistDescription
+	} from '$lib/data/defaultTracklists';
 	import Plus from 'lucide-svelte/icons/plus';
 	import AppFooter from '../primitives/AppFooter.svelte';
 	import FeedbackPopup from '../gameplay/FeedbackPopup.svelte';
@@ -29,10 +33,12 @@
 	import Sparkles from 'lucide-svelte/icons/sparkles';
 	import { getPlayerToken } from '$lib/stores/identity';
 	import { getDailyChallengeEntry, getUtcDateString } from '$lib/utils/dailyChallenge';
+	import { SettingsService } from '$lib/services';
 	import { gameData } from '$lib/stores/gameData';
 	import { get } from 'svelte/store';
 	import type { Track } from '$lib/models';
 	import TimelinePopup from '$lib/components/game/timeline/TimelinePopup.svelte';
+	import TracklistRecordsPopup from '$lib/components/ui/setup/TracklistRecordsPopup.svelte';
 	import TimelineLeaderboard from '$lib/components/ui/setup/TimelineLeaderboard.svelte';
 	import { fade, slide } from 'svelte/transition';
 	import { getLeaderboard } from '$lib/services/client';
@@ -64,6 +70,10 @@
 	let leaderboardEntries = $state<LeaderboardEntry[]>([]);
 	let leaderboardLoading = $state(false);
 	let showExpandedLeaderboard = $state(false);
+	let showTracklistRecords = $state(false);
+	let tracklistRecordsEntries = $state<LeaderboardEntry[]>([]);
+	let tracklistRecordsLoading = $state(false);
+	let tracklistRecordsRequestId = 0;
 	let leaderboardRequestId = 0;
 	let leaderboardFilterKey = '';
 	let showTimelinePopup = $state(false);
@@ -80,6 +90,8 @@
 	let startAudio: HTMLAudioElement | null = null;
 	let utcTodayDate = $state(getUtcDateString());
 	let dailyChallengeEntry = $state(getDailyChallengeEntry());
+	let customTracklists = $state<Tracklist[]>([]);
+	let allTracklists = $derived([...DEFAULT_TRACKLISTS, ...customTracklists]);
 	let dailyChallengeTimer: ReturnType<typeof setTimeout> | null = null;
 	let previousSelectedTracklist = $settingsStore.selectedTracklist;
 	let startAudioSources = {
@@ -213,6 +225,31 @@
 					dailyHighScore = null;
 				});
 		}
+	});
+
+	$effect(() => {
+		if (!showTracklistRecords || !browser) return;
+		const requestId = ++tracklistRecordsRequestId;
+		customTracklists = SettingsService.loadCustomTracklists();
+		tracklistRecordsLoading = true;
+
+		getLeaderboard({
+			limit: 50,
+			records: true,
+			token: getPlayerToken()
+		})
+			.then((data) => {
+				if (requestId !== tracklistRecordsRequestId) return;
+				tracklistRecordsEntries = data.entries ?? [];
+			})
+			.catch(() => {
+				if (requestId !== tracklistRecordsRequestId) return;
+				tracklistRecordsEntries = [];
+			})
+			.finally(() => {
+				if (requestId !== tracklistRecordsRequestId) return;
+				tracklistRecordsLoading = false;
+			});
 	});
 
 	function handleTracklistSelect(tracklist: Tracklist) {
@@ -673,12 +710,16 @@
 			<div class="mt-3 flex items-center justify-end md:contents">
 				{#if pageviews24h != null}
 					<div class="md:fixed md:bottom-3 md:left-3 md:z-40">
-						<div
-							class="flex items-center gap-1.5 rounded-full border border-cyan-400/20 bg-slate-900/60 px-2 py-1 text-cyan-400/70 backdrop-blur-md"
+						<button
+							type="button"
+							onclick={() => (showTracklistRecords = true)}
+							class="flex cursor-pointer items-center gap-1.5 rounded-full border border-cyan-400/20 bg-slate-900/60 px-2 py-1 text-cyan-400/70 backdrop-blur-md transition-colors hover:border-cyan-400/40 hover:bg-slate-800/80 hover:text-cyan-300"
+							title={$_('leaderboard.tracklistRecordsTitle')}
+							aria-label={$_('leaderboard.tracklistRecordsTitle')}
 						>
 							<Users class="h-3.5 w-3.5" />
 							<span class="text-xs font-medium">{pageviews24h.toLocaleString()}</span>
-						</div>
+						</button>
 					</div>
 				{/if}
 				<div
@@ -720,6 +761,16 @@
 	onClose={() => (showShareLinkPopup = false)}
 	shareTitle={$_('bingo.shareTitle')}
 	shareText={$_('bingo.shareText')}
+/>
+
+<TracklistRecordsPopup
+	visible={showTracklistRecords}
+	entries={tracklistRecordsEntries}
+	{currentLocale}
+	isLoading={tracklistRecordsLoading}
+	tracklists={allTracklists}
+	onClose={() => (showTracklistRecords = false)}
+	onShowTimeline={handleShowTimeline}
 />
 
 <TimelinePopup

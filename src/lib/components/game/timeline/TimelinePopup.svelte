@@ -9,9 +9,9 @@
 	import TrackInfo from '$lib/components/ui/gameplay/TrackInfo.svelte';
 	import { formatDateString, formatYearRange } from '$lib/utils';
 	import Flame from 'lucide-svelte/icons/flame';
-	import Clock3 from 'lucide-svelte/icons/clock-3';
 	import { get } from 'svelte/store';
 	import { getStreakTextStyle } from '$lib/logic/timelineMotion';
+	import { Zap } from 'lucide-svelte';
 
 	const REPLAY_STEP_WIDTH_REM = 2.25;
 
@@ -256,7 +256,7 @@
 					{/if}
 					{#if averageTime !== null}
 						<span class="flex items-center gap-1 tabular-nums">
-							<Clock3 class="h-3 w-3 text-cyan-400/80" />
+							<Zap class="h-3 w-3 text-cyan-400/80" />
 							{$_('timeline.averageTime', { values: { seconds: averageTime.toFixed(1) } })}
 						</span>
 					{/if}

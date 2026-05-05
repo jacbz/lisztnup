@@ -32,6 +32,7 @@ export interface LeaderboardQuery {
 	tracklist?: string | null;
 	target?: number | string | null;
 	token?: string | null;
+	records?: boolean;
 }
 
 export interface LeaderboardSubmission {
@@ -99,6 +100,7 @@ function normalizeLeaderboardUrl(query: LeaderboardQuery) {
 	if (query.tracklist) params.set('tracklist', query.tracklist);
 	if (query.target != null) params.set('target', String(query.target));
 	if (query.token) params.set('token', query.token);
+	if (query.records) params.set('records', '1');
 	params.sort();
 	return `/api/game/leaderboard?${params.toString()}`;
 }

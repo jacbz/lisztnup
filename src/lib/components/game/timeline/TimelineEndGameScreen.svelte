@@ -9,7 +9,6 @@
 	import Home from 'lucide-svelte/icons/home';
 	import MessageSquare from 'lucide-svelte/icons/message-square';
 	import Flame from 'lucide-svelte/icons/flame';
-	import Clock3 from 'lucide-svelte/icons/clock-3';
 	import BarChart from 'lucide-svelte/icons/bar-chart-3';
 	import FeedbackPopup from '$lib/components/ui/gameplay/FeedbackPopup.svelte';
 	import { getPlayerToken } from '$lib/stores/identity';
@@ -21,6 +20,7 @@
 	import { getLeaderboard, patchLeaderboardName, submitLeaderboard } from '$lib/services/client';
 	import type { TimelineReplayLog, TimelineReplayTurn } from '$lib/types';
 	import { settings } from '$lib/stores/settings';
+	import { Zap } from 'lucide-svelte';
 
 	interface FinalTimeline {
 		player: Player;
@@ -588,7 +588,7 @@
 							</span>
 							{#if getAverageTime(t.replayTurns) !== null}
 								<span class="flex items-center gap-1 tabular-nums">
-									<Clock3 class="h-3 w-3 text-cyan-400/80" />
+									<Zap class="h-3 w-3 text-cyan-400/80" />
 									{$_('timeline.averageTime', {
 										values: { seconds: getAverageTime(t.replayTurns)!.toFixed(1) }
 									})}

@@ -3,6 +3,7 @@ export interface LeaderboardEntry {
 	score: number;
 	attempts: number;
 	target: number;
+	tracklist_id?: string;
 	average_time: number | null;
 	longest_streak: number | null;
 	country?: string;

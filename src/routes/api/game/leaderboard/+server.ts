@@ -42,6 +42,7 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 	const tracklistId = url.searchParams.get('tracklist') || null;
 	const target = Number(url.searchParams.get('target')) || null;
 	const playerToken = url.searchParams.get('token') || null;
+	const records = url.searchParams.get('records') === '1';
 
 	try {
 		// Use ROW_NUMBER() to keep only each player's best score per config
@@ -64,25 +65,35 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 
 		const whereClause = conditions.length > 0 ? ` WHERE ${conditions.join(' AND ')}` : '';
 		const cols = `player_token, player_name, score, attempts, target, average_time, longest_streak, tracklist_id, country, timestamp, log`;
+		const sql = records
+			? `WITH ranked AS (
+					SELECT ${cols},
+						ROW_NUMBER() OVER (PARTITION BY tracklist_id, target ORDER BY score DESC, log IS NOT NULL DESC, timestamp DESC) AS rn
+					FROM timeline_scores${whereClause}
+				)
+				SELECT ${cols}
+				FROM ranked
+				WHERE rn = 1
+				ORDER BY timestamp DESC LIMIT ?${binds.length + 1}`
+			: `WITH best AS (
+					SELECT ${cols},
+						ROW_NUMBER() OVER (PARTITION BY player_token, player_name ORDER BY score DESC, log IS NOT NULL DESC, timestamp DESC) AS rn
+					FROM timeline_scores${whereClause}
+				), deduped AS (
+					SELECT ${cols} FROM best WHERE rn = 1
+				), max_named AS (
+					SELECT player_token, MAX(score) AS max_named_score
+					FROM deduped WHERE player_name IS NOT NULL
+					GROUP BY player_token
+				)
+				SELECT d.player_token, d.player_name, d.score, d.attempts, d.target, d.average_time, d.longest_streak, d.tracklist_id, d.country, d.timestamp, d.log
+				FROM deduped d
+				LEFT JOIN max_named mn ON d.player_token = mn.player_token
+				WHERE d.player_name IS NOT NULL
+					OR mn.player_token IS NULL
+					OR d.score > mn.max_named_score
+				ORDER BY d.score DESC LIMIT ?${binds.length + 1}`;
 
-		const sql = `WITH best AS (
-				SELECT ${cols},
-					ROW_NUMBER() OVER (PARTITION BY player_token, player_name ORDER BY score DESC, log IS NOT NULL DESC, timestamp DESC) AS rn
-				FROM timeline_scores${whereClause}
-			), deduped AS (
-				SELECT ${cols} FROM best WHERE rn = 1
-			), max_named AS (
-				SELECT player_token, MAX(score) AS max_named_score
-				FROM deduped WHERE player_name IS NOT NULL
-				GROUP BY player_token
-			)
-			SELECT d.player_token, d.player_name, d.score, d.attempts, d.target, d.average_time, d.longest_streak, d.tracklist_id, d.country, d.timestamp, d.log
-			FROM deduped d
-			LEFT JOIN max_named mn ON d.player_token = mn.player_token
-			WHERE d.player_name IS NOT NULL
-				OR mn.player_token IS NULL
-				OR d.score > mn.max_named_score
-			ORDER BY d.score DESC LIMIT ?${binds.length + 1}`;
 		binds.push(limit);
 
 		const results = await platform.env.DB.prepare(sql)
