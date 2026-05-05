@@ -47,7 +47,7 @@
 	},
 	"settings": {
 		"numberOfTracks": "Número de Faixas",
-		"cardsToWin": "Cartas para vencer",
+		"target": "Cartas para vencer",
 		"language": "Idioma",
 		"presetInfo": {
 			"default": "{allFemaleComposers, select, true {{composers, plural, one {# compositora} other {# compositoras}}} other {{composers, plural, =0 {nenhum compositor} one {# compositor} other {# compositores}}}}, {works, plural, =0 {nenhuma obra} one {# obra} other {# obras}}, {tracks, plural, =0 {nenhuma faixa} one {# faixa} other {# faixas}}"

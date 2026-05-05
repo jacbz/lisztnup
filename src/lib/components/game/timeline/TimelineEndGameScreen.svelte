@@ -39,7 +39,7 @@
 
 	interface Props {
 		visible?: boolean;
-		cardsToWin: number;
+		target: number;
 		timelines: FinalTimeline[];
 		tracksExhausted?: boolean;
 		tracklistId?: string | null;
@@ -50,7 +50,7 @@
 
 	let {
 		visible = false,
-		cardsToWin,
+		target,
 		timelines,
 		tracksExhausted = false,
 		tracklistId = null,
@@ -158,7 +158,7 @@
 
 		getLeaderboard({
 			tracklist: tracklistId,
-			cardsToWin,
+			target,
 			limit: 50,
 			token: getPlayerToken()
 		})
@@ -192,7 +192,6 @@
 								averageTime: p.averageTime,
 								longestStreak: p.longestStreak,
 								tracklistId,
-								cardsToWin,
 								sessionId,
 								log: getReplayLog(t)
 							},

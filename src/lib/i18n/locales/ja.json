@@ -47,7 +47,7 @@
 	},
 	"settings": {
 		"numberOfTracks": "トラック数",
-		"cardsToWin": "勝利に必要なカード数",
+		"target": "勝利に必要なカード数",
 		"language": "言語",
 		"presetInfo": {
 			"default": "{composers}人の作曲家、{works}曲の作品、{tracks}トラック"

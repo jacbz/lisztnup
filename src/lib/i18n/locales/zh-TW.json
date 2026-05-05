@@ -47,7 +47,7 @@
 	},
 	"settings": {
 		"numberOfTracks": "曲目數量",
-		"cardsToWin": "獲勝所需卡牌數",
+		"target": "獲勝所需卡牌數",
 		"language": "語言",
 		"presetInfo": {
 			"default": "{composers, plural, =0 {無作曲家} other {# 位作曲家}}, {works, plural, =0 {無作品} other {# 部作品}}, {tracks, plural, =0 {無音軌} other {# 條音軌}}"

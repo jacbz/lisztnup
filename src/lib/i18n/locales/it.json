@@ -47,7 +47,7 @@
 	},
 	"settings": {
 		"numberOfTracks": "Numero di tracce",
-		"cardsToWin": "Carte per vincere",
+		"target": "Carte per vincere",
 		"language": "Lingua",
 		"presetInfo": {
 			"default": "{allFemaleComposers, select, true {{composers, plural, one {# compositrice} other {# compositrici}}} other {{composers, plural, =0 {nessun compositore} one {# compositore} other {# compositori}}}}, {works, plural, =0 {nessuna opera} one {# opera} other {# opere}}, {tracks, plural, =0 {nessuna traccia} one {# traccia} other {# tracce}}"

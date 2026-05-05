@@ -81,6 +81,7 @@
 	let utcTodayDate = $state(getUtcDateString());
 	let dailyChallengeEntry = $state(getDailyChallengeEntry());
 	let dailyChallengeTimer: ReturnType<typeof setTimeout> | null = null;
+	let previousSelectedTracklist = $settingsStore.selectedTracklist;
 	let startAudioSources = {
 		classic: '/start_classic.mp3',
 		buzzer: '/start_buzzer.mp3',
@@ -127,7 +128,15 @@
 
 	// Update local settings when store changes
 	$effect(() => {
-		localSettings = { ...$settingsStore };
+		const nextSettings = { ...$settingsStore };
+		const tracklistChanged = nextSettings.selectedTracklist !== previousSelectedTracklist;
+		localSettings = nextSettings;
+		if (tracklistChanged) {
+			showTimelinePopup = false;
+			timelineTracks = [];
+			timelineLog = null;
+			previousSelectedTracklist = nextSettings.selectedTracklist;
+		}
 		// Only sync enableScoring if we're not in Bingo/Timeline (where scoring is forced off/on)
 		if (selectedMode !== 'bingo' && selectedMode !== 'timeline') {
 			enableScoring = $settingsStore.enableScoring;
@@ -150,9 +159,9 @@
 	$effect(() => {
 		if (selectedMode === 'timeline' && browser) {
 			const tracklist = localSettings.selectedTracklist;
-			const cards = localSettings.timelineCardsToWin;
+			const target = localSettings.timelineTarget;
 			const limit = showExpandedLeaderboard ? 20 : 6;
-			const filterKey = `${tracklist}:${cards}`;
+			const filterKey = `${tracklist}:${target}`;
 			const requestId = ++leaderboardRequestId;
 
 			leaderboardLoading = true;
@@ -164,7 +173,7 @@
 			getLeaderboard({
 				limit,
 				tracklist,
-				cardsToWin: cards,
+				target,
 				token: getPlayerToken()
 			})
 				.then((data) => {
@@ -190,11 +199,11 @@
 	// Fetch the #1 score for the daily challenge tracklist
 	$effect(() => {
 		if (showDailyChallenge && browser) {
-			const cards = localSettings.timelineCardsToWin;
+			const target = localSettings.timelineTarget;
 			getLeaderboard({
 				limit: 1,
 				tracklist: dailyChallengeEntry.tracklist.id,
-				cardsToWin: cards,
+				target,
 				token: getPlayerToken()
 			})
 				.then((data) => {
@@ -244,9 +253,9 @@
 		settingsStore.update((s) => ({ ...s, numberOfTracks: value }));
 	}
 
-	function handleTimelineCardsToWinChange(value: number) {
-		localSettings.timelineCardsToWin = value;
-		settingsStore.update((s) => ({ ...s, timelineCardsToWin: value }));
+	function handleTimelineTargetChange(value: number) {
+		localSettings.timelineTarget = value;
+		settingsStore.update((s) => ({ ...s, timelineTarget: value }));
 	}
 
 	function handleStartGame() {
@@ -302,7 +311,9 @@
 				const allPartGids = [...new Set([log.initial, ...log.turns.map((t) => t.part)])].filter(
 					(gid): gid is string => typeof gid === 'string' && gid.length > 0
 				);
-				timelineTracks = data.resolveTimelineTracks(allPartGids);
+				const resolvedTracks = data.resolveTimelineTracks(allPartGids);
+				if (resolvedTracks.length === 0) return;
+				timelineTracks = resolvedTracks;
 				timelineLog = log;
 				timelinePlayerName = entry.player_name || $_('leaderboard.anonymous');
 				timelineCountry = entry.country ?? undefined;
@@ -517,11 +528,11 @@
 					<!-- Timeline-only: Cards to Win -->
 					{#if selectedMode === 'timeline'}
 						<div class="flex items-center justify-between">
-							<span class="text-sm font-semibold text-slate-400">{$_('settings.cardsToWin')}</span>
+							<span class="text-sm font-semibold text-slate-400">{$_('settings.target')}</span>
 							<NumberSelector
-								value={localSettings.timelineCardsToWin}
+								value={localSettings.timelineTarget}
 								options={[6, 10, 15]}
-								onChange={handleTimelineCardsToWinChange}
+								onChange={handleTimelineTargetChange}
 							/>
 						</div>
 

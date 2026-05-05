@@ -136,7 +136,7 @@
 
 		if (mode === 'timeline') {
 			gameInfo = {
-				cardsToWin: get(settings).timelineCardsToWin,
+				target: get(settings).timelineTarget,
 				numberOfPlayers: players.length
 			};
 		} else if (mode === 'buzzer' || mode === 'classic') {

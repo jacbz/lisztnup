@@ -30,7 +30,7 @@ interface LeaderboardResponse {
 export interface LeaderboardQuery {
 	limit?: number;
 	tracklist?: string | null;
-	cardsToWin?: number | string | null;
+	target?: number | string | null;
 	token?: string | null;
 }
 
@@ -43,7 +43,6 @@ export interface LeaderboardSubmission {
 	averageTime?: number | null;
 	longestStreak: number;
 	tracklistId?: string | null;
-	cardsToWin: number;
 	sessionId?: string | null;
 	log?: TimelineReplayLog;
 }
@@ -98,7 +97,7 @@ function normalizeLeaderboardUrl(query: LeaderboardQuery) {
 	const params = new URLSearchParams();
 	if (query.limit != null) params.set('limit', String(query.limit));
 	if (query.tracklist) params.set('tracklist', query.tracklist);
-	if (query.cardsToWin != null) params.set('cardsToWin', String(query.cardsToWin));
+	if (query.target != null) params.set('target', String(query.target));
 	if (query.token) params.set('token', query.token);
 	params.sort();
 	return `/api/game/leaderboard?${params.toString()}`;

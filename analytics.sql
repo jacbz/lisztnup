@@ -72,7 +72,6 @@ CREATE TABLE IF NOT EXISTS timeline_scores (
   average_time REAL,
   longest_streak INTEGER,
   tracklist_id TEXT NOT NULL,
-  cards_to_win INTEGER NOT NULL,
   country TEXT,
   user_hash TEXT,
   session_id TEXT,

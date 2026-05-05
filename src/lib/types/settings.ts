@@ -69,7 +69,7 @@ export interface BingoGridCell {
 export interface GameSettings {
 	numberOfTracks: number;
 	/// Timeline mode only: number of cards a player needs in their timeline to win.
-	timelineCardsToWin: number;
+	timelineTarget: number;
 	selectedTracklist: string; // id of the currently selected tracklist
 	trackLength: number; // Duration in seconds (5-30)
 	volume: number; // Volume level (0-100)
@@ -152,7 +152,7 @@ const isWebKit =
  */
 export const DEFAULT_SETTINGS: GameSettings = {
 	numberOfTracks: 10,
-	timelineCardsToWin: 6,
+	timelineTarget: 6,
 	selectedTracklist: 'beginner',
 	trackLength: 30,
 	volume: 100,

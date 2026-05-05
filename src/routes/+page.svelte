@@ -143,7 +143,7 @@
 			{:else if currentMode === 'timeline'}
 				<TimelineGameScreen
 					players={currentPlayers}
-					cardsToWin={$settings.timelineCardsToWin}
+					target={$settings.timelineTarget}
 					{isSoloMode}
 				/>
 			{:else}

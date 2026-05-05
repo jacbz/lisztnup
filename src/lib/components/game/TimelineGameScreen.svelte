@@ -30,20 +30,20 @@
 
 	interface Props {
 		players: Player[];
-		cardsToWin: number;
+		target: number;
 		isSoloMode?: boolean;
 		onHome?: () => void;
 	}
 
-	let { players, cardsToWin, isSoloMode = false, onHome = () => {} }: Props = $props();
+	let { players, target, isSoloMode = false, onHome = () => {} }: Props = $props();
 
 	// ─── Context & Game Logic ──────────────────────────────
 
 	const ctx = getGameContext();
-	// svelte-ignore state_referenced_locally (TimelineGame is a one-shot construct; players/cardsToWin are fixed for the game lifetime)
+	// svelte-ignore state_referenced_locally (TimelineGame is a one-shot construct; players/target are fixed for the game lifetime)
 	const game = new TimelineGame(
 		players,
-		cardsToWin,
+		target,
 		{
 			playTrack: ctx.playTrack,
 			stopTrack: ctx.stopTrack,
@@ -377,7 +377,7 @@
 
 <TimelineEndGameScreen
 	visible={game.showEndGame}
-	{cardsToWin}
+	{target}
 	timelines={game.timelines}
 	tracksExhausted={ctx.tracksExhausted}
 	tracklistId={$settings.selectedTracklist}

@@ -47,7 +47,7 @@
 	},
 	"settings": {
 		"numberOfTracks": "Number of Tracks",
-		"cardsToWin": "Cards to win",
+		"target": "Cards to win",
 		"language": "Language",
 		"presetInfo": {
 			"default": "{composers, plural, =0 {no composers} one {# composer} other {# composers}}, {works, plural, =0 {no works} one {# work} other {# works}}, {tracks, plural, =0 {no tracks} one {# track} other {# tracks}}"

@@ -12,7 +12,7 @@
 	import { get } from 'svelte/store';
 	import { getStreakTextStyle } from '$lib/logic/timelineMotion';
 
-	const POINT_LABEL_Y_OFFSETS = [0, -8];
+	const REPLAY_STEP_WIDTH_REM = 2.25;
 
 	interface Props {
 		visible?: boolean;
@@ -53,7 +53,10 @@
 	const maxStep = $derived(turns.length);
 	const correctCount = $derived(turns.filter((turn) => turn.ok).length);
 	const accuracyPercent = $derived(attempts > 0 ? Math.round((correctCount / attempts) * 100) : 0);
-	const trackByPart = $derived(new Map(tracks.map((track) => [track.part.gid, track])));
+	const resolvedTracks = $derived(tracks.filter(isResolvedTrack));
+	const trackByPart = $derived(
+		new Map(resolvedTracks.map((track) => [track.part.gid, track] as const))
+	);
 	const replaySteps = $derived(range(turns.length + 1));
 
 	const entries = $derived<TimelineEntry[]>(
@@ -81,12 +84,16 @@
 	});
 
 	function buildFinalEntries(): TimelineEntry[] {
-		return tracks.map((track, i) => ({
+		return resolvedTracks.map((track, i) => ({
 			id: `saved-${i}`,
 			track,
 			confirmed: true,
 			correct: null
 		}));
+	}
+
+	function isResolvedTrack(track: Track | null | undefined): track is Track {
+		return !!track?.part?.gid && !!track.work;
 	}
 
 	function insertAt<T>(items: T[], index: number | null, item: T) {
@@ -149,10 +156,6 @@
 	function pointWeight(points: number): number {
 		const magnitude = Math.min(Math.abs(points), 3000);
 		return 500 + Math.round((magnitude / 3000) * 400);
-	}
-
-	function pointLabelOffset(index: number): number {
-		return POINT_LABEL_Y_OFFSETS[index % POINT_LABEL_Y_OFFSETS.length];
 	}
 
 	function pointClass(turn: TimelineReplayTurn): string {
@@ -249,30 +252,31 @@
 
 		{#if log && turns.length > 0}
 			<div
-				class="relative mx-auto w-full max-w-4xl px-2 pt-0"
-				style="--step-count: {turns.length + 1};"
+				class="-mx-4 max-w-[calc(100%+2rem)] overflow-x-auto overflow-y-visible px-4 pt-0 pb-2 md:-mx-8 md:max-w-[calc(100%+4rem)] md:px-8"
+				style="touch-action: pan-x;"
 			>
 				<div
-					class="grid items-end gap-1"
-					style="grid-template-columns: repeat({turns.length + 1}, minmax(2.25rem, 1fr));"
+					class="relative min-w-full"
+					style="--step-count: {turns.length + 1}; width: max(100%, {(turns.length + 1) *
+						REPLAY_STEP_WIDTH_REM}rem);"
 				>
-					<div></div>
-					{#each turns as turn, i (i)}
-						<div
-							class="flex flex-col justify-end text-center text-[11px] leading-none tabular-nums"
-						>
+					<div
+						class="grid items-end"
+						style="grid-template-columns: repeat({turns.length + 1}, minmax(2.25rem, 1fr));"
+					>
+						<div></div>
+						{#each turns as turn, i (i)}
 							<div
-								class="flex flex-col items-center gap-0.5"
-								style="transform: translateY({pointLabelOffset(i)}px);"
+								class="flex flex-col justify-end text-center text-[11px] leading-none tabular-nums"
 							>
 								<div
-									class="flex items-center justify-center {pointClass(turn)}"
+									class="flex flex-col items-center justify-end gap-0.5 {pointClass(turn)}"
 									style={pointStyle(turn)}
 								>
-									<span>+{turn.points.toLocaleString()}</span>
 									{#if turn.streak >= 3}
 										<Flame class="h-3 w-3 shrink-0" />
 									{/if}
+									<span>+{turn.points.toLocaleString()}</span>
 								</div>
 								{#if i === turns.length - 1 && log.completionBonus > 0}
 									<div class="font-bold text-amber-400">
@@ -280,67 +284,69 @@
 									</div>
 								{/if}
 							</div>
-						</div>
-					{/each}
-				</div>
-
-				{#key sliderOpenKey}
-					<div class="relative h-5">
-						<div
-							class="absolute top-1/2 h-1 -translate-y-1/2 rounded-full bg-slate-700/80"
-							style="left: calc(50% / var(--step-count)); right: calc(50% / var(--step-count));"
-						>
-							<div
-								class="h-full rounded-full bg-cyan-400/70 shadow-[0_0_14px_rgba(34,211,238,0.45)] transition-[width] ease-out {touchedSlider
-									? 'duration-200'
-									: 'duration-1000'}"
-								style="width: {touchedSlider ? sliderProgress : 100}%; animation: {touchedSlider
-									? 'none'
-									: 'replay-rail-fill 1000ms ease-out both'}; transform-origin: left;"
-							></div>
-						</div>
-						<div
-							class="absolute inset-0 grid items-center"
-							style="grid-template-columns: repeat({turns.length + 1}, minmax(2.25rem, 1fr));"
-						>
-							{#each replaySteps as i (i)}
-								<button
-									type="button"
-									onclick={() => {
-										selectedStep = i;
-										touchedSlider = true;
-									}}
-									class="relative z-10 flex h-5 cursor-pointer items-center justify-center"
-									aria-label={replayStepLabel(i)}
-								>
-									<span class="h-3 w-3 rounded-full border-2 transition-all {stepCircleClass(i)}"
-									></span>
-								</button>
-							{/each}
-						</div>
-						<input
-							type="range"
-							min="0"
-							max={maxStep}
-							step="1"
-							bind:value={selectedStep}
-							oninput={() => (touchedSlider = true)}
-							aria-label={replayStepLabel(selectedStep)}
-							class="absolute inset-0 z-20 h-5 w-full cursor-pointer opacity-0"
-						/>
+						{/each}
 					</div>
-				{/key}
 
-				<div
-					class="grid items-start gap-1"
-					style="grid-template-columns: repeat({turns.length + 1}, minmax(2.25rem, 1fr));"
-				>
-					<div></div>
-					{#each turns as turn, i (turn.part + '-' + i)}
-						<div class="min-h-4 text-center text-[11px] leading-tight text-slate-500 tabular-nums">
-							<div>{stepTimeLabel(turn)}</div>
+					{#key sliderOpenKey}
+						<div class="relative mt-1 h-5">
+							<div
+								class="absolute top-1/2 h-1 -translate-y-1/2 rounded-full bg-slate-700/80"
+								style="left: calc(50% / var(--step-count)); right: calc(50% / var(--step-count));"
+							>
+								<div
+									class="h-full rounded-full bg-cyan-400/70 shadow-[0_0_14px_rgba(34,211,238,0.45)] transition-[width] ease-out {touchedSlider
+										? 'duration-200'
+										: 'duration-1000'}"
+									style="width: {touchedSlider ? sliderProgress : 100}%; animation: {touchedSlider
+										? 'none'
+										: 'replay-rail-fill 1000ms ease-out both'}; transform-origin: left;"
+								></div>
+							</div>
+							<div
+								class="absolute inset-0 grid items-center"
+								style="grid-template-columns: repeat({turns.length + 1}, minmax(2.25rem, 1fr));"
+							>
+								{#each replaySteps as i (i)}
+									<button
+										type="button"
+										onclick={() => {
+											selectedStep = i;
+											touchedSlider = true;
+										}}
+										class="relative z-10 flex h-5 cursor-pointer items-center justify-center"
+										aria-label={replayStepLabel(i)}
+									>
+										<span class="h-3 w-3 rounded-full border-2 transition-all {stepCircleClass(i)}"
+										></span>
+									</button>
+								{/each}
+							</div>
+							<input
+								type="range"
+								min="0"
+								max={maxStep}
+								step="1"
+								bind:value={selectedStep}
+								oninput={() => (touchedSlider = true)}
+								aria-label={replayStepLabel(selectedStep)}
+								class="replay-step-range absolute inset-0 z-20 h-5 w-full cursor-pointer opacity-0"
+							/>
 						</div>
-					{/each}
+					{/key}
+
+					<div
+						class="mt-2 grid items-start"
+						style="grid-template-columns: repeat({turns.length + 1}, minmax(2.25rem, 1fr));"
+					>
+						<div></div>
+						{#each turns as turn, i (turn.part + '-' + i)}
+							<div
+								class="min-h-4 text-center text-[11px] leading-tight text-slate-400 tabular-nums"
+							>
+								<div>{stepTimeLabel(turn)}</div>
+							</div>
+						{/each}
+					</div>
 				</div>
 			</div>
 		{/if}
@@ -374,6 +380,12 @@
 		}
 		to {
 			transform: scaleX(1);
+		}
+	}
+
+	@media (pointer: coarse) {
+		.replay-step-range {
+			pointer-events: none;
 		}
 	}
 </style>

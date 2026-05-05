@@ -55,7 +55,7 @@ export class TimelineGame {
 	// CONFIG (immutable)
 	// ═══════════════════════════════════════════════════════
 	readonly #players: Player[];
-	readonly #cardsToWin: number;
+	readonly #target: number;
 	readonly #ctx: TimelineGameActions;
 	readonly #getCurrentTrack: () => Track | null;
 
@@ -264,13 +264,13 @@ export class TimelineGame {
 
 	constructor(
 		players: Player[],
-		cardsToWin: number,
+		target: number,
 		ctx: TimelineGameActions,
 		getCurrentTrack: () => Track | null,
 		isSoloMode: boolean = false
 	) {
 		this.#players = players;
-		this.#cardsToWin = cardsToWin;
+		this.#target = target;
 		this.#ctx = ctx;
 		this.#getCurrentTrack = getCurrentTrack;
 		this.#isSoloMode = isSoloMode;
@@ -786,8 +786,8 @@ export class TimelineGame {
 			const cardsOnTimeline = this.activePlayer.entries.filter(
 				(e) => e.confirmed && e.correct !== false
 			).length;
-			if (cardsOnTimeline >= this.#cardsToWin && !this.activePlayer.reachedTarget) {
-				const completion = calculateCompletion(this.#cardsToWin, this.activePlayer.totalPlacements);
+			if (cardsOnTimeline >= this.#target && !this.activePlayer.reachedTarget) {
+				const completion = calculateCompletion(this.#target, this.activePlayer.totalPlacements);
 				this.activePlayer.completionBonus = completion;
 				this.activePlayer.score += completion;
 				this.activePlayer.reachedTarget = true;
@@ -819,7 +819,7 @@ export class TimelineGame {
 				year,
 				correctLeftYear,
 				correctRightYear,
-				this.#cardsToWin,
+				this.#target,
 				this.activePlayer.totalPlacements
 			);
 			this.lastConsolationBreakdown = consolation;

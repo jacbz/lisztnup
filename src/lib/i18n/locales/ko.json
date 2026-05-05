@@ -47,7 +47,7 @@
 	},
 	"settings": {
 		"numberOfTracks": "트랙 수",
-		"cardsToWin": "승리 목표 카드 수",
+		"target": "승리 목표 카드 수",
 		"language": "언어",
 		"presetInfo": {
 			"default": "작곡가 {composers}명, 작품 {works}곡, 트랙 {tracks}개"

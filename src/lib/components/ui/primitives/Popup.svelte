@@ -102,7 +102,7 @@
 
 		const widthMap: Record<string, string> = {
 			screen: 'w-dvw max-w-[95vw] h-dvh max-h-[95vh]',
-			auto: 'w-auto',
+			auto: 'w-auto max-w-[95vw]',
 			sm: 'w-full max-w-sm',
 			md: 'w-full max-w-md',
 			lg: 'w-full max-w-lg',
