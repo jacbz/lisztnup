@@ -37,7 +37,6 @@ export interface TurnScoreBreakdown {
 	base: number;
 	diff: number;
 	gap: number;
-	dMin: number;
 	/** True when the card was placed at the start or end of the timeline. */
 	isEdgePlacement: boolean;
 	mastery: number;

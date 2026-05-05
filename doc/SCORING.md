@@ -18,16 +18,11 @@ $$\text{Base} = 1000$$
 
 ### Difficulty Bonus ($\text{Diff}$)
 
-Rewards two distinct types of difficulty: placing correctly in a historically dense period, and threading the needle close to a known anchor year. The two terms are additive and independently tunable.
+Rewards chronological difficulty. It is high when cards must be placed inside a short historical window.
 
-$$\text{Diff} = \underbrace{\text{GapWeight} \times \frac{10}{\text{Gap} + 10}}_{\text{Gap Term}} + \underbrace{\text{PrecisionWeight} \times \frac{10}{d_{\min} + 10}}_{\text{Precision Term}}$$
+$$\text{Diff} = 2310 \times \frac{10}{\text{Gap} + 10}$$
 
-where $\text{GapWeight} = 1000$ and $\text{PrecisionWeight} = 400$.
-
-- **Total Gap ($\text{Gap}$):** The chronological distance between the two neighboring boundary years around the correct slot. Edge placements use the dataset boundary as the missing neighbor. To prevent degenerate score spikes from near-identical years, $\text{Gap}$ is floored at 25 years after boundary substitution.
-- **Nearest Boundary Distance ($d_{\min}$):** Distance from the placed card's year to the nearest **real** boundary card (never the dataset boundary). Edge placements have exactly one real boundary card, so $d_{\min}$ is simply the distance to that card. Each player is dealt a random card at the beginning of the game, so at least one real boundary always exists.
-- **Gap Term:** The first term is the primary difficulty signal. It is high when cards must be placed inside a short chronological window, and approaches zero for wide, easy gaps. It is unaffected by where within the gap the card's year falls.
-- **Precision Term:** The second term is a supplementary reward for placing a card whose year sits close to an existing boundary. A card dated 1799 placed correctly in a [1600, 1800] slot scores materially more than 1700 in the same slot, because knowing the year to within 1 year of a boundary demonstrates tighter historical knowledge than knowing only the broad era.
+- **Total Gap ($\text{Gap}$):** The chronological distance between the two neighboring boundary years around the correct slot. Edge placements use the dataset boundary as the missing neighbor. To prevent degenerate score spikes from near-identical years, $\text{Gap}$ is floored at 25 years. The maximum obtained value for $\text{Diff}$ therefore is $2310 \times \frac{10}{35} = 660$.
 
 ### Mastery Bonus ($\text{Mastery}$)
 

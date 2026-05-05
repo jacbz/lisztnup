@@ -15,7 +15,6 @@ import type {
 import {
 	calculateTurnScore,
 	calculateGap,
-	calculateDMin,
 	calculateCompletion,
 	calculateConsolationScore
 } from './timelineScoring';
@@ -764,12 +763,10 @@ export class TimelineGame {
 			const nextYear =
 				idx < entries.length - 1 ? this.#getTimelineYear(entries[idx + 1].track) : null;
 			const gap = calculateGap(prevYear, nextYear);
-			const dMin = calculateDMin(year, prevYear, nextYear, gap);
 			const isEdgePlacement = prevYear === null || nextYear === null;
 
 			const breakdown = calculateTurnScore({
 				gap,
-				dMin,
 				seconds: secondsTaken,
 				streak: this.activePlayer.currentStreak,
 				isEdgePlacement,

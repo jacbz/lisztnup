@@ -6,17 +6,15 @@ import { MIN_WORK_YEAR, MAX_WORK_YEAR } from '$lib/types/settings';
 import type { TurnScoreBreakdown, ConsolationBreakdown } from './timelineTypes';
 
 export const base = 1000;
-export const gapWeight = 1000;
-export const precisionWeight = 400;
 export const masteryCap = 500;
 export const speedBonus = 0.25;
 export const completionRate = 750;
 
 /**
- * Difficulty bonus combines total slot density and boundary precision.
+ * Difficulty bonus based on total slot density.
  */
-export function calculateDiff(gap: number, dMin: number): number {
-	return gapWeight * (10 / (gap + 10)) + precisionWeight * (10 / (dMin + 10));
+export function calculateDiff(gap: number): number {
+	return 2310 * (10 / (gap + 10));
 }
 
 /**
@@ -82,29 +80,10 @@ export function calculateGap(leftYear: number | null, rightYear: number | null):
 	return Math.max(25, right - left);
 }
 
-/**
- * Distance from the placed card to the nearest real boundary card.
- * Edge placements have one boundary card; the first card has none and falls
- * back to the total slot gap to keep its difficulty near the minimum.
- */
-export function calculateDMin(
-	cardYear: number,
-	leftYear: number | null,
-	rightYear: number | null,
-	gap: number
-): number {
-	const distances: number[] = [];
-	if (leftYear !== null) distances.push(Math.abs(cardYear - leftYear));
-	if (rightYear !== null) distances.push(Math.abs(rightYear - cardYear));
-
-	return distances.length > 0 ? Math.max(0, Math.min(...distances)) : gap;
-}
-
 // ─── Composite score calculation ───────────────────────────
 
 export interface TurnScoreInput {
 	gap: number;
-	dMin: number;
 	seconds: number;
 	/** Streak count *after* incrementing for this correct turn. */
 	streak: number;
@@ -121,7 +100,7 @@ export interface TurnScoreInput {
  * All intermediate values are kept at full precision; round only for display.
  */
 export function calculateTurnScore(input: TurnScoreInput): TurnScoreBreakdown {
-	const diff = Math.round(calculateDiff(input.gap, input.dMin));
+	const diff = Math.round(calculateDiff(input.gap));
 	const mastery = Math.round(calculateMastery(input.correct, input.attempts));
 	const speed = calculateSpeed(input.seconds);
 	const streakMult = calculateStreakMult(input.streak);
@@ -133,7 +112,6 @@ export function calculateTurnScore(input: TurnScoreInput): TurnScoreBreakdown {
 		base,
 		diff,
 		gap: input.gap,
-		dMin: input.dMin,
 		isEdgePlacement: input.isEdgePlacement ?? false,
 		mastery,
 		correct: input.correct,
