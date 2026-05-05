@@ -5,7 +5,7 @@
 	import { onMount, tick } from 'svelte';
 	import Popup from '$lib/components/ui/primitives/Popup.svelte';
 	import TrackInfo from '$lib/components/ui/gameplay/TrackInfo.svelte';
-	import type { Track } from '$lib/types';
+	import type { Track } from '$lib/models';
 	import type { TurnScoreBreakdown } from '$lib/logic/timelineTypes';
 	import Flame from 'lucide-svelte/icons/flame';
 	import Zap from 'lucide-svelte/icons/zap';

@@ -1,5 +1,5 @@
 import { tracklist, waitForOnline } from '$lib/stores';
-import type { Track } from '$lib/types';
+import type { Track } from '$lib/models';
 import { deezerPlayer, NetworkError, type LoadedPlayableTrack } from './DeezerPlayer';
 import type { TracklistGenerator } from './TracklistGenerator';
 

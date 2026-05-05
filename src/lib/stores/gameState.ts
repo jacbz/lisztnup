@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
-import type { GameState, RoundState, Track } from '$lib/types';
+import type { Track } from '$lib/models';
+import type { GameState, RoundState } from '$lib/types';
 
 export const gameState = writable<GameState>('loading');
 

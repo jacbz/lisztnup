@@ -1,4 +1,4 @@
-import type { Composer, Work } from '$lib/types';
+import type { Composer, Work } from '$lib/models';
 
 /**
  * Formats a composer sort name (e.g., "Bach, Johann Sebastian" or "Strauss, Johann, II")
@@ -196,15 +196,15 @@ export function formatWorksAsMarkdown(works: Work[], composers: Composer[]): str
 		return a.name.localeCompare(b.name);
 	});
 	works.sort((a, b) => {
-		const composerA = composers.find((c) => c.gid === a.composer)!;
-		const composerB = composers.find((c) => c.gid === b.composer)!;
+		const composerA = composers.find((c) => c.gid === a.composerGid)!;
+		const composerB = composers.find((c) => c.gid === b.composerGid)!;
 		const lastNameA = getComposerLastName(composerA ? composerA.name : '');
 		const lastNameB = getComposerLastName(composerB ? composerB.name : '');
 		return lastNameA.localeCompare(lastNameB);
 	});
 
 	const rows = works.map((work) => {
-		const composer = composerMap.get(work.composer);
+		const composer = composerMap.get(work.composerGid);
 		const composerLastName = composer ? getComposerLastName(composer.name) : 'Unknown Composer';
 		const gidPrefix = work.gid;
 		const composerWork = `${composerLastName} – ${work.name}`;

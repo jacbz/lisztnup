@@ -23,10 +23,9 @@
 	import Sparkles from 'lucide-svelte/icons/sparkles';
 	import { getPlayerToken } from '$lib/stores/identity';
 	import { getDailyChallengeEntry, getUtcDateString } from '$lib/utils/dailyChallenge';
-	import { resolveTimelineTracks } from '$lib/utils/search';
 	import { gameData } from '$lib/stores/gameData';
 	import { get } from 'svelte/store';
-	import type { Track } from '$lib/types';
+	import type { Track } from '$lib/models';
 	import TimelinePopup from '$lib/components/game/timeline/TimelinePopup.svelte';
 	import TimelineLeaderboard from '$lib/components/ui/setup/TimelineLeaderboard.svelte';
 	import { fade, slide } from 'svelte/transition';
@@ -290,7 +289,7 @@
 			const gids = JSON.parse(entry.timeline) as [string, string][];
 			const data = get(gameData);
 			if (data && gids.length > 0) {
-				timelineTracks = resolveTimelineTracks(data, gids);
+				timelineTracks = data.resolveTimelineTracks(gids);
 				timelinePlayerName = entry.player_name || $_('leaderboard.anonymous');
 				timelineCountry = entry.country ?? undefined;
 				timelineScore = entry.score;

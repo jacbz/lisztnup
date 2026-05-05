@@ -31,7 +31,7 @@
 ## TypeScript Conventions
 
 - **Strict mode**: `noImplicitAny`, `strictNullChecks` enabled.
-- **Types directory**: Shared types in `src/lib/types/` with barrel re-export from `index.ts`.
+- **Type ownership**: Catalog/domain types live with `GameCatalog` in `src/lib/models/`; non-catalog shared types live in `src/lib/types/`.
 - **Typed context**: Context interfaces defined in dedicated files (e.g., `context.ts`), used with `satisfies` at creation site.
 - **Custom error classes**: Use subclasses (e.g., `NetworkError extends Error`) to enable typed error handling with `instanceof`.
 - **Export conventions**: Re-export from `index.ts` barrel files in each directory. Services export both the class/singleton and relevant types/utilities.

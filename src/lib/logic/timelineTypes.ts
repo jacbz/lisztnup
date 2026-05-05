@@ -1,4 +1,5 @@
-import type { Player, Track } from '$lib/types';
+import type { Track } from '$lib/models';
+import type { Player } from '$lib/types';
 
 // ─── Data types ────────────────────────────────────────────
 

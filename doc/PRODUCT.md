@@ -112,7 +112,7 @@ Deezer API ← link_deezer.py ← process_deezer.py → static/lisztnup.json (2.
 
 Python scripts in `data/`. Config in `WORK_PROCESSING_CONFIG.yaml` and `WORK_TYPE_MATCHING_RULES.yaml`. Bad tracks filtered via `DEEZER_BANNED_IDS` (hard) and `DEEZER_EXCLUDED_IDS` (soft).
 
-`lisztnup.json` stores work and part GIDs as 8-character prefixes for size; composer GIDs remain full for MusicBrainz artist links.
+`lisztnup.json` stores work and part GIDs as 8-character prefixes for size; `composer_gid` values remain full for MusicBrainz artist links. The client hydrates this raw DTO into `GameCatalog` for indexed lookups and part→work resolution.
 
 Each part includes up to 5 Deezer IDs (max ceil(n/2) of available recordings) for fallback.
 

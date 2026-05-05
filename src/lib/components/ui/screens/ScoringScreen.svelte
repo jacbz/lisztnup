@@ -3,7 +3,8 @@
 	import Popup from '../primitives/Popup.svelte';
 	import ScoringCard from '../primitives/ScoringCard.svelte';
 	import TrackInfo from '../gameplay/TrackInfo.svelte';
-	import { CATEGORY_POINTS, type GuessCategory, type Player, type Track } from '$lib/types';
+	import type { Track } from '$lib/models';
+	import { CATEGORY_POINTS, type GuessCategory, type Player } from '$lib/types';
 	import { ArrowRight } from 'lucide-svelte';
 	import { SvelteMap } from 'svelte/reactivity';
 

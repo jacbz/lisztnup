@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { onMount, onDestroy, setContext } from 'svelte';
 	import type { TracklistGenerator } from '$lib/services';
-	import type { Player, GameMode, Track } from '$lib/types';
+	import type { Track } from '$lib/models';
+	import type { Player, GameMode } from '$lib/types';
 	import {
 		gameSession,
 		currentRound,
@@ -68,7 +69,8 @@
 	const currentTrack = $derived(playableBuffer.currentTrack);
 	const isWaitingForPlayableTrack = $derived(
 		!$currentRound.isPlaying &&
-			((playableBuffer.isInitialLoading && currentTrack === null) || playableBuffer.isBlockedOnTrack)
+			((playableBuffer.isInitialLoading && currentTrack === null) ||
+				playableBuffer.isBlockedOnTrack)
 	);
 
 	// Timeline and Bingo don't end based on fixed track count
@@ -292,17 +294,17 @@
 				return;
 			}
 
-				const nextTrack = await playableBuffer.advance();
-				if (!nextTrack) {
-					if (mode === 'timeline') {
-						// Timeline observes tracksExhausted through context and owns its end screen.
-						return;
-					}
-					showEndGameScreen = true;
+			const nextTrack = await playableBuffer.advance();
+			if (!nextTrack) {
+				if (mode === 'timeline') {
+					// Timeline observes tracksExhausted through context and owns its end screen.
 					return;
 				}
+				showEndGameScreen = true;
+				return;
+			}
 
-				nextRoundFn();
+			nextRoundFn();
 
 			// Log progress after round increment
 			if (mode === 'classic' || mode === 'buzzer') {
@@ -316,10 +318,10 @@
 				});
 			}
 
-				playableBuffer.ensureFilled();
-			} finally {
-				isAdvancingRound = false;
-			}
+			playableBuffer.ensureFilled();
+		} finally {
+			isAdvancingRound = false;
+		}
 	}
 
 	function handleScoreSubmit(scores: Record<string, number>): void {

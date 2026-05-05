@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { GameCatalog, type RawLisztnupData } from '../src/lib/models';
 import { TracklistGenerator } from '../src/lib/services/TracklistGenerator';
 import {
 	ADVANCED_CONFIG,
@@ -9,7 +10,7 @@ import {
 	SKILLED_CONFIG
 } from '../src/lib/data/tracklistConfigs';
 import { formatWorksAsMarkdown } from '../src/lib/utils/formatters';
-import type { LisztnupData } from '../src/lib/types';
+import type { Tracklist } from '../src/lib/types';
 
 async function syncTracklistMd() {
 	console.log('Generating TRACKLIST_INTERMEDIATE.md...');
@@ -17,7 +18,7 @@ async function syncTracklistMd() {
 	try {
 		const dataPath = path.join(process.cwd(), 'static/lisztnup.json');
 		const rawData = fs.readFileSync(dataPath, 'utf-8');
-		const data: LisztnupData = JSON.parse(rawData);
+		const data = GameCatalog.fromRaw(JSON.parse(rawData) as RawLisztnupData);
 
 		const tracklists = [
 			{
@@ -56,10 +57,9 @@ async function syncTracklistMd() {
 
 		for (const tl of tracklists) {
 			try {
-				const tracklistMeta = {
-					name: tl.title,
-					description: '',
-					isDefault: true,
+				const tracklistMeta: Tracklist = {
+					kind: 'default',
+					id: tl.key.toLowerCase(),
 					category: 'difficulty',
 					config: tl.config
 				};

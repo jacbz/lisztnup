@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Track } from '$lib/types';
+	import type { Track } from '$lib/models';
 	import {
 		formatComposerName,
 		formatLifespan,

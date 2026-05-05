@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Track } from '$lib/types';
+	import type { Track } from '$lib/models';
 	import { flip } from 'svelte/animate';
 	import { quintOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
@@ -43,7 +43,7 @@
 		score?: number;
 		hideHeader?: boolean;
 		hideCount?: boolean;
-}
+	}
 
 	let {
 		playerName,
@@ -172,34 +172,40 @@
 		class={`relative flex items-center justify-center gap-1 rounded-xl border bg-slate-950/30 transition-all duration-300 md:gap-1.5 ${helpText || showConfirm ? 'mt-6' : ''} ${active ? `rounded-tl-none py-2` : 'min-w-25 px-1.5 py-1.5'} ${acceptingDrop ? 'border-cyan-400/40' : 'border-slate-700/40'}`}
 		style="{active
 			? `box-shadow: ${flameGlow || (acceptingDrop ? `0 0 25px rgba(34,211,238,0.35)` : `0 0 15px ${playerColor}44`)}; min-width: ${isVertical ? '92dvh' : '92vw'}; container-type: inline-size;`
-			: flameGlow ? `box-shadow: ${flameGlow};` : ''}--entry-count: {Math.max(entries.length, 1)}; --gap: calc(var(--spacing) * 1.5);"
+			: flameGlow
+				? `box-shadow: ${flameGlow};`
+				: ''}--entry-count: {Math.max(entries.length, 1)}; --gap: calc(var(--spacing) * 1.5);"
 	>
 		{#if !hideHeader}
-		<div
-			class={`pointer-events-none absolute flex items-center gap-1 whitespace-nowrap rounded-lg border border-slate-700/50 bg-slate-950/50 px-2 transition-all ${active ? 'top-0 left-0 z-100 -translate-y-full rounded-br-none rounded-bl-none py-0.5 text-xs text-slate-200' : '-top-2 left-1/2 -translate-x-1/2 text-[10px] text-slate-300'}`}
-		>
-			<div class="h-2 w-2 shrink-0 rounded-full" style="background-color: {playerColor};"></div>
-			<div class="max-w-[28ch] truncate font-semibold tracking-wide select-none">{playerName}</div>
-			{#if score > 0}
-				<span class="text-slate-600">|</span>
-				<div class="font-bold text-cyan-400 tabular-nums">{$_('scoring.pts', { values: { points: Math.round(score).toLocaleString() } })}</div>
-			{/if}
-			{#if streakCount >= STREAK_THRESHOLD && active}
-				<span class="text-slate-600">|</span>
-				<div class="flex items-center gap-0.5 text-orange-400">
-					<Flame class="h-3.5 w-3.5" />
-					<span class="text-xs font-bold">{streakCount}</span>
+			<div
+				class={`pointer-events-none absolute flex items-center gap-1 rounded-lg border border-slate-700/50 bg-slate-950/50 px-2 whitespace-nowrap transition-all ${active ? 'top-0 left-0 z-100 -translate-y-full rounded-br-none rounded-bl-none py-0.5 text-xs text-slate-200' : '-top-2 left-1/2 -translate-x-1/2 text-[10px] text-slate-300'}`}
+			>
+				<div class="h-2 w-2 shrink-0 rounded-full" style="background-color: {playerColor};"></div>
+				<div class="max-w-[28ch] truncate font-semibold tracking-wide select-none">
+					{playerName}
 				</div>
-			{/if}
-		</div>
+				{#if score > 0}
+					<span class="text-slate-600">|</span>
+					<div class="font-bold text-cyan-400 tabular-nums">
+						{$_('scoring.pts', { values: { points: Math.round(score).toLocaleString() } })}
+					</div>
+				{/if}
+				{#if streakCount >= STREAK_THRESHOLD && active}
+					<span class="text-slate-600">|</span>
+					<div class="flex items-center gap-0.5 text-orange-400">
+						<Flame class="h-3.5 w-3.5" />
+						<span class="text-xs font-bold">{streakCount}</span>
+					</div>
+				{/if}
+			</div>
 		{/if}
 
 		{#if !hideCount}
-		<div
-			class={`absolute transition-all ${active ? 'top-1 left-2 text-xs' : 'top-0.75 left-1 text-[10px]'} opacity-50`}
-		>
-			{entries.length}
-		</div>
+			<div
+				class={`absolute transition-all ${active ? 'top-1 left-2 text-xs' : 'top-0.75 left-1 text-[10px]'} opacity-50`}
+			>
+				{entries.length}
+			</div>
 		{/if}
 		<!-- Dummy card to maintain spacing when empty -->
 		{#if entries.length === 0}

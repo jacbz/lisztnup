@@ -2,7 +2,7 @@
 	import Popup from '$lib/components/ui/primitives/Popup.svelte';
 	import Flag from '$lib/components/ui/primitives/Flag.svelte';
 	import { _, locale } from 'svelte-i18n';
-	import type { Track } from '$lib/types';
+	import type { Track } from '$lib/models';
 	import PlayerTimeline, { type TimelineEntry } from './PlayerTimeline.svelte';
 	import TrackInfo from '$lib/components/ui/gameplay/TrackInfo.svelte';
 	import { formatDateString, formatYearRange } from '$lib/utils';

@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { Tracklist, WorkCategory } from '$lib/types';
+	import type { WorkCategory } from '$lib/models';
+	import type { Tracklist } from '$lib/types';
 	import { gameData } from '$lib/stores';
 	import { get } from 'svelte/store';
 	import { formatComposerName, formatLifespan } from '$lib/utils';
@@ -38,7 +39,7 @@
 			const generator = new TracklistGenerator(data, tracklist);
 			return generator.getFilteredData().composers;
 		}
-		return data.composers;
+		return [...data.composers];
 	});
 
 	const works = $derived.by(() => {
@@ -48,7 +49,7 @@
 			const generator = new TracklistGenerator(data, tracklist);
 			return generator.getFilteredData().works;
 		}
-		return data.works;
+		return [...data.works];
 	});
 
 	const selectedComposer = $derived.by(() => {
@@ -111,7 +112,10 @@
 				<h2 class="flex items-center gap-2 text-xl font-bold text-cyan-400 md:text-2xl">
 					{#if tracklist}
 						<ListMusic class="h-5 w-5 md:h-6 md:w-6" />
-						{tracklistDisplayName(tracklist, $_)}{:else if viewMode === 'composer' && selectedComposer}
+						{tracklistDisplayName(
+							tracklist,
+							$_
+						)}{:else if viewMode === 'composer' && selectedComposer}
 						{@html composerIcon}
 						{formatComposerName(selectedComposer.name)}
 						<span class="text-sm font-normal text-slate-400">

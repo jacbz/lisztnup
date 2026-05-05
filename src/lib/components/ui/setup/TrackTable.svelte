@@ -1,5 +1,12 @@
 <script lang="ts">
-	import type { Tracklist, Composer, Work, Part, WorkCategory } from '$lib/types';
+	import {
+		ALL_WORK_CATEGORIES,
+		type Composer,
+		type Part,
+		type Work,
+		type WorkCategory
+	} from '$lib/models';
+	import type { Tracklist } from '$lib/types';
 	import { MIN_WORK_SCORE, MAX_WORK_SCORE } from '$lib/types';
 	import { gameData } from '$lib/stores';
 	import { TracklistGenerator, PreviewPlayer } from '$lib/services';
@@ -22,7 +29,6 @@
 	import Plus from 'lucide-svelte/icons/plus';
 	import Check from 'lucide-svelte/icons/check';
 	import Ban from 'lucide-svelte/icons/ban';
-	import { ALL_WORK_CATEGORIES } from '$lib/types/work';
 	import { ClipboardCopy } from 'lucide-svelte';
 	import { toast } from '$lib/stores/toast';
 	import { MIN_PART_SCORE } from '$lib/types/settings';
@@ -274,8 +280,8 @@
 				filteredWorks = filteredData.works;
 			} else {
 				// Show whole library - no filtering
-				filteredComposers = data.composers;
-				filteredWorks = data.works;
+				filteredComposers = [...data.composers];
+				filteredWorks = [...data.works];
 			}
 
 			// Create a map of composer GIDs to composer objects
@@ -286,7 +292,7 @@
 			const rows: TableRow[] = [];
 
 			filteredWorks.forEach((work) => {
-				const composer = composerMap.get(work.composer);
+				const composer = composerMap.get(work.composerGid);
 				if (!composer) return;
 				if (!work.parts || work.parts.length === 0) return;
 
@@ -306,7 +312,7 @@
 						gid: p.gid,
 						name: p.name,
 						score: p.score,
-						deezerIds: p.deezer
+						deezerIds: [...p.deezer]
 					})),
 					popularity: work.score,
 					year: yearStr

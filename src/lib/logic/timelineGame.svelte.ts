@@ -1,4 +1,5 @@
-import type { Player, Track, PlayerEdge } from '$lib/types';
+import type { Track } from '$lib/models';
+import type { Player, PlayerEdge } from '$lib/types';
 import { ALL_EDGES } from '$lib/types';
 import { formatYearRange } from '$lib/utils';
 import { SvelteMap } from 'svelte/reactivity';

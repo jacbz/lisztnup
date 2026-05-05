@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { _ } from 'svelte-i18n';
-	import type { Track } from '$lib/types';
+	import type { Track } from '$lib/models';
 	import Popup from '../primitives/Popup.svelte';
 	import { analytics } from '$lib/game-logger';
 	import { playerState } from '$lib/services';
@@ -149,24 +149,26 @@
 				>
 					{composerName}
 					<ExternalLink />
-					</a>
+				</a>
 
-					<span class="mx-1 opacity-30">|</span>
+				<span class="mx-1 opacity-30">|</span>
 
-					<a
-						href="https://musicbrainz.org/search?query=wid%3A{track.work.gid}-*&type=work&limit=25&method=advanced"
+				<a
+					href="https://musicbrainz.org/search?query=wid%3A{track.work
+						.gid}-*&type=work&limit=25&method=advanced"
 					target="_blank"
 					rel="noopener noreferrer"
 					class="flex items-center gap-1 text-cyan-400/80 hover:text-cyan-400 hover:underline"
-					>
+				>
 					{track.work.name}
 					<ExternalLink />
-					</a>
+				</a>
 
-					<span class="mx-1 opacity-30">|</span>
+				<span class="mx-1 opacity-30">|</span>
 
-					<a
-					href="https://www.deezer.com/track/{deezerId}"					target="_blank"
+				<a
+					href="https://www.deezer.com/track/{deezerId}"
+					target="_blank"
 					rel="noopener noreferrer"
 					class="flex items-center gap-1 text-cyan-400/80 hover:text-cyan-400 hover:underline"
 				>

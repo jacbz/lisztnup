@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Composer, Work } from '$lib/types';
+	import type { Composer, Work } from '$lib/models';
 	import { formatComposerName, formatLifespan, getComposerLastName } from '$lib/utils';
 	import { _, locale } from 'svelte-i18n';
 	import { fade } from 'svelte/transition';
@@ -38,7 +38,7 @@
 	const entries = $derived.by(() => {
 		const workCountMap = new SvelteMap<string, number>();
 		works.forEach((w) => {
-			workCountMap.set(w.composer, (workCountMap.get(w.composer) || 0) + 1);
+			workCountMap.set(w.composerGid, (workCountMap.get(w.composerGid) || 0) + 1);
 		});
 
 		return composers

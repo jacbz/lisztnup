@@ -1,5 +1,11 @@
 <script lang="ts">
-	import type { Tracklist, CustomTracklist, CategoryAdjustments, TracklistConfig, ComposerFilter } from '$lib/types';
+	import type {
+		Tracklist,
+		CustomTracklist,
+		CategoryAdjustments,
+		TracklistConfig,
+		ComposerFilter
+	} from '$lib/types';
 	import {
 		DEFAULT_CATEGORY_ADJUSTMENTS,
 		DEFAULT_TRACKLIST_CONFIG,
@@ -251,10 +257,10 @@
 			previewWorkGids = new SvelteSet(filteredData.works.map((w) => w.gid));
 
 			filteredData.works.forEach((work) => {
-				if (!composerWorkMap.has(work.composer)) {
-					const composer = data.composers.find((c) => c.gid === work.composer);
+				if (!composerWorkMap.has(work.composerGid)) {
+					const composer = data.getComposer(work.composerGid);
 					if (composer) {
-						composerWorkMap.set(work.composer, {
+						composerWorkMap.set(work.composerGid, {
 							name: composer.name,
 							gid: composer.gid,
 							works: [],
@@ -262,7 +268,7 @@
 						});
 					}
 				}
-				const composerData = composerWorkMap.get(work.composer);
+				const composerData = composerWorkMap.get(work.composerGid);
 				if (composerData) {
 					composerData.works.push({ name: work.name });
 					composerData.trackCount += work.parts.length;
@@ -287,7 +293,7 @@
 					categoryMap.set(work.type, { composers: new Set(), workCount: 0, trackCount: 0 });
 				}
 				const categoryData = categoryMap.get(work.type)!;
-				categoryData.composers.add(work.composer);
+				categoryData.composers.add(work.composerGid);
 				categoryData.workCount++;
 				categoryData.trackCount += work.parts.length;
 			});
@@ -570,10 +576,9 @@
 	function getWorkName(gid: string): string {
 		const data = get(gameData);
 		if (!data) return gid;
-		const work = data.works.find((w) => w.gid === gid);
+		const work = data.getWork(gid);
 		if (!work) return gid;
-		const composer = data.composers.find((c) => c.gid === work.composer);
-		const composerName = composer ? getComposerLastName(composer.name) : '';
+		const composerName = getComposerLastName(work.composer.name);
 		return composerName ? `${composerName}: ${work.name}` : work.name;
 	}
 

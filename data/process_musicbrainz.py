@@ -273,7 +273,7 @@ class FinalWork:
     def to_dict(self) -> Dict[str, Any]:
         return {
             "gid": short_gid(self.gid),
-            "composer": self.composer,
+            "composer_gid": self.composer,
             "name": self.name,
             "type": self.type,
             "begin_year": self.begin_year,

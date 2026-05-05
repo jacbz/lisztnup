@@ -1,5 +1,6 @@
 import { getContext } from 'svelte';
-import type { Track, GuessCategory } from '$lib/types';
+import type { Track } from '$lib/models';
+import type { GuessCategory } from '$lib/types';
 
 export const GAME_SCREEN_CONTEXT = Symbol('game-screen');
 

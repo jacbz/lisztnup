@@ -1,7 +1,8 @@
 <script lang="ts">
 	import Popup from '$lib/components/ui/primitives/Popup.svelte';
 	import { _ } from 'svelte-i18n';
-	import type { Player, Track } from '$lib/types';
+	import type { Track } from '$lib/models';
+	import type { Player } from '$lib/types';
 	import PlayerTimeline, { type TimelineEntry } from './PlayerTimeline.svelte';
 	import TrackInfo from '$lib/components/ui/gameplay/TrackInfo.svelte';
 	import { formatYearRange } from '$lib/utils';

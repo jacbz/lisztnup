@@ -333,7 +333,7 @@ def build_expected_titles(data: dict) -> dict[int, str]:
 
     expected_titles = {}
     for work in data.get("works", []):
-        composer_name = composer_last_names.get(work.get("composer"), "Unknown")
+        composer_name = composer_last_names.get(work.get("composer_gid"), "Unknown")
         for part in work.get("parts", []):
             target_title = f"{composer_name} {part.get('name', '')}"
             for deezer_id in part.get("deezer", []):

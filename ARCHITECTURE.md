@@ -9,11 +9,10 @@ src/
 ├── app.html                   HTML shell
 ├── hooks.server.ts            Server hooks: pageview tracking with bot filtering
 ├── lib/
-│   ├── types/                 Shared TypeScript types (composer, data, game, settings, track, work)
+│   ├── types/                 Shared non-catalog TypeScript types (game, settings, leaderboard)
 │   ├── data/                  Static data configs (categories, default tracklists, tracklist configs)
-│   ├── stores/                Svelte stores (gameData, settings, gameState — which also
-│   │                            defines tracklist + currentRound stores, gameSession,
-│   │                            toast, networkStatus)
+│   ├── models/                Runtime domain models (`GameCatalog`, `Composer`, `Work`, `Part`)
+│   ├── stores/                Svelte stores (gameData, settings, gameState, session, toast)
 │   ├── utils/                 Pure utilities (compression, formatters, random, uuid, svg, fontLoader, search)
 │   ├── i18n/                  svelte-i18n setup + 10 locale JSON files
 │   ├── services/              Business logic singletons
@@ -68,9 +67,11 @@ services/                Business logic (DeezerPlayer, TracklistGenerator, Setti
   ↓
 stores/                  Reactive state (Svelte stores)
   ↓
+models/                  Runtime domain models and indexed catalog lookups
+  ↓
 utils/                   Pure utility functions (no side effects, no imports from above)
   ↓
-types/                   TypeScript type definitions (no runtime code)
+types/                   Non-catalog TypeScript definitions (no runtime code)
   ↓
 data/                    Static configuration (tracklist configs, categories)
 ```
@@ -82,18 +83,19 @@ data/                    Static configuration (tracklist configs, categories)
 ```
 static/lisztnup.json
   → LoadingScreen (streamed with progress bar)
-  → gameData store (2.5MB in memory)
-  → TracklistGenerator (filters on init, O(1) sampling)
+  → gameData store (`GameCatalog` hydrates + indexes the catalog once)
+  → TracklistGenerator (filters indexed catalog on init, O(1) sampling)
   → PlayableTrackBuffer (current track + 2 ready future tracks)
   → DeezerPlayer.preload() (fetch preview from Deezer API, LUFS analysis)
   → playerState store (isPlaying, progress, track, analyserNode)
   → UI components (PlayerControl, Visualizer, TrackInfo)
 ```
 
-## Key Singletons
+## Key Runtime Objects
 
-| Singleton            | Module                  | Scope                                                                                  |
+| Object               | Module                  | Scope                                                                                  |
 | -------------------- | ----------------------- | -------------------------------------------------------------------------------------- |
+| `GameCatalog`        | `models/GameCatalog.ts` | Immutable hydrated music catalog with GID indexes and track resolvers                  |
 | `deezerPlayer`       | `DeezerPlayer.ts`       | One active playback controller; buffered assets are owned by `PlayableTrackBuffer`     |
 | `playerState`        | `DeezerPlayer.ts`       | Store exported alongside player — reactive playback state                              |
 | `analytics`          | `game-logger.ts`        | One per app — fire-and-forget telemetry via sendBeacon                                 |

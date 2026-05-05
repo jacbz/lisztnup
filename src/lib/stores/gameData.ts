@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
-import type { LisztnupData } from '$lib/types';
+import { GameCatalog, type RawLisztnupData } from '$lib/models';
 
-export const gameData = writable<LisztnupData | null>(null);
+export const gameData = writable<GameCatalog | null>(null);
 export const isDataLoaded = writable<boolean>(false);
 // 0-100 percent progress of loading the main game data blob
 export const dataLoadProgress = writable<number>(0);
@@ -11,8 +11,8 @@ export const dataLoadProgress = writable<number>(0);
  * @param text The raw data to parse.
  */
 function parseData(text: string) {
-	const data: LisztnupData = JSON.parse(text);
-	gameData.set(data);
+	const rawData: RawLisztnupData = JSON.parse(text);
+	gameData.set(GameCatalog.fromRaw(rawData));
 	dataLoadProgress.set(100);
 	isDataLoaded.set(true);
 }
@@ -73,8 +73,10 @@ export async function loadGameData(): Promise<void> {
 		if (response.body) {
 			await handleStreamingResponse(response);
 		} else {
-			const data: LisztnupData = await response.json();
-			parseData(JSON.stringify(data));
+			const data: RawLisztnupData = await response.json();
+			gameData.set(GameCatalog.fromRaw(data));
+			dataLoadProgress.set(100);
+			isDataLoaded.set(true);
 		}
 	} catch (error) {
 		console.error('Error loading game data:', error);

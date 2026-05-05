@@ -1,37 +1,41 @@
 import {
-	type LisztnupData,
 	type Tracklist,
-	type Track,
-	type Composer,
-	type Work,
 	type CategoryAdjustments,
 	type TracklistConfig,
 	MAX_WORK_SCORE_ROUNDED,
 	type GuessCategory
 } from '$lib/types';
+import type { Composer, GameCatalog, Part, Track, Work } from '$lib/models';
 import { weightedRandom } from '$lib/utils/random';
+
+interface ScoredWork {
+	work: Work;
+	score: number;
+}
+
+interface CandidateWork {
+	work: Work;
+	score: number;
+	parts: Part[];
+}
 
 /**
  * Tracklist generator that uses swap-and-pop sampling
  * Filters data once on initialization, then samples tracks on demand
  */
 export class TracklistGenerator {
-	private readonly data: LisztnupData;
+	private readonly data: GameCatalog;
 	private readonly tracklist: Tracklist;
 	private readonly requireWorkYear: boolean;
 
-	private filteredWorks: Work[] = [];
+	private filteredWorks: CandidateWork[] = [];
 	private filteredComposers: Composer[] = [];
-	private readonly composerMap: Map<string, Composer> = new Map();
 
-	constructor(data: LisztnupData, tracklist: Tracklist, options?: { requireWorkYear?: boolean }) {
+	constructor(data: GameCatalog, tracklist: Tracklist, options?: { requireWorkYear?: boolean }) {
 		this.data = data;
 		this.tracklist = tracklist;
 		this.requireWorkYear = options?.requireWorkYear ?? false;
 
-		for (const composer of this.data.composers) {
-			this.composerMap.set(composer.gid, composer);
-		}
 		this.initializeData();
 	}
 
@@ -50,11 +54,11 @@ export class TracklistGenerator {
 			(!this.requireWorkYear || w.begin_year != null || w.end_year != null);
 
 		// 1. Extract Manual Works (Bypass general filters, but respect excludes and year rules)
-		const manualWorks = this.data.works.filter(
-			(w) => includeWorkGids.has(w.gid) && isEligibleWork(w)
-		);
+		const manualWorks = this.data.works
+			.filter((w) => includeWorkGids.has(w.gid) && isEligibleWork(w))
+			.map((work) => ({ work, score: work.score }));
 
-		let finalWorks: Work[] = [];
+		let finalWorks: ScoredWork[];
 
 		if (!enableFilters) {
 			finalWorks = manualWorks;
@@ -72,55 +76,53 @@ export class TracklistGenerator {
 		}
 
 		// 5. Apply track limits and guarantee data immutability for the `sample()` phase
-		finalWorks = this.applyTrackLimits(finalWorks, config.maxTracksFromSingleWork);
+		const finalCandidates = this.applyTrackLimits(finalWorks, config.maxTracksFromSingleWork);
 
 		// 6. Finalize state
-		const finalComposerSet = new Set(finalWorks.map((w) => w.composer));
-		this.filteredWorks = finalWorks;
+		const finalComposerSet = new Set(
+			finalCandidates.map((candidate) => candidate.work.composerGid)
+		);
+		this.filteredWorks = finalCandidates;
 		this.filteredComposers = this.data.composers.filter((c) => finalComposerSet.has(c.gid));
 	}
 
 	/**
 	 * Applies standard filters (score, year, name, composer inclusion/exclusion) to candidates
 	 */
-	private applyFilters(works: Work[], config: TracklistConfig): Work[] {
-		let filtered = works;
+	private applyFilters(works: readonly Work[], config: TracklistConfig): ScoredWork[] {
+		let filtered = works.map((work) => ({
+			work,
+			score:
+				work.score + (config.categoryAdjustments?.[work.type as keyof CategoryAdjustments] ?? 0)
+		}));
 
 		// Category Adjustments
-		if (config.categoryAdjustments) {
-			filtered = filtered.map((work) => ({
-				...work,
-				score:
-					work.score + (config.categoryAdjustments?.[work.type as keyof CategoryAdjustments] ?? 0)
-			}));
-		}
-
-		// Enforce positive score
-		filtered = filtered.filter((w) => w.score > 0);
+		// Enforce positive score after adjustments
+		filtered = filtered.filter((candidate) => candidate.score > 0);
 
 		// Work Score Range
 		if (config.workScoreRange) {
 			const minScore = config.workScoreRange[0];
 			const maxScore =
 				config.workScoreRange[1] === MAX_WORK_SCORE_ROUNDED ? Infinity : config.workScoreRange[1];
-			filtered = filtered.filter((w) => w.score >= minScore && w.score <= maxScore);
+			filtered = filtered.filter(
+				(candidate) => candidate.score >= minScore && candidate.score <= maxScore
+			);
 		}
 
 		// Year Range Filter
 		if (config.yearFilter) {
 			const [startYear, endYear] = config.yearFilter;
-			filtered = filtered.filter((work) => {
-				const composer = this.composerMap.get(work.composer);
-				if (!composer) return false;
-				const begin = work.begin_year ?? composer.birth_year;
-				const end = work.end_year ?? composer.death_year ?? new Date().getFullYear();
+			filtered = filtered.filter(({ work }) => {
+				const begin = work.begin_year ?? work.composer.birth_year;
+				const end = work.end_year ?? work.composer.death_year ?? new Date().getFullYear();
 				return begin >= startYear && end <= endYear;
 			});
 		}
 
 		// Name Filter
 		if (config.nameFilter && config.nameFilter.length > 0) {
-			filtered = filtered.filter((work) => {
+			filtered = filtered.filter(({ work }) => {
 				const workName = work.name.toLowerCase();
 				return config.nameFilter!.some((filter) => {
 					if (filter.startsWith('/') && filter.endsWith('/')) {
@@ -140,37 +142,35 @@ export class TracklistGenerator {
 		if (cf) {
 			if (cf.mode === 'include') {
 				const validIds = new Set(cf.composers);
-				filtered = filtered.filter((w) => validIds.has(w.composer));
+				filtered = filtered.filter(({ work }) => validIds.has(work.composerGid));
 			} else if (cf.mode === 'exclude') {
 				const invalidIds = new Set(cf.composers);
-				filtered = filtered.filter((w) => !invalidIds.has(w.composer));
+				filtered = filtered.filter(({ work }) => !invalidIds.has(work.composerGid));
 			} else if (cf.mode === 'notabilityRange') {
 				const [startRank, endRank] = cf.range;
-				const activeComposerIds = new Set(filtered.map((w) => w.composer));
+				const activeComposerIds = new Set(filtered.map(({ work }) => work.composerGid));
 				const activeComposers = this.data.composers.filter((c) => activeComposerIds.has(c.gid));
 
 				const sortedComposers = activeComposers.sort((a, b) => b.score - a.score);
 				const allowedIds = new Set(
 					sortedComposers.slice(Math.max(0, startRank - 1), endRank).map((c) => c.gid)
 				);
-				filtered = filtered.filter((w) => allowedIds.has(w.composer));
+				filtered = filtered.filter(({ work }) => allowedIds.has(work.composerGid));
 			} else if (cf.mode === 'country') {
 				const validCountries = new Set(cf.countries);
 				const validIds = new Set(
-					this.data.composers.filter((c) => validCountries.has(c.country)).map((c) => c.gid)
+					[...validCountries].flatMap((country) => this.data.getComposerIdsByCountry(country))
 				);
-				filtered = filtered.filter((w) => validIds.has(w.composer));
+				filtered = filtered.filter(({ work }) => validIds.has(work.composerGid));
 			} else if (cf.mode === 'countryExclude') {
 				const excludedCountries = new Set(cf.countries);
 				const invalidIds = new Set(
-					this.data.composers.filter((c) => excludedCountries.has(c.country)).map((c) => c.gid)
+					[...excludedCountries].flatMap((country) => this.data.getComposerIdsByCountry(country))
 				);
-				filtered = filtered.filter((w) => !invalidIds.has(w.composer));
+				filtered = filtered.filter(({ work }) => !invalidIds.has(work.composerGid));
 			} else if (cf.mode === 'gender') {
-				const validIds = new Set(
-					this.data.composers.filter((c) => c.gender === cf.gender).map((c) => c.gid)
-				);
-				filtered = filtered.filter((w) => validIds.has(w.composer));
+				const validIds = new Set(this.data.getComposerIdsByGender(cf.gender));
+				filtered = filtered.filter(({ work }) => validIds.has(work.composerGid));
 			}
 		}
 
@@ -181,10 +181,10 @@ export class TracklistGenerator {
 	 * Greedily selects works ensuring the maximum array size and max-composer-percentage quotas are met
 	 */
 	private enforceQuotas(
-		manualWorks: Work[],
-		candidateWorks: Work[],
+		manualWorks: ScoredWork[],
+		candidateWorks: ScoredWork[],
 		config: TracklistConfig
-	): Work[] {
+	): ScoredWork[] {
 		const hasTopN = config.topWorksCount !== undefined && config.topWorksCount > 0;
 		const hasLimit =
 			config.limitWorksFromComposer !== undefined && config.limitWorksFromComposer > 0;
@@ -211,19 +211,19 @@ export class TracklistGenerator {
 		const composerCounts = new Map<string, number>();
 
 		// Seed quotas with manual works
-		for (const work of manualWorks) {
-			composerCounts.set(work.composer, (composerCounts.get(work.composer) || 0) + 1);
+		for (const { work } of manualWorks) {
+			composerCounts.set(work.composerGid, (composerCounts.get(work.composerGid) || 0) + 1);
 		}
 
 		// Greedily pick the best remaining candidates
-		for (const work of candidateWorks) {
+		for (const candidate of candidateWorks) {
 			if (finalWorks.length >= targetCount) break;
 
-			const currentCount = composerCounts.get(work.composer) || 0;
+			const currentCount = composerCounts.get(candidate.work.composerGid) || 0;
 			if (currentCount >= limitPerComposer) continue;
 
-			finalWorks.push(work);
-			composerCounts.set(work.composer, currentCount + 1);
+			finalWorks.push(candidate);
+			composerCounts.set(candidate.work.composerGid, currentCount + 1);
 		}
 
 		return finalWorks;
@@ -232,16 +232,17 @@ export class TracklistGenerator {
 	/**
 	 * Enforces limits on parts-per-work.
 	 */
-	private applyTrackLimits(works: Work[], maxTracks?: number): Work[] {
-		return works.map((work) => {
+	private applyTrackLimits(works: ScoredWork[], maxTracks?: number): CandidateWork[] {
+		return works.map(({ work, score }) => {
 			const partsCopy = [...work.parts];
 
 			if (maxTracks === undefined || partsCopy.length <= maxTracks) {
-				return { ...work, parts: partsCopy };
+				return { work, score, parts: partsCopy };
 			}
 
 			if (maxTracks === 1 && partsCopy.every((p) => p.score > 98)) {
-				return { ...work, parts: [partsCopy[0]] };
+				const limitedWork = work.cloneWithParts([partsCopy[0]]);
+				return { work: limitedWork, score, parts: [...limitedWork.parts] };
 			}
 
 			const sortedParts = partsCopy
@@ -251,7 +252,8 @@ export class TracklistGenerator {
 				.sort((a, b) => a.index - b.index) // Restore original order
 				.map((item) => item.part);
 
-			return { ...work, parts: sortedParts };
+			const limitedWork = work.cloneWithParts(sortedParts);
+			return { work: limitedWork, score, parts: [...limitedWork.parts] };
 		});
 	}
 
@@ -265,35 +267,35 @@ export class TracklistGenerator {
 
 		// Step 1: Select work with optional score weighting
 		const useWeighting = this.tracklist.config.enablePopularityWeighting ?? false;
-		const work = weightedRandom(this.filteredWorks, (i) => (useWeighting ? i.score : 1));
+		const candidate = weightedRandom(this.filteredWorks, (i) => (useWeighting ? i.score : 1));
 
 		// Step 2: Check if work has parts
-		if (work.parts.length === 0) {
-			this.removeEmptyWork(work);
+		if (candidate.parts.length === 0) {
+			this.removeEmptyWork(candidate);
 			return this.sample();
 		}
 
 		// Step 3: Select part with  score weighting and POP it
 		const partIndex = weightedRandom(
-			work.parts.map((_, i) => i),
-			(i) => (useWeighting ? work.parts[i].score : 1)
+			candidate.parts.map((_, i) => i),
+			(i) => (useWeighting ? candidate.parts[i].score : 1)
 		);
-		const part = work.parts[partIndex];
+		const part = candidate.parts[partIndex];
 
 		// Pop selected part to prevent duplication
-		work.parts.splice(partIndex, 1);
-		if (work.parts.length === 0) {
-			this.removeEmptyWork(work);
+		candidate.parts.splice(partIndex, 1);
+		if (candidate.parts.length === 0) {
+			this.removeEmptyWork(candidate);
 		}
 
 		return {
-			composer: this.composerMap.get(work.composer)!,
-			work,
+			composer: candidate.work.composer,
+			work: candidate.work,
 			part
 		};
 	}
 
-	private removeEmptyWork(work: Work) {
+	private removeEmptyWork(work: CandidateWork) {
 		const index = this.filteredWorks.indexOf(work);
 		if (index !== -1) {
 			this.filteredWorks.splice(index, 1);
@@ -321,7 +323,7 @@ export class TracklistGenerator {
 	 * Gets the filtered data for preview purposes
 	 */
 	getFilteredData(): { composers: Composer[]; works: Work[] } {
-		return { composers: this.filteredComposers, works: this.filteredWorks };
+		return { composers: this.filteredComposers, works: this.filteredWorks.map(({ work }) => work) };
 	}
 
 	/**
@@ -337,7 +339,7 @@ export class TracklistGenerator {
 		// Disable 'type' if only one work category
 		if (
 			this.filteredWorks.length > 0 &&
-			this.filteredWorks.every((w) => w.type === this.filteredWorks[0].type)
+			this.filteredWorks.every(({ work }) => work.type === this.filteredWorks[0].work.type)
 		) {
 			disabled.push('type');
 		}
@@ -345,12 +347,9 @@ export class TracklistGenerator {
 		let minYear = Infinity;
 		let maxYear = -Infinity;
 
-		for (const work of this.filteredWorks) {
-			const composer = this.composerMap.get(work.composer);
-			if (!composer) continue;
-
-			const begin = work.begin_year ?? composer.birth_year;
-			const end = work.end_year ?? composer.death_year ?? new Date().getFullYear();
+		for (const { work } of this.filteredWorks) {
+			const begin = work.begin_year ?? work.composer.birth_year;
+			const end = work.end_year ?? work.composer.death_year ?? new Date().getFullYear();
 
 			if (begin < minYear) minYear = begin;
 			if (end > maxYear) maxYear = end;
