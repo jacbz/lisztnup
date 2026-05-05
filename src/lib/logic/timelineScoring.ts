@@ -6,22 +6,17 @@ import { MIN_WORK_YEAR, MAX_WORK_YEAR } from '$lib/types/settings';
 import type { TurnScoreBreakdown, ConsolationBreakdown } from './timelineTypes';
 
 export const base = 1000;
-export const gapC = 120;
+export const gapWeight = 1000;
+export const precisionWeight = 400;
 export const masteryCap = 500;
 export const speedBonus = 0.25;
 export const completionRate = 750;
 
 /**
- * Difficulty bonus based on an effective gap that compresses wide slots when
- * the placement is close to a boundary card.
+ * Difficulty bonus combines total slot density and boundary precision.
  */
-export function calculateEffGap(gap: number, dMin: number, c = gapC): number {
-	return gap * ((2 * dMin + c) / (gap + c));
-}
-
-export function calculateDiff(gap: number, dMin: number, c = gapC): number {
-	const effGap = calculateEffGap(gap, dMin, c);
-	return 2310 * (10 / (effGap + 10));
+export function calculateDiff(gap: number, dMin: number): number {
+	return gapWeight * (10 / (gap + 10)) + precisionWeight * (10 / (dMin + 10));
 }
 
 /**
@@ -126,7 +121,6 @@ export interface TurnScoreInput {
  * All intermediate values are kept at full precision; round only for display.
  */
 export function calculateTurnScore(input: TurnScoreInput): TurnScoreBreakdown {
-	const effGap = calculateEffGap(input.gap, input.dMin);
 	const diff = Math.round(calculateDiff(input.gap, input.dMin));
 	const mastery = Math.round(calculateMastery(input.correct, input.attempts));
 	const speed = calculateSpeed(input.seconds);
@@ -140,7 +134,6 @@ export function calculateTurnScore(input: TurnScoreInput): TurnScoreBreakdown {
 		diff,
 		gap: input.gap,
 		dMin: input.dMin,
-		effGap,
 		isEdgePlacement: input.isEdgePlacement ?? false,
 		mastery,
 		correct: input.correct,

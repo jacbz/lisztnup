@@ -1,6 +1,6 @@
 # Scoring
 
-This document defines the mathematical rules for timeline placements. The system rewards chronological precision, accuracy over time, and fast consecutive answers, while utilizing non-linear decay to strictly prevent score-farming exploits in long games. It was designed by iterating on millions of simulated games with pre-defined player archetypes to ensure a fun, skill-based experience that still offers hope for underdogs.
+This document defines the mathematical rules for timeline placements. The system rewards chronological precision, accuracy over time, and fast consecutive answers, while utilizing non-linear decay to strictly prevent score-farming exploits in long games. It was designed by iterating on thousands of simulated games with pre-defined player archetypes to ensure a fun, skill-based experience that still offers hope for underdogs.
 
 All scores and components are rounded to the nearest integer. The final turn score is the sum of correct placement points and consolation points (if applicable). The player's total score is the cumulative sum of all turn scores, plus any completion bonus when they reach their target goal.
 
@@ -16,13 +16,16 @@ $$\text{Base} = 1000$$
 
 ### Difficulty Bonus ($\text{Diff}$)
 
-Rewards placing cards in tight gaps or threading the needle near a boundary year.
-$$\text{Diff} = 2310 \times \frac{10}{\text{EffGap} + 10}$$
+Rewards two distinct types of difficulty: placing correctly in a historically dense period, and threading the needle close to a known anchor year. The two terms are additive and independently tunable.
+
+$$\text{Diff} = \underbrace{\text{GapWeight} \times \frac{10}{\text{Gap} + 10}}_{\text{Gap Term}} + \underbrace{\text{PrecisionWeight} \times \frac{10}{d_{\min} + 10}}_{\text{Precision Term}}$$
+
+where $\text{GapWeight} = 1000$ and $\text{PrecisionWeight} = 400$.
 
 - **Total Gap ($\text{Gap}$):** The chronological distance between the two neighboring boundary years around the correct slot. Edge placements use the dataset boundary as the missing neighbor. To prevent degenerate score spikes from near-identical years, $\text{Gap}$ is floored at 25 years after boundary substitution.
-- **Nearest Boundary Distance ($d_{\min}$):** Distance from the placed card's year to the nearest real boundary card. Edge placements have one real boundary. Each player is dealt a random card at the beginning of the game, so at least one real boundary always exists.
-- **Effective Gap ($\text{EffGap}$):** Instead of raw total gap size ($\text{Gap}$), we use an asymptotic fraction involving distance to the nearest boundary year ($d_{\min}$) and a tuning constant ($\text{GapC}=120$). This mathematically ensures that boundary drops in wide gaps yield massive points, while safely choking score inflation in already-tight gaps. The smaller $\text{GapC}$ is, the larger the edge bonus for tight gaps.
-  $$\text{EffGap} = \text{Gap} \times \frac{2d_{\min} + \text{GapC}}{\text{Gap} + \text{GapC}}$$
+- **Nearest Boundary Distance ($d_{\min}$):** Distance from the placed card's year to the nearest **real** boundary card (never the dataset boundary). Edge placements have exactly one real boundary card, so $d_{\min}$ is simply the distance to that card. Each player is dealt a random card at the beginning of the game, so at least one real boundary always exists.
+- **Gap Term:** The first term is the primary difficulty signal. It is high when cards must be placed inside a short chronological window, and approaches zero for wide, easy gaps. It is unaffected by where within the gap the card's year falls.
+- **Precision Term:** The second term is a supplementary reward for placing a card whose year sits close to an existing boundary. A card dated 1799 placed correctly in a [1600, 1800] slot scores materially more than 1700 in the same slot, because knowing the year to within 1 year of a boundary demonstrates tighter historical knowledge than knowing only the broad era.
 
 ### Mastery Bonus ($\text{Mastery}$)
 

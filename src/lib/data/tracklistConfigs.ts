@@ -387,33 +387,42 @@ export const WOODWINDCONCERTO_CONFIG: TracklistConfig = {
 };
 
 export const LISZT_CONFIG: TracklistConfig = {
-	composerFilter: { mode: 'include', composers: ['2cd475bb-1abd-40c4-9904-6d4b691c752c'] }
+	composerFilter: { mode: 'include', composers: ['2cd475bb-1abd-40c4-9904-6d4b691c752c'] },
+	maxTracksFromSingleWork: 1,
+	topWorksCount: 125
 };
 
 export const BACH_CONFIG: TracklistConfig = {
 	composerFilter: { mode: 'include', composers: ['24f1766e-9635-4d58-a4d4-9413f9f98a4c'] },
-	maxTracksFromSingleWork: 5
+	topWorksCount: 200,
+	maxTracksFromSingleWork: 1
 };
 
 export const MOZART_CONFIG: TracklistConfig = {
 	composerFilter: { mode: 'include', composers: ['b972f589-fb0e-474e-b64a-803b0364fa75'] },
-	maxTracksFromSingleWork: 5
+	topWorksCount: 200,
+	maxTracksFromSingleWork: 1
 };
 
 export const BEETHOVEN_CONFIG: TracklistConfig = {
 	composerFilter: { mode: 'include', composers: ['1f9df192-a621-4f54-8850-2c5373b7eac9'] },
-	maxTracksFromSingleWork: 5
+	topWorksCount: 200,
+	maxTracksFromSingleWork: 1
 };
 
 export const CHOPIN_CONFIG: TracklistConfig = {
-	composerFilter: { mode: 'include', composers: ['09ff1fe8-d61c-4b98-bb82-18487c74d7b7'] }
+	composerFilter: { mode: 'include', composers: ['09ff1fe8-d61c-4b98-bb82-18487c74d7b7'] },
+	maxTracksFromSingleWork: 1
 };
 export const TCHAIKOVSKY_CONFIG: TracklistConfig = {
-	composerFilter: { mode: 'include', composers: ['9ddd7abc-9e1b-471d-8031-583bc6bc8be9'] }
+	composerFilter: { mode: 'include', composers: ['9ddd7abc-9e1b-471d-8031-583bc6bc8be9'] },
+	maxTracksFromSingleWork: 1
 };
 
 export const VIVALDI_CONFIG: TracklistConfig = {
-	composerFilter: { mode: 'include', composers: ['ad79836d-9849-44df-8789-180bbc823f3c'] }
+	composerFilter: { mode: 'include', composers: ['ad79836d-9849-44df-8789-180bbc823f3c'] },
+	topWorksCount: 200,
+	maxTracksFromSingleWork: 1
 };
 
 export const FEMALE_COMPOSERS_CONFIG: TracklistConfig = {
@@ -421,30 +430,36 @@ export const FEMALE_COMPOSERS_CONFIG: TracklistConfig = {
 };
 
 export const RENAISSANCE_CONFIG: TracklistConfig = {
-	yearFilter: [MIN_WORK_YEAR, 1600]
+	yearFilter: [MIN_WORK_YEAR, 1600],
+	maxTracksFromSingleWork: 2
 };
 
 export const BAROQUE_CONFIG: TracklistConfig = {
 	yearFilter: [1600, 1750],
 	limitWorksFromComposer: 0.25,
-	topWorksCount: 1000
+	topWorksCount: 1000,
+	maxTracksFromSingleWork: 2
 };
 
 export const CLASSICAL_CONFIG: TracklistConfig = {
 	yearFilter: [1750, 1820],
-	limitWorksFromComposer: 0.3
+	limitWorksFromComposer: 0.3,
+	maxTracksFromSingleWork: 2
 };
 
 export const ROMANTIC_CONFIG: TracklistConfig = {
-	yearFilter: [1820, 1910]
+	yearFilter: [1820, 1910],
+	maxTracksFromSingleWork: 2
 };
 
 export const MODERNISM_CONFIG: TracklistConfig = {
-	yearFilter: [1890, 1945]
+	yearFilter: [1890, 1945],
+	maxTracksFromSingleWork: 2
 };
 
 export const CONTEMPORARY_CONFIG: TracklistConfig = {
-	yearFilter: [1945, 2050]
+	yearFilter: [1945, 2050],
+	maxTracksFromSingleWork: 2
 };
 
 export const GERMANY_CONFIG: TracklistConfig = {
