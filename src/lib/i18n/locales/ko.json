@@ -656,7 +656,10 @@
 	},
 	"dailyChallenge": {
 		"title": "오늘의 도전",
-		"subtitle": "오늘의 추천 플레이리스트",
+		"subtitle": "오늘의 추천",
+		"subtitleBirthday": "생일에 건네는 한 곡",
+		"subtitleNationalDay": "국경일에 띄우는 한 곡",
+		"subtitleWomensDay": "세계 여성의 날을 위한 한 곡",
 		"highScore": "{name}의 {score}점을 넘을 수 있을까?",
 		"play": "플레이"
 	}

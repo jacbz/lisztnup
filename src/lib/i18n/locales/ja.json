@@ -656,7 +656,10 @@
 	},
 	"dailyChallenge": {
 		"title": "今日のチャレンジ",
-		"subtitle": "本日のおすすめプレイリスト",
+		"subtitle": "きょうのおすすめ",
+		"subtitleBirthday": "誕生日にひと曲",
+		"subtitleNationalDay": "その国の日にひと曲",
+		"subtitleWomensDay": "国際女性デーの一曲",
 		"highScore": "{name}の{score}点を超えられる？",
 		"play": "プレイ"
 	}

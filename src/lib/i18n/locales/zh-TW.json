@@ -656,7 +656,10 @@
 	},
 	"dailyChallenge": {
 		"title": "每日挑戰",
-		"subtitle": "今日精選歌單",
+		"subtitle": "今日主打歌單",
+		"subtitleBirthday": "給生日的一份彩蛋",
+		"subtitleNationalDay": "獻給國慶日的一首",
+		"subtitleWomensDay": "獻給國際婦女節的一份致意",
 		"highScore": "能超越{name}的{score}分嗎？",
 		"play": "開始"
 	}

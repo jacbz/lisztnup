@@ -80,7 +80,7 @@ export interface GameSettings {
 	enableAudioNormalization: boolean; // Whether to use Web Audio API with LUFS normalization (defaults to false on WebKit)
 	buzzerVolume: number; // Buzzer volume level (0-1)
 	gamesPlayed: number; // Total number of games started (used to detect new users)
-	dailyChallengePlayedDate: string | null; // YYYY-MM-DD when the daily challenge was last started
+	dailyChallengePlayedDate: string | null; // UTC YYYY-MM-DD when the daily challenge was last started
 }
 
 /**

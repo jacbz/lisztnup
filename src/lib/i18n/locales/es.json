@@ -656,7 +656,10 @@
 	},
 	"dailyChallenge": {
 		"title": "Reto del día",
-		"subtitle": "La lista destacada de hoy",
+		"subtitle": "La selección de hoy",
+		"subtitleBirthday": "Un guiño de cumpleaños",
+		"subtitleNationalDay": "Una jornada con bandera",
+		"subtitleWomensDay": "Un homenaje al 8M",
 		"highScore": "¿Podrás superar los {score} pts de {name}?",
 		"play": "Jugar"
 	}

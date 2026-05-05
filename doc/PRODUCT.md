@@ -83,6 +83,10 @@ Buzzer "Wrong" guess: -10 points.
 
 Five difficulty levels (Beginner → Expert) with pre-configured filters. Generated documentation in `out/TRACKLIST_*.md`.
 
+### Daily Challenge
+
+The daily challenge uses a global UTC month schedule so every player sees the same tracklist on the same day without server storage. There are some pre-defined tracklists for specific dates (e.g., composer birthdays, national days).
+
 ### Custom Tracklists
 
 Created via `TracklistEditor`. Saved to localStorage via `SettingsService`. Features:

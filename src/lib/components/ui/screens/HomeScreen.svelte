@@ -22,7 +22,7 @@
 	import Users from 'lucide-svelte/icons/users';
 	import Sparkles from 'lucide-svelte/icons/sparkles';
 	import { getPlayerToken } from '$lib/stores/identity';
-	import { getDailyTracklist, getTodayDateString } from '$lib/utils/dailyChallenge';
+	import { getDailyChallengeEntry, getUtcDateString } from '$lib/utils/dailyChallenge';
 	import { resolveTimelineTracks } from '$lib/utils/search';
 	import { gameData } from '$lib/stores/gameData';
 	import { get } from 'svelte/store';
@@ -69,6 +69,9 @@
 	let timelineTimestamp = $state<string | undefined>();
 	let playerSetupRef: { addPlayer: () => void } | undefined = $state();
 	let startAudio: HTMLAudioElement | null = null;
+	let utcTodayDate = $state(getUtcDateString());
+	let dailyChallengeEntry = $state(getDailyChallengeEntry());
+	let dailyChallengeTimer: ReturnType<typeof setTimeout> | null = null;
 	let startAudioSources = {
 		classic: '/start_classic.mp3',
 		buzzer: '/start_buzzer.mp3',
@@ -77,13 +80,41 @@
 	};
 
 	// Daily challenge state
-	let dailyTracklist = getDailyTracklist();
 	let dailyHighScore = $state<{ name: string | null; score: number } | null>(null);
 	let showDailyChallenge = $derived(
 		selectedMode === 'timeline' &&
 			(localSettings.gamesPlayed ?? 0) > 0 &&
-			localSettings.dailyChallengePlayedDate !== getTodayDateString()
+			localSettings.dailyChallengePlayedDate !== utcTodayDate
 	);
+	let dailyChallengeSubtitle = $derived.by(() => {
+		if (dailyChallengeEntry.cause === 'womensDay') {
+			return $_('dailyChallenge.subtitleWomensDay');
+		}
+
+		if (dailyChallengeEntry.cause === 'birthday') {
+			return $_('dailyChallenge.subtitleBirthday');
+		}
+
+		if (dailyChallengeEntry.cause === 'nationalDay') {
+			return $_('dailyChallenge.subtitleNationalDay');
+		}
+
+		return $_('dailyChallenge.subtitle');
+	});
+
+	function getMsUntilNextUtcMidnight(date = new Date()): number {
+		const nextUtcMidnight = Date.UTC(
+			date.getUTCFullYear(),
+			date.getUTCMonth(),
+			date.getUTCDate() + 1
+		);
+		return Math.max(0, nextUtcMidnight - date.getTime());
+	}
+
+	function syncDailyChallenge() {
+		utcTodayDate = getUtcDateString();
+		dailyChallengeEntry = getDailyChallengeEntry();
+	}
 
 	// Update local settings when store changes
 	$effect(() => {
@@ -153,7 +184,7 @@
 			const cards = localSettings.timelineCardsToWin;
 			getLeaderboard({
 				limit: 1,
-				tracklist: dailyTracklist.id,
+				tracklist: dailyChallengeEntry.tracklist.id,
 				cardsToWin: cards,
 				token: getPlayerToken()
 			})
@@ -218,8 +249,11 @@
 		// Track games played (for new-user detection) and daily challenge completion
 		settingsStore.update((s) => {
 			const updates: Partial<typeof s> = { gamesPlayed: (s.gamesPlayed ?? 0) + 1 };
-			if (selectedMode === 'timeline' && localSettings.selectedTracklist === dailyTracklist.id) {
-				updates.dailyChallengePlayedDate = getTodayDateString();
+			if (
+				selectedMode === 'timeline' &&
+				localSettings.selectedTracklist === dailyChallengeEntry.tracklist.id
+			) {
+				updates.dailyChallengePlayedDate = utcTodayDate;
 			}
 			return { ...s, ...updates };
 		});
@@ -277,6 +311,22 @@
 		const initialMode = selectedMode || 'classic';
 		startAudio = new Audio(startAudioSources[initialMode]);
 
+		syncDailyChallenge();
+
+		const scheduleUtcRefresh = () => {
+			if (dailyChallengeTimer) {
+				clearTimeout(dailyChallengeTimer);
+				dailyChallengeTimer = null;
+			}
+
+			dailyChallengeTimer = setTimeout(() => {
+				syncDailyChallenge();
+				scheduleUtcRefresh();
+			}, getMsUntilNextUtcMidnight());
+		};
+
+		scheduleUtcRefresh();
+
 		// Close locale dropdown when clicking outside
 		const handleClickOutside = (event: MouseEvent) => {
 			const target = event.target as HTMLElement;
@@ -285,7 +335,10 @@
 			}
 		};
 		document.addEventListener('click', handleClickOutside);
-		return () => document.removeEventListener('click', handleClickOutside);
+		return () => {
+			document.removeEventListener('click', handleClickOutside);
+			if (dailyChallengeTimer) clearTimeout(dailyChallengeTimer);
+		};
 	});
 </script>
 
@@ -347,7 +400,7 @@
 			<div class="mt-8" transition:slide={{ duration: 220 }}>
 				<button
 					type="button"
-					onclick={() => handleTracklistSelect(dailyTracklist)}
+					onclick={() => handleTracklistSelect(dailyChallengeEntry.tracklist)}
 					class="group mx-auto flex w-full max-w-2xl cursor-pointer items-center gap-4 rounded-2xl border-2 border-amber-400/40 bg-linear-to-r from-amber-950/30 via-amber-900/20 to-amber-950/30 px-5 py-4 text-left shadow-[0_0_20px_rgba(251,191,36,0.15)] backdrop-blur-sm transition-all duration-300 hover:border-amber-400/70 hover:shadow-[0_0_30px_rgba(251,191,36,0.3)] active:scale-[0.98]"
 					in:fade={{ delay: 300, duration: 300 }}
 				>
@@ -359,14 +412,14 @@
 					<div class="flex min-w-0 flex-1 flex-col gap-0.5">
 						<div class="flex flex-col md:flex-row md:items-center md:gap-2">
 							<span class="text-sm font-bold text-amber-400">{$_('dailyChallenge.title')}</span>
-							<span class="text-xs text-amber-400/60">{$_('dailyChallenge.subtitle')}</span>
+							<span class="text-xs text-amber-400/60">{dailyChallengeSubtitle}</span>
 						</div>
 						<div class="mt-0.5 flex items-center gap-1.5">
-							{#if dailyTracklist.icon}
-								<div class="text-amber-300/70">{@html dailyTracklist.icon}</div>
+							{#if dailyChallengeEntry.tracklist.icon}
+								<div class="text-amber-300/70">{@html dailyChallengeEntry.tracklist.icon}</div>
 							{/if}
 							<span class="truncate font-semibold text-amber-200"
-								>{tracklistDisplayName(dailyTracklist, $_)}</span
+								>{tracklistDisplayName(dailyChallengeEntry.tracklist, $_)}</span
 							>
 						</div>
 						{#if dailyHighScore}

@@ -436,11 +436,11 @@
 			},
 			"step3": {
 				"title": "Marquer des points",
-				"desc": "Chaque placement correct rapporte des points. Plus l'écart entre les cartes voisines est serré, plus le bonus de Difficulté est juteux. Moins tu fais d'erreurs, plus ton bonus de Maîtrise grimpe. La rapidité booste ta Vitesse, et les bonnes réponses à la suite gonflent ton multiplicateur de Série."
+				"desc": "Chaque placement correct rapporte des points. Plus l’écart entre les cartes voisines est serré, plus le bonus de Difficulté est juteux. Moins tu fais d’erreurs, plus ton bonus de Maîtrise grimpe. La rapidité booste ta Vitesse, et les bonnes réponses à la suite gonflent ton multiplicateur de Série."
 			},
 			"step4": {
 				"title": "La course à la victoire",
-				"desc": "Le premier joueur à réunir assez de cartes déclenche la manche finale. Un Bonus de Complétion récompense l'efficacité — moins tu as eu besoin d'essais, plus la récompense est grosse."
+				"desc": "Le premier joueur à réunir assez de cartes déclenche la manche finale. Un Bonus de Complétion récompense l’efficacité — moins tu as eu besoin d’essais, plus la récompense est grosse."
 			}
 		},
 		"classic": {
@@ -549,7 +549,7 @@
 		"drag": "Glisser",
 		"confirm": "Confirmer",
 		"accuracy": "{correct}/{total} correct ({percentage} %)",
-		"streak": "{count} d'affilée !",
+		"streak": "{count} d’affilée !",
 		"longestStreak": "Meilleure série : {count}",
 		"help": {
 			"playFirst": "Joue la carte pour commencer.",
@@ -562,7 +562,7 @@
 			"gap": "écart {years}a",
 			"speed": "Vitesse",
 			"streak": "Série",
-			"streakCount": "{count} d'affilée",
+			"streakCount": "{count} d’affilée",
 			"completionBonus": "Bonus de complétion",
 			"turnTotal": "Total du tour",
 			"score": "Score",
@@ -617,7 +617,7 @@
 		"nameYourScore": "Signe ton score",
 		"nameYourScoreSubtitle": "Enregistré anonymement — ajoute ta signature",
 		"named": "Nom enregistré !",
-		"error": "Échec de l'enregistrement. Réessayer ?",
+		"error": "Échec de l’enregistrement. Réessayer ?",
 		"submitting": "Enregistrement…",
 		"name": "Signer",
 		"nameAll": "Tout signer",
@@ -656,7 +656,10 @@
 	},
 	"dailyChallenge": {
 		"title": "Défi du jour",
-		"subtitle": "La playlist du jour",
+		"subtitle": "La sélection du jour",
+		"subtitleBirthday": "Un bis d’anniversaire",
+		"subtitleNationalDay": "Une page aux couleurs du pays",
+		"subtitleWomensDay": "Hommage pour la Journée internationale des droits des femmes",
 		"highScore": "Prêt à battre les {score} pts de {name} ?",
 		"play": "Jouer"
 	}

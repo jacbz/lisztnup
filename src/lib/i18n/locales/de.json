@@ -656,7 +656,10 @@
 	},
 	"dailyChallenge": {
 		"title": "Tagesherausforderung",
-		"subtitle": "Die Tracklist des Tages",
+		"subtitle": "Heutige Tracklist im Rampenlicht",
+		"subtitleBirthday": "Ein Geburtstagsgruß in Noten",
+		"subtitleNationalDay": "Ein klingender Nationalfeiertag",
+		"subtitleWomensDay": "Ein Hoch auf den Frauentag",
 		"highScore": "Knackst du {name}s Rekord von {score} Pkt.?",
 		"play": "Spielen"
 	}

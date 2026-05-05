@@ -13,7 +13,7 @@
 	"report": {
 		"title": "Report a problem",
 		"prompt": "Describe the problem with this track.",
-		"placeholder": "What's wrong? (e.g. wrong track, wrong year, bad audio...)",
+		"placeholder": "What’s wrong? (e.g. wrong track, wrong year, bad audio...)",
 		"submit": "Submit Report",
 		"sending": "Sending...",
 		"success": "Thank you!"
@@ -132,11 +132,11 @@
 		},
 		"celloconcerto": {
 			"name": "Cello Concertos",
-			"description": "Rich, resonant and impossibly moving. The cello's finest hour."
+			"description": "Rich, resonant and impossibly moving. The cello’s finest hour."
 		},
 		"woodwindconcerto": {
 			"name": "Woodwind Concertos",
-			"description": "All it takes is a breath. The woodwinds prove you don't need strings to steal the show."
+			"description": "All it takes is a breath. The woodwinds prove you don’t need strings to steal the show."
 		},
 		"liszt": {
 			"name": "Lisztomania",
@@ -184,7 +184,7 @@
 		},
 		"contemporary": {
 			"name": "Contemporary",
-			"description": "Where anything goes and everything counts. Classical music's bleeding edge (1945-)."
+			"description": "Where anything goes and everything counts. Classical music’s bleeding edge (1945-)."
 		},
 		"beethoven": {
 			"name": "Beathoven",
@@ -196,7 +196,7 @@
 		},
 		"germany": {
 			"name": "Austro-German",
-			"description": "From Vienna's coffeehouses to Berlin's concert halls. The heavyweight tradition."
+			"description": "From Vienna’s coffeehouses to Berlin’s concert halls. The heavyweight tradition."
 		},
 		"italy": {
 			"name": "Bella Musica",
@@ -539,7 +539,7 @@
 	"endGame": {
 		"title": "Game Over!",
 		"winner": "{name} Wins!",
-		"tie": "It's a Tie!",
+		"tie": "It’s a Tie!",
 		"noMoreTracks": "No more tracks available.",
 		"finalScores": "Final Scores",
 		"home": "Home"
@@ -605,7 +605,7 @@
 	},
 	"about": {
 		"description": "<em>Liszt’n Up!</em> is a passion project born from a love of classical music. Think of it as Hitster, but for classical music nerds. I built it because I wanted a fun way to test how well my friends and I actually know the repertoire we claim to love.",
-		"donateHint": "This is and always will be free. But if you're feeling generous, a coffee never hurts.",
+		"donateHint": "This is and always will be free. But if you’re feeling generous, a coffee never hurts.",
 		"donateButton": "Buy me a coffee",
 		"viewOnGithub": "View on GitHub"
 	},
@@ -656,8 +656,11 @@
 	},
 	"dailyChallenge": {
 		"title": "Daily Challenge",
-		"subtitle": "Today's featured tracklist",
-		"highScore": "Think you can top {name}'s {score} pts?",
+		"subtitle": "Today’s featured tracklist",
+		"subtitleBirthday": "A birthday encore",
+		"subtitleNationalDay": "A national-day spotlight",
+		"subtitleWomensDay": "A salute for International Women’s Day",
+		"highScore": "Think you can top {name}’s {score} pts?",
 		"play": "Play"
 	}
 }
