@@ -14,8 +14,8 @@ import type {
 import {
 	calculateTurnScore,
 	calculateGap,
-	calculateBoundaryDistance,
-	calculateEfficiencyBonus,
+	calculateDMin,
+	calculateCompletion,
 	calculateConsolationScore
 } from './timelineScoring';
 
@@ -365,7 +365,7 @@ export class TimelineGame {
 			longestStreak: 0,
 			score: 0,
 			reachedTarget: false,
-			efficiencyBonus: 0
+			completionBonus: 0
 		}));
 		this.activePlayerIndex = 0;
 		this.endgameActive = false;
@@ -757,38 +757,34 @@ export class TimelineGame {
 				this.activePlayer.longestStreak = this.activePlayer.currentStreak;
 			}
 
-			// Calculate year gap for difficulty bonus
 			const prevYear = idx > 0 ? this.#getTimelineYear(entries[idx - 1].track) : null;
 			const nextYear =
 				idx < entries.length - 1 ? this.#getTimelineYear(entries[idx + 1].track) : null;
 			const gap = calculateGap(prevYear, nextYear);
-			const boundaryDistance = calculateBoundaryDistance(year, prevYear, nextYear, gap);
+			const dMin = calculateDMin(year, prevYear, nextYear, gap);
 			const isEdgePlacement = prevYear === null || nextYear === null;
 
 			const breakdown = calculateTurnScore({
 				gap,
-				boundaryDistance,
-				secondsTaken,
-				streakCount: this.activePlayer.currentStreak,
+				dMin,
+				seconds: secondsTaken,
+				streak: this.activePlayer.currentStreak,
 				isEdgePlacement,
-				correctSoFar: this.activePlayer.correctPlacements,
-				attemptsSoFar: this.activePlayer.totalPlacements
+				correct: this.activePlayer.correctPlacements,
+				attempts: this.activePlayer.totalPlacements
 			});
 			this.lastTurnScoreBreakdown = breakdown;
 			this.lastConsolationBreakdown = null;
-			this.activePlayer.score += breakdown.totalScore;
+			this.activePlayer.score += breakdown.score;
 
 			// Check if this player just reached the target (cards on timeline including dealt card)
 			const cardsOnTimeline = this.activePlayer.entries.filter(
 				(e) => e.confirmed && e.correct !== false
 			).length;
 			if (cardsOnTimeline >= this.#cardsToWin && !this.activePlayer.reachedTarget) {
-				const effBonus = calculateEfficiencyBonus(
-					this.#cardsToWin,
-					this.activePlayer.totalPlacements
-				);
-				this.activePlayer.efficiencyBonus = effBonus;
-				this.activePlayer.score += effBonus;
+				const completion = calculateCompletion(this.#cardsToWin, this.activePlayer.totalPlacements);
+				this.activePlayer.completionBonus = completion;
+				this.activePlayer.score += completion;
 				this.activePlayer.reachedTarget = true;
 			}
 		} else {
@@ -821,7 +817,7 @@ export class TimelineGame {
 				this.activePlayer.totalPlacements
 			);
 			this.lastConsolationBreakdown = consolation;
-			this.activePlayer.score += consolation.consolationScore;
+			this.activePlayer.score += consolation.consolation;
 		}
 
 		// Track per-round scores for the stats graph
@@ -835,7 +831,7 @@ export class TimelineGame {
 		import('$lib/game-logger')
 			.then(({ analytics }) => {
 				analytics.logPlacement(track.work.gid, track.part.gid, isCorrect, {
-					turnScore: scoreBreakdown?.totalScore ?? consolationBreakdown?.consolationScore ?? 0,
+					turnScore: scoreBreakdown?.score ?? consolationBreakdown?.consolation ?? 0,
 					secondsTaken,
 					streakCount: this.activePlayer.currentStreak,
 					gap: scoreBreakdown?.gap ?? consolationBreakdown?.gap ?? 0
@@ -1019,7 +1015,7 @@ export class TimelineGame {
 					players: this.playerStats,
 					scores: this.timelines.map((t) => ({
 						score: t.score,
-						efficiencyBonus: t.efficiencyBonus
+						completionBonus: t.completionBonus
 					}))
 				});
 			})

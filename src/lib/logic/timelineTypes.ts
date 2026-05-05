@@ -27,36 +27,37 @@ export interface TimelineRow {
 	longestStreak: number;
 	score: number;
 	reachedTarget: boolean;
-	efficiencyBonus: number;
+	completionBonus: number;
 }
 
 /** Full breakdown of a single turn's score computation. */
 export interface TurnScoreBreakdown {
-	baseScore: number;
-	difficultyBonus: number;
+	base: number;
+	diff: number;
 	gap: number;
-	boundaryDistance: number;
+	dMin: number;
+	effGap: number;
 	/** True when the card was placed at the start or end of the timeline. */
 	isEdgePlacement: boolean;
-	masteryBonus: number;
-	correctSoFar: number;
-	attemptsSoFar: number;
-	speedMult: number;
-	secondsTaken: number;
+	mastery: number;
+	correct: number;
+	attempts: number;
+	speed: number;
+	seconds: number;
 	streakMult: number;
-	streakCount: number;
-	rawScore: number;
-	totalScore: number;
+	streak: number;
+	scoreBeforeStreak: number;
+	score: number;
 }
 
 /** Breakdown of consolation points awarded on an incorrect placement. */
 export interface ConsolationBreakdown {
-	consolationScore: number;
+	consolation: number;
 	gap: number;
-	gapFactor: number;
-	edgeDist: number;
-	edgeFactor: number;
-	timeMultiplier: number;
+	gapF: number;
+	dErr: number;
+	edgeF: number;
+	timeF: number;
 }
 
 // ─── Enumerations ──────────────────────────────────────────

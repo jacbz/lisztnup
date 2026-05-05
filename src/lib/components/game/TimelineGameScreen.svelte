@@ -23,7 +23,7 @@
 	// Logic
 	import { getGameContext } from './context';
 	import { TimelineGame } from '$lib/logic/timelineGame.svelte';
-	import { getStreakMultiplier } from '$lib/logic/timelineScoring';
+	import { calculateStreakMult } from '$lib/logic/timelineScoring';
 	import type { TimelineRow } from '$lib/logic/timelineTypes';
 
 	// ─── Props ─────────────────────────────────────────────
@@ -184,10 +184,10 @@
 							isPlaying={false}
 							playbackEnded={false}
 							isRevealed={false}
-								progress={ctx.audioProgressValue}
-								playerSize={120}
-								disabled={ctx.isPreloading}
-								onPlay={() => game.handlePlay()}
+							progress={ctx.audioProgressValue}
+							playerSize={120}
+							disabled={ctx.isPreloading}
+							onPlay={() => game.handlePlay()}
 							onStop={() => game.handleStop()}
 							onReveal={() => {}}
 							onReplay={() => game.handlePlay()}
@@ -206,10 +206,10 @@
 							isPlaying={true}
 							playbackEnded={false}
 							isRevealed={false}
-								progress={ctx.audioProgressValue}
-								playerSize={120}
-								disabled={ctx.isPreloading}
-								onPlay={() => {}}
+							progress={ctx.audioProgressValue}
+							playerSize={120}
+							disabled={ctx.isPreloading}
+							onPlay={() => {}}
 							onStop={() => game.handleStop()}
 							onReveal={() => {}}
 							onReplay={() => {}}
@@ -224,16 +224,22 @@
 {#snippet timelineDisplay(timeline: TimelineRow, rotation: number, edge: PlayerEdge)}
 	{@const isTurnOwner = timeline.player.name === game.activePlayerName}
 	{@const isActive = !game.isDealing && isTurnOwner}
-	{@const isEndgameTrigger = game.endgameActive && game.timelines.indexOf(timeline) === game.timelines.findIndex((t) => t.reachedTarget)}
+	{@const isEndgameTrigger =
+		game.endgameActive &&
+		game.timelines.indexOf(timeline) === game.timelines.findIndex((t) => t.reachedTarget)}
 
 	{#if game.endgameActive && !isSoloMode && !game.showEndGame}
 		<div class="mb-1 text-center">
 			{#if isEndgameTrigger}
-				<span class="inline-block animate-pulse rounded-full bg-amber-500/20 px-3 py-0.5 text-[10px] font-bold tracking-wider text-amber-400 uppercase">
+				<span
+					class="inline-block animate-pulse rounded-full bg-amber-500/20 px-3 py-0.5 text-[10px] font-bold tracking-wider text-amber-400 uppercase"
+				>
 					{$_('timeline.targetReached')}
 				</span>
 			{:else}
-				<span class="inline-block animate-pulse rounded-full bg-red-500/15 px-3 py-0.5 text-[10px] font-bold tracking-wider text-red-400 uppercase">
+				<span
+					class="inline-block animate-pulse rounded-full bg-red-500/15 px-3 py-0.5 text-[10px] font-bold tracking-wider text-red-400 uppercase"
+				>
 					{$_('timeline.finalRound')}
 				</span>
 			{/if}
@@ -246,8 +252,14 @@
 		entries={timeline.entries}
 		active={isActive}
 		compact={!isActive}
-		acceptingDrop={isActive && game.hasPlaybackStarted && !game.pendingEntryId && !game.resolvingTurn && !game.isDealing}
-		streakCount={isActive && game.streakRevealPending ? game.preRevealCurrentStreak : timeline.currentStreak}
+		acceptingDrop={isActive &&
+			game.hasPlaybackStarted &&
+			!game.pendingEntryId &&
+			!game.resolvingTurn &&
+			!game.isDealing}
+		streakCount={isActive && game.streakRevealPending
+			? game.preRevealCurrentStreak
+			: timeline.currentStreak}
 		score={timeline.score}
 		{rotation}
 		isVertical={edge === 'left' || edge === 'right'}
@@ -281,7 +293,10 @@
 <!-- LAYOUT                                                  -->
 <!-- ═══════════════════════════════════════════════════════ -->
 
-<div class="fixed inset-0 overflow-hidden text-white" class:endgame-glow={game.endgameActive && !isSoloMode && !game.showEndGame}>
+<div
+	class="fixed inset-0 overflow-hidden text-white"
+	class:endgame-glow={game.endgameActive && !isSoloMode && !game.showEndGame}
+>
 	{#if game.isMdHeight}
 		<!-- Standard centred layout for taller screens -->
 		<div
@@ -352,8 +367,8 @@
 	isCorrect={game.revealIsCorrect}
 	purpose={game.revealPurpose}
 	scoreBreakdown={game.lastTurnScoreBreakdown}
-	consolationScore={game.lastConsolationBreakdown?.consolationScore ?? 0}
-	efficiencyBonus={game.activePlayer?.efficiencyBonus ?? 0}
+	consolationScore={game.lastConsolationBreakdown?.consolation ?? 0}
+	completionBonus={game.activePlayer?.completionBonus ?? 0}
 	reachedTarget={game.revealReachedWin}
 	scoreBeforeTurn={game.scoreBeforeTurn}
 	rotation={game.popupRotation}
@@ -368,15 +383,27 @@
 	tracklistId={$settings.selectedTracklist}
 	sessionId={game.endgameSessionId}
 	onHome={handleQuit}
-	onViewStats={() => { game.showEndGame = false; statsOpenedFromEndgame = true; showStatsPopup = true; }}
+	onViewStats={() => {
+		game.showEndGame = false;
+		statsOpenedFromEndgame = true;
+		showStatsPopup = true;
+	}}
 />
 
 <FlashingText
-	text={game.streakFlash ? $_('timeline.streak', { values: { count: game.streakFlash.streak } }) : ''}
-	secondLine={game.streakFlash ? $_('timeline.scoring.streakMultiplier', { values: { mult: getStreakMultiplier(game.streakFlash.streak).toFixed(2) + '×' } }) : ''}
+	text={game.streakFlash
+		? $_('timeline.streak', { values: { count: game.streakFlash.streak } })
+		: ''}
+	secondLine={game.streakFlash
+		? $_('timeline.scoring.streakMultiplier', {
+				values: { mult: calculateStreakMult(game.streakFlash.streak).toFixed(2) + '×' }
+			})
+		: ''}
 	visible={!!game.streakFlash}
 	rotation={game.streakFlash?.rotation ?? 0}
-	intensity={game.streakFlash ? Math.min(5, Math.max(1, Math.floor((game.streakFlash.streak - 1) / 2))) : 1}
+	intensity={game.streakFlash
+		? Math.min(5, Math.max(1, Math.floor((game.streakFlash.streak - 1) / 2)))
+		: 1}
 	onComplete={() => game.handleStreakFlashComplete()}
 />
 
@@ -408,7 +435,8 @@
 	}
 
 	@keyframes endgame-pulse {
-		0%, 100% {
+		0%,
+		100% {
 			box-shadow:
 				inset 0 0 40px rgba(251, 191, 36, 0.2),
 				inset 0 0 80px rgba(251, 191, 36, 0.08),

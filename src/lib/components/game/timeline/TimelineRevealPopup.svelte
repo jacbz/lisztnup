@@ -20,7 +20,7 @@
 		purpose?: 'turn' | 'inspect';
 		scoreBreakdown?: TurnScoreBreakdown | null;
 		consolationScore?: number;
-		efficiencyBonus?: number;
+		completionBonus?: number;
 		reachedTarget?: boolean;
 		scoreBeforeTurn?: number;
 		rotation?: number;
@@ -35,7 +35,7 @@
 		purpose = 'turn',
 		scoreBreakdown = null,
 		consolationScore = 0,
-		efficiencyBonus = 0,
+		completionBonus = 0,
 		reachedTarget = false,
 		scoreBeforeTurn = 0,
 		rotation = 0,
@@ -102,7 +102,7 @@
 	$effect(() => {
 		if (visible && isCorrect && scoreBreakdown) {
 			clearAllTimers();
-			const turnTotal = scoreBreakdown.totalScore + efficiencyBonus;
+			const turnTotal = scoreBreakdown.score + completionBonus;
 			displayedValues = {};
 			displayedTurnTotal = 0;
 			displayedScore = scoreBeforeTurn;
@@ -118,9 +118,9 @@
 				const startTime = performance.now();
 				const pointDuration = 1200;
 				const pointTargets: Record<string, number> = {
-					base: scoreBreakdown!.baseScore,
-					difficulty: scoreBreakdown!.difficultyBonus,
-					mastery: scoreBreakdown!.masteryBonus
+					base: scoreBreakdown!.base,
+					difficulty: scoreBreakdown!.diff,
+					mastery: scoreBreakdown!.mastery
 				};
 				const pointStagger: Record<string, number> = {
 					base: 0,
@@ -132,7 +132,7 @@
 				scheduleTimeout(() => {
 					rowVisible.speed = true;
 					rowVisible = rowVisible;
-					displayedValues = { ...displayedValues, speed: scoreBreakdown!.speedMult };
+					displayedValues = { ...displayedValues, speed: scoreBreakdown!.speed };
 				}, 1100);
 				scheduleTimeout(() => {
 					rowVisible.streak = true;
@@ -161,7 +161,7 @@
 						animFrame = requestAnimationFrame(tickPoints);
 					} else {
 						// Point rows done — proceed to completion bonus or totals
-						const hasCompletion = reachedTarget && efficiencyBonus > 0;
+						const hasCompletion = reachedTarget && completionBonus > 0;
 
 						if (hasCompletion) {
 							// Brief pause then completion bonus
@@ -175,7 +175,7 @@
 									const elapsed = now - compStart;
 									const progress = Math.min(elapsed / compDuration, 1);
 									const eased = 1 - Math.pow(1 - progress, 3);
-									displayedValues = { ...displayedValues, completion: efficiencyBonus * eased };
+									displayedValues = { ...displayedValues, completion: completionBonus * eased };
 									if (progress < 1) {
 										animFrame = requestAnimationFrame(tickCompletion);
 									} else {
@@ -306,10 +306,22 @@
 	});
 
 	const borderColor = $derived(
-		reachedTarget && isCorrect ? 'border-amber-400' : isCorrect === true ? 'border-green-400' : isCorrect === false ? 'border-red-400' : 'border-cyan-400'
+		reachedTarget && isCorrect
+			? 'border-amber-400'
+			: isCorrect === true
+				? 'border-green-400'
+				: isCorrect === false
+					? 'border-red-400'
+					: 'border-cyan-400'
 	);
 	const shadowColor = $derived(
-		reachedTarget && isCorrect ? 'rgba(251,191,36,0.3)' : isCorrect === true ? 'rgba(74,222,128,0.3)' : isCorrect === false ? 'rgba(248,113,113,0.3)' : 'rgba(34,211,238,0.3)'
+		reachedTarget && isCorrect
+			? 'rgba(251,191,36,0.3)'
+			: isCorrect === true
+				? 'rgba(74,222,128,0.3)'
+				: isCorrect === false
+					? 'rgba(248,113,113,0.3)'
+					: 'rgba(34,211,238,0.3)'
 	);
 
 	function fmtNum(n: number | undefined): string {
@@ -320,86 +332,160 @@
 	}
 </script>
 
-<Popup {visible} onClose={() => onClose()} width="w-[520px] max-w-[92vw]" {borderColor} {shadowColor} {rotation}>
+<Popup
+	{visible}
+	onClose={() => onClose()}
+	width="w-[520px] max-w-[92vw]"
+	{borderColor}
+	{shadowColor}
+	{rotation}
+>
 	{#if track}
 		<div class="flex h-full w-full flex-col gap-4">
 			<div class="text-center text-5xl font-black tracking-wide text-slate-200">{yearText}</div>
-			<div class="min-h-0 overflow-hidden rounded-2xl border border-slate-700/50 bg-slate-950/30 p-3">
+			<div
+				class="min-h-0 overflow-hidden rounded-2xl border border-slate-700/50 bg-slate-950/30 p-3"
+			>
 				<TrackInfo {track} bleed="sm" showMirror={false} />
 			</div>
 
 			{#if purpose === 'turn' && isCorrect && scoreBreakdown}
-				<div bind:this={scoreTableEl} class="flex flex-col gap-1 rounded-xl border border-slate-700/40 bg-slate-900/60 px-4 py-3">
+				<div
+					bind:this={scoreTableEl}
+					class="flex flex-col gap-1 rounded-xl border border-slate-700/40 bg-slate-900/60 px-4 py-3"
+				>
 					<!-- Point-based rows -->
 					<!-- Base -->
-					<div class="flex items-center justify-between text-sm" in:fly={{ y: 10, duration: 300, delay: 0, easing: cubicOut }}>
+					<div
+						class="flex items-center justify-between text-sm"
+						in:fly={{ y: 10, duration: 300, delay: 0, easing: cubicOut }}
+					>
 						<span class="text-slate-400">{$_('timeline.scoring.base')}</span>
-						<span class="font-bold text-slate-200 tabular-nums">{$_('scoring.pts', { values: { points: fmtNum(displayedValues.base) } })}</span>
+						<span class="font-bold text-slate-200 tabular-nums"
+							>{$_('scoring.pts', { values: { points: fmtNum(displayedValues.base) } })}</span
+						>
 					</div>
 
 					<!-- Difficulty -->
-					<div class="flex items-center justify-between text-sm" in:fly={{ y: 10, duration: 300, delay: 80, easing: cubicOut }}>
+					<div
+						class="flex items-center justify-between text-sm"
+						in:fly={{ y: 10, duration: 300, delay: 80, easing: cubicOut }}
+					>
 						<span class="text-slate-400">{$_('timeline.scoring.difficulty')}</span>
-						<span class="font-bold text-green-400 tabular-nums">+{$_('scoring.pts', { values: { points: fmtNum(displayedValues.difficulty) } })}</span>
+						<span class="font-bold text-green-400 tabular-nums"
+							>+{$_('scoring.pts', {
+								values: { points: fmtNum(displayedValues.difficulty) }
+							})}</span
+						>
 					</div>
 
 					<!-- Mastery -->
-					<div class="flex items-center justify-between text-sm" in:fly={{ y: 10, duration: 300, delay: 160, easing: cubicOut }}>
+					<div
+						class="flex items-center justify-between text-sm"
+						in:fly={{ y: 10, duration: 300, delay: 160, easing: cubicOut }}
+					>
 						<span class="text-slate-400">{$_('timeline.scoring.mastery')}</span>
-						<span class="font-bold text-violet-400 tabular-nums">+{$_('scoring.pts', { values: { points: fmtNum(displayedValues.mastery) } })}</span>
+						<span class="font-bold text-violet-400 tabular-nums"
+							>+{$_('scoring.pts', { values: { points: fmtNum(displayedValues.mastery) } })}</span
+						>
 					</div>
 
 					<!-- Separator: point-based ↔ multiplier-based -->
-					<div class="my-0.5 border-t border-dashed border-slate-700/30" in:fly={{ y: 10, duration: 200, delay: 240, easing: cubicOut }}></div>
+					<div
+						class="my-0.5 border-t border-dashed border-slate-700/30"
+						in:fly={{ y: 10, duration: 200, delay: 240, easing: cubicOut }}
+					></div>
 
 					<!-- Speed (fade in, no number count-up) -->
-					<div class="flex items-center justify-between text-sm" in:fly={{ y: 10, duration: 300, delay: 320, easing: cubicOut }}>
+					<div
+						class="flex items-center justify-between text-sm"
+						in:fly={{ y: 10, duration: 300, delay: 320, easing: cubicOut }}
+					>
 						<span class="flex items-center gap-1 text-slate-400">
 							<Zap class="h-3.5 w-3.5 text-cyan-400" />
 							{$_('timeline.scoring.speed')}
 						</span>
 						{#if rowVisible.speed}
-							<span class="font-bold text-cyan-400 tabular-nums" in:fade={{ duration: 500 }}>{fmtMult(displayedValues.speed)}</span>
+							<span class="font-bold text-cyan-400 tabular-nums" in:fade={{ duration: 500 }}
+								>{fmtMult(displayedValues.speed)}</span
+							>
 						{/if}
 					</div>
 
 					<!-- Streak (fade in, no number count-up) -->
-					<div class="flex items-center justify-between text-sm" in:fly={{ y: 10, duration: 300, delay: 400, easing: cubicOut }}>
-						<span class="flex items-center gap-1 {scoreBreakdown.streakCount >= 3 ? 'text-orange-400' : 'text-slate-400'}">
-							<Flame class="h-3.5 w-3.5 {scoreBreakdown.streakCount >= 3 ? 'text-orange-400' : 'text-slate-500'}" />
+					<div
+						class="flex items-center justify-between text-sm"
+						in:fly={{ y: 10, duration: 300, delay: 400, easing: cubicOut }}
+					>
+						<span
+							class="flex items-center gap-1 {scoreBreakdown.streak >= 3
+								? 'text-orange-400'
+								: 'text-slate-400'}"
+						>
+							<Flame
+								class="h-3.5 w-3.5 {scoreBreakdown.streak >= 3
+									? 'text-orange-400'
+									: 'text-slate-500'}"
+							/>
 							{$_('timeline.scoring.streak')}
 						</span>
 						{#if rowVisible.streak}
-							<span class="font-bold tabular-nums {scoreBreakdown.streakMult > 1 ? 'text-orange-400' : 'text-slate-300'}" in:fade={{ duration: 500 }}>{fmtMult(displayedValues.streak)}</span>
+							<span
+								class="font-bold tabular-nums {scoreBreakdown.streakMult > 1
+									? 'text-orange-400'
+									: 'text-slate-300'}"
+								in:fade={{ duration: 500 }}>{fmtMult(displayedValues.streak)}</span
+							>
 						{/if}
 					</div>
 
-					<div class="my-1 border-t border-slate-700/60" in:fly={{ y: 10, duration: 200, delay: 480, easing: cubicOut }}></div>
+					<div
+						class="my-1 border-t border-slate-700/60"
+						in:fly={{ y: 10, duration: 200, delay: 480, easing: cubicOut }}
+					></div>
 
 					<!-- Completion Bonus (reserves space, content fades in) -->
-					{#if reachedTarget && efficiencyBonus > 0}
-						<div class="flex items-center justify-between text-sm" style="opacity: {rowVisible.completion ? 1 : 0}; transition: opacity 400ms;">
+					{#if reachedTarget && completionBonus > 0}
+						<div
+							class="flex items-center justify-between text-sm"
+							style="opacity: {rowVisible.completion ? 1 : 0}; transition: opacity 400ms;"
+						>
 							<span class="flex items-center gap-1 font-bold text-amber-400">
 								<Trophy class="h-3.5 w-3.5" />
 								{$_('timeline.scoring.completionBonus')}
 							</span>
-							<span class="font-bold text-amber-400 tabular-nums">+{$_('scoring.pts', { values: { points: fmtNum(displayedValues.completion) } })}</span>
+							<span class="font-bold text-amber-400 tabular-nums"
+								>+{$_('scoring.pts', {
+									values: { points: fmtNum(displayedValues.completion) }
+								})}</span
+							>
 						</div>
 					{/if}
 
 					<!-- Turn Total -->
-					<div class="flex items-center justify-between text-sm" style="opacity: {turnTotalOpacity};">
+					<div
+						class="flex items-center justify-between text-sm"
+						style="opacity: {turnTotalOpacity};"
+					>
 						<span class="font-bold text-slate-200">{$_('timeline.scoring.turnTotal')}</span>
-						<span class="font-bold tabular-nums text-slate-200 transition-opacity duration-300" style="opacity: {rowVisible.turnTotal ? 1 : 0};">
+						<span
+							class="font-bold text-slate-200 tabular-nums transition-opacity duration-300"
+							style="opacity: {rowVisible.turnTotal ? 1 : 0};"
+						>
 							+{$_('scoring.pts', { values: { points: displayedTurnTotal.toLocaleString() } })}
 						</span>
 					</div>
-          
+
 					<!-- Total Score -->
 					<div class="flex items-center justify-between" style="opacity: {scoreOpacity};">
 						<span class="text-base font-bold text-slate-200">{$_('timeline.scoring.score')}</span>
-						<span class="font-black text-cyan-400 tabular-nums transition-opacity duration-300" style="opacity: {rowVisible.turnTotal ? 1 : 0};">
-							{$_('scoring.pts', { values: { points: Math.round(displayedScore).toLocaleString() } })}
+						<span
+							class="font-black text-cyan-400 tabular-nums transition-opacity duration-300"
+							style="opacity: {rowVisible.turnTotal ? 1 : 0};"
+						>
+							{$_('scoring.pts', {
+								values: { points: Math.round(displayedScore).toLocaleString() }
+							})}
 						</span>
 					</div>
 				</div>
@@ -407,13 +493,21 @@
 
 			<!-- Wrong Placement / Forfeit -->
 			{#if purpose === 'turn' && isCorrect === false}
-				<div bind:this={scoreTableEl} class="flex flex-col gap-1.5 rounded-xl border border-slate-700/40 bg-slate-900/60 px-4 py-3" in:fly={{ y: 10, duration: 300, easing: cubicOut }}>
+				<div
+					bind:this={scoreTableEl}
+					class="flex flex-col gap-1.5 rounded-xl border border-slate-700/40 bg-slate-900/60 px-4 py-3"
+					in:fly={{ y: 10, duration: 300, easing: cubicOut }}
+				>
 					<!-- Consolation row -->
 					{#if rowVisible.consolation}
 						<div transition:slide={{ duration: 400, easing: cubicOut }}>
 							<div class="flex items-center justify-between text-sm">
 								<span class="font-bold text-yellow-700">{$_('timeline.scoring.consolation')}</span>
-								<span class="font-bold text-yellow-700 tabular-nums">+{$_('scoring.pts', { values: { points: fmtNum(displayedValues.consolation) } })}</span>
+								<span class="font-bold text-yellow-700 tabular-nums"
+									>+{$_('scoring.pts', {
+										values: { points: fmtNum(displayedValues.consolation) }
+									})}</span
+								>
 							</div>
 
 							<div class="my-0.5 border-t border-slate-700/60"></div>
@@ -421,10 +515,19 @@
 					{/if}
 
 					<!-- Turn Total -->
-					<div class="flex items-center justify-between text-sm" style="opacity: {turnTotalOpacity};">
+					<div
+						class="flex items-center justify-between text-sm"
+						style="opacity: {turnTotalOpacity};"
+					>
 						<span class="font-bold text-slate-200">{$_('timeline.scoring.turnTotal')}</span>
-						<span class="font-bold tabular-nums transition-all duration-300 {rowVisible.turnTotal ? 'text-slate-200' : 'text-red-400'}">
-							+{$_('scoring.pts', { values: { points: (rowVisible.turnTotal ? displayedTurnTotal : 0).toLocaleString() } })}
+						<span
+							class="font-bold tabular-nums transition-all duration-300 {rowVisible.turnTotal
+								? 'text-slate-200'
+								: 'text-red-400'}"
+						>
+							+{$_('scoring.pts', {
+								values: { points: (rowVisible.turnTotal ? displayedTurnTotal : 0).toLocaleString() }
+							})}
 						</span>
 					</div>
 
@@ -432,7 +535,9 @@
 					<div class="flex items-center justify-between" style="opacity: {scoreOpacity};">
 						<span class="text-base font-bold text-slate-200">{$_('timeline.scoring.score')}</span>
 						<span class="font-black text-cyan-400 tabular-nums">
-							{$_('scoring.pts', { values: { points: Math.round(displayedScore).toLocaleString() } })}
+							{$_('scoring.pts', {
+								values: { points: Math.round(displayedScore).toLocaleString() }
+							})}
 						</span>
 					</div>
 				</div>

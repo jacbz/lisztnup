@@ -30,7 +30,7 @@
 		longestStreak: number;
 		score: number;
 		reachedTarget: boolean;
-		efficiencyBonus: number;
+		completionBonus: number;
 	}
 
 	interface Props {
@@ -57,8 +57,7 @@
 
 	let inspectTrack = $state<Track | null>(null);
 
-	// Winner: player with highest score (already includes efficiencyBonus)
-	// score already includes efficiencyBonus — no need to add it again
+	// Winner: player with highest score (already includes completion bonus).
 	const sortedTimelines = $derived([...timelines].sort((a, b) => b.score - a.score));
 
 	const winner = $derived.by(() => {

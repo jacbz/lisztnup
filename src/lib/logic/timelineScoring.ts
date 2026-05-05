@@ -1,89 +1,78 @@
+/**
+ * Implements the scoring logic as specified in SCORING.md.
+ * It must be kept in sync (including variable names) with the formulas and descriptions in that document, which is the source of truth for how scoring works.
+ */
 import { MIN_WORK_YEAR, MAX_WORK_YEAR } from '$lib/types/settings';
 import type { TurnScoreBreakdown, ConsolationBreakdown } from './timelineTypes';
 
-// ─── Constants ─────────────────────────────────────────────
-
-export const BASE_SCORE = 1000;
-export const MAX_SPEED_TIME = 20;
-export const SPEED_BONUS_COEFFICIENT = 0.25;
-export const TOTAL_SPAN = MAX_WORK_YEAR - MIN_WORK_YEAR;
-export const DIFFICULTY_COMPRESSION_CONSTANT = 100;
-
-/** Streak multiplier tiers. Index = streak count. */
-const STREAK_MULTIPLIERS: Record<number, number> = {
-	1: 1.0,
-	2: 1.1,
-	3: 1.35,
-	4: 1.55,
-	5: 1.75
-};
-const STREAK_CAP_MULTIPLIER = 2.0;
-
-// ─── Pure scoring functions ────────────────────────────────
+export const base = 1000;
+export const gapC = 120;
+export const masteryCap = 500;
+export const speedBonus = 0.25;
+export const completionRate = 750;
 
 /**
  * Difficulty bonus based on an effective gap that compresses wide slots when
  * the placement is close to a boundary card.
  */
-export function calculateDifficultyBonus(
-	totalGap: number,
-	boundaryDistance: number,
-	compressionConstant = DIFFICULTY_COMPRESSION_CONSTANT
-): number {
-	const effectiveGap =
-		totalGap * ((2 * boundaryDistance + compressionConstant) / (totalGap + compressionConstant));
-	return 2310 * (10 / (effectiveGap + 10));
+export function calculateEffGap(gap: number, dMin: number, c = gapC): number {
+	return gap * ((2 * dMin + c) / (gap + c));
+}
+
+export function calculateDiff(gap: number, dMin: number, c = gapC): number {
+	const effGap = calculateEffGap(gap, dMin, c);
+	return 2310 * (10 / (effGap + 10));
 }
 
 /**
  * Speed multiplier based on how quickly the player placed the card.
  * Uses a quadratic curve: sub-3s answers are dramatically more rewarding.
- * Divides by (MAX_SPEED_TIME - 1) so that 1s taken yields the maximum bonus
+ * Divides by 19 so that 1s taken yields the maximum bonus
  * while 0s (instant) is only marginally better. Returns exactly 1.0 for times ≥ 20s.
  */
-export function calculateSpeedMultiplier(secondsTaken: number): number {
-	const clamped = Math.max(0, MAX_SPEED_TIME - secondsTaken);
-	return 1.0 + SPEED_BONUS_COEFFICIENT * (clamped / (MAX_SPEED_TIME - 1)) ** 2;
+export function calculateSpeed(seconds: number): number {
+	return 1.0 + speedBonus * (Math.max(0, 20 - seconds) / 19) ** 2;
 }
 
 /**
  * Streak multiplier for consecutive correct placements.
  * The streak counter should already be incremented for the current turn.
  */
-export function getStreakMultiplier(streakCount: number): number {
-	if (streakCount <= 0) return 1.0;
-	if (streakCount >= 6) return STREAK_CAP_MULTIPLIER;
-	return STREAK_MULTIPLIERS[streakCount] ?? 1.0;
+export function calculateStreakMult(streak: number): number {
+	if (streak <= 1) return 1.0;
+	if (streak === 2) return 1.1;
+	if (streak === 3) return 1.35;
+	if (streak === 4) return 1.55;
+	if (streak === 5) return 1.75;
+	if (streak >= 6) return 2.0;
+	return 1.0;
 }
 
 /**
- * One-time efficiency bonus awarded when a player reaches the target.
+ * One-time completion bonus awarded when a player reaches the target.
  * Only players who reach the target receive this.
  */
-export function calculateEfficiencyBonus(target: number, totalAttempts: number): number {
-	if (totalAttempts <= 0) return 0;
-	return Math.round((target / totalAttempts) ** 2 * (target * 750));
+export function calculateCompletion(target: number, attempts: number): number {
+	if (attempts <= 0) return 0;
+	return Math.round((target / attempts) ** 2 * (target * completionRate));
 }
 
 /**
  * Mastery bonus based on accuracy with a one-mistake grace.
- * Mastery_Acc = min(1, correct / max(correct, attempts - 1))
- * Mastery_Bonus = 500 × Mastery_Acc²
+ * Mastery = masteryCap × min(1, correct / max(correct, attempts - 1))²
  */
-export function calculateMasteryBonus(correctSoFar: number, attemptsSoFar: number): number {
-	if (attemptsSoFar <= 0) return 0;
-	const acc = Math.min(1, correctSoFar / Math.max(correctSoFar, attemptsSoFar - 1));
-	return 500 * acc * acc;
+export function calculateMastery(correct: number, attempts: number): number {
+	if (attempts <= 0) return 0;
+	const acc = Math.min(1, correct / Math.max(correct, attempts - 1));
+	return masteryCap * acc * acc;
 }
-
-const MIN_GAP = 25;
 
 /**
  * Calculate the year gap between the two neighbours of a newly placed card.
  * For edge placements (one neighbour missing), uses the dataset boundary
  * (MIN_WORK_YEAR / MAX_WORK_YEAR) as the virtual neighbour so that edge
  * cards are scored against a realistic range rather than a mirrored gap.
- * Enforces a minimum gap of MIN_GAP to prevent extreme difficulty bonuses
+ * Enforces a minimum gap of 25 years to prevent extreme difficulty bonuses
  * from near-identical placements.
  */
 export function calculateGap(leftYear: number | null, rightYear: number | null): number {
@@ -92,10 +81,10 @@ export function calculateGap(leftYear: number | null, rightYear: number | null):
 
 	if (leftYear === null && rightYear === null) {
 		// First card on the timeline — use full span
-		return TOTAL_SPAN;
+		return MAX_WORK_YEAR - MIN_WORK_YEAR;
 	}
 
-	return Math.max(MIN_GAP, right - left);
+	return Math.max(25, right - left);
 }
 
 /**
@@ -103,33 +92,33 @@ export function calculateGap(leftYear: number | null, rightYear: number | null):
  * Edge placements have one boundary card; the first card has none and falls
  * back to the total slot gap to keep its difficulty near the minimum.
  */
-export function calculateBoundaryDistance(
+export function calculateDMin(
 	cardYear: number,
 	leftYear: number | null,
 	rightYear: number | null,
-	totalGap: number
+	gap: number
 ): number {
 	const distances: number[] = [];
 	if (leftYear !== null) distances.push(Math.abs(cardYear - leftYear));
 	if (rightYear !== null) distances.push(Math.abs(rightYear - cardYear));
 
-	return distances.length > 0 ? Math.max(0, Math.min(...distances)) : totalGap;
+	return distances.length > 0 ? Math.max(0, Math.min(...distances)) : gap;
 }
 
 // ─── Composite score calculation ───────────────────────────
 
 export interface TurnScoreInput {
 	gap: number;
-	boundaryDistance: number;
-	secondsTaken: number;
+	dMin: number;
+	seconds: number;
 	/** Streak count *after* incrementing for this correct turn. */
-	streakCount: number;
+	streak: number;
 	/** True when the card was placed at the start or end of the timeline. */
 	isEdgePlacement?: boolean;
 	/** Correct placements so far (including this one). */
-	correctSoFar: number;
+	correct: number;
 	/** Total attempts so far (including this one). */
-	attemptsSoFar: number;
+	attempts: number;
 }
 
 /**
@@ -137,29 +126,31 @@ export interface TurnScoreInput {
  * All intermediate values are kept at full precision; round only for display.
  */
 export function calculateTurnScore(input: TurnScoreInput): TurnScoreBreakdown {
-	const difficultyBonus = Math.round(calculateDifficultyBonus(input.gap, input.boundaryDistance));
-	const masteryBonus = Math.round(calculateMasteryBonus(input.correctSoFar, input.attemptsSoFar));
-	const speedMult = calculateSpeedMultiplier(input.secondsTaken);
-	const streakMult = getStreakMultiplier(input.streakCount);
+	const effGap = calculateEffGap(input.gap, input.dMin);
+	const diff = Math.round(calculateDiff(input.gap, input.dMin));
+	const mastery = Math.round(calculateMastery(input.correct, input.attempts));
+	const speed = calculateSpeed(input.seconds);
+	const streakMult = calculateStreakMult(input.streak);
 
-	const rawScore = Math.round((BASE_SCORE + difficultyBonus + masteryBonus) * speedMult);
-	const totalScore = Math.round(rawScore * streakMult);
+	const scoreBeforeStreak = Math.round((base + diff + mastery) * speed);
+	const score = Math.round(scoreBeforeStreak * streakMult);
 
 	return {
-		baseScore: BASE_SCORE,
-		difficultyBonus,
+		base,
+		diff,
 		gap: input.gap,
-		boundaryDistance: input.boundaryDistance,
+		dMin: input.dMin,
+		effGap,
 		isEdgePlacement: input.isEdgePlacement ?? false,
-		masteryBonus,
-		correctSoFar: input.correctSoFar,
-		attemptsSoFar: input.attemptsSoFar,
-		speedMult,
-		secondsTaken: input.secondsTaken,
+		mastery,
+		correct: input.correct,
+		attempts: input.attempts,
+		speed,
+		seconds: input.seconds,
 		streakMult,
-		streakCount: input.streakCount,
-		rawScore,
-		totalScore
+		streak: input.streak,
+		scoreBeforeStreak,
+		score
 	};
 }
 
@@ -169,10 +160,10 @@ export function calculateTurnScore(input: TurnScoreInput): TurnScoreBreakdown {
  * Small consolation bonus for incorrect placements, scaled by how
  * genuinely difficult the correct slot was.
  *
- * Formula: round(max(1, round(75 × gapFactor × edgeFactor)) × timeMult)
- *   gapFactor  = max(0, (150 - gap) / 150)
- *   edgeFactor = max(0, (50 - edgeDist) / 50)
- *   timeMult   = max(0, min(1, (4 × target - attempts) / target))
+ * Formula: round(max(1, round(75 × gapF × edgeF)) × timeF)
+ *   gapF  = max(0, (150 - gap) / 150)
+ *   edgeF = max(0, (50 - dErr) / 50)
+ *   timeF = max(0, min(1, (4 × target - attempts) / target))
  *
  * @param gap        Year distance between the two boundary cards of the correct slot.
  * @param cardYear   The true year of the placed card.
@@ -191,19 +182,18 @@ export function calculateConsolationScore(
 ): ConsolationBreakdown {
 	const left = leftYear ?? MIN_WORK_YEAR;
 	const right = rightYear ?? MAX_WORK_YEAR;
-	const edgeDist = Math.min(cardYear - left, right - cardYear);
+	const dErr = Math.min(cardYear - left, right - cardYear);
 
 	const isEdgeSlot = leftYear === null || rightYear === null;
 	const boundaryYear = leftYear ?? rightYear ?? cardYear;
-	const effectiveGap = isEdgeSlot ? Math.abs(boundaryYear - cardYear) * 4 : gap;
+	const consolationGap = isEdgeSlot ? Math.abs(boundaryYear - cardYear) * 4 : gap;
 
-	const gapFactor = Math.max(0, (150 - effectiveGap) / 150);
-	const edgeFactor = Math.max(0, (50 - edgeDist) / 50);
-	const timeMultiplier =
-		target > 0 ? Math.max(0, Math.min(1, (4 * target - attempts) / target)) : 0;
+	const gapF = Math.max(0, (150 - consolationGap) / 150);
+	const edgeF = Math.max(0, (50 - dErr) / 50);
+	const timeF = target > 0 ? Math.max(0, Math.min(1, (4 * target - attempts) / target)) : 0;
 
-	const baseConsolation = Math.max(1, Math.round(75 * gapFactor * edgeFactor));
-	const consolationScore = Math.round(baseConsolation * timeMultiplier);
+	const baseConsolation = Math.max(1, Math.round(75 * gapF * edgeF));
+	const consolation = Math.round(baseConsolation * timeF);
 
-	return { consolationScore, gap: effectiveGap, gapFactor, edgeDist, edgeFactor, timeMultiplier };
+	return { consolation, gap: consolationGap, gapF, dErr, edgeF, timeF };
 }
