@@ -1334,14 +1334,30 @@ def generate_markdown_report(final_output: FinalOutput) -> None:
 def check_short_uuid_collisions(final_output: FinalOutput, short_length: int = 8) -> None:
     """Checks for potential UUID collisions if frontend uses short IDs."""
     short_map = defaultdict(list)
+
     for work in final_output.works:
-        short_map[work.gid[:short_length]].append(work)
-    
-    collisions = {k: v for k, v in short_map.items() if len(v) > 1}
+        short = work.gid[:short_length]
+        short_map[short].append(("work", work.name, work.gid))
+        for part in work.parts:
+            pshort = part.gid[:short_length]
+            short_map[pshort].append(("part", f"{part.name} (in {work.name})", part.gid))
+
+    # Find any short IDs that map to more than one distinct full-GID (work or part)
+    collisions = {}
+    for short, entries in short_map.items():
+        if len(entries) <= 1:
+            continue
+        full_gids = {gid for (_kind, _name, gid) in entries}
+        # If all entries share the same full-GID, it's not a real collision
+        if len(full_gids) <= 1:
+            continue
+        collisions[short] = entries
+
     if collisions:
         print(f"\nWARNING: Found {len(collisions)} short-UUID ({short_length}) collisions!")
-        for k, v in collisions.items():
-            print(f"  {k}: {[w.name for w in v]}")
+        for k, entries in collisions.items():
+            display = [f"{kind}:{name} [{gid}]" for kind, name, gid in entries]
+            print(f"  {k}: {display}")
     else:
         print(f"\n✓ No short-UUID collisions detected ({short_length} chars).")
 
