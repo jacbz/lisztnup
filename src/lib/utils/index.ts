@@ -6,3 +6,4 @@ export * from './compression';
 export * from './fontLoader';
 export * from './uuid';
 export * from './dailyChallenge';
+export * from './date';

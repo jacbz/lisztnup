@@ -1,6 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { hashUser, getCurrentSalt } from '$lib/server/analytics';
+import { formatD1TimestampAsGermanDate } from '$lib/utils/date';
 
 const MAX_NAME_LENGTH = 30;
 const MAX_SCORE = 1_000_000;
@@ -85,7 +86,11 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 		// Map results: replace raw token with is_me flag for privacy
 		const entries = (results.results ?? []).map((row: Record<string, unknown>) => {
 			const { player_token, ...rest } = row;
-			return { ...rest, is_me: playerToken ? player_token === playerToken : false };
+			return {
+				...rest,
+				timestamp: formatD1TimestampAsGermanDate(rest.timestamp) ?? undefined,
+				is_me: playerToken ? player_token === playerToken : false
+			};
 		});
 
 		return json({ entries });

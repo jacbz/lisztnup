@@ -5,6 +5,9 @@ import {
 	type DailyChallengeAnchor,
 	type DailyChallengeScheduleEntry
 } from './dailyChallengeSchedule';
+import { getUtcDateString } from './date';
+
+export { getUtcDateString } from './date';
 
 /** Eligible tracklists for the daily challenge (excludes beginner). */
 const DAILY_CANDIDATES: DefaultTracklist[] = DEFAULT_TRACKLISTS.filter((t) => t.id !== 'beginner');
@@ -30,11 +33,6 @@ const DAILY_CHALLENGE_ANCHORS: DailyChallengeAnchor[] = [
 	{ month: 11, day: 14, tracklistId: 'uk', cause: 'nationalDay' },
 	{ month: 12, day: 17, tracklistId: 'beethoven', cause: 'birthday' }
 ];
-
-/** Returns today's date as `YYYY-MM-DD` in UTC. */
-export function getUtcDateString(date = new Date()): string {
-	return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}-${String(date.getUTCDate()).padStart(2, '0')}`;
-}
 
 /** Backwards-compatible alias for the UTC date string helper. */
 export const getTodayDateString = getUtcDateString;

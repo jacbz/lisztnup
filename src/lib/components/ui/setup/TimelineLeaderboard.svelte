@@ -5,6 +5,7 @@
 	import { _ } from 'svelte-i18n';
 	import Flag from '../primitives/Flag.svelte';
 	import type { LeaderboardEntry } from '$lib/types';
+	import { formatDateString } from '$lib/utils';
 
 	interface Props {
 		entries: LeaderboardEntry[];
@@ -21,13 +22,6 @@
 		isLoading = false,
 		onShowTimeline = () => {}
 	}: Props = $props();
-
-	function formatEntryDate(timestamp: string | undefined, locale: string): string {
-		if (!timestamp) return '';
-		const d = new Date(timestamp.includes('T') ? timestamp : timestamp.replace(' ', 'T'));
-		if (isNaN(d.getTime())) return '';
-		return d.toLocaleDateString(locale, { year: 'numeric', month: 'numeric', day: 'numeric' });
-	}
 </script>
 
 {#snippet leaderboardRow(entry: LeaderboardEntry, rank: number)}
@@ -54,7 +48,7 @@
 		{$_('scoring.pts', { values: { points: entry.score.toLocaleString() } })}
 	</span>
 	<span class="text-right whitespace-nowrap text-slate-500 tabular-nums">
-		{formatEntryDate(entry.timestamp, currentLocale)}
+		{formatDateString(entry.timestamp, currentLocale)}
 	</span>
 	<div class="flex">
 		{#if entry.timeline && entry.timeline !== '[]'}

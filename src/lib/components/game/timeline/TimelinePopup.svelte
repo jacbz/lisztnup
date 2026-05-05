@@ -5,7 +5,7 @@
 	import type { Track } from '$lib/types';
 	import PlayerTimeline, { type TimelineEntry } from './PlayerTimeline.svelte';
 	import TrackInfo from '$lib/components/ui/gameplay/TrackInfo.svelte';
-	import { formatYearRange } from '$lib/utils';
+	import { formatDateString, formatYearRange } from '$lib/utils';
 
 	interface Props {
 		visible?: boolean;
@@ -38,12 +38,7 @@
 		}))
 	);
 
-	function formatEntryDate(ts: string | undefined, loc: string): string {
-		if (!ts) return '';
-		const d = new Date(ts.includes('T') ? ts : ts.replace(' ', 'T'));
-		if (isNaN(d.getTime())) return '';
-		return d.toLocaleDateString(loc, { year: 'numeric', month: 'numeric', day: 'numeric' });
-	}
+	const formatEntryDate = formatDateString;
 
 	const revealYearText = $derived.by(() => {
 		if (!inspectTrack) return '';
@@ -62,7 +57,9 @@
 					{playerName}
 				</h2>
 				<div class="flex items-center gap-3 text-sm font-medium text-slate-400">
-					<span class="text-cyan-400">{$_('scoring.pts', { values: { points: score.toLocaleString() } })}</span>
+					<span class="text-cyan-400"
+						>{$_('scoring.pts', { values: { points: score.toLocaleString() } })}</span
+					>
 					{#if timestamp}
 						<span class="text-slate-600">|</span>
 						<span class="tabular-nums">{formatEntryDate(timestamp, $locale || 'en')}</span>
