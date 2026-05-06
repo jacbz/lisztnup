@@ -773,9 +773,7 @@ export class TimelineGame {
 				gap,
 				seconds: secondsTaken,
 				streak: this.activePlayer.currentStreak,
-				isEdgePlacement,
-				correct: this.activePlayer.correctPlacements,
-				attempts: this.activePlayer.totalPlacements
+				isEdgePlacement
 			});
 			this.lastTurnScoreBreakdown = breakdown;
 			this.lastConsolationBreakdown = null;
@@ -813,9 +811,7 @@ export class TimelineGame {
 					break;
 				}
 			}
-			const correctGap = calculateGap(correctLeftYear, correctRightYear);
 			const consolation = calculateConsolationScore(
-				correctGap,
 				year,
 				correctLeftYear,
 				correctRightYear,
@@ -850,7 +846,7 @@ export class TimelineGame {
 					turnScore: scoreBreakdown?.score ?? consolationBreakdown?.consolation ?? 0,
 					secondsTaken,
 					streakCount: this.activePlayer.currentStreak,
-					gap: scoreBreakdown?.gap ?? consolationBreakdown?.gap ?? 0
+					gap: scoreBreakdown?.gap ?? consolationBreakdown?.dErr ?? 0
 				});
 				analytics.updateProgress({
 					numberOfTurns: this.totalTurns,

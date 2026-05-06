@@ -6,15 +6,14 @@ import { MIN_WORK_YEAR, MAX_WORK_YEAR } from '$lib/types/settings';
 import type { TurnScoreBreakdown, ConsolationBreakdown } from './timelineTypes';
 
 export const base = 1000;
-export const masteryCap = 500;
 export const speedBonus = 0.25;
-export const completionRate = 750;
+export const completionRate = 1000;
 
 /**
  * Difficulty bonus based on total slot density.
  */
 export function calculateDiff(gap: number): number {
-	return 2310 * (10 / (gap + 10));
+	return 3500 * (10 / (gap + 10));
 }
 
 /**
@@ -47,17 +46,11 @@ export function calculateStreakMult(streak: number): number {
  */
 export function calculateCompletion(target: number, attempts: number): number {
 	if (attempts <= 0) return 0;
-	return Math.round((target / attempts) ** 2 * (target * completionRate));
-}
+	const cardsNeeded = Math.max(0, target - 1);
+	if (cardsNeeded <= 0) return 0;
 
-/**
- * Mastery bonus based on accuracy with a one-mistake grace.
- * Mastery = masteryCap × min(1, correct / max(correct, attempts - 1))²
- */
-export function calculateMastery(correct: number, attempts: number): number {
-	if (attempts <= 0) return 0;
-	const acc = Math.min(1, correct / Math.max(correct, attempts - 1));
-	return masteryCap * acc * acc;
+	const flawlessMult = attempts === cardsNeeded ? 1.2 : 1.0;
+	return Math.round((cardsNeeded / attempts) ** 2 * (target * completionRate) * flawlessMult);
 }
 
 /**
@@ -89,10 +82,6 @@ export interface TurnScoreInput {
 	streak: number;
 	/** True when the card was placed at the start or end of the timeline. */
 	isEdgePlacement?: boolean;
-	/** Correct placements so far (including this one). */
-	correct: number;
-	/** Total attempts so far (including this one). */
-	attempts: number;
 }
 
 /**
@@ -101,11 +90,10 @@ export interface TurnScoreInput {
  */
 export function calculateTurnScore(input: TurnScoreInput): TurnScoreBreakdown {
 	const diff = Math.round(calculateDiff(input.gap));
-	const mastery = Math.round(calculateMastery(input.correct, input.attempts));
 	const speed = calculateSpeed(input.seconds);
 	const streakMult = calculateStreakMult(input.streak);
 
-	const scoreBeforeStreak = Math.round((base + diff + mastery) * speed);
+	const scoreBeforeStreak = Math.round((base + diff) * speed);
 	const score = Math.round(scoreBeforeStreak * streakMult);
 
 	return {
@@ -113,9 +101,6 @@ export function calculateTurnScore(input: TurnScoreInput): TurnScoreBreakdown {
 		diff,
 		gap: input.gap,
 		isEdgePlacement: input.isEdgePlacement ?? false,
-		mastery,
-		correct: input.correct,
-		attempts: input.attempts,
 		speed,
 		seconds: input.seconds,
 		streakMult,
@@ -128,15 +113,13 @@ export function calculateTurnScore(input: TurnScoreInput): TurnScoreBreakdown {
 // ─── Consolation score for incorrect placements ────────────
 
 /**
- * Small consolation bonus for incorrect placements, scaled by how
- * genuinely difficult the correct slot was.
+ * Small consolation bonus for incorrect placements, scaled by chronological
+ * distance from the nearest boundary of the correct slot.
  *
- * Formula: round(max(1, round(75 × gapF × edgeF)) × timeF)
- *   gapF  = max(0, (150 - gap) / 150)
- *   edgeF = max(0, (50 - dErr) / 50)
- *   timeF = max(0, min(1, (4 × target - attempts) / target))
+ * Formula: round(round(100 × 0.5^(dErr / 20)) × timeF)
+ *   cardsNeeded = target - 1
+ *   timeF = max(0, min(1, (4 × cardsNeeded - attempts) / cardsNeeded))
  *
- * @param gap        Year distance between the two boundary cards of the correct slot.
  * @param cardYear   The true year of the placed card.
  * @param leftYear   Year of the left boundary card (null if card belongs at far left).
  * @param rightYear  Year of the right boundary card (null if card belongs at far right).
@@ -144,7 +127,6 @@ export function calculateTurnScore(input: TurnScoreInput): TurnScoreBreakdown {
  * @param attempts   Player attempts so far, including this miss.
  */
 export function calculateConsolationScore(
-	gap: number,
 	cardYear: number,
 	leftYear: number | null,
 	rightYear: number | null,
@@ -154,17 +136,12 @@ export function calculateConsolationScore(
 	const left = leftYear ?? MIN_WORK_YEAR;
 	const right = rightYear ?? MAX_WORK_YEAR;
 	const dErr = Math.min(cardYear - left, right - cardYear);
+	const cardsNeeded = Math.max(0, target - 1);
+	const timeF =
+		cardsNeeded > 0 ? Math.max(0, Math.min(1, (4 * cardsNeeded - attempts) / cardsNeeded)) : 0;
 
-	const isEdgeSlot = leftYear === null || rightYear === null;
-	const boundaryYear = leftYear ?? rightYear ?? cardYear;
-	const consolationGap = isEdgeSlot ? Math.abs(boundaryYear - cardYear) * 4 : gap;
-
-	const gapF = Math.max(0, (150 - consolationGap) / 150);
-	const edgeF = Math.max(0, (50 - dErr) / 50);
-	const timeF = target > 0 ? Math.max(0, Math.min(1, (4 * target - attempts) / target)) : 0;
-
-	const baseConsolation = Math.max(1, Math.round(75 * gapF * edgeF));
+	const baseConsolation = Math.round(100 * 0.5 ** (dErr / 20));
 	const consolation = Math.round(baseConsolation * timeF);
 
-	return { consolation, gap: consolationGap, gapF, dErr, edgeF, timeF };
+	return { consolation, dErr, timeF };
 }

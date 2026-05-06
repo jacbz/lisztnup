@@ -98,6 +98,10 @@ export function formatReportMessage(
 		workGid === 'n/a'
 			? esc(work)
 			: `<a href="https://musicbrainz.org/search?query=wid%3A${escAttr(workGid)}-*&amp;type=work&amp;limit=25&amp;method=advanced">${esc(work)}</a>`;
+	const partLink =
+		partGid === 'n/a'
+			? esc(part)
+			: `<a href="https://musicbrainz.org/search?query=rid%3A${escAttr(partGid)}-*&amp;type=recording&amp;limit=25&amp;method=advanced">${esc(part)}</a>`;
 	const deezerLink =
 		deezerId === 'n/a'
 			? esc(deezerId)
@@ -106,10 +110,9 @@ export function formatReportMessage(
 	let text = `🚩 <b>Problem Report</b>\n\n`;
 	text += `<b>Composer:</b> ${composerLink}\n`;
 	text += `<b>Work:</b> ${workLink}\n`;
-	text += `<b>Part:</b> ${esc(part)}\n`;
+	text += `<b>Part:</b> ${partLink}\n`;
 	text += `<b>Type:</b> ${esc(workType)}\n`;
 	text += `<b>Years:</b> ${esc(workYears)}\n`;
-	text += `<b>Part GID:</b> ${esc(partGid)}\n`;
 	text += `<b>Deezer:</b> ${deezerLink}\n`;
 	text += `<b>Message:</b> ${esc(message)}\n`;
 	if (email) text += `<b>Email:</b> ${esc(email)}\n`;

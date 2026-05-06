@@ -113,31 +113,29 @@
 			scheduleTimeout(() => {
 				scrollToBottom();
 
-				// Phase 1: Count up point rows (base, difficulty, mastery)
+				// Phase 1: Count up point rows (base, difficulty)
 				const startTime = performance.now();
 				const pointDuration = 1200;
 				const pointTargets: Record<string, number> = {
 					base: scoreBreakdown!.base,
-					difficulty: scoreBreakdown!.diff,
-					mastery: scoreBreakdown!.mastery
+					difficulty: scoreBreakdown!.diff
 				};
 				const pointStagger: Record<string, number> = {
 					base: 0,
-					difficulty: 300,
-					mastery: 600
+					difficulty: 300
 				};
 
-				// Schedule speed & streak to appear while mastery is still counting
+				// Schedule speed & streak to appear while point rows are still counting
 				scheduleTimeout(() => {
 					rowVisible.speed = true;
 					rowVisible = rowVisible;
 					displayedValues = { ...displayedValues, speed: scoreBreakdown!.speed };
-				}, 1100);
+				}, 900);
 				scheduleTimeout(() => {
 					rowVisible.streak = true;
 					rowVisible = rowVisible;
 					displayedValues = { ...displayedValues, streak: scoreBreakdown!.streakMult };
-				}, 1400);
+				}, 1200);
 
 				function tickPoints(now: number) {
 					const elapsed = now - startTime;
@@ -381,27 +379,16 @@
 						>
 					</div>
 
-					<!-- Mastery -->
-					<div
-						class="flex items-center justify-between text-sm"
-						in:fly={{ y: 10, duration: 300, delay: 160, easing: cubicOut }}
-					>
-						<span class="text-slate-400">{$_('timeline.scoring.mastery')}</span>
-						<span class="font-bold text-violet-400 tabular-nums"
-							>+{$_('scoring.pts', { values: { points: fmtNum(displayedValues.mastery) } })}</span
-						>
-					</div>
-
 					<!-- Separator: point-based ↔ multiplier-based -->
 					<div
 						class="my-0.5 border-t border-dashed border-slate-700/30"
-						in:fly={{ y: 10, duration: 200, delay: 240, easing: cubicOut }}
+						in:fly={{ y: 10, duration: 200, delay: 160, easing: cubicOut }}
 					></div>
 
 					<!-- Speed (fade in, no number count-up) -->
 					<div
 						class="flex items-center justify-between text-sm"
-						in:fly={{ y: 10, duration: 300, delay: 320, easing: cubicOut }}
+						in:fly={{ y: 10, duration: 300, delay: 240, easing: cubicOut }}
 					>
 						<span class="flex items-center gap-1 text-slate-400">
 							<Zap class="h-3.5 w-3.5 text-cyan-400" />
@@ -420,7 +407,7 @@
 					<!-- Streak (fade in, no number count-up) -->
 					<div
 						class="flex items-center justify-between text-sm"
-						in:fly={{ y: 10, duration: 300, delay: 400, easing: cubicOut }}
+						in:fly={{ y: 10, duration: 300, delay: 320, easing: cubicOut }}
 					>
 						<span
 							class="flex items-center gap-1 {scoreBreakdown.streak >= 3
@@ -446,7 +433,7 @@
 
 					<div
 						class="my-1 border-t border-slate-700/60"
-						in:fly={{ y: 10, duration: 200, delay: 480, easing: cubicOut }}
+						in:fly={{ y: 10, duration: 200, delay: 400, easing: cubicOut }}
 					></div>
 
 					<!-- Completion Bonus (reserves space, content fades in) -->

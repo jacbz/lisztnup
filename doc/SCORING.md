@@ -8,7 +8,7 @@ All scores and components are rounded to the nearest integer. The final turn sco
 
 A correct placement instantly calculates a turn score:
 
-$$\text{Score} = (\text{Base} + \text{Diff} + \text{Mastery}) \times \text{Speed} \times \text{StreakMult}$$
+$$\text{Score} = (\text{Base} + \text{Diff}) \times \text{Speed} \times \text{StreakMult}$$
 
 ### Base Points ($\text{Base}$)
 
@@ -18,17 +18,11 @@ $$\text{Base} = 1000$$
 
 ### Difficulty Bonus ($\text{Diff}$)
 
-Rewards chronological difficulty. It is high when cards must be placed inside a short historical window.
+Rewards chronological difficulty. It is high when cards must be placed inside a short historical window, scaling up to double the base points for threading extremely tight needles.
 
-$$\text{Diff} = 2310 \times \frac{10}{\text{Gap} + 10}$$
+$$\text{Diff} = 3500 \times \frac{10}{\text{Gap} + 10}$$
 
-- **Total Gap ($\text{Gap}$):** The chronological distance between the two neighboring boundary years around the correct slot. Edge placements use the dataset boundary as the missing neighbor. To prevent degenerate score spikes from near-identical years, $\text{Gap}$ is floored at 25 years. The maximum obtained value for $\text{Diff}$ therefore is $2310 \times \frac{10}{35} = 660$.
-
-### Mastery Bonus ($\text{Mastery}$)
-
-Rewards high historical accuracy. The formula provides exactly 1 "free mistake" grace, after which the bonus decays quadratically. ($\text{Correct}$ = current correct cards; $\text{Attempts}$ = total attempts; $\text{MasteryCap}=500$).
-
-$$\text{Mastery} = \text{MasteryCap} \times \min\left(1, \frac{\text{Correct}}{\max(\text{Correct}, \text{Attempts} - 1)}\right)^2$$
+- **Total Gap ($\text{Gap}$):** The chronological distance between the two neighboring boundary years around the correct slot. Edge placements use the dataset boundary as the missing neighbor. To prevent degenerate score spikes from near-identical years, $\text{Gap}$ is floored at 25 years. The maximum obtained value for $\text{Diff}$ therefore is $3500 \times \frac{10}{35} = 1000$.
 
 ### Speed Multiplier ($\text{Speed}$)
 
@@ -60,28 +54,24 @@ $$\text{Streak}_{\text{new}} = \max\left(0, \min\left(\lfloor \text{Streak}/2 \r
 
 ## Wrong Placements (Consolation)
 
-Missed attempts yield a minor consolation score. It rewards players who "almost had it", but mathematically fades to $0$ if a game drags on, preventing bot-farming.
+Missed attempts yield a minor consolation score. It strictly evaluates chronological accuracy using a half-life decay, rewarding players who "almost had it" but mathematically fading to $0$ if a game drags on to prevent bot-farming.
 
-$$\text{Consolation} = \max\left(1, \text{round}(75 \times \text{GapF} \times \text{EdgeF})\right) \times \text{TimeF}$$
+$$\text{Consolation} = \text{round}\left(100 \times 0.5^{\frac{d_{\text{err}}}{20}}\right) \times \text{TimeF}$$
 
-- **Gap Factor ($\text{GapF}$):** Rewards missing in a narrow window (shrinks to 0 if the gap is $\ge 150$ years).
+- **Error Distance ($d_{\text{err}}$):** The absolute chronological distance in years between the drawn card's actual year and the nearest valid boundary of its _correct_ historical slot. (e.g., If an 1888 card belonged between 1879 and 1896, but was placed elsewhere, the nearest correct boundary missed was 1879. $d_{\text{err}} = |1888 - 1879| = 9$ years). The formula halves the awarded points every 20 years of inaccuracy.
+- **Cards Needed ($\text{CardsNeeded}$):** The actual number of correct placements required to finish the game ($\text{Target} - 1$, since every player begins with 1 card automatically on their timeline).
+- **Time Fade ($\text{TimeF}$):** Stays at $1.0$ through $3 \times \text{CardsNeeded}$ attempts, then linearly fades to $0$ by $4 \times \text{CardsNeeded}$.
 
-$$\text{GapF} = \max\left(0, \frac{150 - \text{Gap}}{150}\right)$$
-
-- **Edge-slot Gap:** If the correct slot is outside the current timeline, consolation does not use the dataset boundary gap. It uses the distance from the missed card to the single real boundary card ($d_{\text{boundary}}$), so far-out edge misses fade quickly:
-
-$$\text{Gap} = 4 \times d_{\text{boundary}}$$
-
-- **Edge Factor ($\text{EdgeF}$):** Rewards missing close to the actual correct slot boundary ($d_{\text{err}}$). Drops to 0 if off by $\ge 50$ years.
-
-$$\text{EdgeF} = \max\left(0, \frac{50 - d_{\text{err}}}{50}\right)$$
-
-- **Time Fade ($\text{TimeF}$):** Stays at $1.0$ through $3 \times \text{Target}$ attempts, then linearly fades to $0$ by $4 \times \text{Target}$.
-
-$$\text{TimeF} = \max\left(0, \min\left(1, \frac{4\text{Target} - \text{Attempts}}{\text{Target}}\right)\right)$$
+$$\text{TimeF} = \max\left(0, \min\left(1, \frac{4\times\text{CardsNeeded} - \text{Attempts}}{\text{CardsNeeded}}\right)\right)$$
 
 ## Completion Bonus
 
-Awarded instantly when a player places their target goal ($\text{Target}$) of cards. The squared ratio punishes players who require excessive attempts, preserving solo leaderboard integrity. $\text{CompletionRate}=750$.
+Awarded instantly when a player places their target goal ($\text{Target}$) of cards.
 
-$$\text{Completion} = \left(\frac{\text{Target}}{\text{Attempts}}\right)^2 \times (\text{Target} \times \text{CompletionRate})$$
+Because every player begins the game with 1 card automatically placed on their timeline, the baseline for efficiency is $\text{CardsNeeded}$. The squared ratio severely punishes players who require excessive attempts, ensuring that an incomplete timeline cannot win. $\text{CompletionRate}=1000$.
+
+$$\text{Completion} = \left(\frac{\text{CardsNeeded}}{\text{Attempts}}\right)^2 \times (\text{Target} \times \text{CompletionRate})$$
+
+### Flawless Bonus
+
+If a player successfully completes their timeline without making a single mistake throughout the entire game ($\text{Attempts} == \text{CardsNeeded}$), their mastery is explicitly rewarded with a final $1.2\times$ multiplier applied directly to the Completion Bonus.

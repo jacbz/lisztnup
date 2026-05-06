@@ -42,9 +42,6 @@ export interface TurnScoreBreakdown {
 	gap: number;
 	/** True when the card was placed at the start or end of the timeline. */
 	isEdgePlacement: boolean;
-	mastery: number;
-	correct: number;
-	attempts: number;
 	speed: number;
 	seconds: number;
 	streakMult: number;
@@ -56,10 +53,7 @@ export interface TurnScoreBreakdown {
 /** Breakdown of consolation points awarded on an incorrect placement. */
 export interface ConsolationBreakdown {
 	consolation: number;
-	gap: number;
-	gapF: number;
 	dErr: number;
-	edgeF: number;
 	timeF: number;
 }
 
