@@ -153,6 +153,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		if (nameProvided && playerName.length > MAX_NAME_LENGTH) {
 			return json({ success: false, reason: 'Invalid name' }, { status: 400 });
 		}
+		const storedPlayerName = nameProvided ? playerName.slice(0, MAX_NAME_LENGTH) : null;
 
 		// ── Range checks (self-contained, no DB dependency) ─
 		if (score < 0 || score > MAX_SCORE) {
@@ -188,20 +189,50 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		const userHash = await hashUser(ip, getCurrentSalt());
 		const country = platform.cf?.country || 'UNKNOWN';
 		const timestamp = parseClientTimestamp(occurredAt);
+		const logJson = log ? JSON.stringify(log) : null;
 
-		// ── Duplicate check: same session + player name (named submissions only) ──
-		// Anonymous auto-submits skip dedup — rate limiter prevents abuse,
-		// and GET collapses anonymous entries per token anyway.
-		if (nameProvided && sessionId && typeof sessionId === 'string') {
+		// ── Idempotency check: same session + player + exact score payload ──
+		// Anonymous submissions can be retried after the server inserted but the client
+		// missed the response, so dedupe them too without collapsing local multiplayer rows.
+		if (sessionId && typeof sessionId === 'string') {
+			const duplicateNameCondition = nameProvided ? 'player_name = ?3' : 'player_name IS NULL';
+			const duplicatePayload = nameProvided
+				? [
+						sessionId,
+						playerToken,
+						storedPlayerName,
+						Math.round(score),
+						Math.round(target),
+						Math.round(attempts),
+						tracklistId,
+						logJson
+					]
+				: [
+						sessionId,
+						playerToken,
+						Math.round(score),
+						Math.round(target),
+						Math.round(attempts),
+						tracklistId,
+						logJson
+					];
 			const dupCheck = await db
 				.prepare(
-					`SELECT COUNT(*) AS cnt FROM timeline_scores
-					 WHERE session_id = ?1 AND player_token = ?2 AND player_name = ?3`
+					`SELECT id FROM timeline_scores
+					 WHERE session_id = ?1
+					   AND player_token = ?2
+					   AND ${duplicateNameCondition}
+					   AND score = ?${nameProvided ? 4 : 3}
+					   AND target = ?${nameProvided ? 5 : 4}
+					   AND attempts = ?${nameProvided ? 6 : 5}
+					   AND tracklist_id = ?${nameProvided ? 7 : 6}
+					   AND (log = ?${nameProvided ? 8 : 7} OR (log IS NULL AND ?${nameProvided ? 8 : 7} IS NULL))
+					 ORDER BY id DESC LIMIT 1`
 				)
-				.bind(sessionId, playerToken, playerName.slice(0, MAX_NAME_LENGTH))
-				.first<{ cnt: number }>();
-			if (dupCheck && dupCheck.cnt > 0) {
-				return json({ success: false, reason: 'Already submitted' }, { status: 409 });
+				.bind(...duplicatePayload)
+				.first<{ id: number }>();
+			if (dupCheck) {
+				return json({ success: true, id: dupCheck.id });
 			}
 		}
 
@@ -226,7 +257,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 			.bind(
 				timestamp,
 				playerToken,
-				nameProvided ? playerName.slice(0, MAX_NAME_LENGTH) : null,
+				storedPlayerName,
 				Math.round(score),
 				Math.round(attempts),
 				Math.round(target),
@@ -236,7 +267,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				country,
 				userHash,
 				sessionId ?? null,
-				log ? JSON.stringify(log) : null
+				logJson
 			)
 			.run();
 
