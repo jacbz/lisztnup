@@ -7,7 +7,7 @@ const MAX_NAME_LENGTH = 30;
 const MAX_SCORE = 1_000_000;
 const MAX_CARDS = 500;
 const MAX_SCORE_PER_CARD = 6000;
-const MAX_SUBMISSIONS_PER_HOUR = 10;
+const MAX_SUBMISSIONS_PER_HOUR = 60;
 
 function parseClientTimestamp(value: unknown): string | null {
 	if (typeof value !== 'string') return null;

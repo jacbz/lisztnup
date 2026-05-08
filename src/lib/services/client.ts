@@ -285,6 +285,7 @@ export async function submitLeaderboard(
 	try {
 		const data = await fetchJson<{ success: boolean; id?: number }>('/api/game/leaderboard', {
 			method: 'POST',
+			keepalive: true,
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(body)
 		});
@@ -297,7 +298,8 @@ export async function submitLeaderboard(
 				(error instanceof ApiHttpError && isRetryableStatus(error.status)))
 		) {
 			enqueueWrite('POST', '/api/game/leaderboard', payload as unknown as JsonObject, {
-				occurredAt: body.occurredAt
+				occurredAt: body.occurredAt,
+				keepalive: true
 			});
 			return null;
 		}
@@ -312,6 +314,7 @@ export async function patchLeaderboardName(payload: {
 }) {
 	const data = await fetchJson<{ success: boolean }>('/api/game/leaderboard', {
 		method: 'PATCH',
+		keepalive: true,
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(payload)
 	});
