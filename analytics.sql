@@ -72,3 +72,12 @@ CREATE TABLE IF NOT EXISTS timeline_scores (
   session_id TEXT,
   log TEXT
 );
+
+CREATE TABLE IF NOT EXISTS logs (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+  severity TEXT NOT NULL,
+  message TEXT NOT NULL,
+  context TEXT,
+  session_id TEXT
+);

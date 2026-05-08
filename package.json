@@ -21,6 +21,7 @@
 		"lint": "prettier --check . && eslint ."
 	},
 	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20260508.1",
 		"@eslint/compat": "^2.0.5",
 		"@eslint/js": "^10.0.1",
 		"@sveltejs/adapter-cloudflare": "^7.2.8",

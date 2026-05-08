@@ -2,6 +2,7 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { hashUser, getCurrentSalt } from '$lib/server/analytics';
 import { formatD1TimestampAsGermanDate } from '$lib/utils/date';
+import { logger } from '$lib/server/logging';
 
 const MAX_NAME_LENGTH = 30;
 const MAX_SCORE = 1_000_000;
@@ -112,7 +113,9 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 
 		return json({ entries });
 	} catch (err) {
-		console.error('Leaderboard GET error:', err);
+		await logger.error(platform.env.DB, 'Leaderboard GET server error', {
+			context: { error: err instanceof Error ? err.message : String(err) }
+		});
 		return json({ entries: [] });
 	}
 };
@@ -121,6 +124,11 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 	if (!platform?.env?.DB) {
 		return json({ success: false, reason: 'No DB configured' }, { status: 503 });
 	}
+
+	const db = platform.env.DB;
+	const ip = getClientAddress() || request.headers.get('cf-connecting-ip') || '0.0.0.0';
+	const userHash = await hashUser(ip, getCurrentSalt());
+	const country = platform.cf?.country || 'UNKNOWN';
 
 	try {
 		const body = await request.json();
@@ -145,49 +153,105 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 			typeof target !== 'number' ||
 			typeof attempts !== 'number'
 		) {
+			await logger.warn(db, 'Leaderboard POST rejected: missing/invalid required fields', {
+				userHash,
+				country,
+				sessionId,
+				context: { hasToken: !!playerToken, score, target, attempts }
+			});
 			return json({ success: false, reason: 'Invalid payload' }, { status: 400 });
 		}
 		// playerName is optional — null means anonymous submission
 		const nameProvided =
 			playerName != null && typeof playerName === 'string' && playerName.length > 0;
 		if (nameProvided && playerName.length > MAX_NAME_LENGTH) {
+			await logger.warn(db, 'Leaderboard POST rejected: name too long', {
+				userHash,
+				country,
+				sessionId,
+				context: { nameLength: playerName.length }
+			});
 			return json({ success: false, reason: 'Invalid name' }, { status: 400 });
 		}
 		const storedPlayerName = nameProvided ? playerName.slice(0, MAX_NAME_LENGTH) : null;
 
 		// ── Range checks (self-contained, no DB dependency) ─
 		if (score < 0 || score > MAX_SCORE) {
+			await logger.warn(db, 'Leaderboard POST rejected: score out of range', {
+				userHash,
+				country,
+				sessionId,
+				context: { score }
+			});
 			return json({ success: false, reason: 'Score out of range' }, { status: 400 });
 		}
 		if (target < 1 || target > MAX_CARDS) {
+			await logger.warn(db, 'Leaderboard POST rejected: target out of range', {
+				userHash,
+				country,
+				sessionId,
+				context: { target }
+			});
 			return json({ success: false, reason: 'Target out of range' }, { status: 400 });
 		}
 		if (typeof tracklistId !== 'string' || tracklistId.length === 0) {
+			await logger.warn(db, 'Leaderboard POST rejected: invalid tracklist', {
+				userHash,
+				country,
+				sessionId,
+				context: { tracklistId }
+			});
 			return json({ success: false, reason: 'Invalid tracklist' }, { status: 400 });
 		}
 		if (attempts < Math.max(0, target - 1) || attempts > MAX_CARDS * 5) {
+			await logger.warn(db, 'Leaderboard POST rejected: attempts out of range', {
+				userHash,
+				country,
+				sessionId,
+				context: { attempts, target }
+			});
 			return json({ success: false, reason: 'Attempts out of range' }, { status: 400 });
 		}
 		if (
 			typeof averageTime === 'number' &&
 			(averageTime < 0 || averageTime > 3600 || !Number.isFinite(averageTime))
 		) {
+			await logger.warn(db, 'Leaderboard POST rejected: average time out of range', {
+				userHash,
+				country,
+				sessionId,
+				context: { averageTime }
+			});
 			return json({ success: false, reason: 'Average time out of range' }, { status: 400 });
 		}
 		if (typeof longestStreak === 'number' && (longestStreak < 0 || longestStreak > attempts)) {
+			await logger.warn(db, 'Leaderboard POST rejected: streak out of range', {
+				userHash,
+				country,
+				sessionId,
+				context: { longestStreak, attempts }
+			});
 			return json({ success: false, reason: 'Streak out of range' }, { status: 400 });
 		}
 		if (score > target * MAX_SCORE_PER_CARD) {
+			await logger.warn(db, 'Leaderboard POST rejected: score implausible', {
+				userHash,
+				country,
+				sessionId,
+				context: { score, target, maxPerCard: MAX_SCORE_PER_CARD }
+			});
 			return json({ success: false, reason: 'Score implausible' }, { status: 400 });
 		}
 		if (log && !isCompletedLog(log, target)) {
+			await logger.warn(db, 'Leaderboard POST rejected: incomplete replay', {
+				userHash,
+				country,
+				sessionId,
+				context: { target }
+			});
 			return json({ success: false, reason: 'Incomplete replay' }, { status: 400 });
 		}
 
-		const db = platform.env.DB;
-		const ip = getClientAddress() || request.headers.get('cf-connecting-ip') || '0.0.0.0';
-		const userHash = await hashUser(ip, getCurrentSalt());
-		const country = platform.cf?.country || 'UNKNOWN';
 		const timestamp = parseClientTimestamp(occurredAt);
 		const logJson = log ? JSON.stringify(log) : null;
 
@@ -273,7 +337,11 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 
 		return json({ success: true, id: result.meta.last_row_id });
 	} catch (err) {
-		console.error('Leaderboard POST error:', err);
+		await logger.error(db, 'Leaderboard POST server error', {
+			userHash,
+			country,
+			context: { error: err instanceof Error ? err.message : String(err) }
+		});
 		return json({ success: false, reason: 'Server error' }, { status: 500 });
 	}
 };
@@ -330,7 +398,9 @@ export const PATCH: RequestHandler = async ({ request, platform }) => {
 
 		return json({ success: true });
 	} catch (err) {
-		console.error('Leaderboard PATCH error:', err);
+		await logger.error(platform.env.DB, 'Leaderboard PATCH server error', {
+			context: { error: err instanceof Error ? err.message : String(err) }
+		});
 		return json({ success: false, reason: 'Server error' }, { status: 500 });
 	}
 };

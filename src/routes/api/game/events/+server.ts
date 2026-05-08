@@ -1,6 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { hashUser, getCurrentSalt } from '$lib/server/analytics';
+import { logger } from '$lib/server/logging';
 
 function parseClientTimestamp(value: unknown): string | null {
 	if (typeof value !== 'string') return null;
@@ -30,9 +31,10 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 
 		// Fire-and-forget the database operations using execution context
 		const dbOp = async () => {
-			try {
-				const db = platform.env!.DB;
+			const db = platform.env!.DB;
+			const commonLogFields = { userHash, country, sessionId: payload.sessionId };
 
+			try {
 				if (payload.type === 'game_start') {
 					// Use UPSERT to handle cases where game_end arrives first
 					await db
@@ -61,9 +63,10 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 						)
 						.run();
 				} else if (payload.type === 'game_end') {
+					const newState = payload.state || 'ended';
+
 					// Use UPSERT to handle cases where game_end arrives before game_start
 					const gameInfoJson = payload.gameInfo ? JSON.stringify(payload.gameInfo) : '{}';
-					const newState = payload.state || 'ended';
 
 					await db
 						.prepare(
@@ -110,7 +113,10 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 						.run();
 				}
 			} catch (e) {
-				console.error('Failed to write event to analytics:', e);
+				await logger.error(db, 'Failed to write event to analytics', {
+					...commonLogFields,
+					context: { error: e instanceof Error ? e.message : String(e), type: payload.type }
+				});
 			}
 		};
 

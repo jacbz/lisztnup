@@ -7,6 +7,7 @@ import {
 	formatSessionBlock
 } from '$lib/server/telegram';
 import type { GameSessionRow } from '$lib/server/telegram';
+import { logger } from '$lib/server/logging';
 
 function parseClientTimestamp(value: unknown): string | null {
 	if (typeof value !== 'string') return null;
@@ -22,6 +23,8 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 	if (!platform?.env?.DB) {
 		return json({ success: false, reason: 'No DB configured' }, { status: 503 });
 	}
+
+	const db = platform.env!.DB;
 
 	try {
 		const payload = await request.json();
@@ -39,9 +42,8 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		const country = cf?.country || 'UNKNOWN';
 		const email = typeof payload.email === 'string' ? payload.email.trim().slice(0, 254) : null;
 		const timestamp = parseClientTimestamp(payload.occurredAt);
-
-		const db = platform.env!.DB;
 		const sessionId = typeof payload.sessionId === 'string' ? payload.sessionId : null;
+
 		let sessionRow: GameSessionRow | null = null;
 		if (sessionId) {
 			sessionRow = await db
@@ -73,7 +75,12 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 					await sendTelegramMessage(token, chatId, text);
 				}
 			} catch (e) {
-				console.error('Failed to send feedback to Telegram:', e);
+				await logger.error(db, 'Failed to send feedback to Telegram', {
+					userHash,
+					country,
+					sessionId,
+					context: { error: e instanceof Error ? e.message : String(e) }
+				});
 			}
 		};
 
@@ -81,7 +88,9 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 
 		return json({ success: true });
 	} catch (e) {
-		console.error('Feedback payload error:', e);
+		await logger.error(db, 'Feedback payload error', {
+			context: { error: e instanceof Error ? e.message : String(e) }
+		});
 		return json({ success: false, error: 'Invalid payload' }, { status: 400 });
 	}
 };

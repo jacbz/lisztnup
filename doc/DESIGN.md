@@ -49,3 +49,13 @@
 - **Short UUIDs**: Use first 8 chars of MusicBrainz GIDs for storage/sharing efficiency. Resolve via `uuid.ts` utilities.
 - **localStorage**: All user settings auto-persisted immediately via `SettingsService`. Never batch writes.
 - **Compression**: Use `compression.ts` (browser `CompressionStream` API) for URL-shared tracklists.
+
+## Server-side Logging
+
+- **Database Persistence**: Diagnostic logs live in the D1 `logs` table, not Cloudflare console.
+- **Severity Levels**:
+  - `INFO`: Significant lifecycle events (game start, feedback received).
+  - `WARN`: Validation failures (score implausible, invalid payload), recoverable errors.
+  - `ERROR`: Backend failures (DB write error, Telegram API failure).
+- **Contextual Clarity**: `session_id` is kept as a top-level column for fast indexing/tracing. All other metadata (`userHash`, `country`, input values) is folded into the `context` JSON blob.
+- **Privacy**: Never log raw IP addresses. Use the hashed `userHash` for correlation.

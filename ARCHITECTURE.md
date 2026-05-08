@@ -29,6 +29,7 @@ src/
 │   │   └── timelineTypes.ts, timelineMotion.ts  Timeline types + shared card motion helpers
 │   ├── server/                Server-only code (Cloudflare Workers)
 │   │   ├── analytics.ts         User hashing (GDPR-compliant daily-rotating salt)
+│   │   ├── logging.ts           Database-backed diagnostic logger
 │   │   └── telegram.ts          Telegram Bot API notifications
 │   ├── game-logger.ts         Client-side analytics (GameAnalytics singleton)
 │   └── components/            UI components (see doc/FRONTEND.md)
@@ -123,6 +124,7 @@ Cloudflare Pages with D1 database. Config in `wrangler.toml`:
 | `problem_reports`     | User-reported issues    | `session_id`, `message`, `track_metadata` (JSON: MB/Deezer ids + labels)   |
 | `feedback`            | General user feedback   | `session_id`, `message`, `email`                                           |
 | `timeline_scores`     | Timeline solo scores    | `player_token`, `score`, `attempts`, `target`, `average_time`, `log`       |
+| `logs`                | Server-side diagnostics | `severity`, `message`, `context` (includes user/country), `session_id`     |
 
 All tables include `user_hash` (SHA-256 of IP + daily-rotating salt — never stores raw IPs) and `country` (from Cloudflare headers).
 

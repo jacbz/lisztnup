@@ -3,6 +3,7 @@ import type { RequestHandler } from './$types';
 import { hashUser, getCurrentSalt } from '$lib/server/analytics';
 import { sendTelegramMessage, formatReportMessage, formatSessionBlock } from '$lib/server/telegram';
 import type { GameSessionRow } from '$lib/server/telegram';
+import { logger } from '$lib/server/logging';
 
 function parseClientTimestamp(value: unknown): string | null {
 	if (typeof value !== 'string') return null;
@@ -102,7 +103,12 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 					await sendTelegramMessage(token, chatId, text);
 				}
 			} catch (e) {
-				console.error('Failed to send report to Telegram:', e);
+				await logger.error(db, 'Failed to send report to Telegram', {
+					userHash,
+					country,
+					sessionId,
+					context: { error: e instanceof Error ? e.message : String(e) }
+				});
 			}
 		};
 
@@ -110,7 +116,12 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 
 		return json({ success: true });
 	} catch (e) {
-		console.error('Report payload error:', e);
+		const db = platform.env?.DB;
+		if (db) {
+			await logger.error(db, 'Report payload error', {
+				context: { error: e instanceof Error ? e.message : String(e) }
+			});
+		}
 		return json({ success: false, error: 'Invalid payload' }, { status: 400 });
 	}
 };
