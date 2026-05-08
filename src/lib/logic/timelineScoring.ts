@@ -5,15 +5,76 @@
 import { MIN_WORK_YEAR, MAX_WORK_YEAR } from '$lib/types/settings';
 import type { TurnScoreBreakdown, ConsolationBreakdown } from './timelineTypes';
 
-export const base = 1000;
-export const speedBonus = 0.25;
-export const completionRate = 1000;
+export interface TimelineScoringParameters {
+	readonly id: string;
+	readonly label: string;
+	readonly base: number;
+	readonly difficultyScale: number;
+	readonly difficultyGapOffset: number;
+	readonly minimumGap: number;
+	readonly speedBonus: number;
+	readonly speedWindowSeconds: number;
+	readonly speedMaxBonusAtSeconds: number;
+	readonly streakMultiplierTiers: readonly { streak: number; multiplier: number }[];
+	readonly maxStreakMultiplier: number;
+	readonly maxStreakMultiplierAt: number;
+	readonly missStreakDivisor: number;
+	readonly missStreakSubtract: number;
+	readonly completionRate: number;
+	readonly completionFlawlessMultiplier: number;
+	readonly consolationBase: number;
+	readonly consolationHalfLifeYears: number;
+	readonly consolationFadeStartAttemptsMultiplier: number;
+	readonly consolationFadeEndAttemptsMultiplier: number;
+}
+
+export const PRODUCTION_TIMELINE_SCORING = {
+	id: 'production',
+	label: 'Production',
+	base: 1000,
+	difficultyScale: 3500,
+	difficultyGapOffset: 10,
+	minimumGap: 25,
+	speedBonus: 0.25,
+	speedWindowSeconds: 20,
+	speedMaxBonusAtSeconds: 1,
+	streakMultiplierTiers: [
+		{ streak: 2, multiplier: 1.1 },
+		{ streak: 3, multiplier: 1.35 },
+		{ streak: 4, multiplier: 1.55 },
+		{ streak: 5, multiplier: 1.75 }
+	],
+	maxStreakMultiplier: 2.0,
+	maxStreakMultiplierAt: 6,
+	missStreakDivisor: 2,
+	missStreakSubtract: 3,
+	completionRate: 1000,
+	completionFlawlessMultiplier: 1.2,
+	consolationBase: 100,
+	consolationHalfLifeYears: 20,
+	consolationFadeStartAttemptsMultiplier: 3,
+	consolationFadeEndAttemptsMultiplier: 4
+} as const satisfies TimelineScoringParameters;
+
+export const base = PRODUCTION_TIMELINE_SCORING.base;
+export const difficultyScale = PRODUCTION_TIMELINE_SCORING.difficultyScale;
+export const minimumGap = PRODUCTION_TIMELINE_SCORING.minimumGap;
+export const speedBonus = PRODUCTION_TIMELINE_SCORING.speedBonus;
+export const completionRate = PRODUCTION_TIMELINE_SCORING.completionRate;
+export const completionFlawlessMultiplier =
+	PRODUCTION_TIMELINE_SCORING.completionFlawlessMultiplier;
 
 /**
  * Difficulty bonus based on total slot density.
  */
-export function calculateDiff(gap: number): number {
-	return 3500 * (10 / (gap + 10));
+export function calculateDiff(
+	gap: number,
+	parameters: TimelineScoringParameters = PRODUCTION_TIMELINE_SCORING
+): number {
+	return (
+		parameters.difficultyScale *
+		(parameters.difficultyGapOffset / (gap + parameters.difficultyGapOffset))
+	);
 }
 
 /**
@@ -22,35 +83,68 @@ export function calculateDiff(gap: number): number {
  * Divides by 19 so that 1s taken yields the maximum bonus
  * while 0s (instant) is only marginally better. Returns exactly 1.0 for times ≥ 20s.
  */
-export function calculateSpeed(seconds: number): number {
-	return 1.0 + speedBonus * (Math.max(0, 20 - seconds) / 19) ** 2;
+export function calculateSpeed(
+	seconds: number,
+	parameters: TimelineScoringParameters = PRODUCTION_TIMELINE_SCORING
+): number {
+	const denominator = Math.max(
+		1,
+		parameters.speedWindowSeconds - parameters.speedMaxBonusAtSeconds
+	);
+	return (
+		1.0 +
+		parameters.speedBonus *
+			(Math.max(0, parameters.speedWindowSeconds - seconds) / denominator) ** 2
+	);
 }
 
 /**
  * Streak multiplier for consecutive correct placements.
  * The streak counter should already be incremented for the current turn.
  */
-export function calculateStreakMult(streak: number): number {
+export function calculateStreakMult(
+	streak: number,
+	parameters: TimelineScoringParameters = PRODUCTION_TIMELINE_SCORING
+): number {
 	if (streak <= 1) return 1.0;
-	if (streak === 2) return 1.1;
-	if (streak === 3) return 1.35;
-	if (streak === 4) return 1.55;
-	if (streak === 5) return 1.75;
-	if (streak >= 6) return 2.0;
+	if (streak >= parameters.maxStreakMultiplierAt) return parameters.maxStreakMultiplier;
+
+	const tier = parameters.streakMultiplierTiers.find((candidate) => candidate.streak === streak);
+	if (tier) return tier.multiplier;
+
 	return 1.0;
+}
+
+export function calculateMissStreak(
+	streak: number,
+	parameters: TimelineScoringParameters = PRODUCTION_TIMELINE_SCORING
+): number {
+	return Math.max(
+		0,
+		Math.min(
+			Math.floor(streak / parameters.missStreakDivisor),
+			streak - parameters.missStreakSubtract
+		)
+	);
 }
 
 /**
  * One-time completion bonus awarded when a player reaches the target.
  * Only players who reach the target receive this.
  */
-export function calculateCompletion(target: number, attempts: number): number {
+export function calculateCompletion(
+	target: number,
+	attempts: number,
+	parameters: TimelineScoringParameters = PRODUCTION_TIMELINE_SCORING
+): number {
 	if (attempts <= 0) return 0;
 	const cardsNeeded = Math.max(0, target - 1);
 	if (cardsNeeded <= 0) return 0;
 
-	const flawlessMult = attempts === cardsNeeded ? 1.2 : 1.0;
-	return Math.round((cardsNeeded / attempts) ** 2 * (target * completionRate) * flawlessMult);
+	const flawlessMult = attempts === cardsNeeded ? parameters.completionFlawlessMultiplier : 1.0;
+	return Math.round(
+		(cardsNeeded / attempts) ** 2 * (target * parameters.completionRate) * flawlessMult
+	);
 }
 
 /**
@@ -61,7 +155,11 @@ export function calculateCompletion(target: number, attempts: number): number {
  * Enforces a minimum gap of 25 years to prevent extreme difficulty bonuses
  * from near-identical placements.
  */
-export function calculateGap(leftYear: number | null, rightYear: number | null): number {
+export function calculateGap(
+	leftYear: number | null,
+	rightYear: number | null,
+	parameters: TimelineScoringParameters = PRODUCTION_TIMELINE_SCORING
+): number {
 	const left = leftYear ?? MIN_WORK_YEAR;
 	const right = rightYear ?? MAX_WORK_YEAR;
 
@@ -70,7 +168,7 @@ export function calculateGap(leftYear: number | null, rightYear: number | null):
 		return MAX_WORK_YEAR - MIN_WORK_YEAR;
 	}
 
-	return Math.max(25, right - left);
+	return Math.max(parameters.minimumGap, right - left);
 }
 
 // ─── Composite score calculation ───────────────────────────
@@ -88,16 +186,19 @@ export interface TurnScoreInput {
  * Calculate the full turn score breakdown for a correct placement.
  * All intermediate values are kept at full precision; round only for display.
  */
-export function calculateTurnScore(input: TurnScoreInput): TurnScoreBreakdown {
-	const diff = Math.round(calculateDiff(input.gap));
-	const speed = calculateSpeed(input.seconds);
-	const streakMult = calculateStreakMult(input.streak);
+export function calculateTurnScore(
+	input: TurnScoreInput,
+	parameters: TimelineScoringParameters = PRODUCTION_TIMELINE_SCORING
+): TurnScoreBreakdown {
+	const diff = Math.round(calculateDiff(input.gap, parameters));
+	const speed = calculateSpeed(input.seconds, parameters);
+	const streakMult = calculateStreakMult(input.streak, parameters);
 
-	const scoreBeforeStreak = Math.round((base + diff) * speed);
+	const scoreBeforeStreak = Math.round((parameters.base + diff) * speed);
 	const score = Math.round(scoreBeforeStreak * streakMult);
 
 	return {
-		base,
+		base: parameters.base,
 		diff,
 		gap: input.gap,
 		isEdgePlacement: input.isEdgePlacement ?? false,
@@ -131,16 +232,25 @@ export function calculateConsolationScore(
 	leftYear: number | null,
 	rightYear: number | null,
 	target: number,
-	attempts: number
+	attempts: number,
+	parameters: TimelineScoringParameters = PRODUCTION_TIMELINE_SCORING
 ): ConsolationBreakdown {
 	const left = leftYear ?? MIN_WORK_YEAR;
 	const right = rightYear ?? MAX_WORK_YEAR;
 	const dErr = Math.min(cardYear - left, right - cardYear);
 	const cardsNeeded = Math.max(0, target - 1);
+	const fadeStart = parameters.consolationFadeStartAttemptsMultiplier * cardsNeeded;
+	const fadeEnd = parameters.consolationFadeEndAttemptsMultiplier * cardsNeeded;
 	const timeF =
-		cardsNeeded > 0 ? Math.max(0, Math.min(1, (4 * cardsNeeded - attempts) / cardsNeeded)) : 0;
+		cardsNeeded <= 0
+			? 0
+			: attempts <= fadeStart
+				? 1
+				: Math.max(0, Math.min(1, (fadeEnd - attempts) / Math.max(1, fadeEnd - fadeStart)));
 
-	const baseConsolation = Math.round(100 * 0.5 ** (dErr / 20));
+	const baseConsolation = Math.round(
+		parameters.consolationBase * 0.5 ** (dErr / parameters.consolationHalfLifeYears)
+	);
 	const consolation = Math.round(baseConsolation * timeF);
 
 	return { consolation, dErr, timeF };

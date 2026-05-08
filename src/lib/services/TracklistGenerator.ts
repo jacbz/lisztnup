@@ -6,7 +6,7 @@ import {
 	type GuessCategory
 } from '$lib/types';
 import type { Composer, GameCatalog, Part, Track, Work } from '$lib/models';
-import { weightedRandom } from '$lib/utils/random';
+import { weightedRandom, type RandomSource } from '$lib/utils/random';
 
 interface ScoredWork {
 	work: Work;
@@ -19,6 +19,18 @@ interface CandidateWork {
 	parts: Part[];
 }
 
+export interface TracklistSamplePoolWork {
+	work: Work;
+	score: number;
+	parts: readonly Part[];
+}
+
+export interface TracklistSamplePool {
+	works: readonly TracklistSamplePoolWork[];
+	composers: readonly Composer[];
+	usePopularityWeighting: boolean;
+}
+
 /**
  * Tracklist generator that uses swap-and-pop sampling
  * Filters data once on initialization, then samples tracks on demand
@@ -27,14 +39,20 @@ export class TracklistGenerator {
 	private readonly data: GameCatalog;
 	private readonly tracklist: Tracklist;
 	private readonly requireWorkYear: boolean;
+	private readonly rng: RandomSource;
 
 	private filteredWorks: CandidateWork[] = [];
 	private filteredComposers: Composer[] = [];
 
-	constructor(data: GameCatalog, tracklist: Tracklist, options?: { requireWorkYear?: boolean }) {
+	constructor(
+		data: GameCatalog,
+		tracklist: Tracklist,
+		options?: { requireWorkYear?: boolean; rng?: RandomSource }
+	) {
 		this.data = data;
 		this.tracklist = tracklist;
 		this.requireWorkYear = options?.requireWorkYear ?? false;
+		this.rng = options?.rng ?? Math.random;
 
 		this.initializeData();
 	}
@@ -267,7 +285,11 @@ export class TracklistGenerator {
 
 		// Step 1: Select work with optional score weighting
 		const useWeighting = this.tracklist.config.enablePopularityWeighting ?? false;
-		const candidate = weightedRandom(this.filteredWorks, (i) => (useWeighting ? i.score : 1));
+		const candidate = weightedRandom(
+			this.filteredWorks,
+			(i) => (useWeighting ? i.score : 1),
+			this.rng
+		);
 
 		// Step 2: Check if work has parts
 		if (candidate.parts.length === 0) {
@@ -278,7 +300,8 @@ export class TracklistGenerator {
 		// Step 3: Select part with  score weighting and POP it
 		const partIndex = weightedRandom(
 			candidate.parts.map((_, i) => i),
-			(i) => (useWeighting ? candidate.parts[i].score : 1)
+			(i) => (useWeighting ? candidate.parts[i].score : 1),
+			this.rng
 		);
 		const part = candidate.parts[partIndex];
 
@@ -316,6 +339,18 @@ export class TracklistGenerator {
 			works: this.filteredWorks.length,
 			tracks: totalTracks,
 			allFemaleComposers
+		};
+	}
+
+	getSamplePool(): TracklistSamplePool {
+		return {
+			works: this.filteredWorks.map(({ work, score, parts }) => ({
+				work,
+				score,
+				parts: [...parts]
+			})),
+			composers: [...this.filteredComposers],
+			usePopularityWeighting: this.tracklist.config.enablePopularityWeighting ?? false
 		};
 	}
 

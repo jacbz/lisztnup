@@ -2,7 +2,7 @@
 
 This document defines the mathematical rules for timeline placements. The system rewards chronological precision, accuracy over time, and fast consecutive answers, while utilizing non-linear decay to strictly prevent score-farming exploits in long games. It was designed by iterating on thousands of simulated games with pre-defined player archetypes to ensure a fun, skill-based experience that still offers hope for underdogs.
 
-All scores and components are rounded to the nearest integer. The final turn score is the sum of correct placement points and consolation points (if applicable). The player's total score is the cumulative sum of all turn scores, plus any completion bonus when they reach their target goal.
+All scores and components are rounded to the nearest integer. The final turn score is the sum of correct placement points and consolation points (if applicable). The player's total score is the cumulative sum of all turn scores, plus any completion bonus when they reach their target goal. Production constants live in `PRODUCTION_TIMELINE_SCORING` so gameplay and simulations use the same parameters.
 
 ## Correct Placements
 
@@ -20,9 +20,10 @@ $$\text{Base} = 1000$$
 
 Rewards chronological difficulty. It is high when cards must be placed inside a short historical window, scaling up to double the base points for threading extremely tight needles.
 
-$$\text{Diff} = 3500 \times \frac{10}{\text{Gap} + 10}$$
+$$\text{Diff} = \text{DifficultyScale} \times \frac{10}{\text{Gap} + 10}$$
 
-- **Total Gap ($\text{Gap}$):** The chronological distance between the two neighboring boundary years around the correct slot. Edge placements use the dataset boundary as the missing neighbor. To prevent degenerate score spikes from near-identical years, $\text{Gap}$ is floored at 25 years. The maximum obtained value for $\text{Diff}$ therefore is $3500 \times \frac{10}{35} = 1000$.
+- **DifficultyScale:** `3500`.
+- **Total Gap ($\text{Gap}$):** The chronological distance between the two neighboring boundary years around the correct slot. Edge placements use the dataset boundary as the missing neighbor. To prevent degenerate score spikes from near-identical years, $\text{Gap}$ is floored at `MinimumGap = 25` years. The maximum obtained value for $\text{Diff}$ therefore is $3500 \times \frac{10}{35} = 1000$.
 
 ### Speed Multiplier ($\text{Speed}$)
 
@@ -74,4 +75,8 @@ $$\text{Completion} = \left(\frac{\text{CardsNeeded}}{\text{Attempts}}\right)^2 
 
 ### Flawless Bonus
 
-If a player successfully completes their timeline without making a single mistake throughout the entire game ($\text{Attempts} == \text{CardsNeeded}$), their mastery is explicitly rewarded with a final $1.2\times$ multiplier applied directly to the Completion Bonus.
+If a player successfully completes their timeline without making a single mistake throughout the entire game ($\text{Attempts} == \text{CardsNeeded}$), their mastery is explicitly rewarded with `CompletionFlawlessMultiplier = 1.2` applied directly to the Completion Bonus.
+
+## Simulation Suite
+
+The TypeScript suite in this directory runs seeded Timeline simulations with the real dataset, `TracklistGenerator` filtering, modeled player personas, and one or more `TimelineScoringParameters` presets. See [README.md](README.md) for commands, profiles, metrics, and JSON report details.

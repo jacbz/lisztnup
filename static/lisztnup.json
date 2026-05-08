@@ -7171,7 +7171,7 @@
       "death_year": 1893,
       "gender": "male",
       "country": "RU",
-      "score": 77.27
+      "score": 77.13
     },
     {
       "gid": "aae12a3d-8f00-410a-a87b-f19f8d7fd24e",
@@ -258121,40 +258121,6 @@
       ]
     },
     {
-      "gid": "1b1ebd2f",
-      "composer_gid": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
-      "name": "Swan Lake",
-      "type": "ballet",
-      "begin_year": null,
-      "end_year": null,
-      "score": 1.79,
-      "parts": [
-        {
-          "gid": "1b1ebd2f",
-          "name": "Swan Lake",
-          "deezer": [3317827611],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "81687c4d",
-      "composer_gid": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
-      "name": "Swan Lake, Ballet Suite, op. 20: Scene",
-      "type": "ballet",
-      "begin_year": null,
-      "end_year": null,
-      "score": 1.61,
-      "parts": [
-        {
-          "gid": "81687c4d",
-          "name": "Swan Lake, Ballet Suite, op. 20: Scene",
-          "deezer": [3036601211, 3288061],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "11f48c5e",
       "composer_gid": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
       "name": "Swan Lake, op. 20",
@@ -258252,35 +258218,6 @@
           "name": "Act IV, no. 29: Scene finale: Andante - Allegro agitato - Alla breve. Moderato e maestoso",
           "deezer": [3419359, 71726661, 2950791721, 71716138, 990418132],
           "score": 88.07
-        }
-      ]
-    },
-    {
-      "gid": "13867eb1",
-      "composer_gid": "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
-      "name": "Swan Lake, op. 20 (orch. Drigo)",
-      "type": "ballet",
-      "begin_year": 1876,
-      "end_year": 1876,
-      "score": 3.79,
-      "parts": [
-        {
-          "gid": "34103e67",
-          "name": "Swan Lake, op. 20: Act II: No. 13 Scène. Andante",
-          "deezer": [65584677],
-          "score": 89.82
-        },
-        {
-          "gid": "5b0ad9f9",
-          "name": "Swan Lake, op. 20: Act III: Pas de deux: II. Andante",
-          "deezer": [950213652],
-          "score": 100.0
-        },
-        {
-          "gid": "27e185cb",
-          "name": "Swan Lake, op. 20: Variation II. Valse-bluette",
-          "deezer": [65584698],
-          "score": 89.82
         }
       ]
     },

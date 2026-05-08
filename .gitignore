@@ -16,6 +16,7 @@ out/LIBRARY.md
 .vercel
 .netlify
 .wrangler
+scoring/results/
 /.svelte-kit
 /build
 

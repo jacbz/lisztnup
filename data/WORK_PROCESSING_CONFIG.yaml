@@ -322,6 +322,9 @@ excluded_works:
   '3428f35f-dac8-45ba-af0b-17e345edd355': 'The Yankee Doodle Blues'
   '9e337924-660c-4f92-b1b5-a81456db8572': '3rd Earth'
   'b4716010-6059-4673-8f2d-cc8073386918': 'The Dam Busters March'
+  '1b1ebd2f-62db-4663-959e-e30251713d71': 'Swan Lake'
+  '13867eb1-42c2-45ed-97d9-e1cc85b006fd': 'Swan Lake (Drigo)'
+  '81687c4d-2cc5-304f-9ae1-33e8555f7ef8': 'Swan Lake'
 
 # --- Work Significance Score (WSS) Overrides ---
 # Manually set the WSS for specific works.

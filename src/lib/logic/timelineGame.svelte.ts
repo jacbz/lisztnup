@@ -16,7 +16,8 @@ import {
 	calculateTurnScore,
 	calculateGap,
 	calculateCompletion,
-	calculateConsolationScore
+	calculateConsolationScore,
+	calculateMissStreak
 } from './timelineScoring';
 
 // Re-export types for convenience
@@ -791,9 +792,7 @@ export class TimelineGame {
 				this.activePlayer.reachedTarget = true;
 			}
 		} else {
-			// Soft decay: Min(½, −3) — drop to min(streak//2, streak−3), floor 0 for multiplier tier
-			const s = this.activePlayer.currentStreak;
-			this.activePlayer.currentStreak = Math.max(0, Math.min(Math.floor(s / 2), s - 3));
+			this.activePlayer.currentStreak = calculateMissStreak(this.activePlayer.currentStreak);
 			this.activePlayer.absoluteStreak = 0;
 			this.lastTurnScoreBreakdown = null;
 
@@ -1094,8 +1093,7 @@ export class TimelineGame {
 		this.preRevealCurrentStreak = this.activePlayer.currentStreak;
 		this.preRevealLongestStreak = this.activePlayer.longestStreak;
 		this.streakRevealPending = true;
-		const s = this.activePlayer.currentStreak;
-		this.activePlayer.currentStreak = Math.max(0, Math.min(Math.floor(s / 2), s - 3));
+		this.activePlayer.currentStreak = calculateMissStreak(this.activePlayer.currentStreak);
 		this.lastTurnScoreBreakdown = null;
 		this.lastConsolationBreakdown = null;
 		const secondsTaken = this.#turnStartTime > 0 ? (Date.now() - this.#turnStartTime) / 1000 : null;

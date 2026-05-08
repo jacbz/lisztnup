@@ -49,7 +49,7 @@ static/
 └── screenshots/               Mode rule screenshots
 data/                          Python data pipeline (MusicBrainz → Deezer)
 doc/                           Design docs + generated tracklist docs
-out/                           Generated tracklist reference docs (TRACKLIST_*.md)
+out/                           Generated docs; scoring/ has Timeline formulas, simulator, reports
 ```
 
 ## Layer Architecture

@@ -40,7 +40,7 @@ pnpm sync:tracklist   # Regenerate tracklist docs in out/
 | [doc/DESIGN.md](doc/DESIGN.md)           | Design principles, Svelte 5 patterns, Tailwind/styling rules, TypeScript conventions, i18n rules.                                                       |
 | [doc/FRONTEND.md](doc/FRONTEND.md)       | Component hierarchy, GameScreen base pattern, Popup conventions, SpinningWheel physics, animation patterns, component catalog.                          |
 | [doc/PRODUCT.md](doc/PRODUCT.md)         | Game modes & rules, game flow state machine, tracklist system, data pipeline, user-facing features.                                                     |
-| [doc/SCORING.md](doc/SCORING.md)         | Detailed scoring formulas and balance variables.                                                                                                        |
+| [scoring/SCORING.md](scoring/SCORING.md) | Detailed scoring formulas and balance variables.                                                                                                        |
 | [doc/RELIABILITY.md](doc/RELIABILITY.md) | Network resilience, audio fallbacks, Safari handling, state integrity guards, resource cleanup.                                                         |
 
 ## Documentation Maintenance
@@ -53,7 +53,7 @@ After implementing changes, **update the relevant doc file** — not all of them
 | Coding patterns, styling rules, i18n conventions                    | [doc/DESIGN.md](doc/DESIGN.md)           |
 | Components, popups, animations, UI patterns                         | [doc/FRONTEND.md](doc/FRONTEND.md)       |
 | Game rules, flow, tracklists, user features                         | [doc/PRODUCT.md](doc/PRODUCT.md)         |
-| Scoring formulas and balance variables                              | [doc/SCORING.md](doc/SCORING.md)         |
+| Scoring formulas and balance variables                              | [scoring/SCORING.md](scoring/SCORING.md) |
 | Error handling, resilience, cleanup, Safari workarounds             | [doc/RELIABILITY.md](doc/RELIABILITY.md) |
 
 **Anti-bloat rules:**
