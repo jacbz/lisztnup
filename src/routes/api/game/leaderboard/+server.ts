@@ -20,19 +20,7 @@ function parseClientTimestamp(value: unknown): string | null {
 	return new Date(ms).toISOString().slice(0, 19).replace('T', ' ');
 }
 
-function isCompletedLog(log: unknown, target: unknown): boolean {
-	if (!log || typeof log !== 'object') return false;
-	const replay = log as { v?: unknown; initial?: unknown; turns?: unknown };
-	if (replay.v !== 1 || !Array.isArray(replay.turns)) return false;
-	if (typeof target !== 'number' || !Number.isFinite(target) || target <= 0) {
-		return false;
-	}
-	const initialCount = typeof replay.initial === 'string' && replay.initial.length > 0 ? 1 : 0;
-	const correctTurns = replay.turns.filter(
-		(turn) => !!turn && typeof turn === 'object' && (turn as { ok?: unknown }).ok === true
-	).length;
-	return initialCount + correctTurns >= target;
-}
+import { isCompletedLog } from '$lib/logic/timelineReplayUtils';
 
 export const GET: RequestHandler = async ({ url, platform }) => {
 	if (!platform?.env?.DB) {

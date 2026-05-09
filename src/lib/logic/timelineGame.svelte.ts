@@ -828,10 +828,11 @@ export class TimelineGame {
 			part: track.part.gid,
 			index: idx,
 			ok: isCorrect,
-			seconds: Math.round(secondsTaken * 10) / 10,
+			seconds: Math.round(secondsTaken * 100) / 100,
 			points: Math.round(placementPoints),
 			streak: this.activePlayer.absoluteStreak,
-			score: Math.round(this.activePlayer.score)
+			score: Math.round(this.activePlayer.score),
+			year: this.#getTimelineYear(track)
 		});
 		this.#currentRoundScores[this.activePlayer.player.name] =
 			(this.#currentRoundScores[this.activePlayer.player.name] ?? 0) + scoreDelta;
@@ -1109,10 +1110,11 @@ export class TimelineGame {
 					part: entries[idx].track.part.gid,
 					index: idx,
 					ok: false,
-					seconds: secondsTaken === null ? null : Math.round(secondsTaken * 10) / 10,
+					seconds: secondsTaken === null ? null : Math.round(secondsTaken * 100) / 100,
 					points: 0,
-					streak: 0,
-					score: Math.round(this.activePlayer.score)
+					streak: this.activePlayer.currentStreak,
+					score: Math.round(this.activePlayer.score),
+					year: this.#getTimelineYear(entries[idx].track)
 				});
 
 				this.revealEntryId = entries[idx].id;
@@ -1134,10 +1136,11 @@ export class TimelineGame {
 				part: currentTrack.part.gid,
 				index: null,
 				ok: false,
-				seconds: secondsTaken === null ? null : Math.round(secondsTaken * 10) / 10,
+				seconds: secondsTaken === null ? null : Math.round(secondsTaken * 100) / 100,
 				points: 0,
-				streak: 0,
-				score: Math.round(this.activePlayer.score)
+				streak: this.activePlayer.currentStreak,
+				score: Math.round(this.activePlayer.score),
+				year: this.#getTimelineYear(currentTrack)
 			});
 			this.revealEntryId = null;
 			this.revealTrack = currentTrack;

@@ -6,6 +6,7 @@ export interface TimelineReplayTurn {
 	points: number;
 	streak: number;
 	score: number;
+	year?: number; // Optional for backward compatibility with older logs
 }
 
 export interface TimelineReplayLog {

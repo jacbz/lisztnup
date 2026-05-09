@@ -12,6 +12,7 @@
 		"score:sim:heavy": "tsx scoring/run.ts --profile heavy",
 		"score:test": "tsx scoring/tests.ts",
 		"score:check": "tsc --project tsconfig.scoring.json",
+		"recalculate-scores": "tsx scripts/recalculate-scores.ts",
 		"minify-json": "node -e \"const fs=require('fs');const data=JSON.parse(fs.readFileSync('.svelte-kit/cloudflare/lisztnup.json','utf8'));fs.writeFileSync('.svelte-kit/cloudflare/lisztnup.json',JSON.stringify(data))\"",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",

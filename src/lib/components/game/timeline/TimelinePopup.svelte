@@ -11,6 +11,7 @@
 	import Flame from 'lucide-svelte/icons/flame';
 	import { get } from 'svelte/store';
 	import { getStreakTextStyle } from '$lib/logic/timelineMotion';
+	import { calculateStreakMult } from '$lib/logic/timelineScoring';
 	import { Zap } from 'lucide-svelte';
 
 	const REPLAY_STEP_WIDTH_REM = 2.25;
@@ -311,7 +312,12 @@
 									style={pointStyle(turn)}
 								>
 									{#if turn.streak >= 3}
-										<Flame class="h-3 w-3 shrink-0" />
+										<div class="flex items-center">
+											<Flame class="h-3 w-3 shrink-0" />
+											<span class="text-[9px] font-bold opacity-80"
+												>{calculateStreakMult(turn.streak).toFixed(2)}×</span
+											>
+										</div>
 									{/if}
 									<span>+{turn.points.toLocaleString()}</span>
 								</div>
