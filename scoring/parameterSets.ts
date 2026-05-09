@@ -22,7 +22,7 @@ export const PARAMETER_SETS: readonly TimelineScoringParameters[] = [
 	// preset({
 	// 	id: 'precision-heavy',
 	// 	label: 'Precision Heavy',
-	// 	difficultyScale: 4200,
+	// 	difficultyMax: 1200,
 	// 	minimumGap: 20,
 	// 	speedBonus: 0.18,
 	// 	completionFlawlessMultiplier: 1.15

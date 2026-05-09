@@ -9,8 +9,9 @@ export interface TimelineScoringParameters {
 	readonly id: string;
 	readonly label: string;
 	readonly base: number;
-	readonly difficultyScale: number;
-	readonly difficultyGapOffset: number;
+	readonly difficultyMax: number;
+	readonly difficultyDecayRate: number;
+	readonly difficultyCliffShape: number;
 	readonly minimumGap: number;
 	readonly speedBonus: number;
 	readonly speedWindowSeconds: number;
@@ -32,9 +33,10 @@ export const PRODUCTION_TIMELINE_SCORING = {
 	id: 'production',
 	label: 'Production',
 	base: 1000,
-	difficultyScale: 3500,
-	difficultyGapOffset: 10,
-	minimumGap: 25,
+	difficultyMax: 1000,
+	difficultyDecayRate: 0.004,
+	difficultyCliffShape: 1.4,
+	minimumGap: 0,
 	speedBonus: 0.25,
 	speedWindowSeconds: 20,
 	speedMaxBonusAtSeconds: 1,
@@ -57,7 +59,7 @@ export const PRODUCTION_TIMELINE_SCORING = {
 } as const satisfies TimelineScoringParameters;
 
 export const base = PRODUCTION_TIMELINE_SCORING.base;
-export const difficultyScale = PRODUCTION_TIMELINE_SCORING.difficultyScale;
+export const difficultyMax = PRODUCTION_TIMELINE_SCORING.difficultyMax;
 export const minimumGap = PRODUCTION_TIMELINE_SCORING.minimumGap;
 export const speedBonus = PRODUCTION_TIMELINE_SCORING.speedBonus;
 export const completionRate = PRODUCTION_TIMELINE_SCORING.completionRate;
@@ -65,15 +67,16 @@ export const completionFlawlessMultiplier =
 	PRODUCTION_TIMELINE_SCORING.completionFlawlessMultiplier;
 
 /**
- * Difficulty bonus based on total slot density.
+ * Difficulty bonus based on chronological window size.
+ * Uses a Weibull decay curve to reward precision.
  */
 export function calculateDiff(
 	gap: number,
 	parameters: TimelineScoringParameters = PRODUCTION_TIMELINE_SCORING
 ): number {
 	return (
-		parameters.difficultyScale *
-		(parameters.difficultyGapOffset / (gap + parameters.difficultyGapOffset))
+		parameters.difficultyMax *
+		Math.exp(-parameters.difficultyDecayRate * Math.pow(gap, parameters.difficultyCliffShape))
 	);
 }
 

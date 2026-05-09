@@ -6,8 +6,7 @@ import {
 	calculateGap,
 	calculateMissStreak,
 	calculateSpeed,
-	calculateTurnScore,
-	PRODUCTION_TIMELINE_SCORING
+	calculateTurnScore
 } from '../src/lib/logic/timelineScoring';
 import { loadDataset, prepareTracklistPools } from './suite/dataset';
 import { compactSignature } from './suite/report';
@@ -24,9 +23,9 @@ import { buildWarnings } from './suite/warnings';
 import { resolveParameterSets } from './parameterSets';
 
 function testProductionScoring(): void {
-	assert.equal(calculateDiff(25), 1000);
+	assert.equal(Math.round(calculateDiff(25)), 696);
 	assert.equal(calculateSpeed(1), 1.25);
-	assert.equal(calculateGap(1800, 1810), PRODUCTION_TIMELINE_SCORING.minimumGap);
+	assert.equal(calculateGap(1800, 1810), 10);
 	assert.equal(calculateCompletion(6, 5), 7200);
 	assert.equal(calculateMissStreak(8), 4);
 	assert.equal(calculateMissStreak(5), 2);
@@ -44,9 +43,9 @@ function testProductionScoring(): void {
 
 	const score = calculateTurnScore({ gap: 25, seconds: 1, streak: 5 });
 	assert.equal(score.base, 1000);
-	assert.equal(score.diff, 1000);
-	assert.equal(score.scoreBeforeStreak, 2500);
-	assert.equal(score.score, 4375);
+	assert.equal(score.diff, 696);
+	assert.equal(score.scoreBeforeStreak, 2120);
+	assert.equal(score.score, 3710);
 }
 
 function runTinyReport(seed: string) {

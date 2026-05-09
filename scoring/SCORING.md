@@ -18,12 +18,25 @@ $$\text{Base} = 1000$$
 
 ### Difficulty Bonus ($\text{Diff}$)
 
-Rewards chronological difficulty. It is high when cards must be placed inside a short historical window, scaling up to double the base points for threading extremely tight needles.
+Rewards chronological difficulty. It is highest when cards are placed inside a short historical window. The reward utilizes a Weibull decay curve, ensuring a noticeable initial point penalty for slightly wide gaps while maintaining a generous middle ground, before dropping off an aggressive mathematical cliff for gaps wider than 50 years.
 
-$$\text{Diff} = \text{DifficultyScale} \times \frac{10}{\text{Gap} + 10}$$
+$$\text{Diff} = \text{round}\left( \text{DiffMax} \times e^{-\text{DecayRate} \times \text{Gap}^{\text{CliffShape}}} \right)$$
 
-- **DifficultyScale:** `3500`.
-- **Total Gap ($\text{Gap}$):** The chronological distance between the two neighboring boundary years around the correct slot. Edge placements use the dataset boundary as the missing neighbor. To prevent degenerate score spikes from near-identical years, $\text{Gap}$ is floored at `MinimumGap = 25` years. The maximum obtained value for $\text{Diff}$ therefore is $3500 \times \frac{10}{35} = 1000$.
+- **Total Gap ($\text{Gap}$):** The chronological distance between the two neighboring boundary years around the correct slot. Edge placements use the dataset boundary as the missing neighbor.
+- **$\text{DiffMax} = 1000$:** The maximum possible bonus, awarded for threading a flawless 0-year gap.
+- **$\text{DecayRate} = 0.004$:** The scale parameter. Controls the overall "speed" of the point loss. Increasing this value causes points to drop faster across all gap sizes. Decreasing it makes the entire timeline more forgiving.
+- **$\text{CliffShape} = 1.4$:** The shape parameter. Controls the "bend" of the curve. A value of $1.0$ would yield a standard steady exponential drop, leaving wide gaps too highly rewarded. A value $> 1.0$ creates the "cliff" effect. It forces the curve to stay relatively flat for small gaps (protecting the 0–25 year range) before accelerating downward to aggressively crush the value of wide gaps (75+ years).
+
+| Gap Size (Years) | Difficulty Bonus |
+| :--------------- | :--------------- |
+| 0                | 1000             |
+| 5                | 963              |
+| 10               | 904              |
+| 25               | 696              |
+| 50               | 384              |
+| 75               | 185              |
+| 100              | 80               |
+| 150+             | < 15             |
 
 ### Speed Multiplier ($\text{Speed}$)
 
