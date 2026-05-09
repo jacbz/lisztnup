@@ -56,12 +56,18 @@ export function flyTimelineCardFromCenter(
 	};
 }
 
-export function getStreakHeat(streak: number): number {
-	return Math.min(Math.max((streak - 3) / 12, 0), 1);
+/**
+ * Multiplier to Heat [0, 1] mapping.
+ * 1.35x (streak 3) is the start of visible heat.
+ * 2.0x (streak 6+) is maximum heat.
+ */
+export function getStreakHeat(multiplier: number): number {
+	if (multiplier < 1.35) return 0;
+	return Math.min(Math.max((multiplier - 1.35) / 0.65, 0), 1);
 }
 
-export function getStreakRgb(streak: number) {
-	const t = getStreakHeat(streak);
+export function getStreakRgb(multiplier: number) {
+	const t = getStreakHeat(multiplier);
 	return {
 		r: Math.round(251 - t * 31),
 		g: Math.round(146 - t * 108),
@@ -69,17 +75,17 @@ export function getStreakRgb(streak: number) {
 	};
 }
 
-export function getStreakTextStyle(streak: number): string {
-	const { r, g, b } = getStreakRgb(streak);
+export function getStreakTextStyle(multiplier: number): string {
+	const { r, g, b } = getStreakRgb(multiplier);
 	return `color: rgb(${r}, ${g}, ${b});`;
 }
 
-export function getStreakGlow(streak: number, active: boolean): string {
-	if (streak < 3) return '';
-	const t = getStreakHeat(streak);
+export function getStreakGlow(multiplier: number, active: boolean): string {
+	if (multiplier < 1.35) return '';
+	const t = getStreakHeat(multiplier);
 	const dim = active ? 1 : 0.5;
 	const spread = (40 + t * 40) * dim;
 	const opacity = (0.55 + t * 0.35) * dim;
-	const { r, g, b } = getStreakRgb(streak);
+	const { r, g, b } = getStreakRgb(multiplier);
 	return `0 0 ${spread}px rgba(${r},${g},${b},${opacity})`;
 }

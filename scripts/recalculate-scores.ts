@@ -12,7 +12,9 @@ async function main() {
 		output: process.stdout
 	});
 
-	console.log('Exporting timeline_scores from D1 (this might take a moment)...');
+	const isLocal = process.argv.includes('--local');
+
+	console.log(`Exporting timeline_scores from ${isLocal ? 'local' : 'remote'} D1...`);
 	const tempSqlPath = 'temp-scores.sql';
 	const tempJsonPath = 'temp-scores.json';
 	const updatesSqlPath = 'updates.sql';
@@ -20,7 +22,7 @@ async function main() {
 	try {
 		// 1. Export from D1
 		execSync(
-			`npx wrangler d1 export lisztnup-analytics --remote --output=${tempSqlPath} --table timeline_scores`,
+			`npx wrangler d1 export lisztnup-analytics ${isLocal ? '--local' : '--remote'} --output=${tempSqlPath} --table timeline_scores --skip-confirmation`,
 			{ stdio: 'inherit' }
 		);
 
@@ -56,10 +58,15 @@ async function main() {
 
 		console.log(`Processing ${scores.length} scores chronologically...`);
 
-		const updates: { id: number; oldScore: number; newScore: number; log: string; timestamp: string }[] = [];
+		const updates: {
+			id: number;
+			oldScore: number;
+			newScore: number;
+			log: string;
+			timestamp: string;
+		}[] = [];
 		let totalOldScore = 0;
 		let totalNewScore = 0;
-		let firstSample: { oldLog: TimelineReplayLog; newLog: TimelineReplayLog } | null = null;
 
 		for (const row of scores) {
 			const oldScore = row.score;
@@ -86,21 +93,20 @@ async function main() {
 			// Final score check
 			if (isScoreChanged) {
 				const diffValue = newScore - oldScore;
-				warnings.push(`Final score mismatch! Log: ${oldScore}, Logic: ${newScore} (${diffValue > 0 ? '+' : ''}${diffValue})`);
+				warnings.push(
+					`Final score mismatch! Log: ${oldScore}, Logic: ${newScore} (${diffValue > 0 ? '+' : ''}${diffValue})`
+				);
 			}
 
 			if (warnings.length > 0) {
 				const dateStr = new Date(row.timestamp).toLocaleString();
 				console.log(`\n--- Warnings for ID ${row.id} (${dateStr}) ---`);
 				for (const w of warnings) {
-					console.log(`  ID ${row.id}: ${w}`);
+					console.log(`  ${w}`);
 				}
 			}
 
 			if (isScoreChanged || isLogChanged) {
-				if (!firstSample) {
-					firstSample = { oldLog, newLog };
-				}
 				updates.push({
 					id: row.id,
 					oldScore,
@@ -114,17 +120,6 @@ async function main() {
 		}
 
 		if (updates.length > 0) {
-			if (firstSample) {
-				console.log('\n=============================================');
-				console.log('=== SAMPLE LOG CHANGE (FIRST ENCOUNTERED) ===');
-				console.log('=============================================');
-				console.log('OLD LOG:');
-				console.log(JSON.stringify(firstSample.oldLog, null, 2));
-				console.log('\nNEW LOG:');
-				console.log(JSON.stringify(firstSample.newLog, null, 2));
-				console.log('=============================================\n');
-			}
-
 			console.log('\n--- Recalculation Statistics ---');
 			const diffs = updates.map((u) => u.newScore - u.oldScore);
 			const avgDiff = diffs.reduce((a, b) => a + b, 0) / updates.length;
@@ -139,7 +134,9 @@ async function main() {
 			console.log(`Total points shift:    ${totalNewScore - totalOldScore} pts`);
 
 			console.log('\n--- Top 20 Score Increases ---');
-			const sortedByInc = [...updates].sort((a, b) => (b.newScore - b.oldScore) - (a.newScore - a.oldScore));
+			const sortedByInc = [...updates].sort(
+				(a, b) => b.newScore - b.oldScore - (a.newScore - a.oldScore)
+			);
 			console.table(
 				sortedByInc.slice(0, 20).map((u) => ({
 					Date: new Date(u.timestamp).toLocaleDateString(),
@@ -151,7 +148,9 @@ async function main() {
 			);
 
 			console.log('\n--- Top 20 Score Decreases ---');
-			const sortedByDec = [...updates].sort((a, b) => (a.newScore - a.oldScore) - (b.newScore - b.oldScore));
+			const sortedByDec = [...updates].sort(
+				(a, b) => a.newScore - a.oldScore - (b.newScore - b.oldScore)
+			);
 			console.table(
 				sortedByDec.slice(0, 20).map((u) => ({
 					Date: new Date(u.timestamp).toLocaleDateString(),
@@ -172,12 +171,17 @@ async function main() {
 			fs.writeFileSync(updatesSqlPath, sql);
 			console.log(`\nWritten ${updates.length} updates to ${updatesSqlPath}`);
 
-			const answer = await rl.question('\nApply these updates to D1? (y/N) ');
+			const answer = await rl.question(
+				`\nApply these updates to ${isLocal ? 'local' : 'remote'} D1? (y/N) `
+			);
 			if (answer.toLowerCase() === 'y' || answer.toLowerCase() === 'yes') {
 				console.log('Applying updates...');
-				execSync(`wrangler d1 execute lisztnup-analytics --remote --file=${updatesSqlPath}`, {
-					stdio: 'inherit'
-				});
+				execSync(
+					`wrangler d1 execute lisztnup-analytics ${isLocal ? '--local' : '--remote'} --file=${updatesSqlPath} --yes`,
+					{
+						stdio: 'inherit'
+					}
+				);
 				console.log('Done!');
 				fs.unlinkSync(updatesSqlPath);
 			} else {

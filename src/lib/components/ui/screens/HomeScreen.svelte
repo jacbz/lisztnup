@@ -380,6 +380,7 @@
 		return {
 			v: 1,
 			initial: typeof parsed.initial === 'string' ? parsed.initial : null,
+			score: typeof parsed.score === 'number' ? parsed.score : 0,
 			completionBonus:
 				typeof parsed.completionBonus === 'number' && Number.isFinite(parsed.completionBonus)
 					? parsed.completionBonus

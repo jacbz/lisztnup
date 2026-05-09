@@ -147,6 +147,7 @@
 		return {
 			v: 1,
 			initial: t.initialPartGid,
+			score: Math.round(t.score),
 			completionBonus: Math.round(t.completionBonus),
 			turns: t.replayTurns
 		};

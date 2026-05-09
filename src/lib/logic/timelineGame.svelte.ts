@@ -17,7 +17,8 @@ import {
 	calculateGap,
 	calculateCompletion,
 	calculateConsolationScore,
-	calculateMissStreak
+	calculateMissStreak,
+	calculateStreakMult
 } from './timelineScoring';
 
 // Re-export types for convenience
@@ -830,7 +831,7 @@ export class TimelineGame {
 			ok: isCorrect,
 			seconds: Math.round(secondsTaken * 100) / 100,
 			points: Math.round(placementPoints),
-			streak: this.activePlayer.absoluteStreak,
+			streak: calculateStreakMult(this.activePlayer.currentStreak),
 			score: Math.round(this.activePlayer.score),
 			year: this.#getTimelineYear(track)
 		});
@@ -1112,7 +1113,7 @@ export class TimelineGame {
 					ok: false,
 					seconds: secondsTaken === null ? null : Math.round(secondsTaken * 100) / 100,
 					points: 0,
-					streak: this.activePlayer.currentStreak,
+					streak: calculateStreakMult(this.activePlayer.currentStreak),
 					score: Math.round(this.activePlayer.score),
 					year: this.#getTimelineYear(entries[idx].track)
 				});
@@ -1138,7 +1139,7 @@ export class TimelineGame {
 				ok: false,
 				seconds: secondsTaken === null ? null : Math.round(secondsTaken * 100) / 100,
 				points: 0,
-				streak: this.activePlayer.currentStreak,
+				streak: calculateStreakMult(this.activePlayer.currentStreak),
 				score: Math.round(this.activePlayer.score),
 				year: this.#getTimelineYear(currentTrack)
 			});

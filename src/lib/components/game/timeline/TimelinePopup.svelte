@@ -10,8 +10,7 @@
 	import { formatDateString, formatYearRange } from '$lib/utils';
 	import Flame from 'lucide-svelte/icons/flame';
 	import { get } from 'svelte/store';
-	import { getStreakTextStyle } from '$lib/logic/timelineMotion';
-	import { calculateStreakMult } from '$lib/logic/timelineScoring';
+	import { getStreakTextStyle, getStreakGlow } from '$lib/logic/timelineMotion';
 	import { Zap } from 'lucide-svelte';
 
 	const REPLAY_STEP_WIDTH_REM = 2.25;
@@ -195,12 +194,19 @@
 	}
 
 	function pointClass(turn: TimelineReplayTurn): string {
-		if (turn.streak >= 3) return '';
+		if (turn.streak >= 1.35) return '';
 		return turn.points > 0 ? 'text-cyan-300' : 'text-slate-500';
 	}
 
+	function getTurnStreakStyle(turn: TimelineReplayTurn): string {
+		if (turn.streak < 1.35) return '';
+		const glow = getStreakGlow(turn.streak, false);
+		const color = turn.streak >= 1.35 ? getStreakTextStyle(turn.streak) : '';
+		return `${color} ${glow ? `text-shadow: ${glow};` : ''}`;
+	}
+
 	function pointStyle(turn: TimelineReplayTurn): string {
-		const color = turn.streak >= 3 ? getStreakTextStyle(turn.streak) : '';
+		const color = turn.streak >= 1.35 ? getStreakTextStyle(turn.streak) : '';
 		return `${color} font-weight: ${pointWeight(turn.points)};`;
 	}
 
@@ -308,14 +314,17 @@
 								class="flex flex-col justify-end text-center text-[11px] leading-none tabular-nums"
 							>
 								<div
-									class="flex flex-col items-center justify-end gap-0.5 {pointClass(turn)}"
+									class="relative flex flex-col items-center justify-end gap-0.5 {pointClass(turn)}"
 									style={pointStyle(turn)}
 								>
-									{#if turn.streak >= 3}
-										<div class="flex items-center">
-											<Flame class="h-3 w-3 shrink-0" />
-											<span class="text-[9px] font-bold opacity-80"
-												>{calculateStreakMult(turn.streak).toFixed(2)}×</span
+									{#if turn.streak >= 1.35}
+										<div
+											class="absolute -top-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-0.5"
+										>
+											<Flame class="h-4 w-4 fill-current" />
+											<span
+												class="text-[10px] font-bold tabular-nums tracking-tighter"
+												style={getTurnStreakStyle(turn)}>{turn.streak.toFixed(2)}×</span
 											>
 										</div>
 									{/if}
