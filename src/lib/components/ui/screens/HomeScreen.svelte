@@ -170,7 +170,7 @@
 		if (selectedMode === 'timeline' && browser) {
 			const tracklist = localSettings.selectedTracklist;
 			const target = localSettings.timelineTarget;
-			const limit = showExpandedLeaderboard ? 20 : 6;
+			const limit = showExpandedLeaderboard ? 25 : 6;
 			const filterKey = `${tracklist}:${target}`;
 			const requestId = ++leaderboardRequestId;
 

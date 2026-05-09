@@ -72,7 +72,8 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 						ROW_NUMBER() OVER (PARTITION BY tracklist_id, target ORDER BY score DESC, log IS NOT NULL DESC, timestamp DESC) AS rn
 					FROM timeline_scores${whereClause}
 				)
-				SELECT ${cols}
+				SELECT ${cols},
+					RANK() OVER (ORDER BY timestamp DESC) as rank
 				FROM ranked
 				WHERE rn = 1
 				ORDER BY timestamp DESC LIMIT ?${binds.length + 1}`
@@ -86,16 +87,23 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 					SELECT player_token, MAX(score) AS max_named_score
 					FROM deduped WHERE player_name IS NOT NULL
 					GROUP BY player_token
+				), final_list AS (
+					SELECT d.player_token, d.player_name, d.score, d.attempts, d.target, d.average_time, d.longest_streak, d.tracklist_id, d.country, d.timestamp, d.log,
+						RANK() OVER (ORDER BY d.score DESC, d.log IS NOT NULL DESC, d.timestamp DESC) as rank
+					FROM deduped d
+					LEFT JOIN max_named mn ON d.player_token = mn.player_token
+					WHERE d.player_name IS NOT NULL
+						OR mn.player_token IS NULL
+						OR d.score > mn.max_named_score
 				)
-				SELECT d.player_token, d.player_name, d.score, d.attempts, d.target, d.average_time, d.longest_streak, d.tracklist_id, d.country, d.timestamp, d.log
-				FROM deduped d
-				LEFT JOIN max_named mn ON d.player_token = mn.player_token
-				WHERE d.player_name IS NOT NULL
-					OR mn.player_token IS NULL
-					OR d.score > mn.max_named_score
-				ORDER BY d.score DESC LIMIT ?${binds.length + 1}`;
+				SELECT * FROM final_list
+				${playerToken ? `WHERE rank <= ?${binds.length + 1} OR rank = (SELECT rank FROM final_list WHERE player_token = ?${binds.length + 2} ORDER BY rank ASC LIMIT 1)` : `WHERE rank <= ?${binds.length + 1}`}
+				ORDER BY rank ASC`;
 
 		binds.push(limit);
+		if (playerToken && !records) {
+			binds.push(playerToken);
+		}
 
 		const results = await platform.env.DB.prepare(sql)
 			.bind(...binds)

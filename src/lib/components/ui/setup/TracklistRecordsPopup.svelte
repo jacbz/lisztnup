@@ -65,20 +65,16 @@
 					return (
 						(a.country ?? '').localeCompare(b.country ?? '', currentLocale) ||
 						b.score - a.score ||
-						getTimestampMs(b) - getTimestampMs(a)
+						a.rank - b.rank
 					);
 				case 'points':
-					return b.score - a.score || getTimestampMs(b) - getTimestampMs(a);
+					return b.score - a.score || a.rank - b.rank;
 				case 'date':
 				default:
-					return getTimestampMs(b) - getTimestampMs(a) || b.score - a.score;
+					return a.rank - b.rank;
 			}
 		});
 	});
-
-	function getTimestampMs(entry: LeaderboardEntry): number {
-		return entry.timestamp ? Date.parse(entry.timestamp) || 0 : 0;
-	}
 
 	function getTracklist(tracklistId: string | undefined): Tracklist | undefined {
 		return tracklists.find((t) => t.id === tracklistId);

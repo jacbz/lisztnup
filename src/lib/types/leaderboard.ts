@@ -1,4 +1,5 @@
 export interface LeaderboardEntry {
+	rank: number;
 	player_name: string | null;
 	score: number;
 	attempts: number;

@@ -23,14 +23,14 @@
 	}: Props = $props();
 </script>
 
-{#snippet leaderboardRow(entry: LeaderboardEntry, rank: number)}
+{#snippet leaderboardRow(entry: LeaderboardEntry)}
 	<tr>
 		<td
 			class="pr-2 text-center font-bold"
 			class:text-cyan-400={entry.is_me}
 			class:text-slate-500={!entry.is_me}
 		>
-			{rank}
+			{entry.rank}
 		</td>
 		<td
 			class="max-w-0 truncate"
@@ -87,12 +87,18 @@
 			</colgroup>
 			<tbody>
 				{#each entries.slice(0, 5) as entry, i (i)}
-					{@render leaderboardRow(entry, i + 1)}
+					{@render leaderboardRow(entry)}
 				{/each}
-				{#if showExpanded && entries.length > 5}
+
+				{#if showExpanded}
 					{#each entries.slice(5) as entry, i (i)}
-						{@render leaderboardRow(entry, i + 6)}
+						{@render leaderboardRow(entry)}
 					{/each}
+				{:else if entries.length > 5}
+					{@const myEntry = entries.slice(5).find((e) => e.is_me)}
+					{#if myEntry}
+						{@render leaderboardRow(myEntry)}
+					{/if}
 				{/if}
 			</tbody>
 		</table>
