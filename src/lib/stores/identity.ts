@@ -2,6 +2,40 @@ import { browser } from '$app/environment';
 
 const STORAGE_KEY = 'lisztnup_player_token';
 
+// Handle domain migration
+if (browser) {
+	const urlParams = new URLSearchParams(window.location.search);
+	const migrateToken = urlParams.get('player_token');
+	const migrateFlag = urlParams.get('migrate');
+
+	// If arriving with a migration token, save it
+	if (migrateFlag && migrateToken) {
+		localStorage.setItem(STORAGE_KEY, migrateToken);
+		// Clean up the URL
+		urlParams.delete('player_token');
+		urlParams.delete('migrate');
+		const newUrl =
+			window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '');
+		window.history.replaceState({}, '', newUrl);
+	}
+
+	// If on the old domain, redirect to the new domain
+	if (window.location.hostname === 'lisztnup.jacobzhang.de') {
+		const token = localStorage.getItem(STORAGE_KEY);
+
+		// Also preserve any other query params or hashes
+		const currentUrl = new URL(window.location.href);
+
+		if (token) {
+			currentUrl.searchParams.set('migrate', 'true');
+			currentUrl.searchParams.set('player_token', token);
+		}
+
+		const redirectUrl = `https://lisztnup.com${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`;
+		window.location.replace(redirectUrl);
+	}
+}
+
 function generateToken(): string {
 	if (typeof crypto !== 'undefined' && crypto.randomUUID) {
 		return crypto.randomUUID();

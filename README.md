@@ -10,9 +10,9 @@
   <p align="center">
     The Classical Music Guessing Game.
     <br />
-    <a href="https://lisztnup.jacobzhang.de/"><strong>Play »</strong></a>
+    <a href="https://lisztnup.com/"><strong>Play »</strong></a>
   </p>
-  <a href="https://lisztnup.jacobzhang.de/">
+  <a href="https://lisztnup.com/">
     <img src="https://i.imgur.com/YPbd1Lq.png" width="600px" alt="Liszt’n Up!"/>
   </a>
 </div>
