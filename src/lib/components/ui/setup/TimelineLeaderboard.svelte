@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ChevronDown from 'lucide-svelte/icons/chevron-down';
+	import ChevronUp from 'lucide-svelte/icons/chevron-up';
 	import { SquareStack } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	import Flag from '../primitives/Flag.svelte';
@@ -102,13 +103,17 @@
 				{/if}
 			</tbody>
 		</table>
-		{#if !showExpanded && entries.length > 5}
+		{#if entries.length > 5}
 			<button
 				type="button"
-				onclick={() => (showExpanded = true)}
+				onclick={() => (showExpanded = !showExpanded)}
 				class="mx-auto mt-1 flex cursor-pointer items-center justify-center rounded-md px-2 py-0.5 text-slate-500 transition-colors hover:bg-slate-800 hover:text-slate-400"
 			>
-				<ChevronDown class="h-4 w-4" />
+				{#if showExpanded}
+					<ChevronUp class="h-4 w-4" />
+				{:else}
+					<ChevronDown class="h-4 w-4" />
+				{/if}
 			</button>
 		{/if}
 	{/if}
