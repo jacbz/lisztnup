@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {
 	calculateCompletion,
+	calculateConsolationScore,
 	calculateDiff,
 	calculateGap,
 	calculateMissStreak,
@@ -30,6 +31,16 @@ function testProductionScoring(): void {
 	assert.equal(calculateMissStreak(8), 4);
 	assert.equal(calculateMissStreak(5), 2);
 	assert.equal(calculateMissStreak(2), 0);
+
+	// Consolation: 1888 placed in [1865, 1879] slot
+	const consolation1 = calculateConsolationScore(1888, 1865, 1879, 6, 5);
+	assert.equal(consolation1.dErr, 9);
+	assert.equal(consolation1.consolation, 73); // round(100 * 0.5^(9/20)) * 1.0 = 73
+
+	// Consolation: 1943 placed in [null, 1870] slot (left edge)
+	const consolation2 = calculateConsolationScore(1943, null, 1870, 6, 5);
+	assert.equal(consolation2.dErr, 73);
+	assert.equal(consolation2.consolation, 8); // round(100 * 0.5^(73/20)) * 1.0 = 8
 
 	const score = calculateTurnScore({ gap: 25, seconds: 1, streak: 5 });
 	assert.equal(score.base, 1000);

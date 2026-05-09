@@ -797,24 +797,10 @@ export class TimelineGame {
 			this.activePlayer.absoluteStreak = 0;
 			this.lastTurnScoreBreakdown = null;
 
-			// Consolation: find the correct slot (excluding the misplaced card)
-			const otherEntries = entries.filter((_, i) => i !== idx);
-			let correctLeftYear: number | null = null;
-			let correctRightYear: number | null = null;
-			for (let j = 0; j <= otherEntries.length; j++) {
-				const leftY = j > 0 ? this.#getTimelineYear(otherEntries[j - 1].track) : -Infinity;
-				const rightY =
-					j < otherEntries.length ? this.#getTimelineYear(otherEntries[j].track) : Infinity;
-				if (year >= leftY && year <= rightY) {
-					correctLeftYear = j > 0 ? leftY : null;
-					correctRightYear = j < otherEntries.length ? rightY : null;
-					break;
-				}
-			}
 			const consolation = calculateConsolationScore(
 				year,
-				correctLeftYear,
-				correctRightYear,
+				idx > 0 ? this.#getTimelineYear(entries[idx - 1].track) : null,
+				idx < entries.length - 1 ? this.#getTimelineYear(entries[idx + 1].track) : null,
 				this.#target,
 				this.activePlayer.totalPlacements
 			);

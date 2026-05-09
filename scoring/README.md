@@ -90,7 +90,7 @@ Scoring presets live in `parameterSets.ts`. Production imports `PRODUCTION_TIMEL
 
 The `pnpm recalculate-scores` utility (`scripts/recalculate-scores.ts`) is used to audit and synchronize the D1 production database after a scoring logic change.
 
-- **Trace Simulation**: It exports the `timeline_scores` table, parses the `log` (JSON trace) for every game, and replays each turn through the *current* `timelineScoring.ts` logic.
+- **Trace Simulation**: It exports the `timeline_scores` table, parses the `log` (JSON trace) for every game, and replays each turn through the _current_ `timelineScoring.ts` logic.
 - **Verification**: It compares the original logged score with the re-simulated score. Any mismatch indicates a formula drift or a bug in the replayer.
 - **Synchronization**: If mismatches are found, it generates an `updates.sql` file containing the necessary `UPDATE` statements to bring the production database in line with the new logic.
 - **Local Testing**: Run with `pnpm recalculate-scores --local` to test against a local D1 instance before touching production.

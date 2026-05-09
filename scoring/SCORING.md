@@ -59,7 +59,9 @@ Missed attempts yield a minor consolation score. It strictly evaluates chronolog
 
 $$\text{Consolation} = \text{round}\left(100 \times 0.5^{\frac{d_{\text{err}}}{20}}\right) \times \text{TimeF}$$
 
-- **Error Distance ($d_{\text{err}}$):** The absolute chronological distance in years between the drawn card's actual year and the nearest valid boundary of its _correct_ historical slot. (e.g., If an 1888 card belonged between 1879 and 1896, but was placed elsewhere, the nearest correct boundary missed was 1879. $d_{\text{err}} = |1888 - 1879| = 9$ years). The formula halves the awarded points every 20 years of inaccuracy.
+- **Error Distance ($d_{\text{err}}$):** The absolute chronological distance in years between the drawn card's actual year and the nearest boundary of the incorrect slot the player chose.
+  - _Example:_ If an `1888` card is placed between `1865` and `1879`, the nearest boundary to the card's true year is 1879. Therefore, $d_{\text{err}} = 1888 - 1879 = 9$ years.
+  - _Example 2:_ If a `1943` card is placed on the left edge of the timeline before an `1870` card, the only valid boundary of that chosen slot is 1870. Therefore, $d_{\text{err}} = 1943 - 1870 = 73$ years.
 - **Cards Needed ($\text{CardsNeeded}$):** The actual number of correct placements required to finish the game ($\text{Target} - 1$, since every player begins with 1 card automatically on their timeline).
 - **Time Fade ($\text{TimeF}$):** Stays at $1.0$ through $3 \times \text{CardsNeeded}$ attempts, then linearly fades to $0$ by $4 \times \text{CardsNeeded}$.
 

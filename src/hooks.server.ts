@@ -31,7 +31,14 @@ const BOT_USER_AGENTS = [
 	'internet-measurement',
 	'whatsapp',
 	'l9scan',
-	'leakix'
+	'leakix',
+	'okhttp',
+	'curl',
+	'wget',
+	'monitor-telegram-clone-realtime',
+	'Scrapy',
+	'TLM-Audit-Scanner',
+	'NetcraftSurveyAgent'
 ];
 
 function isBot(userAgent: string | null) {

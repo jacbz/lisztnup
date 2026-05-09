@@ -133,33 +133,39 @@ async function main() {
 			console.log(`Highest decrease:      ${maxDec} pts`);
 			console.log(`Total points shift:    ${totalNewScore - totalOldScore} pts`);
 
-			console.log('\n--- Top 20 Score Increases ---');
-			const sortedByInc = [...updates].sort(
-				(a, b) => b.newScore - b.oldScore - (a.newScore - a.oldScore)
-			);
-			console.table(
-				sortedByInc.slice(0, 20).map((u) => ({
-					Date: new Date(u.timestamp).toLocaleDateString(),
-					ID: u.id,
-					'Old Score': u.oldScore,
-					'New Score': u.newScore,
-					Diff: `+${u.newScore - u.oldScore}`
-				}))
-			);
+			const increases = updates.filter((u) => u.newScore > u.oldScore);
+			if (increases.length > 0) {
+				console.log('\n--- Top 20 Score Increases ---');
+				const sortedByInc = [...increases].sort(
+					(a, b) => b.newScore - b.oldScore - (a.newScore - a.oldScore)
+				);
+				console.table(
+					sortedByInc.slice(0, 20).map((u) => ({
+						Date: new Date(u.timestamp).toLocaleDateString(),
+						ID: u.id,
+						'Old Score': u.oldScore,
+						'New Score': u.newScore,
+						Diff: `+${u.newScore - u.oldScore}`
+					}))
+				);
+			}
 
-			console.log('\n--- Top 20 Score Decreases ---');
-			const sortedByDec = [...updates].sort(
-				(a, b) => a.newScore - a.oldScore - (b.newScore - b.oldScore)
-			);
-			console.table(
-				sortedByDec.slice(0, 20).map((u) => ({
-					Date: new Date(u.timestamp).toLocaleDateString(),
-					ID: u.id,
-					'Old Score': u.oldScore,
-					'New Score': u.newScore,
-					Diff: u.newScore - u.oldScore
-				}))
-			);
+			const decreases = updates.filter((u) => u.newScore < u.oldScore);
+			if (decreases.length > 0) {
+				console.log('\n--- Top 20 Score Decreases ---');
+				const sortedByDec = [...decreases].sort(
+					(a, b) => a.newScore - a.oldScore - (b.newScore - b.oldScore)
+				);
+				console.table(
+					sortedByDec.slice(0, 20).map((u) => ({
+						Date: new Date(u.timestamp).toLocaleDateString(),
+						ID: u.id,
+						'Old Score': u.oldScore,
+						'New Score': u.newScore,
+						Diff: u.newScore - u.oldScore
+					}))
+				);
+			}
 
 			const sql = updates
 				.map(

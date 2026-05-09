@@ -55,24 +55,30 @@ export function replayTimelineLog(
 
 			// If the player was correct, we should use THEIR index to determine the gap.
 			const playerIndex = turn.index ?? 0;
-			
+
 			// Verify if the slot chosen was actually correct for this year.
 			const leftYear = playerIndex > 0 ? getYear(timeline[playerIndex - 1]) : null;
 			const rightYear = playerIndex < timeline.length ? getYear(timeline[playerIndex]) : null;
-			
-			const isCorrectSlot = (leftYear === null || leftYear <= turnYear) && (rightYear === null || turnYear <= rightYear);
-			
+
+			const isCorrectSlot =
+				(leftYear === null || leftYear <= turnYear) &&
+				(rightYear === null || turnYear <= rightYear);
+
 			if (!isCorrectSlot) {
-				onWarning?.(`[Turn ${turnNum}: ${turn.part}] Log says OK but turn is chronologically incorrect (${turnYear}). Slot [${leftYear ?? '...'}, ${rightYear ?? '...'}] at index ${playerIndex}.`);
+				onWarning?.(
+					`[Turn ${turnNum}: ${turn.part}] Log says OK but turn is chronologically incorrect (${turnYear}). Slot [${leftYear ?? '...'}, ${rightYear ?? '...'}] at index ${playerIndex}.`
+				);
 			}
 
 			// If the logged index is correct, use it. Otherwise find the "ideal" one.
-			const finalIndex = isCorrectSlot ? playerIndex : findInsertionIndexForYear(turnYear, timeline);
-			
+			const finalIndex = isCorrectSlot
+				? playerIndex
+				: findInsertionIndexForYear(turnYear, timeline);
+
 			const finalLeftYear = finalIndex > 0 ? getYear(timeline[finalIndex - 1]) : null;
 			const finalRightYear = finalIndex < timeline.length ? getYear(timeline[finalIndex]) : null;
 			const gap = calculateGap(finalLeftYear, finalRightYear);
-			
+
 			const isEdgePlacement = finalIndex === 0 || finalIndex === timeline.length;
 
 			const turnBreakdown = calculateTurnScore({
@@ -147,7 +153,8 @@ export function replayTimelineLog(
 				const placedRight = turn.index < timeline.length ? getYear(timeline[turn.index]) : null;
 
 				const isTimeoutLog = turn.points === 0;
-				const isCorrectSlotButMarkedWrong = turnYear >= (placedLeft ?? -Infinity) && turnYear <= (placedRight ?? Infinity);
+				const isCorrectSlotButMarkedWrong =
+					turnYear >= (placedLeft ?? -Infinity) && turnYear <= (placedRight ?? Infinity);
 
 				if (isTimeoutLog || isCorrectSlotButMarkedWrong) {
 					points = 0;

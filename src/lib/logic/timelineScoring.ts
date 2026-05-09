@@ -235,9 +235,12 @@ export function calculateConsolationScore(
 	attempts: number,
 	parameters: TimelineScoringParameters = PRODUCTION_TIMELINE_SCORING
 ): ConsolationBreakdown {
-	const left = leftYear ?? MIN_WORK_YEAR;
-	const right = rightYear ?? MAX_WORK_YEAR;
-	const dErr = Math.min(cardYear - left, right - cardYear);
+	const dErr =
+		leftYear === null
+			? Math.abs(cardYear - (rightYear ?? MAX_WORK_YEAR))
+			: rightYear === null
+				? Math.abs(cardYear - (leftYear ?? MIN_WORK_YEAR))
+				: Math.min(Math.abs(cardYear - leftYear), Math.abs(cardYear - rightYear));
 	const cardsNeeded = Math.max(0, target - 1);
 	const fadeStart = parameters.consolationFadeStartAttemptsMultiplier * cardsNeeded;
 	const fadeEnd = parameters.consolationFadeEndAttemptsMultiplier * cardsNeeded;
