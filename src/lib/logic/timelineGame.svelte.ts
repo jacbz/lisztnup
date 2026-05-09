@@ -18,7 +18,8 @@ import {
 	calculateCompletion,
 	calculateConsolationScore,
 	calculateMissStreak,
-	calculateStreakMult
+	calculateStreakMult,
+	PRODUCTION_TIMELINE_SCORING
 } from './timelineScoring';
 
 // Re-export types for convenience
@@ -38,6 +39,8 @@ export interface TimelineGameActions {
 	stopTrack: () => void;
 	nextRound: () => Promise<void>;
 	sampleRawTrack: () => Track | null;
+	minYear: number;
+	maxYear: number;
 }
 
 // ─── TimelineGame ──────────────────────────────────────────
@@ -768,7 +771,13 @@ export class TimelineGame {
 			const prevYear = idx > 0 ? this.#getTimelineYear(entries[idx - 1].track) : null;
 			const nextYear =
 				idx < entries.length - 1 ? this.#getTimelineYear(entries[idx + 1].track) : null;
-			const gap = calculateGap(prevYear, nextYear);
+			const gap = calculateGap(
+				prevYear,
+				nextYear,
+				PRODUCTION_TIMELINE_SCORING,
+				this.#ctx.minYear,
+				this.#ctx.maxYear
+			);
 			const isEdgePlacement = prevYear === null || nextYear === null;
 
 			const breakdown = calculateTurnScore({
@@ -802,7 +811,10 @@ export class TimelineGame {
 				idx > 0 ? this.#getTimelineYear(entries[idx - 1].track) : null,
 				idx < entries.length - 1 ? this.#getTimelineYear(entries[idx + 1].track) : null,
 				this.#target,
-				this.activePlayer.totalPlacements
+				this.activePlayer.totalPlacements,
+				PRODUCTION_TIMELINE_SCORING,
+				this.#ctx.minYear,
+				this.#ctx.maxYear
 			);
 			this.lastConsolationBreakdown = consolation;
 			this.activePlayer.score += consolation.consolation;

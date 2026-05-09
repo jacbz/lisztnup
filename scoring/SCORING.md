@@ -2,7 +2,7 @@
 
 This document defines the mathematical rules for timeline placements. The system rewards chronological precision, accuracy over time, and fast consecutive answers, while utilizing non-linear decay to strictly prevent score-farming exploits in long games. It was designed by iterating on thousands of simulated games with pre-defined player archetypes to ensure a fun, skill-based experience that still offers hope for underdogs.
 
-All scores and components are rounded to the nearest integer. The final turn score is the sum of correct placement points and consolation points (if applicable). The player's total score is the cumulative sum of all turn scores, plus any completion bonus when they reach their target goal. Production constants live in `PRODUCTION_TIMELINE_SCORING` so gameplay and simulations use the same parameters.
+All scores and components are rounded to the nearest integer. The final turn score is the sum of correct placement points and consolation points (if applicable). The player's total score is the cumulative sum of all turn scores, plus any completion bonus when they reach their target goal.
 
 ## Correct Placements
 
@@ -22,7 +22,7 @@ Rewards chronological difficulty. It is highest when cards are placed inside a s
 
 $$\text{Diff} = \text{round}\left( \text{DiffMax} \times e^{-\text{DecayRate} \times \text{Gap}^{\text{CliffShape}}} \right)$$
 
-- **Total Gap ($\text{Gap}$):** The chronological distance between the two neighboring boundary years around the correct slot. Edge placements use the dataset boundary as the missing neighbor.
+- **Total Gap ($\text{Gap}$):** The chronological distance between the two neighboring boundary years. For edge slots, the tracklist's min or max year acts as the virtual neighbor.
 - **$\text{DiffMax} = 1000$:** The maximum possible bonus, awarded for threading a flawless 0-year gap.
 - **$\text{DecayRate} = 0.004$:** The scale parameter. Controls the overall "speed" of the point loss. Increasing this value causes points to drop faster across all gap sizes. Decreasing it makes the entire timeline more forgiving.
 - **$\text{CliffShape} = 1.4$:** The shape parameter. Controls the "bend" of the curve. A value of $1.0$ would yield a standard steady exponential drop, leaving wide gaps too highly rewarded. A value $> 1.0$ creates the "cliff" effect. It forces the curve to stay relatively flat for small gaps (protecting the 0–25 year range) before accelerating downward to aggressively crush the value of wide gaps (75+ years).
@@ -72,9 +72,9 @@ Missed attempts yield a minor consolation score. It strictly evaluates chronolog
 
 $$\text{Consolation} = \text{round}\left(100 \times 0.5^{\frac{d_{\text{err}}}{20}}\right) \times \text{TimeF}$$
 
-- **Error Distance ($d_{\text{err}}$):** The absolute chronological distance in years between the drawn card's actual year and the nearest boundary of the incorrect slot the player chose.
+- **Error Distance ($d_{\text{err}}$):** The absolute chronological distance in years between the drawn card's actual year and the nearest boundary of the incorrect slot. For edge slots, the tracklist's min or max year acts as a virtual boundary.
   - _Example:_ If an `1888` card is placed between `1865` and `1879`, the nearest boundary to the card's true year is 1879. Therefore, $d_{\text{err}} = 1888 - 1879 = 9$ years.
-  - _Example 2:_ If a `1943` card is placed on the left edge of the timeline before an `1870` card, the only valid boundary of that chosen slot is 1870. Therefore, $d_{\text{err}} = 1943 - 1870 = 73$ years.
+  - _Example 2:_ If a `1943` card is placed on the left edge of the timeline before an `1870` card, the nearest boundary is `1870`. Therefore, $d_{\text{err}} = 1943 - 1870 = 73$ years.
 - **Cards Needed ($\text{CardsNeeded}$):** The actual number of correct placements required to finish the game ($\text{Target} - 1$, since every player begins with 1 card automatically on their timeline).
 - **Time Fade ($\text{TimeF}$):** Stays at $1.0$ through $3 \times \text{CardsNeeded}$ attempts, then linearly fades to $0$ by $4 \times \text{CardsNeeded}$.
 

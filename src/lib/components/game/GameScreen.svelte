@@ -436,10 +436,32 @@
 		get hasPreloadError() {
 			return playableBuffer.hasVisibleError;
 		},
+		get minYear() {
+			return tracklistBounds.min;
+		},
+		get maxYear() {
+			return tracklistBounds.max;
+		},
 		registerStatsHandler(handler: (() => void) | null) {
 			childStatsHandler = handler;
 		}
 	} satisfies GameScreenContext);
+
+	const tracklistBounds = $derived.by(() => {
+		const { works } = generator.getFilteredData();
+		let min = Infinity;
+		let max = -Infinity;
+		for (const work of works) {
+			const begin = work.begin_year ?? work.composer.birth_year;
+			const end = work.end_year ?? work.composer.death_year ?? new Date().getFullYear();
+			if (begin < min) min = begin;
+			if (end > max) max = end;
+		}
+		return {
+			min: min === Infinity ? 1400 : min,
+			max: max === -Infinity ? 2020 : max
+		};
+	});
 </script>
 
 <div class="fixed inset-0 overflow-hidden text-white">

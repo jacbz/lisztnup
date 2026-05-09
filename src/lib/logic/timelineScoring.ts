@@ -161,14 +161,16 @@ export function calculateCompletion(
 export function calculateGap(
 	leftYear: number | null,
 	rightYear: number | null,
-	parameters: TimelineScoringParameters = PRODUCTION_TIMELINE_SCORING
+	parameters: TimelineScoringParameters = PRODUCTION_TIMELINE_SCORING,
+	minYear: number = MIN_WORK_YEAR,
+	maxYear: number = MAX_WORK_YEAR
 ): number {
-	const left = leftYear ?? MIN_WORK_YEAR;
-	const right = rightYear ?? MAX_WORK_YEAR;
+	const left = leftYear ?? minYear;
+	const right = rightYear ?? maxYear;
 
 	if (leftYear === null && rightYear === null) {
 		// First card on the timeline — use full span
-		return MAX_WORK_YEAR - MIN_WORK_YEAR;
+		return maxYear - minYear;
 	}
 
 	return Math.max(parameters.minimumGap, right - left);
@@ -236,14 +238,13 @@ export function calculateConsolationScore(
 	rightYear: number | null,
 	target: number,
 	attempts: number,
-	parameters: TimelineScoringParameters = PRODUCTION_TIMELINE_SCORING
+	parameters: TimelineScoringParameters = PRODUCTION_TIMELINE_SCORING,
+	minYear: number = MIN_WORK_YEAR,
+	maxYear: number = MAX_WORK_YEAR
 ): ConsolationBreakdown {
-	const dErr =
-		leftYear === null
-			? Math.abs(cardYear - (rightYear ?? MAX_WORK_YEAR))
-			: rightYear === null
-				? Math.abs(cardYear - (leftYear ?? MIN_WORK_YEAR))
-				: Math.min(Math.abs(cardYear - leftYear), Math.abs(cardYear - rightYear));
+	const left = leftYear ?? minYear;
+	const right = rightYear ?? maxYear;
+	const dErr = Math.min(Math.abs(cardYear - left), Math.abs(cardYear - right));
 	const cardsNeeded = Math.max(0, target - 1);
 	const fadeStart = parameters.consolationFadeStartAttemptsMultiplier * cardsNeeded;
 	const fadeEnd = parameters.consolationFadeEndAttemptsMultiplier * cardsNeeded;

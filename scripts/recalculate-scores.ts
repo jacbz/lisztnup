@@ -44,7 +44,7 @@ async function main() {
 
 		console.log('Converting exported SQL to JSON...');
 		execSync(
-			`sqlite3 :memory: ".read ${tempSqlPath}" ".mode json" "SELECT id, score, target, log, timestamp FROM timeline_scores WHERE log IS NOT NULL ORDER BY timestamp ASC" > ${tempJsonPath}`
+			`sqlite3 :memory: ".read ${tempSqlPath}" ".mode json" "SELECT id, score, target, log, timestamp, player_name, country, tracklist_id FROM timeline_scores WHERE log IS NOT NULL ORDER BY timestamp ASC" > ${tempJsonPath}`
 		);
 
 		const scoresRaw = fs.readFileSync(tempJsonPath, 'utf-8');
@@ -54,6 +54,9 @@ async function main() {
 			target: number;
 			log: string;
 			timestamp: string;
+			player_name: string | null;
+			country: string | null;
+			tracklist_id: string;
 		}[];
 
 		console.log(`Processing ${scores.length} scores chronologically...`);
@@ -64,6 +67,8 @@ async function main() {
 			newScore: number;
 			log: string;
 			timestamp: string;
+			player_name: string | null;
+			tracklist_id: string;
 		}[] = [];
 		let totalOldScore = 0;
 		let totalNewScore = 0;
@@ -99,8 +104,12 @@ async function main() {
 			}
 
 			if (warnings.length > 0) {
-				const dateStr = new Date(row.timestamp).toLocaleString();
-				console.log(`\n--- Warnings for ID ${row.id} (${dateStr}) ---`);
+				const date = new Date(row.timestamp).toLocaleString();
+				const playerName = row.player_name || 'Anonymous';
+				const country = row.country || '??';
+				console.log(
+					`\n--- ID ${row.id} (${date}) | ${playerName} (${country}) | ${row.tracklist_id} ---`
+				);
 				for (const w of warnings) {
 					console.log(`  ${w}`);
 				}
@@ -111,12 +120,14 @@ async function main() {
 					id: row.id,
 					oldScore,
 					newScore,
+					timestamp: row.timestamp,
 					log: newLogStr,
-					timestamp: row.timestamp
+					player_name: row.player_name,
+					tracklist_id: row.tracklist_id
 				});
-				totalOldScore += oldScore;
-				totalNewScore += newScore;
 			}
+			totalOldScore += oldScore;
+			totalNewScore += newScore;
 		}
 
 		if (updates.length > 0) {
@@ -143,6 +154,8 @@ async function main() {
 					sortedByInc.slice(0, 20).map((u) => ({
 						Date: new Date(u.timestamp).toLocaleDateString(),
 						ID: u.id,
+						Tracklist: u.tracklist_id,
+						Player: u.player_name || 'Anonymous',
 						'Old Score': u.oldScore,
 						'New Score': u.newScore,
 						Diff: `+${u.newScore - u.oldScore}`
@@ -160,6 +173,8 @@ async function main() {
 					sortedByDec.slice(0, 20).map((u) => ({
 						Date: new Date(u.timestamp).toLocaleDateString(),
 						ID: u.id,
+						Tracklist: u.tracklist_id,
+						Player: u.player_name || 'Anonymous',
 						'Old Score': u.oldScore,
 						'New Score': u.newScore,
 						Diff: u.newScore - u.oldScore

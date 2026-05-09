@@ -26,6 +26,8 @@ function testProductionScoring(): void {
 	assert.equal(Math.round(calculateDiff(25)), 696);
 	assert.equal(calculateSpeed(1), 1.25);
 	assert.equal(calculateGap(1800, 1810), 10);
+	assert.equal(calculateGap(null, 1850, undefined, 1800, 1900), 50);
+	assert.equal(calculateGap(1850, null, undefined, 1800, 1900), 50);
 	assert.equal(calculateCompletion(6, 5), 7200);
 	assert.equal(calculateMissStreak(8), 4);
 	assert.equal(calculateMissStreak(5), 2);

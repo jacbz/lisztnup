@@ -34,6 +34,22 @@ export function replayTimelineLog(
 	const getYear = (t: Track) => t.work.end_year ?? t.work.begin_year;
 	timeline.push(initialTrack);
 
+	// Calculate tracklist bounds from all tracks present in the log to approximate the original tracklist range
+	const allLogTracks = [initialTrack, ...log.turns.map((t) => tracksMap(t.part))].filter(
+		Boolean
+	) as Track[];
+	let minYear = Infinity;
+	let maxYear = -Infinity;
+	for (const t of allLogTracks) {
+		const y = getYear(t);
+		if (y != null) {
+			if (y < minYear) minYear = y;
+			if (y > maxYear) maxYear = y;
+		}
+	}
+	if (minYear === Infinity) minYear = 1400;
+	if (maxYear === -Infinity) maxYear = 2020;
+
 	const newTurns: TimelineReplayTurn[] = [];
 
 	for (let i = 0; i < log.turns.length; i++) {
@@ -77,7 +93,7 @@ export function replayTimelineLog(
 
 			const finalLeftYear = finalIndex > 0 ? getYear(timeline[finalIndex - 1]) : null;
 			const finalRightYear = finalIndex < timeline.length ? getYear(timeline[finalIndex]) : null;
-			const gap = calculateGap(finalLeftYear, finalRightYear);
+			const gap = calculateGap(finalLeftYear, finalRightYear, undefined, minYear, maxYear);
 
 			const isEdgePlacement = finalIndex === 0 || finalIndex === timeline.length;
 
@@ -164,7 +180,10 @@ export function replayTimelineLog(
 						leftYear,
 						rightYear,
 						target,
-						totalPlacements
+						totalPlacements,
+						undefined,
+						minYear,
+						maxYear
 					);
 					points = consolation.consolation;
 				}

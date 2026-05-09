@@ -48,7 +48,9 @@
 			playTrack: ctx.playTrack,
 			stopTrack: ctx.stopTrack,
 			nextRound: ctx.nextRound,
-			sampleRawTrack: ctx.sampleRawTrack
+			sampleRawTrack: ctx.sampleRawTrack,
+			minYear: ctx.minYear,
+			maxYear: ctx.maxYear
 		},
 		() => ctx.currentTrack,
 		isSoloMode
