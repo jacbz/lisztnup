@@ -116,7 +116,7 @@ export function replayTimelineLog(
 				ok: true,
 				seconds: turn.seconds,
 				points,
-				streak: multiplier,
+				streakMult: multiplier,
 				score,
 				year: turnYear
 			});
@@ -186,7 +186,7 @@ export function replayTimelineLog(
 				ok: false,
 				seconds: turn.seconds,
 				points,
-				streak: multiplier,
+				streakMult: multiplier,
 				score,
 				year: turnYear
 			});

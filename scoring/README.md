@@ -10,6 +10,7 @@ pnpm score:sim
 pnpm score:sim:heavy
 pnpm score:test
 pnpm score:check
+pnpm recalculate-scores
 ```
 
 - `pnpm score:sim:quick`: 2,000-game smoke run. Uses a smaller tracklist subset and production scoring only. Best for checking that the suite still works.
@@ -17,6 +18,7 @@ pnpm score:check
 - `pnpm score:sim:heavy`: 300,000-game tuning sweep with the same broad matrix as balanced. Best before committing scoring changes.
 - `pnpm score:test`: focused deterministic tests for scoring invariants, seeded reproducibility, paired parameter comparison, and basic skill signal.
 - `pnpm score:check`: TypeScript check for the scoring suite and imported production logic.
+- `pnpm recalculate-scores`: reconcile historical D1 leaderboard data with the current simulation engine. Use this after changing formulas to audit the impact on real player history.
 
 Useful flags for `score:sim`, `score:sim:quick`, and `score:sim:heavy`:
 
@@ -82,6 +84,14 @@ JSON output contains the same aggregate data and structured warning objects for 
 
 Runs of 10,000+ games print progress every 5% with throughput and heap usage. Quantile metrics use bounded deterministic sampling on very large runs; counts, means, min, and max remain exact.
 
-## Parameter Sets
-
 Scoring presets live in `parameterSets.ts`. Production imports `PRODUCTION_TIMELINE_SCORING` from `src/lib/logic/timelineScoring.ts`, and gameplay helpers default to that preset. Candidate presets should be added as typed `TimelineScoringParameters` objects so production and simulations share the same formula surface.
+
+## Scoring Reconciliation
+
+The `pnpm recalculate-scores` utility (`scripts/recalculate-scores.ts`) is used to audit and synchronize the D1 production database after a scoring logic change.
+
+- **Trace Simulation**: It exports the `timeline_scores` table, parses the `log` (JSON trace) for every game, and replays each turn through the *current* `timelineScoring.ts` logic.
+- **Verification**: It compares the original logged score with the re-simulated score. Any mismatch indicates a formula drift or a bug in the replayer.
+- **Synchronization**: If mismatches are found, it generates an `updates.sql` file containing the necessary `UPDATE` statements to bring the production database in line with the new logic.
+- **Local Testing**: Run with `pnpm recalculate-scores --local` to test against a local D1 instance before touching production.
+- **Safety**: Always review `updates.sql` before applying. The script only updates the `score` and `log` (to include new properties like `year` or `streakMult`), ensuring data integrity.

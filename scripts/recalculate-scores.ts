@@ -183,9 +183,8 @@ async function main() {
 					}
 				);
 				console.log('Done!');
-				fs.unlinkSync(updatesSqlPath);
 			} else {
-				console.log('Update cancelled. The updates.sql file has been preserved.');
+				console.log('Update cancelled.');
 			}
 		} else {
 			console.log('No scores required updates.');
@@ -194,6 +193,7 @@ async function main() {
 		console.log('Cleaning up temporary files...');
 		fs.unlinkSync(tempSqlPath);
 		fs.unlinkSync(tempJsonPath);
+		fs.unlinkSync(updatesSqlPath);
 	} catch (error) {
 		console.error('Error during recalculation:', error);
 		process.exit(1);

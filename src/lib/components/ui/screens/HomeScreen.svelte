@@ -16,7 +16,8 @@
 		GameMode,
 		Player,
 		LeaderboardEntry,
-		TimelineReplayLog
+		TimelineReplayLog,
+		TimelineReplayTurn
 	} from '$lib/types';
 	import {
 		DEFAULT_TRACKLISTS,
@@ -358,16 +359,16 @@
 		timelineLog = null;
 	}
 
-	function isReplayTurn(turn: unknown): turn is TimelineReplayLog['turns'][number] {
+	function isReplayTurn(turn: unknown): turn is TimelineReplayTurn {
 		if (!turn || typeof turn !== 'object') return false;
-		const candidate = turn as Partial<TimelineReplayLog['turns'][number]>;
+		const candidate = turn as Partial<TimelineReplayTurn>;
 		return (
 			typeof candidate.part === 'string' &&
 			(candidate.index === null || typeof candidate.index === 'number') &&
 			typeof candidate.ok === 'boolean' &&
 			(candidate.seconds === null || typeof candidate.seconds === 'number') &&
 			typeof candidate.points === 'number' &&
-			typeof candidate.streak === 'number' &&
+			typeof candidate.streakMult === 'number' &&
 			typeof candidate.score === 'number'
 		);
 	}

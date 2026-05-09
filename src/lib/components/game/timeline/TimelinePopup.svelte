@@ -119,7 +119,7 @@
 			typeof candidate.ok === 'boolean' &&
 			(candidate.seconds === null || typeof candidate.seconds === 'number') &&
 			typeof candidate.points === 'number' &&
-			typeof candidate.streak === 'number' &&
+			typeof candidate.streakMult === 'number' &&
 			typeof candidate.score === 'number'
 		);
 	}
@@ -188,26 +188,40 @@
 		return Array.from(Array(length).keys());
 	}
 
-	function pointWeight(points: number): number {
-		const magnitude = Math.min(Math.abs(points), 3000);
-		return 500 + Math.round((magnitude / 3000) * 400);
+	function pointWeight(turn: TimelineReplayTurn): number {
+		const p = Math.abs(turn.points);
+		let weight: number;
+		if (p <= 100) {
+			weight = 300;
+		} else if (p <= 1200) {
+			weight = 300 + Math.round(((p - 100) / 1100) * 200);
+		} else {
+			const magnitude = Math.min(p, 6000);
+			weight = 500 + Math.round(((magnitude - 1200) / 4800) * 400);
+		}
+
+		// Ensure wrong turns are readable even with low consolation points
+		if (!turn.ok) {
+			weight = Math.max(weight, 500);
+		}
+		return weight;
 	}
 
 	function pointClass(turn: TimelineReplayTurn): string {
-		if (turn.streak >= 1.35) return '';
+		if (turn.ok && turn.streakMult >= 1.35) return '';
 		return turn.points > 0 ? 'text-cyan-300' : 'text-slate-500';
 	}
 
 	function getTurnStreakStyle(turn: TimelineReplayTurn): string {
-		if (turn.streak < 1.35) return '';
-		const glow = getStreakGlow(turn.streak, false);
-		const color = turn.streak >= 1.35 ? getStreakTextStyle(turn.streak) : '';
+		if (turn.streakMult < 1.35) return '';
+		const glow = getStreakGlow(turn.streakMult, false);
+		const color = getStreakTextStyle(turn.streakMult);
 		return `${color} ${glow ? `text-shadow: ${glow};` : ''}`;
 	}
 
 	function pointStyle(turn: TimelineReplayTurn): string {
-		const color = turn.streak >= 1.35 ? getStreakTextStyle(turn.streak) : '';
-		return `${color} font-weight: ${pointWeight(turn.points)};`;
+		const color = turn.ok && turn.streakMult >= 1.35 ? getStreakTextStyle(turn.streakMult) : '';
+		return `${color} font-weight: ${pointWeight(turn)};`;
 	}
 
 	function stepCircleClass(step: number): string {
@@ -296,7 +310,7 @@
 
 		{#if log && turns.length > 0}
 			<div
-				class="-mx-4 max-w-[calc(100%+2rem)] overflow-x-auto overflow-y-visible px-4 pt-0 pb-2 md:-mx-8 md:max-w-[calc(100%+4rem)] md:px-8"
+				class="-mx-4 max-w-[calc(100%+2rem)] overflow-x-auto overflow-y-visible px-2 pt-0 md:-mx-8 md:max-w-[calc(100%+4rem)] md:px-4"
 				style="touch-action: pan-x;"
 			>
 				<div
@@ -317,14 +331,12 @@
 									class="relative flex flex-col items-center justify-end gap-0.5 {pointClass(turn)}"
 									style={pointStyle(turn)}
 								>
-									{#if turn.streak >= 1.35}
-										<div
-											class="absolute -top-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-0.5"
-										>
-											<Flame class="h-4 w-4 fill-current" />
+									{#if turn.ok && turn.streakMult >= 1.35}
+										<div class="flex items-center">
+											<Flame class="h-2.5 w-2.5 shrink-0" />
 											<span
-												class="text-[10px] font-bold tabular-nums tracking-tighter"
-												style={getTurnStreakStyle(turn)}>{turn.streak.toFixed(2)}×</span
+												class="text-[10px] font-bold tracking-tighter tabular-nums"
+												style={getTurnStreakStyle(turn)}>{turn.streakMult.toFixed(2)}×</span
 											>
 										</div>
 									{/if}

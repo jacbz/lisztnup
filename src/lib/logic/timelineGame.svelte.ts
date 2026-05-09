@@ -831,7 +831,7 @@ export class TimelineGame {
 			ok: isCorrect,
 			seconds: Math.round(secondsTaken * 100) / 100,
 			points: Math.round(placementPoints),
-			streak: calculateStreakMult(this.activePlayer.currentStreak),
+			streakMult: calculateStreakMult(this.activePlayer.currentStreak),
 			score: Math.round(this.activePlayer.score),
 			year: this.#getTimelineYear(track)
 		});
@@ -1113,7 +1113,7 @@ export class TimelineGame {
 					ok: false,
 					seconds: secondsTaken === null ? null : Math.round(secondsTaken * 100) / 100,
 					points: 0,
-					streak: calculateStreakMult(this.activePlayer.currentStreak),
+					streakMult: calculateStreakMult(this.activePlayer.currentStreak),
 					score: Math.round(this.activePlayer.score),
 					year: this.#getTimelineYear(entries[idx].track)
 				});
@@ -1139,7 +1139,7 @@ export class TimelineGame {
 				ok: false,
 				seconds: secondsTaken === null ? null : Math.round(secondsTaken * 100) / 100,
 				points: 0,
-				streak: calculateStreakMult(this.activePlayer.currentStreak),
+				streakMult: calculateStreakMult(this.activePlayer.currentStreak),
 				score: Math.round(this.activePlayer.score),
 				year: this.#getTimelineYear(currentTrack)
 			});
