@@ -41,6 +41,7 @@ import subprocess
 from typing import Dict, List, Optional, Set, Any, Tuple
 import yaml
 import pycountry
+import urllib.parse
 
 # Module-level logger – writes to process_musicbrainz.log
 log = logging.getLogger("lisztnup")
@@ -324,6 +325,7 @@ class MusicbrainzProcessor:
         :param composers_data: A list of composer dictionaries from the raw JSON file.
         """
         self.composers = self._parse_input_data(composers_data)
+        self._composer_map = {c.gid: c for c in self.composers}
         self._composer_names: Dict[str, str] = {c.gid: c.name for c in self.composers}
         self.unresolved_work_candidates: Dict[str, List[Tuple[str, str]]] = defaultdict(list)
         
@@ -442,7 +444,13 @@ class MusicbrainzProcessor:
         log.info("STAGE 3: Apply manual exclusions")
         work_candidates = self._apply_manual_exclusions(work_candidates)
 
-        # Stage 4: Resolve MB Part Collisions (The "Vivaldi" Fix)
+        # Stage 3.5: Check Work Dates
+        # Output works that fall outside composer living dates.
+        log.info("=" * 60)
+        log.info("STAGE 3.5: Check work dates vs composer life")
+        self._check_work_dates(work_candidates)
+
+        # Stage 4: Resolve MB Part Collisions
         # Ensure a specific MusicBrainz sub-work GID belongs to only ONE root work.
         # It is assigned to the root work with the highest WSS.
         log.info("=" * 60)
@@ -619,6 +627,64 @@ class MusicbrainzProcessor:
                     parts=potential_parts
                 ))
         return candidates
+
+    def _check_work_dates(self, works: List[FinalWork]) -> None:
+        """
+        Checks that every work falls between composer living dates.
+        Outputs findings to 'date_anomalies.txt' and a summary to the console.
+        """
+        anomalies_for_file = []
+        for work in works:
+            composer = self._composer_map.get(work.composer)
+            if not composer or not (composer.birth_year or composer.death_year):
+                continue
+
+            birth = composer.birth_year
+            death = composer.death_year
+            
+            issue = None
+            if birth and work.begin_year is not None and work.begin_year < birth:
+                issue = f"Work start {work.begin_year} < Composer birth {birth}"
+                self.stats["date_anomaly_before_birth"] += 1
+
+            comp_year = work.end_year if work.end_year is not None else work.begin_year
+            if death and comp_year is not None and comp_year > death:
+                issue = f"Work completion {comp_year} > Composer death {death}"
+                self.stats["date_anomaly_after_death"] += 1
+            
+            if issue:
+                last_name = composer.name.split(",")[0].strip()
+                query = f"{last_name} {work.name}"
+                search_url = f"https://www.google.com/search?q={urllib.parse.quote_plus(query)}"
+                mb_url = f"https://musicbrainz.org/work/{work.gid}"
+
+                file_entry = (
+                    f"{'='*80}\n"
+                    f"WORK:     {work.name}\n"
+                    f"GID:      {work.gid}\n"
+                    f"COMPOSER: {composer.name}\n"
+                    f"ISSUE:    {issue}\n"
+                    f"GOOGLE:   {search_url}\n"
+                    f"MB LINK:  {mb_url}\n"
+                    f"{'='*80}"
+                )
+                anomalies_for_file.append(file_entry)
+                log.warning("DATE ANOMALY | %s | %s | %s", work.name, issue, composer.name)
+        
+        if anomalies_for_file:
+            with open("date_anomalies.txt", "w", encoding="utf-8") as f:
+                f.write("\n\n".join(anomalies_for_file))
+            log.warning("Found %d date anomalies. See 'date_anomalies.txt'", len(anomalies_for_file))
+
+    def print_date_anomaly_summary(self) -> None:
+        """Prints a prominent warning if date anomalies were found."""
+        total = self.stats.get("date_anomaly_before_birth", 0) + self.stats.get("date_anomaly_after_death", 0)
+        if total > 0:
+            summary = (f"\n" + "!" * 80 + "\n"
+                       f"!!! WARNING: {total} works have dates outside composer life range.\n"
+                       f"!!! Detailed report generated: 'date_anomalies.txt'\n" + 
+                       "!" * 80 + "\n")
+            print(summary)
 
     def _format_part_names(self, works: List[FinalWork]) -> None:
         """
@@ -1393,6 +1459,7 @@ def main() -> None:
     # Reports
     generate_markdown_report(final_output)
     processor.print_summary(final_output)
+    processor.print_date_anomaly_summary()
     check_short_uuid_collisions(final_output)
     print("Processing log written to 'process_musicbrainz.log'.")
 
