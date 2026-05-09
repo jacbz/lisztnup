@@ -177,7 +177,7 @@
 			leaderboardLoading = true;
 			if (filterKey !== leaderboardFilterKey) {
 				resetTimelinePopup();
-				leaderboardEntries = [];
+				// Do not clear leaderboardEntries here to allow smooth visual updates
 				leaderboardFilterKey = filterKey;
 			}
 
@@ -253,11 +253,13 @@
 	});
 
 	function handleTracklistSelect(tracklist: Tracklist) {
+		showExpandedLeaderboard = false;
 		localSettings.selectedTracklist = tracklist.id;
 		settingsStore.update((s) => ({ ...s, selectedTracklist: tracklist.id }));
 	}
 
 	function handleTracklistRecordSelect(tracklist: Tracklist, target: number) {
+		showExpandedLeaderboard = false;
 		localSettings.selectedTracklist = tracklist.id;
 		localSettings.timelineTarget = target;
 		settingsStore.update((s) => ({
@@ -301,6 +303,7 @@
 	}
 
 	function handleTimelineTargetChange(value: number) {
+		showExpandedLeaderboard = false;
 		localSettings.timelineTarget = value;
 		settingsStore.update((s) => ({ ...s, timelineTarget: value }));
 	}

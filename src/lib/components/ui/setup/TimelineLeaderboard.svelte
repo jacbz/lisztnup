@@ -3,6 +3,7 @@
 	import ChevronUp from 'lucide-svelte/icons/chevron-up';
 	import { SquareStack } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
+	import { slide } from 'svelte/transition';
 	import Flag from '../primitives/Flag.svelte';
 	import type { LeaderboardEntry } from '$lib/types';
 	import { formatDateString } from '$lib/utils';
@@ -69,15 +70,13 @@
 	</tr>
 {/snippet}
 
-<div class="mt-1">
+<div class="mt-1 transition-opacity duration-300" class:opacity-50={isLoading}>
 	<div class="mb-2 flex text-sm font-semibold text-slate-400">
 		{$_('leaderboard.title')}
 	</div>
-	{#if isLoading && entries.length === 0}
-		<p class="py-2 text-xs text-slate-500">{$_('leaderboard.loading')}</p>
-	{:else if entries.length === 0}
+	{#if entries.length === 0 && !isLoading}
 		<p class="py-2 text-xs text-slate-500">{$_('leaderboard.noScores')}</p>
-	{:else}
+	{:else if entries.length > 0}
 		<table class="w-full table-fixed border-separate border-spacing-y-1 text-left text-xs">
 			<colgroup>
 				<col class="w-6" />
@@ -91,11 +90,7 @@
 					{@render leaderboardRow(entry)}
 				{/each}
 
-				{#if showExpanded}
-					{#each entries.slice(5) as entry, i (i)}
-						{@render leaderboardRow(entry)}
-					{/each}
-				{:else if entries.length > 5}
+				{#if !showExpanded && entries.length > 5}
 					{@const myEntry = entries.slice(5).find((e) => e.is_me)}
 					{#if myEntry}
 						{@render leaderboardRow(myEntry)}
@@ -103,6 +98,25 @@
 				{/if}
 			</tbody>
 		</table>
+
+		{#if showExpanded && entries.length > 5}
+			<div transition:slide={{ duration: 250 }}>
+				<table class="w-full table-fixed border-separate border-spacing-y-1 text-left text-xs">
+					<colgroup>
+						<col class="w-6" />
+						<col />
+						<col class="w-22" />
+						<col class="w-18" />
+						<col class="w-5" />
+					</colgroup>
+					<tbody>
+						{#each entries.slice(5) as entry, i (i)}
+							{@render leaderboardRow(entry)}
+						{/each}
+					</tbody>
+				</table>
+			</div>
+		{/if}
 		{#if entries.length > 5}
 			<button
 				type="button"
