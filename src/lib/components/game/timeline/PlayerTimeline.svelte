@@ -96,7 +96,7 @@
 	);
 
 	const flameGlow = $derived.by(() => {
-		return getStreakGlow(streakCount, active);
+		return getStreakGlow(calculateStreakMult(streakCount), active);
 	});
 
 	const localDragTranslate = $derived(rotateVector(dragTranslate.x, dragTranslate.y, rotation));
