@@ -15,6 +15,10 @@
 
 	const REPLAY_STEP_WIDTH_REM = 2.25;
 
+	interface ReplayTrack extends Track {
+		isMissing?: boolean;
+	}
+
 	interface Props {
 		visible?: boolean;
 		playerName: string;
@@ -43,7 +47,7 @@
 		onClose = () => {}
 	}: Props = $props();
 
-	let inspectTrack = $state<Track | null>(null);
+	let inspectTrack = $state<ReplayTrack | null>(null);
 	let selectedStep = $state(0);
 	let touchedSlider = $state(false);
 	let sliderOpenKey = $state(0);
@@ -136,7 +140,11 @@
 	}
 
 	function buildReplayEntries(replay: TimelineReplayLog, step: number, showFinalBorder: boolean) {
-		const initialTrack = replay.initial ? trackByPart.get(replay.initial) : null;
+		let initialTrack = replay.initial ? trackByPart.get(replay.initial) : null;
+		if (!initialTrack && replay.initial) {
+			initialTrack = createMissingTrack(replay.initial, replay.initialYear);
+		}
+
 		const result: TimelineEntry[] = initialTrack
 			? [
 					{
@@ -150,8 +158,15 @@
 
 		for (let i = 0; i < Math.min(step, turns.length); i++) {
 			const turn = turns[i];
-			const track = trackByPart.get(turn.part);
-			if (!track) continue;
+			let track = trackByPart.get(turn.part);
+			if (!track) {
+				if (turn.year !== undefined) {
+					track = createMissingTrack(turn.part, turn.year);
+				} else {
+					continue;
+				}
+			}
+
 			const isActiveStep = i === step - 1;
 			if (turn.ok) {
 				insertAt(result, turn.index, {
@@ -171,6 +186,15 @@
 		}
 
 		return result;
+	}
+
+	function createMissingTrack(gid: string, year: number): ReplayTrack {
+		return {
+			part: { gid, name: '?', deezer: [], score: 0 },
+			work: { gid: '?', name: '?', begin_year: year, end_year: year },
+			composer: { name: '?', birth_year: 0, death_year: 0 },
+			isMissing: true
+		} as unknown as ReplayTrack;
 	}
 
 	function stepTimeLabel(turn: TimelineReplayTurn): string {
@@ -430,7 +454,15 @@
 			<div
 				class="min-h-0 flex-1 overflow-y-auto rounded-2xl border border-slate-700/50 bg-slate-950/30 p-4"
 			>
-				<TrackInfo track={inspectTrack} showMirror={false} bleed="sm" />
+				{#if inspectTrack.isMissing}
+					<div class="flex h-full flex-col items-center justify-center gap-4 text-center">
+						<div class="max-w-md text-xl font-medium text-slate-400">
+							{$_('timeline.trackMissing')}
+						</div>
+					</div>
+				{:else}
+					<TrackInfo track={inspectTrack} showMirror={false} bleed="sm" />
+				{/if}
 			</div>
 		</div>
 	{/if}

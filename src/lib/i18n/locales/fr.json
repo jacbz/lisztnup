@@ -554,6 +554,7 @@
 		"replayStep": "Étape de replay {step}",
 		"streak": "{count} d’affilée !",
 		"longestStreak": "Meilleure série : {count}",
+		"trackMissing": "Cette œuvre a quitté l’affiche et ne figure plus au catalogue.",
 		"help": {
 			"playFirst": "Joue la carte pour commencer.",
 			"dragToPlace": "Glisse la carte dans ta frise.",

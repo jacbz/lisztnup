@@ -553,7 +553,8 @@
 		"secondsShort": "{seconds}초",
 		"replayStep": "리플레이 단계 {step}",
 		"streak": "{count}연속 정답!",
-		"longestStreak": "최장 연속: {count}",
+		"longestStreak": "최고 연속 기록: {count}",
+		"trackMissing": "이 작품은 무대를 내려와 이제 카탈로그에 남아 있지 않습니다.",
 		"help": {
 			"playFirst": "먼저 카드를 재생하세요.",
 			"dragToPlace": "타임라인의 적절한 위치로 카드를 드래그하세요.",

@@ -553,7 +553,8 @@
 		"secondsShort": "{seconds}秒",
 		"replayStep": "回放步骤 {step}",
 		"streak": "连续{count}次正确！",
-		"longestStreak": "最长连续: {count}",
+		"longestStreak": "最佳连胜: {count}",
+		"trackMissing": "这部作品已经谢幕，不再收录于曲库。",
 		"help": {
 			"playFirst": "播放卡牌以开始回合。",
 			"dragToPlace": "将卡牌拖入你的时间线。",

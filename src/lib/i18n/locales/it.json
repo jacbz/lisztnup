@@ -554,6 +554,7 @@
 		"replayStep": "Passaggio replay {step}",
 		"streak": "{count} di fila!",
 		"longestStreak": "Miglior serie: {count}",
+		"trackMissing": "Quest’opera è uscita di scena e non fa più parte del catalogo.",
 		"help": {
 			"playFirst": "Gioca la carta per iniziare il turno.",
 			"dragToPlace": "Trascina la carta nella tua timeline.",

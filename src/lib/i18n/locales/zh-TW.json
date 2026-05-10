@@ -553,7 +553,8 @@
 		"secondsShort": "{seconds}秒",
 		"replayStep": "重播步驟 {step}",
 		"streak": "連續{count}次正確！",
-		"longestStreak": "最長連續: {count}",
+		"longestStreak": "最佳連勝: {count}",
+		"trackMissing": "這部作品已經謝幕，不再收錄在曲庫中。",
 		"help": {
 			"playFirst": "播放卡牌以開始回合。",
 			"dragToPlace": "將卡牌拖入你的時間線。",

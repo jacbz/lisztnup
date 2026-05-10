@@ -554,6 +554,7 @@
 		"replayStep": "Paso de repetición {step}",
 		"streak": "¡{count} seguidas!",
 		"longestStreak": "Mejor racha: {count}",
+		"trackMissing": "Esta obra ya salió del programa y no forma parte del catálogo.",
 		"help": {
 			"playFirst": "Juega la carta para empezar tu turno.",
 			"dragToPlace": "Arrastra la carta a tu línea de tiempo.",

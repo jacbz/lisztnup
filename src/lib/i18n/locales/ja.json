@@ -553,7 +553,8 @@
 		"secondsShort": "{seconds}秒",
 		"replayStep": "リプレイ手順 {step}",
 		"streak": "{count}連続正解！",
-		"longestStreak": "最長連続: {count}",
+		"longestStreak": "最高連続正解数: {count}",
+		"trackMissing": "この作品はすでに終演となり、カタログには残っていません。",
 		"help": {
 			"playFirst": "カードを再生して開始します。",
 			"dragToPlace": "カードをタイムラインにドラッグしてください。",

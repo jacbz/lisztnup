@@ -554,6 +554,7 @@
 		"replayStep": "Replay step {step}",
 		"streak": "{count} in a row!",
 		"longestStreak": "Best streak: {count}",
+		"trackMissing": "This work has taken its final bow and is no longer part of the catalog.",
 		"help": {
 			"playFirst": "Play the card to begin your turn.",
 			"dragToPlace": "Drag the card into your timeline.",

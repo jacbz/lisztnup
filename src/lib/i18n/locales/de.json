@@ -554,6 +554,7 @@
 		"replayStep": "Replay-Schritt {step}",
 		"streak": "{count}-er Streak",
 		"longestStreak": "Beste Streak: {count}",
+		"trackMissing": "Dieses Werk hat seinen Schlussakkord gespielt und steht nicht mehr im Katalog.",
 		"help": {
 			"playFirst": "Spiele die Karte ab, um zu beginnen.",
 			"dragToPlace": "Ziehe die Karte in deine Timeline.",
