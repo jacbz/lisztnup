@@ -50,10 +50,30 @@ function testProductionScoring(): void {
 	assert.equal(score.score, 3710);
 }
 
-import { replayTimelineLog } from '../src/lib/logic/timelineReplayUtils';
+import { replayTimelineLog, isCompletedLog } from '../src/lib/logic/timelineReplayUtils';
 import { GameCatalog } from '../src/lib/models';
 import fs from 'fs';
 import path from 'path';
+
+function testLogValidation(): void {
+	const validLog = {
+		v: 1,
+		initial: 'abc',
+		turns: [{ part: 'p1', ok: true }]
+	};
+	// Target 2 cards: needs 1 turn.
+	assert.equal(isCompletedLog(validLog, 2), true);
+	// Target 3 cards: 1 turn is not enough.
+	assert.equal(isCompletedLog(validLog, 3), false);
+
+	// The case from the user: 5 turns for target 6 cards.
+	const userLog = {
+		v: 1,
+		initial: 'init',
+		turns: new Array(5).fill({ part: 'p', ok: true })
+	};
+	assert.equal(isCompletedLog(userLog, 6), true);
+}
 
 function testReplayConsolation(): void {
 	const dataPath = path.join(process.cwd(), 'static/lisztnup.json');
@@ -343,6 +363,7 @@ function emptyDataset(): DatasetSummary {
 }
 
 testProductionScoring();
+testLogValidation();
 testReplayConsolation();
 testDeterminism();
 testSkillSignal();

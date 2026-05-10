@@ -255,7 +255,7 @@ export function isCompletedLog(log: unknown, target?: number): log is TimelineRe
 		candidate.turns.length > 0;
 
 	if (!basic) return false;
-	if (target !== undefined && (candidate.turns?.length ?? 0) < target) return false;
+	if (target !== undefined && (candidate.turns?.length ?? 0) < target - 1) return false;
 
 	return true;
 }
