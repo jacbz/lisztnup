@@ -50,7 +50,7 @@
 			class:text-slate-300={!entry.is_me && entry.player_name}
 			class:text-slate-500={!entry.is_me && !entry.player_name}
 		>
-			<Flag country={entry.country} class="mr-0.5" faded={!entry.player_name} />
+			<Flag country={entry.country} class="mr-0.5" />
 			{entry.player_name ?? $_('leaderboard.anonymous')}
 		</td>
 		<td

@@ -4,11 +4,10 @@
 	interface Props {
 		country: string | undefined | null;
 		size?: 'xs' | 'sm' | 'md';
-		faded?: boolean;
 		class?: string;
 	}
 
-	let { country, size = 'sm', faded = false, class: cls = '' }: Props = $props();
+	let { country, size = 'sm', class: cls = '' }: Props = $props();
 
 	const sizeClasses: Record<string, string> = {
 		xs: 'h-2 w-3 rounded-[1px]',
@@ -41,7 +40,6 @@
 		class="inline-block border-[0.5px] border-slate-600 align-baseline select-none {sizeClasses[
 			size
 		]} {cls}"
-		class:opacity-50={faded}
 		draggable="false"
 		oncontextmenu={(e) => e.preventDefault()}
 	/>
