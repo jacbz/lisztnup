@@ -22,7 +22,8 @@ Rewards chronological difficulty. It is highest when cards are placed inside a s
 
 $$\text{Diff} = \text{round}\left( \text{DiffMax} \times e^{-\text{DecayRate} \times \text{Gap}} \right)$$
 
-- **Total Gap ($\text{Gap}$):** The chronological distance between the two neighboring boundary years. For edge slots, the tracklist's min or max year acts as the virtual neighbor.
+- **Total Gap ($\text{Gap}$):** The chronological distance between the two neighboring boundary years. For edge slots, the relevant virtual boundary year is used.
+  - Virtual boundary years are calculated as $\text{tracklistMin} - \text{EdgeBoundaryPadding}$ and $\text{tracklistMax} + \text{EdgeBoundaryPadding}$. We set $\text{EdgeBoundaryPadding} = 25$. $\text{tracklistMin}$ may not be lower than then dataset's min year and $\text{tracklistMax}$ may not be higher than the dataset's max year.
 - **$\text{DiffMax} = 1000$:** The maximum possible bonus, awarded for threading a flawless 0-year gap.
 - **$\text{DecayRate} = 0.0115$:** The exponential decay constant. At this rate, a 10-year gap loses approximately 11% of its value, a 60-year gap loses half of its value (the half-life), and a 200-year gap retains exactly 10%.
 
@@ -73,7 +74,7 @@ Missed attempts yield a minor consolation score. It strictly evaluates chronolog
 
 $$\text{Consolation} = \text{round}\left(100 \times 0.5^{\frac{d_{\text{err}}}{20}}\right) \times \text{TimeF}$$
 
-- **Error Distance ($d_{\text{err}}$):** The absolute chronological distance in years between the drawn card's actual year and the nearest boundary of the incorrect slot. For edge slots, the tracklist's min or max year acts as a virtual boundary.
+- **Error Distance ($d_{\text{err}}$):** The absolute chronological distance in years between the drawn card's actual year and the nearest boundary of the incorrect slot. For edge slots, the relevant virtual boundary year (see above) is used.
   - _Example:_ If an `1888` card is placed between `1865` and `1879`, the nearest boundary to the card's true year is 1879. Therefore, $d_{\text{err}} = 1888 - 1879 = 9$ years.
   - _Example 2:_ If a `1943` card is placed on the left edge of the timeline before an `1870` card, the nearest boundary is `1870`. Therefore, $d_{\text{err}} = 1943 - 1870 = 73$ years.
 - **Cards Needed ($\text{CardsNeeded}$):** The actual number of correct placements required to finish the game ($\text{Target} - 1$, since every player begins with 1 card automatically on their timeline).

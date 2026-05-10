@@ -26,6 +26,7 @@ export interface TimelineScoringParameters {
 	readonly consolationHalfLifeYears: number;
 	readonly consolationFadeStartAttemptsMultiplier: number;
 	readonly consolationFadeEndAttemptsMultiplier: number;
+	readonly edgeBoundaryPadding: number;
 }
 
 export const PRODUCTION_TIMELINE_SCORING = {
@@ -53,7 +54,8 @@ export const PRODUCTION_TIMELINE_SCORING = {
 	consolationBase: 100,
 	consolationHalfLifeYears: 20,
 	consolationFadeStartAttemptsMultiplier: 3,
-	consolationFadeEndAttemptsMultiplier: 4
+	consolationFadeEndAttemptsMultiplier: 4,
+	edgeBoundaryPadding: 25
 } as const satisfies TimelineScoringParameters;
 
 export const base = PRODUCTION_TIMELINE_SCORING.base;
@@ -147,25 +149,31 @@ export function calculateCompletion(
 
 /**
  * Calculate the year gap between the two neighbours of a newly placed card.
- * For edge placements (one neighbour missing), uses the dataset boundary
- * (MIN_WORK_YEAR / MAX_WORK_YEAR) as the virtual neighbour so that edge
- * cards are scored against a realistic range rather than a mirrored gap.
- * Enforces a minimum gap of 25 years to prevent extreme difficulty bonuses
- * from near-identical placements.
+ * For edge placements (one neighbour missing), uses virtual boundary years
+ * calculated as tracklistMin - edgeBoundaryPadding and tracklistMax + edgeBoundaryPadding,
+ * clamped to dataset boundaries (MIN_WORK_YEAR / MAX_WORK_YEAR).
+ * Enforces a minimum gap to prevent extreme difficulty bonuses.
  */
 export function calculateGap(
 	leftYear: number | null,
 	rightYear: number | null,
 	parameters: TimelineScoringParameters = PRODUCTION_TIMELINE_SCORING,
-	minYear: number = MIN_WORK_YEAR,
-	maxYear: number = MAX_WORK_YEAR
+	tracklistMin: number = MIN_WORK_YEAR,
+	tracklistMax: number = MAX_WORK_YEAR
 ): number {
-	const left = leftYear ?? minYear;
-	const right = rightYear ?? maxYear;
+	const datasetMin = MIN_WORK_YEAR;
+	const datasetMax = MAX_WORK_YEAR;
+
+	// Calculate virtual boundaries with padding, clamped to dataset limits
+	const virtualMin = Math.max(datasetMin, tracklistMin - parameters.edgeBoundaryPadding);
+	const virtualMax = Math.min(datasetMax, tracklistMax + parameters.edgeBoundaryPadding);
+
+	const left = leftYear ?? virtualMin;
+	const right = rightYear ?? virtualMax;
 
 	if (leftYear === null && rightYear === null) {
 		// First card on the timeline — use full span
-		return maxYear - minYear;
+		return virtualMax - virtualMin;
 	}
 
 	return Math.max(parameters.minimumGap, right - left);
@@ -234,11 +242,18 @@ export function calculateConsolationScore(
 	target: number,
 	attempts: number,
 	parameters: TimelineScoringParameters = PRODUCTION_TIMELINE_SCORING,
-	minYear: number = MIN_WORK_YEAR,
-	maxYear: number = MAX_WORK_YEAR
+	tracklistMin: number = MIN_WORK_YEAR,
+	tracklistMax: number = MAX_WORK_YEAR
 ): ConsolationBreakdown {
-	const left = leftYear ?? minYear;
-	const right = rightYear ?? maxYear;
+	const datasetMin = MIN_WORK_YEAR;
+	const datasetMax = MAX_WORK_YEAR;
+
+	// Calculate virtual boundaries with padding, clamped to dataset limits
+	const virtualMin = Math.max(datasetMin, tracklistMin - parameters.edgeBoundaryPadding);
+	const virtualMax = Math.min(datasetMax, tracklistMax + parameters.edgeBoundaryPadding);
+
+	const left = leftYear ?? virtualMin;
+	const right = rightYear ?? virtualMax;
 	const dErr = Math.min(Math.abs(cardYear - left), Math.abs(cardYear - right));
 	const cardsNeeded = Math.max(0, target - 1);
 	const fadeStart = parameters.consolationFadeStartAttemptsMultiplier * cardsNeeded;
