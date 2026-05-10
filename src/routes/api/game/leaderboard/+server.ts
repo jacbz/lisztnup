@@ -239,13 +239,19 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 			return json({ success: false, reason: 'Score implausible' }, { status: 400 });
 		}
 		if (log && !isCompletedLog(log, target)) {
-			await logger.warn(db, 'Leaderboard POST rejected: incomplete replay', {
+			await logger.warn(db, 'Leaderboard would have been rejected: incomplete replay', {
 				userHash,
 				country,
 				sessionId,
 				context: { target, log }
 			});
-			return json({ success: false, reason: 'Incomplete replay' }, { status: 400 });
+			// await logger.warn(db, 'Leaderboard POST rejected: incomplete replay', {
+			// 	userHash,
+			// 	country,
+			// 	sessionId,
+			// 	context: { target, log }
+			// });
+			// return json({ success: false, reason: 'Incomplete replay' }, { status: 400 });
 		}
 
 		const timestamp = parseClientTimestamp(occurredAt);
