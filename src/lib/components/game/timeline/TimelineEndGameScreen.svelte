@@ -32,7 +32,7 @@
 		score: number;
 		reachedTarget: boolean;
 		completionBonus: number;
-		initialPartGid: string | null;
+		initialPartGid: string;
 		replayTurns: TimelineReplayTurn[];
 	}
 
@@ -155,12 +155,18 @@
 	}
 
 	function getReplayLog(t: FinalTimeline): TimelineReplayLog {
-		const preferredInitialEntry = t.initialPartGid
-			? (t.entries.find((entry) => entry.track.part.gid === t.initialPartGid) ?? null)
-			: null;
-		const fallbackInitialEntry = preferredInitialEntry ?? t.entries[0] ?? null;
-		const initialYear =
-			(fallbackInitialEntry ? getTrackYear(fallbackInitialEntry.track) : null) ?? tracklistMin;
+		const initialEntry = t.entries.find((entry) => entry.track.part.gid === t.initialPartGid);
+		if (!initialEntry) {
+			throw new Error(
+				`Timeline replay invariant violated: missing initial entry ${t.initialPartGid}.`
+			);
+		}
+		const initialYear = getTrackYear(initialEntry.track);
+		if (initialYear === null) {
+			throw new Error(
+				`Timeline replay invariant violated: initial entry ${t.initialPartGid} has no year.`
+			);
+		}
 
 		const replayLog: TimelineReplayLog = {
 			v: 1,

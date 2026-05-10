@@ -171,7 +171,6 @@
 		if (selectedMode === 'timeline' && browser) {
 			const tracklist = localSettings.selectedTracklist;
 			const target = localSettings.timelineTarget;
-			const limit = showExpandedLeaderboard ? 25 : 6;
 			const filterKey = `${tracklist}:${target}`;
 			const requestId = ++leaderboardRequestId;
 
@@ -183,7 +182,7 @@
 			}
 
 			getLeaderboard({
-				limit,
+				limit: 25,
 				tracklist,
 				target,
 				token: getPlayerToken()
