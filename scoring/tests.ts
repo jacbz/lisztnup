@@ -23,7 +23,7 @@ import { buildWarnings } from './suite/warnings';
 import { resolveParameterSets } from './parameterSets';
 
 function testProductionScoring(): void {
-	assert.equal(Math.round(calculateDiff(25)), 696);
+	assert.equal(Math.round(calculateDiff(25)), 750);
 	assert.equal(calculateSpeed(1), 1.25);
 	assert.equal(calculateGap(1800, 1810), 10);
 	assert.equal(calculateGap(null, 1850, undefined, 1800, 1900), 50);
@@ -45,9 +45,9 @@ function testProductionScoring(): void {
 
 	const score = calculateTurnScore({ gap: 25, seconds: 1, streak: 5 });
 	assert.equal(score.base, 1000);
-	assert.equal(score.diff, 696);
-	assert.equal(score.scoreBeforeStreak, 2120);
-	assert.equal(score.score, 3710);
+	assert.equal(score.diff, 750);
+	assert.equal(score.scoreBeforeStreak, 2188);
+	assert.equal(score.score, 3829);
 }
 
 import { replayTimelineLog, isCompletedLog } from '../src/lib/logic/timelineReplayUtils';
@@ -59,6 +59,9 @@ function testLogValidation(): void {
 	const validLog = {
 		v: 1,
 		initial: 'abc',
+		initialYear: 1800,
+		tracklistMin: 1400,
+		tracklistMax: 2020,
 		turns: [{ part: 'p1', ok: true }]
 	};
 	// Target 2 cards: needs 1 turn.
@@ -70,6 +73,9 @@ function testLogValidation(): void {
 	const userLog = {
 		v: 1,
 		initial: 'init',
+		initialYear: 1800,
+		tracklistMin: 1400,
+		tracklistMax: 2020,
 		turns: new Array(5).fill({ part: 'p', ok: true })
 	};
 	assert.equal(isCompletedLog(userLog, 6), true);
@@ -84,7 +90,7 @@ function testReplayConsolation(): void {
 		for (const work of data.works) {
 			for (const part of work.parts) {
 				if (part.gid === partGid) {
-					return { work, part };
+					return { work, part, composer: work.composer };
 				}
 			}
 		}

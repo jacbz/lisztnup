@@ -18,25 +18,26 @@ $$\text{Base} = 1000$$
 
 ### Difficulty Bonus ($\text{Diff}$)
 
-Rewards chronological difficulty. It is highest when cards are placed inside a short historical window. The reward utilizes a Weibull decay curve, ensuring a noticeable initial point penalty for slightly wide gaps while maintaining a generous middle ground, before dropping off an aggressive mathematical cliff for gaps wider than 50 years.
+Rewards chronological difficulty. It is highest when cards are placed inside a short historical window. The reward utilizes an exponential decay curve, ensuring a swift but smooth point penalty for slightly wide gaps, while allowing massive century-wide gaps to still yield a tiny trickle of consolation points.
 
-$$\text{Diff} = \text{round}\left( \text{DiffMax} \times e^{-\text{DecayRate} \times \text{Gap}^{\text{CliffShape}}} \right)$$
+$$\text{Diff} = \text{round}\left( \text{DiffMax} \times e^{-\text{DecayRate} \times \text{Gap}} \right)$$
 
 - **Total Gap ($\text{Gap}$):** The chronological distance between the two neighboring boundary years. For edge slots, the tracklist's min or max year acts as the virtual neighbor.
 - **$\text{DiffMax} = 1000$:** The maximum possible bonus, awarded for threading a flawless 0-year gap.
-- **$\text{DecayRate} = 0.004$:** The scale parameter. Controls the overall "speed" of the point loss. Increasing this value causes points to drop faster across all gap sizes. Decreasing it makes the entire timeline more forgiving.
-- **$\text{CliffShape} = 1.4$:** The shape parameter. Controls the "bend" of the curve. A value of $1.0$ would yield a standard steady exponential drop, leaving wide gaps too highly rewarded. A value $> 1.0$ creates the "cliff" effect. It forces the curve to stay relatively flat for small gaps (protecting the 0–25 year range) before accelerating downward to aggressively crush the value of wide gaps (75+ years).
+- **$\text{DecayRate} = 0.0115$:** The exponential decay constant. At this rate, a 10-year gap loses approximately 11% of its value, a 60-year gap loses half of its value (the half-life), and a 200-year gap retains exactly 10%.
 
 | Gap Size (Years) | Difficulty Bonus |
 | :--------------- | :--------------- |
 | 0                | 1000             |
-| 5                | 963              |
-| 10               | 904              |
-| 25               | 696              |
-| 50               | 384              |
-| 75               | 185              |
-| 100              | 80               |
-| 150+             | < 15             |
+| 5                | 944              |
+| 10               | 891              |
+| 25               | 750              |
+| 50               | 563              |
+| 75               | 422              |
+| 100              | 317              |
+| 150              | 178              |
+| 200              | 100              |
+| 300              | 32               |
 
 ### Speed Multiplier ($\text{Speed}$)
 

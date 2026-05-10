@@ -11,7 +11,6 @@ export interface TimelineScoringParameters {
 	readonly base: number;
 	readonly difficultyMax: number;
 	readonly difficultyDecayRate: number;
-	readonly difficultyCliffShape: number;
 	readonly minimumGap: number;
 	readonly speedBonus: number;
 	readonly speedWindowSeconds: number;
@@ -34,8 +33,7 @@ export const PRODUCTION_TIMELINE_SCORING = {
 	label: 'Production',
 	base: 1000,
 	difficultyMax: 1000,
-	difficultyDecayRate: 0.004,
-	difficultyCliffShape: 1.4,
+	difficultyDecayRate: 0.0115,
 	minimumGap: 0,
 	speedBonus: 0.25,
 	speedWindowSeconds: 20,
@@ -68,16 +66,13 @@ export const completionFlawlessMultiplier =
 
 /**
  * Difficulty bonus based on chronological window size.
- * Uses a Weibull decay curve to reward precision.
+ * Uses an exponential decay curve to reward precision.
  */
 export function calculateDiff(
 	gap: number,
 	parameters: TimelineScoringParameters = PRODUCTION_TIMELINE_SCORING
 ): number {
-	return (
-		parameters.difficultyMax *
-		Math.exp(-parameters.difficultyDecayRate * Math.pow(gap, parameters.difficultyCliffShape))
-	);
+	return parameters.difficultyMax * Math.exp(-parameters.difficultyDecayRate * gap);
 }
 
 /**
