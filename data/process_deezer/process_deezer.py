@@ -376,7 +376,7 @@ def main():
 
     banned_count = len(banned)
     
-    with Path("../static/lisztnup.json").open("r", encoding="utf-8") as f:
+    with Path("../../static/lisztnup.json").open("r", encoding="utf-8") as f:
         data = json.load(f)
 
     expected_titles = build_expected_titles(data)
