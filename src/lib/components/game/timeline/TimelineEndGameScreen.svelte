@@ -380,18 +380,29 @@
 
 	function acceptPublishPermission(): void {
 		if (!canAcceptPublishPermission()) return;
+
+		// Capture reactive values before any settings updates that would cause them to recompute
+		const playersToPublish = [...unknownPermissionPlayers];
 		const finalNames = permissionNames.map((name) => name.trim());
+
+		// Update publishing permissions
 		updatePublishingNames(finalNames, 'allow');
-		updatePublishingNames(
-			unknownPermissionPlayers
-				.map((player) => player.name)
-				.filter((name, i) => normalizeName(name) !== normalizeName(finalNames[i])),
-			'deny'
-		);
+
+		// Only deny old names if they're different from the new names AND are default names
+		const oldNamesToDeny = playersToPublish
+			.map((player) => player.name)
+			.filter(
+				(name, i) => normalizeName(name) !== normalizeName(finalNames[i]) && isDefaultName(name)
+			);
+		if (oldNamesToDeny.length > 0) {
+			updatePublishingNames(oldNamesToDeny, 'deny');
+		}
+
+		// Build pending publishes using captured player list
 		pendingPermissionPublishes = {
 			...pendingPermissionPublishes,
 			...Object.fromEntries(
-				unknownPermissionPlayers
+				playersToPublish
 					.map((player, i) => {
 						const index = leaderboardPlayers.findIndex(
 							(candidate) => candidate.name === player.name && candidate.color === player.color
@@ -401,9 +412,12 @@
 					.filter((entry): entry is readonly [number, string] => entry !== null)
 			)
 		};
-		for (const [index, player] of unknownPermissionPlayers.entries()) {
+
+		// Update player names in settings
+		for (const [index, player] of playersToPublish.entries()) {
 			savePlayerName(player.color, finalNames[index]);
 		}
+
 		showPublishPermission = false;
 		// PATCH runs only after each POST returns an id (pendingPermissionPublishes $effect) so we
 		// never send parallel token-wide anonymous PATCHes before rows exist.
