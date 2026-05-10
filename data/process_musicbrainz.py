@@ -612,6 +612,8 @@ class MusicbrainzProcessor:
                         begin_year, end_year = override[0], override[1]
                     elif isinstance(override, int):
                         begin_year, end_year = None, override
+                    elif override is None:
+                        begin_year, end_year = None, None
 
                 work_type = self._transform_type(root_work, composer)
                 log.info("WORK CANDIDATE | %s (%s) | Composer: %s | Source type: %s | Final type: %s | WSS: %.2f | Parts: %d",

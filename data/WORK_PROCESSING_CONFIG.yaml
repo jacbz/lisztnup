@@ -325,6 +325,7 @@ excluded_works:
   '1b1ebd2f-62db-4663-959e-e30251713d71': 'Swan Lake'
   '13867eb1-42c2-45ed-97d9-e1cc85b006fd': 'Swan Lake (Drigo)'
   '81687c4d-2cc5-304f-9ae1-33e8555f7ef8': 'Swan Lake'
+  'afea14ed-4f9c-4344-a6c4-18e22d8130f1': 'Sæle jolekveld'
 
 # --- Work Significance Score (WSS) Overrides ---
 # Manually set the WSS for specific works.
@@ -379,6 +380,10 @@ year_overrides:
   'e039120f-9a72-3d38-b885-5f9a6779e2c9': 1974
   'f124195b-b3f2-3b47-af5c-f86e5cb7adff': 1982
   '859e2b62-77b2-41a1-a19a-80154ad04b5c': 1874
+  '1a1cae9f-2f5b-4d5d-94d5-d3740a5e9403': 1891
+  '85045d13-8c85-49c0-85a4-079cbffaf85f': 1874
+  '18f2f969-94b9-48f3-baf4-60486a68f2a3': null
+  'afea14ed-4f9c-4344-a6c4-18e22d8130f1': 'Sæle jolekveld'
 
   # Uncertain dates that are manually set to a reasonable scholarly estimate
   '7481c7f5-71bd-464e-956a-c670f4117de3': [1711, 1720]

@@ -2026,15 +2026,6 @@
       "score": 60.81
     },
     {
-      "gid": "8bac9b74-658c-4aac-8f7f-711aa27ba7a5",
-      "name": "Drese, Adam",
-      "birth_year": 1620,
-      "death_year": 1701,
-      "gender": "male",
-      "country": "DE",
-      "score": 3.01
-    },
-    {
       "gid": "d1591eff-428d-44ed-b7f0-f9936f1ab656",
       "name": "Dubois, Théodore",
       "birth_year": 1837,
@@ -75912,8 +75903,8 @@
       "composer_gid": "3d217bc1-cc90-4261-a230-46c0f6b7492c",
       "name": "Bourrée fantasque (orch. Mottl)",
       "type": "orchestral",
-      "begin_year": 1991,
-      "end_year": 1991,
+      "begin_year": null,
+      "end_year": 1891,
       "score": 1.95,
       "parts": [
         {
@@ -90959,23 +90950,6 @@
       ]
     },
     {
-      "gid": "afea14ed",
-      "composer_gid": "8bac9b74-658c-4aac-8f7f-711aa27ba7a5",
-      "name": "Sæle jolekveld",
-      "type": "vocal",
-      "begin_year": 1698,
-      "end_year": 1698,
-      "score": 1.61,
-      "parts": [
-        {
-          "gid": "afea14ed",
-          "name": "Sæle jolekveld",
-          "deezer": [618775152],
-          "score": 100.0
-        }
-      ]
-    },
-    {
       "gid": "fdb6be53",
       "composer_gid": "d1591eff-428d-44ed-b7f0-f9936f1ab656",
       "name": "Douze pièces pour orgue",
@@ -94753,8 +94727,8 @@
       "composer_gid": "819eaeb2-8dd8-48a5-ad07-0bcd137985ef",
       "name": "String Quartet no. 7 in A minor, op. 16, B. 45",
       "type": "chamber",
-      "begin_year": 1874,
-      "end_year": 1987,
+      "begin_year": null,
+      "end_year": 1874,
       "score": 1.95,
       "parts": [
         {
@@ -101831,8 +101805,8 @@
       "composer_gid": "7ea7ad5a-f2fe-4988-ada5-c15a11958911",
       "name": "Pièces de Viole, Livre I",
       "type": "chamber",
-      "begin_year": 1747,
-      "end_year": 1747,
+      "begin_year": null,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
