@@ -17,7 +17,9 @@ export function replayTimelineLog(
 	log: TimelineReplayLog,
 	target: number,
 	tracksMap: (gid: string) => Track | undefined,
-	onWarning?: (msg: string) => void
+	onWarning?: (msg: string) => void,
+	explicitMinYear?: number,
+	explicitMaxYear?: number
 ): { log: TimelineReplayLog; score: number; newTurns: TimelineReplayTurn[] } {
 	let score = 0;
 	let currentStreak = 0;
@@ -34,21 +36,24 @@ export function replayTimelineLog(
 	const getYear = (t: Track) => t.work.end_year ?? t.work.begin_year;
 	timeline.push(initialTrack);
 
-	// Calculate tracklist bounds from all tracks present in the log to approximate the original tracklist range
-	const allLogTracks = [initialTrack, ...log.turns.map((t) => tracksMap(t.part))].filter(
-		Boolean
-	) as Track[];
-	let minYear = Infinity;
-	let maxYear = -Infinity;
-	for (const t of allLogTracks) {
-		const y = getYear(t);
-		if (y != null) {
-			if (y < minYear) minYear = y;
-			if (y > maxYear) maxYear = y;
+	// Determine tracklist bounds: use explicit values if provided, otherwise approximate from the log
+	let minYear = explicitMinYear ?? Infinity;
+	let maxYear = explicitMaxYear ?? -Infinity;
+
+	if (explicitMinYear === undefined || explicitMaxYear === undefined) {
+		const allLogTracks = [initialTrack, ...log.turns.map((t) => tracksMap(t.part))].filter(
+			Boolean
+		) as Track[];
+		for (const t of allLogTracks) {
+			const y = getYear(t);
+			if (y != null) {
+				if (explicitMinYear === undefined && y < minYear) minYear = y;
+				if (explicitMaxYear === undefined && y > maxYear) maxYear = y;
+			}
 		}
+		if (minYear === Infinity) minYear = 1400;
+		if (maxYear === -Infinity) maxYear = 2020;
 	}
-	if (minYear === Infinity) minYear = 1400;
-	if (maxYear === -Infinity) maxYear = 2020;
 
 	const newTurns: TimelineReplayTurn[] = [];
 
@@ -177,8 +182,8 @@ export function replayTimelineLog(
 				} else {
 					const consolation = calculateConsolationScore(
 						turnYear,
-						leftYear,
-						rightYear,
+						placedLeft,
+						placedRight,
 						target,
 						totalPlacements,
 						undefined,

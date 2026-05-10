@@ -6,7 +6,7 @@ import { logger } from '$lib/server/logging';
 
 const MAX_NAME_LENGTH = 30;
 const MAX_SCORE = 1_000_000;
-const MAX_CARDS = 500;
+const MAX_CARDS = 100;
 const MAX_SCORE_PER_CARD = 6000;
 const MAX_SUBMISSIONS_PER_HOUR = 60;
 
@@ -149,109 +149,93 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 			typeof target !== 'number' ||
 			typeof attempts !== 'number'
 		) {
-			await logger.warn(db, 'Leaderboard POST rejected: missing/invalid required fields', {
+			await logger.warn(db, 'Leaderboard: missing/invalid required fields', {
 				userHash,
 				country,
 				sessionId,
 				context: { hasToken: !!playerToken, score, target, attempts, log }
 			});
-			return json({ success: false, reason: 'Invalid payload' }, { status: 400 });
 		}
 		// playerName is optional — null means anonymous submission
 		const nameProvided =
 			playerName != null && typeof playerName === 'string' && playerName.length > 0;
 		if (nameProvided && playerName.length > MAX_NAME_LENGTH) {
-			await logger.warn(db, 'Leaderboard POST rejected: name too long', {
+			await logger.warn(db, 'Leaderboard: name too long', {
 				userHash,
 				country,
 				sessionId,
 				context: { nameLength: playerName.length, log }
 			});
-			return json({ success: false, reason: 'Invalid name' }, { status: 400 });
 		}
 		const storedPlayerName = nameProvided ? playerName.slice(0, MAX_NAME_LENGTH) : null;
 
 		// ── Range checks (self-contained, no DB dependency) ─
 		if (score < 0 || score > MAX_SCORE) {
-			await logger.warn(db, 'Leaderboard POST rejected: score out of range', {
+			await logger.warn(db, 'Leaderboard: score out of range', {
 				userHash,
 				country,
 				sessionId,
 				context: { score, log }
 			});
-			return json({ success: false, reason: 'Score out of range' }, { status: 400 });
 		}
 		if (target < 1 || target > MAX_CARDS) {
-			await logger.warn(db, 'Leaderboard POST rejected: target out of range', {
+			await logger.warn(db, 'Leaderboard: target out of range', {
 				userHash,
 				country,
 				sessionId,
 				context: { target, log }
 			});
-			return json({ success: false, reason: 'Target out of range' }, { status: 400 });
 		}
 		if (typeof tracklistId !== 'string' || tracklistId.length === 0) {
-			await logger.warn(db, 'Leaderboard POST rejected: invalid tracklist', {
+			await logger.warn(db, 'Leaderboard: invalid tracklist', {
 				userHash,
 				country,
 				sessionId,
 				context: { tracklistId, log }
 			});
-			return json({ success: false, reason: 'Invalid tracklist' }, { status: 400 });
 		}
 		if (attempts < Math.max(0, target - 1) || attempts > MAX_CARDS * 5) {
-			await logger.warn(db, 'Leaderboard POST rejected: attempts out of range', {
+			await logger.warn(db, 'Leaderboard: attempts out of range', {
 				userHash,
 				country,
 				sessionId,
 				context: { attempts, target, log }
 			});
-			return json({ success: false, reason: 'Attempts out of range' }, { status: 400 });
 		}
 		if (
 			typeof averageTime === 'number' &&
 			(averageTime < 0 || averageTime > 3600 || !Number.isFinite(averageTime))
 		) {
-			await logger.warn(db, 'Leaderboard POST rejected: average time out of range', {
+			await logger.warn(db, 'Leaderboard: average time out of range', {
 				userHash,
 				country,
 				sessionId,
 				context: { averageTime, log }
 			});
-			return json({ success: false, reason: 'Average time out of range' }, { status: 400 });
 		}
 		if (typeof longestStreak === 'number' && (longestStreak < 0 || longestStreak > attempts)) {
-			await logger.warn(db, 'Leaderboard POST rejected: streak out of range', {
+			await logger.warn(db, 'Leaderboard: streak out of range', {
 				userHash,
 				country,
 				sessionId,
 				context: { longestStreak, attempts, log }
 			});
-			return json({ success: false, reason: 'Streak out of range' }, { status: 400 });
 		}
 		if (score > target * MAX_SCORE_PER_CARD) {
-			await logger.warn(db, 'Leaderboard POST rejected: score implausible', {
+			await logger.warn(db, 'Leaderboard: score implausible', {
 				userHash,
 				country,
 				sessionId,
 				context: { score, target, maxPerCard: MAX_SCORE_PER_CARD, log }
 			});
-			return json({ success: false, reason: 'Score implausible' }, { status: 400 });
 		}
 		if (log && !isCompletedLog(log, target)) {
-			await logger.warn(db, 'Leaderboard would have been rejected: incomplete replay', {
+			await logger.warn(db, 'Leaderboard: incomplete replay', {
 				userHash,
 				country,
 				sessionId,
 				context: { target, log }
 			});
-			// await logger.warn(db, 'Leaderboard POST rejected: incomplete replay', {
-			// 	userHash,
-			// 	country,
-			// 	sessionId,
-			// 	context: { target, log }
-			// });
-			// return json({ success: false, reason: 'Incomplete replay' }, { status: 400 });
 		}
 
 		const timestamp = parseClientTimestamp(occurredAt);

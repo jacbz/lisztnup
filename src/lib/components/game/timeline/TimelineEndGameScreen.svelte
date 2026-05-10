@@ -132,6 +132,8 @@
 	let autoSubmitted = $state(false);
 	let entryIds = $state<(number | null)[]>([]);
 	let permissionAskedForKey = $state('');
+	let leaderboardPublishingFingerprint = $state<string | null>(null);
+	const pendingPublishInFlight = new Set<number>();
 
 	function getAverageTime(turns: TimelineReplayTurn[]): number | null {
 		const times = turns
@@ -227,6 +229,16 @@
 		}));
 	}
 
+	async function waitForLeaderboardEntryId(index: number, maxMs = 20_000): Promise<number> {
+		const deadline = Date.now() + maxMs;
+		while (Date.now() < deadline) {
+			const id = entryIds[index];
+			if (id != null) return id;
+			await new Promise((r) => setTimeout(r, 50));
+		}
+		throw new Error('Leaderboard entry not ready');
+	}
+
 	function markNamed(index: number | null, name: string, entryId: number | null): void {
 		if (index == null) return;
 		const key = `${index}:${normalizeName(name)}:${entryId ?? 'pending'}`;
@@ -291,6 +303,7 @@
 			if (normalizeName(finalName) !== normalizeName(selectedLeaderboardPlayer.name)) {
 				updatePublishingNames([selectedLeaderboardPlayer.name], 'deny');
 			}
+			await waitForLeaderboardEntryId(selectedLeaderboardIndex);
 			await publishPlayerAs(selectedLeaderboardPlayer, selectedLeaderboardIndex, finalName);
 			showNamePopup = false;
 		} catch {
@@ -305,10 +318,13 @@
 		index: number,
 		playerName: string
 	): Promise<void> {
-		const entryId = entryIds[index] ?? null;
+		const entryId = entryIds[index];
+		if (entryId == null) {
+			throw new Error('Leaderboard entry not ready');
+		}
 		if (wasNamed(index, playerName, entryId)) return;
 		await patchLeaderboardName({
-			id: entryId ?? undefined,
+			id: entryId,
 			playerToken: getPlayerToken(),
 			playerName
 		});
@@ -330,7 +346,7 @@
 		});
 	}
 
-	async function acceptPublishPermission(): Promise<void> {
+	function acceptPublishPermission(): void {
 		if (!canAcceptPublishPermission()) return;
 		const finalNames = permissionNames.map((name) => name.trim());
 		updatePublishingNames(finalNames, 'allow');
@@ -357,15 +373,8 @@
 			savePlayerName(player.color, finalNames[index]);
 		}
 		showPublishPermission = false;
-		await Promise.all(
-			unknownPermissionPlayers.map((player, i) => {
-				const index = leaderboardPlayers.findIndex(
-					(candidate) => candidate.name === player.name && candidate.color === player.color
-				);
-				if (index < 0) return Promise.resolve();
-				return publishPlayerAs(player, index, finalNames[i]).catch(() => undefined);
-			})
-		);
+		// PATCH runs only after each POST returns an id (pendingPermissionPublishes $effect) so we
+		// never send parallel token-wide anonymous PATCHes before rows exist.
 	}
 
 	function denyPublishPermission(): void {
@@ -470,12 +479,27 @@
 		showPublishPermission = false;
 		showNamePopup = false;
 		permissionAskedForKey = '';
+		pendingPermissionPublishes = {};
+		pendingPublishInFlight.clear();
+	});
+
+	$effect(() => {
+		const pub = $settings.leaderboardPublishing ?? { allowedNames: [], deniedNames: [] };
+		const fp = JSON.stringify({
+			a: [...pub.allowedNames.map((n) => normalizeName(n))].sort(),
+			d: [...pub.deniedNames.map((n) => normalizeName(n))].sort()
+		});
+		if (leaderboardPublishingFingerprint !== null && fp !== leaderboardPublishingFingerprint) {
+			permissionAskedForKey = '';
+		}
+		leaderboardPublishingFingerprint = fp;
 	});
 
 	$effect(() => {
 		if (!visible || leaderboardPlayers.length === 0) return;
 		for (let i = 0; i < leaderboardPlayers.length; i++) {
 			const player = leaderboardPlayers[i];
+			if (entryIds[i] == null) continue;
 			if (hasAllowedName(player.name) && !isDefaultName(player.name)) {
 				void publishAllowedPlayer(player, i);
 			}
@@ -487,13 +511,22 @@
 		for (const [rawIndex, playerName] of Object.entries(pendingPermissionPublishes)) {
 			const index = Number(rawIndex);
 			const player = leaderboardPlayers[index];
-			if (!player || entryIds[index] == null || wasNamed(index, playerName, entryIds[index]))
-				continue;
-			void publishPlayerAs(player, index, playerName).then(() => {
-				const remaining = { ...pendingPermissionPublishes };
-				delete remaining[index];
-				pendingPermissionPublishes = remaining;
-			});
+			const entryId = entryIds[index];
+			if (!player || entryId == null || wasNamed(index, playerName, entryId)) continue;
+			if (pendingPublishInFlight.has(index)) continue;
+			pendingPublishInFlight.add(index);
+			void publishPlayerAs(player, index, playerName)
+				.then(() => {
+					const remaining = { ...pendingPermissionPublishes };
+					delete remaining[index];
+					pendingPermissionPublishes = remaining;
+				})
+				.catch(() => {
+					/* keep pending; user can retry via per-player Publish */
+				})
+				.finally(() => {
+					pendingPublishInFlight.delete(index);
+				});
 		}
 	});
 

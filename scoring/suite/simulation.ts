@@ -221,7 +221,12 @@ export function runSimulationSuite(input: SimulationInput): SuiteReport {
 		gamesSimulated++;
 
 		for (const parameterSet of input.parameterSets) {
-			const evaluation = evaluateTrace(trace, parameterSet);
+			const evaluation = evaluateTrace(
+				trace,
+				parameterSet,
+				pool.difficulty.bounds?.min,
+				pool.difficulty.bounds?.max
+			);
 			const winnerSet = new Set(evaluation.winnerIndexes);
 			const isMultiplayer = evaluation.players.length > 1;
 			if (isMultiplayer) {
@@ -427,7 +432,9 @@ export function generateTrace(
 
 export function evaluateTrace(
 	trace: GameTrace,
-	parameterSet: TimelineScoringParameters
+	parameterSet: TimelineScoringParameters,
+	minYear?: number,
+	maxYear?: number
 ): GameEvaluation {
 	const players = trace.table.personaIds.map((personaId, playerIndex) => ({
 		playerIndex,
@@ -458,7 +465,7 @@ export function evaluateTrace(
 			player.absoluteStreak++;
 			player.longestStreak = Math.max(player.longestStreak, player.absoluteStreak);
 
-			const gap = calculateGap(turn.leftYear, turn.rightYear, parameterSet);
+			const gap = calculateGap(turn.leftYear, turn.rightYear, parameterSet, minYear, maxYear);
 			const breakdown = calculateTurnScore(
 				{
 					gap,
@@ -487,11 +494,13 @@ export function evaluateTrace(
 			if (!turn.timedOut) {
 				const consolation = calculateConsolationScore(
 					turn.year,
-					turn.correctLeftYear,
-					turn.correctRightYear,
+					turn.leftYear,
+					turn.rightYear,
 					trace.scenario.target,
 					player.attempts,
-					parameterSet
+					parameterSet,
+					minYear,
+					maxYear
 				);
 				player.score += consolation.consolation;
 			}

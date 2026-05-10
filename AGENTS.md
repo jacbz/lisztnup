@@ -68,7 +68,7 @@ After implementing changes, **update the relevant doc file** — not all of them
 
 1. **Tailwind over custom CSS.** Only use `app.css` for things Tailwind can't express.
 2. **Svelte 5 Runes only.** `$state`, `$derived`, `$effect` — never legacy `$:` syntax.
-3. **All strings through i18n.** No hardcoded user-visible text. No `default` values. Add keys to all 10 locale files.
+3. **All strings through i18n.** No hardcoded user-visible text. No `default` values. Add keys to all 10 locale files. As a creative game, all i18n strings must be creative, highly idiomatic to each language, and never just a literal translation.
 4. **Types directory.** Shared types in `src/lib/types/`, re-exported from `index.ts`.
 5. **Context pattern.** Parent components expose typed context via `setContext` + `satisfies`. Children use `getGameContext()`.
 6. **Stores auto-persist.** All settings changes write to localStorage immediately via `SettingsService`.

@@ -5,6 +5,8 @@ import readline from 'readline/promises';
 import { GameCatalog, type RawLisztnupData } from '../src/lib/models';
 import { replayTimelineLog } from '../src/lib/logic/timelineReplayUtils';
 import type { TimelineReplayLog } from '../src/lib/types/timelineReplay';
+import { TracklistGenerator } from '../src/lib/services/TracklistGenerator';
+import * as Configs from '../src/lib/data/tracklistConfigs';
 
 async function main() {
 	const rl = readline.createInterface({
@@ -30,6 +32,71 @@ async function main() {
 		const dataPath = path.join(process.cwd(), 'static/lisztnup.json');
 		const rawData = fs.readFileSync(dataPath, 'utf-8');
 		const data = GameCatalog.fromRaw(JSON.parse(rawData) as RawLisztnupData);
+
+		console.log('Pre-calculating tracklist bounds...');
+		const tracklistBounds = new Map<string, { min: number; max: number }>();
+
+		// Recreate the tracklist definitions without importing the UI-heavy DEFAULT_TRACKLISTS
+		// (which would try to load SVG files via Vite/esbuild, failing in a raw Node environment).
+		const tracklists = [
+			{ id: 'beginner', config: Configs.BEGINNER_CONFIG },
+			{ id: 'intermediate', config: Configs.INTERMEDIATE_CONFIG },
+			{ id: 'skilled', config: Configs.SKILLED_CONFIG },
+			{ id: 'advanced', config: Configs.ADVANCED_CONFIG },
+			{ id: 'expert', config: Configs.EXPERT_CONFIG },
+			{ id: 'virtuoso', config: Configs.VIRTUOSO_CONFIG },
+			{ id: 'cadenza', config: Configs.CADENZA_CONFIG },
+			{ id: 'obscure', config: Configs.OBSCURE_CONFIG },
+			{ id: 'piano', config: Configs.PIANO_CONFIG },
+			{ id: 'orchestral', config: Configs.ORCHESTRAL_CONFIG },
+			{ id: 'chamber', config: Configs.CHAMBER_CONFIG },
+			{ id: 'ballet', config: Configs.BALLET_CONFIG },
+			{ id: 'opera', config: Configs.OPERA_CONFIG },
+			{ id: 'concerto', config: Configs.CONCERTO_CONFIG },
+			{ id: 'pianoconcerto', config: Configs.PIANOCONCERTO_CONFIG },
+			{ id: 'violinconcerto', config: Configs.VIOLINCONCERTO_CONFIG },
+			{ id: 'celloconcerto', config: Configs.CELLOCONCERTO_CONFIG },
+			{ id: 'woodwindconcerto', config: Configs.WOODWINDCONCERTO_CONFIG },
+			{ id: 'bach', config: Configs.BACH_CONFIG },
+			{ id: 'beethoven', config: Configs.BEETHOVEN_CONFIG },
+			{ id: 'mozart', config: Configs.MOZART_CONFIG },
+			{ id: 'liszt', config: Configs.LISZT_CONFIG },
+			{ id: 'chopin', config: Configs.CHOPIN_CONFIG },
+			{ id: 'tchaikovsky', config: Configs.TCHAIKOVSKY_CONFIG },
+			{ id: 'vivaldi', config: Configs.VIVALDI_CONFIG },
+			{ id: 'femalecomposers', config: Configs.FEMALE_COMPOSERS_CONFIG },
+			{ id: 'renaissance', config: Configs.RENAISSANCE_CONFIG },
+			{ id: 'baroque', config: Configs.BAROQUE_CONFIG },
+			{ id: 'classical', config: Configs.CLASSICAL_CONFIG },
+			{ id: 'romantic', config: Configs.ROMANTIC_CONFIG },
+			{ id: 'modernism', config: Configs.MODERNISM_CONFIG },
+			{ id: 'contemporary', config: Configs.CONTEMPORARY_CONFIG },
+			{ id: 'germany', config: Configs.GERMANY_CONFIG },
+			{ id: 'italy', config: Configs.ITALY_CONFIG },
+			{ id: 'france', config: Configs.FRANCE_CONFIG },
+			{ id: 'russia', config: Configs.RUSSIA_CONFIG },
+			{ id: 'uk', config: Configs.UK_CONFIG },
+			{ id: 'usa', config: Configs.USA_CONFIG },
+			{ id: 'spain', config: Configs.SPAIN_CONFIG },
+			{ id: 'scandinavia', config: Configs.SCANDINAVIA_CONFIG }
+		];
+
+		for (const tl of tracklists) {
+			const generator = new TracklistGenerator(data, tl as any);
+			const { works } = generator.getFilteredData();
+			let min = Infinity;
+			let max = -Infinity;
+			for (const work of works) {
+				const begin = work.begin_year ?? work.composer.birth_year;
+				const end = work.end_year ?? work.composer.death_year ?? new Date().getFullYear();
+				if (begin < min) min = begin;
+				if (end > max) max = end;
+			}
+			tracklistBounds.set(tl.id, {
+				min: min === Infinity ? 1400 : min,
+				max: max === -Infinity ? 2020 : max
+			});
+		}
 
 		const trackLookup = (partGid: string) => {
 			for (const work of data.works) {
@@ -84,8 +151,14 @@ async function main() {
 			}
 
 			const warnings: string[] = [];
-			const result = replayTimelineLog(oldLog, row.target, trackLookup, (msg) =>
-				warnings.push(msg)
+			const bounds = tracklistBounds.get(row.tracklist_id);
+			const result = replayTimelineLog(
+				oldLog,
+				row.target,
+				trackLookup,
+				(msg) => warnings.push(msg),
+				bounds?.min,
+				bounds?.max
 			);
 
 			const newScore = result.score;

@@ -28,7 +28,8 @@ const EMPTY_DIFFICULTY: TracklistDifficultyProfile = {
 	composerHomogeneity: 0,
 	typeHomogeneity: 0,
 	obscurity: 0,
-	historicalRemoteness: 0
+	historicalRemoteness: 0,
+	bounds: { min: 1400, max: 2020 }
 };
 
 export function calculateTracklistDifficulty(
@@ -45,6 +46,22 @@ export function calculateTracklistDifficulty(
 	if (candidates.length === 0) return EMPTY_DIFFICULTY;
 
 	const totalWeight = candidates.reduce((sum, candidate) => sum + candidate.weight, 0);
+
+	// Bounds calculation matching GameScreen.svelte logic
+	let min = Infinity;
+	let max = -Infinity;
+	for (const candidate of pool.works) {
+		const work = candidate.work;
+		const begin = work.begin_year ?? work.composer.birth_year;
+		const end = work.end_year ?? work.composer.death_year ?? new Date().getFullYear();
+		if (begin < min) min = begin;
+		if (end > max) max = end;
+	}
+	const bounds = {
+		min: min === Infinity ? 1400 : min,
+		max: max === -Infinity ? 2020 : max
+	};
+
 	const years = candidates.map((candidate) => candidate.year);
 	const minYear = Math.min(...years);
 	const maxYear = Math.max(...years);
@@ -108,7 +125,8 @@ export function calculateTracklistDifficulty(
 		composerHomogeneity,
 		typeHomogeneity,
 		obscurity,
-		historicalRemoteness
+		historicalRemoteness,
+		bounds
 	};
 }
 

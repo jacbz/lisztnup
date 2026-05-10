@@ -50,6 +50,77 @@ function testProductionScoring(): void {
 	assert.equal(score.score, 3710);
 }
 
+import { replayTimelineLog } from '../src/lib/logic/timelineReplayUtils';
+import { GameCatalog } from '../src/lib/models';
+import fs from 'fs';
+import path from 'path';
+
+function testReplayConsolation(): void {
+	const dataPath = path.join(process.cwd(), 'static/lisztnup.json');
+	const rawData = fs.readFileSync(dataPath, 'utf-8');
+	const data = GameCatalog.fromRaw(JSON.parse(rawData));
+
+	const trackLookup = (partGid: string) => {
+		for (const work of data.works) {
+			for (const part of work.parts) {
+				if (part.gid === partGid) {
+					return { work, part };
+				}
+			}
+		}
+		return undefined;
+	};
+
+	const findTrack = (year: number) => {
+		for (const work of data.works) {
+			if (work.end_year === year || work.begin_year === year) {
+				return work.parts[0].gid;
+			}
+		}
+		return null;
+	};
+
+	const g1781 = findTrack(1781);
+	const g1907 = findTrack(1907);
+	const g1978 = findTrack(1978);
+
+	if (!g1781 || !g1907 || !g1978) {
+		console.warn('Skipping replay consolation test: tracks not found in dataset.');
+		return;
+	}
+
+	const log = {
+		v: 1,
+		initial: g1781,
+		turns: [
+			{
+				part: g1907,
+				index: 1,
+				ok: true,
+				seconds: 10,
+				points: 1000,
+				score: 1000,
+				year: 1907
+			},
+			{
+				part: g1978,
+				index: 1, // Misplaced between 1781 and 1907
+				ok: false,
+				seconds: 10,
+				points: 1, // Non-zero
+				score: 1000,
+				year: 1978
+			}
+		]
+	} as any;
+
+	const result = replayTimelineLog(log, 6, trackLookup, undefined, 1400, 2020);
+	const points = result.newTurns[1].points;
+	// Expected: dErr = min(|1978-1781|, |1978-1907|) = 71
+	// round(100 * 0.5^(71/20)) = 9
+	assert.equal(points, 9, `Consolation score should be 9, got ${points}`);
+}
+
 function runTinyReport(seed: string) {
 	const startedAt = performance.now();
 	const dataset = loadDataset();
@@ -272,6 +343,7 @@ function emptyDataset(): DatasetSummary {
 }
 
 testProductionScoring();
+testReplayConsolation();
 testDeterminism();
 testSkillSignal();
 testSoloMultiplayerSegregation();

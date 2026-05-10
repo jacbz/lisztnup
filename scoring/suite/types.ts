@@ -77,6 +77,7 @@ export interface TracklistDifficultyProfile {
 	typeHomogeneity: number;
 	obscurity: number;
 	historicalRemoteness: number;
+	bounds: { min: number; max: number };
 }
 
 export interface TracklistPoolSummary {
