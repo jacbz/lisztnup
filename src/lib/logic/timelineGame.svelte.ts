@@ -1017,6 +1017,13 @@ export class TimelineGame {
 			this.#currentRoundScores = {};
 		}
 
+		// Clear correct/incorrect highlights from all timeline entries for end screen display
+		this.timelines.forEach((timeline) => {
+			timeline.entries.forEach((entry) => {
+				entry.correct = null;
+			});
+		});
+
 		// Capture session ID before endGame() clears it — needed for leaderboard submission.
 		// Eagerly send game_end so the event isn't lost if the tab closes.
 		import('$lib/game-logger')

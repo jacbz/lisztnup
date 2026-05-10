@@ -644,9 +644,21 @@
 								<div class="h-3 w-3 rounded-full" style="background-color: {t.player.color};"></div>
 								<span class="font-semibold text-white">{t.player.name}</span>
 							</div>
-							<span class="text-xl font-bold text-cyan-400 tabular-nums">
-								{$_('scoring.pts', { values: { points: totalScore.toLocaleString() } })}
-							</span>
+							<div class="flex flex-row items-center gap-2">
+								{#if t.score > 0}
+									<button
+										type="button"
+										onclick={() => openReplayPopup(t)}
+										class="flex cursor-pointer items-center gap-1.5 rounded-md border border-cyan-400/50 bg-cyan-400/10 px-2 py-1 text-xs font-semibold text-cyan-300 transition-all hover:bg-cyan-400/20"
+									>
+										<SquareStack class="h-3 w-3" />
+										<span class="hidden md:block">{$_('leaderboard.replay')}</span>
+									</button>
+								{/if}
+								<span class="text-xl font-bold text-cyan-400 tabular-nums">
+									{$_('scoring.pts', { values: { points: totalScore.toLocaleString() } })}
+								</span>
+							</div>
 						</div>
 
 						<PlayerTimeline
@@ -656,6 +668,8 @@
 							active={false}
 							compact={false}
 							acceptingDrop={false}
+							hideCount={true}
+							hideHeader={true}
 							onConfirmedCardClick={(entry) => (inspectTrack = entry.track)}
 						/>
 						<p class="flex items-center gap-2 text-xs text-slate-400">
@@ -690,15 +704,7 @@
 							{@const leaderboardIndex = getLeaderboardIndex(t)}
 							{@const leaderboardPlayer = leaderboardPlayers[leaderboardIndex]}
 							{#if leaderboardPlayer}
-								<div class="flex gap-2">
-									<button
-										type="button"
-										onclick={() => openReplayPopup(t)}
-										class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border border-cyan-400/60 bg-cyan-400/10 px-4 py-2.5 text-sm font-bold text-cyan-300 transition-all hover:bg-cyan-400/20"
-									>
-										<SquareStack class="h-5 w-5" />
-										{$_('leaderboard.replay')}
-									</button>
+								<div class="flex justify-end">
 									<button
 										type="button"
 										onclick={() =>
@@ -709,7 +715,7 @@
 													? 'rename'
 													: 'publish'
 											)}
-										class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border border-amber-400/60 bg-amber-400/10 px-4 py-2.5 text-sm font-bold text-amber-300 transition-all hover:bg-amber-400/20"
+										class="flex cursor-pointer items-center gap-2 rounded-lg border border-amber-400/60 bg-amber-400/10 px-3 py-2 text-sm font-bold text-amber-300 transition-all hover:bg-amber-400/20"
 									>
 										{#if hasAllowedName(t.player.name) || isNamedInCurrentRound(leaderboardIndex)}
 											<PenLine class="h-4 w-4" />
@@ -721,17 +727,6 @@
 									</button>
 								</div>
 							{/if}
-						{:else if t.score > 0}
-							<div class="flex justify-end">
-								<button
-									type="button"
-									onclick={() => openReplayPopup(t)}
-									class="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-cyan-400/60 bg-cyan-400/10 px-4 py-2.5 text-sm font-bold text-cyan-300 transition-all hover:bg-cyan-400/20"
-								>
-									<SquareStack class="h-5 w-5" />
-									{$_('leaderboard.replay')}
-								</button>
-							</div>
 						{/if}
 					</div>
 				</div>
