@@ -87,7 +87,7 @@ Awarded instantly when a player places their target goal ($\text{Target}$) of ca
 
 Because every player begins the game with 1 card automatically placed on their timeline, the baseline for efficiency is $\text{CardsNeeded}$. The squared ratio severely punishes players who require excessive attempts, ensuring that an incomplete timeline cannot win. $\text{CompletionRate}=1000$.
 
-$$\text{Completion} = \left(\frac{\text{CardsNeeded}}{\text{Attempts}}\right)^2 \times (\text{Target} \times \text{CompletionRate})$$
+$$\text{Completion} = \left(\frac{\text{CardsNeeded}}{\text{Attempts}}\right)^2 \times (\text{CardsNeeded} \times \text{CompletionRate})$$
 
 ### Flawless Bonus
 

@@ -141,7 +141,7 @@ export function calculateCompletion(
 
 	const flawlessMult = attempts === cardsNeeded ? parameters.completionFlawlessMultiplier : 1.0;
 	return Math.round(
-		(cardsNeeded / attempts) ** 2 * (target * parameters.completionRate) * flawlessMult
+		(cardsNeeded / attempts) ** 2 * (cardsNeeded * parameters.completionRate) * flawlessMult
 	);
 }
 

@@ -7,6 +7,7 @@ import { replayTimelineLog } from '../src/lib/logic/timelineReplayUtils';
 import type { TimelineReplayLog } from '../src/lib/types/timelineReplay';
 import { TracklistGenerator } from '../src/lib/services/TracklistGenerator';
 import * as Configs from '../src/lib/data/tracklistConfigs';
+import { Target } from 'lucide-svelte';
 
 function hasReplayMetadata(log: unknown): log is TimelineReplayLog {
 	if (!log || typeof log !== 'object') return false;
@@ -143,6 +144,7 @@ async function main() {
 			timestamp: string;
 			player_name: string | null;
 			tracklist_id: string;
+			target: number;
 		}[] = [];
 		let totalOldScore = 0;
 		let totalNewScore = 0;
@@ -236,7 +238,8 @@ async function main() {
 					timestamp: row.timestamp,
 					log: newLogStr,
 					player_name: row.player_name,
-					tracklist_id: row.tracklist_id
+					tracklist_id: row.tracklist_id,
+					target: row.target
 				});
 			}
 			totalOldScore += oldScore;
@@ -268,6 +271,7 @@ async function main() {
 						Date: new Date(u.timestamp).toLocaleDateString(),
 						ID: u.id,
 						Tracklist: u.tracklist_id,
+						Target: u.target,
 						Player: u.player_name || 'Anonymous',
 						'Old Score': u.oldScore,
 						'New Score': u.newScore,
@@ -287,6 +291,7 @@ async function main() {
 						Date: new Date(u.timestamp).toLocaleDateString(),
 						ID: u.id,
 						Tracklist: u.tracklist_id,
+						Target: u.target,
 						Player: u.player_name || 'Anonymous',
 						'Old Score': u.oldScore,
 						'New Score': u.newScore,
