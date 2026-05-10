@@ -21,6 +21,7 @@
 	import type { TimelineReplayLog, TimelineReplayTurn } from '$lib/types';
 	import { settings } from '$lib/stores/settings';
 	import { Zap } from 'lucide-svelte';
+	import { SvelteSet } from 'svelte/reactivity';
 
 	interface FinalTimeline {
 		player: Player;
@@ -137,7 +138,7 @@
 	let entryIds = $state<(number | null)[]>([]);
 	let permissionAskedForKey = $state('');
 	let leaderboardPublishingFingerprint = $state<string | null>(null);
-	const pendingPublishInFlight = new Set<number>();
+	const pendingPublishInFlight = new SvelteSet<number>();
 
 	function getAverageTime(turns: TimelineReplayTurn[]): number | null {
 		const times = turns

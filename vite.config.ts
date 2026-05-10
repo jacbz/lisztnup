@@ -7,5 +7,8 @@ export default defineConfig(({ mode }) => ({
 	define: {
 		__BUILD_DATE__: JSON.stringify(new Date().toISOString().substring(0, 10))
 	},
-	esbuild: mode === 'production' ? { pure: ['console.debug'] } : undefined
+	build: {
+		minify: 'esbuild'
+	},
+	esbuild: mode === 'production' ? { drop: ['console', 'debugger'] } : undefined
 }));
