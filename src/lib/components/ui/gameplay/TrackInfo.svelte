@@ -26,9 +26,10 @@
 		showMirror?: boolean;
 		/** Controls horizontal bleed to break out of parent padding. */
 		bleed?: 'none' | 'sm' | 'md' | 'lg';
+		fixedWidth?: boolean;
 	}
 
-	let { track = null, showMirror = true, bleed = 'lg' }: Props = $props();
+	let { track = null, showMirror = true, bleed = 'lg', fixedWidth = false }: Props = $props();
 
 	let showSearchPopup = $state(false);
 	let showReportPopup = $state(false);
@@ -138,7 +139,9 @@
 		</div>
 	{/if}
 
-	<div class="flex h-full flex-col justify-center gap-5">
+	<div
+		class={`flex h-full flex-col justify-center gap-5 ${fixedWidth ? 'md:max-w-100 md:min-w-100' : ''}`}
+	>
 		<!-- Composer -->
 		<div class="flex flex-col gap-1.5">
 			<p class="text-center text-3xl font-bold text-cyan-400">
