@@ -119,8 +119,7 @@
 			typeof candidate.ok === 'boolean' &&
 			(candidate.seconds === null || typeof candidate.seconds === 'number') &&
 			typeof candidate.points === 'number' &&
-			typeof candidate.streakMult === 'number' &&
-			typeof candidate.score === 'number'
+			typeof candidate.streakMult === 'number'
 		);
 	}
 

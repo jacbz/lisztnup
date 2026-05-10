@@ -42,6 +42,8 @@
 		timelines: FinalTimeline[];
 		tracksExhausted?: boolean;
 		tracklistId?: string | null;
+		tracklistMin: number;
+		tracklistMax: number;
 		sessionId?: string | null;
 		onHome?: () => void;
 		onViewStats?: () => void;
@@ -53,6 +55,8 @@
 		timelines,
 		tracksExhausted = false,
 		tracklistId = null,
+		tracklistMin,
+		tracklistMax,
 		sessionId = null,
 		onHome = () => {},
 		onViewStats
@@ -145,14 +149,31 @@
 		return Math.round((times.reduce((sum, seconds) => sum + seconds, 0) / times.length) * 10) / 10;
 	}
 
+	function getTrackYear(track: Track): number | null {
+		const year = track.work.end_year ?? track.work.begin_year;
+		return typeof year === 'number' && Number.isFinite(year) ? year : null;
+	}
+
 	function getReplayLog(t: FinalTimeline): TimelineReplayLog {
-		return {
+		const preferredInitialEntry = t.initialPartGid
+			? (t.entries.find((entry) => entry.track.part.gid === t.initialPartGid) ?? null)
+			: null;
+		const fallbackInitialEntry = preferredInitialEntry ?? t.entries[0] ?? null;
+		const initialYear =
+			(fallbackInitialEntry ? getTrackYear(fallbackInitialEntry.track) : null) ?? tracklistMin;
+
+		const replayLog: TimelineReplayLog = {
 			v: 1,
 			initial: t.initialPartGid,
+			initialYear,
+			tracklistMin,
+			tracklistMax,
 			score: Math.round(t.score),
 			completionBonus: Math.round(t.completionBonus),
 			turns: t.replayTurns
 		};
+
+		return replayLog;
 	}
 
 	const completedPermissionNames = $derived(

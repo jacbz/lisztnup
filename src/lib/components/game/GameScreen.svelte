@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount, onDestroy, setContext } from 'svelte';
-	import type { TracklistGenerator } from '$lib/services';
 	import type { Track } from '$lib/models';
 	import type { Player, GameMode } from '$lib/types';
 	import {
@@ -11,6 +10,7 @@
 		tracklist,
 		toast
 	} from '$lib/stores';
+	import type { TracklistGenerator } from '$lib/services';
 	import { deezerPlayer, progress, PlayableTrackBuffer } from '$lib/services';
 	import ScoringScreen from '../ui/screens/ScoringScreen.svelte';
 	import StatsScreen from '../ui/screens/StatsScreen.svelte';
@@ -448,19 +448,7 @@
 	} satisfies GameScreenContext);
 
 	const tracklistBounds = $derived.by(() => {
-		const { works } = generator.getFilteredData();
-		let min = Infinity;
-		let max = -Infinity;
-		for (const work of works) {
-			const begin = work.begin_year ?? work.composer.birth_year;
-			const end = work.end_year ?? work.composer.death_year ?? new Date().getFullYear();
-			if (begin < min) min = begin;
-			if (end > max) max = end;
-		}
-		return {
-			min: min === Infinity ? 1400 : min,
-			max: max === -Infinity ? 2020 : max
-		};
+		return generator.getScoringYearBounds();
 	});
 </script>
 

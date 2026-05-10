@@ -357,87 +357,89 @@ export class TimelineGame {
 	async initGame() {
 		if (this.#isInitializing) return;
 		this.#isInitializing = true;
+		try {
+			this.isDealing = true;
+			this.#lastSyncedTrack = null;
 
-		this.isDealing = true;
-		this.#lastSyncedTrack = null;
+			// Sample exactly one track per player for the deal
+			const dealTracks: Track[] = [];
+			for (let i = 0; i < this.#players.length; i++) {
+				const track = this.#ctx.sampleRawTrack();
+				if (track) dealTracks.push(track);
+			}
+			if (dealTracks.length !== this.#players.length) {
+				throw new Error('Timeline init failed: unable to deal an initial card to every player.');
+			}
 
-		this.timelines = this.#players.map((p) => ({
-			player: p,
-			entries: [],
-			totalPlacements: 0,
-			correctPlacements: 0,
-			currentStreak: 0,
-			absoluteStreak: 0,
-			longestStreak: 0,
-			score: 0,
-			reachedTarget: false,
-			completionBonus: 0,
-			initialPartGid: null,
-			replayTurns: []
-		}));
-		this.activePlayerIndex = 0;
-		this.endgameActive = false;
-		this.lastTurnScoreBreakdown = null;
-		this.lastConsolationBreakdown = null;
-		this.scoreBeforeTurn = 0;
-		this.roundScores = [];
-		this.#currentRoundScores = {};
-		this.#roundCounter = 0;
+			this.timelines = this.#players.map((p, i) => ({
+				player: p,
+				entries: [],
+				totalPlacements: 0,
+				correctPlacements: 0,
+				currentStreak: 0,
+				absoluteStreak: 0,
+				longestStreak: 0,
+				score: 0,
+				reachedTarget: false,
+				completionBonus: 0,
+				initialPartGid: dealTracks[i].part.gid,
+				replayTurns: []
+			}));
+			this.activePlayerIndex = 0;
+			this.endgameActive = false;
+			this.lastTurnScoreBreakdown = null;
+			this.lastConsolationBreakdown = null;
+			this.scoreBeforeTurn = 0;
+			this.roundScores = [];
+			this.#currentRoundScores = {};
+			this.#roundCounter = 0;
 
-		// Sample exactly one track per player for the deal
-		const dealTracks: Track[] = [];
-		for (let i = 0; i < this.#players.length; i++) {
-			const track = this.#ctx.sampleRawTrack();
-			if (track) dealTracks.push(track);
-		}
-
-		// Seed visual stack with the first deal track
-		this.centerStack = [];
-		if (dealTracks.length > 0) {
+			// Seed visual stack with the first deal track
+			this.centerStack = [];
 			this.centerStack.push({ track: dealTracks[0], id: this.#newId() });
 			this.#restockCenterStack();
-		}
 
-		// Let empty timelines render before dealing animation
-		await new Promise((r) => setTimeout(r, 500));
+			// Let empty timelines render before dealing animation
+			await new Promise((r) => setTimeout(r, 500));
 
-		// Animate dealing one card per player
-		for (let i = 0; i < dealTracks.length; i++) {
-			this.dealingToName = this.timelines[i].player.name;
+			// Animate dealing one card per player
+			for (let i = 0; i < dealTracks.length; i++) {
+				this.dealingToName = this.timelines[i].player.name;
 
-			if (this.centerStack.length > 0) {
-				this.centerStack.shift();
-				this.#restockCenterStack();
+				if (this.centerStack.length > 0) {
+					this.centerStack.shift();
+					this.#restockCenterStack();
+				}
+
+				const entry: TimelineEntry = {
+					id: this.#newId(),
+					track: dealTracks[i],
+					confirmed: true,
+					correct: null,
+					isDiscarding: false
+				};
+				this.timelines[i].entries.push(entry);
+
+				await new Promise((r) => setTimeout(r, 800));
 			}
 
-			const entry: TimelineEntry = {
-				id: this.#newId(),
-				track: dealTracks[i],
-				confirmed: true,
-				correct: null,
-				isDiscarding: false
-			};
-			this.timelines[i].entries.push(entry);
-			this.timelines[i].initialPartGid = dealTracks[i].part.gid;
-
-			await new Promise((r) => setTimeout(r, 800));
-		}
-
-		// Sync top card with the audio-loaded track from the tracklist
-		const loadedTrack = this.#getCurrentTrack();
-		if (loadedTrack) {
-			if (this.centerStack.length > 0) {
-				this.centerStack[0].track = loadedTrack;
-			} else {
-				this.centerStack.push({ track: loadedTrack, id: this.#newId() });
-				this.#restockCenterStack();
+			// Sync top card with the audio-loaded track from the tracklist
+			const loadedTrack = this.#getCurrentTrack();
+			if (loadedTrack) {
+				if (this.centerStack.length > 0) {
+					this.centerStack[0].track = loadedTrack;
+				} else {
+					this.centerStack.push({ track: loadedTrack, id: this.#newId() });
+					this.#restockCenterStack();
+				}
 			}
-		}
 
-		this.dealingToName = null;
-		this.isDealing = false;
-		this.#resetTurnState();
-		this.#isInitializing = false;
+			this.dealingToName = null;
+			this.isDealing = false;
+			this.#resetTurnState();
+		} finally {
+			this.#isInitializing = false;
+		}
 	}
 
 	// ═══════════════════════════════════════════════════════
@@ -830,7 +832,6 @@ export class TimelineGame {
 			seconds: Math.round(secondsTaken * 100) / 100,
 			points: Math.round(placementPoints),
 			streakMult: calculateStreakMult(this.activePlayer.currentStreak),
-			score: Math.round(this.activePlayer.score),
 			year: this.#getTimelineYear(track)
 		});
 		this.#currentRoundScores[this.activePlayer.player.name] =
@@ -1112,7 +1113,6 @@ export class TimelineGame {
 					seconds: secondsTaken === null ? null : Math.round(secondsTaken * 100) / 100,
 					points: 0,
 					streakMult: calculateStreakMult(this.activePlayer.currentStreak),
-					score: Math.round(this.activePlayer.score),
 					year: this.#getTimelineYear(entries[idx].track)
 				});
 
@@ -1138,7 +1138,6 @@ export class TimelineGame {
 				seconds: secondsTaken === null ? null : Math.round(secondsTaken * 100) / 100,
 				points: 0,
 				streakMult: calculateStreakMult(this.activePlayer.currentStreak),
-				score: Math.round(this.activePlayer.score),
 				year: this.#getTimelineYear(currentTrack)
 			});
 			this.revealEntryId = null;

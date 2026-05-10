@@ -368,19 +368,28 @@
 			typeof candidate.ok === 'boolean' &&
 			(candidate.seconds === null || typeof candidate.seconds === 'number') &&
 			typeof candidate.points === 'number' &&
-			typeof candidate.streakMult === 'number' &&
-			typeof candidate.score === 'number'
+			typeof candidate.streakMult === 'number'
 		);
 	}
 
 	function parseTimelineReplayLog(value: string): TimelineReplayLog | null {
 		const parsed = JSON.parse(value) as Partial<TimelineReplayLog> | null;
 		if (!parsed || parsed.v !== 1 || !Array.isArray(parsed.turns)) return null;
+		if (typeof parsed.initial !== 'string' || parsed.initial.length === 0) return null;
+		if (typeof parsed.initialYear !== 'number' || !Number.isFinite(parsed.initialYear)) return null;
+		if (typeof parsed.tracklistMin !== 'number' || !Number.isFinite(parsed.tracklistMin))
+			return null;
+		if (typeof parsed.tracklistMax !== 'number' || !Number.isFinite(parsed.tracklistMax))
+			return null;
+		if (parsed.tracklistMin > parsed.tracklistMax) return null;
 		const turns = parsed.turns.filter(isReplayTurn);
 		if (turns.length === 0) return null;
 		return {
 			v: 1,
-			initial: typeof parsed.initial === 'string' ? parsed.initial : null,
+			initial: parsed.initial,
+			initialYear: parsed.initialYear,
+			tracklistMin: parsed.tracklistMin,
+			tracklistMax: parsed.tracklistMax,
 			score: typeof parsed.score === 'number' ? parsed.score : 0,
 			completionBonus:
 				typeof parsed.completionBonus === 'number' && Number.isFinite(parsed.completionBonus)

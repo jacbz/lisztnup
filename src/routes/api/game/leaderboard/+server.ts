@@ -229,7 +229,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				context: { score, target, maxPerCard: MAX_SCORE_PER_CARD, log }
 			});
 		}
-		if (log && !isCompletedLog(log, target)) {
+		if (!log || !isCompletedLog(log, target)) {
 			await logger.warn(db, 'Leaderboard: incomplete replay', {
 				userHash,
 				country,

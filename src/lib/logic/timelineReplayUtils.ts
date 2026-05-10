@@ -9,6 +9,14 @@ import {
 	calculateStreakMult
 } from './timelineScoring';
 
+interface ReplayTimelineEntry {
+	year: number;
+}
+
+function asFiniteNumber(value: unknown): number | undefined {
+	return typeof value === 'number' && Number.isFinite(value) ? value : undefined;
+}
+
 /**
  * Replays a timeline log to verify or recalculate scores using the current game logic.
  * This should be used for both the leaderboard (validation) and migration tools.
@@ -27,29 +35,29 @@ export function replayTimelineLog(
 	let reachedTarget = false;
 	let completionBonus = 0;
 
-	const timeline: Track[] = [];
-	const initialTrack = tracksMap(log.initial ?? '');
+	const initialTrack = tracksMap(log.initial);
 	if (!initialTrack) {
 		throw new Error(`Initial track ${log.initial} not found in map.`);
 	}
 
-	const getYear = (t: Track) => t.work.end_year ?? t.work.begin_year;
-	timeline.push(initialTrack);
+	const getYear = (t: Track) => t.work.end_year ?? t.work.begin_year ?? null;
+	const initialYear = log.initialYear;
+	const timeline: ReplayTimelineEntry[] = [{ year: initialYear }];
 
-	// Determine tracklist bounds: use explicit values if provided, otherwise approximate from the log
-	let minYear = explicitMinYear ?? Infinity;
-	let maxYear = explicitMaxYear ?? -Infinity;
+	// Determine tracklist bounds: explicit values win, then log metadata, then approximation from replay years.
+	let minYear = explicitMinYear ?? log.tracklistMin;
+	let maxYear = explicitMaxYear ?? log.tracklistMax;
 
 	if (explicitMinYear === undefined || explicitMaxYear === undefined) {
-		const allLogTracks = [initialTrack, ...log.turns.map((t) => tracksMap(t.part))].filter(
-			Boolean
-		) as Track[];
-		for (const t of allLogTracks) {
-			const y = getYear(t);
-			if (y != null) {
-				if (explicitMinYear === undefined && y < minYear) minYear = y;
-				if (explicitMaxYear === undefined && y > maxYear) maxYear = y;
-			}
+		const replayYears = [initialYear];
+		for (const turn of log.turns) {
+			const track = tracksMap(turn.part);
+			const year = asFiniteNumber(turn.year) ?? (track ? getYear(track) : null);
+			if (year !== null && year !== undefined) replayYears.push(year);
+		}
+		for (const year of replayYears) {
+			if (explicitMinYear === undefined && year < minYear) minYear = year;
+			if (explicitMaxYear === undefined && year > maxYear) maxYear = year;
 		}
 		if (minYear === Infinity) minYear = 1400;
 		if (maxYear === -Infinity) maxYear = 2020;
@@ -78,8 +86,8 @@ export function replayTimelineLog(
 			const playerIndex = turn.index ?? 0;
 
 			// Verify if the slot chosen was actually correct for this year.
-			const leftYear = playerIndex > 0 ? getYear(timeline[playerIndex - 1]) : null;
-			const rightYear = playerIndex < timeline.length ? getYear(timeline[playerIndex]) : null;
+			const leftYear = playerIndex > 0 ? timeline[playerIndex - 1].year : null;
+			const rightYear = playerIndex < timeline.length ? timeline[playerIndex].year : null;
 
 			const isCorrectSlot =
 				(leftYear === null || leftYear <= turnYear) &&
@@ -96,8 +104,8 @@ export function replayTimelineLog(
 				? playerIndex
 				: findInsertionIndexForYear(turnYear, timeline);
 
-			const finalLeftYear = finalIndex > 0 ? getYear(timeline[finalIndex - 1]) : null;
-			const finalRightYear = finalIndex < timeline.length ? getYear(timeline[finalIndex]) : null;
+			const finalLeftYear = finalIndex > 0 ? timeline[finalIndex - 1].year : null;
+			const finalRightYear = finalIndex < timeline.length ? timeline[finalIndex].year : null;
 			const gap = calculateGap(finalLeftYear, finalRightYear, undefined, minYear, maxYear);
 
 			const isEdgePlacement = finalIndex === 0 || finalIndex === timeline.length;
@@ -123,16 +131,12 @@ export function replayTimelineLog(
 			score += points;
 
 			// Update timeline immediately using the index we chose
-			timeline.splice(finalIndex, 0, track);
+			timeline.splice(finalIndex, 0, { year: turnYear });
 
 			if (timeline.length >= target && !reachedTarget) {
 				reachedTarget = true;
 				completionBonus = calculateCompletion(target, totalPlacements);
 				score += completionBonus;
-			}
-
-			if (Math.abs(score - turn.score) <= 2) {
-				score = turn.score;
 			}
 
 			const multiplier = turnBreakdown.streakMult;
@@ -144,7 +148,6 @@ export function replayTimelineLog(
 				seconds: turn.seconds,
 				points,
 				streakMult: multiplier,
-				score,
 				year: turnYear
 			});
 		} else {
@@ -159,19 +162,16 @@ export function replayTimelineLog(
 
 				// Consolation is based on the CORRECT slot distance, not the misplaced index.
 				for (const t of timeline) {
-					const y = getYear(t);
-					if (y !== null) {
-						if (y <= turnYear) {
-							if (leftYear === null || y > leftYear) leftYear = y;
-						}
-						if (y >= turnYear) {
-							if (rightYear === null || y < rightYear) rightYear = y;
-						}
+					if (t.year <= turnYear) {
+						if (leftYear === null || t.year > leftYear) leftYear = t.year;
+					}
+					if (t.year >= turnYear) {
+						if (rightYear === null || t.year < rightYear) rightYear = t.year;
 					}
 				}
 
-				const placedLeft = turn.index > 0 ? getYear(timeline[turn.index - 1]) : null;
-				const placedRight = turn.index < timeline.length ? getYear(timeline[turn.index]) : null;
+				const placedLeft = turn.index > 0 ? timeline[turn.index - 1].year : null;
+				const placedRight = turn.index < timeline.length ? timeline[turn.index].year : null;
 
 				const isTimeoutLog = turn.points === 0;
 				const isCorrectSlotButMarkedWrong =
@@ -205,10 +205,6 @@ export function replayTimelineLog(
 
 			score += points;
 
-			if (Math.abs(score - turn.score) <= 2) {
-				score = turn.score;
-			}
-
 			const multiplier = calculateStreakMult(currentStreak);
 
 			newTurns.push({
@@ -218,25 +214,30 @@ export function replayTimelineLog(
 				seconds: turn.seconds,
 				points,
 				streakMult: multiplier,
-				score,
 				year: turnYear
 			});
 		}
 	}
 
 	return {
-		log: { ...log, score, completionBonus, turns: newTurns },
+		log: {
+			...log,
+			initialYear,
+			tracklistMin: minYear,
+			tracklistMax: maxYear,
+			score,
+			completionBonus,
+			turns: newTurns
+		},
 		score,
 		newTurns
 	};
 }
 
-function findInsertionIndexForYear(year: number, timeline: Track[]): number {
-	const getYear = (t: Track) => t.work.end_year ?? t.work.begin_year;
+function findInsertionIndexForYear(year: number, timeline: ReplayTimelineEntry[]): number {
 	let index = 0;
 	while (index < timeline.length) {
-		const y = getYear(timeline[index]);
-		if (y !== null && y > year) break;
+		if (timeline[index].year > year) break;
 		index++;
 	}
 	return index;
@@ -251,10 +252,21 @@ export function isCompletedLog(log: unknown, target?: number): log is TimelineRe
 	const basic =
 		candidate.v === 1 &&
 		typeof candidate.initial === 'string' &&
+		candidate.initial.length > 0 &&
 		Array.isArray(candidate.turns) &&
 		candidate.turns.length > 0;
+	const hasMetadata =
+		typeof candidate.initialYear === 'number' &&
+		Number.isFinite(candidate.initialYear) &&
+		typeof candidate.tracklistMin === 'number' &&
+		Number.isFinite(candidate.tracklistMin) &&
+		typeof candidate.tracklistMax === 'number' &&
+		Number.isFinite(candidate.tracklistMax) &&
+		candidate.tracklistMin <= candidate.tracklistMax &&
+		candidate.initialYear >= candidate.tracklistMin &&
+		candidate.initialYear <= candidate.tracklistMax;
 
-	if (!basic) return false;
+	if (!basic || !hasMetadata) return false;
 	if (target !== undefined && (candidate.turns?.length ?? 0) < target - 1) return false;
 
 	return true;

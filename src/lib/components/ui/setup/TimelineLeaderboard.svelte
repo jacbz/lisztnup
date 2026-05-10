@@ -25,6 +25,16 @@
 	}: Props = $props();
 </script>
 
+{#snippet tableColgroup()}
+	<colgroup>
+		<col class="w-6" />
+		<col />
+		<col class="w-22" />
+		<col class="w-18" />
+		<col class="w-5" />
+	</colgroup>
+{/snippet}
+
 {#snippet leaderboardRow(entry: LeaderboardEntry)}
 	<tr>
 		<td
@@ -77,46 +87,94 @@
 	{#if entries.length === 0 && !isLoading}
 		<p class="py-2 text-xs text-slate-500">{$_('leaderboard.noScores')}</p>
 	{:else if entries.length > 0}
+		<!-- Extract the myEntry logic -->
+		{@const myIndex = entries.findIndex((e) => e.is_me)}
+		{@const hasMyEntryOutsideTop5 = myIndex > 4}
+
 		<table class="w-full table-fixed border-separate border-spacing-y-1 text-left text-xs">
-			<colgroup>
-				<col class="w-6" />
-				<col />
-				<col class="w-22" />
-				<col class="w-18" />
-				<col class="w-5" />
-			</colgroup>
+			{@render tableColgroup()}
+
+			<!-- Top 5 are always visible -->
 			<tbody>
 				{#each entries.slice(0, 5) as entry, i (i)}
 					{@render leaderboardRow(entry)}
 				{/each}
-
-				{#if !showExpanded && entries.length > 5}
-					{@const myEntry = entries.slice(5).find((e) => e.is_me)}
-					{#if myEntry}
-						{@render leaderboardRow(myEntry)}
-					{/if}
-				{/if}
 			</tbody>
+
+			{#if hasMyEntryOutsideTop5}
+				<!-- TOP DRAWER: Animates in rows between rank 5 and myEntry -->
+				{#if showExpanded && myIndex > 5}
+					<tbody>
+						<tr>
+							<td colspan="5" class="border-0 p-0">
+								<div transition:slide={{ duration: 250 }}>
+									<table
+										class="-my-1 w-full table-fixed border-separate border-spacing-y-1 text-left text-xs"
+									>
+										{@render tableColgroup()}
+										<tbody>
+											{#each entries.slice(5, myIndex) as entry, i (i)}
+												{@render leaderboardRow(entry)}
+											{/each}
+										</tbody>
+									</table>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				{/if}
+
+				<!-- Pinned myEntry: Never leaves the DOM, avoiding jump jank completely -->
+				<tbody>
+					{@render leaderboardRow(entries[myIndex])}
+				</tbody>
+
+				<!-- BOTTOM DRAWER: Animates in rows after myEntry -->
+				{#if showExpanded && myIndex < entries.length - 1}
+					<tbody>
+						<tr>
+							<td colspan="5" class="border-0 p-0">
+								<div transition:slide={{ duration: 250 }}>
+									<table
+										class="-my-1 w-full table-fixed border-separate border-spacing-y-1 text-left text-xs"
+									>
+										{@render tableColgroup()}
+										<tbody>
+											{#each entries.slice(myIndex + 1) as entry, i (i)}
+												{@render leaderboardRow(entry)}
+											{/each}
+										</tbody>
+									</table>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				{/if}
+			{:else}
+				<!-- Fallback: Standard expansion if myEntry is in Top 5 (or doesn't exist) -->
+				{#if showExpanded && entries.length > 5}
+					<tbody>
+						<tr>
+							<td colspan="5" class="border-0 p-0">
+								<div transition:slide={{ duration: 250 }}>
+									<table
+										class="-my-1 w-full table-fixed border-separate border-spacing-y-1 text-left text-xs"
+									>
+										{@render tableColgroup()}
+										<tbody>
+											{#each entries.slice(5) as entry, i (i)}
+												{@render leaderboardRow(entry)}
+											{/each}
+										</tbody>
+									</table>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				{/if}
+			{/if}
 		</table>
 
-		{#if showExpanded && entries.length > 5}
-			<div transition:slide={{ duration: 250 }}>
-				<table class="w-full table-fixed border-separate border-spacing-y-1 text-left text-xs">
-					<colgroup>
-						<col class="w-6" />
-						<col />
-						<col class="w-22" />
-						<col class="w-18" />
-						<col class="w-5" />
-					</colgroup>
-					<tbody>
-						{#each entries.slice(5) as entry, i (i)}
-							{@render leaderboardRow(entry)}
-						{/each}
-					</tbody>
-				</table>
-			</div>
-		{/if}
 		{#if entries.length > 5}
 			<button
 				type="button"

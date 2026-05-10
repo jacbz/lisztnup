@@ -425,7 +425,7 @@
 	"modes": {
 		"timeline": {
 			"name": "Timeline",
-			"description": "Baue eine chronologische Timeline, indem du Tracks in die richtige Jahres-Reihenfolge legst.",
+			"description": "Baue eine chronologische Timeline, indem du Tracks in die richtige Reihenfolge legst.",
 			"step1": {
 				"title": "Karte abspielen",
 				"desc": "Starte deinen Zug, indem du die oberste Karte aus dem Stapel abspielst."

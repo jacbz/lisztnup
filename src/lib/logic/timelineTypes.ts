@@ -31,7 +31,7 @@ export interface TimelineRow {
 	score: number;
 	reachedTarget: boolean;
 	completionBonus: number;
-	initialPartGid: string | null;
+	initialPartGid: string;
 	replayTurns: TimelineReplayTurn[];
 }
 

@@ -383,6 +383,8 @@
 	timelines={game.timelines}
 	tracksExhausted={ctx.tracksExhausted}
 	tracklistId={$settings.selectedTracklist}
+	tracklistMin={ctx.minYear}
+	tracklistMax={ctx.maxYear}
 	sessionId={game.endgameSessionId}
 	onHome={handleQuit}
 	onViewStats={() => {

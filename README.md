@@ -85,7 +85,7 @@ Unlike many trivia games with manually curated lists, _Liszt’n Up!_ uses an al
 
 ### Analytics Database (Optional)
 
-The game works fully without a backend, but includes optional analytics (pageviews, game sessions, feedback, problem reports) via Cloudflare D1. To set it up:
+The game works fully without a dedicated server, but includes an optional backend (leaderboard, pageviews, game sessions, feedback, problem reports) via Cloudflare D1. To set it up:
 
 1. Install the [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/install-and-update/):
 

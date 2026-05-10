@@ -7,6 +7,7 @@ import {
 } from '$lib/types';
 import type { Composer, GameCatalog, Part, Track, Work } from '$lib/models';
 import { weightedRandom, type RandomSource } from '$lib/utils/random';
+import { MAX_WORK_YEAR, MIN_WORK_YEAR } from '$lib/types/settings';
 
 interface ScoredWork {
 	work: Work;
@@ -40,6 +41,7 @@ export class TracklistGenerator {
 	private readonly tracklist: Tracklist;
 	private readonly requireWorkYear: boolean;
 	private readonly rng: RandomSource;
+	private scoringYearBounds = { min: MIN_WORK_YEAR, max: MAX_WORK_YEAR };
 
 	private filteredWorks: CandidateWork[] = [];
 	private filteredComposers: Composer[] = [];
@@ -55,6 +57,26 @@ export class TracklistGenerator {
 		this.rng = options?.rng ?? Math.random;
 
 		this.initializeData();
+	}
+
+	static getScoringYear(work: Work): number | null {
+		const year = work.end_year ?? work.begin_year;
+		return typeof year === 'number' && Number.isFinite(year) ? year : null;
+	}
+
+	static getScoringYearBounds(works: readonly Work[]): { min: number; max: number } {
+		let min = Infinity;
+		let max = -Infinity;
+		for (const work of works) {
+			const year = TracklistGenerator.getScoringYear(work);
+			if (year === null) continue;
+			if (year < min) min = year;
+			if (year > max) max = year;
+		}
+		return {
+			min: min === Infinity ? MIN_WORK_YEAR : min,
+			max: max === -Infinity ? MAX_WORK_YEAR : max
+		};
 	}
 
 	/**
@@ -102,6 +124,13 @@ export class TracklistGenerator {
 		);
 		this.filteredWorks = finalCandidates;
 		this.filteredComposers = this.data.composers.filter((c) => finalComposerSet.has(c.gid));
+		this.scoringYearBounds = TracklistGenerator.getScoringYearBounds(
+			finalCandidates.map(({ work }) => work)
+		);
+	}
+
+	getScoringYearBounds(): { min: number; max: number } {
+		return { ...this.scoringYearBounds };
 	}
 
 	/**
@@ -379,17 +408,9 @@ export class TracklistGenerator {
 			disabled.push('type');
 		}
 
-		let minYear = Infinity;
-		let maxYear = -Infinity;
-
-		for (const { work } of this.filteredWorks) {
-			const begin = work.begin_year ?? work.composer.birth_year;
-			const end = work.end_year ?? work.composer.death_year ?? new Date().getFullYear();
-
-			if (begin < minYear) minYear = begin;
-			if (end > maxYear) maxYear = end;
-		}
-
+		const { min: minYear, max: maxYear } = TracklistGenerator.getScoringYearBounds(
+			this.filteredWorks.map(({ work }) => work)
+		);
 		const yearRange = maxYear - minYear;
 		// Disable 'decade' if time range less than 30 years
 		if (yearRange < 30) disabled.push('decade');

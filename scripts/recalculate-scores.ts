@@ -8,6 +8,24 @@ import type { TimelineReplayLog } from '../src/lib/types/timelineReplay';
 import { TracklistGenerator } from '../src/lib/services/TracklistGenerator';
 import * as Configs from '../src/lib/data/tracklistConfigs';
 
+function hasReplayMetadata(log: unknown): log is TimelineReplayLog {
+	if (!log || typeof log !== 'object') return false;
+	const candidate = log as Partial<TimelineReplayLog>;
+	return (
+		candidate.v === 1 &&
+		typeof candidate.initial === 'string' &&
+		candidate.initial.length > 0 &&
+		typeof candidate.initialYear === 'number' &&
+		Number.isFinite(candidate.initialYear) &&
+		typeof candidate.tracklistMin === 'number' &&
+		Number.isFinite(candidate.tracklistMin) &&
+		typeof candidate.tracklistMax === 'number' &&
+		Number.isFinite(candidate.tracklistMax) &&
+		Array.isArray(candidate.turns) &&
+		candidate.turns.length > 0
+	);
+}
+
 async function main() {
 	const rl = readline.createInterface({
 		input: process.stdin,
@@ -83,19 +101,8 @@ async function main() {
 
 		for (const tl of tracklists) {
 			const generator = new TracklistGenerator(data, tl as any);
-			const { works } = generator.getFilteredData();
-			let min = Infinity;
-			let max = -Infinity;
-			for (const work of works) {
-				const begin = work.begin_year ?? work.composer.birth_year;
-				const end = work.end_year ?? work.composer.death_year ?? new Date().getFullYear();
-				if (begin < min) min = begin;
-				if (end > max) max = end;
-			}
-			tracklistBounds.set(tl.id, {
-				min: min === Infinity ? 1400 : min,
-				max: max === -Infinity ? 2020 : max
-			});
+			const bounds = generator.getScoringYearBounds();
+			tracklistBounds.set(tl.id, bounds);
 		}
 
 		const trackLookup = (partGid: string) => {
@@ -149,16 +156,49 @@ async function main() {
 				console.warn(`[WARN] Skipping ID ${row.id}: invalid JSON log.`);
 				continue;
 			}
+			if (!hasReplayMetadata(oldLog)) {
+				console.warn(`[WARN] Skipping ID ${row.id}: incomplete replay metadata.`);
+				continue;
+			}
 
 			const warnings: string[] = [];
 			const bounds = tracklistBounds.get(row.tracklist_id);
+			const replayMin = oldLog.tracklistMin;
+			const replayMax = oldLog.tracklistMax;
+
+			if (bounds && oldLog.tracklistMin !== bounds.min) {
+				warnings.push(
+					`[Meta] tracklistMin mismatch: log ${oldLog.tracklistMin}, dataset ${bounds.min}`
+				);
+			}
+			if (bounds && oldLog.tracklistMax !== bounds.max) {
+				warnings.push(
+					`[Meta] tracklistMax mismatch: log ${oldLog.tracklistMax}, dataset ${bounds.max}`
+				);
+			}
+			if (typeof oldLog.initial === 'string') {
+				const initialTrack = trackLookup(oldLog.initial);
+				const currentInitialYear = initialTrack
+					? (initialTrack.work.end_year ?? initialTrack.work.begin_year)
+					: null;
+				if (
+					typeof currentInitialYear === 'number' &&
+					Number.isFinite(currentInitialYear) &&
+					oldLog.initialYear !== currentInitialYear
+				) {
+					warnings.push(
+						`[Meta] initialYear mismatch: log ${oldLog.initialYear}, dataset ${currentInitialYear}`
+					);
+				}
+			}
+
 			const result = replayTimelineLog(
 				oldLog,
 				row.target,
 				trackLookup,
 				(msg) => warnings.push(msg),
-				bounds?.min,
-				bounds?.max
+				replayMin,
+				replayMax
 			);
 
 			const newScore = result.score;
@@ -285,9 +325,9 @@ async function main() {
 		}
 
 		console.log('Cleaning up temporary files...');
-		fs.unlinkSync(tempSqlPath);
-		fs.unlinkSync(tempJsonPath);
-		fs.unlinkSync(updatesSqlPath);
+		if (fs.existsSync(tempSqlPath)) fs.unlinkSync(tempSqlPath);
+		if (fs.existsSync(tempJsonPath)) fs.unlinkSync(tempJsonPath);
+		if (fs.existsSync(updatesSqlPath)) fs.unlinkSync(updatesSqlPath);
 	} catch (error) {
 		console.error('Error during recalculation:', error);
 		process.exit(1);
