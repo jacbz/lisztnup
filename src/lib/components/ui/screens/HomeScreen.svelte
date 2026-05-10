@@ -32,6 +32,9 @@
 	import MessageSquare from 'lucide-svelte/icons/message-square';
 	import Users from 'lucide-svelte/icons/users';
 	import Sparkles from 'lucide-svelte/icons/sparkles';
+	import Cake from 'lucide-svelte/icons/cake';
+	import Flag from 'lucide-svelte/icons/flag';
+	import Venus from 'lucide-svelte/icons/venus';
 	import { getPlayerToken } from '$lib/stores/identity';
 	import { getDailyChallengeEntry, getUtcDateString } from '$lib/utils/dailyChallenge';
 	import { SettingsService } from '$lib/services';
@@ -109,6 +112,13 @@
 			(localSettings.gamesPlayed ?? 0) > 0 &&
 			localSettings.dailyChallengePlayedDate !== utcTodayDate
 	);
+	let DailyChallengeIcon = $derived.by(() => {
+		if (dailyChallengeEntry.cause === 'birthday') return Cake;
+		if (dailyChallengeEntry.cause === 'nationalDay') return Flag;
+		if (dailyChallengeEntry.cause === 'womensDay') return Venus;
+		return Sparkles;
+	});
+
 	let dailyChallengeSubtitle = $derived.by(() => {
 		if (dailyChallengeEntry.cause === 'womensDay') {
 			return $_('dailyChallenge.subtitleWomensDay');
@@ -530,7 +540,7 @@
 					<div
 						class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-400/15 text-amber-400 transition-colors group-hover:bg-amber-400/25"
 					>
-						<Sparkles class="h-5 w-5" />
+						<DailyChallengeIcon class="h-5 w-5" />
 					</div>
 					<div class="flex min-w-0 flex-1 flex-col gap-0.5">
 						<div class="flex flex-col md:flex-row md:items-center md:gap-2">
