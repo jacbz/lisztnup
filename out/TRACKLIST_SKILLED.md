@@ -22,7 +22,7 @@
 | `e10360f3` | Bach – Concerto for Flute, Violin, Harpsichord, Strings and Continuo in A minor, BWV 1044 "Triple Concerto" | * I. Allegro | ? |
 | `25821d13` | Bach – Concerto for Keyboard and Orchestra no. 3 in D major, BWV 1054 | * I. Allegro | ? |
 | `6e5aeab8` | Bach – Concerto in C minor for Two Harpsichords, BWV 1060 | * II. Largo ovvero Adagio | ? |
-| `7f5f3f86` | Bach – Concerto no. 5 for Keyboard and Orchestra in F minor, BWV 1056 | * II. Largo | ? |
+| `7f5f3f86` | Bach – Concerto no. 5 for Keyboard and Orchestra in F minor, BWV 1056 | * II. Largo | 1738 |
 | `d42ad3cc` | Bach – Duetto Nr. 1 e-Moll, BWV 802 | * Duetto Nr. 1 e-Moll, BWV 802 | ? |
 | `08d8a451` | Bach – Duetto Nr. 2 F-Dur, BWV 803 | * Duetto Nr. 2 F-Dur, BWV 803 | ? |
 | `b7026c7f` | Bach – Duetto Nr. 3 G-dur, BWV 804 | * Duetto Nr. 3 G-dur, BWV 804 | ? |
@@ -87,7 +87,7 @@
 | `c4f0bd0a` | Bach – Toccata und Fuge d-Moll, BWV 565 | * I. Toccata | 1703‑1707 |
 | `f8d2e6ed` | Bach – Toccata, Adagio, and Fugue in C major, BWV 564 | * II. Adagio | 1712 |
 | `5543ddeb` | Bach – Violin Concerto in A minor, BWV 1041 | * I. Allegro | 1717‑1723 |
-| `7e466a70` | Bach – Violin Concerto in E major, BWV 1042 | * I. Allegro | ? |
+| `7e466a70` | Bach – Violin Concerto in E major, BWV 1042 | * I. Allegro | 1717‑1723 |
 | `1ebe1abf` | Barber – Adagio for Strings | * Adagio for Strings | 1936 |
 | `663f0bd9` | Barrios Mangoré – La catedral | * III. Allegro solemne | 1921 |
 | `2720522c` | Bartók – Concerto for Orchestra, Sz. 116, BB 123 | * IV. Intermezzo interrotto. Allegretto | 1943 |
@@ -266,7 +266,7 @@
 | `4c9f3751` | Chopin – Andante spianato et Grande polonaise brillante in E‐flat major, op. 22 | * I. Andante spianato | 1834 |
 | `680c7826` | Chopin – Ballades | * Ballade no. 1 in G minor, op. 23 | 1831‑1835 |
 | `0d5d12d1` | Chopin – Barcarolle in F‐sharp major, op. 60 | * Barcarolle in F‐sharp major, op. 60 | 1845‑1846 |
-| `d8c5d27a` | Chopin – Berceuse in D‐flat major, op. 57 | * Berceuse in D‐flat major, op. 57 | ? |
+| `d8c5d27a` | Chopin – Berceuse in D‐flat major, op. 57 | * Berceuse in D‐flat major, op. 57 | 1844 |
 | `5f7ded0a` | Chopin – Concerto for Piano and Orchestra no. 1 in E minor, op. 11 | * I. Allegro maestoso | 1830 |
 | `dda6229e` | Chopin – Concerto for Piano and Orchestra no. 2 in F minor, op. 21 | * II. Larghetto | 1829‑1830 |
 | `09fb2287` | Chopin – Études, op. 10 | * Étude in E major, op. 10 no. 3: Lento ma non troppo | 1829‑1832 |
@@ -292,7 +292,7 @@
 | `d8373f6d` | Chopin – Nocturnes, op. 55 | * Nocturne no. 15 in F minor, op. 55 no. 1: Andante | 1842‑1844 |
 | `d69af78d` | Chopin – Nocturnes, op. 62 | * Nocturne no. 17 in B major, op. 62 no. 1: Andante | 1846 |
 | `660d0d25` | Chopin – Nocturnes, op. 9 | * Nocturne no. 2 in E‐flat major, op. 9 no. 2: Andante | 1830‑1832 |
-| `a077a0ca` | Chopin – Polonaise‐fantaisie in A‐flat major, op. 61: Allegro maestoso | * Polonaise‐fantaisie in A‐flat major, op. 61: Allegro maestoso | ? |
+| `a077a0ca` | Chopin – Polonaise‐fantaisie in A‐flat major, op. 61: Allegro maestoso | * Polonaise‐fantaisie in A‐flat major, op. 61: Allegro maestoso | 1846 |
 | `eb68888d` | Chopin – Polonaises | * Polonaise in A major, op. 40 no. 1 “Military” | 1838 |
 | `287854cf` | Chopin – Prélude in C‐sharp minor, op. 45 | * Prélude in C‐sharp minor, op. 45 | ? |
 | `80a00b47` | Chopin – Rondo à la Krakowiak in F major, op. 14 | * Rondo à la Krakowiak in F major, op. 14 | 1828 |
@@ -903,22 +903,22 @@
 | `a26cbcf8` | Strauss – Perpetuum mobile, op. 257 | * Perpetuum mobile, op. 257 | 1861 |
 | `df2755aa` | Strauss – Persischer Marsch, op. 289 | * Persischer Marsch, op. 289 | ? |
 | `64e7a2e2` | Strauss – Radetzky March, op. 228 | * Radetzky March, op. 228 | 1848 |
-| `2eb55386` | Strauss – Rosen aus dem Süden, op. 388 | * Rosen aus dem Süden, op. 388 | ? |
+| `2eb55386` | Strauss – Rosen aus dem Süden, op. 388 | * Rosen aus dem Süden, op. 388 | 1880 |
 | `deb11247` | Strauss – Seid umschlungen, Millionen, op. 443 | * Seid umschlungen, Millionen, op. 443 | ? |
 | `e9d8cbfd` | Strauss – Sonata for Violin and Piano in E-flat major | * I. Allegro ma non troppo | 1887‑1888 |
-| `2a7a816c` | Strauss – Tales From the Vienna Woods | * Tales From the Vienna Woods | ? |
+| `2a7a816c` | Strauss – Tales From the Vienna Woods | * Tales From the Vienna Woods | 1868 |
 | `b0facf44` | Strauss – Thousand and One Nights, Op. 346 | * Thousand and One Nights, Op. 346 | 1871 |
-| `85be26e9` | Strauss – Thunder and Lightning, op. 324 | * Thunder and Lightning, op. 324 | ? |
+| `85be26e9` | Strauss – Thunder and Lightning, op. 324 | * Thunder and Lightning, op. 324 | 1868 |
 | `a4c3bb91` | Strauss – Till Eulenspiegel’s Merry Pranks | * Till Eulenspiegel’s Merry Pranks | 1894‑1895 |
 | `5a498219` | Strauss – Treasure-Waltz, Op. 418 | * Treasure-Waltz, Op. 418 | 1885 |
 | `38ed9e44` | Strauss – Tritsch–Tratsch Polka, op. 214 | * Tritsch–Tratsch Polka, op. 214 | 1858 |
 | `dd995231` | Strauss – Vergnügungszug, op. 281 | * Vergnügungszug, op. 281 | ? |
-| `54fe325f` | Strauss – Vienna Blood | * Vienna Blood | ? |
+| `54fe325f` | Strauss – Vienna Blood | * Vienna Blood | 1873 |
 | `ed538401` | Strauss – Vienna Bonbons, Op. 307 | * Vienna Bonbons, Op. 307 | 1866 |
 | `17540bfe` | Strauss – Village Swallows from Austria, Op. 164 | * Village Swallows from Austria, Op. 164 | 1864 |
 | `b42a2d27` | Strauss – Voices of Spring | * Voices of Spring | 1882 |
 | `16e024c8` | Strauss – Where the Citrons Bloom, op. 364 | * Where the Citrons Bloom, op. 364 | ? |
-| `6237af8b` | Strauss – Wine, Woman and Song | * Wine, Woman and Song | ? |
+| `6237af8b` | Strauss – Wine, Woman and Song | * Wine, Woman and Song | 1869 |
 | `1a00a184` | Stravinsky – L’Oiseau de feu, suite de 1919 | * III. Danse infernale du roi Kachtcheï | 1919 |
 | `54dacada` | Stravinsky – Le Sacre du printemps | * II. Le Sacrifice: VI. Danse sacrale (L’Élue) | 1911‑1913 |
 | `57deae1f` | Stravinsky – Pétrouchka | * Tableau II. Chez Pétrouchka | ? |

@@ -57,7 +57,8 @@ DOWNLOAD_LOCATION = Path("downloads")
 # Manually ban certain artists that play arrangements
 BANNED_ARTISTS = [
     'Rosemary Standley',
-    'Berdien Stenberg'
+    'Berdien Stenberg',
+    'Aasmund Nordstoga'
 ]
 
 

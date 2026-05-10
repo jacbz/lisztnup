@@ -383,7 +383,14 @@ year_overrides:
   '1a1cae9f-2f5b-4d5d-94d5-d3740a5e9403': 1891
   '85045d13-8c85-49c0-85a4-079cbffaf85f': 1874
   '18f2f969-94b9-48f3-baf4-60486a68f2a3': null
-  'afea14ed-4f9c-4344-a6c4-18e22d8130f1': 'Sæle jolekveld'
+  'afea14ed-4f9c-4344-a6c4-18e22d8130f1': 1698
+  'd8c5d27a-04fc-3fe5-99f3-a3201c0428d8': 1844
+  '54fe325f-e04a-3849-bc0d-867b110724cf': 1873
+  '2a7a816c-3c28-3609-be5d-7663b3337fee': 1868
+  '2eb55386-e1b9-37d0-97fc-769b50fd2066': 1880
+  '7e466a70-2864-4db1-8470-94f0372624eb': [1717, 1723]
+  '7f5f3f86-b23f-4aea-bcf0-5d0c34bb9d9c': 1738
+  'a077a0ca-ea1f-3d14-8cf5-e93b68f21fac': 1846
 
   # Uncertain dates that are manually set to a reasonable scholarly estimate
   '7481c7f5-71bd-464e-956a-c670f4117de3': [1711, 1720]
@@ -401,6 +408,8 @@ year_overrides:
   '3f13a790-3103-4a79-ac0e-c7aa3d495568': 1879
   '24df0a9b-7977-4ff6-a4dc-7ad71db6972c': 1853
   'c9790161-7aaf-4ddb-9c78-caf216666617': 1892
+  '6237af8b-2092-3206-a581-3af3e6c5bcf4': 1869
+  '85be26e9-6dec-3d34-96e5-87ba458133da': 1868
 
 # --- Deezer ID Overrides ---
 # Manually set the Deezer IDs for specific works/parts, e.g. to feature a specific segment

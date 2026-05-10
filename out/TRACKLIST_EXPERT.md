@@ -133,7 +133,7 @@
 | `c25fa2fd` | Bach – Concerto for Oboe, Strings and Basso Continuo in D minor, BWV 1059R | * I. Allegro<br>* II. Adagio<br>* III. Presto | ? |
 | `1fa8d1cb` | Bach – Concerto in C major for Two Harpsichords, BWV 1061 | * I. Allegro<br>* II. Adagio<br>* III. Vivace | ? |
 | `6e5aeab8` | Bach – Concerto in C minor for Two Harpsichords, BWV 1060 | * I. Allegro<br>* II. Largo ovvero Adagio<br>* III. Allegro | ? |
-| `7f5f3f86` | Bach – Concerto no. 5 for Keyboard and Orchestra in F minor, BWV 1056 | * I. Allegro<br>* II. Largo<br>* III. Presto | ? |
+| `7f5f3f86` | Bach – Concerto no. 5 for Keyboard and Orchestra in F minor, BWV 1056 | * I. Allegro<br>* II. Largo<br>* III. Presto | 1738 |
 | `66145f9d` | Bach – Da Jesus an dem Kreuze stund, BWV 621 | * Da Jesus an dem Kreuze stund, BWV 621 | ? |
 | `18eaa441` | Bach – Das alte Jahr vergangen ist, BWV 1091 | * Das alte Jahr vergangen ist, BWV 1091 | ? |
 | `ef22b0a9` | Bach – Das Jesulein soll doch mein Trost, BWV 702 | * Das Jesulein soll doch mein Trost, BWV 702 | ? |
@@ -403,7 +403,7 @@
 | `017633ff` | Bach – Vater unser im Himmelreich, BWV 737 | * Vater unser im Himmelreich, BWV 737 | ? |
 | `5543ddeb` | Bach – Violin Concerto in A minor, BWV 1041 | * I. Allegro<br>* II. Andante<br>* III. Allegro assai | 1717‑1723 |
 | `fb197117` | Bach – Violin Concerto in D minor, BWV 1052R | * I. Allegro<br>* II. Adagio<br>* III. Allegro | ? |
-| `7e466a70` | Bach – Violin Concerto in E major, BWV 1042 | * I. Allegro<br>* II. Adagio<br>* III. Allegro assai | ? |
+| `7e466a70` | Bach – Violin Concerto in E major, BWV 1042 | * I. Allegro<br>* II. Adagio<br>* III. Allegro assai | 1717‑1723 |
 | `24604972` | Bach – Violin Concerto in G minor, BWV 1056R | * I. Allegro<br>* II. Largo<br>* III. Presto | ? |
 | `33445ee6` | Bach – Violin Sonata in E minor, BWV 1023 | * II. Adagio ma non tanto<br>* III. Allemande<br>* IV. Gigue | ? |
 | `8d7a1763` | Bach – Violin Sonata in G major, BWV 1021 | * I. Adagio<br>* III. Largo<br>* IV. Presto | ? |
@@ -957,7 +957,7 @@
 | `4c9f3751` | Chopin – Andante spianato et Grande polonaise brillante in E‐flat major, op. 22 | * I. Andante spianato<br>* II. Grande polonaise brillante. Allegro molto | 1834 |
 | `680c7826` | Chopin – Ballades | * Ballade no. 1 in G minor, op. 23<br>* Ballade no. 3 in A‐flat major, op. 47<br>* Ballade no. 4 in F minor, op. 52 | 1831‑1835 |
 | `0d5d12d1` | Chopin – Barcarolle in F‐sharp major, op. 60 | * Barcarolle in F‐sharp major, op. 60 | 1845‑1846 |
-| `d8c5d27a` | Chopin – Berceuse in D‐flat major, op. 57 | * Berceuse in D‐flat major, op. 57 | ? |
+| `d8c5d27a` | Chopin – Berceuse in D‐flat major, op. 57 | * Berceuse in D‐flat major, op. 57 | 1844 |
 | `06213b1a` | Chopin – Bolero in A minor, op. 19 | * Bolero in A minor, op. 19 | 1833 |
 | `0c471b8a` | Chopin – Cantabile in B‐flat major, BI 84 | * Cantabile in B‐flat major, BI 84 | 1834 |
 | `5f7ded0a` | Chopin – Concerto for Piano and Orchestra no. 1 in E minor, op. 11 | * I. Allegro maestoso<br>* II. Romance. Larghetto<br>* III. Rondo. Vivace | 1830 |
@@ -1003,7 +1003,7 @@
 | `ca9231b4` | Chopin – Polonaise in G minor, op. posth., B. 1, KK IIa/1, KK. 889 | * Polonaise in G minor, op. posth., B. 1, KK IIa/1, KK. 889 | 1817 |
 | `51b00e6d` | Chopin – Polonaise in G‐flat major, op. posth., B. 36, KK IVa/8, KK. 1197–1200 | * Polonaise in G‐flat major, op. posth., B. 36, KK IVa/8, KK. 1197–1200 | 1829 |
 | `ecdbe10e` | Chopin – Polonaise in G‐sharp minor, op. posth., B. 6, KK IVa/3, KK. 1185–1187 | * Polonaise in G‐sharp minor, op. posth., B. 6, KK IVa/3, KK. 1185–1187 | 1822 |
-| `a077a0ca` | Chopin – Polonaise‐fantaisie in A‐flat major, op. 61: Allegro maestoso | * Polonaise‐fantaisie in A‐flat major, op. 61: Allegro maestoso | ? |
+| `a077a0ca` | Chopin – Polonaise‐fantaisie in A‐flat major, op. 61: Allegro maestoso | * Polonaise‐fantaisie in A‐flat major, op. 61: Allegro maestoso | 1846 |
 | `eb68888d` | Chopin – Polonaises | * Polonaise in C‐sharp minor, op. 26 no. 1<br>* Polonaise in A major, op. 40 no. 1 “Military” | 1838 |
 | `06e1a851` | Chopin – Prélude in A‐flat major, op. posth.: Presto con leggierezza | * Prélude in A‐flat major, op. posth.: Presto con leggierezza | 1834 |
 | `287854cf` | Chopin – Prélude in C‐sharp minor, op. 45 | * Prélude in C‐sharp minor, op. 45 | ? |
@@ -3490,7 +3490,7 @@
 | `64e7a2e2` | Strauss – Radetzky March, op. 228 | * Radetzky March, op. 228 | 1848 |
 | `142c729e` | Strauss – Ritter Pázmán, op. 441 | * Csárdás aus 'Ritter Pasman', op. 441-1 | ? |
 | `9f42a374` | Strauss – Romanze in F major for Violoncello & Orchestra, AV 75 | * Romanze in F major for Violoncello & Orchestra, AV 75 | 1883 |
-| `2eb55386` | Strauss – Rosen aus dem Süden, op. 388 | * Rosen aus dem Süden, op. 388 | ? |
+| `2eb55386` | Strauss – Rosen aus dem Süden, op. 388 | * Rosen aus dem Süden, op. 388 | 1880 |
 | `fe28fb30` | Strauss – Russischer Marsch, op. 426 | * Russischer Marsch, op. 426 | ? |
 | `a8c369d7` | Strauss – Salome | * Vierte Szene. Tanz der sieben Schleier | 1903‑1905 |
 | `deb11247` | Strauss – Seid umschlungen, Millionen, op. 443 | * Seid umschlungen, Millionen, op. 443 | ? |
@@ -3499,12 +3499,12 @@
 | `e9d8cbfd` | Strauss – Sonata for Violin and Piano in E-flat major | * I. Allegro ma non troppo<br>* II. Improvisation. Andante cantabile<br>* III. Finale. Andante - Allegro | 1887‑1888 |
 | `97429dfb` | Strauss – Suite for 13 wind instruments in B-flat major | * Suite in B-flat major, op. 4: 1. Praeludium<br>* Suite in B-flat major, op. 4: 2. Romanze<br>* Suite in B-flat major, op. 4: 3. Gavotte | 1884 |
 | `6f506b87` | Strauss – Symphonia Domestica | * II. Scherzo. Munter<br>* III. Adagio. Langsam<br>* IV. Finale. Sehr lebhaft | 1903 |
-| `2a7a816c` | Strauss – Tales From the Vienna Woods | * Tales From the Vienna Woods | ? |
+| `2a7a816c` | Strauss – Tales From the Vienna Woods | * Tales From the Vienna Woods | 1868 |
 | `570b4a8b` | Strauss – The Bourgeois Gentleman | * Le Bourgeois gentilhomme, op. 60: II. Menuett<br>* Le Bourgeois gentilhomme, op. 60: III. Der Fechtmeister<br>* Le bourgeois gentilhomme, op. 60: VIII. Vorspiel zum 2. Aufzug | 1920 |
 | `791622e6` | Strauss – The Dragonfly, Op. 204 | * The Dragonfly, Op. 204 | 1866 |
 | `18e6d250` | Strauss – The Rose-knight, op. 59 | * Der Rosenkavalier, op. 59: Akt I. “Da geht er hin, der aufgeblasene schlechte Kerl”<br>* Der Rosenkavalier, op. 59: Akt II. "Mir ist die Ehre widerfahren" (Octavian, Sophie)<br>* Der Rosenkavalier, op. 59: Akt III. “Marie Theres’!” … “Hab’ mir’s gelobt” (Octavian, Marschallin, Sophie, Faninal) | 1909‑1910 |
 | `b0facf44` | Strauss – Thousand and One Nights, Op. 346 | * Thousand and One Nights, Op. 346 | 1871 |
-| `85be26e9` | Strauss – Thunder and Lightning, op. 324 | * Thunder and Lightning, op. 324 | ? |
+| `85be26e9` | Strauss – Thunder and Lightning, op. 324 | * Thunder and Lightning, op. 324 | 1868 |
 | `be0b1b11` | Strauss – Tik-Tak-Polka, op. 365 | * Tik-Tak-Polka, op. 365 | ? |
 | `a4c3bb91` | Strauss – Till Eulenspiegel’s Merry Pranks | * Till Eulenspiegel’s Merry Pranks | 1894‑1895 |
 | `ab56a448` | Strauss – Tod und Verklärung, op. 24 | * I. Largo<br>* II. Allegro molto agitato<br>* IV. Moderato | 1888‑1889 |
@@ -3512,13 +3512,13 @@
 | `5a498219` | Strauss – Treasure-Waltz, Op. 418 | * Treasure-Waltz, Op. 418 | 1885 |
 | `38ed9e44` | Strauss – Tritsch–Tratsch Polka, op. 214 | * Tritsch–Tratsch Polka, op. 214 | 1858 |
 | `dd995231` | Strauss – Vergnügungszug, op. 281 | * Vergnügungszug, op. 281 | ? |
-| `54fe325f` | Strauss – Vienna Blood | * Vienna Blood | ? |
+| `54fe325f` | Strauss – Vienna Blood | * Vienna Blood | 1873 |
 | `ed538401` | Strauss – Vienna Bonbons, Op. 307 | * Vienna Bonbons, Op. 307 | 1866 |
 | `17540bfe` | Strauss – Village Swallows from Austria, Op. 164 | * Village Swallows from Austria, Op. 164 | 1864 |
 | `72313445` | Strauss – Violin Concerto in D minor | * I. Allegro<br>* II. Lento<br>* III. Rondo | 1880‑1882 |
 | `b42a2d27` | Strauss – Voices of Spring | * Voices of Spring | 1882 |
 | `16e024c8` | Strauss – Where the Citrons Bloom, op. 364 | * Where the Citrons Bloom, op. 364 | ? |
-| `6237af8b` | Strauss – Wine, Woman and Song | * Wine, Woman and Song | ? |
+| `6237af8b` | Strauss – Wine, Woman and Song | * Wine, Woman and Song | 1869 |
 | `5778e65f` | Stravinsky – Apollo | * Scene 1. The Birth of Apollo<br>* Scene 2. Variation d'Apollon (I)<br>* Scene 2. Coda | 1927‑1928 |
 | `7f0a427d` | Stravinsky – Ave Maria | * Ave Maria | 1934 |
 | `3fd31049` | Stravinsky – Capriccio for Piano and Orchestra | * I. Presto<br>* II. Andante rapsodico<br>* III. Allegro capriccioso ma tempo giusto | 1926‑1929 |

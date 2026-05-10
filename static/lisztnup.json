@@ -676,15 +676,6 @@
       "score": 46.71
     },
     {
-      "gid": "599bc81e-35dc-452a-ab84-2853b5451166",
-      "name": "Berggreen, Andreas Peter",
-      "birth_year": 1801,
-      "death_year": 1880,
-      "gender": "male",
-      "country": "DK",
-      "score": 16.64
-    },
-    {
       "gid": "d61e77cc-80b3-4586-bf4e-91fe7f13165e",
       "name": "Berio, Luciano",
       "birth_year": 1925,
@@ -3193,7 +3184,7 @@
       "death_year": 1809,
       "gender": "male",
       "country": "AT",
-      "score": 80.45
+      "score": 80.43
     },
     {
       "gid": "760357b4-37da-4271-8cb7-52786d335745",
@@ -19665,7 +19656,7 @@
       "name": "Concerto no. 5 for Keyboard and Orchestra in F minor, BWV 1056",
       "type": "concerto",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1738,
       "score": 4.99,
       "parts": [
         {
@@ -39881,8 +39872,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Violin Concerto in E major, BWV 1042",
       "type": "concerto",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1717,
+      "end_year": 1723,
       "score": 5.24,
       "parts": [
         {
@@ -54658,23 +54649,6 @@
           "gid": "852fbad9",
           "name": "Act 3, Scene 5, Ringel, Ringel, Rosenkranz, Ringelreih'n",
           "deezer": [2789942562, 67344441],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "6ce50e5f",
-      "composer_gid": "599bc81e-35dc-452a-ab84-2853b5451166",
-      "name": "Et barn er født i Bethlehem",
-      "type": "vocal",
-      "begin_year": 1849,
-      "end_year": 1849,
-      "score": 2.56,
-      "parts": [
-        {
-          "gid": "6ce50e5f",
-          "name": "Et barn er født i Bethlehem",
-          "deezer": [590500242],
           "score": 100.0
         }
       ]
@@ -77212,7 +77186,7 @@
       "name": "Berceuse in D‐flat major, op. 57",
       "type": "piano",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1844,
       "score": 5.56,
       "parts": [
         {
@@ -78356,7 +78330,7 @@
       "name": "Polonaise‐fantaisie in A‐flat major, op. 61: Allegro maestoso",
       "type": "piano",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1846,
       "score": 4.97,
       "parts": [
         {
@@ -118466,23 +118440,6 @@
           "name": "III. Allegro",
           "deezer": [65775996, 1745126147, 1480211472],
           "score": 95.92
-        }
-      ]
-    },
-    {
-      "gid": "2ab17e41",
-      "composer_gid": "c130b0fb-5dce-449d-9f40-1437f889f7fe",
-      "name": "Concerto no. 1 in C major, Hob.:VIIh/1",
-      "type": "concerto",
-      "begin_year": 1786,
-      "end_year": 1786,
-      "score": 1.95,
-      "parts": [
-        {
-          "gid": "c15eaf6a",
-          "name": "I. Allegro con spirito",
-          "deezer": [761268442],
-          "score": 100.0
         }
       ]
     },
@@ -246543,7 +246500,7 @@
       "name": "Rosen aus dem Süden, op. 388",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1880,
       "score": 5.33,
       "parts": [
         {
@@ -246594,7 +246551,7 @@
       "name": "Tales From the Vienna Woods",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1868,
       "score": 5.53,
       "parts": [
         {
@@ -246628,7 +246585,7 @@
       "name": "Thunder and Lightning, op. 324",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1868,
       "score": 5.19,
       "parts": [
         {
@@ -246713,7 +246670,7 @@
       "name": "Vienna Blood",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1873,
       "score": 5.56,
       "parts": [
         {
@@ -246798,7 +246755,7 @@
       "name": "Wine, Woman and Song",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1869,
       "score": 5.21,
       "parts": [
         {
