@@ -153,7 +153,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				userHash,
 				country,
 				sessionId,
-				context: { hasToken: !!playerToken, score, target, attempts }
+				context: { hasToken: !!playerToken, score, target, attempts, log }
 			});
 			return json({ success: false, reason: 'Invalid payload' }, { status: 400 });
 		}
@@ -165,7 +165,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				userHash,
 				country,
 				sessionId,
-				context: { nameLength: playerName.length }
+				context: { nameLength: playerName.length, log }
 			});
 			return json({ success: false, reason: 'Invalid name' }, { status: 400 });
 		}
@@ -177,7 +177,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				userHash,
 				country,
 				sessionId,
-				context: { score }
+				context: { score, log }
 			});
 			return json({ success: false, reason: 'Score out of range' }, { status: 400 });
 		}
@@ -186,7 +186,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				userHash,
 				country,
 				sessionId,
-				context: { target }
+				context: { target, log }
 			});
 			return json({ success: false, reason: 'Target out of range' }, { status: 400 });
 		}
@@ -195,7 +195,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				userHash,
 				country,
 				sessionId,
-				context: { tracklistId }
+				context: { tracklistId, log }
 			});
 			return json({ success: false, reason: 'Invalid tracklist' }, { status: 400 });
 		}
@@ -204,7 +204,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				userHash,
 				country,
 				sessionId,
-				context: { attempts, target }
+				context: { attempts, target, log }
 			});
 			return json({ success: false, reason: 'Attempts out of range' }, { status: 400 });
 		}
@@ -216,7 +216,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				userHash,
 				country,
 				sessionId,
-				context: { averageTime }
+				context: { averageTime, log }
 			});
 			return json({ success: false, reason: 'Average time out of range' }, { status: 400 });
 		}
@@ -225,7 +225,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				userHash,
 				country,
 				sessionId,
-				context: { longestStreak, attempts }
+				context: { longestStreak, attempts, log }
 			});
 			return json({ success: false, reason: 'Streak out of range' }, { status: 400 });
 		}
@@ -234,7 +234,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				userHash,
 				country,
 				sessionId,
-				context: { score, target, maxPerCard: MAX_SCORE_PER_CARD }
+				context: { score, target, maxPerCard: MAX_SCORE_PER_CARD, log }
 			});
 			return json({ success: false, reason: 'Score implausible' }, { status: 400 });
 		}
@@ -243,7 +243,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				userHash,
 				country,
 				sessionId,
-				context: { target }
+				context: { target, log }
 			});
 			return json({ success: false, reason: 'Incomplete replay' }, { status: 400 });
 		}
@@ -305,6 +305,12 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 			.bind(userHash)
 			.first<{ cnt: number }>();
 		if (rateCheck && rateCheck.cnt >= MAX_SUBMISSIONS_PER_HOUR) {
+			await logger.warn(db, 'Leaderboard POST rejected: rate limit exceeded', {
+				userHash,
+				country,
+				sessionId,
+				context: { log }
+			});
 			return json({ success: false, reason: 'Rate limited' }, { status: 429 });
 		}
 
