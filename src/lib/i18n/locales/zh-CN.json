@@ -627,6 +627,7 @@
 			"points": "分数"
 		},
 		"showTimeline": "显示时间线",
+		"replay": "回放",
 		"publishTitle": "发布到排行榜",
 		"renameTitle": "修改排行榜名称",
 		"namePrompt": "输入你想留在全球排行榜上的名字。",

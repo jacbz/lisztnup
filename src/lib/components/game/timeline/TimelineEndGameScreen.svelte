@@ -10,6 +10,7 @@
 	import MessageSquare from 'lucide-svelte/icons/message-square';
 	import Flame from 'lucide-svelte/icons/flame';
 	import BarChart from 'lucide-svelte/icons/bar-chart-3';
+	import SquareStack from 'lucide-svelte/icons/square-stack';
 	import FeedbackPopup from '$lib/components/ui/gameplay/FeedbackPopup.svelte';
 	import { getPlayerToken } from '$lib/stores/identity';
 	import PenLine from 'lucide-svelte/icons/pen-line';
@@ -22,6 +23,7 @@
 	import { settings } from '$lib/stores/settings';
 	import { Zap } from 'lucide-svelte';
 	import { SvelteSet } from 'svelte/reactivity';
+	import TimelinePopup from './TimelinePopup.svelte';
 
 	interface FinalTimeline {
 		player: Player;
@@ -139,6 +141,8 @@
 	let permissionAskedForKey = $state('');
 	let leaderboardPublishingFingerprint = $state<string | null>(null);
 	const pendingPublishInFlight = new SvelteSet<number>();
+	let showReplayPopup = $state(false);
+	let replayTimeline = $state<FinalTimeline | null>(null);
 
 	function getAverageTime(turns: TimelineReplayTurn[]): number | null {
 		const times = turns
@@ -423,6 +427,11 @@
 		}
 	}
 
+	function openReplayPopup(timeline: FinalTimeline) {
+		replayTimeline = timeline;
+		showReplayPopup = true;
+	}
+
 	$effect(() => {
 		if (visible && gameoverAudio && !gameoverPlayed) {
 			gameoverPlayed = true;
@@ -667,7 +676,15 @@
 							{@const leaderboardIndex = getLeaderboardIndex(t)}
 							{@const leaderboardPlayer = leaderboardPlayers[leaderboardIndex]}
 							{#if leaderboardPlayer}
-								<div class="flex justify-end">
+								<div class="flex gap-2">
+									<button
+										type="button"
+										onclick={() => openReplayPopup(t)}
+										class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border border-cyan-400/60 bg-cyan-400/10 px-4 py-2.5 text-sm font-bold text-cyan-300 transition-all hover:bg-cyan-400/20"
+									>
+										<SquareStack class="h-5 w-5" />
+										{$_('leaderboard.replay')}
+									</button>
 									<button
 										type="button"
 										onclick={() =>
@@ -678,7 +695,7 @@
 													? 'rename'
 													: 'publish'
 											)}
-										class="flex cursor-pointer items-center gap-2 rounded-lg border border-amber-400/60 bg-amber-400/10 px-3 py-2 text-sm font-bold text-amber-300 transition-all hover:bg-amber-400/20"
+										class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border border-amber-400/60 bg-amber-400/10 px-4 py-2.5 text-sm font-bold text-amber-300 transition-all hover:bg-amber-400/20"
 									>
 										{#if hasAllowedName(t.player.name) || isNamedInCurrentRound(leaderboardIndex)}
 											<PenLine class="h-4 w-4" />
@@ -690,6 +707,17 @@
 									</button>
 								</div>
 							{/if}
+						{:else if t.score > 0}
+							<div class="flex justify-end">
+								<button
+									type="button"
+									onclick={() => openReplayPopup(t)}
+									class="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-cyan-400/60 bg-cyan-400/10 px-4 py-2.5 text-sm font-bold text-cyan-300 transition-all hover:bg-cyan-400/20"
+								>
+									<SquareStack class="h-5 w-5" />
+									{$_('leaderboard.replay')}
+								</button>
+							</div>
 						{/if}
 					</div>
 				</div>
@@ -884,3 +912,19 @@
 		</div>
 	</div>
 </Popup>
+
+{#if replayTimeline}
+	<TimelinePopup
+		visible={showReplayPopup}
+		playerName={replayTimeline.player.name}
+		country={null}
+		score={Math.round(replayTimeline.score)}
+		attempts={replayTimeline.totalPlacements}
+		averageTime={getAverageTime(replayTimeline.replayTurns)}
+		longestStreak={replayTimeline.longestStreak}
+		timestamp={undefined}
+		tracks={replayTimeline.entries.map((e) => e.track)}
+		log={getReplayLog(replayTimeline)}
+		onClose={() => (showReplayPopup = false)}
+	/>
+{/if}

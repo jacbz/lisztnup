@@ -627,6 +627,7 @@
 			"points": "점수"
 		},
 		"showTimeline": "타임라인 보기",
+		"replay": "리플레이",
 		"publishTitle": "리더보드에 올리기",
 		"renameTitle": "리더보드 이름 바꾸기",
 		"namePrompt": "글로벌 리더보드에 올리고 싶은 이름을 입력해 주세요.",

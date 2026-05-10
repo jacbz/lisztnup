@@ -627,6 +627,7 @@
 			"points": "Pontos"
 		},
 		"showTimeline": "Mostrar linha do tempo",
+		"replay": "Replay",
 		"publishTitle": "Publicar no ranking",
 		"renameTitle": "Renomear no ranking",
 		"namePrompt": "Digite o nome que você quer ver no ranking global.",

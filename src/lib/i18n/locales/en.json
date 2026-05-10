@@ -627,6 +627,7 @@
 			"points": "Points"
 		},
 		"showTimeline": "Show timeline",
+		"replay": "Replay",
 		"publishTitle": "Publish to Leaderboard",
 		"renameTitle": "Rename in Leaderboard",
 		"namePrompt": "Add the name you’d like to see on the global leaderboard.",
