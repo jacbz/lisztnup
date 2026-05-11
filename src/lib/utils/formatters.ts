@@ -1,18 +1,41 @@
 import type { Composer, Work } from '$lib/models';
 
 /**
- * Formats a composer sort name (e.g., "Bach, Johann Sebastian" or "Strauss, Johann, II")
- * into a display name (e.g., "Johann Sebastian Bach" or "Johann Strauss II")
+ * Formats a composer sort name into a display name.
+ *
+ * Examples:
+ * - "Bach, Johann Sebastian" -> "Johann Sebastian Bach"
+ * - "Strauss, Johann, II" -> "Johann Strauss II"
+ * - "Bennett, Richard Rodney, Sir" -> "Sir Richard Rodney Bennett"
  */
 export function formatComposerName(sortName: string): string {
-	const parts = sortName.split(',').map((part) => part.trim());
-	if (parts.length >= 2) {
-		const firstName = parts[1];
-		const lastName = parts[0];
-		const suffix = parts.length > 2 ? ' ' + parts.slice(2).join(' ') : '';
-		return `${firstName} ${lastName}${suffix}`;
+	const parts = sortName
+		.split(',')
+		.map((part) => part.trim())
+		.filter(Boolean);
+
+	if (parts.length < 2) {
+		return sortName;
 	}
-	return sortName;
+
+	const lastName = parts[0];
+	const firstNames = parts[1];
+	const extras = parts.slice(2);
+
+	const prefixes = new Set(['Sir', 'Dame']);
+
+	const prefixParts: string[] = [];
+	const suffixParts: string[] = [];
+
+	for (const extra of extras) {
+		if (prefixes.has(extra)) {
+			prefixParts.push(extra);
+		} else {
+			suffixParts.push(extra);
+		}
+	}
+
+	return [...prefixParts, firstNames, lastName, ...suffixParts].join(' ');
 }
 
 /**
