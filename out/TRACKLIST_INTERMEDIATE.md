@@ -19,20 +19,20 @@
 | `e74a3a95` | Bach – Keyboard Concerto in D minor, BWV 1052 | * I. Allegro | 1738 |
 | `8faf9f08` | Bach – Keyboard Concerto no. 4 in A major, BWV 1055 | * I. Allegro | 1738 |
 | `ef5ff09e` | Bach – Mass in B minor, BWV 232 | * IIa. Gloria: Chorus "Gloria in excelsis Deo" | 1748‑1749 |
-| `1ef8a483` | Bach – Orchestral suite no. 1 in C major, BWV 1066 | * Suite for Orchestra No. 1 in C major, BWV 1066: Ouverture | ? |
+| `1ef8a483` | Bach – Orchestral suite no. 1 in C major, BWV 1066 | * Suite for Orchestra No. 1 in C major, BWV 1066: Ouverture | 1719‑1720 |
 | `179cc1f2` | Bach – Orchestral Suite no. 2 in B minor, BWV 1067 | * VII. Badinerie | 1738‑1739 |
 | `1767c8ae` | Bach – Orchestral Suite no. 3 in D major, BWV 1068 | * Orchestral Suite no. 3 in D major, BWV 1068: II. Air | 1730 |
-| `872109a2` | Bach – Orchestral suite no. 4 in D major, BWV 1069 | * Orchestersuite Nr. 4 D-Dur, BWV 1069: V. Réjouissance | ? |
+| `872109a2` | Bach – Orchestral suite no. 4 in D major, BWV 1069 | * Orchestersuite Nr. 4 D-Dur, BWV 1069: V. Réjouissance | 1725 |
 | `4161a5d1` | Bach – Sechs Choräle von verschiedener Art | * Sechs Choräle von Verschiedener Art (Schübler-Choräle): Wachet auf, ruft uns die Stimme, BWV 645 | 1748‑1749 |
 | `7481c7f5` | Bach – Six concerts avec plusieurs instruments | * Brandenburgisches Konzert Nr. 3 G-Dur, BWV 1048: I. Allegro | 1711‑1720 |
 | `4e4b97df` | Bach – Six Suites for Unaccompanied Cello | * Cello Suite No. 1 in G major, BWV 1007: I. Prélude | 1717‑1723 |
-| `5009eb7c` | Bach – Sonata for Violin and Harpsichord in G major, BWV 1019.3 | * I. Allegro | ? |
+| `5009eb7c` | Bach – Sonata for Violin and Harpsichord in G major, BWV 1019.3 | * I. Allegro | 1717‑1723 |
 | `4a8c18a0` | Bach – Sonatas and Partitas for solo violin, BWV 1001–1006 | * Violin Partita no. 2 in D minor, BWV 1004: V. Chaconne | 1720 |
-| `1056036c` | Bach – Sonate für Violine und Klavier A-Dur, BWV 1015 | * I. Dolce | ? |
-| `c324226d` | Bach – Sonate für Violine und Klavier c-Moll, BWV 1017 | * I. Largo | ? |
+| `1056036c` | Bach – Sonate für Violine und Klavier A-Dur, BWV 1015 | * I. Dolce | 1717‑1723 |
+| `c324226d` | Bach – Sonate für Violine und Klavier c-Moll, BWV 1017 | * I. Largo | 1717‑1723 |
 | `0a633962` | Bach – Sonate für Violine und Klavier E-Dur, BWV 1016 | * I. Adagio | 1720 |
-| `8768bb9e` | Bach – Sonate für Violine und Klavier f-Moll, BWV 1018 | * I. | ? |
-| `e3d84d65` | Bach – Sonate für Violine und Klavier h-Moll, BWV 1014 | * II. Allegro | ? |
+| `8768bb9e` | Bach – Sonate für Violine und Klavier f-Moll, BWV 1018 | * I. | 1717‑1723 |
+| `e3d84d65` | Bach – Sonate für Violine und Klavier h-Moll, BWV 1014 | * II. Allegro | 1717‑1723 |
 | `45afb3b2` | Bach – St Matthew Passion, BWV 244 | * Matthäus-Passion, BWV 244: Teil II, XXXIX. Aria (Alto) "Erbarme dich, mein Gott" | 1727 |
 | `e562bb8c` | Bach – The Art of Fugue, BWV 1080 | * Die Kunst der Fuge, BWV 1080: I. Contrapunctus 1 | 1742‑1750 |
 | `bd511c33` | Bach – The Well-Tempered Clavier, BWV 846–893 | * The Well-Tempered Clavier, Book I: Prelude and Fugue no. 1 in C major, BWV 846: Prelude | 1722 |
@@ -84,8 +84,8 @@
 | `3ee98c65` | Bellini – Norma | * Atto I, scena 1. Scena e cavatina “Casta diva, che inargenti” (Norma, coro) | 1831 |
 | `312510a8` | Berlioz – Symphonie fantastique, op. 14 : Épisode de la vie d’un artiste … en cinq parties | * Symphonie fantastique, op. 14: IV. Marche au supplice | 1830 |
 | `3f4b1135` | Berlioz – The Roman Carnival Overture for Orchestra, op. 9 | * The Roman Carnival Overture for Orchestra, op. 9 | 1843 |
-| `04173a43` | Bizet – Carmen Suite no. 1 (arr. Guiraud) | * VI. Les Toréadors. Allegro giocoso | 1887 |
-| `280ebc4d` | Bizet – Carmen Suite no. 2 (arr. Guiraud) | * II. Habanera | 1886 |
+| `04173a43` | Bizet – Carmen Suite no. 1 (arr. Guiraud) | * VI. Les Toréadors. Allegro giocoso | ? |
+| `280ebc4d` | Bizet – Carmen Suite no. 2 (arr. Guiraud) | * II. Habanera | ? |
 | `45efd8f4` | Bizet – Carmen, WD 31 | * Carmen : Acte I. No. 5 Habanera « L’amour est un oiseau rebelle » (Carmen, chœur) | 1875 |
 | `a4578f4c` | Bizet – L’Arlésienne Suite no. 1, op. 23bis | * III. Adagietto | 1872 |
 | `6ec79e92` | Bizet – L’Arlésienne Suite no. 2 (arr. Guiraud) | * IV. Farandole | 1872 |
@@ -440,11 +440,11 @@
 | `0e9918ea` | Sibelius – Symphony no. 5 in E-flat major, op. 82 | * III. Allegro molto | 1915 |
 | `67843334` | Sibelius – Violin Concerto in D minor, op. 47 | * I. Allegro moderato | 1903‑1904 |
 | `be255a2d` | Smetana – Má vlast, JB 1:112 | * Má vlast: II. Vltava, JB 1:112/2 | 1874‑1879 |
-| `be482645` | Strauss – Accelerationen, op. 234 | * Accelerationen, op. 234 | ? |
+| `be482645` | Strauss – Accelerationen, op. 234 | * Accelerationen, op. 234 | 1860 |
 | `fec1c6a5` | Strauss – Also sprach Zarathustra, op. 30 | * I. Einleitung | 1896 |
 | `62308818` | Strauss – Annen‐Polka, op. 117 | * Annen‐Polka, op. 117 | 1852 |
 | `71f4fb64` | Strauss – Artist’s Life, op. 316 | * Artist’s Life, op. 316 | 1867 |
-| `f2d0754e` | Strauss – Der Zigeunerbaron | * Ouvertüre | ? |
+| `f2d0754e` | Strauss – Der Zigeunerbaron | * Ouvertüre | 1885 |
 | `88504b20` | Strauss – Die Fledermaus | * Overture | 1874 |
 | `fd3e8e99` | Strauss – Don Juan | * Don Juan | 1888 |
 | `49adc2c3` | Strauss – Éljen a Magyar, op. 332 | * Éljen a Magyar, op. 332 | 1869 |
@@ -489,9 +489,9 @@
 | `2d73a8a6` | Verdi – Messa da requiem | * IIa. Dies irae: Dies irae (coro) | 1874 |
 | `445fc058` | Verdi – Nabucco | * Parte III, scena 2. Coro “Va, pensiero, sull’ali dorate” (Coro) | 1841 |
 | `2dc7fb62` | Verdi – Rigoletto | * Atto III. “La donna è mobile” (Duca) | 1850‑1851 |
-| `40b35a3c` | Vivaldi – 6 Flute Concertos, op. 10 | * Concerto in D major, op. 10 no. 3, RV 428 “Il gardellino”: I. Allegro | ? |
+| `40b35a3c` | Vivaldi – 6 Flute Concertos, op. 10 | * Concerto in D major, op. 10 no. 3, RV 428 “Il gardellino”: I. Allegro | 1729 |
 | `4b8c6bb2` | Vivaldi – Concerto for Lute in D major, RV 93 | * II. Largo | 1730‑1731 |
-| `6ab1f532` | Vivaldi – Concerto for Mandolin in C major, RV 425 | * I. Allegro | 1742 |
+| `6ab1f532` | Vivaldi – Concerto for Mandolin in C major, RV 425 | * I. Allegro | ? |
 | `e7a37d0c` | Vivaldi – Flautino Concerto in C major, RV 443 | * II. Largo | 1728‑1729 |
 | `7044d543` | Vivaldi – The Contest Between Harmony and Invention, op. 8 | * Concerto in E-flat major, op. 8 no. 5, RV 253 "La tempesta di mare": I. (Allegro e) Presto | 1725 |
 | `87886dcf` | Vivaldi – The Four Seasons | * “The Four Seasons”: Concerto in E Major, op. 8 no. 1, RV. 269, “Spring”: 1. Allegro | 1723 |

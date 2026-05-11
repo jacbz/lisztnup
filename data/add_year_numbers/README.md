@@ -50,11 +50,16 @@ PROCESS_RATE_SECONDS=1.0
 ## Data Sources (Priority Order)
 
 1. **Wikidata** (highest priority)
-   - Properties: P571 (Inception), P577 (Publication Date)
+   - Property: P571 (Inception) - composition date only
    - Supports qualifiers for date ranges (P580/P582)
 
 2. **IMSLP** (International Music Score Library Project)
-   - Scrapes: "Composition Year", "Year/Date of Composition", "First Pub", etc.
+   - Scrapes composition date fields only:
+     - "Year/Date of Composition"
+     - "Composition Year"
+     - "Year of Composition"
+     - "Date of Composition"
+     - "Composed"
 
 3. **AllMusic** (fallback)
-   - Scrapes: "Comp Date" field
+   - Scrapes: "Comp Date" field (composition date)

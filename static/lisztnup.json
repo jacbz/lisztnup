@@ -9602,8 +9602,8 @@
       "composer_gid": "0a46cf2a-61bd-447d-b8fd-a2b32eb20282",
       "name": "Navarra, B. 49",
       "type": "piano",
-      "begin_year": 1909,
-      "end_year": 1912,
+      "begin_year": null,
+      "end_year": null,
       "score": 3.18,
       "parts": [
         {
@@ -11139,7 +11139,7 @@
       "name": "Artaxerxes",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 2.2,
       "parts": [
         {
@@ -15890,7 +15890,7 @@
       "name": "8 kleine Präludien und Fugen, BWV 553-560",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1852,
+      "end_year": null,
       "score": 2.03,
       "parts": [
         {
@@ -16201,7 +16201,7 @@
       "name": "Ach Gott, vom Himmel sieh' darein, BWV 741",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1751,
+      "end_year": null,
       "score": 3.33,
       "parts": [
         {
@@ -16669,7 +16669,7 @@
       "name": "Canon Trias Harmonica a 8, BWV 1072",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1754,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -16685,8 +16685,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Canon a 2 perpetuus, BWV 1075",
       "type": "chamber",
-      "begin_year": 1734,
-      "end_year": 1801,
+      "begin_year": null,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -16702,8 +16702,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Canon a 4 perpetuus, BWV 1073",
       "type": "chamber",
-      "begin_year": 1713,
-      "end_year": 1808,
+      "begin_year": null,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -16719,8 +16719,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Canon super Fa Mi, a 7, post Tempus Musicum, BWV 1078",
       "type": "chamber",
-      "begin_year": 1749,
-      "end_year": 1803,
+      "begin_year": null,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -16736,8 +16736,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Canone doppio sopr' il soggetto, BWV 1077",
       "type": "chamber",
-      "begin_year": 1747,
-      "end_year": 1810,
+      "begin_year": null,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -17324,7 +17324,7 @@
       "name": "Choralsatz BWV 333 \"Herr Jesu Christ, du hast bereit\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1765,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -17409,7 +17409,7 @@
       "name": "Choralsatz, BWV 299 [1] \"Dir, dir, Jehova, will ich singen\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1765,
+      "end_year": null,
       "score": 2.71,
       "parts": [
         {
@@ -17919,7 +17919,7 @@
       "name": "Choralsatz, BWV 370 \"Komm, Gott Schöpfer, Heiliger Geist\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1751,
+      "end_year": null,
       "score": 2.08,
       "parts": [
         {
@@ -18004,7 +18004,7 @@
       "name": "Choralsatz, BWV 377 \"Mach's mit mir, Gott, nach deiner Güt'\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1765,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -18038,7 +18038,7 @@
       "name": "Choralsatz, BWV 386 \"Nun danket alle Gott\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1751,
+      "end_year": null,
       "score": 2.2,
       "parts": [
         {
@@ -18072,7 +18072,7 @@
       "name": "Choralsatz, BWV 404 \"O Traurigkeit, O Herzeleid\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1765,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -18123,7 +18123,7 @@
       "name": "Choralsatz, BWV 430 \"Wenn mein Stündlein vorhanden ist\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1765,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -18174,7 +18174,7 @@
       "name": "Choralstaz, BWV 369 \"Keinen hat Gott verlassen\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1765,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -18633,7 +18633,7 @@
       "name": "Choräle, BWV 730 \"Liebster Jesu, wir sind hier\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1751,
+      "end_year": null,
       "score": 3.71,
       "parts": [
         {
@@ -18713,7 +18713,7 @@
       "name": "Christ, du bist der helle Tag, BWV 766",
       "type": "organ",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1750,
       "score": 2.97,
       "parts": [
         {
@@ -18766,7 +18766,7 @@
       "name": "Christe, du Lamm Gottes, BWV 619",
       "type": "organ",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1716,
       "score": 3.91,
       "parts": [
         {
@@ -19378,7 +19378,7 @@
       "name": "Concerto for 3 Harpsichords in C major, BWV 1064",
       "type": "concerto",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1730,
       "score": 3.83,
       "parts": [
         {
@@ -19406,8 +19406,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Concerto for 3 harpsichords, strings & continuo in D minor, BWV 1063",
       "type": "concerto",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1735,
+      "end_year": 1745,
       "score": 4.04,
       "parts": [
         {
@@ -19453,7 +19453,7 @@
       "name": "Concerto for 4 Harpsichords and Orchestra in A minor, BWV 1065",
       "type": "concerto",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1730,
       "score": 4.16,
       "parts": [
         {
@@ -19481,8 +19481,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Concerto for Flute, Violin, Harpsichord, Strings and Continuo in A minor, BWV 1044 \"Triple Concerto\"",
       "type": "concerto",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1738,
+      "end_year": 1740,
       "score": 4.23,
       "parts": [
         {
@@ -19511,7 +19511,7 @@
       "name": "Concerto for Keyboard and Orchestra no. 3 in D major, BWV 1054",
       "type": "concerto",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1739,
       "score": 4.36,
       "parts": [
         {
@@ -19540,7 +19540,7 @@
       "name": "Concerto for Oboe, Strings and Basso Continuo in D minor, BWV 1059R",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1855,
+      "end_year": null,
       "score": 3.15,
       "parts": [
         {
@@ -19569,7 +19569,7 @@
       "name": "Concerto for harpsichord, oboe, strings & continuo no. 8 in D minor (incomplete), BWV 1059",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1855,
+      "end_year": null,
       "score": 2.18,
       "parts": [
         {
@@ -20131,7 +20131,7 @@
       "name": "Ein feste Burg ist unser Gott, BWV Anh. 49",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -20497,7 +20497,7 @@
       "name": "Erhalt uns, Herr, bei deinem Wort, BWV Anh. 50",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -21041,7 +21041,7 @@
       "name": "Fuge C-Dur, BWV 952",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1843,
+      "end_year": null,
       "score": 2.56,
       "parts": [
         {
@@ -21075,7 +21075,7 @@
       "name": "Fuge G-Dur, BWV 577",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1881,
+      "end_year": null,
       "score": 3.97,
       "parts": [
         {
@@ -33323,7 +33323,7 @@
       "name": "Liebster Jesu, wir sind hier, BWV 731",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1893,
+      "end_year": null,
       "score": 4.19,
       "parts": [
         {
@@ -33391,7 +33391,7 @@
       "name": "Lobet den Herrn, alle Heiden, BWV 230",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1821,
+      "end_year": null,
       "score": 3.85,
       "parts": [
         {
@@ -33791,8 +33791,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Messe A-Dur, BWV 234",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1738,
+      "end_year": 1739,
       "score": 2.81,
       "parts": [
         {
@@ -33839,7 +33839,7 @@
       "name": "Messe F-Dur, BWV 233",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1738,
       "score": 2.88,
       "parts": [
         {
@@ -33885,8 +33885,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Messe G-Dur, BWV 236",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1738,
+      "end_year": 1739,
       "score": 2.88,
       "parts": [
         {
@@ -34031,7 +34031,7 @@
       "name": "Nun freut euch, lieben Christen g’mein, BWV 734",
       "type": "organ",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1715,
       "score": 4.14,
       "parts": [
         {
@@ -34099,7 +34099,7 @@
       "name": "Nun laßt uns den Leib begraben, BWV 1111",
       "type": "organ",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1710,
       "score": 2.94,
       "parts": [
         {
@@ -34133,7 +34133,7 @@
       "name": "O Ewigkeit, du Donnerwort, BWV 513",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1725,
       "score": 2.64,
       "parts": [
         {
@@ -34149,8 +34149,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "O Gott, du frommer Gott, BWV 767",
       "type": "organ",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1714,
+      "end_year": 1717,
       "score": 3.32,
       "parts": [
         {
@@ -34215,7 +34215,7 @@
       "name": "O Herre Gott, dein göttlich Wort, BWV 1110",
       "type": "organ",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1710,
       "score": 3.04,
       "parts": [
         {
@@ -34248,8 +34248,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "O Jesu, wie ist dein Gestalt, BWV 1094",
       "type": "organ",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1703,
+      "end_year": 1707,
       "score": 3.04,
       "parts": [
         {
@@ -34265,8 +34265,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "O Lamm Gottes unschuldig, BWV 1095",
       "type": "organ",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1703,
+      "end_year": 1707,
       "score": 3.14,
       "parts": [
         {
@@ -34357,7 +34357,7 @@
       "name": "Oboe Concerto in F major, BWV 1053R",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1955,
+      "end_year": null,
       "score": 3.34,
       "parts": [
         {
@@ -34537,8 +34537,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Orchestral suite no. 1 in C major, BWV 1066",
       "type": "orchestral",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1719,
+      "end_year": 1720,
       "score": 4.53,
       "parts": [
         {
@@ -34591,7 +34591,7 @@
       "name": "Orchestral suite no. 4 in D major, BWV 1069",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1725,
       "score": 4.56,
       "parts": [
         {
@@ -34667,7 +34667,7 @@
       "name": "Ouvertüre nach französischer Art h-Moll, BWV 831",
       "type": "piano",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1733,
       "score": 4.13,
       "parts": [
         {
@@ -34719,8 +34719,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Partita for Flute in A minor, BWV 1013",
       "type": "solo",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1722,
+      "end_year": 1723,
       "score": 4.03,
       "parts": [
         {
@@ -34754,8 +34754,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Partita in C minor, BWV 997.1",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1738,
+      "end_year": 1741,
       "score": 3.33,
       "parts": [
         {
@@ -34795,8 +34795,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Partite diverse für Orgel sopra \"Ach, was soll ich Sünder machen\", BWV 770",
       "type": "organ",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1710,
+      "end_year": 1714,
       "score": 2.89,
       "parts": [
         {
@@ -34867,7 +34867,7 @@
       "name": "Partite diverse sopra \"Sei gegrüßet, Jesu gütig\", BWV 768.2",
       "type": "organ",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1710,
       "score": 3.47,
       "parts": [
         {
@@ -34990,7 +34990,7 @@
       "name": "Pastorale F-Dur / Pastorella F-Dur, BWV 590",
       "type": "organ",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1720,
       "score": 3.88,
       "parts": [
         {
@@ -35481,8 +35481,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Preludes and Fugues by J. S. Bach, S. 462",
       "type": "piano",
-      "begin_year": 1842,
-      "end_year": 1850,
+      "begin_year": null,
+      "end_year": null,
       "score": 3.05,
       "parts": [
         {
@@ -37141,8 +37141,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Sonata for Violin and Harpsichord in G major, BWV 1019.3",
       "type": "chamber",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1717,
+      "end_year": 1723,
       "score": 4.31,
       "parts": [
         {
@@ -37559,8 +37559,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Sonate für Viola da Gamba und Cembalo D-Dur, BWV 1028",
       "type": "chamber",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1730,
+      "end_year": 1740,
       "score": 4.15,
       "parts": [
         {
@@ -37594,8 +37594,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Sonate für Viola da Gamba und Cembalo g-Moll, BWV 1029",
       "type": "chamber",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1730,
+      "end_year": 1740,
       "score": 4.14,
       "parts": [
         {
@@ -37658,8 +37658,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Sonate für Violine und Klavier A-Dur, BWV 1015",
       "type": "chamber",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1717,
+      "end_year": 1723,
       "score": 4.29,
       "parts": [
         {
@@ -37728,8 +37728,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Sonate für Violine und Klavier c-Moll, BWV 1017",
       "type": "chamber",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1717,
+      "end_year": 1723,
       "score": 4.4,
       "parts": [
         {
@@ -37763,8 +37763,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Sonate für Violine und Klavier f-Moll, BWV 1018",
       "type": "chamber",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1717,
+      "end_year": 1723,
       "score": 4.28,
       "parts": [
         {
@@ -37798,8 +37798,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "Sonate für Violine und Klavier h-Moll, BWV 1014",
       "type": "chamber",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1717,
+      "end_year": 1723,
       "score": 4.27,
       "parts": [
         {
@@ -38174,8 +38174,8 @@
       "composer_gid": "24f1766e-9635-4d58-a4d4-9413f9f98a4c",
       "name": "St. John Passion, BWV 245",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1728,
+      "end_year": 1732,
       "score": 3.94,
       "parts": [
         {
@@ -38681,7 +38681,7 @@
       "name": "Suite from Orchestral Works of Bach (orch. Mahler)",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": 1910,
+      "end_year": null,
       "score": 2.42,
       "parts": [
         {
@@ -39506,7 +39506,7 @@
       "name": "Toccata und Fuge F-Dur, BWV 540",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1829,
+      "end_year": null,
       "score": 4.23,
       "parts": [
         {
@@ -39667,7 +39667,7 @@
       "name": "Trio g-Moll, BWV 584 / Anh. II 46‑>",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1842,
+      "end_year": null,
       "score": 2.64,
       "parts": [
         {
@@ -44015,7 +44015,7 @@
       "name": "Rhapsody no. 2 for Violin and Orchestra, Sz. 90",
       "type": "concerto",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1928,
       "score": 2.08,
       "parts": [
         {
@@ -44568,7 +44568,7 @@
       "name": "Suite no. 1, op. 3, Sz. 31",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1905,
       "score": 1.95,
       "parts": [
         {
@@ -44649,7 +44649,7 @@
       "name": "The Miraculous Mandarin Suite, op. 19",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1927,
       "score": 2.46,
       "parts": [
         {
@@ -44736,8 +44736,8 @@
       "composer_gid": "fd14da1b-3c2d-4cc8-9ca6-fc8c62ce6988",
       "name": "Three Burlesques, Sz. 47, BB 55",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1908,
+      "end_year": 1911,
       "score": 2.74,
       "parts": [
         {
@@ -53743,7 +53743,7 @@
       "name": "Beatrice di Tenda",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1850,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -53800,7 +53800,7 @@
       "name": "I puritani",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1850,
+      "end_year": null,
       "score": 3.58,
       "parts": [
         {
@@ -53864,7 +53864,7 @@
       "name": "La sonnambula",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1850,
+      "end_year": null,
       "score": 3.47,
       "parts": [
         {
@@ -56009,7 +56009,7 @@
       "name": "Candide",
       "type": "opera",
       "begin_year": null,
-      "end_year": 2000,
+      "end_year": null,
       "score": 3.31,
       "parts": [
         {
@@ -57431,7 +57431,7 @@
       "name": "Carmen Suite no. 1 (arr. Guiraud)",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": 1887,
+      "end_year": null,
       "score": 4.85,
       "parts": [
         {
@@ -57478,7 +57478,7 @@
       "name": "Carmen Suite no. 2 (arr. Guiraud)",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": 1886,
+      "end_year": null,
       "score": 4.51,
       "parts": [
         {
@@ -57982,7 +57982,7 @@
       "name": "Symphony in C major \"Roma\"",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": 1880,
+      "end_year": null,
       "score": 2.03,
       "parts": [
         {
@@ -59709,7 +59709,7 @@
       "name": "Piano Quintet in C minor",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1862,
       "score": 2.3,
       "parts": [
         {
@@ -60672,7 +60672,7 @@
       "name": "Old Hundredth (arr. Vaughan Williams)",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1953,
+      "end_year": null,
       "score": 2.71,
       "parts": [
         {
@@ -61012,7 +61012,7 @@
       "name": "La Dame blanche",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1850,
+      "end_year": null,
       "score": 2.33,
       "parts": [
         {
@@ -71730,8 +71730,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Ach Gott und Herr, BuxWV 177",
       "type": "vocal",
-      "begin_year": 1903,
-      "end_year": 1904,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.64,
       "parts": [
         {
@@ -72142,7 +72142,7 @@
       "name": "Canzona in G minor, BuxWV 173",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1952,
+      "end_year": null,
       "score": 2.64,
       "parts": [
         {
@@ -72159,7 +72159,7 @@
       "name": "Canzonetta in A minor, BuxWV 225",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1972,
+      "end_year": null,
       "score": 2.4,
       "parts": [
         {
@@ -72175,8 +72175,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Canzonetta in D minor, BuxWV 168",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.89,
       "parts": [
         {
@@ -72226,8 +72226,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Chaconne in E minor, BuxWV 160",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 3.47,
       "parts": [
         {
@@ -72260,8 +72260,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Chorale Prelude for Organ in Dorian mode, BuxWV 180 \"Christ, unser Herr zum Jordan kam\"",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.77,
       "parts": [
         {
@@ -72277,8 +72277,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Ciaccona in C minor, BuxWV 159",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 3.14,
       "parts": [
         {
@@ -72294,8 +72294,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Danket dem Herrn, BuxWV 181",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.89,
       "parts": [
         {
@@ -72328,8 +72328,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Durch Adams Fall ist ganz verderbt, BuxWV 183",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.71,
       "parts": [
         {
@@ -72345,8 +72345,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Ein feste Burg ist unser Gott, BuxWV 184",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 3.0,
       "parts": [
         {
@@ -72362,8 +72362,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Erhalt uns, Herr, bei deinem Wort, BuxWV 185",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.48,
       "parts": [
         {
@@ -72379,8 +72379,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Es spricht der unweisen Mund wohl, BuxWV 187",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.64,
       "parts": [
         {
@@ -72549,8 +72549,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Herr Jesu Christ, ich weiß gar wohl, BuxWV 193",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.56,
       "parts": [
         {
@@ -72674,8 +72674,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Jesus Christus, unser Heiland, BuxWV 198",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.48,
       "parts": [
         {
@@ -72708,8 +72708,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Komm heiliger Geist, Herre Gott, BuxWV 199",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 3.0,
       "parts": [
         {
@@ -72861,8 +72861,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Nun bitten wir den heiligen Geist, BuxWV 208",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.89,
       "parts": [
         {
@@ -72878,8 +72878,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Nun bitten wir den heiligen Geist, BuxWV 209",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.71,
       "parts": [
         {
@@ -72895,8 +72895,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Nun freut euch, BuxWV 210",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.83,
       "parts": [
         {
@@ -72912,8 +72912,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Nun komm, der Heiden Heiland, BuxWV 211",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 3.66,
       "parts": [
         {
@@ -72980,8 +72980,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Passacaglia in D minor, BuxWV 161",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 3.69,
       "parts": [
         {
@@ -73099,8 +73099,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Praeludium in D minor, BuxWV 140",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.77,
       "parts": [
         {
@@ -73235,8 +73235,8 @@
       "composer_gid": "f106fb52-0b54-4135-bdfd-9ccfd7e320cb",
       "name": "Praeludium, Fuga, and Ciaccona in C major, BuxWV 137",
       "type": "vocal",
-      "begin_year": 1875,
-      "end_year": 1876,
+      "begin_year": null,
+      "end_year": null,
       "score": 3.3,
       "parts": [
         {
@@ -73873,7 +73873,7 @@
       "name": "Come to me, grief, for ever",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1586,
       "score": 2.08,
       "parts": [
         {
@@ -74308,7 +74308,7 @@
       "name": "The Bells",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1899,
+      "end_year": null,
       "score": 2.3,
       "parts": [
         {
@@ -74530,7 +74530,7 @@
       "name": "A Maiden's Prayer, op. 4",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1938,
+      "end_year": null,
       "score": 3.18,
       "parts": [
         {
@@ -74547,7 +74547,7 @@
       "name": "Obras de musica para tecla, arpa y vihuela",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1578,
+      "end_year": null,
       "score": 2.02,
       "parts": [
         {
@@ -77070,8 +77070,8 @@
       "composer_gid": "09ff1fe8-d61c-4b98-bb82-18487c74d7b7",
       "name": "6 Chants polonais, S. 480",
       "type": "piano",
-      "begin_year": 1857,
-      "end_year": 1860,
+      "begin_year": null,
+      "end_year": null,
       "score": 3.3,
       "parts": [
         {
@@ -77271,7 +77271,7 @@
       "name": "Chopiniana, op. 46 (orch. Glazunov)",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": 1892,
+      "end_year": null,
       "score": 2.17,
       "parts": [
         {
@@ -78842,7 +78842,7 @@
       "name": "Waltz in A minor",
       "type": "piano",
       "begin_year": null,
-      "end_year": 2024,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -81645,7 +81645,7 @@
       "name": "12 concerti grossi, op. 6",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1714,
+      "end_year": null,
       "score": 4.12,
       "parts": [
         {
@@ -82514,7 +82514,7 @@
       "name": "La Superbe",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1695,
       "score": 2.4,
       "parts": [
         {
@@ -85151,7 +85151,7 @@
       "name": "Concertante for Flute and Clarinet with Orchestra in B-flat major, op. 41",
       "type": "concerto",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1786,
       "score": 2.27,
       "parts": [
         {
@@ -85277,7 +85277,7 @@
       "name": "Negro Folk Symphony",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1934,
       "score": 1.95,
       "parts": [
         {
@@ -87911,7 +87911,7 @@
       "name": "Sylvia",
       "type": "ballet",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1876,
       "score": 2.41,
       "parts": [
         {
@@ -88195,7 +88195,7 @@
       "name": "Sonata for Cello and Piano in D major",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1916,
       "score": 2.2,
       "parts": [
         {
@@ -88414,7 +88414,7 @@
       "name": "12 Chorale Preludes on Gregorian Themes, op. 8",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1947,
       "score": 1.71,
       "parts": [
         {
@@ -89050,7 +89050,7 @@
       "name": "La Favorite. A. 58",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1850,
+      "end_year": null,
       "score": 2.2,
       "parts": [
         {
@@ -89229,7 +89229,7 @@
       "name": "Maria Stuarda",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1850,
+      "end_year": null,
       "score": 2.21,
       "parts": [
         {
@@ -89269,7 +89269,7 @@
       "name": "Roberto Devereux",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1850,
+      "end_year": null,
       "score": 2.36,
       "parts": [
         {
@@ -89706,7 +89706,7 @@
       "name": "Captaine Digorie Piper his Pavan, P. 8",
       "type": "solo",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1596,
       "score": 2.89,
       "parts": [
         {
@@ -94043,7 +94043,7 @@
       "name": "Slavonic Fantasy (arr. Kreisler)",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": 1914,
+      "end_year": null,
       "score": 2.2,
       "parts": [
         {
@@ -95681,7 +95681,7 @@
       "name": "Concerto for Violin and Orchestra no. 6 in E-flat major, K. 268/365b/Anh. C. 14.04",
       "type": "concerto",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1790,
       "score": 2.35,
       "parts": [
         {
@@ -95825,7 +95825,7 @@
       "name": "3 Songs, op. 16",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1894,
       "score": 1.86,
       "parts": [
         {
@@ -97772,7 +97772,7 @@
       "name": "La vida breve",
       "type": "opera",
       "begin_year": null,
-      "end_year": 2000,
+      "end_year": null,
       "score": 2.45,
       "parts": [
         {
@@ -98250,7 +98250,7 @@
       "name": "Trumpet Concerto in D major, FWV L:D1",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1964,
+      "end_year": null,
       "score": 2.7,
       "parts": [
         {
@@ -101653,7 +101653,7 @@
       "name": "Sonata no. 16 for 3 violins in C major",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1641,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -101670,7 +101670,7 @@
       "name": "Sonata seconda in D major, F 1475.02",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1641,
+      "end_year": null,
       "score": 2.08,
       "parts": [
         {
@@ -101779,7 +101779,7 @@
       "composer_gid": "7ea7ad5a-f2fe-4988-ada5-c15a11958911",
       "name": "Pièces de Viole, Livre I",
       "type": "chamber",
-      "begin_year": null,
+      "begin_year": 1747,
       "end_year": 1747,
       "score": 1.95,
       "parts": [
@@ -103665,7 +103665,7 @@
       "name": "Sonata XXI \"con tre violini\", Ch. 214",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1615,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -104878,7 +104878,7 @@
       "name": "Canzon francese del Principe",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1957,
+      "end_year": null,
       "score": 2.08,
       "parts": [
         {
@@ -105376,7 +105376,7 @@
       "name": "De tous biens plaine",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1501,
+      "end_year": null,
       "score": 2.71,
       "parts": [
         {
@@ -106772,7 +106772,7 @@
       "name": "Symphony no. 4 \"Heroes\"",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1997,
       "score": 1.73,
       "parts": [
         {
@@ -107112,7 +107112,7 @@
       "name": "Meditation, op. 32",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1891,
       "score": 1.79,
       "parts": [
         {
@@ -107663,7 +107663,7 @@
       "name": "Triumphal March, op. 40",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1892,
       "score": 1.79,
       "parts": [
         {
@@ -107697,7 +107697,7 @@
       "name": "Élégie, op. 44",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1893,
       "score": 1.95,
       "parts": [
         {
@@ -107731,7 +107731,7 @@
       "name": "A Life for the Tsar",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1836,
       "score": 1.66,
       "parts": [
         {
@@ -107765,7 +107765,7 @@
       "name": "Kamarinskaya",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1848,
       "score": 2.56,
       "parts": [
         {
@@ -107867,7 +107867,7 @@
       "name": "The Lark",
       "type": "piano",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1840,
       "score": 3.18,
       "parts": [
         {
@@ -108095,7 +108095,7 @@
       "name": "Iphigénie en Aulide, Wq. 40",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 2.21,
       "parts": [
         {
@@ -108432,7 +108432,7 @@
       "name": "Trio Sonata in C major, DürG 13 (BWV 1037)",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1860,
+      "end_year": null,
       "score": 2.56,
       "parts": [
         {
@@ -109272,7 +109272,7 @@
       "name": "Mors et Vita",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1885,
       "score": 2.3,
       "parts": [
         {
@@ -109289,7 +109289,7 @@
       "name": "Our Love",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1939,
+      "end_year": null,
       "score": 2.83,
       "parts": [
         {
@@ -110042,7 +110042,7 @@
       "name": "12 danzas españolas, op. 37",
       "type": "piano",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1890,
       "score": 3.81,
       "parts": [
         {
@@ -110059,7 +110059,7 @@
       "name": "12 tonadillas al estilo antiguo, H.136",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1914,
       "score": 2.77,
       "parts": [
         {
@@ -110100,7 +110100,7 @@
       "name": "Allegro de concierto, op. 46",
       "type": "piano",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1903,
       "score": 3.18,
       "parts": [
         {
@@ -110290,7 +110290,7 @@
       "name": "Goyescas, H.65",
       "type": "opera",
       "begin_year": null,
-      "end_year": 2000,
+      "end_year": null,
       "score": 3.16,
       "parts": [
         {
@@ -112404,7 +112404,7 @@
       "name": "Soirée de Vienne, op. 56",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1926,
+      "end_year": null,
       "score": 2.08,
       "parts": [
         {
@@ -112880,7 +112880,7 @@
       "name": "Seis canciones castellanas",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1939,
       "score": 1.72,
       "parts": [
         {
@@ -114876,7 +114876,7 @@
       "name": "Flute Sonata in A minor, HWV 374 \"Halle Sonata no. 1\"",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1879,
+      "end_year": null,
       "score": 2.26,
       "parts": [
         {
@@ -114911,7 +114911,7 @@
       "name": "Flute Sonata in B minor, HWV 376 \"Halle Sonata no. 3\"",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1879,
+      "end_year": null,
       "score": 2.26,
       "parts": [
         {
@@ -114981,7 +114981,7 @@
       "name": "Flute Sonata in E minor, HWV 375 \"Halle Sonata no. 2\"",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1879,
+      "end_year": null,
       "score": 2.28,
       "parts": [
         {
@@ -118263,7 +118263,7 @@
       "name": "Baryton Trio in D major, Hob. XI:113",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1914,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -118466,7 +118466,7 @@
       "name": "Das Leben Ist Ein Traum, Hob. XXVIa:21",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1784,
       "score": 1.79,
       "parts": [
         {
@@ -118499,8 +118499,8 @@
       "composer_gid": "c130b0fb-5dce-449d-9f40-1437f889f7fe",
       "name": "Die Jahreszeiten",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1799,
+      "end_year": 1801,
       "score": 3.26,
       "parts": [
         {
@@ -118739,7 +118739,7 @@
       "name": "Die Schöpfung, Hob. XXI:2",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1796,
       "score": 4.03,
       "parts": [
         {
@@ -118929,8 +118929,8 @@
       "composer_gid": "c130b0fb-5dce-449d-9f40-1437f889f7fe",
       "name": "Divertimento für Cembalo in Es-dur, Hob. XVI:16",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1750,
+      "end_year": 1755,
       "score": 1.95,
       "parts": [
         {
@@ -118959,7 +118959,7 @@
       "name": "Divertimento in A major, Hob.IV:10",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1784,
       "score": 1.92,
       "parts": [
         {
@@ -118988,7 +118988,7 @@
       "name": "Divertimento in C major, Hob.IV:8",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1784,
       "score": 2.08,
       "parts": [
         {
@@ -119017,7 +119017,7 @@
       "name": "Divertimento in D major, Hob.IV:6",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1784,
       "score": 1.89,
       "parts": [
         {
@@ -119046,7 +119046,7 @@
       "name": "Divertimento in G major, Hob.IV:9",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1784,
       "score": 1.79,
       "parts": [
         {
@@ -119167,7 +119167,7 @@
       "name": "Geistliches Lied, Hob. XXVIa:17",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1784,
       "score": 1.79,
       "parts": [
         {
@@ -119184,7 +119184,7 @@
       "name": "Harmoniemesse, Hob. XXII:14",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1802,
       "score": 2.8,
       "parts": [
         {
@@ -119931,7 +119931,7 @@
       "name": "Piano Concerto no. 11 in D major, Hob. XVIII:11",
       "type": "concerto",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1782,
       "score": 4.21,
       "parts": [
         {
@@ -119989,7 +119989,7 @@
       "name": "Piano Concerto no. 3 in F major, Hob. XVIII:3",
       "type": "concerto",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1765,
       "score": 2.86,
       "parts": [
         {
@@ -120219,8 +120219,8 @@
       "composer_gid": "c130b0fb-5dce-449d-9f40-1437f889f7fe",
       "name": "Piano Sonata no. 42 in G major, Hob. XVI:27",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1774,
+      "end_year": 1776,
       "score": 2.56,
       "parts": [
         {
@@ -120248,8 +120248,8 @@
       "composer_gid": "c130b0fb-5dce-449d-9f40-1437f889f7fe",
       "name": "Piano Sonata no. 43 in E-flat major, Hob. XVI:28",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1774,
+      "end_year": 1776,
       "score": 2.55,
       "parts": [
         {
@@ -120277,8 +120277,8 @@
       "composer_gid": "c130b0fb-5dce-449d-9f40-1437f889f7fe",
       "name": "Piano Sonata no. 45 in A major, Hob. XVI:30",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1774,
+      "end_year": 1776,
       "score": 2.36,
       "parts": [
         {
@@ -121412,7 +121412,7 @@
       "name": "Septem Verba Christi in Cruce, Hob. XX:1",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1786,
       "score": 2.51,
       "parts": [
         {
@@ -121494,7 +121494,7 @@
       "name": "Sinfonia Concertante for Violin, Cello, Oboe & Bassoon in B-flat major, Hob. I:105",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1792,
       "score": 3.63,
       "parts": [
         {
@@ -121523,7 +121523,7 @@
       "name": "Sonata no. 1 in G major, Hob. XVI:8",
       "type": "piano",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1766,
       "score": 2.54,
       "parts": [
         {
@@ -121557,8 +121557,8 @@
       "composer_gid": "c130b0fb-5dce-449d-9f40-1437f889f7fe",
       "name": "Sonata no. 10 in C major, Hob. XVI:1",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1750,
+      "end_year": 1755,
       "score": 2.54,
       "parts": [
         {
@@ -121587,7 +121587,7 @@
       "name": "Sonata no. 11 in B-flat major, Hob. XVI:2",
       "type": "piano",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1760,
       "score": 2.77,
       "parts": [
         {
@@ -121616,7 +121616,7 @@
       "name": "Sonata no. 12 in A major, Hob. XVI:12",
       "type": "piano",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1767,
       "score": 2.69,
       "parts": [
         {
@@ -121644,8 +121644,8 @@
       "composer_gid": "c130b0fb-5dce-449d-9f40-1437f889f7fe",
       "name": "Sonata no. 13 in G major, Hob. XVI:6",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1760,
+      "end_year": 1766,
       "score": 2.92,
       "parts": [
         {
@@ -121680,7 +121680,7 @@
       "name": "Sonata no. 14 in C major, Hob. XVI:3",
       "type": "piano",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1765,
       "score": 2.4,
       "parts": [
         {
@@ -121708,8 +121708,8 @@
       "composer_gid": "c130b0fb-5dce-449d-9f40-1437f889f7fe",
       "name": "Sonata no. 15 in E major, Hob. XVI:13",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1760,
+      "end_year": 1767,
       "score": 2.48,
       "parts": [
         {
@@ -121737,8 +121737,8 @@
       "composer_gid": "c130b0fb-5dce-449d-9f40-1437f889f7fe",
       "name": "Sonata no. 16 in D major, Hob. XVI:14",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1760,
+      "end_year": 1767,
       "score": 2.56,
       "parts": [
         {
@@ -121796,7 +121796,7 @@
       "name": "Sonata no. 2 in C major, Hob. XVI:7",
       "type": "piano",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1766,
       "score": 2.4,
       "parts": [
         {
@@ -121824,8 +121824,8 @@
       "composer_gid": "c130b0fb-5dce-449d-9f40-1437f889f7fe",
       "name": "Sonata no. 20 in B-flat major, Hob. XVI:18",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1771,
+      "end_year": 1773,
       "score": 2.4,
       "parts": [
         {
@@ -121848,7 +121848,7 @@
       "name": "Sonata no. 3 in F major, Hob. XVI:9",
       "type": "piano",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1766,
       "score": 2.4,
       "parts": [
         {
@@ -121877,7 +121877,7 @@
       "name": "Sonata no. 30 in D major, Hob. XVI:19",
       "type": "piano",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1767,
       "score": 2.83,
       "parts": [
         {
@@ -129953,7 +129953,7 @@
       "name": "Jeanne d'Arc au bûcher",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1935,
       "score": 1.91,
       "parts": [
         {
@@ -131498,7 +131498,7 @@
       "name": "La paloma",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1962,
+      "end_year": null,
       "score": 3.5,
       "parts": [
         {
@@ -132078,8 +132078,8 @@
       "composer_gid": "eb87b85e-857d-4c11-8aa9-4c55f3b54880",
       "name": "Sonata for Violin and Piano no. 4 \"Children's Day at the Camp Meeting\", S. 63",
       "type": "chamber",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1900,
+      "end_year": 1916,
       "score": 2.27,
       "parts": [
         {
@@ -132737,8 +132737,8 @@
       "composer_gid": "edfced8a-01bc-4c22-96b2-da58edd6b8af",
       "name": "Jenůfa",
       "type": "opera",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1896,
+      "end_year": 1903,
       "score": 1.61,
       "parts": [
         {
@@ -132872,7 +132872,7 @@
       "name": "Nursery Rhymes",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1926,
       "score": 1.83,
       "parts": [
         {
@@ -133371,7 +133371,7 @@
       "name": "The Cunning Little Vixen",
       "type": "opera",
       "begin_year": null,
-      "end_year": 2000,
+      "end_year": null,
       "score": 1.51,
       "parts": [
         {
@@ -134776,8 +134776,8 @@
       "composer_gid": "8a8b0ded-a43f-4c06-a797-46a91b03e4c9",
       "name": "66 Choral-Improvisationen, op. 65",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1906,
+      "end_year": 1908,
       "score": 3.56,
       "parts": [
         {
@@ -136665,7 +136665,7 @@
       "name": "Prelude in C major, BWV 567",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1852,
+      "end_year": null,
       "score": 2.4,
       "parts": [
         {
@@ -136898,7 +136898,7 @@
       "name": "Menuet (in the style of Porpora)",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1910,
       "score": 2.3,
       "parts": [
         {
@@ -138666,8 +138666,8 @@
       "composer_gid": "853f1c0a-4b59-4957-9c05-c3a8d3a4d5ef",
       "name": "Prophetiae Sibyllarum",
       "type": "vocal",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1555,
+      "end_year": 1560,
       "score": 1.65,
       "parts": [
         {
@@ -139334,7 +139334,7 @@
       "name": "Concerto for Oboe and Orchestra no. 1 in D minor",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1804,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -139461,7 +139461,7 @@
       "name": "6 Violin Concertos, op. 7",
       "type": "concerto",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1737,
       "score": 1.72,
       "parts": [
         {
@@ -140314,7 +140314,7 @@
       "name": "Zazà",
       "type": "opera",
       "begin_year": null,
-      "end_year": 2000,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -149540,7 +149540,7 @@
       "name": "Canon for Piano in G major, Hess 274",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1803,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -152925,8 +152925,8 @@
       "composer_gid": "0e85eb79-1c05-44ba-827c-7b259a3d941a",
       "name": "String Symphony no. 13 in C minor: Grave - Allegro molto",
       "type": "orchestral",
-      "begin_year": 1824,
-      "end_year": 1912,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.3,
       "parts": [
         {
@@ -153029,8 +153029,8 @@
       "composer_gid": "0e85eb79-1c05-44ba-827c-7b259a3d941a",
       "name": "String Symphony no. 5 in B-flat major",
       "type": "orchestral",
-      "begin_year": 1821,
-      "end_year": 1909,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.77,
       "parts": [
         {
@@ -153892,7 +153892,7 @@
       "name": "Composizioni per Organo e Cembalo",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1961,
+      "end_year": null,
       "score": 1.56,
       "parts": [
         {
@@ -157558,7 +157558,7 @@
       "name": "Il nono libro de madrigali, SV 168–178",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1651,
+      "end_year": null,
       "score": 2.33,
       "parts": [
         {
@@ -158678,7 +158678,7 @@
       "name": "Officium defunctorum",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1894,
+      "end_year": null,
       "score": 2.08,
       "parts": [
         {
@@ -159231,7 +159231,7 @@
       "name": "Nesciens mater virgo virum",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1555,
+      "end_year": null,
       "score": 2.83,
       "parts": [
         {
@@ -159706,7 +159706,7 @@
       "name": "3 Quartets, op. 79",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1799,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -160949,8 +160949,8 @@
       "composer_gid": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Aria for Bass, Double Bass & Orchestra in D major, K. 612: \"Per questa bella mano\"",
       "type": "vocal",
-      "begin_year": 1791,
-      "end_year": 1803,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.3,
       "parts": [
         {
@@ -161119,8 +161119,8 @@
       "composer_gid": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Aria for Soprano & Orchestra in F major, K. 73o/82: \"Se ardire, e speranza\"",
       "type": "vocal",
-      "begin_year": 1770,
-      "end_year": 1804,
+      "begin_year": null,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -161238,8 +161238,8 @@
       "composer_gid": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Aria for Soprano and Orchestra in F major, K. 538: Allegro “Ah se in ciel, benigne stelle”",
       "type": "vocal",
-      "begin_year": 1788,
-      "end_year": 1803,
+      "begin_year": null,
+      "end_year": null,
       "score": 3.0,
       "parts": [
         {
@@ -161323,8 +161323,8 @@
       "composer_gid": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Aria for Tenor & Orchestra in D major, K. 209: \"Si mostra la sorte\"",
       "type": "vocal",
-      "begin_year": 1775,
-      "end_year": 1805,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.2,
       "parts": [
         {
@@ -164916,7 +164916,7 @@
       "name": "Il rè pastore, K. 208",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 2.52,
       "parts": [
         {
@@ -164933,7 +164933,7 @@
       "name": "Il sogno di Scipione, K. 126",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 1.69,
       "parts": [
         {
@@ -165267,7 +165267,7 @@
       "name": "Lucio Silla, K. 135",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 2.16,
       "parts": [
         {
@@ -166378,7 +166378,7 @@
       "name": "Mitridate, rè di Ponto, K. 74a/87",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 2.41,
       "parts": [
         {
@@ -166480,8 +166480,8 @@
       "composer_gid": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Notturno for 2 Sopranos, Bass & 3 Basset Horns, in B-flat major, K. 549 \"Canzonetta\": \"Più non si trovano\"",
       "type": "vocal",
-      "begin_year": 1788,
-      "end_year": 1807,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.2,
       "parts": [
         {
@@ -168417,7 +168417,7 @@
       "name": "Romanze in A-flat major, K. Anh. 205",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1851,
+      "end_year": null,
       "score": 2.3,
       "parts": [
         {
@@ -170083,8 +170083,8 @@
       "composer_gid": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Song for Voice & Piano in B-flat major, K. 468 \"Gesellenreise\": \"Die ihr einem neuen Grad\"",
       "type": "vocal",
-      "begin_year": 1785,
-      "end_year": 1803,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.77,
       "parts": [
         {
@@ -170100,8 +170100,8 @@
       "composer_gid": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Song for Voice & Piano in B-flat major, K. 473 \"Die Zufriedenheit\": \"Wie sanft, wie ruhig fühl' ich hier\"",
       "type": "vocal",
-      "begin_year": 1785,
-      "end_year": 1805,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.64,
       "parts": [
         {
@@ -170134,8 +170134,8 @@
       "composer_gid": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Song for Voice & Piano in C major, K. 531 \"Die kleine Spinnerin\": \"Was spinnst du?\"",
       "type": "vocal",
-      "begin_year": 1787,
-      "end_year": 1812,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.71,
       "parts": [
         {
@@ -170236,8 +170236,8 @@
       "composer_gid": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Song for Voice & Piano in E-flat major, K. 597 \"Im Frühlingsanfang\": \"Erwacht zum neuen Leben\"",
       "type": "vocal",
-      "begin_year": 1791,
-      "end_year": 1801,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.56,
       "parts": [
         {
@@ -170321,8 +170321,8 @@
       "composer_gid": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Song for Voice & Piano in F major, K. 596 \"Sehnsucht nach dem Frühling\": \"Komm, lieber Mai\"",
       "type": "vocal",
-      "begin_year": 1791,
-      "end_year": 1801,
+      "begin_year": null,
+      "end_year": null,
       "score": 3.33,
       "parts": [
         {
@@ -170372,8 +170372,8 @@
       "composer_gid": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Song for Voice & Piano in G major, K. 474 \"Die Betrogene Welt\": \"Der reiche Tor\"",
       "type": "vocal",
-      "begin_year": 1785,
-      "end_year": 1805,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.4,
       "parts": [
         {
@@ -170406,8 +170406,8 @@
       "composer_gid": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Song for Voice & Piano in G minor, K. 472 \"Der Zauberer\": \"Ihr Mädchen, flieht Damöten ja!\"",
       "type": "vocal",
-      "begin_year": 1785,
-      "end_year": 1805,
+      "begin_year": null,
+      "end_year": null,
       "score": 3.22,
       "parts": [
         {
@@ -172551,8 +172551,8 @@
       "composer_gid": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Trio for Piano no. 4 in E major, K. 542",
       "type": "chamber",
-      "begin_year": 1788,
-      "end_year": 1806,
+      "begin_year": null,
+      "end_year": null,
       "score": 3.32,
       "parts": [
         {
@@ -173643,7 +173643,7 @@
       "name": "Zaide, K. 336b/344",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 2.77,
       "parts": [
         {
@@ -174380,8 +174380,8 @@
       "composer_gid": "c1380b12-3909-47d8-a5fd-d20e76123310",
       "name": "Scherzo in C-sharp minor",
       "type": "piano",
-      "begin_year": 1858,
-      "end_year": 1911,
+      "begin_year": null,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -175584,7 +175584,7 @@
       "name": "Die lustigen Weiber von Windsor",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1850,
+      "end_year": null,
       "score": 3.74,
       "parts": [
         {
@@ -175601,7 +175601,7 @@
       "name": "Var hälsad sköna morgonstund",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1819,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -176853,7 +176853,7 @@
       "name": "Ma bouche rit et ma pensee pleure",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1501,
+      "end_year": null,
       "score": 2.64,
       "parts": [
         {
@@ -177020,7 +177020,7 @@
       "name": "Prenez sur moy vostre exemple",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1504,
+      "end_year": null,
       "score": 2.2,
       "parts": [
         {
@@ -177875,7 +177875,7 @@
       "name": "Ach Gott, vom Himmel sieh darein (no. 1), P. 1, T. 9",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -177909,7 +177909,7 @@
       "name": "Chaconne in D minor, P. 41, T. 204",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1901,
+      "end_year": null,
       "score": 2.4,
       "parts": [
         {
@@ -177926,7 +177926,7 @@
       "name": "Chaconne in F minor, P. 43, T. 206",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1901,
+      "end_year": null,
       "score": 3.09,
       "parts": [
         {
@@ -177960,7 +177960,7 @@
       "name": "Christ unser Herr zum Jordan kam (no. 1), P. 61, T. 23",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -177976,8 +177976,8 @@
       "composer_gid": "2251b277-2dfb-4cf1-83f3-27e29f902440",
       "name": "Christe, der du bist Tag und Licht, BWV 1096, P. 63",
       "type": "piano",
-      "begin_year": 1703,
-      "end_year": 1707,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.94,
       "parts": [
         {
@@ -177994,7 +177994,7 @@
       "name": "Christmas Canon",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 2001,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -178011,7 +178011,7 @@
       "name": "Compositionen zumeist Fugen über das Magnificat",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1901,
+      "end_year": null,
       "score": 1.73,
       "parts": [
         {
@@ -178058,7 +178058,7 @@
       "name": "Durch Adams Fall ist ganz verderbt (no. 2), P. 104, T. 29",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -178075,7 +178075,7 @@
       "name": "Ein feste Burg ist unser Gott (no. 1), P. 106, T. 31",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -178092,7 +178092,7 @@
       "name": "Es spricht der Unweisen Mund wohl (no. 1), P. 114, T. 34",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -178109,7 +178109,7 @@
       "name": "Es spricht der Unweisen Mund wohl (no. 2), P. 115, T. 35",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -178160,7 +178160,7 @@
       "name": "Fantasia in E-flat major, P. 127, T. 254",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 2.08,
       "parts": [
         {
@@ -178177,7 +178177,7 @@
       "name": "Fantasia in G minor, P. 128, T. 255",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 2.3,
       "parts": [
         {
@@ -178211,7 +178211,7 @@
       "name": "Fugue in C major (no. 1), P. 131, T. 261",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1901,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -178228,7 +178228,7 @@
       "name": "Fugue in C major (no. 4), P. 143, T. 263",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -178245,7 +178245,7 @@
       "name": "Fugue in C major (no. 9), P. 148, T. 265",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -178262,7 +178262,7 @@
       "name": "Fugue in C minor, P. 152, T. 273",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -178279,7 +178279,7 @@
       "name": "Gott Vater, der du deine Sonn’, P. 178, T. 41",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1884,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -178296,7 +178296,7 @@
       "name": "Herr Gott, dich loben alle wir (no. 1), P. 183, T. 43",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -178313,7 +178313,7 @@
       "name": "Komm, Gott Schöpfer, Heiliger Geist (no. 1), P. 223, T. 50",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -178330,7 +178330,7 @@
       "name": "O Lamm Gottes, unschuldig (no. 1), P. 393, T. 60",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -178347,7 +178347,7 @@
       "name": "Ricercare in C major, P. 418, T. 291",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -178364,7 +178364,7 @@
       "name": "Ricercare in C minor, P. 419, T. 292",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -178398,7 +178398,7 @@
       "name": "Toccata in C major (no. 1), P. 454, T. 231",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -178415,7 +178415,7 @@
       "name": "Toccata in C major (no. 4), P. 457, T. 234",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -178432,7 +178432,7 @@
       "name": "Toccata in E minor, P. 462, T. 240",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 2.08,
       "parts": [
         {
@@ -178449,7 +178449,7 @@
       "name": "Toccata in G minor (no. 3), P. 467, T. 245",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -178483,7 +178483,7 @@
       "name": "Warum betrübst du dich, mein Herz (no. 1), P. 483, T. 64",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -178500,7 +178500,7 @@
       "name": "Warum betrübst du dich, mein Herz (no. 2), P. 484, T. 65",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1884,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -178534,7 +178534,7 @@
       "name": "Was mein Gott will, das g'scheh allzeit (no. 1), P. 488, T. 66",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -178551,7 +178551,7 @@
       "name": "Wenn wir in höchsten Nöten sein (no. 1), P. 494, T. 70",
       "type": "organ",
       "begin_year": null,
-      "end_year": 1903,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -179956,7 +179956,7 @@
       "name": "Missa \"Hodie Christus natus est\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1601,
+      "end_year": null,
       "score": 2.03,
       "parts": [
         {
@@ -187987,7 +187987,7 @@
       "name": "La rondine",
       "type": "opera",
       "begin_year": null,
-      "end_year": 2000,
+      "end_year": null,
       "score": 3.54,
       "parts": [
         {
@@ -188855,7 +188855,7 @@
       "name": "Harpsichord Suite no. 4 in A minor, Z. 663",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1696,
+      "end_year": null,
       "score": 2.45,
       "parts": [
         {
@@ -188890,7 +188890,7 @@
       "name": "Harpsichord Suite no. 5 in C major, Z. 666",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1696,
+      "end_year": null,
       "score": 2.28,
       "parts": [
         {
@@ -194722,7 +194722,7 @@
       "name": "6 Concerts Transcrits en Sextuor",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1896,
+      "end_year": null,
       "score": 2.05,
       "parts": [
         {
@@ -194864,7 +194864,7 @@
       "name": "Les Indes galantes",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 2.62,
       "parts": [
         {
@@ -201116,7 +201116,7 @@
       "name": "Passacaille del seigneur Louigi",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1660,
+      "end_year": null,
       "score": 2.08,
       "parts": [
         {
@@ -201133,7 +201133,7 @@
       "name": "Toccate e correnti",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1657,
+      "end_year": null,
       "score": 2.11,
       "parts": [
         {
@@ -201497,7 +201497,7 @@
       "name": "La regata veneziana",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1878,
+      "end_year": null,
       "score": 2.08,
       "parts": [
         {
@@ -207993,7 +207993,7 @@
       "name": "Petite ouverture à danser",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": 1968,
+      "end_year": null,
       "score": 3.58,
       "parts": [
         {
@@ -208142,7 +208142,7 @@
       "name": "Prélude en tapisserie",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1929,
+      "end_year": null,
       "score": 3.04,
       "parts": [
         {
@@ -215559,8 +215559,8 @@
       "composer_gid": "95c7a1d1-5cfd-41d5-99f9-0611262de8e1",
       "name": "Sonata in G major, K 427, L 286: Presto, quanto sia possibile",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1756,
+      "end_year": 1757,
       "score": 3.22,
       "parts": [
         {
@@ -216391,7 +216391,7 @@
       "name": "Comical Duet for Soprano & Bass in D major, K. 592a/625: \"Nun, liebes Weibchen\" (orch. Mozart)",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1790,
       "score": 1.79,
       "parts": [
         {
@@ -216601,7 +216601,7 @@
       "name": "Fontana d'Israel",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1623,
       "score": 1.57,
       "parts": [
         {
@@ -216658,7 +216658,7 @@
       "name": "Lamento sopra la morte di Ferdinand III",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1680,
       "score": 1.95,
       "parts": [
         {
@@ -217481,7 +217481,7 @@
       "name": "Brettl-Lieder",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1901,
       "score": 2.17,
       "parts": [
         {
@@ -217597,7 +217597,7 @@
       "name": "De profundis, op. 50b",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1950,
       "score": 1.79,
       "parts": [
         {
@@ -224775,8 +224775,8 @@
       "composer_gid": "f91e3a88-24ee-4563-8963-fab73d2765ed",
       "name": "Polonaise for Violin and Orchestra in B-flat major, D. 580",
       "type": "concerto",
-      "begin_year": 1817,
-      "end_year": 1909,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.56,
       "parts": [
         {
@@ -225212,7 +225212,7 @@
       "name": "Sechs Melodien von Franz Schubert, S. 563 (arr. Liszt)",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1844,
+      "end_year": null,
       "score": 2.1,
       "parts": [
         {
@@ -225399,7 +225399,7 @@
       "name": "Six mélodies favorites de La Belle Meunière, S. 565 (arr. Liszt)",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1846,
+      "end_year": null,
       "score": 2.98,
       "parts": [
         {
@@ -227488,7 +227488,7 @@
       "name": "Vier geistliche Lieder, S. 562 (arr. Liszt)",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1840,
+      "end_year": null,
       "score": 2.71,
       "parts": [
         {
@@ -228566,8 +228566,8 @@
       "composer_gid": "36df8e64-6ec6-4342-9045-e962ab9effb3",
       "name": "Die gute Nacht, die ich dir sage",
       "type": "vocal",
-      "begin_year": 1841,
-      "end_year": 1906,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.08,
       "parts": [
         {
@@ -232082,7 +232082,7 @@
       "name": "Ouvertüre zu Goethes \"Hermann und Dorothea\", op. 136",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": 1857,
+      "end_year": null,
       "score": 2.48,
       "parts": [
         {
@@ -237965,7 +237965,7 @@
       "name": "Dances of the Dolls",
       "type": "piano",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1952,
       "score": 1.99,
       "parts": [
         {
@@ -238050,8 +238050,8 @@
       "composer_gid": "519dd32e-8f30-4380-8826-7aa99169e1bb",
       "name": "Five Preludes",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1919,
+      "end_year": 1921,
       "score": 1.61,
       "parts": [
         {
@@ -239174,7 +239174,7 @@
       "name": "Suite from \"Katerina Ismailova\", op. 114a",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1956,
       "score": 1.77,
       "parts": [
         {
@@ -239214,8 +239214,8 @@
       "composer_gid": "519dd32e-8f30-4380-8826-7aa99169e1bb",
       "name": "Suite from \"The Age of Gold\", op. 22a",
       "type": "orchestral",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1929,
+      "end_year": 1929,
       "score": 3.18,
       "parts": [
         {
@@ -243730,7 +243730,7 @@
       "name": "6 Stücke, op. 32",
       "type": "piano",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1896,
       "score": 3.87,
       "parts": [
         {
@@ -244084,8 +244084,8 @@
       "composer_gid": "6eb5695e-cf7b-4b94-b441-a09901127ef9",
       "name": "The Bartered Bride",
       "type": "opera",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1863,
+      "end_year": 1866,
       "score": 3.92,
       "parts": [
         {
@@ -245803,7 +245803,7 @@
       "name": "Beliebte Annen-Polka, op. 137",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1842,
       "score": 2.3,
       "parts": [
         {
@@ -245888,7 +245888,7 @@
       "name": "Accelerationen, op. 234",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1860,
       "score": 4.45,
       "parts": [
         {
@@ -245905,7 +245905,7 @@
       "name": "Albion. Polka, op. 102",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1851,
       "score": 1.61,
       "parts": [
         {
@@ -245956,7 +245956,7 @@
       "name": "Auf der Jagd, op. 373: Polka schnell",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1875,
       "score": 4.2,
       "parts": [
         {
@@ -245973,7 +245973,7 @@
       "name": "Banditen-Galopp, op. 378",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1877,
       "score": 3.4,
       "parts": [
         {
@@ -245990,7 +245990,7 @@
       "name": "Casanova (arr. Benatzky)",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1928,
       "score": 2.83,
       "parts": [
         {
@@ -246007,7 +246007,7 @@
       "name": "Champagner Polka, op. 211",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1858,
       "score": 4.23,
       "parts": [
         {
@@ -246024,7 +246024,7 @@
       "name": "Demolirer, op. 269",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1862,
       "score": 1.79,
       "parts": [
         {
@@ -246041,7 +246041,7 @@
       "name": "Der Zigeunerbaron",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1885,
       "score": 4.55,
       "parts": [
         {
@@ -246737,8 +246737,8 @@
       "composer_gid": "8255db36-4902-4cf6-8612-0f2b4288bc9a",
       "name": "Where the Citrons Bloom, op. 364",
       "type": "orchestral",
-      "begin_year": 1874,
-      "end_year": 1905,
+      "begin_year": null,
+      "end_year": null,
       "score": 4.29,
       "parts": [
         {
@@ -259519,7 +259519,7 @@
       "name": "Concerto for Flute and Violin in E minor, TWV 52:e3",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1768,
+      "end_year": null,
       "score": 2.45,
       "parts": [
         {
@@ -259927,7 +259927,7 @@
       "name": "Concerto polonois in B-flat major, TWV 43:B3",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1768,
+      "end_year": null,
       "score": 1.7,
       "parts": [
         {
@@ -260751,7 +260751,7 @@
       "name": "Oboe Concerto in F minor, TWV 51:f1",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1957,
+      "end_year": null,
       "score": 2.29,
       "parts": [
         {
@@ -261044,7 +261044,7 @@
       "name": "Ouverture-Suite in G minor “La Changeante”, TWV 55:g2",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": 1971,
+      "end_year": null,
       "score": 1.9,
       "parts": [
         {
@@ -261321,7 +261321,7 @@
       "name": "Overture in F major, \"Alster Echo\", TWV 55:F11",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": 1967,
+      "end_year": null,
       "score": 2.43,
       "parts": [
         {
@@ -261644,7 +261644,7 @@
       "name": "Recorder Concerto in F major, TWV 51:F1",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1950,
+      "end_year": null,
       "score": 2.18,
       "parts": [
         {
@@ -261749,7 +261749,7 @@
       "name": "Suite in A major, TWV 32:14",
       "type": "piano",
       "begin_year": null,
-      "end_year": 1890,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -262270,8 +262270,8 @@
       "composer_gid": "c118d897-3e73-48e3-a307-b02ea1541e3f",
       "name": "Raymond",
       "type": "opera",
-      "begin_year": 1851,
-      "end_year": 1906,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.3,
       "parts": [
         {
@@ -264245,7 +264245,7 @@
       "name": "Adelita (mazurka)",
       "type": "solo",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1902,
       "score": 3.81,
       "parts": [
         {
@@ -264296,7 +264296,7 @@
       "name": "Danza mora",
       "type": "solo",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1900,
       "score": 2.83,
       "parts": [
         {
@@ -264398,7 +264398,7 @@
       "name": "Gran vals",
       "type": "solo",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1902,
       "score": 2.48,
       "parts": [
         {
@@ -265243,7 +265243,7 @@
       "name": "Les Deux Guitares",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1960,
+      "end_year": null,
       "score": 2.64,
       "parts": [
         {
@@ -268522,8 +268522,8 @@
       "composer_gid": "a3552f21-dd32-4ff7-8310-dbc102f6a224",
       "name": "Capriccio for Solo Viola, op. 55 \"Hommage à Paganini\"",
       "type": "solo",
-      "begin_year": 1881,
-      "end_year": 1887,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.4,
       "parts": [
         {
@@ -270191,7 +270191,7 @@
       "name": "12 Trio Sonatas, op. 1",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1705,
       "score": 3.78,
       "parts": [
         {
@@ -270208,7 +270208,7 @@
       "name": "12 Violin Sonatas, op. 2",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1709,
       "score": 3.01,
       "parts": [
         {
@@ -270285,7 +270285,7 @@
       "name": "12 concerti, op. 7",
       "type": "concerto",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1720,
       "score": 2.05,
       "parts": [
         {
@@ -270469,7 +270469,7 @@
       "name": "6 Flute Concertos, op. 10",
       "type": "concerto",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1729,
       "score": 4.48,
       "parts": [
         {
@@ -270582,7 +270582,7 @@
       "name": "6 Violin Sonatas, op. 5",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1716,
       "score": 1.79,
       "parts": [
         {
@@ -270709,7 +270709,7 @@
       "name": "Antiphon in C minor, RV 616 \"Salve Regina\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.23,
       "parts": [
         {
@@ -270756,7 +270756,7 @@
       "name": "Armida al campo d'Egitto, RV 699",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 1.76,
       "parts": [
         {
@@ -270785,7 +270785,7 @@
       "name": "Ascende laeta, RV 635",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -270814,7 +270814,7 @@
       "name": "Bajazet, RV 703",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 2.11,
       "parts": [
         {
@@ -270843,7 +270843,7 @@
       "name": "Bassoon Concerto in A minor, RV 497",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.94,
       "parts": [
         {
@@ -271110,7 +271110,7 @@
       "name": "Bassoon Concerto in C major, RV 474",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.2,
       "parts": [
         {
@@ -271284,7 +271284,7 @@
       "name": "Bassoon Concerto in E minor, RV 484",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 3.36,
       "parts": [
         {
@@ -271545,7 +271545,7 @@
       "name": "Beatus Vir, RV 597",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.23,
       "parts": [
         {
@@ -271574,7 +271574,7 @@
       "name": "Canta in prato, ride in monte, RV 623",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.15,
       "parts": [
         {
@@ -271673,7 +271673,7 @@
       "name": "Cantata for Alto voice, Strings, and Continuo, RV 683 “Amor hai vinto”",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.06,
       "parts": [
         {
@@ -271708,7 +271708,7 @@
       "name": "Cantata for Alto voice, Strings, and Continuo, RV 684 “Cessate, omai cessate”",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.48,
       "parts": [
         {
@@ -271743,7 +271743,7 @@
       "name": "Cantata for Soprano Voice and Continuo, RV 651 \"Amor hai vinto\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.91,
       "parts": [
         {
@@ -271760,7 +271760,7 @@
       "name": "Cantata for Soprano Voice and Continuo, RV 656 \"Fonti del pianto\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -271818,7 +271818,7 @@
       "name": "Cantata for Soprano Voice and Continuo, RV 667 \"Sorge vermiglia in ciel\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -271853,7 +271853,7 @@
       "name": "Cantata for Soprano Voice, Flute, and Continuo, RV 678 \"All'ombra di sospett\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1970,
+      "end_year": null,
       "score": 2.62,
       "parts": [
         {
@@ -271917,7 +271917,7 @@
       "name": "Cantata for Soprano Voice, Violin, Strings, and Continuo, RV 679 \"Che giova il sospirar povero core\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1750,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -271952,7 +271952,7 @@
       "name": "Cantata for Soprano Voice, Violin, and Continuo, RV 680 \"Lungi dal vago volto\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.3,
       "parts": [
         {
@@ -272144,7 +272144,7 @@
       "name": "Clarae stellae, scintillate, RV 625",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.08,
       "parts": [
         {
@@ -272266,7 +272266,7 @@
       "name": "Concerto for 2 Oboes and Strings in A minor, RV 536",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.44,
       "parts": [
         {
@@ -272295,7 +272295,7 @@
       "name": "Concerto for 2 Oboes and Violin in F major, RV 574",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.2,
       "parts": [
         {
@@ -272324,7 +272324,7 @@
       "name": "Concerto for 2 Violins in A minor, RV 523",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.66,
       "parts": [
         {
@@ -272353,7 +272353,7 @@
       "name": "Concerto for 2 Violins in C minor, RV 510",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.03,
       "parts": [
         {
@@ -272411,7 +272411,7 @@
       "name": "Concerto for 2 Violins, 2 Cellos and Strings in D major, RV 564",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.4,
       "parts": [
         {
@@ -272509,7 +272509,7 @@
       "name": "Concerto for 2 violins, string orchestra and basso continuo in D minor, RV 514",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.79,
       "parts": [
         {
@@ -272596,7 +272596,7 @@
       "name": "Concerto for Bassoon and Orchestra no. 18 in C major, RV 467",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -272625,7 +272625,7 @@
       "name": "Concerto for Bassoon and Orchestra no. 22 in F major, RV 486",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -272700,7 +272700,7 @@
       "name": "Concerto for Cello in A minor, RV 419",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.33,
       "parts": [
         {
@@ -272723,7 +272723,7 @@
       "name": "Concerto for Cello in A minor, RV 421",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -272752,7 +272752,7 @@
       "name": "Concerto for Cello in A minor, RV 422",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.59,
       "parts": [
         {
@@ -272810,7 +272810,7 @@
       "name": "Concerto for Cello in C major, RV 398",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -272897,7 +272897,7 @@
       "name": "Concerto for Cello in C minor, RV 401",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 3.39,
       "parts": [
         {
@@ -272955,7 +272955,7 @@
       "name": "Concerto for Cello in D major, RV 404",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.03,
       "parts": [
         {
@@ -272984,7 +272984,7 @@
       "name": "Concerto for Cello in D minor, RV 406",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.4,
       "parts": [
         {
@@ -273013,7 +273013,7 @@
       "name": "Concerto for Cello in E minor, RV 409",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.35,
       "parts": [
         {
@@ -273100,7 +273100,7 @@
       "name": "Concerto for Cello in G major, RV 413",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 3.25,
       "parts": [
         {
@@ -273216,7 +273216,7 @@
       "name": "Concerto for Cello, Strings, and Continuo in D minor, RV 405",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.48,
       "parts": [
         {
@@ -273245,7 +273245,7 @@
       "name": "Concerto for Cello, Strings, and Continuo in D minor, RV 407",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.03,
       "parts": [
         {
@@ -273355,7 +273355,7 @@
       "name": "Concerto for Flute, Strings, and Continuo in A minor, RV 440",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 3.28,
       "parts": [
         {
@@ -273413,7 +273413,7 @@
       "name": "Concerto for Flute, Strings, and Continuo in G major, RV 436",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.46,
       "parts": [
         {
@@ -273442,7 +273442,7 @@
       "name": "Concerto for Harpsichord, Strings, and Continuo in A major, RV 780",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -273500,7 +273500,7 @@
       "name": "Concerto for Mandolin in C major, RV 425",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 4.44,
       "parts": [
         {
@@ -273529,7 +273529,7 @@
       "name": "Concerto for Oboe and Bassoon in G major, RV 545",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 3.03,
       "parts": [
         {
@@ -273558,7 +273558,7 @@
       "name": "Concerto for Oboe and Violin in B-flat major, RV 548",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 3.23,
       "parts": [
         {
@@ -273587,7 +273587,7 @@
       "name": "Concerto for Oboe, Strings & Basso Continuo in F major, RV 455",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.87,
       "parts": [
         {
@@ -273767,7 +273767,7 @@
       "name": "Concerto for Strings in A major, RV 158 \"Concerto ripieno\"",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 3.31,
       "parts": [
         {
@@ -274387,7 +274387,7 @@
       "name": "Concerto for Two Cellos in G minor, RV 531",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 4.0,
       "parts": [
         {
@@ -274416,7 +274416,7 @@
       "name": "Concerto for Two Flutes in C major, RV 533",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 3.48,
       "parts": [
         {
@@ -274462,7 +274462,7 @@
       "name": "Concerto for Two Oboes and Two Clarinets in C major, RV 560",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.23,
       "parts": [
         {
@@ -274491,7 +274491,7 @@
       "name": "Concerto for Two Trumpets in C major, RV 537",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1950,
+      "end_year": null,
       "score": 4.31,
       "parts": [
         {
@@ -274549,7 +274549,7 @@
       "name": "Concerto for Viola d'Amore, Strings, and Continuo in A major, RV 396",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.37,
       "parts": [
         {
@@ -274566,7 +274566,7 @@
       "name": "Concerto for Viola d'Amore, Strings, and Continuo in D minor, RV 393",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.16,
       "parts": [
         {
@@ -274595,7 +274595,7 @@
       "name": "Concerto for Viola d'Amore, Strings, and Continuo in D minor, RV 395",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.1,
       "parts": [
         {
@@ -274676,7 +274676,7 @@
       "name": "Concerto for Violin and Cello in B-flat major, RV 547",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 3.03,
       "parts": [
         {
@@ -274763,7 +274763,7 @@
       "name": "Concerto for Violin and Organ in D minor, RV 541",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.83,
       "parts": [
         {
@@ -274792,7 +274792,7 @@
       "name": "Concerto for Violin and Organ in F major, RV 542",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.71,
       "parts": [
         {
@@ -274850,7 +274850,7 @@
       "name": "Concerto for Violin in D major, RV 208 \"Grosso Mogul\"",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 3.12,
       "parts": [
         {
@@ -274879,7 +274879,7 @@
       "name": "Concerto for Violin in E major, RV 271 “L’amoroso”",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 3.48,
       "parts": [
         {
@@ -274908,7 +274908,7 @@
       "name": "Concerto for Violin, 2 Oboes, 2 Horns, Bassoon and Cello in F major, RV 569",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1760,
+      "end_year": null,
       "score": 2.51,
       "parts": [
         {
@@ -274995,7 +274995,7 @@
       "name": "Concerto for Violin, Strings, and Continuo in A major, RV 340",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -275024,7 +275024,7 @@
       "name": "Concerto for Violin, Strings, and Continuo in A major, RV 343",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -275053,7 +275053,7 @@
       "name": "Concerto for Violin, Strings, and Continuo in A major, RV 344",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.54,
       "parts": [
         {
@@ -275122,7 +275122,7 @@
       "name": "Concerto for Violin, Strings, and Continuo in B-flat major \"Il Carbonelli\", RV 366",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -275151,7 +275151,7 @@
       "name": "Concerto for Violin, Strings, and Continuo in B-flat major, RV 367",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -275180,7 +275180,7 @@
       "name": "Concerto for Violin, Strings, and Continuo in B-flat major, RV 371",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -275209,7 +275209,7 @@
       "name": "Concerto for Violin, Strings, and Continuo in C major, RV 186",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -275267,7 +275267,7 @@
       "name": "Concerto for Violin, Strings, and Continuo in C minor, RV 197",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -275325,7 +275325,7 @@
       "name": "Concerto for Violin, Strings, and Continuo in D major, RV 228",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.54,
       "parts": [
         {
@@ -275342,7 +275342,7 @@
       "name": "Concerto for Violin, Strings, and Continuo in D minor, RV 237",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -275371,7 +275371,7 @@
       "name": "Concerto for Violin, Strings, and Continuo in E minor, RV 273",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -275429,7 +275429,7 @@
       "name": "Concerto for violin, cello, organ, strings & continuo in C major, RV 554a",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.03,
       "parts": [
         {
@@ -275487,7 +275487,7 @@
       "name": "Concerto in A minor, RV 445",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 3.3,
       "parts": [
         {
@@ -275603,7 +275603,7 @@
       "name": "Concerto in B-flat major, RV 553",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.54,
       "parts": [
         {
@@ -275632,7 +275632,7 @@
       "name": "Concerto in B-flat major, RV 579 \"Concerto funebre\"",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.11,
       "parts": [
         {
@@ -275701,7 +275701,7 @@
       "name": "Concerto in C major, RV 444",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 3.81,
       "parts": [
         {
@@ -275846,7 +275846,7 @@
       "name": "Concerto in D major for Viola d'Amore, Strings and Continuo, RV 392",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.3,
       "parts": [
         {
@@ -275962,7 +275962,7 @@
       "name": "Concerto in D major, RV 781",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.23,
       "parts": [
         {
@@ -276020,7 +276020,7 @@
       "name": "Concerto in D minor for Viola d'Amore, Lute, Strings and Continuo, RV 540",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1960,
+      "end_year": null,
       "score": 3.66,
       "parts": [
         {
@@ -276391,7 +276391,7 @@
       "name": "Concerto in F major, RV 572 \"Il Proteo, ò il Mondo al Rovescio\"",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -276588,7 +276588,7 @@
       "name": "Concerto in G minor, RV 576",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.48,
       "parts": [
         {
@@ -276617,7 +276617,7 @@
       "name": "Concerto in G minor, RV 577",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.81,
       "parts": [
         {
@@ -276675,7 +276675,7 @@
       "name": "Concerto in do maggiore per due violini, archi e basso continuo, RV 508",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -276733,7 +276733,7 @@
       "name": "Concerto in do minore per due violini, archi e basso continuo, RV 509",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.3,
       "parts": [
         {
@@ -276791,7 +276791,7 @@
       "name": "Concerto in mi bemolle maggiore per due violini, archi e basso continuo, RV 515",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -276820,7 +276820,7 @@
       "name": "Concerto in sol minore per due violini, archi e basso continuo, RV 517",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.4,
       "parts": [
         {
@@ -276994,7 +276994,7 @@
       "name": "Concerto per violoncello in mi bemolle maggiore, RV 408",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.23,
       "parts": [
         {
@@ -277052,7 +277052,7 @@
       "name": "Concerto per violoncello in sol minore, RV 417",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.3,
       "parts": [
         {
@@ -277081,7 +277081,7 @@
       "name": "Confitebor tibi, Domine, RV 596",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -277163,7 +277163,7 @@
       "name": "Dixit Dominus, RV 595",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.32,
       "parts": [
         {
@@ -277287,7 +277287,7 @@
       "name": "Dorilla in Tempe, RV 709",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 1.98,
       "parts": [
         {
@@ -277304,7 +277304,7 @@
       "name": "Filiae maestae Jerusalem, RV 638",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.16,
       "parts": [
         {
@@ -277379,7 +277379,7 @@
       "name": "Flute Concerto in C minor, RV 441",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 4.03,
       "parts": [
         {
@@ -277408,7 +277408,7 @@
       "name": "Giustino, RV 717",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 2.58,
       "parts": [
         {
@@ -277602,7 +277602,7 @@
       "name": "Griselda, RV 718",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 2.29,
       "parts": [
         {
@@ -277688,7 +277688,7 @@
       "name": "In turbato mare irato, RV 627",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -277913,7 +277913,7 @@
       "name": "Konzert für Violoncello und Orchester F-Dur RV 411",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.16,
       "parts": [
         {
@@ -277942,7 +277942,7 @@
       "name": "Kyrie, RV 587",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.27,
       "parts": [
         {
@@ -277971,7 +277971,7 @@
       "name": "L'Olimpiade, RV 725",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 2.37,
       "parts": [
         {
@@ -278250,7 +278250,7 @@
       "name": "La fida ninfa, RV 714",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -278476,7 +278476,7 @@
       "name": "La verità in cimento, RV 739",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 1.85,
       "parts": [
         {
@@ -278522,7 +278522,7 @@
       "name": "Laudate pueri in G major, RV 601",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.02,
       "parts": [
         {
@@ -278752,7 +278752,7 @@
       "name": "L’incoronazione di Dario, RV 719",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1800,
+      "end_year": null,
       "score": 2.6,
       "parts": [
         {
@@ -279041,7 +279041,7 @@
       "name": "Non in pratis aut in hortis, RV 641",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.53,
       "parts": [
         {
@@ -279128,7 +279128,7 @@
       "name": "Oboe Concerto in A minor, RV 461",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 3.65,
       "parts": [
         {
@@ -279157,7 +279157,7 @@
       "name": "Oboe Concerto in A minor, RV 463",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.94,
       "parts": [
         {
@@ -279273,7 +279273,7 @@
       "name": "Oboe Concerto in C major, RV 451",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.51,
       "parts": [
         {
@@ -279302,7 +279302,7 @@
       "name": "Oboe Concerto in C major, RV 452",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.27,
       "parts": [
         {
@@ -279360,7 +279360,7 @@
       "name": "Oboe Concerto in D major, RV 453",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.88,
       "parts": [
         {
@@ -279418,7 +279418,7 @@
       "name": "Oboe Concerto in F major, RV 457",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 3.04,
       "parts": [
         {
@@ -279522,7 +279522,7 @@
       "name": "Regina Coeli, antiphona, RV 615",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.47,
       "parts": [
         {
@@ -279551,7 +279551,7 @@
       "name": "Responsorio \"Domine ad adiuvandum me festina\", RV 593",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -279580,7 +279580,7 @@
       "name": "Salmo 109: Dixit Dominus, RV 594",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.57,
       "parts": [
         {
@@ -279651,7 +279651,7 @@
       "name": "Salmo 112: Laudate pueri Dominum, RV 600",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.67,
       "parts": [
         {
@@ -279722,7 +279722,7 @@
       "name": "Salmo 121: Laetatus sum, RV 607: Allegro",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.4,
       "parts": [
         {
@@ -279756,7 +279756,7 @@
       "name": "Salve Regina for soprano, violin, strings & continuo in F major, RV 617",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -279791,7 +279791,7 @@
       "name": "Salve regina, RV 618",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -280029,7 +280029,7 @@
       "name": "Sonata for Cello and Continuo in E-flat major, RV 39",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.48,
       "parts": [
         {
@@ -280064,7 +280064,7 @@
       "name": "Sonata for Oboe and Continuo in C minor, RV 53",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1951,
+      "end_year": null,
       "score": 2.63,
       "parts": [
         {
@@ -280099,7 +280099,7 @@
       "name": "Sonata for Recorder and Bassoon in A minor, RV 86",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 3.0,
       "parts": [
         {
@@ -280134,7 +280134,7 @@
       "name": "Sonata for Two Violins and Optional Continuo in F major, RV 70",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.3,
       "parts": [
         {
@@ -280163,7 +280163,7 @@
       "name": "Sonata for Two Violins and Optional Continuo in G major, RV 71",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.18,
       "parts": [
         {
@@ -280192,7 +280192,7 @@
       "name": "Sonata for Violin and Continuo in A major, RV 29",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -280262,7 +280262,7 @@
       "name": "Sonata for Violin and Continuo in B-flat major, RV 759",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1976,
+      "end_year": null,
       "score": 1.72,
       "parts": [
         {
@@ -280297,7 +280297,7 @@
       "name": "Sonata for Violin and Continuo in C major, RV 2",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.08,
       "parts": [
         {
@@ -280332,7 +280332,7 @@
       "name": "Sonata for Violin and Continuo in C major, RV 3",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -280437,7 +280437,7 @@
       "name": "Sonata for Violin and Continuo in E minor, RV 17a",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -280472,7 +280472,7 @@
       "name": "Sonata for Violin and Continuo in F major, RV 19",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -280548,7 +280548,7 @@
       "name": "Sonata for Violin and Continuo in G minor, RV 26",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.52,
       "parts": [
         {
@@ -280693,7 +280693,7 @@
       "name": "Sonata in F major, RV 52",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.76,
       "parts": [
         {
@@ -280757,7 +280757,7 @@
       "name": "Sonata in G minor, RV 42",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.89,
       "parts": [
         {
@@ -280792,7 +280792,7 @@
       "name": "Stabat Mater, RV 621",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 3.95,
       "parts": [
         {
@@ -281064,7 +281064,7 @@
       "name": "Trio Sonata for Violin, Cello, and Continuo in C minor, RV 83",
       "type": "chamber",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.03,
       "parts": [
         {
@@ -281186,7 +281186,7 @@
       "name": "Viola d'Amore Concerto in D minor, RV 394",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 2.77,
       "parts": [
         {
@@ -281290,7 +281290,7 @@
       "name": "Violin Concerto in B-flat major, RV 370",
       "type": "concerto",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -283294,7 +283294,7 @@
       "name": "Abu Hassan, J 106",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1850,
+      "end_year": null,
       "score": 3.22,
       "parts": [
         {
@@ -283685,7 +283685,7 @@
       "name": "Peter Schmoll und seine Nachbarn, J 8, op. 8",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1850,
+      "end_year": null,
       "score": 2.56,
       "parts": [
         {
@@ -287834,7 +287834,7 @@
       "name": "I gioielli della Madonna",
       "type": "opera",
       "begin_year": null,
-      "end_year": 2000,
+      "end_year": null,
       "score": 2.56,
       "parts": [
         {
@@ -287851,7 +287851,7 @@
       "name": "I quatro rusteghi",
       "type": "opera",
       "begin_year": null,
-      "end_year": 2000,
+      "end_year": null,
       "score": 2.2,
       "parts": [
         {
@@ -287908,7 +287908,7 @@
       "name": "L’amore medico",
       "type": "opera",
       "begin_year": null,
-      "end_year": 2000,
+      "end_year": null,
       "score": 1.55,
       "parts": [
         {
@@ -289300,7 +289300,7 @@
       "name": "Mille regretz",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1549,
+      "end_year": null,
       "score": 3.58,
       "parts": [
         {

@@ -3,8 +3,8 @@ add_year_numbers.py
 
 Task: 
 Parses a list of missing MusicBrainz Work GIDs, fetches composition dates 
-(or publication dates) from Wikidata, IMSLP, and AllMusic, and maps the 
-UUIDs to integer years or ranges in a YAML file.
+from Wikidata, IMSLP, and AllMusic, and maps the UUIDs to integer years 
+or ranges in a YAML file.
 
 Logic Pipeline:
 1. Loads GIDs from "../missing_year_numbers.txt".
@@ -16,6 +16,8 @@ Logic Pipeline:
    - Composed Until -> `[null, 1742]`
 5. Writes/appends successfully found dates to "WORK_YEAR_NUMBERS.yml".
 6. Keeps a "checked_gids.txt" state file to resume gracefully without hitting APIs twice.
+
+Note: Only composition dates are extracted. Publication dates are ignored.
 
 Usage:
   Run script normally:   python add_year_numbers.py
@@ -333,47 +335,47 @@ def get_year_from_wikidata(url):
     claims = entity.get('claims', {})
     logger.debug(f"[Wikidata] Available properties in claims: {list(claims.keys())}")
     
-    # Check Inception (P571) first, then Publication Date (P577)
-    for prop in ['P571', 'P577']:
-        prop_name = 'Inception' if prop == 'P571' else 'Publication Date'
-        
-        if prop in claims:
-            logger.debug(f"[Wikidata] Found property {prop} ({prop_name}) with {len(claims[prop])} claims")
-            claim = claims[prop][0]
-            qualifiers = claim.get('qualifiers', {})
-            
-            logger.debug(f"[Wikidata] Property {prop} qualifiers: {list(qualifiers.keys())}")
-            
-            # 1. Attempt to parse range via qualifiers: P580 (start) & P582 (end)
-            start_year = extract_year_from_snak(qualifiers.get('P580', [{}])[0]) if 'P580' in qualifiers else None
-            end_year = extract_year_from_snak(qualifiers.get('P582', [{}])[0]) if 'P582' in qualifiers else None
-            
-            if start_year:
-                logger.debug(f"[Wikidata] Found start year (P580) in qualifiers: {start_year}")
-            if end_year:
-                logger.debug(f"[Wikidata] Found end year (P582) in qualifiers: {end_year}")
-            
-            if start_year and end_year:
-                logger.info(f"[Wikidata] Extracted year range from {prop} ({prop_name}): [{start_year}, {end_year}]")
-                return [start_year, end_year]
-            
-            # 2. Fall back to standard mainsnak value
-            mainsnak = claim.get('mainsnak', {})
-            logger.debug(f"[Wikidata] Mainsnak for {prop}: snaktype={mainsnak.get('snaktype')}, datatype={mainsnak.get('datatype')}")
-            
-            year = extract_year_from_snak(mainsnak)
-            if year is not None:
-                logger.info(f"[Wikidata] Extracted single year from {prop} ({prop_name}): {year}")
-                return year
-            else:
-                logger.debug(f"[Wikidata] Could not extract year from {prop} mainsnak")
-                if mainsnak.get('snaktype') == 'value':
-                    time_value = mainsnak.get('datavalue', {}).get('value', {})
-                    logger.debug(f"[Wikidata] Time value structure: {time_value}")
-        else:
-            logger.debug(f"[Wikidata] Property {prop} ({prop_name}) not found in claims")
+    # Check ONLY Inception (P571) - composition date
+    prop = 'P571'
+    prop_name = 'Inception'
     
-    logger.warning(f"[Wikidata] No valid year found in P571 or P577 for QID: {actual_qid}")
+    if prop in claims:
+        logger.debug(f"[Wikidata] Found property {prop} ({prop_name}) with {len(claims[prop])} claims")
+        claim = claims[prop][0]
+        qualifiers = claim.get('qualifiers', {})
+        
+        logger.debug(f"[Wikidata] Property {prop} qualifiers: {list(qualifiers.keys())}")
+        
+        # 1. Attempt to parse range via qualifiers: P580 (start) & P582 (end)
+        start_year = extract_year_from_snak(qualifiers.get('P580', [{}])[0]) if 'P580' in qualifiers else None
+        end_year = extract_year_from_snak(qualifiers.get('P582', [{}])[0]) if 'P582' in qualifiers else None
+        
+        if start_year:
+            logger.debug(f"[Wikidata] Found start year (P580) in qualifiers: {start_year}")
+        if end_year:
+            logger.debug(f"[Wikidata] Found end year (P582) in qualifiers: {end_year}")
+        
+        if start_year and end_year:
+            logger.info(f"[Wikidata] Extracted year range from {prop} ({prop_name}): [{start_year}, {end_year}]")
+            return [start_year, end_year]
+        
+        # 2. Fall back to standard mainsnak value
+        mainsnak = claim.get('mainsnak', {})
+        logger.debug(f"[Wikidata] Mainsnak for {prop}: snaktype={mainsnak.get('snaktype')}, datatype={mainsnak.get('datatype')}")
+        
+        year = extract_year_from_snak(mainsnak)
+        if year is not None:
+            logger.info(f"[Wikidata] Extracted single year from {prop} ({prop_name}): {year}")
+            return year
+        else:
+            logger.debug(f"[Wikidata] Could not extract year from {prop} mainsnak")
+            if mainsnak.get('snaktype') == 'value':
+                time_value = mainsnak.get('datavalue', {}).get('value', {})
+                logger.debug(f"[Wikidata] Time value structure: {time_value}")
+    else:
+        logger.debug(f"[Wikidata] Property {prop} ({prop_name}) not found in claims")
+    
+    logger.warning(f"[Wikidata] No composition date (P571) found for QID: {actual_qid}")
     return None
 
 def get_year_from_imslp(url):
@@ -384,17 +386,13 @@ def get_year_from_imslp(url):
     
     soup = BeautifulSoup(resp.text, 'html.parser')
     
-    # Comprehensive list of IMSLP date field labels (in priority order)
+    # Only composition date labels - no publication dates
     labels = [
         "Year/Date of Composition",
         "Composition Year",
         "Year of Composition", 
         "Date of Composition",
-        "Composed",
-        "First Publication",
-        "First Pub",
-        "Publication Date",
-        "Year Published"
+        "Composed"
     ]
     
     for label in labels:
@@ -426,7 +424,7 @@ def get_year_from_imslp(url):
         else:
             logger.debug(f"[IMSLP] Label '{label}' not found in page")
     
-    logger.warning(f"[IMSLP] No valid year found on page: {url}")
+    logger.warning(f"[IMSLP] No composition date found on page: {url}")
     return None
 
 def get_year_from_allmusic(url):
