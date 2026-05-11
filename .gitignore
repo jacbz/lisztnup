@@ -3,8 +3,8 @@ node_modules
 # Data
 .mypy_cache
 data/*.sql
-data/*.txt
-data/*.log
+data/**/*.txt
+*.log
 data/musicbrainz.json
 data/DEEZER_PROCESSED_IDS
 data/downloads

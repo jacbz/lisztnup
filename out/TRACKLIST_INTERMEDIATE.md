@@ -6,7 +6,7 @@
 | :--- | :--- | :--- | :--- |
 | `c9790161` | Albéniz – Suite española no. 1, op. 47: V. Asturias (Leyenda) | * V. Asturias (Leyenda) | 1892 |
 | `3c1d42c1` | Bach – 6 Partitas, BWV 825-830 | * Partita no. 1 in B-flat major, BWV 825: VII. Gigue | 1726‑1731 |
-| `937fff7e` | Bach – Chorale Prelude for organ in G minor, BWV 659 “Nun komm’ der Heiden Heiland” | * Chorale Prelude for organ in G minor, BWV 659 “Nun komm’ der Heiden Heiland” | ? |
+| `937fff7e` | Bach – Chorale Prelude for organ in G minor, BWV 659 “Nun komm’ der Heiden Heiland” | * Chorale Prelude for organ in G minor, BWV 659 “Nun komm’ der Heiden Heiland” | 1748 |
 | `dcf4aa55` | Bach – Choralvorspiel, BWV 622 "O Mensch bewein dein Sünde groß" | * Choralvorspiel, BWV 622 "O Mensch bewein dein Sünde groß" | ? |
 | `7031bd90` | Bach – Chromatische Fantasie und Fuge d-Moll, BWV 903 | * I. Fantasie | 1717‑1723 |
 | `fe8612d1` | Bach – Concerto for 2 Violins in D minor, BWV 1043 | * II. Largo ma non tanto | 1730‑1731 |
@@ -17,8 +17,8 @@
 | `97a2c256` | Bach – Italian Concerto in F major, BWV 971 | * I. [Allegro] | 1735 |
 | `3010fa08` | Bach – Jesu, Joy of Man’s Desiring (orch. Stokowski) | * Jesu, Joy of Man’s Desiring (orch. Stokowski) | ? |
 | `e74a3a95` | Bach – Keyboard Concerto in D minor, BWV 1052 | * I. Allegro | 1738 |
-| `8faf9f08` | Bach – Keyboard Concerto no. 4 in A major, BWV 1055 | * I. Allegro | ? |
-| `ef5ff09e` | Bach – Mass in B minor, BWV 232 | * IIa. Gloria: Chorus "Gloria in excelsis Deo" | ? |
+| `8faf9f08` | Bach – Keyboard Concerto no. 4 in A major, BWV 1055 | * I. Allegro | 1738 |
+| `ef5ff09e` | Bach – Mass in B minor, BWV 232 | * IIa. Gloria: Chorus "Gloria in excelsis Deo" | 1748‑1749 |
 | `1ef8a483` | Bach – Orchestral suite no. 1 in C major, BWV 1066 | * Suite for Orchestra No. 1 in C major, BWV 1066: Ouverture | ? |
 | `179cc1f2` | Bach – Orchestral Suite no. 2 in B minor, BWV 1067 | * VII. Badinerie | 1738‑1739 |
 | `1767c8ae` | Bach – Orchestral Suite no. 3 in D major, BWV 1068 | * Orchestral Suite no. 3 in D major, BWV 1068: II. Air | 1730 |
@@ -84,8 +84,8 @@
 | `3ee98c65` | Bellini – Norma | * Atto I, scena 1. Scena e cavatina “Casta diva, che inargenti” (Norma, coro) | 1831 |
 | `312510a8` | Berlioz – Symphonie fantastique, op. 14 : Épisode de la vie d’un artiste … en cinq parties | * Symphonie fantastique, op. 14: IV. Marche au supplice | 1830 |
 | `3f4b1135` | Berlioz – The Roman Carnival Overture for Orchestra, op. 9 | * The Roman Carnival Overture for Orchestra, op. 9 | 1843 |
-| `04173a43` | Bizet – Carmen Suite no. 1 (arr. Guiraud) | * VI. Les Toréadors. Allegro giocoso | ? |
-| `280ebc4d` | Bizet – Carmen Suite no. 2 (arr. Guiraud) | * II. Habanera | ? |
+| `04173a43` | Bizet – Carmen Suite no. 1 (arr. Guiraud) | * VI. Les Toréadors. Allegro giocoso | 1887 |
+| `280ebc4d` | Bizet – Carmen Suite no. 2 (arr. Guiraud) | * II. Habanera | 1886 |
 | `45efd8f4` | Bizet – Carmen, WD 31 | * Carmen : Acte I. No. 5 Habanera « L’amour est un oiseau rebelle » (Carmen, chœur) | 1875 |
 | `a4578f4c` | Bizet – L’Arlésienne Suite no. 1, op. 23bis | * III. Adagietto | 1872 |
 | `6ec79e92` | Bizet – L’Arlésienne Suite no. 2 (arr. Guiraud) | * IV. Farandole | 1872 |
@@ -123,7 +123,7 @@
 | `1c0cb34d` | Bruckner – Symphony no. 7 in E major, WAB 107 | * I. Allegro moderato | 1881‑1883 |
 | `2a1b9a00` | Bruckner – Symphony no. 9 in D minor, WAB 109 | * I. Feierlich, misterioso | 1896 |
 | `8cb1e049` | Chabrier – España | * España | 1883 |
-| `cd2de458` | Charpentier – Louise | * Acte III, Scène I. “Depuis le jour” (Louise) | ? |
+| `cd2de458` | Charpentier – Louise | * Acte III, Scène I. “Depuis le jour” (Louise) | 1900 |
 | `d00148c7` | Charpentier – Te Deum, H. 146 | * Prélude | 1688‑1698 |
 | `32d64d90` | Chausson – Poème, op. 25 | * Poème, op. 25 | 1896 |
 | `d1f6b371` | Chopin – 24 Préludes pour le piano, op. 28 | * Prélude no. 15 in D‐flat major, op. 28 “Raindrop”: Sostenuto | 1835‑1839 |
@@ -137,9 +137,9 @@
 | `4e2cd2d3` | Chopin – Études, op. 25 | * Étude in A minor, op. 25 no. 11 “Winter Wind”: Lento | 1832‑1836 |
 | `e6a65b61` | Chopin – Fantaisie in F minor, op. 49 | * Fantaisie in F minor, op. 49 | 1841 |
 | `3fdac4f1` | Chopin – Fantaisie‐impromptu in C‐sharp minor, op. 66 | * Fantaisie‐impromptu in C‐sharp minor, op. 66 | 1834 |
-| `108abf05` | Chopin – Impromptu no. 1 in A‐flat major, op. 29: Allegro assai | * Impromptu no. 1 in A‐flat major, op. 29: Allegro assai | ? |
-| `82f36f6a` | Chopin – Impromptu no. 2 in F‐sharp major, op. 36: Andantino | * Impromptu no. 2 in F‐sharp major, op. 36: Andantino | ? |
-| `e64a4256` | Chopin – Impromptu no. 3 in G‐flat major, op. 51: Vivace | * Impromptu no. 3 in G‐flat major, op. 51: Vivace | ? |
+| `108abf05` | Chopin – Impromptu no. 1 in A‐flat major, op. 29: Allegro assai | * Impromptu no. 1 in A‐flat major, op. 29: Allegro assai | 1837 |
+| `82f36f6a` | Chopin – Impromptu no. 2 in F‐sharp major, op. 36: Andantino | * Impromptu no. 2 in F‐sharp major, op. 36: Andantino | 1839 |
+| `e64a4256` | Chopin – Impromptu no. 3 in G‐flat major, op. 51: Vivace | * Impromptu no. 3 in G‐flat major, op. 51: Vivace | 1842 |
 | `99abedc4` | Chopin – Mazurkas, op. 17 | * Mazurka no. 13 in A minor, op. 17 no. 4 | 1822‑1823 |
 | `a7619cf9` | Chopin – Nocturne no. 20 in C‐sharp minor “Reminiscence”, op. posth. 1 no. 16, B. 49, KKIVa/16 | * Nocturne no. 20 in C‐sharp minor “Reminiscence”, op. posth. 1 no. 16, B. 49, KKIVa/16 | 1830 |
 | `4965815e` | Chopin – Nocturnes, op. 15 | * Nocturne no. 5 in F‐sharp major, op. 15 no. 2: Larghetto | 1830‑1833 |
@@ -208,7 +208,7 @@
 | `e49c8de1` | Elgar – Salut d’amour, op. 12 | * Salut d’amour, op. 12 | 1888 |
 | `af19cd3d` | Elgar – Serenade for Strings in E minor, op. 20 | * II. Larghetto | 1892 |
 | `626bef05` | Elgar – Variations on an Original Theme (‘Enigma’), op. 36 | * IX. Nimrod (Adagio) | 1898‑1899 |
-| `26ea58b3` | Falla – El amor brujo | * VIII. Danza ritual del fuego | ? |
+| `26ea58b3` | Falla – El amor brujo | * VIII. Danza ritual del fuego | 1914‑1915 |
 | `621c4838` | Fauré – Berceuse for Violin (or Cello) and Piano in D major, op. 16 | * Berceuse for Violin (or Cello) and Piano in D major, op. 16 | 1878‑1879 |
 | `a8564b82` | Fauré – Élégie, op. 24 | * Élégie, op. 24 | 1883 |
 | `fd26fa0f` | Fauré – Pavane in F-sharp minor, op. 50 | * Pavane in F-sharp minor, op. 50 | 1887 |
@@ -292,7 +292,7 @@
 | `63ec17bb` | Mozart – Concerto for Piano no. 20 in D minor, K. 466 | * I. Allegro | 1785 |
 | `f210c793` | Mozart – Concerto for Piano no. 21 in C major, K. 467 | * II. Andante | 1785 |
 | `c225a2bb` | Mozart – Concerto for Piano no. 24 in C minor, K. 491 | * I. Allegro | 1785‑1786 |
-| `4469dadb` | Mozart – Concerto for Piano no. 27 in B-flat major, K. 595 | * I. Allegro | ? |
+| `4469dadb` | Mozart – Concerto for Piano no. 27 in B-flat major, K. 595 | * I. Allegro | 1791 |
 | `bcd1c23c` | Mozart – Concerto for Piano no. 9 in E-flat major, K. 271 “Jenamy” | * I. Allegro | 1777 |
 | `eb704829` | Mozart – Concerto for Violin and Orchestra no. 3 in G major, K. 216 “Straßburg” | * I. Allegro aperto | 1775 |
 | `b6ce043d` | Mozart – Concerto for Violin and Orchestra no. 4 in D major, K. 218 | * I. Allegro aperto | 1775 |
@@ -391,7 +391,7 @@
 | `e7b9f29a` | Satie – Trois Gnossiennes | * Gnossienne no. 1 | 1888‑1889 |
 | `7d39f190` | Scarlatti – Sonata in B minor, K 87, L 33 | * Sonata in B minor, K 87, L 33 | ? |
 | `0ee7e99f` | Scarlatti – Sonata in E major, K. 380, L. 23: Andante comodo | * Sonata in E major, K. 380, L. 23: Andante comodo | ? |
-| `b4d1328b` | Schubert – 3 Marches militaires, op. 51, D. 733 | * Marche militaire, op. 51, D. 733 no. 1 in D major | ? |
+| `b4d1328b` | Schubert – 3 Marches militaires, op. 51, D. 733 | * Marche militaire, op. 51, D. 733 no. 1 in D major | 1818 |
 | `b6971a84` | Schubert – 4 Impromptus, op. 142, D. 935 | * Impromptu in A-flat major, D. 935 no. 2. Allegretto | 1827 |
 | `9d1fcbf9` | Schubert – 4 Impromptus, op. 90, D. 899 | * Impromptu in G-flat major, op. 90, D. 899: No. 3. Andante | 1827 |
 | `a0e76a3e` | Schubert – 6 Moments musicaux for Piano, op. 94, D. 780 | * No. 3 in F minor. Allegro moderato | 1823‑1828 |
@@ -447,10 +447,10 @@
 | `f2d0754e` | Strauss – Der Zigeunerbaron | * Ouvertüre | ? |
 | `88504b20` | Strauss – Die Fledermaus | * Overture | 1874 |
 | `fd3e8e99` | Strauss – Don Juan | * Don Juan | 1888 |
-| `49adc2c3` | Strauss – Éljen a Magyar, op. 332 | * Éljen a Magyar, op. 332 | ? |
+| `49adc2c3` | Strauss – Éljen a Magyar, op. 332 | * Éljen a Magyar, op. 332 | 1869 |
 | `17c5bf4e` | Strauss – Emperor Waltz, op. 437 | * Emperor Waltz, op. 437 | 1889 |
-| `64bf568b` | Strauss – Leichtes Blut Galop, op. 319 | * Leichtes Blut Galop, op. 319 | ? |
-| `577ff828` | Strauss – Morgenblätter, op. 279 | * Morgenblätter, op. 279 | ? |
+| `64bf568b` | Strauss – Leichtes Blut Galop, op. 319 | * Leichtes Blut Galop, op. 319 | 1867 |
+| `577ff828` | Strauss – Morgenblätter, op. 279 | * Morgenblätter, op. 279 | 1863 |
 | `6763c20d` | Strauss – On the Beautiful Blue Danube, op. 314 | * On the Beautiful Blue Danube, op. 314 | 1866 |
 | `a26cbcf8` | Strauss – Perpetuum mobile, op. 257 | * Perpetuum mobile, op. 257 | 1861 |
 | `64e7a2e2` | Strauss – Radetzky March, op. 228 | * Radetzky March, op. 228 | 1848 |
@@ -490,9 +490,9 @@
 | `445fc058` | Verdi – Nabucco | * Parte III, scena 2. Coro “Va, pensiero, sull’ali dorate” (Coro) | 1841 |
 | `2dc7fb62` | Verdi – Rigoletto | * Atto III. “La donna è mobile” (Duca) | 1850‑1851 |
 | `40b35a3c` | Vivaldi – 6 Flute Concertos, op. 10 | * Concerto in D major, op. 10 no. 3, RV 428 “Il gardellino”: I. Allegro | ? |
-| `4b8c6bb2` | Vivaldi – Concerto for Lute in D major, RV 93 | * II. Largo | ? |
-| `6ab1f532` | Vivaldi – Concerto for Mandolin in C major, RV 425 | * I. Allegro | ? |
-| `e7a37d0c` | Vivaldi – Flautino Concerto in C major, RV 443 | * II. Largo | ? |
+| `4b8c6bb2` | Vivaldi – Concerto for Lute in D major, RV 93 | * II. Largo | 1730‑1731 |
+| `6ab1f532` | Vivaldi – Concerto for Mandolin in C major, RV 425 | * I. Allegro | 1742 |
+| `e7a37d0c` | Vivaldi – Flautino Concerto in C major, RV 443 | * II. Largo | 1728‑1729 |
 | `7044d543` | Vivaldi – The Contest Between Harmony and Invention, op. 8 | * Concerto in E-flat major, op. 8 no. 5, RV 253 "La tempesta di mare": I. (Allegro e) Presto | 1725 |
 | `87886dcf` | Vivaldi – The Four Seasons | * “The Four Seasons”: Concerto in E Major, op. 8 no. 1, RV. 269, “Spring”: 1. Allegro | 1723 |
 | `597e017a` | Wagner – Der Ring des Nibelungen, WWV 86 | * The Valkyrie: Ride of the Valkyries | 1854‑1856 |

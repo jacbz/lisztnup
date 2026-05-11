@@ -58,11 +58,18 @@ flowchart TD
 
 ### Post-Processing
 
-After generating the final dataset, an additional validation step is recommended:
+After generating the final dataset, additional data validation and enrichment steps can be performed:
 
-**Validate Deezer Previews (`process_deezer.py`)**
+**Validate Deezer Previews (`process_deezer`)**
 
 - This script checks all Deezer Track IDs in `lisztnup.json` to verify that preview MP3s are available via the Deezer API.
 - IDs without previews or with API errors are added to `DEEZER_EXCLUDED_IDS`.
 - **Recheck Mode:** Set `recheck_excluded = True` to verify previously excluded IDs and remove them if previews become available.
 - After running, re-run `process_musicbrainz.py` to regenerate `lisztnup.json` with the updated exclusion list. You may run `process_deezer.py` and `process_musicbrainz.py` alternately until no new IDs are excluded.
+
+**Add missing year numbers (`add_year_numbers`)**
+
+- This script identifies works in `lisztnup.json` that are missing year numbers and attempts to fill them in using external sources (Wikidata, IMSLP, AllMusic).
+- The results are stored in `add_year_numbers/WORK_YEAR_NUMBERS.yml`.
+- `process_musicbrainz.py` automatically loads year data from this file during processing.
+- See [add_year_numbers/README.md] for detailed usage instructions.

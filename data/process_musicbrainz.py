@@ -342,9 +342,18 @@ class MusicbrainzProcessor:
         self.excluded_works = set((config.get("excluded_works") or {}).keys())
         self.wss_overrides = config.get("wss_overrides") or {}
         self.pss_overrides = config.get("pss_overrides") or {}
-        self.year_overrides = config.get("year_overrides") or {}
         self.manual_classification_overrides = config.get("manual_classification_overrides") or {}
         self.deezer_overrides: Dict[str, List[int]] = config.get("deezer_overrides") or {}
+        
+        # Load year numbers from add_year_numbers pipeline
+        year_numbers_path = Path("add_year_numbers/WORK_YEAR_NUMBERS.yml")
+        if year_numbers_path.exists():
+            with open(year_numbers_path, "r", encoding="utf-8") as f:
+                self.year_overrides = yaml.safe_load(f) or {}
+            log.info("Loaded %d year numbers from %s", len(self.year_overrides), year_numbers_path)
+        else:
+            self.year_overrides = {}
+            log.warning("Year numbers file not found: %s", year_numbers_path)
         
         self.stats: Counter = Counter()
 
@@ -510,6 +519,7 @@ class MusicbrainzProcessor:
 
         final_output = FinalOutput(composers=final_composers, works=final_work_list)
         self._write_unresolved_log(final_output)
+        self._gather_missing_year_numbers(final_work_list)
         return final_output
 
     def _filter_composers_by_birth_year(
@@ -684,9 +694,23 @@ class MusicbrainzProcessor:
         if total > 0:
             summary = (f"\n" + "!" * 80 + "\n"
                        f"!!! WARNING: {total} works have dates outside composer life range.\n"
-                       f"!!! Detailed report generated: 'date_anomalies.txt'\n" + 
+                       f"!!! Detailed report generated: 'date_anomalies.txt'\n" +
                        "!" * 80 + "\n")
             print(summary)
+
+    def _gather_missing_year_numbers(self, works: List[FinalWork]) -> None:
+        """
+        Gathers all top-level works without year numbers and writes their full UUIDs
+        to 'missing_year_numbers.txt'.
+        """
+        missing_year_gids = [
+            work.gid for work in works
+            if work.begin_year is None and work.end_year is None
+        ]
+        if missing_year_gids:
+            with open("missing_year_numbers.txt", "w", encoding="utf-8") as f:
+                f.write("\n".join(missing_year_gids))
+            print(f"Found {len(missing_year_gids)} works without year numbers. See 'missing_year_numbers.txt'")
 
     def _format_part_names(self, works: List[FinalWork]) -> None:
         """
@@ -1439,8 +1463,8 @@ def main() -> None:
 
     # Load Exclusion Lists
     global EXCLUDED_DEEZER_IDS, BANNED_DEEZER_IDS
-    EXCLUDED_DEEZER_IDS = load_id_set("DEEZER_EXCLUDED_IDS")
-    BANNED_DEEZER_IDS = load_id_set("DEEZER_BANNED_IDS")
+    EXCLUDED_DEEZER_IDS = load_id_set("process_deezer/DEEZER_EXCLUDED_IDS")
+    BANNED_DEEZER_IDS = load_id_set("process_deezer/DEEZER_BANNED_IDS")
     print(f"Loaded {len(EXCLUDED_DEEZER_IDS)} excluded and {len(BANNED_DEEZER_IDS)} banned Deezer IDs.")
 
     # Configure Logging
