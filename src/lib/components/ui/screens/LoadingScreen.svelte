@@ -10,25 +10,30 @@
 
 	let { onReady = () => {} }: Props = $props();
 
-	const SOUND_FILES = [
-		'/correct.mp3',
-		'/wrong.mp3',
-		'/buzzer.mp3',
-		'/start_timeline.mp3',
-		'/start_classic.mp3',
-		'/start_buzzer.mp3',
-		'/start_bingo.mp3',
-		'/gameover.mp3'
+	const ASSET_FILES = ['/background.jpg'];
+	const FONT_LOADS = [
+		'400 1em Streamster',
+		'300 1em Rajdhani',
+		'400 1em Rajdhani',
+		'500 1em Rajdhani',
+		'600 1em Rajdhani',
+		'700 1em Rajdhani'
 	];
 
-	const ASSET_FILES = [...SOUND_FILES, '/background.jpg'];
+	function preloadFonts(): Promise<void> {
+		if (!document.fonts) return Promise.resolve();
+
+		return Promise.all(FONT_LOADS.map((font) => document.fonts.load(font)))
+			.then(() => document.fonts.ready)
+			.then(() => {});
+	}
 
 	onMount(async () => {
 		loadGameData().catch((error) => {
 			console.error('Failed to load game data:', error);
 		});
 
-		const tasks = [...ASSET_FILES.map((url) => () => preloadAsset(url))];
+		const tasks = [...ASSET_FILES.map((url) => () => preloadAsset(url)), preloadFonts];
 		const total = tasks.length;
 
 		if (total === 0) {

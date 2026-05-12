@@ -26,6 +26,7 @@ src/lib/components/
 ```
 
 All UI components re-exported from `src/lib/components/ui/index.ts`.
+`LoadingScreen` blocks only on shell visuals/fonts; `HomeScreen` warms local game sounds in the background while setup stays interactive.
 
 ## GameScreen Base Pattern
 

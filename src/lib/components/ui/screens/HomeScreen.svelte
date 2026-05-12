@@ -53,7 +53,7 @@
 	import TracklistRecordsPopup from '$lib/components/ui/setup/TracklistRecordsPopup.svelte';
 	import TimelineLeaderboard from '$lib/components/ui/setup/TimelineLeaderboard.svelte';
 	import { fade, slide } from 'svelte/transition';
-	import { getLeaderboard } from '$lib/services/client';
+	import { getLeaderboard, preloadAsset } from '$lib/services/client';
 
 	interface Props {
 		onStart?: (
@@ -117,6 +117,16 @@
 		timeline: '/start_timeline.mp3',
 		bingo: '/start_bingo.mp3'
 	};
+	const GAME_SOUND_FILES = [
+		'/correct.mp3',
+		'/wrong.mp3',
+		'/buzzer.mp3',
+		'/start_timeline.mp3',
+		'/start_classic.mp3',
+		'/start_buzzer.mp3',
+		'/start_bingo.mp3',
+		'/gameover.mp3'
+	];
 
 	// Daily challenge state
 	let dailyHighScore = $state<{ name: string | null; score: number } | null>(null);
@@ -453,10 +463,15 @@
 		// Trigger add player in PlayerSetup via binding
 	}
 
+	function preloadGameSounds() {
+		void Promise.all(GAME_SOUND_FILES.map((url) => preloadAsset(url)));
+	}
+
 	onMount(() => {
 		// Create start audio element with initial mode
 		const initialMode = selectedMode || 'classic';
 		startAudio = new Audio(startAudioSources[initialMode]);
+		preloadGameSounds();
 		let destroyed = false;
 
 		loadingCardTimer = setTimeout(() => {
