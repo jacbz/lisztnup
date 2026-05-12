@@ -1,8 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { loadGameData, dataLoadProgress } from '$lib/stores';
-	import { _ } from 'svelte-i18n';
 	import { preloadAsset } from '$lib/services/client';
+	import { loadGameData } from '$lib/stores';
+	import LoadingProgress from '../primitives/LoadingProgress.svelte';
+
+	interface Props {
+		onReady?: () => void;
+	}
+
+	let { onReady = () => {} }: Props = $props();
 
 	const SOUND_FILES = [
 		'/correct.mp3',
@@ -15,41 +21,55 @@
 		'/gameover.mp3'
 	];
 
-	let error = $state<string | null>(null);
+	const ASSET_FILES = [
+		...SOUND_FILES,
+		'/background.jpg',
+		'/favicon.ico',
+		'/favicon.svg',
+		'/favicon-96x96.png',
+		'/apple-touch-icon.png',
+		'/web-app-manifest-192x192.png',
+		'/web-app-manifest-512x512.png',
+		'/site.webmanifest'
+	];
+
+	const FONT_SPECS = [
+		'1em Streamster',
+		'300 1em Rajdhani',
+		'400 1em Rajdhani',
+		'500 1em Rajdhani',
+		'600 1em Rajdhani',
+		'700 1em Rajdhani'
+	];
+
+	function preloadFont(spec: string): Promise<void> {
+		if (!document.fonts) return Promise.resolve();
+		return document.fonts.load(spec).then(() => {});
+	}
 
 	onMount(async () => {
-		// Preload all sound effects into the browser HTTP cache in parallel.
-		// Runs concurrently with the JSON load; failures are silently ignored so a
-		// missing audio file never blocks the game from starting.
-		SOUND_FILES.forEach(preloadAsset);
+		loadGameData().catch((error) => {
+			console.error('Failed to load game data:', error);
+		});
 
-		try {
-			await loadGameData();
-		} catch (err) {
-			error = err instanceof Error ? err.message : 'Failed to load game data';
+		const tasks = [
+			...ASSET_FILES.map((url) => () => preloadAsset(url)),
+			...FONT_SPECS.map((spec) => () => preloadFont(spec))
+		];
+		const total = tasks.length;
+
+		if (total === 0) {
+			onReady();
+			return;
 		}
+
+		await Promise.all(tasks.map((task) => task().catch(() => {})));
+		onReady();
 	});
 </script>
 
 <div class="flex h-screen w-full items-center justify-center">
-	<div class="text-center">
-		{#if error}
-			<div class="text-xl text-red-400">
-				<p>Error loading game data</p>
-				<p class="mt-2 text-sm">{error}</p>
-			</div>
-		{:else}
-			<div
-				class="mx-auto h-2 w-64 overflow-hidden rounded-full border border-cyan-400/30 bg-slate-900"
-			>
-				<div
-					class="h-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)] transition-all duration-300"
-					style="width: {$dataLoadProgress}%"
-				></div>
-			</div>
-			<p class="mt-4 text-sm text-cyan-300">{$_('loading.progress')}</p>
-		{/if}
-	</div>
+	<LoadingProgress showText={false} compact={true} indeterminate={true} />
 </div>
 
 <style>

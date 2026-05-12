@@ -35,7 +35,18 @@
 		"subtitle": "The Classical Music Guessing Game"
 	},
 	"loading": {
-		"progress": "Loading the music..."
+		"progress": {
+			"0": "Tuning the orchestra...",
+			"1": "Rosining the bow...",
+			"2": "Leafing through the score...",
+			"3": "Winding up the metronome...",
+			"4": "Dusting off the manuscripts...",
+			"5": "Counting the rests...",
+			"6": "Sharpening the conductor's baton...",
+			"7": "Warming up the strings...",
+			"8": "Clearing the concert hall...",
+			"9": "Setting the tempo..."
+		}
 	},
 	"home": {
 		"start": "START",

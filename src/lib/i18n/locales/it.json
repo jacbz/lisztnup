@@ -35,7 +35,18 @@
 		"subtitle": "Il gioco a quiz sulla musica classica"
 	},
 	"loading": {
-		"progress": "Caricamento musica..."
+		"progress": {
+			"0": "L'oboe dà il la all'orchestra...",
+			"1": "Il sipario sta per alzarsi...",
+			"2": "I professori d'orchestra si accordano...",
+			"3": "Il maestro concertatore prende posizione...",
+			"4": "Le luci in sala si abbassano...",
+			"5": "La sala si riempie di aspettativa...",
+			"6": "Il direttore sfoglia la partitura...",
+			"7": "Gli archi si scaldano piano piano...",
+			"8": "Il pianoforte viene accordato un'ultima volta...",
+			"9": "Il pubblico prende posto in platea..."
+		}
 	},
 	"home": {
 		"start": "VIA",

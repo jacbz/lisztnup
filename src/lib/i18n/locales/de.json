@@ -35,7 +35,18 @@
 		"subtitle": "Das Klassik-Ratespiel"
 	},
 	"loading": {
-		"progress": "Lade Musik..."
+		"progress": {
+			"0": "Der Flügel wird gestimmt...",
+			"1": "Die Generalprobe läuft an...",
+			"2": "Beethoven rollt sich kurz um...",
+			"3": "Die Partitur wird aufgeschlagen...",
+			"4": "Der Taktstock hebt sich...",
+			"5": "Die Geigen werden eingespielt...",
+			"6": "Das Orchester nimmt Platz...",
+			"7": "Bach überprüft nochmals die Stimmen...",
+			"8": "Die Konzertmeisterin gibt das A...",
+			"9": "Die Noten werden sortiert..."
+		}
 	},
 	"home": {
 		"start": "START",

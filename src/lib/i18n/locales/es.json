@@ -35,7 +35,18 @@
 		"subtitle": "El juego de adivinanzas de música clásica"
 	},
 	"loading": {
-		"progress": "Cargando la música..."
+		"progress": {
+			"0": "El oboe da el la...",
+			"1": "El telón está a punto de subir...",
+			"2": "El maestro levanta la batuta...",
+			"3": "Los atriles ya están en su sitio...",
+			"4": "La sala se llena de silencio...",
+			"5": "Las cuerdas afilan los arcos...",
+			"6": "El piano se calienta con escalas...",
+			"7": "Los músicos toman sus posiciones...",
+			"8": "La partitura se abre en la primera página...",
+			"9": "El público aguarda en sus butacas..."
+		}
 	},
 	"home": {
 		"start": "INICIO",

@@ -1,14 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
-	import {
-		gameData,
-		isDataLoaded,
-		settings,
-		gameState,
-		tracklist,
-		selectedTracklist
-	} from '$lib/stores';
+	import { gameData, settings, gameState, tracklist, selectedTracklist } from '$lib/stores';
 	import { TracklistGenerator, deezerPlayer, SettingsService } from '$lib/services';
 	import type { GameMode, Player } from '$lib/types';
 	import LoadingScreen from '$lib/components/ui/screens/LoadingScreen.svelte';
@@ -108,17 +101,16 @@
 		gameState.set('home');
 	}
 
-	// Auto-transition from loading to home
-	$effect(() => {
-		if ($isDataLoaded && $gameState === 'loading') {
+	function handleLoadingReady() {
+		if ($gameState === 'loading') {
 			gameState.set('home');
 		}
-	});
+	}
 </script>
 
 {#if $gameState === 'loading'}
 	<div in:fade={{ duration: 300, delay: 300 }} out:fade={{ duration: 300 }}>
-		<LoadingScreen />
+		<LoadingScreen onReady={handleLoadingReady} />
 	</div>
 {:else if $gameState === 'home'}
 	<div in:fade={{ duration: 300, delay: 300 }} out:fade={{ duration: 300 }}>

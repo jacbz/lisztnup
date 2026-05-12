@@ -54,8 +54,8 @@ Loading → Home → [Mode Selection → Player Setup] → Game → End Game
                                                     └─────────┘ (Play Again)
 ```
 
-1. **Loading**: Stream 2.5MB `lisztnup.json` with progress bar. Preload 7 sound-effect MP3s into browser cache.
-2. **Home**: Select mode, configure tracklist, change locale. Check for `addTracklist` URL param (import shared tracklist).
+1. **Loading**: Preload shell assets (fonts, icons, sound effects) with a quiet progress bar while starting the catalog fetch.
+2. **Home**: Continue streaming 2.5MB `lisztnup.json` behind a delayed loading card; Start Game, library, and tracklist counts wait on catalog readiness. Select mode, configure tracklist, change locale, and import shared tracklists via `addTracklist`.
 3. **Setup**: Player names/colors/order (Timeline/Classic/Buzzer). Bingo shows QR code for `/bingo` route.
 4. **Game Start**: Create `TracklistGenerator`, filter data, sample first track. Apply track length + volume settings.
 5. **Round Flow**: Mode-specific (see above). All modes use `GameScreen` for shared infrastructure.

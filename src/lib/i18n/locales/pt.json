@@ -35,7 +35,18 @@
 		"subtitle": "O Jogo de Adivinhação de Música Clássica"
 	},
 	"loading": {
-		"progress": "Carregando a música..."
+		"progress": {
+			"0": "O oboé dá o lá para a orquestra...",
+			"1": "O maestro ergue a batuta...",
+			"2": "As luzes da ribalta se acendem...",
+			"3": "O palco aguarda em silêncio...",
+			"4": "As partituras estão sendo folheadas...",
+			"5": "A plateia se acomoda em seus lugares...",
+			"6": "Os músicos afinam os instrumentos...",
+			"7": "O pano de boca está prestes a subir...",
+			"8": "O ensaio geral chegou ao fim...",
+			"9": "Os archeiros preparam seus arcos..."
+		}
 	},
 	"home": {
 		"start": "INICIAR",

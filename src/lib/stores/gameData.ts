@@ -1,10 +1,13 @@
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import { GameCatalog, type RawLisztnupData } from '$lib/models';
 
 export const gameData = writable<GameCatalog | null>(null);
 export const isDataLoaded = writable<boolean>(false);
+export const isDataLoading = writable<boolean>(false);
 // 0-100 percent progress of loading the main game data blob
 export const dataLoadProgress = writable<number>(0);
+
+let loadPromise: Promise<void> | null = null;
 
 /**
  * Parses the raw data and updates the stores.
@@ -60,9 +63,10 @@ async function handleStreamingResponse(response: Response) {
 	parseData(text);
 }
 
-export async function loadGameData(): Promise<void> {
+async function loadGameDataInternal(): Promise<void> {
 	try {
 		isDataLoaded.set(false);
+		isDataLoading.set(true);
 		dataLoadProgress.set(0);
 
 		const response = await fetch('/lisztnup.json');
@@ -81,5 +85,21 @@ export async function loadGameData(): Promise<void> {
 	} catch (error) {
 		console.error('Error loading game data:', error);
 		throw error;
+	} finally {
+		isDataLoading.set(false);
+		loadPromise = null;
 	}
+}
+
+export function loadGameData(): Promise<void> {
+	if (get(isDataLoaded) && get(gameData)) {
+		return Promise.resolve();
+	}
+
+	if (loadPromise) {
+		return loadPromise;
+	}
+
+	loadPromise = loadGameDataInternal();
+	return loadPromise;
 }

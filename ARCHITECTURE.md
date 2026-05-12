@@ -82,9 +82,9 @@ data/                    Static configuration (tracklist configs, categories)
 ## Client Data Flow
 
 ```
-static/lisztnup.json
-  → LoadingScreen (streamed with progress bar)
-  → gameData store (`GameCatalog` hydrates + indexes the catalog once)
+LoadingScreen → shell asset progress + start static/lisztnup.json fetch
+Home loading card → delayed takeover of streamed catalog progress
+  → gameData store (`GameCatalog` hydrates + indexes once)
   → TracklistGenerator (filters indexed catalog on init, O(1) sampling)
   → PlayableTrackBuffer (current track + 2 ready future tracks)
   → DeezerPlayer.preload() (fetch preview from Deezer API, LUFS analysis)
@@ -145,7 +145,3 @@ Pageview tracking: bot filtering (UA + Cloudflare Bot Management), 10-min dedup 
 ### Client Analytics (game-logger.ts)
 
 `GameAnalytics` sends game lifecycle, placement, report, and feedback events with `sendBeacon()` / keepalive fetch. Failures are silent and never block gameplay.
-
-### Telegram Notifications (server/telegram.ts)
-
-Admin notifications for feedback and problem reports; sends HTML-formatted messages via Telegram Bot API

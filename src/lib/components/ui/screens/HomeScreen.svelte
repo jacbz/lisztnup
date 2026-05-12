@@ -2,11 +2,18 @@
 	import ChevronRight from 'lucide-svelte/icons/chevron-right';
 	import Languages from 'lucide-svelte/icons/languages';
 	import { _, locale } from 'svelte-i18n';
-	import { settings as settingsStore, selectedTracklist } from '$lib/stores';
+	import {
+		settings as settingsStore,
+		selectedTracklist,
+		isDataLoaded,
+		dataLoadProgress,
+		loadGameData
+	} from '$lib/stores';
 	import { locales } from '$lib/i18n';
 	import TracklistSelector from '../setup/TracklistSelector.svelte';
 	import NumberSelector from '../primitives/NumberSelector.svelte';
 	import ToggleButton from '../primitives/ToggleButton.svelte';
+	import LoadingProgress from '../primitives/LoadingProgress.svelte';
 	import ModeSelector from '../setup/ModeSelector.svelte';
 	import PlayerSetup from '../setup/PlayerSetup.svelte';
 	import BingoSetup from '../setup/BingoSetup.svelte';
@@ -97,6 +104,8 @@
 	let customTracklists = $state<Tracklist[]>([]);
 	let allTracklists = $derived([...DEFAULT_TRACKLISTS, ...customTracklists]);
 	let dailyChallengeTimer: ReturnType<typeof setTimeout> | null = null;
+	let loadingCardTimer: ReturnType<typeof setTimeout> | null = null;
+	let showDataLoadingCard = $state(false);
 	let previousSelectedTracklist = $settingsStore.selectedTracklist;
 	let startAudioSources = {
 		classic: '/start_classic.mp3',
@@ -320,6 +329,7 @@
 
 	function handleStartGame() {
 		if (!selectedMode) return;
+		if (!$isDataLoaded) return;
 
 		// Don't allow starting with invalid player names
 		if (!playersValid) return;
@@ -443,6 +453,27 @@
 		// Create start audio element with initial mode
 		const initialMode = selectedMode || 'classic';
 		startAudio = new Audio(startAudioSources[initialMode]);
+		let destroyed = false;
+
+		loadingCardTimer = setTimeout(() => {
+			if (!destroyed && !get(isDataLoaded)) {
+				showDataLoadingCard = true;
+			}
+		}, 300);
+
+		loadGameData()
+			.catch((error) => {
+				console.error('Failed to load game data:', error);
+			})
+			.finally(() => {
+				if (loadingCardTimer) {
+					clearTimeout(loadingCardTimer);
+					loadingCardTimer = null;
+				}
+				if (!destroyed) {
+					showDataLoadingCard = false;
+				}
+			});
 
 		syncDailyChallenge();
 
@@ -469,8 +500,10 @@
 		};
 		document.addEventListener('click', handleClickOutside);
 		return () => {
+			destroyed = true;
 			document.removeEventListener('click', handleClickOutside);
 			if (dailyChallengeTimer) clearTimeout(dailyChallengeTimer);
+			if (loadingCardTimer) clearTimeout(loadingCardTimer);
 		};
 	});
 </script>
@@ -585,9 +618,33 @@
 			</div>
 		{/if}
 
+		{#if showDataLoadingCard}
+			<div
+				class="mx-auto mt-6 max-w-2xl"
+				in:slide={{ duration: 220 }}
+				out:slide={{ duration: 180 }}
+			>
+				<div
+					class="relative overflow-hidden rounded-xl border border-cyan-300/35 bg-slate-950/70 px-6 py-5 shadow-[0_18px_45px_rgba(15,23,42,0.35),0_0_28px_rgba(34,211,238,0.16)] backdrop-blur-md"
+				>
+					<div
+						class="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-cyan-200/70 to-transparent"
+					></div>
+					<div
+						class="pointer-events-none absolute inset-0 bg-linear-to-r from-cyan-400/10 via-fuchsia-300/10 to-amber-200/10"
+					></div>
+					<div class="relative">
+						<LoadingProgress progress={$dataLoadProgress} />
+					</div>
+				</div>
+			</div>
+		{/if}
+
 		<!-- Game Parameters Container -->
 		<div
-			class="mx-auto mt-8 max-w-2xl rounded-2xl border-2 border-cyan-400/30 bg-slate-900/50 p-6 backdrop-blur-sm"
+			class="mx-auto max-w-2xl rounded-2xl border-2 border-cyan-400/30 bg-slate-900/50 p-6 backdrop-blur-sm"
+			class:mt-6={showDataLoadingCard}
+			class:mt-8={!showDataLoadingCard}
 		>
 			<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
 				<!-- Left Column -->
@@ -713,7 +770,7 @@
 				<button
 					type="button"
 					onclick={handleStartGame}
-					disabled={!playersValid}
+					disabled={!playersValid || !$isDataLoaded}
 					class="group relative w-full cursor-pointer overflow-hidden rounded-2xl border-2 border-cyan-400/50 bg-linear-to-r from-slate-900 via-cyan-950/30 to-slate-900 px-8 py-6 text-2xl font-bold text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-cyan-400 hover:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100 disabled:hover:border-cyan-400/50 disabled:hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
 				>
 					<!-- Animated gradient overlay -->
@@ -731,7 +788,7 @@
 					<span
 						class="relative bg-linear-to-r from-cyan-300 via-cyan-400 to-cyan-300 bg-clip-text text-transparent"
 					>
-						{$_('home.startGame', { default: 'Start Game' })}
+						{$_('home.startGame')}
 					</span>
 				</button>
 			</div>

@@ -6,7 +6,7 @@
 src/lib/components/
 ├── ui/
 │   ├── primitives/     Toast, Popup, Dialog, EdgeDisplay, Slider, RangeSlider,
-│   │                   ToggleButton, NumberSelector, ScoringCard, Logo, QRCode,
+│   │                   ToggleButton, NumberSelector, LoadingProgress, ScoringCard, Logo, QRCode,
 │   │                   ExternalLink, SearchPopup, AboutPopup, AppFooter
 │   ├── screens/        HomeScreen, LoadingScreen, EndGameScreen, StatsScreen, ScoringScreen
 │   ├── setup/          ModeSelector, ModeRulesPopup, PlayerSetup, TracklistSelector,

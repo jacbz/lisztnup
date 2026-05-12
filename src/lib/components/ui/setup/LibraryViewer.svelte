@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { WorkCategory } from '$lib/models';
 	import type { Tracklist } from '$lib/types';
-	import { gameData } from '$lib/stores';
+	import { gameData, isDataLoaded } from '$lib/stores';
 	import { get } from 'svelte/store';
 	import { formatComposerName, formatLifespan } from '$lib/utils';
 	import Popup from '../primitives/Popup.svelte';
@@ -146,7 +146,11 @@
 
 		<!-- Content -->
 		<div class="flex-1 overflow-hidden">
-			{#if !tracklist}
+			{#if !$isDataLoaded}
+				<div class="flex h-full items-center justify-center">
+					<p class="text-slate-400">{$_('trackTable.loading')}</p>
+				</div>
+			{:else if !tracklist}
 				<!-- Composer word cloud -->
 				<div class="h-full overflow-y-auto" class:hidden={viewMode !== 'cloud'}>
 					<div class="mx-auto max-w-5xl">
@@ -155,7 +159,7 @@
 				</div>
 			{/if}
 
-			{#if viewMode !== 'cloud' || tracklist}
+			{#if $isDataLoaded && (viewMode !== 'cloud' || tracklist)}
 				<!-- Table view (all works or single composer) -->
 				<TrackTable
 					{visible}

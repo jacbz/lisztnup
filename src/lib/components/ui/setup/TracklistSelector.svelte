@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Tracklist, CustomTracklist } from '$lib/types';
-	import { gameData, toast } from '$lib/stores';
+	import { gameData, isDataLoaded, toast } from '$lib/stores';
 	import { TracklistGenerator } from '$lib/services';
 	import { SettingsService } from '$lib/services';
 	import {
@@ -389,7 +389,11 @@
 			<span class="flex-1 text-sm leading-relaxed {selected ? 'text-slate-200' : 'text-slate-400'}">
 				{tracklistDescription(tracklist, $_)}
 			</span>
-			{#if tracklistInfoMap[tracklist.id]}
+			{#if !$isDataLoaded}
+				<span class="mt-1 text-xs opacity-70">
+					{$_('trackTable.loading')}
+				</span>
+			{:else if tracklistInfoMap[tracklist.id]}
 				<span class="mt-1 text-xs opacity-70">
 					{$_('settings.presetInfo.default', {
 						values: {

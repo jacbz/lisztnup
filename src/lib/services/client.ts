@@ -330,9 +330,10 @@ export async function postJson<T>(url: string, payload: JsonObject): Promise<T> 
 	});
 }
 
-export function preloadAsset(url: string) {
-	fetch(url)
+export function preloadAsset(url: string): Promise<void> {
+	return fetch(url)
 		.then((response) => response.blob())
+		.then(() => {})
 		.catch(() => {});
 }
 

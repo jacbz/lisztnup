@@ -35,7 +35,18 @@
 		"subtitle": "Le jeu de devinettes de musique classique"
 	},
 	"loading": {
-		"progress": "Chargement de la musique..."
+		"progress": {
+			"0": "Le hautbois donne le la...",
+			"1": "Les chandelles s'allument dans la fosse...",
+			"2": "Le chef accorde son regard à la partition...",
+			"3": "Les archets se lèvent en silence...",
+			"4": "Le rideau frémit d'impatience...",
+			"5": "Les partitions bruissent dans la fosse...",
+			"6": "Les loges se remplissent peu à peu...",
+			"7": "Le silence s'installe dans la salle...",
+			"8": "L'accordeur fait ses derniers gestes...",
+			"9": "L'entracte est terminé, place à la musique..."
+		}
 	},
 	"home": {
 		"start": "JOUER",
