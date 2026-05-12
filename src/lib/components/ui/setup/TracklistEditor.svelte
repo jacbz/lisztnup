@@ -39,6 +39,15 @@
 		onCancel?: () => void;
 	}
 
+	interface PreviewYearBucket {
+		decade: number;
+		label: string;
+		workCount: number;
+		heightPercent: number;
+		workNames: string[];
+		isLargest: boolean;
+	}
+
 	let {
 		visible = false,
 		tracklist = null,
@@ -120,6 +129,7 @@
 	let previewCategories = $state<
 		Array<{ category: string; composerCount: number; workCount: number; trackCount: number }>
 	>([]);
+	let previewYearBuckets = $state<PreviewYearBucket[]>([]);
 
 	// Initialize from tracklist ONLY when visible changes to true
 	$effect(() => {
@@ -224,6 +234,7 @@
 			previewInfo = null;
 			previewComposers = [];
 			previewCategories = [];
+			previewYearBuckets = [];
 			return;
 		}
 
@@ -255,6 +266,7 @@
 
 			// Collect work GIDs for visual indicator in include selector
 			previewWorkGids = new SvelteSet(filteredData.works.map((w) => w.gid));
+			previewYearBuckets = buildDecadeBuckets(filteredData.works);
 
 			filteredData.works.forEach((work) => {
 				if (!composerWorkMap.has(work.composerGid)) {
@@ -312,7 +324,75 @@
 			previewInfo = { composers: 0, works: 0, tracks: 0, allFemaleComposers: false };
 			previewComposers = [];
 			previewCategories = [];
+			previewYearBuckets = [];
 		}
+	}
+
+	function buildDecadeBuckets(
+		works: Array<{ name: string; begin_year: number | null; end_year: number | null }>
+	): PreviewYearBucket[] {
+		const buckets = new SvelteMap<number, { workCount: number; workNames: string[] }>();
+
+		for (const work of works) {
+			const year = work.end_year ?? work.begin_year;
+			if (year === null || !Number.isFinite(year)) continue;
+
+			const decade = Math.floor(year / 10) * 10;
+			const bucket = buckets.get(decade) ?? { workCount: 0, workNames: [] };
+			bucket.workCount++;
+			bucket.workNames.push(work.name);
+			buckets.set(decade, bucket);
+		}
+
+		const maxCount = Math.max(...Array.from(buckets.values()).map((bucket) => bucket.workCount), 0);
+		if (maxCount === 0) return [];
+		const decades = Array.from(buckets.keys());
+		const minDecade = Math.min(...decades);
+		const maxDecade = Math.max(...decades);
+		const decadeCount = (maxDecade - minDecade) / 10 + 1;
+
+		return Array.from({ length: decadeCount }, (_, index) => {
+			const decade = minDecade + index * 10;
+			const bucket = buckets.get(decade) ?? { workCount: 0, workNames: [] };
+			return {
+				decade,
+				label: `${decade}-${decade + 9}`,
+				workCount: bucket.workCount,
+				heightPercent:
+					bucket.workCount === 0 ? 0 : Math.max(8, Math.round((bucket.workCount / maxCount) * 100)),
+				workNames: bucket.workNames,
+				isLargest: bucket.workCount === maxCount
+			};
+		});
+	}
+
+	function getDecadeBucketTitle(bucket: PreviewYearBucket): string {
+		return [
+			$_('tracklistEditor.previewDecadeBucket', {
+				values: { decade: bucket.label, count: bucket.workCount }
+			}),
+			...bucket.workNames.slice(0, 20),
+			bucket.workNames.length > 20
+				? $_('tracklistEditor.previewMoreWorks', {
+						values: { count: bucket.workNames.length - 20 }
+					})
+				: ''
+		]
+			.filter(Boolean)
+			.join('\n');
+	}
+
+	function getComposerWorksTitle(composer: { works: Array<{ name: string }> }): string {
+		return [
+			...composer.works.slice(0, 20).map((work) => work.name),
+			composer.works.length > 20
+				? $_('tracklistEditor.previewMoreWorks', {
+						values: { count: composer.works.length - 20 }
+					})
+				: ''
+		]
+			.filter(Boolean)
+			.join('\n');
 	}
 
 	function buildCurrentConfig(): TracklistConfig {
@@ -1388,10 +1468,53 @@
 							</div>
 						</div>
 
+						<!-- Year distribution -->
+						{#if previewYearBuckets.length > 0}
+							<div class="border-t border-slate-700 pt-3">
+								<h4 class="mb-2 text-xs font-semibold text-slate-400 uppercase">
+									{$_('tracklistEditor.previewYearDistribution')}
+								</h4>
+								<div class="rounded-lg border border-slate-700 bg-slate-800/30 px-1.5 pt-2 pb-1">
+									<div class="flex h-24 items-end gap-px pt-4 pb-7">
+										{#each previewYearBuckets as bucket (bucket.decade)}
+											{@const bucketLabel = getDecadeBucketTitle(bucket)}
+											<div
+												class="relative flex h-full min-w-0 flex-1 items-end justify-center"
+												title={bucketLabel}
+												aria-label={bucketLabel}
+											>
+												{#if bucket.isLargest}
+													<span
+														class="absolute left-1/2 -translate-x-1/2 text-[0.6rem] leading-none font-semibold text-cyan-100"
+														style={`bottom: calc(${bucket.heightPercent}% + 0.125rem)`}
+													>
+														{bucket.workCount}
+													</span>
+												{/if}
+												<div
+													class="w-full rounded-t-xs bg-cyan-400/80 transition-colors hover:bg-cyan-200"
+													style={`height: ${bucket.heightPercent}%`}
+												></div>
+												{#if bucket.decade % 100 === 0 || bucket.decade % 100 === 50}
+													<span
+														class="absolute -bottom-5 left-1/2 origin-top-left -translate-x-1/2 rotate-[-30deg] text-[0.55rem] leading-none font-medium whitespace-nowrap text-slate-300"
+													>
+														{bucket.decade}
+													</span>
+												{/if}
+											</div>
+										{/each}
+									</div>
+								</div>
+							</div>
+						{/if}
+
 						<!-- Categories breakdown -->
 						{#if previewCategories.length > 0}
 							<div class="border-t border-slate-700 pt-3">
-								<h4 class="mb-2 text-xs font-semibold text-slate-400 uppercase">Categories</h4>
+								<h4 class="mb-2 text-xs font-semibold text-slate-400 uppercase">
+									{$_('tracklistEditor.categoryCategories')}
+								</h4>
 								<div class="space-y-1 rounded-lg border border-slate-700 bg-slate-800/30 p-2">
 									{#each previewCategories as category (category.category)}
 										<div class="flex items-center justify-between rounded px-2 py-1 text-xs">
@@ -1424,20 +1547,16 @@
 						<!-- Composer list -->
 						{#if previewComposers.length > 0}
 							<div class="border-t border-slate-700 pt-3">
-								<h4 class="mb-2 text-xs font-semibold text-slate-400 uppercase">Composers</h4>
+								<h4 class="mb-2 text-xs font-semibold text-slate-400 uppercase">
+									{$_('tracklistEditor.previewComposers')}
+								</h4>
 								<div
 									class="max-h-96 space-y-1 overflow-y-auto rounded-lg border border-slate-700 bg-slate-800/30 p-2"
 								>
 									{#each previewComposers as composer (composer.gid)}
 										<div
 											class="flex items-center justify-between rounded px-2 py-1.5 text-xs hover:bg-slate-700/50"
-											title={composer.works
-												.slice(0, 20)
-												.map((w) => w.name)
-												.join('\n') +
-												(composer.works.length > 20
-													? `\n... and ${composer.works.length - 20} more`
-													: '')}
+											title={getComposerWorksTitle(composer)}
 										>
 											<span class="truncate text-slate-300"
 												>{formatComposerName(composer.name)}</span

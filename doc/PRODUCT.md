@@ -94,6 +94,7 @@ Created via `TracklistEditor`. Saved to localStorage via `SettingsService`. Feat
 - **Filters** (toggleable): composer filtering (include/exclude/notability/country/gender), year range, popularity range, top N works, work name regex, per-composer work limit, max tracks per work, popularity weighting
 - **Manual curation**: include/exclude specific works via `WorkSelectorPopup`. Stored as short UUIDs (8 chars).
 - **Category score adjustments**: -4.3 to +4.3 per category to bias sampling
+- **Preview**: live counts plus category, composer, and decade-bucket year distribution
 - **Sharing**: Compress config → URL param. Import via `addTracklist` param on load.
 
 When filters disabled, only manually included works are used.
