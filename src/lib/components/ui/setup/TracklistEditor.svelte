@@ -359,7 +359,7 @@
 				label: `${decade}-${decade + 9}`,
 				workCount: bucket.workCount,
 				heightPercent:
-					bucket.workCount === 0 ? 0 : Math.max(8, Math.round((bucket.workCount / maxCount) * 100)),
+					bucket.workCount === 0 ? 0 : Math.max(2, Math.round((bucket.workCount / maxCount) * 100)),
 				workNames: bucket.workNames,
 				isLargest: bucket.workCount === maxCount
 			};
@@ -1475,7 +1475,7 @@
 									{$_('tracklistEditor.previewYearDistribution')}
 								</h4>
 								<div class="rounded-lg border border-slate-700 bg-slate-800/30 px-1.5 pt-2 pb-1">
-									<div class="flex h-24 items-end gap-px pt-4 pb-7">
+									<div class="flex h-32 items-end gap-px pt-3 pb-5">
 										{#each previewYearBuckets as bucket (bucket.decade)}
 											{@const bucketLabel = getDecadeBucketTitle(bucket)}
 											<div
@@ -1497,7 +1497,7 @@
 												></div>
 												{#if bucket.decade % 100 === 0 || bucket.decade % 100 === 50}
 													<span
-														class="absolute -bottom-5 left-1/2 origin-top-left -translate-x-1/2 rotate-[-30deg] text-[0.55rem] leading-none font-medium whitespace-nowrap text-slate-300"
+														class="absolute -bottom-4.5 left-1/2 origin-top-left -translate-x-[calc(100%-0.25rem)] rotate-[-30deg] text-[0.55rem] leading-none font-medium whitespace-nowrap text-slate-300"
 													>
 														{bucket.decade}
 													</span>
