@@ -53800,7 +53800,7 @@
       "name": "I puritani",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1835,
       "score": 3.58,
       "parts": [
         {
@@ -53864,7 +53864,7 @@
       "name": "La sonnambula",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1831,
       "score": 3.47,
       "parts": [
         {
@@ -72913,7 +72913,7 @@
       "name": "Nun komm, der Heiden Heiland, BuxWV 211",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1690,
       "score": 3.66,
       "parts": [
         {
@@ -78841,8 +78841,8 @@
       "composer_gid": "09ff1fe8-d61c-4b98-bb82-18487c74d7b7",
       "name": "Waltz in A minor",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1824,
+      "end_year": 1849,
       "score": 1.61,
       "parts": [
         {
@@ -81645,7 +81645,7 @@
       "name": "12 concerti grossi, op. 6",
       "type": "concerto",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1712,
       "score": 4.12,
       "parts": [
         {
@@ -101779,8 +101779,8 @@
       "composer_gid": "7ea7ad5a-f2fe-4988-ada5-c15a11958911",
       "name": "Pièces de Viole, Livre I",
       "type": "chamber",
-      "begin_year": 1747,
-      "end_year": 1747,
+      "begin_year": null,
+      "end_year": null,
       "score": 1.95,
       "parts": [
         {
@@ -103538,8 +103538,8 @@
       "composer_gid": "4862eb11-7cc5-4848-a595-8a4456af4fd7",
       "name": "In ecclesiis",
       "type": "vocal",
-      "begin_year": 1615,
-      "end_year": 1615,
+      "begin_year": null,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -103606,8 +103606,8 @@
       "composer_gid": "4862eb11-7cc5-4848-a595-8a4456af4fd7",
       "name": "Sacrae symphoniae, Liber 1",
       "type": "vocal",
-      "begin_year": 1597,
-      "end_year": 1615,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.35,
       "parts": [
         {
@@ -103635,8 +103635,8 @@
       "composer_gid": "4862eb11-7cc5-4848-a595-8a4456af4fd7",
       "name": "Sacrae symphoniae, Liber 2",
       "type": "vocal",
-      "begin_year": 1615,
-      "end_year": 1615,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.04,
       "parts": [
         {
@@ -110290,7 +110290,7 @@
       "name": "Goyescas, H.65",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1913,
       "score": 3.16,
       "parts": [
         {
@@ -114981,7 +114981,7 @@
       "name": "Flute Sonata in E minor, HWV 375 \"Halle Sonata no. 2\"",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1730,
       "score": 2.28,
       "parts": [
         {
@@ -133370,8 +133370,8 @@
       "composer_gid": "edfced8a-01bc-4c22-96b2-da58edd6b8af",
       "name": "The Cunning Little Vixen",
       "type": "opera",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1922,
+      "end_year": 1923,
       "score": 1.51,
       "parts": [
         {
@@ -139641,8 +139641,8 @@
       "composer_gid": "e3d50ece-9931-4ecf-88f1-8fa5295b6829",
       "name": "Andalucía (Suite española)",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1923,
+      "end_year": 1928,
       "score": 1.79,
       "parts": [
         {
@@ -139693,7 +139693,7 @@
       "name": "Das Land des Lächelns",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1929,
       "score": 3.86,
       "parts": [
         {
@@ -139790,7 +139790,7 @@
       "name": "Giuditta",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1934,
       "score": 2.91,
       "parts": [
         {
@@ -140070,7 +140070,7 @@
       "name": "Cello Concerto no. 2 in D major",
       "type": "concerto",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1737,
       "score": 2.08,
       "parts": [
         {
@@ -144554,7 +144554,7 @@
       "name": "Consort of Fower Parts",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1660,
       "score": 1.75,
       "parts": [
         {
@@ -156074,7 +156074,7 @@
       "name": "Robert le Diable",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1831,
       "score": 2.2,
       "parts": [
         {
@@ -157884,8 +157884,8 @@
       "composer_gid": "9a33a7ad-f725-473a-b50a-1d1796183af1",
       "name": "Messa a quattro voci da cappella, SV 190",
       "type": "vocal",
-      "begin_year": 1650,
-      "end_year": 1650,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.08,
       "parts": [
         {
@@ -164916,7 +164916,7 @@
       "name": "Il rè pastore, K. 208",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1775,
       "score": 2.52,
       "parts": [
         {
@@ -164933,7 +164933,7 @@
       "name": "Il sogno di Scipione, K. 126",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1771,
       "score": 1.69,
       "parts": [
         {
@@ -165267,7 +165267,7 @@
       "name": "Lucio Silla, K. 135",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1772,
       "score": 2.16,
       "parts": [
         {
@@ -166378,7 +166378,7 @@
       "name": "Mitridate, rè di Ponto, K. 74a/87",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1770,
       "score": 2.41,
       "parts": [
         {
@@ -173642,8 +173642,8 @@
       "composer_gid": "b972f589-fb0e-474e-b64a-803b0364fa75",
       "name": "Zaide, K. 336b/344",
       "type": "opera",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1779,
+      "end_year": 1780,
       "score": 2.77,
       "parts": [
         {
@@ -175583,8 +175583,8 @@
       "composer_gid": "33a2c5c9-f3da-4400-bfa9-77de4ca57ac7",
       "name": "Die lustigen Weiber von Windsor",
       "type": "opera",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1845,
+      "end_year": 1849,
       "score": 3.74,
       "parts": [
         {
@@ -176853,7 +176853,7 @@
       "name": "Ma bouche rit et ma pensee pleure",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1450,
       "score": 2.64,
       "parts": [
         {
@@ -181219,7 +181219,7 @@
       "name": "La serva padrona",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1733,
       "score": 1.84,
       "parts": [
         {
@@ -182179,7 +182179,7 @@
       "name": "Sérénade, op. 7",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1877,
       "score": 2.08,
       "parts": [
         {
@@ -182230,7 +182230,7 @@
       "name": "Les Cloches de Corneville",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1877,
       "score": 1.61,
       "parts": [
         {
@@ -186520,7 +186520,7 @@
       "name": "Pushkin Waltzes, op. 120",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1949,
       "score": 1.75,
       "parts": [
         {
@@ -186606,7 +186606,7 @@
       "name": "Romeo and Juliet: Suite no. 3, op. 101",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1946,
       "score": 2.21,
       "parts": [
         {
@@ -186734,7 +186734,7 @@
       "name": "Semyon Kotko, symphonic suite, op. 81bis",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1941,
       "score": 1.61,
       "parts": [
         {
@@ -187987,7 +187987,7 @@
       "name": "La rondine",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1917,
       "score": 3.54,
       "parts": [
         {
@@ -188376,7 +188376,7 @@
       "name": "Chacony in G minor for 2 violins, viola and continuo, Z. 730",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1680,
       "score": 3.87,
       "parts": [
         {
@@ -189154,7 +189154,7 @@
       "name": "In nomine à 6 in G minor, Z. 746",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1680,
       "score": 2.83,
       "parts": [
         {
@@ -192401,7 +192401,7 @@
       "name": "Five Shakespeare Songs, op. 23",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1921,
       "score": 1.61,
       "parts": [
         {
@@ -192862,7 +192862,7 @@
       "name": "5 Études-tableaux per orchestra (orch. Respighi)",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1930,
       "score": 2.32,
       "parts": [
         {
@@ -193442,7 +193442,7 @@
       "name": "Polka italienne in E-flat major, TN ii/21",
       "type": "chamber",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1906,
       "score": 3.04,
       "parts": [
         {
@@ -194864,7 +194864,7 @@
       "name": "Les Indes galantes",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1735,
       "score": 2.62,
       "parts": [
         {
@@ -204783,7 +204783,7 @@
       "name": "Parysatis",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1901,
       "score": 2.08,
       "parts": [
         {
@@ -207993,7 +207993,7 @@
       "name": "Petite ouverture à danser",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1900,
       "score": 3.58,
       "parts": [
         {
@@ -208142,7 +208142,7 @@
       "name": "Prélude en tapisserie",
       "type": "piano",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1906,
       "score": 3.04,
       "parts": [
         {
@@ -210317,8 +210317,8 @@
       "composer_gid": "95c7a1d1-5cfd-41d5-99f9-0611262de8e1",
       "name": "Sonata in B minor, K 87, L 33",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1756,
+      "end_year": 1757,
       "score": 4.45,
       "parts": [
         {
@@ -211014,8 +211014,8 @@
       "composer_gid": "95c7a1d1-5cfd-41d5-99f9-0611262de8e1",
       "name": "Sonata in C major, K 132, L 457: Cantabile",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1756,
+      "end_year": 1757,
       "score": 3.5,
       "parts": [
         {
@@ -211099,8 +211099,8 @@
       "composer_gid": "95c7a1d1-5cfd-41d5-99f9-0611262de8e1",
       "name": "Sonata in C major, K 159, L 104 \"La caccia\": Allegro",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1756,
+      "end_year": 1757,
       "score": 4.06,
       "parts": [
         {
@@ -212221,8 +212221,8 @@
       "composer_gid": "95c7a1d1-5cfd-41d5-99f9-0611262de8e1",
       "name": "Sonata in C-sharp minor, K 247, L 256: Allegro",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1756,
+      "end_year": 1757,
       "score": 3.3,
       "parts": [
         {
@@ -212935,8 +212935,8 @@
       "composer_gid": "95c7a1d1-5cfd-41d5-99f9-0611262de8e1",
       "name": "Sonata in D major, K 96, L 465: Allegrissimo",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1756,
+      "end_year": 1757,
       "score": 3.56,
       "parts": [
         {
@@ -213003,8 +213003,8 @@
       "composer_gid": "95c7a1d1-5cfd-41d5-99f9-0611262de8e1",
       "name": "Sonata in D minor, K 141, L 422: Allegro",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1756,
+      "end_year": 1757,
       "score": 4.28,
       "parts": [
         {
@@ -213587,8 +213587,8 @@
       "composer_gid": "95c7a1d1-5cfd-41d5-99f9-0611262de8e1",
       "name": "Sonata in E major, K. 380, L. 23: Andante comodo",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1756,
+      "end_year": 1757,
       "score": 4.69,
       "parts": [
         {
@@ -214862,8 +214862,8 @@
       "composer_gid": "95c7a1d1-5cfd-41d5-99f9-0611262de8e1",
       "name": "Sonata in F minor, K 466, L 118: Andante moderato",
       "type": "piano",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1756,
+      "end_year": 1757,
       "score": 4.13,
       "parts": [
         {
@@ -232082,7 +232082,7 @@
       "name": "Ouvertüre zu Goethes \"Hermann und Dorothea\", op. 136",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1851,
       "score": 2.48,
       "parts": [
         {
@@ -236502,8 +236502,8 @@
       "composer_gid": "eb04ac66-3259-425a-a6c5-cf404258500f",
       "name": "Non moriar, sed vivam",
       "type": "vocal",
-      "begin_year": 1520,
-      "end_year": 1543,
+      "begin_year": null,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -245990,7 +245990,7 @@
       "name": "Casanova (arr. Benatzky)",
       "type": "opera",
       "begin_year": null,
-      "end_year": 1928,
+      "end_year": null,
       "score": 2.83,
       "parts": [
         {
@@ -259763,8 +259763,8 @@
       "composer_gid": "8f831f50-e409-47c3-8598-71a61bc8cfb3",
       "name": "Concerto in B-flat major for 3 Oboes, 3 Violins and Continuo, TWV 44:43",
       "type": "concerto",
-      "begin_year": 1768,
-      "end_year": 1768,
+      "begin_year": null,
+      "end_year": null,
       "score": 2.42,
       "parts": [
         {
@@ -261321,7 +261321,7 @@
       "name": "Overture in F major, \"Alster Echo\", TWV 55:F11",
       "type": "orchestral",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1725,
       "score": 2.43,
       "parts": [
         {
@@ -270814,7 +270814,7 @@
       "name": "Bajazet, RV 703",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1735,
       "score": 2.11,
       "parts": [
         {
@@ -271987,7 +271987,7 @@
       "name": "Cantata, RV 654 \"Elvira, anima mia\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.61,
       "parts": [
         {
@@ -272022,7 +272022,7 @@
       "name": "Cantata, RV 670 \"Alla caccia dell'alme e de' cori\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.79,
       "parts": [
         {
@@ -272051,7 +272051,7 @@
       "name": "Cantata, RV 671 \"Cara selve, amici prati\"",
       "type": "vocal",
       "begin_year": null,
-      "end_year": 1742,
+      "end_year": null,
       "score": 1.89,
       "parts": [
         {
@@ -276020,7 +276020,7 @@
       "name": "Concerto in D minor for Viola d'Amore, Lute, Strings and Continuo, RV 540",
       "type": "concerto",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1740,
       "score": 3.66,
       "parts": [
         {
@@ -277287,7 +277287,7 @@
       "name": "Dorilla in Tempe, RV 709",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1726,
       "score": 1.98,
       "parts": [
         {
@@ -277602,7 +277602,7 @@
       "name": "Griselda, RV 718",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1735,
       "score": 2.29,
       "parts": [
         {
@@ -278250,7 +278250,7 @@
       "name": "La fida ninfa, RV 714",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1732,
       "score": 1.79,
       "parts": [
         {
@@ -278752,7 +278752,7 @@
       "name": "L’incoronazione di Dario, RV 719",
       "type": "opera",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1717,
       "score": 2.6,
       "parts": [
         {
@@ -283293,8 +283293,8 @@
       "composer_gid": "c2d17829-1424-435b-9386-c77d3a920abe",
       "name": "Abu Hassan, J 106",
       "type": "opera",
-      "begin_year": null,
-      "end_year": null,
+      "begin_year": 1810,
+      "end_year": 1811,
       "score": 3.22,
       "parts": [
         {
@@ -289300,7 +289300,7 @@
       "name": "Mille regretz",
       "type": "vocal",
       "begin_year": null,
-      "end_year": null,
+      "end_year": 1480,
       "score": 3.58,
       "parts": [
         {

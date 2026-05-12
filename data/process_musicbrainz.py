@@ -643,6 +643,7 @@ class MusicbrainzProcessor:
     def _check_work_dates(self, works: List[FinalWork]) -> None:
         """
         Checks that every work falls between composer living dates.
+        Sets years to null for works with date anomalies.
         Outputs findings to 'date_anomalies.txt' and a summary to the console.
         """
         anomalies_for_file = []
@@ -681,12 +682,16 @@ class MusicbrainzProcessor:
                     f"{'='*80}"
                 )
                 anomalies_for_file.append(file_entry)
-                log.warning("DATE ANOMALY | %s | %s | %s", work.name, issue, composer.name)
+                log.warning("DATE ANOMALY | %s | %s | %s | Setting years to null", work.name, issue, composer.name)
+                
+                # Set years to null for this work
+                work.begin_year = None
+                work.end_year = None
         
         if anomalies_for_file:
             with open("date_anomalies.txt", "w", encoding="utf-8") as f:
                 f.write("\n\n".join(anomalies_for_file))
-            log.warning("Found %d date anomalies. See 'date_anomalies.txt'", len(anomalies_for_file))
+            log.warning("Found %d date anomalies. Years set to null. See 'date_anomalies.txt'", len(anomalies_for_file))
 
     def print_date_anomaly_summary(self) -> None:
         """Prints a prominent warning if date anomalies were found."""
@@ -694,6 +699,7 @@ class MusicbrainzProcessor:
         if total > 0:
             summary = (f"\n" + "!" * 80 + "\n"
                        f"!!! WARNING: {total} works have dates outside composer life range.\n"
+                       f"!!! Years have been set to null for these works in the output.\n"
                        f"!!! Detailed report generated: 'date_anomalies.txt'\n" +
                        "!" * 80 + "\n")
             print(summary)

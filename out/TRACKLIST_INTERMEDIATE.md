@@ -389,8 +389,8 @@
 | `1a085f20` | Satie – Gnossienne no. 6 | * Gnossienne no. 6 | 1897 |
 | `c8dd2fee` | Satie – Gymnopédies | * Gymnopédie no. 1 | 1888 |
 | `e7b9f29a` | Satie – Trois Gnossiennes | * Gnossienne no. 1 | 1888‑1889 |
-| `7d39f190` | Scarlatti – Sonata in B minor, K 87, L 33 | * Sonata in B minor, K 87, L 33 | ? |
-| `0ee7e99f` | Scarlatti – Sonata in E major, K. 380, L. 23: Andante comodo | * Sonata in E major, K. 380, L. 23: Andante comodo | ? |
+| `7d39f190` | Scarlatti – Sonata in B minor, K 87, L 33 | * Sonata in B minor, K 87, L 33 | 1756‑1757 |
+| `0ee7e99f` | Scarlatti – Sonata in E major, K. 380, L. 23: Andante comodo | * Sonata in E major, K. 380, L. 23: Andante comodo | 1756‑1757 |
 | `b4d1328b` | Schubert – 3 Marches militaires, op. 51, D. 733 | * Marche militaire, op. 51, D. 733 no. 1 in D major | 1818 |
 | `b6971a84` | Schubert – 4 Impromptus, op. 142, D. 935 | * Impromptu in A-flat major, D. 935 no. 2. Allegretto | 1827 |
 | `9d1fcbf9` | Schubert – 4 Impromptus, op. 90, D. 899 | * Impromptu in G-flat major, op. 90, D. 899: No. 3. Andante | 1827 |

@@ -322,7 +322,7 @@
 | `a46f3c70` | Copland – Appalachian Spring Suite | * VII. Doppio movimento: Variations on a Shaker Hymn | 1945 |
 | `f846bc6f` | Copland – Fanfare for the Common Man | * Fanfare for the Common Man | 1942 |
 | `c72e86c7` | Copland – Four Dance Episodes from Rodeo | * Rodeo: IV. Hoedown | 1942 |
-| `f5155e79` | Corelli – 12 concerti grossi, op. 6 | * Concerto Grosso in G minor, op. 6 no. 8 “Christmas Concerto”: VI. Pastorale (Largo) | ? |
+| `f5155e79` | Corelli – 12 concerti grossi, op. 6 | * Concerto Grosso in G minor, op. 6 no. 8 “Christmas Concerto”: VI. Pastorale (Largo) | 1712 |
 | `906ee67e` | Cottrau – Santa Lucia | * Santa Lucia | ? |
 | `bd18eb14` | Debussy – Children’s Corner, L. 113, CD 119 | * VI. Golliwogg’s Cake‐Walk | 1906‑1908 |
 | `ede113fb` | Debussy – Deux arabesques, L. 66, CD 74 | * No. 1. Andantino con moto | 1890‑1891 |
@@ -473,7 +473,7 @@
 | `1ee21089` | Kreisler – Prélude et Allegro dans le style de Pugnani | * Prélude et Allegro dans le style de Pugnani | ? |
 | `b17b78e3` | Kreisler – Tambourin chinois, op. 3 | * Tambourin chinois, op. 3 | 1905 |
 | `9cf137ed` | Lalo – Symphonie espagnole in D minor, op. 21 | * II. Scherzando. Allegro molto | 1874 |
-| `a6f7b108` | Lehár – Das Land des Lächelns | * Akt II. Nr. 11 „Dein ist mein ganzes Herz” (Sou-Chong) | ? |
+| `a6f7b108` | Lehár – Das Land des Lächelns | * Akt II. Nr. 11 „Dein ist mein ganzes Herz” (Sou-Chong) | 1929 |
 | `1065a858` | Lehár – Die lustige Witwe | * Akt III. Nr. 15. Duett „Lippen schweigen” … „Bei jedem Walzerschritt” (Hanna, Danilo) | 1905 |
 | `7f357dfc` | Lehár – Gold und Silber-Walzer, op. 79 | * Gold und Silber-Walzer, op. 79 | ? |
 | `3ab8fcaa` | Leoncavallo – Pagliacci | * Atto I. “Recitar!” … “Vesti la giubba” (Canio) | 1892 |
@@ -619,7 +619,7 @@
 | `7cd45975` | Mussorgsky – Night on Bald Mountain (orch. Rimsky‐Korsakov) | * Night on Bald Mountain (orch. Rimsky‐Korsakov) | 1867 |
 | `fef21cee` | Mussorgsky – Pictures at an Exhibition | * The great gate at Kiev | 1874 |
 | `e624d7dc` | Mussorgsky – Pictures at an Exhibition (orch. Ravel) | * Pictures at an Exhibition: X. The Great Gate of Kiev | 1874 |
-| `4bf24d79` | Nicolai – Die lustigen Weiber von Windsor | * Ouvertüre | ? |
+| `4bf24d79` | Nicolai – Die lustigen Weiber von Windsor | * Ouvertüre | 1845‑1849 |
 | `dc59f081` | Nielsen – Symphony no. 4, op. 29, FS 76 “The Inextinguishable” | * I. Allegro | 1914‑1916 |
 | `c283b670` | Offenbach – Die schöne Helena | * La Belle Hélène: Ouverture | ? |
 | `7ca9655b` | Offenbach – Les Contes d’Hoffmann | * Acte III. “Belle nuit, ô nuit d’amour” (Nicklausse, Giulietta) | 1880 |
@@ -659,7 +659,7 @@
 | `d8a080c3` | Puccini – Manon Lescaut | * Atto I. “Donna non vidi mai simile a questa!” (Des Grieux) | 1893 |
 | `b3e15438` | Puccini – Tosca | * Atto III. “E lucevan le stelle” (Cavaradossi) | 1900 |
 | `f617e5ae` | Puccini – Turandot | * Atto III, scena 1. Aria “Nessun dorma” (Calaf) | 1921‑1924 |
-| `4e13dc5f` | Purcell – Chacony in G minor for 2 violins, viola and continuo, Z. 730 | * Chacony in G minor for 2 violins, viola and continuo, Z. 730 | ? |
+| `4e13dc5f` | Purcell – Chacony in G minor for 2 violins, viola and continuo, Z. 730 | * Chacony in G minor for 2 violins, viola and continuo, Z. 730 | 1680 |
 | `0043a9b7` | Purcell – Dido and Aeneas, Z. 626 | * Act III, 37. Ground, Aria and Ritornello “When I am laid in earth” (Dido) | 1689 |
 | `820e42e0` | Rachmaninoff – 10 Preludes, op. 23 | * No. 5 in G minor: Alla marcia | 1901‑1903 |
 | `b1fc68bd` | Rachmaninoff – 13 Preludes, op. 32 | * No. 12 in G-sharp minor. Allegro | 1910 |
@@ -736,12 +736,12 @@
 | `e7b9f29a` | Satie – Trois Gnossiennes | * Gnossienne no. 1 | 1888‑1889 |
 | `232644a4` | Scarlatti – Sonata in A major, K 208, L 238: Adagio e cantabile | * Sonata in A major, K 208, L 238: Adagio e cantabile | 1756‑1757 |
 | `1caf85da` | Scarlatti – Sonata in A major, K 322, L 483: Allegro | * Sonata in A major, K 322, L 483: Allegro | ? |
-| `7d39f190` | Scarlatti – Sonata in B minor, K 87, L 33 | * Sonata in B minor, K 87, L 33 | ? |
-| `52b0d1a1` | Scarlatti – Sonata in C major, K 159, L 104 "La caccia": Allegro | * Sonata in C major, K 159, L 104 "La caccia": Allegro | ? |
-| `08d2472b` | Scarlatti – Sonata in D minor, K 141, L 422: Allegro | * Sonata in D minor, K 141, L 422: Allegro | ? |
+| `7d39f190` | Scarlatti – Sonata in B minor, K 87, L 33 | * Sonata in B minor, K 87, L 33 | 1756‑1757 |
+| `52b0d1a1` | Scarlatti – Sonata in C major, K 159, L 104 "La caccia": Allegro | * Sonata in C major, K 159, L 104 "La caccia": Allegro | 1756‑1757 |
+| `08d2472b` | Scarlatti – Sonata in D minor, K 141, L 422: Allegro | * Sonata in D minor, K 141, L 422: Allegro | 1756‑1757 |
 | `c466c92f` | Scarlatti – Sonata in D minor, K 32, L 423: Aria | * Sonata in D minor, K 32, L 423: Aria | ? |
-| `0ee7e99f` | Scarlatti – Sonata in E major, K. 380, L. 23: Andante comodo | * Sonata in E major, K. 380, L. 23: Andante comodo | ? |
-| `afc3fc5f` | Scarlatti – Sonata in F minor, K 466, L 118: Andante moderato | * Sonata in F minor, K 466, L 118: Andante moderato | ? |
+| `0ee7e99f` | Scarlatti – Sonata in E major, K. 380, L. 23: Andante comodo | * Sonata in E major, K. 380, L. 23: Andante comodo | 1756‑1757 |
+| `afc3fc5f` | Scarlatti – Sonata in F minor, K 466, L 118: Andante moderato | * Sonata in F minor, K 466, L 118: Andante moderato | 1756‑1757 |
 | `57082b35` | Schubert – 3 Klavierstücke, D. 946 | * Nr. 1 in es-Moll. Allegro assai | 1828 |
 | `b4d1328b` | Schubert – 3 Marches militaires, op. 51, D. 733 | * Marche militaire, op. 51, D. 733 no. 1 in D major | 1818 |
 | `1b6eceb2` | Schubert – 3 Sonatas for Violin and Piano, op. 137 | * Sonata for Violin and Piano in G minor, op. 137 no. 3, D. 408: III. Menuetto | 1816 |

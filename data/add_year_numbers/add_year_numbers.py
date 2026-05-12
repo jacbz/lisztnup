@@ -547,6 +547,48 @@ def save_state(gid, year, output_data):
         f.write(f"{gid}\n")
 
 # ==========================================
+# Summary & Reporting
+# ==========================================
+def print_summary(stats: dict, total_years_in_file: int):
+    """Prints a comprehensive summary of the processing run."""
+    print("\n" + "=" * 80)
+    print("PROCESSING SUMMARY")
+    print("=" * 80)
+    
+    # Processing stats
+    print(f"\n📊 Processing Statistics:")
+    print(f"   Works processed this run:  {stats['processed']}")
+    print(f"   Years added this run:      {stats['years_added']}")
+    print(f"   Not found:                 {stats['not_found']}")
+    
+    # Success rate
+    if stats['processed'] > 0:
+        success_rate = (stats['years_added'] / stats['processed']) * 100
+        print(f"   Success rate:              {success_rate:.1f}%")
+    
+    # Source breakdown
+    if stats['years_added'] > 0:
+        print(f"\n🔍 Sources (for years found this run):")
+        print(f"   Wikidata:                  {stats['found_wikidata']} ({stats['found_wikidata']/stats['years_added']*100:.1f}%)")
+        print(f"   IMSLP:                     {stats['found_imslp']} ({stats['found_imslp']/stats['years_added']*100:.1f}%)")
+        print(f"   AllMusic:                  {stats['found_allmusic']} ({stats['found_allmusic']/stats['years_added']*100:.1f}%)")
+    
+    # Error breakdown
+    total_errors = stats['network_errors'] + stats['other_errors']
+    if total_errors > 0:
+        print(f"\n⚠️  Errors:")
+        print(f"   Network errors:            {stats['network_errors']}")
+        print(f"   Other errors:              {stats['other_errors']}")
+        print(f"   Total errors:              {total_errors}")
+    
+    # Overall totals
+    print(f"\n📁 Output File Status:")
+    print(f"   Total years in WORK_YEAR_NUMBERS.yml: {total_years_in_file}")
+    
+    print("\n" + "=" * 80)
+    logger.info("Processing complete. Summary printed to console.")
+
+# ==========================================
 # Main & Test Loops
 # ==========================================
 def main():
@@ -573,16 +615,49 @@ def main():
 
     print(f"Loaded {len(already_processed)} already processed GIDs ({len(checked_gids)} checked, {len(output_data)} with results). {len(gids_to_process)} left to process.")
     
+    # Statistics tracking
+    stats = {
+        'processed': 0,
+        'years_added': 0,
+        'found_wikidata': 0,
+        'found_imslp': 0,
+        'found_allmusic': 0,
+        'not_found': 0,
+        'network_errors': 0,
+        'parse_errors': 0,
+        'other_errors': 0
+    }
+    
     # Wrap with tqdm progress bar
     for gid in tqdm(gids_to_process, desc="Processing Works", unit="work"):
+        stats['processed'] += 1
         try:
             year, source = process_gid(gid)
             save_state(gid, year, output_data)
             checked_gids.add(gid)
+            
+            if year is not None:
+                stats['years_added'] += 1
+                if source == 'wikidata':
+                    stats['found_wikidata'] += 1
+                elif source == 'imslp':
+                    stats['found_imslp'] += 1
+                elif source == 'allmusic':
+                    stats['found_allmusic'] += 1
+            else:
+                stats['not_found'] += 1
+                
+        except requests.exceptions.RequestException as e:
+            logger.error(f"[{gid}] Network error: {e}")
+            stats['network_errors'] += 1
         except Exception as e:
-            logger.error(f"[{gid}] Error processing: {e}")
+            logger.error(f"[{gid}] Error processing: {e}", exc_info=True)
+            stats['other_errors'] += 1
             
         time.sleep(PROCESS_RATE_SECONDS)
+    
+    # Print summary
+    print_summary(stats, len(output_data))
 
 
 class TestYearExtraction(unittest.TestCase):
