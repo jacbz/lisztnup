@@ -5,9 +5,9 @@ import {
 	type DailyChallengeAnchor,
 	type DailyChallengeScheduleEntry
 } from './dailyChallengeSchedule';
-import { getUtcDateString } from './date';
+import { getGermanDateString } from './date';
 
-export { getUtcDateString } from './date';
+export { getGermanDateString, getUtcDateString } from './date';
 
 const EXCLUDED_DAILY_ROTATION_TRACKLIST_IDS: readonly string[] = [
 	'beginner',
@@ -26,7 +26,7 @@ const DAILY_ROTATION_CANDIDATES: DefaultTracklist[] = DEFAULT_TRACKLISTS.filter(
 
 /**
  * Fixed daily challenge anchors with a semantic cause for the banner copy.
- * These are UTC dates so the schedule is global and serverless.
+ * These are German calendar dates so the schedule flips globally at midnight in Berlin.
  */
 const DAILY_CHALLENGE_ANCHORS: DailyChallengeAnchor[] = [
 	{ month: 1, day: 27, tracklistId: 'mozart', cause: 'birthday' },
@@ -46,40 +46,50 @@ const DAILY_CHALLENGE_ANCHORS: DailyChallengeAnchor[] = [
 	{ month: 12, day: 17, tracklistId: 'beethoven', cause: 'birthday' }
 ];
 
-/** Backwards-compatible alias for the UTC date string helper. */
-export const getTodayDateString = getUtcDateString;
+/** Backwards-compatible alias for the daily challenge calendar date helper. */
+export const getTodayDateString = getGermanDateString;
+
+function getGermanScheduleDate(date: Date): { scheduleDate: Date; dayIndex: number } {
+	const [year, month, day] = getGermanDateString(date).split('-').map(Number);
+	return {
+		scheduleDate: new Date(Date.UTC(year, month - 1, day)),
+		dayIndex: day - 1
+	};
+}
 
 /**
- * Returns the global UTC daily challenge schedule for the month of `date`.
+ * Returns the global German-calendar daily challenge schedule for the month of `date`.
  *
  * Fixed themed dates are reserved first, then the remaining days are filled from the allowed
  * rotation pool. If a long month exhausts that pool, allowed filler tracklists repeat.
  */
 export function getDailyChallengeSchedule(date = new Date()): DefaultTracklist[] {
+	const { scheduleDate } = getGermanScheduleDate(date);
 	return buildDailyChallengeSchedule(
 		DAILY_ANCHOR_CANDIDATES,
 		DAILY_CHALLENGE_ANCHORS,
-		date,
+		scheduleDate,
 		DAILY_ROTATION_CANDIDATES
 	).map((entry) => entry.tracklist);
 }
 
-/** Returns the global daily challenge entry for `date` in UTC. */
+/** Returns the global daily challenge entry for `date` in German calendar time. */
 export function getDailyChallengeEntry(
 	date = new Date()
 ): DailyChallengeScheduleEntry<DefaultTracklist> {
+	const { scheduleDate, dayIndex } = getGermanScheduleDate(date);
 	const schedule = buildDailyChallengeSchedule(
 		DAILY_ANCHOR_CANDIDATES,
 		DAILY_CHALLENGE_ANCHORS,
-		date,
+		scheduleDate,
 		DAILY_ROTATION_CANDIDATES
 	);
-	return schedule[date.getUTCDate() - 1]!;
+	return schedule[dayIndex]!;
 }
 
 /**
- * Returns the global daily challenge tracklist for `date` in UTC.
- * Defaults to the current UTC day.
+ * Returns the global daily challenge tracklist for `date` in German calendar time.
+ * Defaults to the current German day.
  */
 export function getDailyTracklist(date = new Date()): DefaultTracklist {
 	return getDailyChallengeEntry(date).tracklist;

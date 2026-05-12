@@ -43,11 +43,12 @@
 	import Flag from 'lucide-svelte/icons/flag';
 	import Venus from 'lucide-svelte/icons/venus';
 	import { getPlayerToken } from '$lib/stores/identity';
-	import { getDailyChallengeEntry, getUtcDateString } from '$lib/utils/dailyChallenge';
+	import { getDailyChallengeEntry } from '$lib/utils/dailyChallenge';
 	import { SettingsService } from '$lib/services';
 	import { gameData } from '$lib/stores/gameData';
 	import { get } from 'svelte/store';
 	import type { Track } from '$lib/models';
+	import { getGermanDateString, getMsUntilNextGermanMidnight } from '$lib/utils/date';
 	import TimelinePopup from '$lib/components/game/timeline/TimelinePopup.svelte';
 	import TracklistRecordsPopup from '$lib/components/ui/setup/TracklistRecordsPopup.svelte';
 	import TimelineLeaderboard from '$lib/components/ui/setup/TimelineLeaderboard.svelte';
@@ -99,11 +100,13 @@
 	let timelineTimestamp = $state<string | undefined>();
 	let playerSetupRef: { addPlayer: () => void } | undefined = $state();
 	let startAudio: HTMLAudioElement | null = null;
-	let utcTodayDate = $state(getUtcDateString());
+	let germanTodayDate = $state(getGermanDateString());
 	let dailyChallengeEntry = $state(getDailyChallengeEntry());
 	let customTracklists = $state<Tracklist[]>([]);
 	let allTracklists = $derived([...DEFAULT_TRACKLISTS, ...customTracklists]);
 	let dailyChallengeTimer: ReturnType<typeof setTimeout> | null = null;
+	let dailyChallengeCountdownTimer: ReturnType<typeof setInterval> | null = null;
+	let dailyChallengeCountdown = $state('');
 	let loadingCardTimer: ReturnType<typeof setTimeout> | null = null;
 	let showDataLoadingCard = $state(false);
 	let previousSelectedTracklist = $settingsStore.selectedTracklist;
@@ -119,7 +122,7 @@
 	let showDailyChallenge = $derived(
 		selectedMode === 'timeline' &&
 			(localSettings.gamesPlayed ?? 0) > 0 &&
-			localSettings.dailyChallengePlayedDate !== utcTodayDate
+			localSettings.dailyChallengePlayedDate !== germanTodayDate
 	);
 	let DailyChallengeIcon = $derived.by(() => {
 		if (dailyChallengeEntry.cause === 'birthday') return Cake;
@@ -144,18 +147,18 @@
 		return $_('dailyChallenge.subtitle');
 	});
 
-	function getMsUntilNextUtcMidnight(date = new Date()): number {
-		const nextUtcMidnight = Date.UTC(
-			date.getUTCFullYear(),
-			date.getUTCMonth(),
-			date.getUTCDate() + 1
-		);
-		return Math.max(0, nextUtcMidnight - date.getTime());
+	function formatCountdown(ms: number): string {
+		const totalSeconds = Math.max(0, Math.ceil(ms / 1000));
+		const hours = Math.floor(totalSeconds / 3600);
+		const minutes = Math.floor((totalSeconds % 3600) / 60);
+		const seconds = totalSeconds % 60;
+		return [hours, minutes, seconds].map((value) => String(value).padStart(2, '0')).join(':');
 	}
 
 	function syncDailyChallenge() {
-		utcTodayDate = getUtcDateString();
+		germanTodayDate = getGermanDateString();
 		dailyChallengeEntry = getDailyChallengeEntry();
+		dailyChallengeCountdown = formatCountdown(getMsUntilNextGermanMidnight());
 	}
 
 	// Update local settings when store changes
@@ -341,7 +344,7 @@
 				selectedMode === 'timeline' &&
 				localSettings.selectedTracklist === dailyChallengeEntry.tracklist.id
 			) {
-				updates.dailyChallengePlayedDate = utcTodayDate;
+				updates.dailyChallengePlayedDate = germanTodayDate;
 			}
 			return { ...s, ...updates };
 		});
@@ -477,7 +480,7 @@
 
 		syncDailyChallenge();
 
-		const scheduleUtcRefresh = () => {
+		const scheduleGermanRefresh = () => {
 			if (dailyChallengeTimer) {
 				clearTimeout(dailyChallengeTimer);
 				dailyChallengeTimer = null;
@@ -485,11 +488,14 @@
 
 			dailyChallengeTimer = setTimeout(() => {
 				syncDailyChallenge();
-				scheduleUtcRefresh();
-			}, getMsUntilNextUtcMidnight());
+				scheduleGermanRefresh();
+			}, getMsUntilNextGermanMidnight());
 		};
 
-		scheduleUtcRefresh();
+		dailyChallengeCountdownTimer = setInterval(() => {
+			dailyChallengeCountdown = formatCountdown(getMsUntilNextGermanMidnight());
+		}, 1000);
+		scheduleGermanRefresh();
 
 		// Close locale dropdown when clicking outside
 		const handleClickOutside = (event: MouseEvent) => {
@@ -503,6 +509,7 @@
 			destroyed = true;
 			document.removeEventListener('click', handleClickOutside);
 			if (dailyChallengeTimer) clearTimeout(dailyChallengeTimer);
+			if (dailyChallengeCountdownTimer) clearInterval(dailyChallengeCountdownTimer);
 			if (loadingCardTimer) clearTimeout(loadingCardTimer);
 		};
 	});
@@ -567,9 +574,14 @@
 				<button
 					type="button"
 					onclick={() => handleTracklistSelect(dailyChallengeEntry.tracklist)}
-					class="group mx-auto flex w-full max-w-2xl cursor-pointer items-center gap-4 rounded-2xl border-2 border-amber-400/40 bg-linear-to-r from-amber-950/30 via-amber-900/20 to-amber-950/30 px-5 py-4 text-left shadow-[0_0_20px_rgba(251,191,36,0.15)] backdrop-blur-sm transition-all duration-300 hover:border-amber-400/70 hover:shadow-[0_0_30px_rgba(251,191,36,0.3)] active:scale-[0.98]"
+					class="group relative mx-auto flex w-full max-w-2xl cursor-pointer items-center gap-4 overflow-hidden rounded-2xl border-2 border-amber-400/40 bg-linear-to-r from-amber-950/30 via-amber-900/20 to-amber-950/30 px-5 py-4 pr-4 text-left shadow-[0_0_20px_rgba(251,191,36,0.15)] backdrop-blur-sm transition-all duration-300 hover:border-amber-400/70 hover:shadow-[0_0_30px_rgba(251,191,36,0.3)] active:scale-[0.98] sm:pr-12"
 					in:fade={{ delay: 300, duration: 300 }}
 				>
+					<span
+						class="pointer-events-none absolute top-4 -right-12 w-36 rotate-45 border-y border-amber-200/30 bg-amber-300/20 py-0.5 text-center text-sm font-black tracking-wide text-amber-100 tabular-nums shadow-[0_0_14px_rgba(251,191,36,0.2)]"
+					>
+						{dailyChallengeCountdown}
+					</span>
 					<div
 						class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-400/15 text-amber-400 transition-colors group-hover:bg-amber-400/25"
 					>

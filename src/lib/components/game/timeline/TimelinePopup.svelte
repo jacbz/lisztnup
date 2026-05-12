@@ -48,6 +48,7 @@
 	}: Props = $props();
 
 	let inspectTrack = $state<ReplayTrack | null>(null);
+	let inspectDisplayYear = $state<number | null>(null);
 	let selectedStep = $state(0);
 	let touchedSlider = $state(false);
 	let sliderOpenKey = $state(0);
@@ -96,6 +97,7 @@
 
 	const revealYearText = $derived.by(() => {
 		if (!inspectTrack) return '';
+		if (inspectDisplayYear !== null) return String(inspectDisplayYear);
 		return formatYearRange(inspectTrack.work.begin_year, inspectTrack.work.end_year, {
 			preferEndYearWhenRange: true
 		});
@@ -151,7 +153,8 @@
 						id: `initial-${initialTrack.part.gid}`,
 						track: initialTrack,
 						confirmed: true,
-						correct: null
+						correct: null,
+						displayYear: getReplayDisplayYear(initialTrack, replay.initialYear)
 					}
 				]
 			: [];
@@ -173,14 +176,16 @@
 					id: `turn-${i}-${turn.part}`,
 					track,
 					confirmed: true,
-					correct: isActiveStep && (step < turns.length || showFinalBorder) ? true : null
+					correct: isActiveStep && (step < turns.length || showFinalBorder) ? true : null,
+					displayYear: getReplayDisplayYear(track, turn.year)
 				});
 			} else if (isActiveStep && turn.index !== null) {
 				insertAt(result, turn.index, {
 					id: `turn-${i}-${turn.part}`,
 					track,
 					confirmed: true,
-					correct: false
+					correct: false,
+					displayYear: getReplayDisplayYear(track, turn.year)
 				});
 			}
 		}
@@ -195,6 +200,11 @@
 			composer: { name: '?', birth_year: 0, death_year: 0 },
 			isMissing: true
 		} as unknown as ReplayTrack;
+	}
+
+	function getReplayDisplayYear(track: Track, logYear: number | undefined): number | undefined {
+		if (track.work.begin_year !== null || track.work.end_year !== null) return undefined;
+		return typeof logYear === 'number' && Number.isFinite(logYear) ? logYear : undefined;
 	}
 
 	function stepTimeLabel(turn: TimelineReplayTurn): string {
@@ -327,7 +337,10 @@
 				animateCards={touchedSlider}
 				fixedWidth={finalTimelineWidth}
 				bindEl={(el) => (timelineEl = el)}
-				onConfirmedCardClick={(entry) => (inspectTrack = entry.track)}
+				onConfirmedCardClick={(entry) => {
+					inspectTrack = entry.track;
+					inspectDisplayYear = entry.displayYear ?? null;
+				}}
 			/>
 		</div>
 
@@ -442,7 +455,10 @@
 
 <Popup
 	visible={!!inspectTrack}
-	onClose={() => (inspectTrack = null)}
+	onClose={() => {
+		inspectTrack = null;
+		inspectDisplayYear = null;
+	}}
 	width="6xl"
 	borderColor="border-cyan-400"
 >

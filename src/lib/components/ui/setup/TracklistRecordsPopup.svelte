@@ -149,7 +149,7 @@
 				{$_('leaderboard.tracklistRecordsNoScores')}
 			</p>
 		{:else if entries.length > 0}
-			<div class="max-h-[65vh] overflow-x-auto overflow-y-auto">
+			<div class="overflow-x-auto">
 				<table
 					class="w-full table-auto border-separate border-spacing-y-2 text-left text-xs md:text-sm"
 				>

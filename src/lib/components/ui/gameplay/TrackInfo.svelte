@@ -140,7 +140,7 @@
 	{/if}
 
 	<div
-		class={`flex h-full flex-col justify-center gap-5 ${fixedWidth ? 'md:max-w-100 md:min-w-100' : ''}`}
+		class={`flex h-full flex-col justify-center gap-5 ${fixedWidth ? 'w-full max-w-100 min-w-72 sm:min-w-100' : ''}`}
 	>
 		<!-- Composer -->
 		<div class="flex flex-col gap-1.5">

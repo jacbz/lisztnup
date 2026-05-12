@@ -23,6 +23,27 @@ export function getGermanDateString(date = new Date()): string {
 	return getDateStringInTimeZone(date, GERMAN_TIME_ZONE);
 }
 
+export function getMsUntilNextGermanMidnight(date = new Date()): number {
+	const currentDate = getGermanDateString(date);
+	let low = date.getTime();
+	let high = low + 36 * 60 * 60 * 1000;
+
+	while (getGermanDateString(new Date(high)) === currentDate) {
+		high += 12 * 60 * 60 * 1000;
+	}
+
+	while (high - low > 1) {
+		const mid = Math.floor((low + high) / 2);
+		if (getGermanDateString(new Date(mid)) === currentDate) {
+			low = mid;
+		} else {
+			high = mid;
+		}
+	}
+
+	return Math.max(0, high - date.getTime());
+}
+
 export function parseD1Timestamp(value: unknown): Date | null {
 	if (typeof value !== 'string') return null;
 	const normalized = value.includes('T') ? value : `${value.replace(' ', 'T')}Z`;

@@ -22,6 +22,7 @@
 		track: Track;
 		confirmed: boolean;
 		correct: boolean | null;
+		displayYear?: number;
 		isDiscarding?: boolean;
 	}
 
@@ -198,9 +199,12 @@
 			</div>
 		{/if}
 		{#each entries as entry (entry.id)}
-			{@const yearText = formatYearRange(entry.track.work.begin_year, entry.track.work.end_year, {
-				preferEndYearWhenRange: true
-			})}
+			{@const yearText =
+				entry.displayYear !== undefined
+					? String(entry.displayYear)
+					: formatYearRange(entry.track.work.begin_year, entry.track.work.end_year, {
+							preferEndYearWhenRange: true
+						})}
 			{@const isPendingMove = isDragging && dragKind === 'pending' && draggingEntryId === entry.id}
 
 			<div

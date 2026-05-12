@@ -3,8 +3,8 @@ export type DailyChallengeCandidate = {
 };
 
 export type DailyChallengeAnchor = {
-	readonly month: number; // 1-12, UTC
-	readonly day: number; // 1-31, UTC
+	readonly month: number; // 1-12 in the schedule calendar
+	readonly day: number; // 1-31 in the schedule calendar
 	readonly tracklistId: string;
 	readonly cause: 'birthday' | 'nationalDay' | 'womensDay';
 };
