@@ -16,7 +16,7 @@ Players take clock-wise turns placing tracks on their own chronological timeline
 - Year-required filtering ensures all tracks have valid dates
 - **Scoring**: Rewards correct placement, tight chronological gaps, close boundary calls, accuracy, speed, and streaks. Misses can earn early consolation so near-correct attempts still matter, but repeated misses fade out. Detailed formulas live in [SCORING.md](../scoring/SCORING.md).
 - **Endgame**: When any player reaches target, endgame activates. In multiplayer, current round completes (all players finish). Winner = highest total score (not card count). Amber edge glow + "FINAL ROUND" badges during endgame.
-- **Leaderboard**: Only completed timelines can publish. Endgame asks once per player name; allow/deny choices are saved in settings. Published names can be renamed later, and naming a score claims anonymous history for the same browser token.
+- **Leaderboard**: Only completed timelines can publish. Endgame asks once per player name; allow/deny choices are saved in settings. Published names can be renamed later, and naming a score claims anonymous history for the same browser token. Custom tracklists publish under `custom` and stay out of Tracklist Records.
 
 ### Classic
 

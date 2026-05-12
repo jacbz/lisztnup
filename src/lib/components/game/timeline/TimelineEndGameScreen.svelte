@@ -20,7 +20,7 @@
 	import { scale } from 'svelte/transition';
 	import { getLeaderboard, patchLeaderboardName, submitLeaderboard } from '$lib/services/client';
 	import type { TimelineReplayLog, TimelineReplayTurn } from '$lib/types';
-	import { settings } from '$lib/stores/settings';
+	import { selectedTracklist, settings } from '$lib/stores/settings';
 	import { Zap } from 'lucide-svelte';
 	import { SvelteSet } from 'svelte/reactivity';
 	import TimelinePopup from './TimelinePopup.svelte';
@@ -85,6 +85,9 @@
 		sortedTimelines.length >= 2 &&
 			sortedTimelines[0].score > 0 &&
 			sortedTimelines[0].score === sortedTimelines[1].score
+	);
+	const publishTracklistId = $derived(
+		$selectedTracklist.kind === 'custom' ? 'custom' : tracklistId
 	);
 
 	const revealYearText = $derived.by(() => {
@@ -496,7 +499,7 @@
 								attempts: t.totalPlacements,
 								averageTime: getAverageTime(t.replayTurns),
 								longestStreak: t.longestStreak,
-								tracklistId,
+								tracklistId: publishTracklistId,
 								sessionId,
 								log: getReplayLog(t)
 							},

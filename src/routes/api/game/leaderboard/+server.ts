@@ -51,6 +51,10 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 			conditions.push(`target = ?${binds.length + 1}`);
 			binds.push(target);
 		}
+		if (records) {
+			conditions.push(`tracklist_id <> ?${binds.length + 1}`);
+			binds.push('custom');
+		}
 
 		const whereClause = conditions.length > 0 ? ` WHERE ${conditions.join(' AND ')}` : '';
 		const cols = `player_token, player_name, score, attempts, target, average_time, longest_streak, tracklist_id, country, timestamp, log`;
