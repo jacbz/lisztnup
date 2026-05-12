@@ -36,9 +36,10 @@ src/
 │       ├── game/              Game mode screens + SpinningWheel + timeline/
 │       └── ui/                primitives/ screens/ setup/ gameplay/
 ├── routes/
-│   ├── +page.svelte           Home page (main app)
-│   ├── +layout.svelte         Root layout
+│   ├── +page.svelte           Home app; [locale=locale]/ mirrors it for localized SEO
+│   ├── +layout.svelte         Root layout + SEO metadata
 │   ├── bingo/+page.svelte     Bingo grid route (per-player device)
+│   ├── sitemap.xml/+server.ts Localized URL sitemap
 │   └── api/game/
 │       ├── events/+server.ts  Game telemetry (start, progress, end, placements)
 │       ├── feedback/+server.ts User feedback collection

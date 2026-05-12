@@ -32,7 +32,9 @@
 	},
 	"app": {
 		"title": "Liszt’n Up!",
-		"subtitle": "古典音樂猜謎大挑戰"
+		"subtitle": "古典音樂猜謎大挑戰",
+		"inspiredByHitster": "靈感來自 Hitster",
+		"seoDescription": "靈感來自 Hitster 的古典音樂猜謎遊戲。和朋友一起玩 Timeline、Bingo、Buzzer 等模式。"
 	},
 	"loading": {
 		"progress": {

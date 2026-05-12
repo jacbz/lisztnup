@@ -1,5 +1,6 @@
 import type { Handle } from '@sveltejs/kit';
 import { hashUser, getCurrentSalt } from '$lib/server/analytics';
+import { isSupportedLocale } from '$lib/seo';
 
 const BOT_USER_AGENTS = [
 	'googlebot',
@@ -69,7 +70,12 @@ function getDeviceType(userAgent: string | null, cfDeviceType: string | null): s
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
-	const response = await resolve(event);
+	const firstSegment = event.url.pathname.split('/').filter(Boolean)[0];
+	const routeLocale = isSupportedLocale(firstSegment) ? firstSegment : 'en';
+	const response = await resolve(event, {
+		transformPageChunk: ({ html }) =>
+			html.replace('<html lang="en">', `<html lang="${routeLocale}">`)
+	});
 
 	// Get Cloudflare context (only defined in production/wrangler dev)
 	const cf = event.platform?.cf;
@@ -81,7 +87,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 		const isVerifiedBot = botScoreStr ? parseInt(botScoreStr) < 30 : isBot(userAgent);
 
 		// Filter out everything except the main game entry points
-		const isMainPath = event.url.pathname === '/' || event.url.pathname === '/bingo';
+		const isLocalizedHome =
+			isSupportedLocale(firstSegment) && event.url.pathname === `/${firstSegment}`;
+		const isMainPath =
+			event.url.pathname === '/' || event.url.pathname === '/bingo' || isLocalizedHome;
 		const isAsset =
 			!isMainPath ||
 			event.url.pathname.startsWith('/_app') ||

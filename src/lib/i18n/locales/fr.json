@@ -32,7 +32,9 @@
 	},
 	"app": {
 		"title": "Liszt’n Up!",
-		"subtitle": "Le jeu de devinettes de musique classique"
+		"subtitle": "Le jeu de devinettes de musique classique",
+		"inspiredByHitster": "inspiré de Hitster",
+		"seoDescription": "Le jeu de devinettes de musique classique inspiré de Hitster. Joue à Timeline, Bingo, Buzzer et plus encore entre amis."
 	},
 	"loading": {
 		"progress": {

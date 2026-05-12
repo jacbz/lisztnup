@@ -32,7 +32,9 @@
 	},
 	"app": {
 		"title": "Liszt’n Up!",
-		"subtitle": "O Jogo de Adivinhação de Música Clássica"
+		"subtitle": "O Jogo de Adivinhação de Música Clássica",
+		"inspiredByHitster": "inspirado no Hitster",
+		"seoDescription": "O jogo de adivinhação de música clássica inspirado no Hitster. Joga Timeline, Bingo, Buzzer e muito mais com amigos."
 	},
 	"loading": {
 		"progress": {

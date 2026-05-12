@@ -32,7 +32,9 @@
 	},
 	"app": {
 		"title": "Liszt’n Up!",
-		"subtitle": "The Classical Music Guessing Game"
+		"subtitle": "The Classical Music Guessing Game",
+		"inspiredByHitster": "inspired by Hitster",
+		"seoDescription": "The Classical Music Guessing Game Inspired by Hitster. Play Timeline, Bingo, Buzzer, and more with friends."
 	},
 	"loading": {
 		"progress": {

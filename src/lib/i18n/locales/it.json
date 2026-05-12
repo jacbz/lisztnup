@@ -32,7 +32,9 @@
 	},
 	"app": {
 		"title": "Liszt’n Up!",
-		"subtitle": "Il gioco a quiz sulla musica classica"
+		"subtitle": "Il gioco a quiz sulla musica classica",
+		"inspiredByHitster": "ispirato a Hitster",
+		"seoDescription": "Il gioco a quiz di musica classica ispirato a Hitster. Gioca a Timeline, Bingo, Buzzer e altro con gli amici."
 	},
 	"loading": {
 		"progress": {

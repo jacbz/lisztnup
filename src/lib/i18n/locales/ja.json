@@ -32,7 +32,9 @@
 	},
 	"app": {
 		"title": "Liszt’n Up!",
-		"subtitle": "クラシック音楽クイズゲーム"
+		"subtitle": "クラシック音楽クイズゲーム",
+		"inspiredByHitster": "Hitsterにインスパイア",
+		"seoDescription": "Hitsterにインスパイアされたクラシック音楽クイズゲーム。友達と Timeline、Bingo、Buzzer などで遊ぼう。"
 	},
 	"loading": {
 		"progress": {

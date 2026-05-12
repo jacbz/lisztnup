@@ -32,7 +32,9 @@
 	},
 	"app": {
 		"title": "Liszt’n Up!",
-		"subtitle": "Das Klassik-Ratespiel"
+		"subtitle": "Das Klassik-Ratespiel",
+		"inspiredByHitster": "inspiriert von Hitster",
+		"seoDescription": "Das Klassik-Ratespiel inspiriert von Hitster: Hitster für klassische Musik. Spiele Timeline, Bingo, Buzzer und mehr mit Freunden."
 	},
 	"loading": {
 		"progress": {
