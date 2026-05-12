@@ -82,7 +82,7 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 # ==========================================
 def parse_year_text(text):
     """
-    Comprehensive year parser handling human-written date formats.
+    Robust year parser handling human-written date formats from free-text sources.
     Only returns EXACT years or ranges - no imprecise decades/centuries.
     
     Returns:
@@ -95,13 +95,15 @@ def parse_year_text(text):
     Supported formats:
         - "1767", "ca. 1767", "c. 1767", "circa 1767"
         - "1777-1779", "1777–1779", "1777 - 1779"
-        - "1777-79", "1715-22"
+        - "1777-79", "1715-22" (year ranges)
         - "before 1742", "1707 or before", "by 1742"
         - "after 1800", "1800 or after", "from 1800"
         - "1715-22 ca.", "ca. 1715-22"
         - "1767?", "1767 (?)", "[1767]", "~1767"
         - "between 1750 and 1760"
-        - "1777/1779", "1777/79"
+        - ISO dates: "1788-06-22", "1821/09/15" (extracts year only)
+        - Dates with locations: "1788/06/22 in Vienna" (extracts year only)
+        - Month-year: "April 1824", "1824-04" (extracts year only)
     
     Rejected (too imprecise):
         - "1700s", "early 1700s", "mid-1700s", "late 1700s"
@@ -133,7 +135,51 @@ def parse_year_text(text):
         return None
     
     # ============================================================
-    # PATTERN 1: "YYYY or before", "before YYYY", "by YYYY"
+    # PATTERN 0: Month names with years (e.g., "April 1824", "1824 April")
+    # ============================================================
+    months = r'(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)'
+    match = re.search(rf'{months}\s+(\d{{4}})', text, re.IGNORECASE)
+    if match:
+        year = int(match.group(1))
+        logger.debug(f"[Parser] Matched month-year pattern, extracting year: {year}")
+        return year
+    
+    match = re.search(rf'(\d{{4}})\s+{months}', text, re.IGNORECASE)
+    if match:
+        year = int(match.group(1))
+        logger.debug(f"[Parser] Matched year-month pattern, extracting year: {year}")
+        return year
+    
+    # ============================================================
+    # PATTERN 1: ISO dates and full dates (MUST come before range patterns!)
+    # Examples: "1788-06-22", "1788/06/22", "1821-09-15 in Paris"
+    # These look like ranges but are actually single dates
+    # ============================================================
+    
+    # ISO date: YYYY-MM-DD or YYYY/MM/DD (with optional location/text after)
+    match = re.search(r'\b(\d{4})[-/](\d{2})[-/](\d{2})\b', text)
+    if match:
+        year = int(match.group(1))
+        month = int(match.group(2))
+        day = int(match.group(3))
+        # Validate it's a real date (month 1-12, day 1-31)
+        if 1 <= month <= 12 and 1 <= day <= 31:
+            logger.debug(f"[Parser] Matched ISO date pattern (YYYY-MM-DD), extracting year: {year}")
+            return year
+    
+    # Partial date: YYYY-MM or YYYY/MM (year and month only)
+    # Must have NO space around the separator to distinguish from ranges like "1799 - 02"
+    match = re.search(r'\b(\d{4})[-/](\d{2})(?:\s|$|[,;.])', text)
+    if match:
+        year = int(match.group(1))
+        month = int(match.group(2))
+        # Validate it's a real month (1-12)
+        if 1 <= month <= 12:
+            logger.debug(f"[Parser] Matched YYYY-MM date pattern, extracting year: {year}")
+            return year
+    
+    # ============================================================
+    # PATTERN 2: "YYYY or before", "before YYYY", "by YYYY"
     # ============================================================
     match = re.search(r'(\d{4})\s+or\s+before', text, re.IGNORECASE)
     if match:
@@ -148,7 +194,7 @@ def parse_year_text(text):
         return result
     
     # ============================================================
-    # PATTERN 2: "after YYYY", "YYYY or after", "from YYYY"
+    # PATTERN 3: "after YYYY", "YYYY or after", "from YYYY"
     # ============================================================
     match = re.search(r'(\d{4})\s+or\s+after', text, re.IGNORECASE)
     if match:
@@ -163,56 +209,77 @@ def parse_year_text(text):
         return result
     
     # ============================================================
-    # PATTERN 3: Full range "YYYY-YYYY" (with optional ca./circa)
+    # PATTERN 4: Full range "YYYY-YYYY" (with optional ca./circa)
     # Examples: "1777-1779", "ca. 1777-1779", "1777-1779 ca."
+    # Must ensure both parts are 4 digits to avoid matching dates
     # ============================================================
     match = re.search(r'(?:ca\.?|circa|c\.?)?\s*(\d{4})\s*-\s*(\d{4})(?:\s*(?:ca\.?|circa|c\.?))?', text, re.IGNORECASE)
     if match:
-        result = [int(match.group(1)), int(match.group(2))]
-        logger.debug(f"[Parser] Matched full range 'YYYY-YYYY' pattern: {result}")
-        return result
+        y1, y2 = int(match.group(1)), int(match.group(2))
+        # Sanity check: ensure it's a valid range (y2 > y1 and reasonable span)
+        if y1 < y2 and (y2 - y1) <= 100:
+            result = [y1, y2]
+            logger.debug(f"[Parser] Matched full range 'YYYY-YYYY' pattern: {result}")
+            return result
+        else:
+            logger.debug(f"[Parser] Rejected invalid range: {y1}-{y2}")
     
     # ============================================================
-    # PATTERN 4: Short range "YYYY-YY" (with optional ca./circa)
-    # Examples: "1777-79", "1715-22", "1715-22 ca.", "ca. 1715-22"
+    # PATTERN 5: Short range "YYYY-YY" or "YYYY - YY" (with optional ca./circa)
+    # Examples: "1777-79", "1715-22", "1799 - 02", "1715-22 ca.", "ca. 1715-22"
+    # Smart heuristics to distinguish from dates:
+    # - If YY > 12: definitely a year range (not a month)
+    # - If YY <= 12 AND has spaces around dash: likely a year range
+    # - If YY <= 12 AND no spaces: likely a date (reject)
     # ============================================================
-    match = re.search(r'(?:ca\.?|circa|c\.?)?\s*(\d{4})\s*-\s*(\d{2})(?:\s*(?:ca\.?|circa|c\.?))?', text, re.IGNORECASE)
+    match = re.search(r'(?:ca\.?|circa|c\.?)?\s*(\d{4})\s*(-)\s*(\d{2})(?:\s*(?:ca\.?|circa|c\.?))?(?:\s|$|[,;.])', text, re.IGNORECASE)
     if match:
-        y1, y2 = match.group(1), match.group(2)
-        century = int(y1[:2])
-        # Handle turn of the century edge case (e.g. 1799-01 -> 1801)
-        if int(y2) < int(y1[2:]):
-            century += 1
-        result = [int(y1), int(f"{century:02d}{y2}")]
-        logger.debug(f"[Parser] Matched short range 'YYYY-YY' pattern: {result}")
-        return result
+        y1, separator_context, y2_short = match.group(1), match.group(2), match.group(3)
+        y2_int = int(y2_short)
+        
+        # Check if there's whitespace around the dash
+        has_space_before = text[match.start(2)-1:match.start(2)].isspace() if match.start(2) > 0 else False
+        has_space_after = text[match.end(2):match.end(2)+1].isspace() if match.end(2) < len(text) else False
+        has_spaces = has_space_before or has_space_after
+        
+        # Decision logic:
+        # 1. If y2 > 31: definitely a year (can't be day or month)
+        # 2. If y2 > 12: definitely a year (can't be month)
+        # 3. If y2 <= 12 AND has spaces around dash: likely year range
+        # 4. If y2 <= 12 AND no spaces: likely date (reject)
+        
+        if y2_int > 31:
+            # Definitely a year
+            is_year_range = True
+        elif y2_int > 12:
+            # Can't be a month, must be a year
+            is_year_range = True
+        elif has_spaces:
+            # Spaces suggest year range (e.g., "1799 - 02")
+            is_year_range = True
+        else:
+            # No spaces and could be month: likely a date
+            is_year_range = False
+        
+        if is_year_range:
+            century = int(y1[:2])
+            # Handle turn of the century edge case (e.g. 1799-01 -> 1801)
+            if y2_int < int(y1[2:]):
+                century += 1
+            y2 = int(f"{century:02d}{y2_short}")
+            result = [int(y1), y2]
+            logger.debug(f"[Parser] Matched short range 'YYYY-YY' pattern: {result}")
+            return result
+        else:
+            logger.debug(f"[Parser] Rejected YYYY-YY pattern (looks like date): {y1}-{y2_short}")
     
     # ============================================================
-    # PATTERN 5: Between "between YYYY and YYYY"
+    # PATTERN 6: Between "between YYYY and YYYY"
     # ============================================================
     match = re.search(r'between\s+(\d{4})\s+and\s+(\d{4})', text, re.IGNORECASE)
     if match:
         result = [int(match.group(1)), int(match.group(2))]
         logger.debug(f"[Parser] Matched 'between YYYY and YYYY' pattern: {result}")
-        return result
-    
-    # ============================================================
-    # PATTERN 6: "YYYY/YYYY" (slash separator)
-    # ============================================================
-    match = re.search(r'\b(\d{4})/(\d{4})\b', text)
-    if match:
-        result = [int(match.group(1)), int(match.group(2))]
-        logger.debug(f"[Parser] Matched 'YYYY/YYYY' pattern: {result}")
-        return result
-    
-    match = re.search(r'\b(\d{4})/(\d{2})\b', text)
-    if match:
-        y1, y2 = match.group(1), match.group(2)
-        century = int(y1[:2])
-        if int(y2) < int(y1[2:]):
-            century += 1
-        result = [int(y1), int(f"{century:02d}{y2}")]
-        logger.debug(f"[Parser] Matched 'YYYY/YY' pattern: {result}")
         return result
     
     # ============================================================
@@ -227,7 +294,7 @@ def parse_year_text(text):
         return result
     
     # ============================================================
-    # FALLBACK: Any 4-digit year
+    # FALLBACK: Any 4-digit year (last resort)
     # ============================================================
     match = re.search(r'\b(\d{4})\b', text)
     if match:
@@ -673,10 +740,10 @@ class TestYearExtraction(unittest.TestCase):
         self.assertEqual(year, 1837)
 
     def test_imslp_extraction(self):
-        gid = '6122f2fb-8abd-4f72-9f20-2abd9dbe90bf'
+        gid = '326c9d28-dfce-4920-ab3a-afb83a20769f'
         year, source = process_gid(gid)
         self.assertEqual(source, 'imslp')
-        self.assertEqual(year, 1767)
+        self.assertEqual(year, 1817)
 
     def test_allmusic_extraction(self):
         gid = 'b66a52f2-1592-44b6-a51c-e0d5dd56b96f'
@@ -690,7 +757,22 @@ class TestYearExtraction(unittest.TestCase):
         self.assertEqual(parse_year_text("1767"), 1767)
         self.assertEqual(parse_year_text("1777–1779"), [1777, 1779])
         self.assertEqual(parse_year_text("1777-79"), [1777, 1779])
-        self.assertEqual(parse_year_text("1799 - 02"), [1799, 1802])
+        self.assertEqual(parse_year_text("1799 - 02"), [1799, 1802])  # Spaces = year range
+        
+        # Month names with years
+        self.assertEqual(parse_year_text("April 1824"), 1824)
+        self.assertEqual(parse_year_text("1824 April"), 1824)
+        self.assertEqual(parse_year_text("December 1791"), 1791)
+        self.assertEqual(parse_year_text("Jan 1800"), 1800)
+        
+        # ISO dates and full dates (should extract year only, not treat as range!)
+        self.assertEqual(parse_year_text("1788/06/22"), 1788)
+        self.assertEqual(parse_year_text("1788-06-22"), 1788)
+        self.assertEqual(parse_year_text("1821-09-15"), 1821)  # Not 1909!
+        self.assertEqual(parse_year_text("1788/06/22 in Vienna"), 1788)
+        self.assertEqual(parse_year_text("1821-09-15 in Paris"), 1821)
+        self.assertEqual(parse_year_text("1788-06"), 1788)  # Year-month only (no space)
+        self.assertEqual(parse_year_text("1817-09"), 1817)  # Year-month (no space)
         
         # Before/after patterns
         self.assertEqual(parse_year_text("Comp Date....before 1742"), [None, 1742])
@@ -716,10 +798,6 @@ class TestYearExtraction(unittest.TestCase):
         
         # Between pattern
         self.assertEqual(parse_year_text("between 1750 and 1760"), [1750, 1760])
-        
-        # Slash separator
-        self.assertEqual(parse_year_text("1777/1779"), [1777, 1779])
-        self.assertEqual(parse_year_text("1777/79"), [1777, 1779])
         
         # Imprecise patterns should return None
         self.assertIsNone(parse_year_text("1770s"))

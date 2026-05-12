@@ -338,8 +338,8 @@
 | `67cb661e` | Bernstein – Symphonic Dances from West Side Story (orch. Kostal, Ramin) | * II. “Somewhere”. Adagio<br>* IV. Mambo. Presto | 1960 |
 | `386166d9` | Binge – Elizabethan Serenade | * Elizabethan Serenade | 1951 |
 | `4a2e78cd` | Bizet – Agnus Dei (arr. Guiraud) | * Agnus Dei (arr. Guiraud) | 1872 |
-| `04173a43` | Bizet – Carmen Suite no. 1 (arr. Guiraud) | * III. Intermezzo. Andantino quasi allegretto<br>* VI. Les Toréadors. Allegro giocoso | ? |
-| `280ebc4d` | Bizet – Carmen Suite no. 2 (arr. Guiraud) | * II. Habanera<br>* VI. Danse bohème | ? |
+| `04173a43` | Bizet – Carmen Suite no. 1 (arr. Guiraud) | * III. Intermezzo. Andantino quasi allegretto<br>* VI. Les Toréadors. Allegro giocoso | 1875 |
+| `280ebc4d` | Bizet – Carmen Suite no. 2 (arr. Guiraud) | * II. Habanera<br>* VI. Danse bohème | 1875 |
 | `45efd8f4` | Bizet – Carmen, WD 31 | * Carmen : Acte I. No. 5 Habanera « L’amour est un oiseau rebelle » (Carmen, chœur)<br>* Carmen : Acte II. No. 17 Duo : « La Fleur que tu m’avais jetée » (Carmen, Don José) | 1875 |
 | `a4578f4c` | Bizet – L’Arlésienne Suite no. 1, op. 23bis | * I. Prélude, Allegro deciso – Andante molto<br>* III. Adagietto | 1872 |
 | `6ec79e92` | Bizet – L’Arlésienne Suite no. 2 (arr. Guiraud) | * III. Menuet<br>* IV. Farandole | 1872 |
@@ -1806,7 +1806,7 @@
 | `ed538401` | Strauss – Vienna Bonbons, Op. 307 | * Vienna Bonbons, Op. 307 | 1866 |
 | `17540bfe` | Strauss – Village Swallows from Austria, Op. 164 | * Village Swallows from Austria, Op. 164 | 1864 |
 | `b42a2d27` | Strauss – Voices of Spring | * Voices of Spring | 1882 |
-| `16e024c8` | Strauss – Where the Citrons Bloom, op. 364 | * Where the Citrons Bloom, op. 364 | ? |
+| `16e024c8` | Strauss – Where the Citrons Bloom, op. 364 | * Where the Citrons Bloom, op. 364 | 1874 |
 | `6237af8b` | Strauss – Wine, Woman and Song | * Wine, Woman and Song | 1869 |
 | `5778e65f` | Stravinsky – Apollo | * Scene 1. The Birth of Apollo<br>* Scene 2. Coda | 1927‑1928 |
 | `81bf55c3` | Stravinsky – Concerto for Piano and Wind Instruments | * I. Largo. Allegro - Maestoso<br>* II. Largo | 1923‑1924 |

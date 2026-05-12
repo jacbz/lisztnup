@@ -71,5 +71,5 @@ After generating the final dataset, additional data validation and enrichment st
 
 - This script identifies works in `lisztnup.json` that are missing year numbers and attempts to fill them in using external sources (Wikidata, IMSLP, AllMusic).
 - The results are stored in `add_year_numbers/WORK_YEAR_NUMBERS.yml`.
-- `process_musicbrainz.py` automatically loads year data from this file during processing.
+- `process_musicbrainz.py` loads year data from this file and deletes matching year/checked-GID lines when a date anomaly is detected; arrangement/orchestration titles are ignored.
 - See [add_year_numbers/README.md] for detailed usage instructions.

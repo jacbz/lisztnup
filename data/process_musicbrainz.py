@@ -63,6 +63,9 @@ POPULARITY_ALPHA = 0.5          # Balances peak vs. average part popularity in t
 # --- Output GID Compression ---
 SHORT_GID_LENGTH = 8
 
+# Remove date-anomaly GIDs from add_year_numbers/checked_gids.txt so they can be retried.
+REMOVE_DATE_ANOMALIES_FROM_CHECKED_GIDS = False
+
 # --- Dynamic Part Score Filter Configuration ---
 # This creates a sliding scale for the minimum part score. A work with a low WSS
 # requires its parts to be highly significant (closer to 100), while a work with a
@@ -346,14 +349,15 @@ class MusicbrainzProcessor:
         self.deezer_overrides: Dict[str, List[int]] = config.get("deezer_overrides") or {}
         
         # Load year numbers from add_year_numbers pipeline
-        year_numbers_path = Path("add_year_numbers/WORK_YEAR_NUMBERS.yml")
-        if year_numbers_path.exists():
-            with open(year_numbers_path, "r", encoding="utf-8") as f:
+        self.year_numbers_path = Path("add_year_numbers/WORK_YEAR_NUMBERS.yml")
+        self.checked_gids_path = Path("add_year_numbers/checked_gids.txt")
+        if self.year_numbers_path.exists():
+            with open(self.year_numbers_path, "r", encoding="utf-8") as f:
                 self.year_overrides = yaml.safe_load(f) or {}
-            log.info("Loaded %d year numbers from %s", len(self.year_overrides), year_numbers_path)
+            log.info("Loaded %d year numbers from %s", len(self.year_overrides), self.year_numbers_path)
         else:
             self.year_overrides = {}
-            log.warning("Year numbers file not found: %s", year_numbers_path)
+            log.warning("Year numbers file not found: %s", self.year_numbers_path)
         
         self.stats: Counter = Counter()
 
@@ -640,14 +644,51 @@ class MusicbrainzProcessor:
                 ))
         return candidates
 
+    def _delete_year_number_lines(self, gids: Set[str]) -> int:
+        """Deletes matching top-level GID lines from WORK_YEAR_NUMBERS.yml without parsing it."""
+        if not gids or not self.year_numbers_path.exists():
+            return 0
+
+        lines = self.year_numbers_path.read_text(encoding="utf-8").splitlines(keepends=True)
+        prefixes = {f"{gid}:" for gid in gids}
+        kept_lines = [line for line in lines if not any(line.startswith(prefix) for prefix in prefixes)]
+        deleted_count = len(lines) - len(kept_lines)
+
+        if deleted_count:
+            self.year_numbers_path.write_text("".join(kept_lines), encoding="utf-8")
+            for gid in gids:
+                self.year_overrides.pop(gid, None)
+
+        return deleted_count
+
+    def _delete_checked_gid_lines(self, gids: Set[str]) -> int:
+        """Deletes matching GID lines from add_year_numbers/checked_gids.txt."""
+        if not gids or not REMOVE_DATE_ANOMALIES_FROM_CHECKED_GIDS or not self.checked_gids_path.exists():
+            return 0
+
+        lines = self.checked_gids_path.read_text(encoding="utf-8").splitlines(keepends=True)
+        kept_lines = [line for line in lines if line.strip() not in gids]
+        deleted_count = len(lines) - len(kept_lines)
+
+        if deleted_count:
+            self.checked_gids_path.write_text("".join(kept_lines), encoding="utf-8")
+
+        return deleted_count
+
     def _check_work_dates(self, works: List[FinalWork]) -> None:
         """
         Checks that every work falls between composer living dates.
-        Sets years to null for works with date anomalies.
+        Sets years to null for works with date anomalies and deletes matching
+        add_year_numbers overrides.
         Outputs findings to 'date_anomalies.txt' and a summary to the console.
         """
         anomalies_for_file = []
+        anomalous_gids = set()
         for work in works:
+            work_title = work.name.lower()
+            if "arr." in work_title or "orch." in work_title:
+                continue
+
             composer = self._composer_map.get(work.composer)
             if not composer or not (composer.birth_year or composer.death_year):
                 continue
@@ -682,6 +723,7 @@ class MusicbrainzProcessor:
                     f"{'='*80}"
                 )
                 anomalies_for_file.append(file_entry)
+                anomalous_gids.add(work.gid)
                 log.warning("DATE ANOMALY | %s | %s | %s | Setting years to null", work.name, issue, composer.name)
                 
                 # Set years to null for this work
@@ -689,6 +731,20 @@ class MusicbrainzProcessor:
                 work.end_year = None
         
         if anomalies_for_file:
+            deleted_count = self._delete_year_number_lines(anomalous_gids)
+            if deleted_count:
+                log.warning(
+                    "Deleted %d date anomaly line(s) from %s",
+                    deleted_count,
+                    self.year_numbers_path,
+                )
+            checked_gids_deleted_count = self._delete_checked_gid_lines(anomalous_gids)
+            if checked_gids_deleted_count:
+                log.warning(
+                    "Deleted %d date anomaly line(s) from %s",
+                    checked_gids_deleted_count,
+                    self.checked_gids_path,
+                )
             with open("date_anomalies.txt", "w", encoding="utf-8") as f:
                 f.write("\n\n".join(anomalies_for_file))
             log.warning("Found %d date anomalies. Years set to null. See 'date_anomalies.txt'", len(anomalies_for_file))
@@ -699,7 +755,7 @@ class MusicbrainzProcessor:
         if total > 0:
             summary = (f"\n" + "!" * 80 + "\n"
                        f"!!! WARNING: {total} works have dates outside composer life range.\n"
-                       f"!!! Years have been set to null for these works in the output.\n"
+                       f"!!! Years have been set to null and matching add_year_numbers lines deleted.\n"
                        f"!!! Detailed report generated: 'date_anomalies.txt'\n" +
                        "!" * 80 + "\n")
             print(summary)

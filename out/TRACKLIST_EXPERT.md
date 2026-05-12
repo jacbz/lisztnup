@@ -375,7 +375,7 @@
 | `e0de3884` | Bach – Suite a-Moll, BWV 818a | * I. Prélude<br>* II. Allemande<br>* III. Courante | 1720‑1722 |
 | `18b1f701` | Bach – Suite E-Dur, BWV 1006a: VI. Bourrée | * VI. Bourrée | ? |
 | `beff096a` | Bach – Suite for Lute in G minor, BWV 995 | * Suite for Lute in G minor, BWV 995: II. Allemande<br>* Suite for Lute in G minor, BWV 995: IV. Sarabande<br>* Lute Suite in G Minor, BWV 995: Gavotte I | 1727‑1731 |
-| `469a9f81` | Bach – Suite from Orchestral Works of Bach (orch. Mahler) | * Orchestral Suite no. 2 in B minor, BWV 1067: Badinerie<br>* Orchestral Suite no. 3 in D major, BWV 1068: Air | ? |
+| `469a9f81` | Bach – Suite from Orchestral Works of Bach (orch. Mahler) | * Orchestral Suite no. 2 in B minor, BWV 1067: Badinerie<br>* Orchestral Suite no. 3 in D major, BWV 1068: Air | 1910 |
 | `8ea818b8` | Bach – Suite in E minor, BWV 996 | * III. Courante<br>* IV. Sarabande<br>* V. Bourrée | 1707‑1709 |
 | `9d34710a` | Bach – Symphony in E-flat major, op. 18 no. 1, W. C26 | * I. Allegro spiritoso<br>* II. Andante<br>* III. Allegro | ? |
 | `e562bb8c` | Bach – The Art of Fugue, BWV 1080 | * Die Kunst der Fuge, BWV 1080: I. Contrapunctus 1<br>* Die Kunst der Fuge, BWV 1080: IV. Contrapunctus 4<br>* Die Kunst der Fuge, BWV 1080: IX. Contrapunctus 9 a 4 alla Duodecima | 1742‑1750 |
@@ -706,8 +706,8 @@
 | `386166d9` | Binge – Elizabethan Serenade | * Elizabethan Serenade | 1951 |
 | `472c67f9` | Binge – Sailing By | * Sailing By | 1963 |
 | `4a2e78cd` | Bizet – Agnus Dei (arr. Guiraud) | * Agnus Dei (arr. Guiraud) | 1872 |
-| `04173a43` | Bizet – Carmen Suite no. 1 (arr. Guiraud) | * I. Prélude. Allegro giocoso – Andante moderato<br>* III. Intermezzo. Andantino quasi allegretto<br>* VI. Les Toréadors. Allegro giocoso | ? |
-| `280ebc4d` | Bizet – Carmen Suite no. 2 (arr. Guiraud) | * II. Habanera<br>* IV. Chanson du toréador<br>* VI. Danse bohème | ? |
+| `04173a43` | Bizet – Carmen Suite no. 1 (arr. Guiraud) | * I. Prélude. Allegro giocoso – Andante moderato<br>* III. Intermezzo. Andantino quasi allegretto<br>* VI. Les Toréadors. Allegro giocoso | 1875 |
+| `280ebc4d` | Bizet – Carmen Suite no. 2 (arr. Guiraud) | * II. Habanera<br>* IV. Chanson du toréador<br>* VI. Danse bohème | 1875 |
 | `45efd8f4` | Bizet – Carmen, WD 31 | * Carmen : Prélude<br>* Carmen : Acte I. No. 5 Habanera « L’amour est un oiseau rebelle » (Carmen, chœur)<br>* Carmen : Acte II. No. 17 Duo : « La Fleur que tu m’avais jetée » (Carmen, Don José) | 1875 |
 | `7aa76874` | Bizet – I pescatori di perle | * Atto I. "Mi par d'udir ancor" | ? |
 | `a7e702fa` | Bizet – Jeux d'enfants, op. 22 | * XI. Petit Mari, petite Femme | 1871 |
@@ -2035,7 +2035,7 @@
 | `5b780498` | Mendelssohn – String Symphony no. 2 in D major, MWV N 2 | * I. Allegro<br>* II. Andante<br>* III. Allegro vivace | 1821 |
 | `412d0b9d` | Mendelssohn – String Symphony no. 3 in E minor, MWV N 3 | * I. Allegro di molto<br>* II. Andante<br>* III. Allegro | 1821 |
 | `618ca68b` | Mendelssohn – String Symphony no. 4 in C minor | * I. Grave – Allegro<br>* II. Andante<br>* III. Allegro vivace | 1821 |
-| `1d3610f9` | Mendelssohn – String Symphony no. 5 in B-flat major | * I. Allegro vivace<br>* II. Andante<br>* III. Presto | ? |
+| `1d3610f9` | Mendelssohn – String Symphony no. 5 in B-flat major | * I. Allegro vivace<br>* II. Andante<br>* III. Presto | 1821 |
 | `0b63e07f` | Mendelssohn – String Symphony no. 6 in E-flat major | * I. Allegro<br>* II. Menueto<br>* III. Prestissimo | ? |
 | `6da167f2` | Mendelssohn – String Symphony no. 7 in D minor | * I. Allegro<br>* II. Andante (amorevole)<br>* III. Menuetto | 1822 |
 | `7d96f8b3` | Mendelssohn – String Symphony no. 8 in D major | * II. Adagio<br>* III. Menuetto<br>* IV. Allegro molto | 1822 |
@@ -2127,7 +2127,7 @@
 | `80b19260` | Mozart – Aria for Soprano & Orchestra in A major, K. 418: "Vorrei spiegarvi, oh Dio" | * Aria for Soprano & Orchestra in A major, K. 418: "Vorrei spiegarvi, oh Dio" | 1783 |
 | `a475236b` | Mozart – Aria for Soprano & Orchestra in G major, K. 383: "Nehmt meinen Dank, ihr holden Gönner" | * Aria for Soprano & Orchestra in G major, K. 383: "Nehmt meinen Dank, ihr holden Gönner" | 1782 |
 | `f6a39cfc` | Mozart – Aria for Soprano and Orchestra in E-flat major, K. 583: Allegro - andante sostenuto “Vado, ma dove? oh Dei!” | * Aria for Soprano and Orchestra in E-flat major, K. 583: Allegro - andante sostenuto “Vado, ma dove? oh Dei!” | 1789 |
-| `beb0e39f` | Mozart – Aria for Soprano and Orchestra in F major, K. 538: Allegro “Ah se in ciel, benigne stelle” | * Aria for Soprano and Orchestra in F major, K. 538: Allegro “Ah se in ciel, benigne stelle” | ? |
+| `beb0e39f` | Mozart – Aria for Soprano and Orchestra in F major, K. 538: Allegro “Ah se in ciel, benigne stelle” | * Aria for Soprano and Orchestra in F major, K. 538: Allegro “Ah se in ciel, benigne stelle” | 1788 |
 | `225f7a18` | Mozart – Aria for Soprano in G major, K. 579: "Un moto di gioia mi sento" | * Aria for Soprano in G major, K. 579: "Un moto di gioia mi sento" | 1789 |
 | `d63c68b1` | Mozart – Ave verum corpus, K. 618 | * Ave verum corpus, K. 618 | 1791 |
 | `24470a62` | Mozart – Ballet Music in C major, K. 299b / KV Anh 10 "Les petits riens" | * Les petits riens, K. 299b: Ouverture. Allegro<br>* Les petits riens, K. 299b: No. 9. Andantino<br>* Les petits riens, K. 299b: No. 16. Pantomime | 1778 |
@@ -2331,10 +2331,10 @@
 | `9c3f613d` | Mozart – Song for Voice & Piano in E-flat major, K. 524 “An Chloë”: “Wenn die Lieb’ aus deinen blauen” | * Song for Voice & Piano in E-flat major, K. 524 “An Chloë”: “Wenn die Lieb’ aus deinen blauen” | 1787 |
 | `57628a69` | Mozart – Song for Voice & Piano in E-flat major, K. 530 "Das Traumbild": "Wo bist du, Bild" | * Song for Voice & Piano in E-flat major, K. 530 "Das Traumbild": "Wo bist du, Bild" | 1787 |
 | `cf8d5f2b` | Mozart – Song for Voice & Piano in F major, K. 523 “Abendempfindung an Laura”: “Abend ist’s” | * Song for Voice & Piano in F major, K. 523 “Abendempfindung an Laura”: “Abend ist’s” | 1787 |
-| `cffaf71c` | Mozart – Song for Voice & Piano in F major, K. 596 "Sehnsucht nach dem Frühling": "Komm, lieber Mai" | * Song for Voice & Piano in F major, K. 596 "Sehnsucht nach dem Frühling": "Komm, lieber Mai" | ? |
+| `cffaf71c` | Mozart – Song for Voice & Piano in F major, K. 596 "Sehnsucht nach dem Frühling": "Komm, lieber Mai" | * Song for Voice & Piano in F major, K. 596 "Sehnsucht nach dem Frühling": "Komm, lieber Mai" | 1791 |
 | `537b2322` | Mozart – Song for Voice & Piano in F minor, K. 519 “Das Lied der Trennung”: “Die Engel Gottes weinen” | * Song for Voice & Piano in F minor, K. 519 “Das Lied der Trennung”: “Die Engel Gottes weinen” | ? |
 | `aabe598e` | Mozart – Song for Voice & Piano in G major, K. 476 “Das Veilchen”: “Ein Veilchen auf der Wiese stand” | * Song for Voice & Piano in G major, K. 476 “Das Veilchen”: “Ein Veilchen auf der Wiese stand” | 1785 |
-| `1f1ca3b0` | Mozart – Song for Voice & Piano in G minor, K. 472 "Der Zauberer": "Ihr Mädchen, flieht Damöten ja!" | * Song for Voice & Piano in G minor, K. 472 "Der Zauberer": "Ihr Mädchen, flieht Damöten ja!" | ? |
+| `1f1ca3b0` | Mozart – Song for Voice & Piano in G minor, K. 472 "Der Zauberer": "Ihr Mädchen, flieht Damöten ja!" | * Song for Voice & Piano in G minor, K. 472 "Der Zauberer": "Ihr Mädchen, flieht Damöten ja!" | 1785 |
 | `bbdbc86d` | Mozart – String Quintet no. 3 in C major, K. 515 | * I. Allegro<br>* II. Andante<br>* IV. Allegro | 1787 |
 | `dae32e21` | Mozart – Symphony in B-flat major, K. 45b / Anh 214 | * I. Allegro<br>* II. Andante<br>* III. Menuetto & Trio | 1768 |
 | `6dd5e3b7` | Mozart – Symphony in F major, K. 19a / Anh. 223 | * I. Allegro assai<br>* II. Andante<br>* III. Presto | 1765 |
@@ -2394,7 +2394,7 @@
 | `f081147d` | Mozart – Trio for Piano no. 1 in B-flat major, K. 254 | * I. Allegro assai<br>* II. Adagio<br>* III. Rondeau. Tempo di minuetto | 1776 |
 | `824d508c` | Mozart – Trio for Piano no. 2 in G major, K. 496 | * I. Allegro<br>* II. Andante<br>* III. Thema. Allegretto. Variation I. Variation II. Variation III. Variation IV. Variation V. Adagio. Variation VI. Allegretto | 1786 |
 | `d1bf8e3c` | Mozart – Trio for Piano no. 3 in B-flat major, K. 502 | * I. Allegro<br>* II. Larghetto<br>* III. Allegretto | 1786 |
-| `dc6bd7e2` | Mozart – Trio for Piano no. 4 in E major, K. 542 | * I. Allegro<br>* II. Andante grazioso<br>* III. Allegro | ? |
+| `dc6bd7e2` | Mozart – Trio for Piano no. 4 in E major, K. 542 | * I. Allegro<br>* II. Andante grazioso<br>* III. Allegro | 1788 |
 | `ed863e66` | Mozart – Trio for Piano no. 5 in C major, K. 548 | * I. Allegro<br>* II. Andante cantabile<br>* III. Allegro | 1788 |
 | `bb18ea71` | Mozart – Trio for Piano no. 6 in G major, K. 564 | * I. Allegro<br>* II. Andante con variazioni<br>* III. Allegretto | 1788 |
 | `9049547c` | Mozart – Vesperae solennes de confessore, K. 339 | * V. Laudate dominum | 1780 |
@@ -2464,7 +2464,7 @@
 | `76c6b9c5` | Orff – Trionfi | * Carmina Burana: Fortuna imperatrix mundi: I. O Fortuna<br>* Carmina Burana: III. Cour d’amours: XXI. In trutina mentis dubia<br>* Carmina Burana: Blanziflor et Helena: XXIV. Ave formosissima | 1936 |
 | `70ed831c` | Pachelbel – Canon and Gigue in D major, P. 37, T. 337 | * I. Canon | 1680 |
 | `66ec72e9` | Pachelbel – Chaconne in F minor, P. 43, T. 206 | * Chaconne in F minor, P. 43, T. 206 | ? |
-| `4690a10d` | Pachelbel – Christe, der du bist Tag und Licht, BWV 1096, P. 63 | * Christe, der du bist Tag und Licht, BWV 1096, P. 63 | ? |
+| `4690a10d` | Pachelbel – Christe, der du bist Tag und Licht, BWV 1096, P. 63 | * Christe, der du bist Tag und Licht, BWV 1096, P. 63 | 1703 |
 | `5e9c65ff` | Paderewski – 6 humoresques de concert, op. 14 | * Menuet célèbre, op. 14 no. 1 | 1887 |
 | `89e914b3` | Paderewski – Miscellanea, op. 16 | * Nocturne in B-flat major, op. 16 no. 4 | 1886‑1896 |
 | `ded18a4a` | Paganini – 24 Caprices for Solo Violin, op. 1, MS 25 | * 24 Caprices for Solo Violin, MS 25, op. 1 no. 5 in A minor: Agitato<br>* 24 Caprices for Solo Violin, MS 25, op. 1 no. 9 in E major: Allegretto “La Chasse”<br>* 24 Caprices for Solo Violin, MS 25, op. 1 no. 24 in A minor: Tema con variazioni. Quasi presto | 1802‑1817 |
@@ -3112,7 +3112,7 @@
 | `90641042` | Schubert – Piano Trio in E-flat major, D. 897 "Notturno" | * Piano Trio in E-flat major, D. 897 "Notturno" | 1827 |
 | `c50a1154` | Schubert – Piano Trio no. 1 in B-flat major, op. 99, D. 898 | * I. Allegro moderato<br>* II. Andante un poco mosso<br>* III. Scherzo. Allegro | 1827‑1828 |
 | `07c9a8ce` | Schubert – Piano Trio no. 2 in E-flat major, op. 100, D. 929 | * I. Allegro<br>* II. Andante con moto<br>* III. Scherzando. Allegro moderato | 1827 |
-| `326c9d28` | Schubert – Polonaise for Violin and Orchestra in B-flat major, D. 580 | * Polonaise for Violin and Orchestra in B-flat major, D. 580 | ? |
+| `326c9d28` | Schubert – Polonaise for Violin and Orchestra in B-flat major, D. 580 | * Polonaise for Violin and Orchestra in B-flat major, D. 580 | 1817 |
 | `6b500210` | Schubert – Prometheus, D. 674 | * Prometheus, D. 674 | 1819 |
 | `1299c104` | Schubert – Rastlose Liebe, D. 138 | * Rastlose Liebe, D. 138 | 1815 |
 | `6e42804b` | Schubert – Rondo for Violin and Piano in B minor, op. 70, D. 895 "Rondeau Brillant" | * I. Andante<br>* II. Allegro - Più mosso | 1826 |
@@ -3122,7 +3122,7 @@
 | `22593591` | Schubert – Schäfers Klagelied, D. 121 | * Schäfers Klagelied, D. 121 | 1814 |
 | `03e6ddaa` | Schubert – Schwanengesang, D. 957 | * I. Liebesbotschaft<br>* IV. Ständchen (Leise flehen meine Lieder)<br>* XIII. Der Doppelgänger | 1828 |
 | `5d48653b` | Schubert – Seligkeit, D. 433 | * Seligkeit, D. 433 | 1816 |
-| `e23b08bc` | Schubert – Six mélodies favorites de La Belle Meunière, S. 565 (arr. Liszt) | * Das Wandern, S. 565 no. 1<br>* Der Müller und der Bach, S. 565 no. 2 | ? |
+| `e23b08bc` | Schubert – Six mélodies favorites de La Belle Meunière, S. 565 (arr. Liszt) | * Das Wandern, S. 565 no. 1<br>* Der Müller und der Bach, S. 565 no. 2 | 1846 |
 | `677d749c` | Schubert – Sonata (Duo) for Violin and Piano in A major, op. 162. D. 574 | * I. Allegro moderato<br>* II. Scherzo: Presto. Trio<br>* III. Andantino | 1817 |
 | `b10732ae` | Schubert – Sonata for Piano no. 11 in F minor, D. 625 | * I. Allegro<br>* II. Scherzo. Allegretto<br>* III. Allegro | 1816‑1817 |
 | `813cd7d1` | Schubert – Sonata for Piano no. 13 in A major, op. posth. 120, D. 664 | * I. Allegro moderato<br>* II. Andante<br>* III. Allegro | 1819 |
@@ -3447,7 +3447,7 @@
 | `f3e5ad84` | Strauss – Banditen-Galopp, op. 378 | * Banditen-Galopp, op. 378 | 1877 |
 | `589eea6b` | Strauss – Burleske in D minor, TrV 145 | * Burleske in D minor, TrV 145 | 1885‑1886 |
 | `bbf9e9f9` | Strauss – Capriccio | * Letzte Szene. Mondscheinmusik (Orchester‐Zwischenspiel)<br>* Letzte Szene. „Morgen mittag um elf! … Kein andres, das mir so im Herzen loht“ | 1940‑1941 |
-| `2d6e795d` | Strauss – Casanova (arr. Benatzky) | * Casanova: Nuns’ Chorus & Laura’s Song | ? |
+| `2d6e795d` | Strauss – Casanova (arr. Benatzky) | * Casanova: Nuns’ Chorus & Laura’s Song | 1928 |
 | `ea045f7f` | Strauss – Cello Sonata in F major | * 1. Allegro con brio<br>* 2. Andante ma non troppo<br>* 3. Finale: Allegro vivo | 1880‑1883 |
 | `8a385dbd` | Strauss – Champagner Polka, op. 211 | * Champagner Polka, op. 211 | 1858 |
 | `840f637a` | Strauss – Delirien Waltz, op. 212 | * Delirien Waltz, op. 212 | 1867 |
@@ -3517,7 +3517,7 @@
 | `17540bfe` | Strauss – Village Swallows from Austria, Op. 164 | * Village Swallows from Austria, Op. 164 | 1864 |
 | `72313445` | Strauss – Violin Concerto in D minor | * I. Allegro<br>* II. Lento<br>* III. Rondo | 1880‑1882 |
 | `b42a2d27` | Strauss – Voices of Spring | * Voices of Spring | 1882 |
-| `16e024c8` | Strauss – Where the Citrons Bloom, op. 364 | * Where the Citrons Bloom, op. 364 | ? |
+| `16e024c8` | Strauss – Where the Citrons Bloom, op. 364 | * Where the Citrons Bloom, op. 364 | 1874 |
 | `6237af8b` | Strauss – Wine, Woman and Song | * Wine, Woman and Song | 1869 |
 | `5778e65f` | Stravinsky – Apollo | * Scene 1. The Birth of Apollo<br>* Scene 2. Variation d'Apollon (I)<br>* Scene 2. Coda | 1927‑1928 |
 | `7f0a427d` | Stravinsky – Ave Maria | * Ave Maria | 1934 |
