@@ -1,31 +1,49 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
+	import { shuffle } from '$lib/utils';
 
 	interface Props {
 		progress?: number;
 		showText?: boolean;
 		compact?: boolean;
 		indeterminate?: boolean;
+		error?: boolean;
 	}
 
-	let { progress = 0, showText = true, compact = false, indeterminate = false }: Props = $props();
+	let {
+		progress = 0,
+		showText = true,
+		compact = false,
+		indeterminate = false,
+		error = false
+	}: Props = $props();
 	let clampedProgress = $derived(Math.max(0, Math.min(100, progress)));
 	let messageIndex = $state(0);
 
 	const MESSAGE_COUNT = 10;
 	const MESSAGE_ROTATION_MS = 3000;
 
-	function nextMessageIndex(current: number): number {
-		if (MESSAGE_COUNT <= 1) return 0;
-		const next = Math.floor(Math.random() * (MESSAGE_COUNT - 1));
-		return next >= current ? next + 1 : next;
+	function makeMessageOrder(previous: number | null = null): number[] {
+		const order = shuffle(Array.from({ length: MESSAGE_COUNT }, (_, index) => index));
+		if (previous === null || order.length <= 1 || order[0] !== previous) return order;
+		[order[0], order[1]] = [order[1], order[0]];
+		return order;
 	}
 
 	onMount(() => {
-		messageIndex = Math.floor(Math.random() * MESSAGE_COUNT);
+		let messageOrder = makeMessageOrder();
+
+		function advanceMessage() {
+			if (messageOrder.length === 0) {
+				messageOrder = makeMessageOrder(messageIndex);
+			}
+			messageIndex = messageOrder.shift() ?? 0;
+		}
+
+		advanceMessage();
 		const interval = setInterval(() => {
-			messageIndex = nextMessageIndex(messageIndex);
+			advanceMessage();
 		}, MESSAGE_ROTATION_MS);
 
 		return () => clearInterval(interval);
@@ -76,8 +94,16 @@
 		></div>
 	</div>
 	{#if showText}
-		<p class="mt-3 text-center text-sm font-semibold text-cyan-300">
-			{$_(`loading.progress.${messageIndex}`)}
+		<p
+			class="mt-3 text-center text-sm font-semibold"
+			class:text-cyan-300={!error}
+			class:text-rose-200={error}
+		>
+			{#if error}
+				{$_('loading.error')}
+			{:else}
+				{$_(`loading.progress.${messageIndex}`)}
+			{/if}
 		</p>
 	{/if}
 </div>

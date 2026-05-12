@@ -109,6 +109,7 @@
 	let dailyChallengeCountdown = $state('');
 	let loadingCardTimer: ReturnType<typeof setTimeout> | null = null;
 	let showDataLoadingCard = $state(false);
+	let dataLoadFailed = $state(false);
 	let previousSelectedTracklist = $settingsStore.selectedTracklist;
 	let startAudioSources = {
 		classic: '/start_classic.mp3',
@@ -464,16 +465,23 @@
 			}
 		}, 300);
 
+		dataLoadFailed = false;
+		let loadFailed = false;
 		loadGameData()
 			.catch((error) => {
 				console.error('Failed to load game data:', error);
+				loadFailed = true;
+				if (!destroyed) {
+					dataLoadFailed = true;
+					showDataLoadingCard = true;
+				}
 			})
 			.finally(() => {
 				if (loadingCardTimer) {
 					clearTimeout(loadingCardTimer);
 					loadingCardTimer = null;
 				}
-				if (!destroyed) {
+				if (!destroyed && !loadFailed) {
 					showDataLoadingCard = false;
 				}
 			});
@@ -637,16 +645,20 @@
 				out:slide={{ duration: 180 }}
 			>
 				<div
-					class="relative overflow-hidden rounded-xl border border-cyan-300/35 bg-slate-950/70 px-6 py-5 shadow-[0_18px_45px_rgba(15,23,42,0.35),0_0_28px_rgba(34,211,238,0.16)] backdrop-blur-md"
+					class="relative overflow-hidden rounded-xl border bg-slate-950/70 px-6 py-5 shadow-[0_18px_45px_rgba(15,23,42,0.35),0_0_28px_rgba(34,211,238,0.16)] backdrop-blur-md {dataLoadFailed
+						? 'border-rose-300/45'
+						: 'border-cyan-300/35'}"
 				>
 					<div
-						class="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-cyan-200/70 to-transparent"
+						class="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent to-transparent {dataLoadFailed
+							? 'via-rose-200/70'
+							: 'via-cyan-200/70'}"
 					></div>
 					<div
 						class="pointer-events-none absolute inset-0 bg-linear-to-r from-cyan-400/10 via-fuchsia-300/10 to-amber-200/10"
 					></div>
 					<div class="relative">
-						<LoadingProgress progress={$dataLoadProgress} />
+						<LoadingProgress progress={$dataLoadProgress} error={dataLoadFailed} />
 					</div>
 				</div>
 			</div>

@@ -48,7 +48,8 @@
 			"7": "Bach überprüft nochmals die Stimmen...",
 			"8": "Die Konzertmeisterin gibt das A...",
 			"9": "Die Noten werden sortiert..."
-		}
+		},
+		"error": "Die Musikbibliothek hat ihren Einsatz verpasst. Prüfe die Verbindung und lade neu."
 	},
 	"home": {
 		"start": "START",

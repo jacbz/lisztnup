@@ -48,7 +48,8 @@
 			"7": "Warming up the strings...",
 			"8": "Clearing the concert hall...",
 			"9": "Setting the tempo..."
-		}
+		},
+		"error": "The music library missed its cue. Check your connection and reload."
 	},
 	"home": {
 		"start": "START",

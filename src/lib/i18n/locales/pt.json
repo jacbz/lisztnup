@@ -48,7 +48,8 @@
 			"7": "O pano de boca está prestes a subir...",
 			"8": "O ensaio geral chegou ao fim...",
 			"9": "Os archeiros preparam seus arcos..."
-		}
+		},
+		"error": "A biblioteca musical perdeu a entrada. Verifique a conexão e recarregue."
 	},
 	"home": {
 		"start": "INICIAR",

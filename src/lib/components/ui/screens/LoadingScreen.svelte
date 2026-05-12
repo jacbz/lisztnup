@@ -21,41 +21,14 @@
 		'/gameover.mp3'
 	];
 
-	const ASSET_FILES = [
-		...SOUND_FILES,
-		'/background.jpg',
-		'/favicon.ico',
-		'/favicon.svg',
-		'/favicon-96x96.png',
-		'/apple-touch-icon.png',
-		'/web-app-manifest-192x192.png',
-		'/web-app-manifest-512x512.png',
-		'/site.webmanifest'
-	];
-
-	const FONT_SPECS = [
-		'1em Streamster',
-		'300 1em Rajdhani',
-		'400 1em Rajdhani',
-		'500 1em Rajdhani',
-		'600 1em Rajdhani',
-		'700 1em Rajdhani'
-	];
-
-	function preloadFont(spec: string): Promise<void> {
-		if (!document.fonts) return Promise.resolve();
-		return document.fonts.load(spec).then(() => {});
-	}
+	const ASSET_FILES = [...SOUND_FILES, '/background.jpg'];
 
 	onMount(async () => {
 		loadGameData().catch((error) => {
 			console.error('Failed to load game data:', error);
 		});
 
-		const tasks = [
-			...ASSET_FILES.map((url) => () => preloadAsset(url)),
-			...FONT_SPECS.map((spec) => () => preloadFont(spec))
-		];
+		const tasks = [...ASSET_FILES.map((url) => () => preloadAsset(url))];
 		const total = tasks.length;
 
 		if (total === 0) {

@@ -48,7 +48,8 @@
 			"7": "Le silence s'installe dans la salle...",
 			"8": "L'accordeur fait ses derniers gestes...",
 			"9": "L'entracte est terminé, place à la musique..."
-		}
+		},
+		"error": "La bibliothèque musicale a manqué son entrée. Vérifie la connexion et recharge."
 	},
 	"home": {
 		"start": "JOUER",

@@ -48,7 +48,8 @@
 			"7": "Los músicos toman sus posiciones...",
 			"8": "La partitura se abre en la primera página...",
 			"9": "El público aguarda en sus butacas..."
-		}
+		},
+		"error": "La biblioteca musical perdió la entrada. Revisa la conexión y recarga."
 	},
 	"home": {
 		"start": "INICIO",

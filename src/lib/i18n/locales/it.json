@@ -48,7 +48,8 @@
 			"7": "Gli archi si scaldano piano piano...",
 			"8": "Il pianoforte viene accordato un'ultima volta...",
 			"9": "Il pubblico prende posto in platea..."
-		}
+		},
+		"error": "La biblioteca musicale ha mancato l'attacco. Controlla la connessione e ricarica."
 	},
 	"home": {
 		"start": "VIA",
