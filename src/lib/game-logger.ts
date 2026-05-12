@@ -5,6 +5,8 @@
 
 import { postBackgroundJson, postJson } from '$lib/services/client';
 
+type TimelinePlacement = 'correct' | 'too_far_left' | 'too_far_right';
+
 // Basic generator for simple secure random UUIDs without heavy crypto deps
 function generateSessionId(): string {
 	if (typeof crypto !== 'undefined' && crypto.randomUUID) {
@@ -67,11 +69,13 @@ class GameAnalytics {
 		workGid: string,
 		partGid: string,
 		placedCorrectly: boolean,
+		placement: TimelinePlacement,
 		scoreData?: {
 			turnScore: number;
 			secondsTaken: number;
 			streakCount: number;
 			gap: number;
+			distance: number;
 		}
 	) {
 		// Do not force log if no session exists or user has adblock explicitly hard-blocking the file
@@ -83,6 +87,7 @@ class GameAnalytics {
 			workGid,
 			partGid,
 			placedCorrectly,
+			placement,
 			...(scoreData ?? {})
 		});
 	}

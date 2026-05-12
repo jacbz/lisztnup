@@ -104,7 +104,7 @@ The game works fully without a dedicated server, but includes an optional backen
 4. Initialize the schema:
 
    ```bash
-   wrangler d1 execute lisztnup-analytics --file=analytics.sql
+   wrangler d1 execute lisztnup-analytics --file=database.sql
    ```
 
 5. (Optional) Copy the remote database into your local D1:

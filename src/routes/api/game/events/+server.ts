@@ -96,18 +96,20 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				} else if (payload.type === 'timeline_placement') {
 					await db
 						.prepare(
-							`INSERT INTO timeline_placements (session_id, work_gid, part_gid, placed_correctly, turn_score, seconds_taken, streak_count, gap, timestamp) 
-						 VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, COALESCE(?9, CURRENT_TIMESTAMP))`
+							`INSERT INTO timeline_placements (session_id, work_gid, part_gid, placement, placed_correctly, turn_score, seconds_taken, streak_count, gap, distance, timestamp) 
+						 VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, COALESCE(?11, CURRENT_TIMESTAMP))`
 						)
 						.bind(
 							payload.sessionId,
 							payload.workGid,
 							payload.partGid,
+							payload.placement ?? (payload.placedCorrectly ? 'correct' : null),
 							payload.placedCorrectly ? 1 : 0,
 							payload.turnScore ?? null,
 							payload.secondsTaken ?? null,
 							payload.streakCount ?? null,
 							payload.gap ?? null,
+							payload.distance ?? null,
 							occurredAt
 						)
 						.run();

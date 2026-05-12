@@ -90,5 +90,5 @@ After implementing changes, **update the relevant doc file** — not all of them
 | `src/lib/game-logger.ts`                    | Client analytics singleton (sendBeacon delivery)             |
 | `src/hooks.server.ts`                       | Server-side pageview tracking                                |
 | `src/routes/api/game/`                      | Analytics + feedback + reports API endpoints                 |
-| `analytics.sql`                             | Database schema (5 tables)                                   |
+| `database.sql`                              | Database schema (5 tables)                                   |
 | `static/lisztnup.json`                      | 2.5MB compiled music database                                |

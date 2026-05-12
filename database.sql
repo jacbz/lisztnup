@@ -27,11 +27,13 @@ CREATE TABLE IF NOT EXISTS timeline_placements (
   session_id TEXT,
   work_gid TEXT,
   part_gid TEXT,
+  placement TEXT,
   placed_correctly BOOLEAN,
   turn_score INTEGER,
   seconds_taken REAL,
   streak_count INTEGER,
   gap INTEGER,
+  distance INTEGER,
   timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 

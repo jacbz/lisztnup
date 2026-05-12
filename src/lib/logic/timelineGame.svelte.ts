@@ -746,6 +746,11 @@ export class TimelineGame {
 		const next =
 			idx < entries.length - 1 ? this.#getTimelineYear(entries[idx + 1].track) : Infinity;
 		const isCorrect = year >= prev && year <= next;
+		const placement = isCorrect ? 'correct' : year > next ? 'too_far_left' : 'too_far_right';
+		const distance = Math.min(
+			Number.isFinite(prev) ? Math.abs(year - prev) : Infinity,
+			Number.isFinite(next) ? Math.abs(year - next) : Infinity
+		);
 
 		entries[idx].confirmed = true;
 		entries[idx].correct = isCorrect;
@@ -842,11 +847,12 @@ export class TimelineGame {
 		const consolationBreakdown = this.lastConsolationBreakdown;
 		import('$lib/game-logger')
 			.then(({ analytics }) => {
-				analytics.logPlacement(track.work.gid, track.part.gid, isCorrect, {
+				analytics.logPlacement(track.work.gid, track.part.gid, isCorrect, placement, {
 					turnScore: scoreBreakdown?.score ?? consolationBreakdown?.consolation ?? 0,
 					secondsTaken,
 					streakCount: this.activePlayer.currentStreak,
-					gap: scoreBreakdown?.gap ?? consolationBreakdown?.dErr ?? 0
+					gap: scoreBreakdown?.gap ?? consolationBreakdown?.dErr ?? 0,
+					distance
 				});
 				analytics.updateProgress({
 					numberOfTurns: this.totalTurns,
