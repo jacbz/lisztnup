@@ -563,6 +563,7 @@
 		"home": "Accueil"
 	},
 	"timeline": {
+		"initialDealFailed": "Impossible de distribuer les cartes de départ. Choisis une sélection plus fournie et relance la partie.",
 		"dealing": "Distribution à {name}",
 		"drag": "Glisser",
 		"confirm": "Confirmer",

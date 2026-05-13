@@ -563,6 +563,7 @@
 		"home": "홈으로"
 	},
 	"timeline": {
+		"initialDealFailed": "첫 카드를 모두 나눌 수 없었습니다. 곡이 더 많은 트랙 리스트를 고르고 다시 시작하세요.",
 		"dealing": "{name}에게 카드 배분 중",
 		"drag": "드래그",
 		"confirm": "확정",

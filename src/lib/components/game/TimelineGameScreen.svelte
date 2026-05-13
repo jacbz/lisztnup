@@ -4,7 +4,7 @@
 	import { fly } from 'svelte/transition';
 	import type { Player, PlayerEdge } from '$lib/types';
 	import { ALL_EDGES } from '$lib/types';
-	import { currentRound, resetGame, gameSession } from '$lib/stores';
+	import { currentRound, resetGame, gameSession, toast } from '$lib/stores';
 	import { settings } from '$lib/stores/settings';
 	import { _ } from 'svelte-i18n';
 	import { analytics } from '$lib/game-logger';
@@ -87,7 +87,7 @@
 		mqLgWidth.addEventListener('change', updateMq);
 		mqMdHeight.addEventListener('change', updateMq);
 
-		game.initGame();
+		void game.initGame().catch(handleInitError);
 
 		return () => {
 			mqWidth.removeEventListener('change', updateMq);
@@ -144,6 +144,12 @@
 		resetGame();
 		gameSession.reset();
 		onHome();
+	}
+
+	function handleInitError(error: unknown) {
+		console.error('Timeline game failed to initialize:', error);
+		toast.error($_('timeline.initialDealFailed'), 5000);
+		handleQuit();
 	}
 </script>
 

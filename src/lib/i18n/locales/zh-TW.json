@@ -563,6 +563,7 @@
 		"home": "返回首頁"
 	},
 	"timeline": {
+		"initialDealFailed": "開局手牌沒能發齊。換一份曲目更多的歌單，再開一局吧。",
 		"dealing": "發牌給 {name}",
 		"drag": "拖曳",
 		"confirm": "確認",

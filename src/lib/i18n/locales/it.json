@@ -563,6 +563,7 @@
 		"home": "Home"
 	},
 	"timeline": {
+		"initialDealFailed": "Non sono riuscito a distribuire le carte iniziali. Scegli una tracklist più ricca e ricomincia.",
 		"dealing": "Carta a {name}",
 		"drag": "Trascina",
 		"confirm": "Conferma",

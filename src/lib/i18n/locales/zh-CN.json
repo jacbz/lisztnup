@@ -563,6 +563,7 @@
 		"home": "返回主页"
 	},
 	"timeline": {
+		"initialDealFailed": "开局手牌没能发齐。换一份曲目更多的歌单，再开一局吧。",
 		"dealing": "正在发牌给 {name}",
 		"drag": "拖动",
 		"confirm": "确认",

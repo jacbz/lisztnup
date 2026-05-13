@@ -563,6 +563,7 @@
 		"home": "Home"
 	},
 	"timeline": {
+		"initialDealFailed": "Couldn’t deal the opening cards. Choose a fuller tracklist and start again.",
 		"dealing": "Dealing to {name}",
 		"drag": "Drag",
 		"confirm": "Confirm",

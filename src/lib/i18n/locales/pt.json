@@ -563,6 +563,7 @@
 		"home": "Início"
 	},
 	"timeline": {
+		"initialDealFailed": "Não foi possível dar as cartas iniciais. Escolha um repertório mais cheio e comece de novo.",
 		"dealing": "Dando cartas para {name}",
 		"drag": "Arrastar",
 		"confirm": "Confirmar",

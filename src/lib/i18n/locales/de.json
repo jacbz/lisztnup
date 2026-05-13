@@ -563,6 +563,7 @@
 		"home": "Start"
 	},
 	"timeline": {
+		"initialDealFailed": "Die Startkarten ließen sich nicht austeilen. Wähle eine vollere Tracklist und starte neu.",
 		"dealing": "Austeilen an {name}...",
 		"drag": "Ziehen",
 		"confirm": "Bestätigen",

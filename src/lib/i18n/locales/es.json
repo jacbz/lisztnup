@@ -563,6 +563,7 @@
 		"home": "Inicio"
 	},
 	"timeline": {
+		"initialDealFailed": "No se pudieron repartir las cartas iniciales. Elige una lista de pistas con más música y empieza de nuevo.",
 		"dealing": "Repartiendo a {name}",
 		"drag": "Arrastrar",
 		"confirm": "Confirmar",

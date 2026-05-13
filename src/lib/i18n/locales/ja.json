@@ -563,6 +563,7 @@
 		"home": "ホームへ戻る"
 	},
 	"timeline": {
+		"initialDealFailed": "最初のカードを配れませんでした。曲が多めのトラックリストを選んで、もう一度始めてください。",
 		"dealing": "{name} に配る",
 		"drag": "ドラッグ",
 		"confirm": "確定",

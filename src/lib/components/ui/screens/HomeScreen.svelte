@@ -601,7 +601,7 @@
 					in:fade={{ delay: 300, duration: 300 }}
 				>
 					<span
-						class="pointer-events-none absolute top-4 -right-12 w-36 rotate-45 border-y border-amber-200/30 bg-amber-300/20 py-0.5 text-center text-sm font-black tracking-wide text-amber-100 tabular-nums shadow-[0_0_14px_rgba(251,191,36,0.2)]"
+						class="pointer-events-none absolute top-2.5 -right-10 w-32 rotate-45 border-y border-amber-200/30 bg-amber-300/20 py-0.5 text-center text-sm font-black tracking-wide text-amber-100 tabular-nums shadow-[0_0_14px_rgba(251,191,36,0.2)]"
 					>
 						{dailyChallengeCountdown}
 					</span>
