@@ -18,6 +18,16 @@
 		}
 	}
 
+	function getSiteNameStructuredData(siteName: string, siteUrl: string) {
+		return JSON.stringify({
+			'@context': 'https://schema.org',
+			'@type': 'WebSite',
+			name: siteName,
+			alternateName: "Liszt'n Up!",
+			url: siteUrl
+		}).replace(/</g, '\\u003c');
+	}
+
 	untrack(() => applyInitialLocale(data.routeLocale, data.locale));
 </script>
 
@@ -39,6 +49,7 @@
 		property="og:title"
 		content="{$_('app.title')} - {$_('app.subtitle')} ({$_('app.inspiredByHitster')})"
 	/>
+	<meta property="og:site_name" content={$_('app.title')} />
 	<meta property="og:description" content={$_('app.seoDescription')} />
 	<meta property="og:url" content={data.canonicalUrl} />
 	<meta property="og:image" content={data.ogImageUrl} />
@@ -49,6 +60,12 @@
 	/>
 	<meta name="twitter:description" content={$_('app.seoDescription')} />
 	<meta name="twitter:image" content={data.ogImageUrl} />
+	{#if data.includeSiteNameStructuredData}
+		{@html `<script type="application/ld+json">${getSiteNameStructuredData(
+			$_('app.title'),
+			data.siteUrl
+		)}</script>`}
+	{/if}
 	<!-- Preconnect to Google Fonts for faster CJK font loading -->
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
