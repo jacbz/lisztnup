@@ -264,7 +264,7 @@
 | `f9527e1b` | Liszt – Trois études de concert, S. 144 | * III. "Un sospiro" in D-flat major | 1845‑1849 |
 | `4b6583df` | Mahler – Piano Quartet in A minor | * I. Nicht zu schnell | 1876 |
 | `5b8cb51a` | Mahler – Symphony no. 1 in D major “Titan” | * III. Feierlich und gemessen, ohne zu schleppen | 1884‑1888 |
-| `ad8df966` | Mahler – Symphony no. 2 “Resurrection” | * 4. Primeval Light. Very solemn, but simple | 1888‑1894 |
+| `ad8df966` | Mahler – Symphony no. 2 “Resurrection” | * I. Allegro maestoso | 1888‑1894 |
 | `ddcca484` | Mahler – Symphony no. 3 in D minor | * Part II: V. Lustig im Tempo und keck im Ausdruck ('Es sungen drei Engel') | 1893‑1896 |
 | `b99a498c` | Mahler – Symphony no. 4 in G major | * Symphonie Nr. 4 in G-Dur: IV. Sehr behaglich. „Wir genießen die himmlischen Freuden“ | 1899‑1901 |
 | `adcdc472` | Mahler – Symphony no. 5 | * Symphony no. 5 in C-sharp minor: IV. Adagietto. Sehr langsam | 1901‑1902 |

@@ -968,7 +968,7 @@
 | `583db119` | Mahler – Symphonic Movement “Blumine”: Andante allegretto | * Symphonic Movement “Blumine”: Andante allegretto | 1884‑1888 |
 | `5b8cb51a` | Mahler – Symphony no. 1 in D major “Titan” | * II. Kräftig bewegt<br>* III. Feierlich und gemessen, ohne zu schleppen | 1884‑1888 |
 | `eff9bd21` | Mahler – Symphony no. 10 in F-sharp major | * I. Adagio | 1910 |
-| `ad8df966` | Mahler – Symphony no. 2 “Resurrection” | * II. Andante moderato<br>* 4. Primeval Light. Very solemn, but simple | 1888‑1894 |
+| `ad8df966` | Mahler – Symphony no. 2 “Resurrection” | * I. Allegro maestoso<br>* 4. Primeval Light. Very solemn, but simple | 1888‑1894 |
 | `ddcca484` | Mahler – Symphony no. 3 in D minor | * Part II: IV. Sehr langsam (Misterioso. Durchaus ppp) ('O Mensch! Gib acht!')<br>* Part II: V. Lustig im Tempo und keck im Ausdruck ('Es sungen drei Engel') | 1893‑1896 |
 | `b99a498c` | Mahler – Symphony no. 4 in G major | * Symphonie Nr. 4 in G-Dur: III. Ruhevoll. Poco adagio<br>* Symphonie Nr. 4 in G-Dur: IV. Sehr behaglich. „Wir genießen die himmlischen Freuden“ | 1899‑1901 |
 | `adcdc472` | Mahler – Symphony no. 5 | * Symphony no. 5 in C-sharp minor: I. Trauermarsch (In gemessenem Schritt. Streng. Wie ein Kondukt)<br>* Symphony no. 5 in C-sharp minor: IV. Adagietto. Sehr langsam | 1901‑1902 |

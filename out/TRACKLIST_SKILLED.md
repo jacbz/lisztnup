@@ -501,7 +501,7 @@
 | `81c59ea4` | Mahler – Songs of a Wayfarer | * Lieder eines fahrenden Gesellen: I. "Wenn mein Schatz Hochzeit macht" | 1884‑1896 |
 | `1dee3abf` | Mahler – Songs on the Death of Children | * Kindertotenlieder: I. “Nun will die Sonn’ so hell aufgeh’n” | 1901‑1904 |
 | `5b8cb51a` | Mahler – Symphony no. 1 in D major “Titan” | * III. Feierlich und gemessen, ohne zu schleppen | 1884‑1888 |
-| `ad8df966` | Mahler – Symphony no. 2 “Resurrection” | * 4. Primeval Light. Very solemn, but simple | 1888‑1894 |
+| `ad8df966` | Mahler – Symphony no. 2 “Resurrection” | * I. Allegro maestoso | 1888‑1894 |
 | `ddcca484` | Mahler – Symphony no. 3 in D minor | * Part II: V. Lustig im Tempo und keck im Ausdruck ('Es sungen drei Engel') | 1893‑1896 |
 | `b99a498c` | Mahler – Symphony no. 4 in G major | * Symphonie Nr. 4 in G-Dur: IV. Sehr behaglich. „Wir genießen die himmlischen Freuden“ | 1899‑1901 |
 | `adcdc472` | Mahler – Symphony no. 5 | * Symphony no. 5 in C-sharp minor: IV. Adagietto. Sehr langsam | 1901‑1902 |

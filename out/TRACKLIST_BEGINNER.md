@@ -104,7 +104,6 @@
 | `7554a660` | Grieg – Holberg Suite, op. 40 | * Fra Holbergs tid, op. 40: I. Præludium (Allegro vivace) | 1884‑1885 |
 | `e6e5dee6` | Grieg – Lyriske stykker | * Lyric Pieces, Book 8, op. 65: No. 6. Wedding Day at Troldhaugen | 1891 |
 | `d5d9aa32` | Grieg – Peer Gynt Suite no. 1, op. 46 | * I. Morning Mood | 1875 |
-| `46001164` | Grieg – Peer Gynt Suite no. 2, op. 55 | * IV. Solveig’s Song | 1875 |
 | `1418776f` | Grieg – Peer Gynt, op. 23 | * 2. akt: I Dovregubbens hall | 1875 |
 | `426b7e1c` | Handel – Messiah, HWV 56 | * Part II, no. 44. Chorus: “Hallelujah” | 1741 |
 | `925c3677` | Handel – Music for the Royal Fireworks, HWV 351 | * IV. La Réjouissance | 1749 |
@@ -129,6 +128,7 @@
 | `f9527e1b` | Liszt – Trois études de concert, S. 144 | * III. "Un sospiro" in D-flat major | 1845‑1849 |
 | `4b6583df` | Mahler – Piano Quartet in A minor | * I. Nicht zu schnell | 1876 |
 | `5b8cb51a` | Mahler – Symphony no. 1 in D major “Titan” | * III. Feierlich und gemessen, ohne zu schleppen | 1884‑1888 |
+| `ad8df966` | Mahler – Symphony no. 2 “Resurrection” | * I. Allegro maestoso | 1888‑1894 |
 | `adcdc472` | Mahler – Symphony no. 5 | * Symphony no. 5 in C-sharp minor: IV. Adagietto. Sehr langsam | 1901‑1902 |
 | `9e131dd9` | Mascagni – Cavalleria rusticana | * Intermezzo | 1890 |
 | `2a3bf259` | Massenet – Thaïs | * Acte II. Entr’acte “Méditation” | 1894 |

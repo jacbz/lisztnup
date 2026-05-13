@@ -348,6 +348,7 @@ pss_overrides:
   - '2216e0e5-dee6-31db-b91b-6fc4851d36f5' # Gershwin - Porgy and Bess: Summertime
   - '0f2c6bb0-6a63-3ddf-b023-6d4483b497d2' # Humperdinck - Hänsel und Gretel: Overture
   - 'b8810dc0-1b98-3623-b292-95ac2cd0d227' # Mahler - Symphony No. 1: III.
+  - 'e2332b37-71fa-34e9-b7d8-a4cc5d7327c0' # Mahler - Symphony No. 2: I.
   - 'a15328c7-f30f-3c05-8fcc-27c9f46b1b22' # Mendelssohn - Violin Concerto: I.
   - '6b96e92a-1e0f-30f7-b8fa-ee12b7b346be' # Mozart - Magic Flute: Der Hölle Rache
   - 'ca017173-6247-3533-949a-90a0d679b060' # Mozart - Le nozze di Figaro: Voi che sapete
@@ -362,6 +363,7 @@ pss_overrides:
   - 'de172280-45e0-359d-9221-2189643b664f' # Tchaikovsky - Violin Concerto: I.
   - '9ffe50aa-b471-4e33-be06-61fd3625a4e3' # Verdi - Requiem: Dies Irae
   - '5a75bea9-985d-4267-9a0a-2ace57e20716' # Wagner - Lohengrin: Bridal Chorus
+  - ''
 
 # --- Deezer ID Overrides ---
 # Manually set the Deezer IDs for specific works/parts, e.g. to feature a specific segment
@@ -382,6 +384,7 @@ deezer_overrides:
   '3f62d0d8-8ccd-31ab-bfca-768a1ae5708d': [2715192982]
   '17ccf450-81a6-4c8d-8f22-f35476db18a2': [646272042]
   '7b209915-be32-3f17-b2c5-b963964ed084': [3185833921]
+  '5a75bea9-985d-4267-9a0a-2ace57e20716': [82564302]
 
 # --- Manual Classification Overrides ---
 # Manually force a work into a specific type category.
