@@ -89,6 +89,7 @@
 	const publishTracklistId = $derived(
 		$selectedTracklist.kind === 'custom' ? 'custom' : tracklistId
 	);
+	const canShowGlobalHighScore = $derived($selectedTracklist.kind !== 'custom');
 
 	const revealYearText = $derived.by(() => {
 		if (!inspectTrack) return '';
@@ -434,6 +435,7 @@
 
 	function handleHomeClick() {
 		if (
+			canShowGlobalHighScore &&
 			isNewHighScore &&
 			leaderboardPlayers.length > 0 &&
 			!leaderboardPlayers.some((p) => hasAllowedName(p.name))
@@ -464,22 +466,25 @@
 	// Fetch leaderboard + auto-submit completed timelines
 	$effect(() => {
 		if (!visible || sortedTimelines.length === 0) return;
+		isNewHighScore = false;
 
-		getLeaderboard({
-			tracklist: tracklistId,
-			target,
-			limit: 50,
-			token: getPlayerToken()
-		})
-			.then((data: { entries?: { player_name: string | null; score: number }[] }) => {
-				const entries = data.entries ?? [];
-				// New global high score?
-				const topScore = Math.round(sortedTimelines[0].score);
-				if (topScore > 0 && (entries.length === 0 || topScore > entries[0].score)) {
-					isNewHighScore = true;
-				}
+		if (canShowGlobalHighScore) {
+			getLeaderboard({
+				tracklist: tracklistId,
+				target,
+				limit: 50,
+				token: getPlayerToken()
 			})
-			.catch(() => {}); // silent
+				.then((data: { entries?: { player_name: string | null; score: number }[] }) => {
+					const entries = data.entries ?? [];
+					// New global high score?
+					const topScore = Math.round(sortedTimelines[0].score);
+					if (topScore > 0 && (entries.length === 0 || topScore > entries[0].score)) {
+						isNewHighScore = true;
+					}
+				})
+				.catch(() => {}); // silent
+		}
 
 		// Auto-submit only players who finished their timeline.
 		if (!autoSubmitted && leaderboardPlayers.length > 0) {
@@ -613,7 +618,7 @@
 			{/if}
 		</div>
 
-		{#if isNewHighScore}
+		{#if canShowGlobalHighScore && isNewHighScore}
 			<div
 				class="flex flex-col items-center gap-1 rounded-lg border border-amber-400/30 bg-amber-400/10 px-4 py-2"
 				in:scale={{ duration: 200, start: 0.9 }}
