@@ -560,7 +560,9 @@
 		"tie": "Empate!",
 		"noMoreTracks": "Não há mais faixas disponíveis.",
 		"finalScores": "Placar Final",
-		"home": "Início"
+		"home": "Início",
+		"share": "Partilhar",
+		"shareText": "Fiz {score} pontos no Liszt’n Up!, o jogo de adivinhar música clássica. Consegues bater a minha pontuação?"
 	},
 	"timeline": {
 		"initialDealFailed": "Não foi possível dar as cartas iniciais. Escolha um repertório mais cheio e comece de novo.",
@@ -648,7 +650,6 @@
 		"showTimeline": "Mostrar linha do tempo",
 		"replay": "Replay",
 		"publishTitle": "Publicar no ranking",
-		"renameTitle": "Renomear no ranking",
 		"namePrompt": "Digite o nome que você quer ver no ranking global.",
 		"error": "Falha ao salvar. Tentar de novo?",
 		"submitting": "Salvando\u2026",
@@ -662,6 +663,7 @@
 		"allowPublishing": "Adicionar meu nome",
 		"newHighScore": "Novo recorde global!",
 		"newHighScoreSubtitle": "Adicione seu nome e fique no topo.",
+		"newHighScorePublishedSubtitle": "Sua pontuação foi publicada com seu nome.",
 		"unnamedScore": "Voc\u00ea acabou de bater o recorde mundial!",
 		"highScoreAnonymousPrompt": "Você acabou de tomar o topo do ranking global! Adicione seu nome e deixe oficial."
 	},

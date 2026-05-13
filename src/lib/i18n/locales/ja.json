@@ -560,7 +560,9 @@
 		"tie": "引き分け！",
 		"noMoreTracks": "再生できる曲がなくなりました。",
 		"finalScores": "最終スコア",
-		"home": "ホームへ戻る"
+		"home": "ホームへ戻る",
+		"share": "共有",
+		"shareText": "クラシック音楽当てゲーム Liszt’n Up! で{score}点を取りました。私のスコア、超えられる？"
 	},
 	"timeline": {
 		"initialDealFailed": "最初のカードを配れませんでした。曲が多めのトラックリストを選んで、もう一度始めてください。",
@@ -648,7 +650,6 @@
 		"showTimeline": "タイムラインを表示",
 		"replay": "リプレイ",
 		"publishTitle": "ランキングに公開",
-		"renameTitle": "ランキング名を変更",
 		"namePrompt": "世界ランキングに載せたい名前を入力してください。",
 		"error": "保存に失敗しました。もう一度？",
 		"submitting": "保存中\u2026",
@@ -662,6 +663,7 @@
 		"allowPublishing": "名前を載せる",
 		"newHighScore": "世界新記録！",
 		"newHighScoreSubtitle": "名前を載せて、トップの座を飾りましょう。",
+		"newHighScorePublishedSubtitle": "スコアはあなたの名前で公開されました。",
 		"unnamedScore": "世界新記録達成！",
 		"highScoreAnonymousPrompt": "世界ランキングのトップに立ちました！名前を載せて、この記録をあなたのものにしましょう。"
 	},

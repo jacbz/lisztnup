@@ -125,6 +125,7 @@ Uses `$effect` to watch `analyserNode`, starts visualization when available (han
 | `SearchPopup`           | External search (12 providers incl. streaming, reference)              | TrackInfo                                                                                |
 | `ModeRulesPopup`        | Game rules with screenshots                                            | ModeSelector                                                                             |
 | `TimelineLeaderboard`   | Single-table top + expanded scores; replays use stepped placement logs | HomeScreen                                                                               |
+| `TimelineEndGameScreen` | Timeline finale with replay, score sharing, and leaderboard naming     | TimelineGameScreen                                                                       |
 | `TracklistRecordsPopup` | Latest record per tracklist/target combo                               | HomeScreen                                                                               |
 | `AboutPopup`            | App info, donation link, feedback launcher                             | HomeScreen                                                                               |
 | `AppFooter`             | Attribution footer with library/feedback links                         | HomeScreen                                                                               |

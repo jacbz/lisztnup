@@ -560,7 +560,9 @@
 		"tie": "平局！",
 		"noMoreTracks": "没有更多曲目了。",
 		"finalScores": "最终得分",
-		"home": "返回主页"
+		"home": "返回主页",
+		"share": "分享",
+		"shareText": "我在 Liszt’n Up! 这个古典音乐猜猜看游戏里拿了{score}分。你能超过我吗？"
 	},
 	"timeline": {
 		"initialDealFailed": "开局手牌没能发齐。换一份曲目更多的歌单，再开一局吧。",
@@ -648,7 +650,6 @@
 		"showTimeline": "显示时间线",
 		"replay": "回放",
 		"publishTitle": "发布到排行榜",
-		"renameTitle": "修改排行榜名称",
 		"namePrompt": "输入你想留在全球排行榜上的名字。",
 		"error": "保存失败，再试一次？",
 		"submitting": "保存中\u2026",
@@ -662,6 +663,7 @@
 		"allowPublishing": "留下名字",
 		"newHighScore": "新全球纪录！",
 		"newHighScoreSubtitle": "留下名字，占住榜首。",
+		"newHighScorePublishedSubtitle": "你的分数已用你的名字发布。",
 		"unnamedScore": "你刚刚打破了全球纪录！",
 		"highScoreAnonymousPrompt": "你刚刚登上全球排行榜第一名！留下名字，让这次登顶正式属于你。"
 	},

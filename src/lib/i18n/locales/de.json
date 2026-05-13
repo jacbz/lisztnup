@@ -560,7 +560,9 @@
 		"tie": "Unentschieden!",
 		"noMoreTracks": "Keine weiteren Tracks verfügbar.",
 		"finalScores": "Endstand",
-		"home": "Start"
+		"home": "Start",
+		"share": "Teilen",
+		"shareText": "Ich habe {score} Punkte in Liszt’n Up! geholt, dem Ratespiel für klassische Musik. Knackst du meinen Score?"
 	},
 	"timeline": {
 		"initialDealFailed": "Die Startkarten ließen sich nicht austeilen. Wähle eine vollere Tracklist und starte neu.",
@@ -648,7 +650,6 @@
 		"showTimeline": "Timeline anzeigen",
 		"replay": "Replay",
 		"publishTitle": "In Bestenliste veröffentlichen",
-		"renameTitle": "In Bestenliste umbenennen",
 		"namePrompt": "Trag den Namen ein, der in der globalen Bestenliste glänzen soll.",
 		"error": "Fehler beim Speichern. Nochmal?",
 		"submitting": "Wird gespeichert…",
@@ -662,6 +663,7 @@
 		"allowPublishing": "Namen eintragen",
 		"newHighScore": "Neuer globaler Highscore!",
 		"newHighScoreSubtitle": "Trag deinen Namen ein und sicher dir Platz eins.",
+		"newHighScorePublishedSubtitle": "Dein Ergebnis wurde unter deinem Namen veröffentlicht.",
 		"unnamedScore": "Du hast gerade den Weltrekord geknackt!",
 		"highScoreAnonymousPrompt": "Du hast gerade die globale Bestenliste erobert. Trag deinen Namen ein und mach es offiziell!"
 	},

@@ -560,7 +560,9 @@
 		"tie": "무승부!",
 		"noMoreTracks": "더 이상 재생할 곡이 없습니다.",
 		"finalScores": "최종 점수",
-		"home": "홈으로"
+		"home": "홈으로",
+		"share": "공유",
+		"shareText": "클래식 음악 맞히기 게임 Liszt’n Up!에서 {score}점을 기록했어요. 제 점수 넘을 수 있나요?"
 	},
 	"timeline": {
 		"initialDealFailed": "첫 카드를 모두 나눌 수 없었습니다. 곡이 더 많은 트랙 리스트를 고르고 다시 시작하세요.",
@@ -648,7 +650,6 @@
 		"showTimeline": "타임라인 보기",
 		"replay": "리플레이",
 		"publishTitle": "리더보드에 올리기",
-		"renameTitle": "리더보드 이름 바꾸기",
 		"namePrompt": "글로벌 리더보드에 올리고 싶은 이름을 입력해 주세요.",
 		"error": "저장 실패. 다시 시도할까요?",
 		"submitting": "저장 중\u2026",
@@ -662,6 +663,7 @@
 		"allowPublishing": "이름 올리기",
 		"newHighScore": "세계 신기록!",
 		"newHighScoreSubtitle": "이름을 올리고 1위를 차지하세요.",
+		"newHighScorePublishedSubtitle": "점수가 내 이름으로 리더보드에 올라갔어요.",
 		"unnamedScore": "세계 신기록을 세웠어요!",
 		"highScoreAnonymousPrompt": "글로벌 리더보드 1위를 차지했어요! 이름을 남겨 이 기록의 주인공이 되어 보세요."
 	},

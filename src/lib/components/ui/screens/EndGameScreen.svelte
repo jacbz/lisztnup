@@ -5,9 +5,11 @@
 	import Trophy from 'lucide-svelte/icons/trophy';
 	import BarChart from 'lucide-svelte/icons/bar-chart-3';
 	import Home from 'lucide-svelte/icons/home';
+	import Share2 from 'lucide-svelte/icons/share-2';
 	import MessageSquare from 'lucide-svelte/icons/message-square';
 	import FeedbackPopup from '../gameplay/FeedbackPopup.svelte';
 	import { onMount } from 'svelte';
+	import { toast } from '$lib/stores';
 
 	interface Props {
 		visible?: boolean;
@@ -39,6 +41,29 @@
 	let showFeedbackPopup = $state(false);
 	let gameoverAudio: HTMLAudioElement | null = null;
 	let gameoverPlayed = false;
+
+	async function handleShareScore(): Promise<void> {
+		if (!winner) return;
+		const text = $_('endGame.shareText', {
+			values: { score: winner.score.toLocaleString() }
+		});
+		const url = window.location.origin;
+
+		try {
+			if (navigator.share) {
+				await navigator.share({
+					title: $_('app.title'),
+					text,
+					url
+				});
+			} else {
+				await navigator.clipboard.writeText(`${text} ${url}`);
+				toast.success($_('shareLink.copied'));
+			}
+		} catch (error) {
+			console.warn('Share failed:', error);
+		}
+	}
 
 	$effect(() => {
 		if (visible && gameoverAudio && !gameoverPlayed) {
@@ -154,34 +179,47 @@
 			{/if}
 
 			<!-- Action Buttons -->
-			<div class="flex items-center gap-2">
-				{#if enableScoring}
-					<button
-						type="button"
-						onclick={onViewStats}
-						class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all duration-200 hover:border-slate-500 hover:bg-slate-700/60 hover:text-white"
-					>
-						<BarChart class="h-4 w-4 shrink-0" />
-						{$_('stats.title')}
-					</button>
-				{/if}
+			<div class="flex flex-col gap-3">
 				<button
 					type="button"
 					onclick={onHome}
-					class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all duration-200 hover:border-slate-500 hover:bg-slate-700/60 hover:text-white"
+					class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-3 text-sm font-bold text-cyan-200 transition-all duration-200 hover:border-cyan-300/60 hover:bg-cyan-400/15 hover:text-white"
 				>
 					<Home class="h-4 w-4 shrink-0" />
 					{$_('endGame.home')}
 				</button>
 
-				<button
-					type="button"
-					onclick={() => (showFeedbackPopup = true)}
-					class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all duration-200 hover:border-slate-500 hover:bg-slate-700/60 hover:text-white"
-				>
-					<MessageSquare class="h-4 w-4 shrink-0" />
-					{$_('feedback.title')}
-				</button>
+				<div class="flex items-center gap-2">
+					{#if enableScoring}
+						<button
+							type="button"
+							onclick={onViewStats}
+							class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all duration-200 hover:border-slate-500 hover:bg-slate-700/60 hover:text-white"
+						>
+							<BarChart class="h-4 w-4 shrink-0" />
+							{$_('stats.title')}
+						</button>
+					{/if}
+					{#if enableScoring && winner}
+						<button
+							type="button"
+							onclick={handleShareScore}
+							class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all duration-200 hover:border-slate-500 hover:bg-slate-700/60 hover:text-white"
+						>
+							<Share2 class="h-4 w-4 shrink-0" />
+							{$_('endGame.share')}
+						</button>
+					{/if}
+
+					<button
+						type="button"
+						onclick={() => (showFeedbackPopup = true)}
+						class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all duration-200 hover:border-slate-500 hover:bg-slate-700/60 hover:text-white"
+					>
+						<MessageSquare class="h-4 w-4 shrink-0" />
+						{$_('feedback.title')}
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>

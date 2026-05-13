@@ -11,6 +11,7 @@
 	import Flame from 'lucide-svelte/icons/flame';
 	import BarChart from 'lucide-svelte/icons/bar-chart-3';
 	import SquareStack from 'lucide-svelte/icons/square-stack';
+	import Share2 from 'lucide-svelte/icons/share-2';
 	import FeedbackPopup from '$lib/components/ui/gameplay/FeedbackPopup.svelte';
 	import { getPlayerToken } from '$lib/stores/identity';
 	import PenLine from 'lucide-svelte/icons/pen-line';
@@ -24,6 +25,7 @@
 	import { Zap } from 'lucide-svelte';
 	import { SvelteSet } from 'svelte/reactivity';
 	import TimelinePopup from './TimelinePopup.svelte';
+	import { toast } from '$lib/stores';
 
 	interface FinalTimeline {
 		player: Player;
@@ -69,6 +71,7 @@
 
 	// Winner: player with highest score (already includes completion bonus).
 	const sortedTimelines = $derived([...timelines].sort((a, b) => b.score - a.score));
+	const highScoreTimeline = $derived(sortedTimelines[0] ?? null);
 
 	const winner = $derived.by(() => {
 		if (sortedTimelines.length === 0) return null;
@@ -90,6 +93,9 @@
 		$selectedTracklist.kind === 'custom' ? 'custom' : tracklistId
 	);
 	const canShowGlobalHighScore = $derived($selectedTracklist.kind !== 'custom');
+	const highScoreHasPublishPermission = $derived(
+		highScoreTimeline?.reachedTarget === true && hasAllowedName(highScoreTimeline.player.name)
+	);
 
 	const revealYearText = $derived.by(() => {
 		if (!inspectTrack) return '';
@@ -446,6 +452,31 @@
 		}
 	}
 
+	async function handleShareScore(): Promise<void> {
+		if (!highScoreTimeline || highScoreTimeline.score <= 0) return;
+		const text = $_('endGame.shareText', {
+			values: {
+				score: Math.round(highScoreTimeline.score).toLocaleString()
+			}
+		});
+		const url = window.location.origin;
+
+		try {
+			if (navigator.share) {
+				await navigator.share({
+					title: $_('app.title'),
+					text,
+					url
+				});
+			} else {
+				await navigator.clipboard.writeText(`${text} ${url}`);
+				toast.success($_('shareLink.copied'));
+			}
+		} catch (error) {
+			console.warn('Share failed:', error);
+		}
+	}
+
 	function openReplayPopup(timeline: FinalTimeline) {
 		replayTimeline = timeline;
 		showReplayPopup = true;
@@ -628,7 +659,13 @@
 					<span class="text-sm font-bold text-amber-400">{$_('leaderboard.newHighScore')}</span>
 					<Crown class="h-5 w-5 text-amber-400" />
 				</div>
-				<span class="text-xs text-amber-400/70">{$_('leaderboard.newHighScoreSubtitle')}</span>
+				<span class="text-xs text-amber-400/70">
+					{$_(
+						highScoreHasPublishPermission
+							? 'leaderboard.newHighScorePublishedSubtitle'
+							: 'leaderboard.newHighScoreSubtitle'
+					)}
+				</span>
 			</div>
 		{/if}
 
@@ -742,6 +779,15 @@
 		</div>
 
 		<div class="flex flex-col gap-3">
+			<button
+				type="button"
+				onclick={handleHomeClick}
+				class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-3 text-sm font-bold text-cyan-200 transition-all duration-200 hover:border-cyan-300/60 hover:bg-cyan-400/15 hover:text-white"
+			>
+				<Home class="h-4 w-4 shrink-0" />
+				{$_('endGame.home')}
+			</button>
+
 			<div class="flex items-center gap-2">
 				{#if onViewStats}
 					<button
@@ -754,14 +800,16 @@
 					</button>
 				{/if}
 
-				<button
-					type="button"
-					onclick={handleHomeClick}
-					class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all duration-200 hover:border-slate-500 hover:bg-slate-700/60 hover:text-white"
-				>
-					<Home class="h-4 w-4 shrink-0" />
-					{$_('endGame.home')}
-				</button>
+				{#if highScoreTimeline && highScoreTimeline.score > 0}
+					<button
+						type="button"
+						onclick={handleShareScore}
+						class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-300 transition-all duration-200 hover:border-slate-500 hover:bg-slate-700/60 hover:text-white"
+					>
+						<Share2 class="h-4 w-4 shrink-0" />
+						{$_('endGame.share')}
+					</button>
+				{/if}
 
 				<button
 					type="button"
@@ -783,7 +831,7 @@
 		<PenLine class="mx-auto h-9 w-9 text-amber-400" />
 		<h3 class="text-lg font-bold text-white">
 			{#if namePopupMode === 'rename'}
-				{$_('leaderboard.renameTitle')}
+				{$_('leaderboard.rename')}
 			{:else}
 				{$_('leaderboard.publishTitle')}
 			{/if}

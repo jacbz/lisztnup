@@ -560,7 +560,9 @@
 		"tie": "It’s a Tie!",
 		"noMoreTracks": "No more tracks available.",
 		"finalScores": "Final Scores",
-		"home": "Home"
+		"home": "Home",
+		"share": "Share",
+		"shareText": "I scored {score} points in Liszt’n Up!, the classical music guessing game. Can you beat my score?"
 	},
 	"timeline": {
 		"initialDealFailed": "Couldn’t deal the opening cards. Choose a fuller tracklist and start again.",
@@ -648,7 +650,6 @@
 		"showTimeline": "Show timeline",
 		"replay": "Replay",
 		"publishTitle": "Publish to Leaderboard",
-		"renameTitle": "Rename in Leaderboard",
 		"namePrompt": "Add the name you’d like to see on the global leaderboard.",
 		"error": "Couldn’t save that name. Try again?",
 		"submitting": "Saving…",
@@ -662,6 +663,7 @@
 		"allowPublishing": "Add my name",
 		"newHighScore": "New Global High Score!",
 		"newHighScoreSubtitle": "Add your name and take the top spot.",
+		"newHighScorePublishedSubtitle": "Your score was published under your name.",
 		"unnamedScore": "You just set a new global record!",
 		"highScoreAnonymousPrompt": "You just took the top spot on the global leaderboard. Add your name and make it official!"
 	},
