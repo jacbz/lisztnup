@@ -121,7 +121,7 @@ Cloudflare Pages with D1 database. Config in `wrangler.toml`:
 | --------------------- | ----------------------- | -------------------------------------------------------------------------- |
 | `pageviews`           | Server-side page views  | `user_hash`, `country`, `path`, `device`, `os`, `user_agent`               |
 | `game_sessions`       | Game lifecycle tracking | `id` (UUID), `state`, `mode`, `tracklist_id`, `locale`, `game_info` (JSON) |
-| `timeline_placements` | Per-placement tracking  | `session_id`, `work_gid`, `placement`, `distance`, `placed_correctly`      |
+| `timeline_placements` | Per-placement tracking  | `session_id`, `work_gid`, `part_gid`, `deezer_id`, `placement`, `distance` |
 | `problem_reports`     | User-reported issues    | `session_id`, `message`, `track_metadata` (JSON: MB/Deezer ids + labels)   |
 | `feedback`            | General user feedback   | `session_id`, `message`, `email`                                           |
 | `timeline_scores`     | Timeline solo scores    | `player_token`, `score`, `attempts`, `target`, `average_time`, `log`       |

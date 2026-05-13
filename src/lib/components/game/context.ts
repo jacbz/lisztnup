@@ -40,6 +40,8 @@ export interface GameScreenContext {
 	onHome: () => void;
 	/** The track at the current round index, or null if not yet loaded. */
 	readonly currentTrack: Track | null;
+	/** Deezer ID for the active loaded audio track, or null if no audio is loaded. */
+	readonly currentDeezerId: number | null;
 	/** Current playback progress (0–1), updated reactively by GameScreen. */
 	readonly audioProgressValue: number;
 	/** Duration in seconds for the active loaded track. */

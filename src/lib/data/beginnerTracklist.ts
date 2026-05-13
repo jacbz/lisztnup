@@ -103,7 +103,6 @@ export const BEGINNER_TRACKLIST = [
 	'7554a660', // Grieg – Holberg Suite, op. 40
 	'd5d9aa32', // Grieg – Peer Gynt - Morning Mood
 	'1418776f', // Grieg – Peer Gynt - In the Hall of the Mountain King
-	'46001164', // Grieg – Peer Gynt Suite no. 2, op. 55
 	'426b7e1c', // Handel – Messiah, HWV 56
 	'925c3677', // Handel – Music for the Royal Fireworks, HWV 351
 	'493b61ba', // Handel – Water Music
@@ -127,6 +126,7 @@ export const BEGINNER_TRACKLIST = [
 	'f9527e1b', // Liszt - Un Sospiro
 	'4b6583df', // Mahler - Piano Quartet in A minor
 	'5b8cb51a', // Mahler – Symphony no. 1 in D major “Titan”
+	'ad8df966', // Mahler – Symphony no. 2
 	'adcdc472', // Mahler – Symphony no. 5
 	'9e131dd9', // Mascagini – Cavalleria rusticana
 	'2a3bf259', // Massenet – Thaïs (Méditation)
@@ -247,7 +247,7 @@ export const BEGINNER_TRACKLIST = [
 	'445fc058', // Verdi - Nabucco (Va, pensiero)
 	'2dc7fb62', // Verdi – Rigoletto (La donna è mobile)
 	'87886dcf', // Vivaldi – The Four Seasons
-	'1d774427', // Wagner - Lohengrin
+	'1d774427', // Wagner - Lohengrin (Bridal Chorus)
 	'597e017a', // Wagner – Der Ring des Nibelungen (Ride of the Valkyries)
 	'd801c361', // Wagner – Tannhäuser: Ouverture and Venusberg Music
 	'ae217ba8', // Wagner – Tristan und Isolde

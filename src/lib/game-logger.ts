@@ -68,6 +68,7 @@ class GameAnalytics {
 	public logPlacement(
 		workGid: string,
 		partGid: string,
+		deezerId: number | null,
 		placedCorrectly: boolean,
 		placement: TimelinePlacement,
 		scoreData?: {
@@ -86,6 +87,7 @@ class GameAnalytics {
 			sessionId: this.sessionId,
 			workGid,
 			partGid,
+			deezerId,
 			placedCorrectly,
 			placement,
 			...(scoreData ?? {})

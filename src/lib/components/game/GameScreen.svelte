@@ -409,6 +409,9 @@
 		get currentTrack() {
 			return currentTrack;
 		},
+		get currentDeezerId() {
+			return playableBuffer.currentLoadedTrack?.deezerId ?? null;
+		},
 		get audioProgressValue() {
 			return $progress;
 		},

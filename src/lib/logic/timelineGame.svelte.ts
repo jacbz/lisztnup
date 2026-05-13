@@ -39,6 +39,7 @@ export interface TimelineGameActions {
 	stopTrack: () => void;
 	nextRound: () => Promise<void>;
 	sampleRawTrack: () => Track | null;
+	getCurrentDeezerId: () => number | null;
 	minYear: number;
 	maxYear: number;
 }
@@ -847,13 +848,20 @@ export class TimelineGame {
 		const consolationBreakdown = this.lastConsolationBreakdown;
 		import('$lib/game-logger')
 			.then(({ analytics }) => {
-				analytics.logPlacement(track.work.gid, track.part.gid, isCorrect, placement, {
-					turnScore: scoreBreakdown?.score ?? consolationBreakdown?.consolation ?? 0,
-					secondsTaken,
-					streakCount: this.activePlayer.currentStreak,
-					gap: scoreBreakdown?.gap ?? consolationBreakdown?.dErr ?? 0,
-					distance
-				});
+				analytics.logPlacement(
+					track.work.gid,
+					track.part.gid,
+					this.#ctx.getCurrentDeezerId(),
+					isCorrect,
+					placement,
+					{
+						turnScore: scoreBreakdown?.score ?? consolationBreakdown?.consolation ?? 0,
+						secondsTaken,
+						streakCount: this.activePlayer.currentStreak,
+						gap: scoreBreakdown?.gap ?? consolationBreakdown?.dErr ?? 0,
+						distance
+					}
+				);
 				analytics.updateProgress({
 					numberOfTurns: this.totalTurns,
 					players: this.playerStats

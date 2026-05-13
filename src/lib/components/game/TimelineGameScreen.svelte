@@ -49,6 +49,7 @@
 			stopTrack: ctx.stopTrack,
 			nextRound: ctx.nextRound,
 			sampleRawTrack: ctx.sampleRawTrack,
+			getCurrentDeezerId: () => ctx.currentDeezerId,
 			minYear: ctx.minYear,
 			maxYear: ctx.maxYear
 		},
