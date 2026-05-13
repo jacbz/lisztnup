@@ -356,6 +356,7 @@
 		"previewYearDistribution": "Tiempo",
 		"previewDecadeBucket": "{decade}: {count, plural, one {# obra} other {# obras}}",
 		"previewMoreWorks": "... y {count} más",
+		"previewMoreComposers": "... y {count} compositores más",
 		"previewLoading": "Calculando...",
 		"save": "Guardar",
 		"cancel": "Cancelar",

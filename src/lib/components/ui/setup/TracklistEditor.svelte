@@ -13,6 +13,7 @@
 	} from '$lib/types';
 	import { gameData } from '$lib/stores';
 	import { TracklistGenerator, SettingsService } from '$lib/services';
+	import type { Work } from '$lib/models';
 	import { get } from 'svelte/store';
 	import Popup from '../primitives/Popup.svelte';
 	import Dialog from '../primitives/Dialog.svelte';
@@ -44,8 +45,17 @@
 		label: string;
 		workCount: number;
 		heightPercent: number;
-		workNames: string[];
+		workLines: string[];
 		isLargest: boolean;
+	}
+
+	interface PreviewCategory {
+		category: string;
+		composerCount: number;
+		workCount: number;
+		trackCount: number;
+		composers: Array<{ name: string; workCount: number }>;
+		workLines: string[];
 	}
 
 	let {
@@ -126,9 +136,7 @@
 			works: Array<{ name: string }>;
 		}>
 	>([]);
-	let previewCategories = $state<
-		Array<{ category: string; composerCount: number; workCount: number; trackCount: number }>
-	>([]);
+	let previewCategories = $state<PreviewCategory[]>([]);
 	let previewYearBuckets = $state<PreviewYearBucket[]>([]);
 
 	// Initialize from tracklist ONLY when visible changes to true
@@ -298,14 +306,29 @@
 			// Build category breakdown
 			const categoryMap = new SvelteMap<
 				string,
-				{ composers: Set<string>; workCount: number; trackCount: number }
+				{
+					composerCounts: SvelteMap<string, number>;
+					workLines: string[];
+					workCount: number;
+					trackCount: number;
+				}
 			>();
 			filteredData.works.forEach((work) => {
 				if (!categoryMap.has(work.type)) {
-					categoryMap.set(work.type, { composers: new Set(), workCount: 0, trackCount: 0 });
+					categoryMap.set(work.type, {
+						composerCounts: new SvelteMap(),
+						workLines: [],
+						workCount: 0,
+						trackCount: 0
+					});
 				}
 				const categoryData = categoryMap.get(work.type)!;
-				categoryData.composers.add(work.composerGid);
+				const composerName = getComposerLastName(work.composer.name);
+				categoryData.composerCounts.set(
+					composerName,
+					(categoryData.composerCounts.get(composerName) ?? 0) + 1
+				);
+				categoryData.workLines.push(getWorkPreviewLine(work));
 				categoryData.workCount++;
 				categoryData.trackCount += work.parts.length;
 			});
@@ -314,9 +337,13 @@
 			previewCategories = Array.from(categoryMap.entries())
 				.map(([category, data]) => ({
 					category,
-					composerCount: data.composers.size,
+					composerCount: data.composerCounts.size,
 					workCount: data.workCount,
-					trackCount: data.trackCount
+					trackCount: data.trackCount,
+					composers: Array.from(data.composerCounts.entries())
+						.map(([name, workCount]) => ({ name, workCount }))
+						.sort((a, b) => b.workCount - a.workCount || a.name.localeCompare(b.name)),
+					workLines: data.workLines
 				}))
 				.sort((a, b) => b.workCount - a.workCount);
 		} catch (error) {
@@ -328,19 +355,17 @@
 		}
 	}
 
-	function buildDecadeBuckets(
-		works: Array<{ name: string; begin_year: number | null; end_year: number | null }>
-	): PreviewYearBucket[] {
-		const buckets = new SvelteMap<number, { workCount: number; workNames: string[] }>();
+	function buildDecadeBuckets(works: Work[]): PreviewYearBucket[] {
+		const buckets = new SvelteMap<number, { workCount: number; workLines: string[] }>();
 
 		for (const work of works) {
 			const year = work.end_year ?? work.begin_year;
 			if (year === null || !Number.isFinite(year)) continue;
 
 			const decade = Math.floor(year / 10) * 10;
-			const bucket = buckets.get(decade) ?? { workCount: 0, workNames: [] };
+			const bucket = buckets.get(decade) ?? { workCount: 0, workLines: [] };
 			bucket.workCount++;
-			bucket.workNames.push(work.name);
+			bucket.workLines.push(getWorkPreviewLine(work));
 			buckets.set(decade, bucket);
 		}
 
@@ -353,17 +378,22 @@
 
 		return Array.from({ length: decadeCount }, (_, index) => {
 			const decade = minDecade + index * 10;
-			const bucket = buckets.get(decade) ?? { workCount: 0, workNames: [] };
+			const bucket = buckets.get(decade) ?? { workCount: 0, workLines: [] };
 			return {
 				decade,
 				label: `${decade}-${decade + 9}`,
 				workCount: bucket.workCount,
 				heightPercent:
 					bucket.workCount === 0 ? 0 : Math.max(2, Math.round((bucket.workCount / maxCount) * 100)),
-				workNames: bucket.workNames,
+				workLines: bucket.workLines,
 				isLargest: bucket.workCount === maxCount
 			};
 		});
+	}
+
+	function getWorkPreviewLine(work: Work): string {
+		const composerName = getComposerLastName(work.composer.name);
+		return composerName ? `${composerName}: ${work.name}` : work.name;
 	}
 
 	function getDecadeBucketTitle(bucket: PreviewYearBucket): string {
@@ -371,10 +401,38 @@
 			$_('tracklistEditor.previewDecadeBucket', {
 				values: { decade: bucket.label, count: bucket.workCount }
 			}),
-			...bucket.workNames.slice(0, 20),
-			bucket.workNames.length > 20
+			...bucket.workLines.slice(0, 20),
+			bucket.workLines.length > 20
 				? $_('tracklistEditor.previewMoreWorks', {
-						values: { count: bucket.workNames.length - 20 }
+						values: { count: bucket.workLines.length - 20 }
+					})
+				: ''
+		]
+			.filter(Boolean)
+			.join('\n');
+	}
+
+	function getCategoryComposersTitle(category: PreviewCategory): string {
+		return [
+			...category.composers
+				.slice(0, 30)
+				.map((composer) => `${composer.name} (${composer.workCount})`),
+			category.composers.length > 30
+				? $_('tracklistEditor.previewMoreComposers', {
+						values: { count: category.composers.length - 30 }
+					})
+				: ''
+		]
+			.filter(Boolean)
+			.join('\n');
+	}
+
+	function getCategoryWorksTitle(category: PreviewCategory): string {
+		return [
+			...category.workLines.slice(0, 30),
+			category.workLines.length > 30
+				? $_('tracklistEditor.previewMoreWorks', {
+						values: { count: category.workLines.length - 30 }
 					})
 				: ''
 		]
@@ -1524,16 +1582,19 @@
 											<div class="flex gap-1 text-xs">
 												<span
 													class="rounded-full bg-yellow-500/20 px-2 py-0.5 font-semibold text-yellow-300"
+													title={getCategoryComposersTitle(category)}
 												>
 													{category.composerCount}
 												</span>
 												<span
 													class="rounded-full bg-cyan-500/20 px-2 py-0.5 font-semibold text-cyan-300"
+													title={getCategoryWorksTitle(category)}
 												>
 													{category.workCount}
 												</span>
 												<span
 													class="rounded-full bg-purple-500/20 px-2 py-0.5 font-semibold text-purple-300"
+													title={getCategoryWorksTitle(category)}
 												>
 													{category.trackCount}
 												</span>

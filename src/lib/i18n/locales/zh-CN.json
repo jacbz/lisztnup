@@ -356,6 +356,7 @@
 		"previewYearDistribution": "年代",
 		"previewDecadeBucket": "{decade}：{count} 部作品",
 		"previewMoreWorks": "...另有 {count} 部",
+		"previewMoreComposers": "...另有 {count} 位作曲家",
 		"previewLoading": "计算中...",
 		"save": "保存",
 		"cancel": "取消",
