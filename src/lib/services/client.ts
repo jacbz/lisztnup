@@ -25,6 +25,7 @@ interface QueuedWrite {
 
 interface LeaderboardResponse {
 	entries: LeaderboardEntry[];
+	viewerCountry?: string | null;
 }
 
 export interface LeaderboardQuery {
@@ -263,7 +264,7 @@ export async function getLeaderboard(query: LeaderboardQuery): Promise<Leaderboa
 
 	const request = fetchJson<LeaderboardResponse>(url)
 		.then((data) => {
-			const normalized = { entries: data.entries ?? [] };
+			const normalized = { entries: data.entries ?? [], viewerCountry: data.viewerCountry ?? null };
 			leaderboardCache.set(url, {
 				expiresAt: Date.now() + LEADERBOARD_CACHE_TTL_MS,
 				data: normalized

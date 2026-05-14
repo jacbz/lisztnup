@@ -136,7 +136,7 @@ All tables include `user_hash` (SHA-256 of IP + daily-rotating salt — never st
 | `POST /api/game/events`            | Game telemetry (start/progress/end/placement) | UPSERT + `json_patch()`, non-blocking via `waitUntil()`                                                                        |
 | `POST /api/game/feedback`          | User feedback (5–1000 chars)                  | Validates, writes DB, sends Telegram notification                                                                              |
 | `POST /api/game/reports`           | Problem reports with track metadata JSON      | Same as feedback + Telegram message with MusicBrainz/Deezer links                                                              |
-| `GET /api/game/leaderboard`        | Top N timeline scores; tracklist records      | Max 50; strips tokens and returns Berlin `YYYY-MM-DD` dates                                                                    |
+| `GET /api/game/leaderboard`        | Top N timeline scores; tracklist records      | Max 50; strips tokens, returns Berlin dates + viewer country, and includes current country/token ranks when available          |
 | `POST/PATCH /api/game/leaderboard` | Submit, publish, or rename timeline scores    | POST validates replay logs (with replay metadata for score recalculation); PATCH rewrites anonymous rows for the browser token |
 
 ### Server Hooks (hooks.server.ts)

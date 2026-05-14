@@ -32,6 +32,8 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 	const target = Number(url.searchParams.get('target')) || null;
 	const playerToken = url.searchParams.get('token') || null;
 	const records = url.searchParams.get('records') === '1';
+	const viewerCountry = platform.cf?.country || null;
+	const canIncludeCountryRank = !!viewerCountry && viewerCountry !== 'UNKNOWN' && !records;
 
 	try {
 		// Use ROW_NUMBER() to keep only each player's best score per config
@@ -89,12 +91,17 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 						OR d.score > mn.max_named_score
 				)
 				SELECT * FROM final_list
-				${playerToken ? `WHERE rank <= ?${binds.length + 1} OR rank = (SELECT rank FROM final_list WHERE player_token = ?${binds.length + 2} ORDER BY rank ASC LIMIT 1)` : `WHERE rank <= ?${binds.length + 1}`}
+				WHERE rank <= ?${binds.length + 1}
+					${playerToken ? `OR rank = (SELECT rank FROM final_list WHERE player_token = ?${binds.length + 2} ORDER BY rank ASC LIMIT 1)` : ''}
+					${canIncludeCountryRank ? `OR rank = (SELECT rank FROM final_list WHERE country = ?${binds.length + (playerToken ? 3 : 2)} ORDER BY rank ASC LIMIT 1)` : ''}
 				ORDER BY rank ASC`;
 
 		binds.push(limit);
 		if (playerToken && !records) {
 			binds.push(playerToken);
+		}
+		if (canIncludeCountryRank) {
+			binds.push(viewerCountry);
 		}
 
 		const results = await platform.env.DB.prepare(sql)
@@ -111,7 +118,7 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 			};
 		});
 
-		return json({ entries });
+		return json({ entries, viewerCountry });
 	} catch (err) {
 		await logger.error(platform.env.DB, 'Leaderboard GET server error', {
 			context: { error: err instanceof Error ? err.message : String(err) }

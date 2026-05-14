@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Popup from '$lib/components/ui/primitives/Popup.svelte';
+	import Flag from '$lib/components/ui/primitives/Flag.svelte';
 	import { _ } from 'svelte-i18n';
 	import type { Track } from '$lib/models';
 	import type { Player } from '$lib/types';
@@ -16,8 +17,9 @@
 	import { getPlayerToken } from '$lib/stores/identity';
 	import PenLine from 'lucide-svelte/icons/pen-line';
 	import UploadCloud from 'lucide-svelte/icons/upload-cloud';
-	import Crown from 'lucide-svelte/icons/crown';
-	import Goal from 'lucide-svelte/icons/goal';
+	import Trophy from 'lucide-svelte/icons/trophy';
+	import Medal from 'lucide-svelte/icons/medal';
+	import CircleStar from 'lucide-svelte/icons/circle-star';
 	import { onMount } from 'svelte';
 	import { scale } from 'svelte/transition';
 	import { getLeaderboard, patchLeaderboardName, submitLeaderboard } from '$lib/services/client';
@@ -144,7 +146,9 @@
 	let gameoverAudio: HTMLAudioElement | null = null;
 	let gameoverPlayed = false;
 	let isNewGlobalHighScore = $state(false);
+	let isNewCountryHighScore = $state(false);
 	let isNewPersonalHighScore = $state(false);
+	let highScoreCountry = $state<string | null>(null);
 	let autoSubmitted = $state(false);
 	let entryIds = $state<(number | null)[]>([]);
 	let permissionAskedForKey = $state('');
@@ -156,12 +160,14 @@
 	const highScoreHasPublishPermission = $derived(
 		leaderboardHighScorePlayer ? hasAllowedName(leaderboardHighScorePlayer.name) : false
 	);
-	const highScoreBannerKind = $derived<'global' | 'personal' | null>(
+	const highScoreBannerKind = $derived<'global' | 'country' | 'personal' | null>(
 		canShowGlobalHighScore && isNewGlobalHighScore
 			? 'global'
-			: canShowGlobalHighScore && isNewPersonalHighScore
-				? 'personal'
-				: null
+			: canShowGlobalHighScore && isNewCountryHighScore
+				? 'country'
+				: canShowGlobalHighScore && isNewPersonalHighScore
+					? 'personal'
+					: null
 	);
 
 	function getAverageTime(turns: TimelineReplayTurn[]): number | null {
@@ -508,7 +514,9 @@
 	$effect(() => {
 		if (!visible || sortedTimelines.length === 0) return;
 		isNewGlobalHighScore = false;
+		isNewCountryHighScore = false;
 		isNewPersonalHighScore = false;
+		highScoreCountry = null;
 
 		if (canShowGlobalHighScore && leaderboardHighScorePlayer) {
 			getLeaderboard({
@@ -517,13 +525,26 @@
 				limit: 50,
 				token: getPlayerToken()
 			})
-				.then((data: { entries?: LeaderboardEntry[] }) => {
+				.then((data: { entries?: LeaderboardEntry[]; viewerCountry?: string | null }) => {
 					const entries = data.entries ?? [];
 					const topScore = Math.round(leaderboardHighScorePlayer.score);
 					if (topScore > 0 && (entries.length === 0 || topScore > entries[0].score)) {
 						isNewGlobalHighScore = true;
 					}
 					if (topScore > 0) {
+						const viewerCountry = data.viewerCountry;
+						if (viewerCountry && viewerCountry !== 'UNKNOWN') {
+							highScoreCountry = viewerCountry;
+							const countryScores = entries
+								.filter((entry) => entry.country === viewerCountry)
+								.map((entry) => entry.score)
+								.filter((score) => Number.isFinite(score));
+							const countryBestScore = countryScores.length > 0 ? Math.max(...countryScores) : null;
+							if (countryBestScore === null || topScore > countryBestScore) {
+								isNewCountryHighScore = true;
+							}
+						}
+
 						const personalScores = entries
 							.filter((entry) => entry.is_me)
 							.map((entry) => entry.score)
@@ -674,46 +695,65 @@
 			<div
 				class="flex flex-col items-center gap-1 rounded-lg border px-4 py-2 {highScoreBannerKind ===
 				'global'
-					? 'border-amber-400/30 bg-amber-400/10 shadow-[0_0_24px_rgba(251,191,36,0.12)]'
-					: 'border-amber-300/20 bg-amber-300/5'}"
+					? 'border-amber-400/35 bg-amber-400/10 shadow-[0_0_24px_rgba(251,191,36,0.12)]'
+					: highScoreBannerKind === 'country'
+						? 'border-slate-300/25 bg-slate-200/10 shadow-[0_0_18px_rgba(226,232,240,0.08)]'
+						: 'border-orange-400/25 bg-orange-400/5'}"
 				in:scale={{ duration: 200, start: 0.9 }}
 			>
 				<div class="flex items-center gap-2">
 					{#if highScoreBannerKind === 'global'}
-						<Crown class="h-5 w-5 text-amber-400" />
+						<Trophy class="h-5 w-5 text-amber-400" />
+					{:else if highScoreBannerKind === 'country'}
+						<Medal class="h-5 w-5 text-slate-200" />
 					{:else}
-						<Goal class="h-4 w-4 text-amber-300/80" />
+						<CircleStar class="h-4 w-4 text-orange-400/85" />
 					{/if}
 					<span
 						class="text-sm font-bold {highScoreBannerKind === 'global'
 							? 'text-amber-400'
-							: 'text-amber-300'}"
+							: highScoreBannerKind === 'country'
+								? 'text-slate-100'
+								: 'text-orange-300'}"
 					>
 						{$_(
 							highScoreBannerKind === 'global'
 								? 'leaderboard.newGlobalHighScore'
-								: 'leaderboard.newPersonalHighScore'
+								: highScoreBannerKind === 'country'
+									? 'leaderboard.newCountryHighScore'
+									: 'leaderboard.newPersonalHighScore'
 						)}
 					</span>
+					{#if highScoreBannerKind === 'country'}
+						<Flag country={highScoreCountry} size="sm" class="ml-0.5" />
+					{/if}
 					{#if highScoreBannerKind === 'global'}
-						<Crown class="h-5 w-5 text-amber-400" />
+						<Trophy class="h-5 w-5 text-amber-400" />
+					{:else if highScoreBannerKind === 'country'}
+						<Medal class="h-5 w-5 text-slate-200" />
 					{:else}
-						<Goal class="h-4 w-4 text-amber-300/80" />
+						<CircleStar class="h-4 w-4 text-orange-400/85" />
 					{/if}
 				</div>
 				<span
 					class="text-xs {highScoreBannerKind === 'global'
 						? 'text-amber-400/70'
-						: 'text-amber-300/60'}"
+						: highScoreBannerKind === 'country'
+							? 'text-slate-200/65'
+							: 'text-orange-300/65'}"
 				>
 					{$_(
 						highScoreBannerKind === 'global'
 							? highScoreHasPublishPermission
 								? 'leaderboard.newGlobalHighScorePublishedSubtitle'
 								: 'leaderboard.newGlobalHighScoreSubtitle'
-							: highScoreHasPublishPermission
-								? 'leaderboard.newPersonalHighScorePublishedSubtitle'
-								: 'leaderboard.newPersonalHighScoreSubtitle'
+							: highScoreBannerKind === 'country'
+								? highScoreHasPublishPermission
+									? 'leaderboard.newCountryHighScorePublishedSubtitle'
+									: 'leaderboard.newCountryHighScoreSubtitle'
+								: highScoreHasPublishPermission
+									? 'leaderboard.newPersonalHighScorePublishedSubtitle'
+									: 'leaderboard.newPersonalHighScoreSubtitle'
 					)}
 				</span>
 			</div>
