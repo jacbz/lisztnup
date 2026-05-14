@@ -1363,7 +1363,7 @@ class MusicbrainzProcessor:
                 log.info("SPECIAL PATCH | %s (%s) | Replacing parts with manual selection", w.name, w.gid)
                 w.parts = [
                     FinalPart(
-                        gid="manual-patch-gid",
+                        gid="d3fed3fd",
                         name="Peter and the Wolf, op. 67: 1. Introduction (no narration)",
                         deezer=[2803098022],
                         score=100.0
