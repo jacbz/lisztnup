@@ -647,6 +647,11 @@
 			"country": "Country",
 			"points": "Points"
 		},
+		"scope": {
+			"global": "global",
+			"national": "national",
+			"personal": "personal"
+		},
 		"showTimeline": "Show timeline",
 		"replay": "Replay",
 		"publishTitle": "Publish to Leaderboard",

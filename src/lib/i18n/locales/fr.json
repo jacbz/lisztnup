@@ -647,6 +647,11 @@
 			"country": "Pays",
 			"points": "Points"
 		},
+		"scope": {
+			"global": "monde",
+			"national": "pays",
+			"personal": "perso"
+		},
 		"showTimeline": "Afficher la frise",
 		"replay": "Replay",
 		"publishTitle": "Publier au classement",

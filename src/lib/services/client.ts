@@ -34,6 +34,7 @@ export interface LeaderboardQuery {
 	target?: number | string | null;
 	token?: string | null;
 	records?: boolean;
+	scope?: 'global' | 'national' | 'personal';
 }
 
 export interface LeaderboardSubmission {
@@ -102,6 +103,7 @@ function normalizeLeaderboardUrl(query: LeaderboardQuery) {
 	if (query.target != null) params.set('target', String(query.target));
 	if (query.token) params.set('token', query.token);
 	if (query.records) params.set('records', '1');
+	if (query.scope && query.scope !== 'global') params.set('scope', query.scope);
 	params.sort();
 	return `/api/game/leaderboard?${params.toString()}`;
 }

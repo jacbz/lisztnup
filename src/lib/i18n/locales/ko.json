@@ -647,6 +647,11 @@
 			"country": "국가",
 			"points": "점수"
 		},
+		"scope": {
+			"global": "세계",
+			"national": "국내",
+			"personal": "내 기록"
+		},
 		"showTimeline": "타임라인 보기",
 		"replay": "리플레이",
 		"publishTitle": "리더보드에 올리기",

@@ -8,21 +8,34 @@
 	import type { LeaderboardEntry } from '$lib/types';
 	import { formatDateString } from '$lib/utils';
 
+	type LeaderboardScope = 'global' | 'national' | 'personal';
+	const scopes: LeaderboardScope[] = ['global', 'national', 'personal'];
+
 	interface Props {
 		entries: LeaderboardEntry[];
 		currentLocale: string;
-		showExpanded?: boolean;
+		scope?: LeaderboardScope;
 		isLoading?: boolean;
+		onScopeChange?: (scope: LeaderboardScope) => void;
 		onShowTimeline?: (entry: LeaderboardEntry) => void;
 	}
 
 	let {
 		entries,
 		currentLocale,
-		showExpanded = $bindable(false),
+		scope = 'global',
 		isLoading = false,
+		onScopeChange = () => {},
 		onShowTimeline = () => {}
 	}: Props = $props();
+
+	let showExpanded = $state(false);
+
+	$effect(() => {
+		if (entries.length <= 5) {
+			showExpanded = false;
+		}
+	});
 </script>
 
 {#snippet tableColgroup()}
@@ -81,8 +94,31 @@
 {/snippet}
 
 <div class="mt-1 transition-opacity duration-300" class:opacity-50={isLoading}>
-	<div class="mb-2 flex text-sm font-semibold text-slate-400">
-		{$_('leaderboard.title')}
+	<div
+		class="mb-2 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm font-semibold text-slate-400"
+	>
+		<span>{$_('leaderboard.title')}</span>
+		<div
+			class="inline-flex items-baseline gap-[0.1rem] text-[0.68rem] leading-none font-semibold text-slate-600"
+		>
+			<span aria-hidden="true">(</span>
+			{#each scopes as option, i (option)}
+				{#if i > 0}
+					<span aria-hidden="true">|</span>
+				{/if}
+				<button
+					type="button"
+					onclick={() => onScopeChange(option)}
+					class="cursor-pointer transition-colors {scope === option
+						? 'text-slate-400'
+						: 'text-slate-600 hover:text-slate-300'}"
+					aria-pressed={scope === option}
+				>
+					{$_(`leaderboard.scope.${option}`)}
+				</button>
+			{/each}
+			<span aria-hidden="true">)</span>
+		</div>
 	</div>
 	{#if entries.length === 0 && !isLoading}
 		<p class="py-2 text-xs text-slate-500">{$_('leaderboard.noScores')}</p>

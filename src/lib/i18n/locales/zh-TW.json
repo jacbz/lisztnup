@@ -647,6 +647,11 @@
 			"country": "國家/地區",
 			"points": "分數"
 		},
+		"scope": {
+			"global": "全球",
+			"national": "全國",
+			"personal": "個人"
+		},
 		"showTimeline": "顯示時間軸",
 		"replay": "回放",
 		"publishTitle": "發布到排行榜",

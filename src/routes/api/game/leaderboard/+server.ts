@@ -9,6 +9,7 @@ const MAX_SCORE = 1_000_000;
 const MAX_CARDS = 100;
 const MAX_SCORE_PER_CARD = 6000;
 const MAX_SUBMISSIONS_PER_HOUR = 60;
+type LeaderboardScope = 'global' | 'national' | 'personal';
 
 function parseClientTimestamp(value: unknown): string | null {
 	if (typeof value !== 'string') return null;
@@ -32,10 +33,39 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 	const target = Number(url.searchParams.get('target')) || null;
 	const playerToken = url.searchParams.get('token') || null;
 	const records = url.searchParams.get('records') === '1';
+	const rawScope = url.searchParams.get('scope');
+	const scope: LeaderboardScope =
+		rawScope === 'national' || rawScope === 'personal' ? rawScope : 'global';
 	const viewerCountry = platform.cf?.country || null;
-	const canIncludeCountryRank = !!viewerCountry && viewerCountry !== 'UNKNOWN' && !records;
+	const canIncludePlayerRank = scope === 'global' && !!playerToken && !records;
+	const canIncludeCountryRank =
+		scope === 'global' && !!viewerCountry && viewerCountry !== 'UNKNOWN' && !records;
+
+	if (scope === 'personal' && !playerToken) {
+		return json({ entries: [], viewerCountry });
+	}
 
 	try {
+		let nationalCountry = viewerCountry;
+		let responseViewerCountry = viewerCountry;
+		if (scope === 'national') {
+			if ((!nationalCountry || nationalCountry === 'UNKNOWN') && playerToken) {
+				const savedCountry = await platform.env.DB.prepare(
+					`SELECT country FROM timeline_scores
+					 WHERE player_token = ?1 AND country IS NOT NULL
+					 ORDER BY country <> 'UNKNOWN' DESC, timestamp DESC
+					 LIMIT 1`
+				)
+					.bind(playerToken)
+					.first<{ country: string | null }>();
+				nationalCountry = savedCountry?.country ?? null;
+			}
+			responseViewerCountry = nationalCountry;
+		}
+		if (scope === 'national' && !nationalCountry) {
+			return json({ entries: [], viewerCountry: responseViewerCountry });
+		}
+
 		// Use ROW_NUMBER() to keep only each player's best score per config
 		// Partition by token+name to allow multiple entries from local multiplayer
 		// NULL player_name entries collapse per token (anonymous best-of-device)
@@ -57,6 +87,14 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 			conditions.push(`tracklist_id <> ?${binds.length + 1}`);
 			binds.push('custom');
 		}
+		if (!records && scope === 'national' && nationalCountry) {
+			conditions.push(`country = ?${binds.length + 1}`);
+			binds.push(nationalCountry);
+		}
+		if (!records && scope === 'personal' && playerToken) {
+			conditions.push(`player_token = ?${binds.length + 1}`);
+			binds.push(playerToken);
+		}
 
 		const whereClause = conditions.length > 0 ? ` WHERE ${conditions.join(' AND ')}` : '';
 		const cols = `player_token, player_name, score, attempts, target, average_time, longest_streak, tracklist_id, country, timestamp, log`;
@@ -71,7 +109,12 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 				FROM ranked
 				WHERE rn = 1
 				ORDER BY timestamp DESC LIMIT ?${binds.length + 1}`
-			: `WITH best AS (
+			: scope === 'personal'
+				? `SELECT ${cols},
+						RANK() OVER (ORDER BY score DESC, log IS NOT NULL DESC, timestamp DESC) as rank
+					FROM timeline_scores${whereClause}
+					ORDER BY rank ASC LIMIT ?${binds.length + 1}`
+				: `WITH best AS (
 					SELECT ${cols},
 						ROW_NUMBER() OVER (PARTITION BY player_token, player_name ORDER BY score DESC, log IS NOT NULL DESC, timestamp DESC) AS rn
 					FROM timeline_scores${whereClause}
@@ -92,12 +135,12 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 				)
 				SELECT * FROM final_list
 				WHERE rank <= ?${binds.length + 1}
-					${playerToken ? `OR rank = (SELECT rank FROM final_list WHERE player_token = ?${binds.length + 2} ORDER BY rank ASC LIMIT 1)` : ''}
-					${canIncludeCountryRank ? `OR rank = (SELECT rank FROM final_list WHERE country = ?${binds.length + (playerToken ? 3 : 2)} ORDER BY rank ASC LIMIT 1)` : ''}
+					${canIncludePlayerRank ? `OR rank = (SELECT rank FROM final_list WHERE player_token = ?${binds.length + 2} ORDER BY rank ASC LIMIT 1)` : ''}
+					${canIncludeCountryRank ? `OR rank = (SELECT rank FROM final_list WHERE country = ?${binds.length + (canIncludePlayerRank ? 3 : 2)} ORDER BY rank ASC LIMIT 1)` : ''}
 				ORDER BY rank ASC`;
 
 		binds.push(limit);
-		if (playerToken && !records) {
+		if (canIncludePlayerRank) {
 			binds.push(playerToken);
 		}
 		if (canIncludeCountryRank) {
@@ -118,7 +161,7 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 			};
 		});
 
-		return json({ entries, viewerCountry });
+		return json({ entries, viewerCountry: responseViewerCountry });
 	} catch (err) {
 		await logger.error(platform.env.DB, 'Leaderboard GET server error', {
 			context: { error: err instanceof Error ? err.message : String(err) }

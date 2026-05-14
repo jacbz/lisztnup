@@ -65,6 +65,8 @@
 		pageviews24h?: number | null;
 	}
 
+	type LeaderboardScope = 'global' | 'national' | 'personal';
+
 	let { onStart = () => {}, pageviews24h = null }: Props = $props();
 
 	let showTracklistSelector = $state(false);
@@ -81,7 +83,7 @@
 	let showFeedbackPopup = $state(false);
 	let leaderboardEntries = $state<LeaderboardEntry[]>([]);
 	let leaderboardLoading = $state(false);
-	let showExpandedLeaderboard = $state(false);
+	let leaderboardScope = $state<LeaderboardScope>('global');
 	let showTracklistRecords = $state(false);
 	let tracklistRecordsEntries = $state<LeaderboardEntry[]>([]);
 	let tracklistRecordsLoading = $state(false);
@@ -207,7 +209,7 @@
 		if (showTimelineLeaderboard && browser) {
 			const tracklist = localSettings.selectedTracklist;
 			const target = localSettings.timelineTarget;
-			const filterKey = `${tracklist}:${target}`;
+			const filterKey = `${tracklist}:${target}:${leaderboardScope}`;
 			const requestId = ++leaderboardRequestId;
 
 			leaderboardLoading = true;
@@ -221,7 +223,8 @@
 				limit: 25,
 				tracklist,
 				target,
-				token: getPlayerToken()
+				token: getPlayerToken(),
+				scope: leaderboardScope
 			})
 				.then((data) => {
 					if (requestId !== leaderboardRequestId) return;
@@ -289,13 +292,11 @@
 	});
 
 	function handleTracklistSelect(tracklist: Tracklist) {
-		showExpandedLeaderboard = false;
 		localSettings.selectedTracklist = tracklist.id;
 		settingsStore.update((s) => ({ ...s, selectedTracklist: tracklist.id }));
 	}
 
 	function handleTracklistRecordSelect(tracklist: Tracklist, target: number) {
-		showExpandedLeaderboard = false;
 		localSettings.selectedTracklist = tracklist.id;
 		localSettings.timelineTarget = target;
 		settingsStore.update((s) => ({
@@ -339,9 +340,12 @@
 	}
 
 	function handleTimelineTargetChange(value: number) {
-		showExpandedLeaderboard = false;
 		localSettings.timelineTarget = value;
 		settingsStore.update((s) => ({ ...s, timelineTarget: value }));
+	}
+
+	function handleLeaderboardScopeChange(scope: LeaderboardScope) {
+		leaderboardScope = scope;
 	}
 
 	function handleStartGame() {
@@ -746,8 +750,9 @@
 							<TimelineLeaderboard
 								entries={leaderboardEntries}
 								{currentLocale}
+								scope={leaderboardScope}
 								isLoading={leaderboardLoading}
-								bind:showExpanded={showExpandedLeaderboard}
+								onScopeChange={handleLeaderboardScopeChange}
 								onShowTimeline={handleShowTimeline}
 							/>
 						{/if}

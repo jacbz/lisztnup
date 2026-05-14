@@ -647,6 +647,11 @@
 			"country": "Land",
 			"points": "Punkte"
 		},
+		"scope": {
+			"global": "weltweit",
+			"national": "landesweit",
+			"personal": "meine"
+		},
 		"showTimeline": "Timeline anzeigen",
 		"replay": "Replay",
 		"publishTitle": "In Bestenliste veröffentlichen",

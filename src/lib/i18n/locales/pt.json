@@ -647,6 +647,11 @@
 			"country": "País",
 			"points": "Pontos"
 		},
+		"scope": {
+			"global": "mundo",
+			"national": "país",
+			"personal": "meu placar"
+		},
 		"showTimeline": "Mostrar linha do tempo",
 		"replay": "Replay",
 		"publishTitle": "Publicar no ranking",

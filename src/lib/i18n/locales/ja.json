@@ -647,6 +647,11 @@
 			"country": "国",
 			"points": "ポイント"
 		},
+		"scope": {
+			"global": "世界",
+			"national": "国内",
+			"personal": "自分"
+		},
 		"showTimeline": "タイムラインを表示",
 		"replay": "リプレイ",
 		"publishTitle": "ランキングに公開",
