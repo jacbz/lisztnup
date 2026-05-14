@@ -17,10 +17,11 @@
 	import PenLine from 'lucide-svelte/icons/pen-line';
 	import UploadCloud from 'lucide-svelte/icons/upload-cloud';
 	import Crown from 'lucide-svelte/icons/crown';
+	import Goal from 'lucide-svelte/icons/goal';
 	import { onMount } from 'svelte';
 	import { scale } from 'svelte/transition';
 	import { getLeaderboard, patchLeaderboardName, submitLeaderboard } from '$lib/services/client';
-	import type { TimelineReplayLog, TimelineReplayTurn } from '$lib/types';
+	import type { LeaderboardEntry, TimelineReplayLog, TimelineReplayTurn } from '$lib/types';
 	import { selectedTracklist, settings } from '$lib/stores/settings';
 	import { Zap } from 'lucide-svelte';
 	import { SvelteSet } from 'svelte/reactivity';
@@ -93,9 +94,6 @@
 		$selectedTracklist.kind === 'custom' ? 'custom' : tracklistId
 	);
 	const canShowGlobalHighScore = $derived($selectedTracklist.kind !== 'custom');
-	const highScoreHasPublishPermission = $derived(
-		highScoreTimeline?.reachedTarget === true && hasAllowedName(highScoreTimeline.player.name)
-	);
 
 	const revealYearText = $derived.by(() => {
 		if (!inspectTrack) return '';
@@ -145,7 +143,8 @@
 	let pendingPermissionPublishes = $state<Record<number, string>>({});
 	let gameoverAudio: HTMLAudioElement | null = null;
 	let gameoverPlayed = false;
-	let isNewHighScore = $state(false);
+	let isNewGlobalHighScore = $state(false);
+	let isNewPersonalHighScore = $state(false);
 	let autoSubmitted = $state(false);
 	let entryIds = $state<(number | null)[]>([]);
 	let permissionAskedForKey = $state('');
@@ -153,6 +152,17 @@
 	const pendingPublishInFlight = new SvelteSet<number>();
 	let showReplayPopup = $state(false);
 	let replayTimeline = $state<FinalTimeline | null>(null);
+	const leaderboardHighScorePlayer = $derived(leaderboardPlayers[0] ?? null);
+	const highScoreHasPublishPermission = $derived(
+		leaderboardHighScorePlayer ? hasAllowedName(leaderboardHighScorePlayer.name) : false
+	);
+	const highScoreBannerKind = $derived<'global' | 'personal' | null>(
+		canShowGlobalHighScore && isNewGlobalHighScore
+			? 'global'
+			: canShowGlobalHighScore && isNewPersonalHighScore
+				? 'personal'
+				: null
+	);
 
 	function getAverageTime(turns: TimelineReplayTurn[]): number | null {
 		const times = turns
@@ -442,7 +452,7 @@
 	function handleHomeClick() {
 		if (
 			canShowGlobalHighScore &&
-			isNewHighScore &&
+			isNewGlobalHighScore &&
 			leaderboardPlayers.length > 0 &&
 			!leaderboardPlayers.some((p) => hasAllowedName(p.name))
 		) {
@@ -497,21 +507,32 @@
 	// Fetch leaderboard + auto-submit completed timelines
 	$effect(() => {
 		if (!visible || sortedTimelines.length === 0) return;
-		isNewHighScore = false;
+		isNewGlobalHighScore = false;
+		isNewPersonalHighScore = false;
 
-		if (canShowGlobalHighScore) {
+		if (canShowGlobalHighScore && leaderboardHighScorePlayer) {
 			getLeaderboard({
 				tracklist: tracklistId,
 				target,
 				limit: 50,
 				token: getPlayerToken()
 			})
-				.then((data: { entries?: { player_name: string | null; score: number }[] }) => {
+				.then((data: { entries?: LeaderboardEntry[] }) => {
 					const entries = data.entries ?? [];
-					// New global high score?
-					const topScore = Math.round(sortedTimelines[0].score);
+					const topScore = Math.round(leaderboardHighScorePlayer.score);
 					if (topScore > 0 && (entries.length === 0 || topScore > entries[0].score)) {
-						isNewHighScore = true;
+						isNewGlobalHighScore = true;
+					}
+					if (topScore > 0) {
+						const personalScores = entries
+							.filter((entry) => entry.is_me)
+							.map((entry) => entry.score)
+							.filter((score) => Number.isFinite(score));
+						const personalBestScore =
+							personalScores.length > 0 ? Math.max(...personalScores) : null;
+						if (personalBestScore === null || topScore > personalBestScore) {
+							isNewPersonalHighScore = true;
+						}
 					}
 				})
 				.catch(() => {}); // silent
@@ -649,21 +670,50 @@
 			{/if}
 		</div>
 
-		{#if canShowGlobalHighScore && isNewHighScore}
+		{#if highScoreBannerKind}
 			<div
-				class="flex flex-col items-center gap-1 rounded-lg border border-amber-400/30 bg-amber-400/10 px-4 py-2"
+				class="flex flex-col items-center gap-1 rounded-lg border px-4 py-2 {highScoreBannerKind ===
+				'global'
+					? 'border-amber-400/30 bg-amber-400/10 shadow-[0_0_24px_rgba(251,191,36,0.12)]'
+					: 'border-amber-300/20 bg-amber-300/5'}"
 				in:scale={{ duration: 200, start: 0.9 }}
 			>
 				<div class="flex items-center gap-2">
-					<Crown class="h-5 w-5 text-amber-400" />
-					<span class="text-sm font-bold text-amber-400">{$_('leaderboard.newHighScore')}</span>
-					<Crown class="h-5 w-5 text-amber-400" />
+					{#if highScoreBannerKind === 'global'}
+						<Crown class="h-5 w-5 text-amber-400" />
+					{:else}
+						<Goal class="h-4 w-4 text-amber-300/80" />
+					{/if}
+					<span
+						class="text-sm font-bold {highScoreBannerKind === 'global'
+							? 'text-amber-400'
+							: 'text-amber-300'}"
+					>
+						{$_(
+							highScoreBannerKind === 'global'
+								? 'leaderboard.newGlobalHighScore'
+								: 'leaderboard.newPersonalHighScore'
+						)}
+					</span>
+					{#if highScoreBannerKind === 'global'}
+						<Crown class="h-5 w-5 text-amber-400" />
+					{:else}
+						<Goal class="h-4 w-4 text-amber-300/80" />
+					{/if}
 				</div>
-				<span class="text-xs text-amber-400/70">
+				<span
+					class="text-xs {highScoreBannerKind === 'global'
+						? 'text-amber-400/70'
+						: 'text-amber-300/60'}"
+				>
 					{$_(
-						highScoreHasPublishPermission
-							? 'leaderboard.newHighScorePublishedSubtitle'
-							: 'leaderboard.newHighScoreSubtitle'
+						highScoreBannerKind === 'global'
+							? highScoreHasPublishPermission
+								? 'leaderboard.newGlobalHighScorePublishedSubtitle'
+								: 'leaderboard.newGlobalHighScoreSubtitle'
+							: highScoreHasPublishPermission
+								? 'leaderboard.newPersonalHighScorePublishedSubtitle'
+								: 'leaderboard.newPersonalHighScoreSubtitle'
 					)}
 				</span>
 			</div>
@@ -749,6 +799,8 @@
 							{@const leaderboardIndex = getLeaderboardIndex(t)}
 							{@const leaderboardPlayer = leaderboardPlayers[leaderboardIndex]}
 							{#if leaderboardPlayer}
+								{@const hasPublishedName =
+									hasAllowedName(t.player.name) || isNamedInCurrentRound(leaderboardIndex)}
 								<div class="flex justify-end">
 									<button
 										type="button"
@@ -756,13 +808,13 @@
 											openLeaderboardNameDialog(
 												leaderboardPlayer,
 												leaderboardIndex,
-												hasAllowedName(t.player.name) || isNamedInCurrentRound(leaderboardIndex)
-													? 'rename'
-													: 'publish'
+												hasPublishedName ? 'rename' : 'publish'
 											)}
-										class="flex cursor-pointer items-center gap-2 rounded-lg border border-amber-400/60 bg-amber-400/10 px-3 py-2 text-sm font-bold text-amber-300 transition-all hover:bg-amber-400/20"
+										class="flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-sm font-bold transition-all {hasPublishedName
+											? 'border-slate-600 bg-slate-800/60 text-slate-300 hover:border-slate-500 hover:bg-slate-700/60 hover:text-white'
+											: 'border-amber-400/60 bg-amber-400/10 text-amber-300 hover:bg-amber-400/20'}"
 									>
-										{#if hasAllowedName(t.player.name) || isNamedInCurrentRound(leaderboardIndex)}
+										{#if hasPublishedName}
 											<PenLine class="h-4 w-4" />
 											{$_('leaderboard.rename')}
 										{:else}

@@ -135,6 +135,9 @@
 			(localSettings.gamesPlayed ?? 0) > 0 &&
 			localSettings.dailyChallengePlayedDate !== germanTodayDate
 	);
+	let showTimelineLeaderboard = $derived(
+		selectedMode === 'timeline' && $selectedTracklist.kind !== 'custom'
+	);
 	let DailyChallengeIcon = $derived.by(() => {
 		if (dailyChallengeEntry.cause === 'birthday') return Cake;
 		if (dailyChallengeEntry.cause === 'nationalDay') return Flag;
@@ -201,7 +204,7 @@
 
 	// Load leaderboard when timeline mode is selected or settings change
 	$effect(() => {
-		if (selectedMode === 'timeline' && browser) {
+		if (showTimelineLeaderboard && browser) {
 			const tracklist = localSettings.selectedTracklist;
 			const target = localSettings.timelineTarget;
 			const filterKey = `${tracklist}:${target}`;
@@ -738,14 +741,16 @@
 							/>
 						</div>
 
-						<!-- Inline Leaderboard -->
-						<TimelineLeaderboard
-							entries={leaderboardEntries}
-							{currentLocale}
-							isLoading={leaderboardLoading}
-							bind:showExpanded={showExpandedLeaderboard}
-							onShowTimeline={handleShowTimeline}
-						/>
+						{#if showTimelineLeaderboard}
+							<!-- Inline Leaderboard -->
+							<TimelineLeaderboard
+								entries={leaderboardEntries}
+								{currentLocale}
+								isLoading={leaderboardLoading}
+								bind:showExpanded={showExpandedLeaderboard}
+								onShowTimeline={handleShowTimeline}
+							/>
+						{/if}
 					{/if}
 				</div>
 
