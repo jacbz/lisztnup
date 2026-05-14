@@ -30,6 +30,9 @@
 		"title": "搜索...",
 		"searchFor": "搜索："
 	},
+	"trackInfo": {
+		"stats": "这张卡已出现 {played} 次，其中 {correctPercent}% 被放对了位置。"
+	},
 	"app": {
 		"title": "Liszt’n Up!",
 		"subtitle": "古典音乐猜谜大挑战",

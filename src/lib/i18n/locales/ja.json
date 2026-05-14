@@ -30,6 +30,9 @@
 		"title": "検索...",
 		"searchFor": "検索対象:"
 	},
+	"trackInfo": {
+		"stats": "このカードはこれまで{played}回登場し、{correctPercent}%の確率で正しい位置に置かれました。"
+	},
 	"app": {
 		"title": "Liszt’n Up!",
 		"subtitle": "クラシック音楽クイズゲーム",

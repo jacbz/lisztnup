@@ -30,6 +30,9 @@
 		"title": "Suchen auf...",
 		"searchFor": "Suchen nach:"
 	},
+	"trackInfo": {
+		"stats": "Diese Karte war schon {played, plural, one {# Mal} other {# Mal}} im Spiel und lag in {correctPercent}% der Versuche richtig."
+	},
 	"app": {
 		"title": "Liszt’n Up!",
 		"subtitle": "Das Klassik-Ratespiel",

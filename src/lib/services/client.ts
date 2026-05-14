@@ -2,6 +2,7 @@ import { browser } from '$app/environment';
 import type { LeaderboardEntry, TimelineReplayLog } from '$lib/types';
 
 const LEADERBOARD_CACHE_TTL_MS = 60_000;
+const TRACK_STATS_CACHE_TTL_MS = 300_000;
 const QUEUE_KEY = 'lisztnup:api-write-queue:v1';
 const SEQUENCE_KEY = 'lisztnup:api-write-sequence:v1';
 const MAX_ATTEMPTS = 8;
@@ -26,6 +27,15 @@ interface QueuedWrite {
 interface LeaderboardResponse {
 	entries: LeaderboardEntry[];
 	viewerCountry?: string | null;
+}
+
+export interface TrackInfoStats {
+	played: number;
+	correctPercent: number;
+}
+
+interface TrackStatsResponse {
+	stats: TrackInfoStats | null;
 }
 
 export interface LeaderboardQuery {
@@ -73,6 +83,8 @@ export class ApiHttpError extends Error {
 
 const leaderboardCache = new Map<string, { expiresAt: number; data: LeaderboardResponse }>();
 const inFlightLeaderboard = new Map<string, Promise<LeaderboardResponse>>();
+const trackStatsCache = new Map<string, { expiresAt: number; data: TrackInfoStats | null }>();
+const inFlightTrackStats = new Map<string, Promise<TrackInfoStats | null>>();
 let isDraining = false;
 let drainTimer: ReturnType<typeof setTimeout> | null = null;
 let fallbackSequence = Date.now();
@@ -277,6 +289,33 @@ export async function getLeaderboard(query: LeaderboardQuery): Promise<Leaderboa
 			inFlightLeaderboard.delete(url);
 		});
 	inFlightLeaderboard.set(url, request);
+	return request;
+}
+
+export async function getTrackInfoStats(partGid: string): Promise<TrackInfoStats | null> {
+	if (!partGid) return null;
+
+	const cached = trackStatsCache.get(partGid);
+	if (cached && cached.expiresAt > Date.now()) return cached.data;
+
+	const inFlight = inFlightTrackStats.get(partGid);
+	if (inFlight) return inFlight;
+
+	const params = new URLSearchParams({ partGid });
+	const request = fetchJson<TrackStatsResponse>(`/api/game/track-stats?${params.toString()}`)
+		.then((data) => {
+			const stats = data.stats ?? null;
+			trackStatsCache.set(partGid, {
+				expiresAt: Date.now() + TRACK_STATS_CACHE_TTL_MS,
+				data: stats
+			});
+			return stats;
+		})
+		.finally(() => {
+			inFlightTrackStats.delete(partGid);
+		});
+
+	inFlightTrackStats.set(partGid, request);
 	return request;
 }
 

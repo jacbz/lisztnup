@@ -30,6 +30,9 @@
 		"title": "Pesquisar em...",
 		"searchFor": "Pesquisar:"
 	},
+	"trackInfo": {
+		"stats": "Esta carta já saiu {played, plural, one {# vez} other {# vezes}} e ficou no lugar certo em {correctPercent} % das jogadas."
+	},
 	"app": {
 		"title": "Liszt’n Up!",
 		"subtitle": "O Jogo de Adivinhação de Música Clássica",

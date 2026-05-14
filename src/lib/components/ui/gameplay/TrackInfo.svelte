@@ -19,6 +19,7 @@
 	import { slide } from 'svelte/transition';
 	import { onDestroy } from 'svelte';
 	import Check from 'lucide-svelte/icons/check-circle';
+	import { getTrackInfoStats, type TrackInfoStats } from '$lib/services/client';
 
 	interface Props {
 		track: Track | null;
@@ -35,6 +36,8 @@
 	let showReportPopup = $state(false);
 	let reportSubmitted = $state(false);
 	let replayActive = $state(false);
+	let trackStats = $state<TrackInfoStats | null>(null);
+	let trackStatsRequestId = 0;
 
 	// Self-contained preview player — completely independent of the game's DeezerPlayer singleton
 	const previewPlayer = new PreviewPlayer();
@@ -79,6 +82,26 @@
 		const loadedId = $playerState.track?.id;
 		const deezerId = isLoadedTrack && loadedId ? loadedId : track.part.deezer[0];
 		return `https://www.deezer.com/track/${deezerId}`;
+	});
+
+	$effect(() => {
+		const partGid = track?.part.gid;
+		const requestId = ++trackStatsRequestId;
+		trackStats = null;
+
+		if (!partGid) return;
+
+		getTrackInfoStats(partGid)
+			.then((stats) => {
+				if (requestId === trackStatsRequestId) {
+					trackStats = stats;
+				}
+			})
+			.catch(() => {
+				if (requestId === trackStatsRequestId) {
+					trackStats = null;
+				}
+			});
 	});
 
 	// Strip work name prefix from part name if part starts with work name
@@ -223,6 +246,20 @@
 					/>
 				</div>
 			</div>
+		{/if}
+
+		{#if trackStats}
+			<p
+				in:slide={{ duration: 300 }}
+				class="px-5 text-center text-[0.65rem] leading-snug text-slate-400 italic"
+			>
+				{$_('trackInfo.stats', {
+					values: {
+						played: trackStats.played,
+						correctPercent: trackStats.correctPercent
+					}
+				})}
+			</p>
 		{/if}
 
 		<!-- Action tabs -->

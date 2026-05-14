@@ -30,6 +30,9 @@
 		"title": "검색...",
 		"searchFor": "검색 대상:"
 	},
+	"trackInfo": {
+		"stats": "이 카드는 지금까지 {played}번 등장했고 {correctPercent}%는 제자리에 놓였습니다."
+	},
 	"app": {
 		"title": "Liszt’n Up!",
 		"subtitle": "클래식 음악 퀴즈 게임",

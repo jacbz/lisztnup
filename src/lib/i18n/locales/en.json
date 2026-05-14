@@ -30,6 +30,9 @@
 		"title": "Search on...",
 		"searchFor": "Search for:"
 	},
+	"trackInfo": {
+		"stats": "This card has appeared {played, plural, one {# time} other {# times}} and landed in the right place {correctPercent}% of the time."
+	},
 	"app": {
 		"title": "Liszt’n Up!",
 		"subtitle": "The Classical Music Guessing Game",
