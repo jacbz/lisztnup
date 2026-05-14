@@ -16,7 +16,7 @@
 	import SearchPopup from '../primitives/SearchPopup.svelte';
 	import ProblemReportPopup from './ProblemReportPopup.svelte';
 	import PlayerControl from './PlayerControl.svelte';
-	import { slide } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
 	import { onDestroy } from 'svelte';
 	import Check from 'lucide-svelte/icons/check-circle';
 	import { getTrackInfoStats, type TrackInfoStats } from '$lib/services/client';
@@ -37,6 +37,7 @@
 	let reportSubmitted = $state(false);
 	let replayActive = $state(false);
 	let trackStats = $state<TrackInfoStats | null>(null);
+	let trackStatsStatus = $state<'loading' | 'visible' | 'hidden'>('hidden');
 	let trackStatsRequestId = 0;
 
 	// Self-contained preview player — completely independent of the game's DeezerPlayer singleton
@@ -88,6 +89,7 @@
 		const partGid = track?.part.gid;
 		const requestId = ++trackStatsRequestId;
 		trackStats = null;
+		trackStatsStatus = partGid ? 'loading' : 'hidden';
 
 		if (!partGid) return;
 
@@ -95,11 +97,13 @@
 			.then((stats) => {
 				if (requestId === trackStatsRequestId) {
 					trackStats = stats;
+					trackStatsStatus = stats ? 'visible' : 'hidden';
 				}
 			})
 			.catch(() => {
 				if (requestId === trackStatsRequestId) {
 					trackStats = null;
+					trackStatsStatus = 'hidden';
 				}
 			});
 	});
@@ -122,6 +126,24 @@
 		const era = getWorkEra(begin_year, end_year, track?.composer);
 		return $_(`eras.${era}`);
 	});
+	const placeholderStatsText = $derived(
+		$_('trackInfo.stats', {
+			values: {
+				played: 888,
+				correctPercent: 88
+			}
+		})
+	);
+	const statsText = $derived(
+		trackStats
+			? $_('trackInfo.stats', {
+					values: {
+						played: trackStats.played,
+						correctPercent: trackStats.correctPercent
+					}
+				})
+			: ''
+	);
 
 	const bleedClasses = $derived.by(() => {
 		switch (bleed) {
@@ -248,58 +270,62 @@
 			</div>
 		{/if}
 
-		{#if trackStats}
-			<p
-				in:slide={{ duration: 300 }}
-				class="px-5 text-center text-[0.65rem] leading-snug text-slate-400 italic"
-			>
-				{$_('trackInfo.stats', {
-					values: {
-						played: trackStats.played,
-						correctPercent: trackStats.correctPercent
-					}
-				})}
-			</p>
-		{/if}
+		<div class="flex flex-col">
+			{#if trackStatsStatus !== 'hidden'}
+				<p
+					out:slide={{ duration: 250 }}
+					class="relative mb-5 grid px-5 text-center text-[0.65rem] leading-snug text-slate-400 italic"
+				>
+					<span class="invisible col-start-1 row-start-1" aria-hidden="true">
+						{placeholderStatsText}
+					</span>
+					{#if trackStats}
+						<span in:fade={{ duration: 300 }} class="col-start-1 row-start-1">
+							{statsText}
+						</span>
+					{/if}
+				</p>
+			{/if}
 
-		<!-- Action tabs -->
-		<div class="{bleedClasses} overflow-hidden rounded-b-2xl border-t border-slate-600/30">
-			<div class="grid grid-cols-3 divide-x divide-slate-700/20 text-center">
-				<button
-					type="button"
-					onclick={handlePlayAgain}
-					class="flex flex-col items-center justify-center gap-1 py-4 text-slate-400 transition-all duration-200 hover:bg-white/5 hover:text-slate-200 md:py-2.5"
-				>
-					<Play class="h-3.5 w-3.5" />
-					<span class="text-[0.65rem] leading-tight font-medium">{$_('common.playAgain')}</span>
-				</button>
-				<button
-					type="button"
-					onclick={() => (showSearchPopup = true)}
-					class="flex flex-col items-center justify-center gap-1 py-4 text-slate-400 transition-all duration-200 hover:bg-white/5 hover:text-slate-200 md:py-2.5"
-				>
-					<Search class="h-3.5 w-3.5" />
-					<span class="text-[0.65rem] leading-tight font-medium">{$_('common.searchOn')}</span>
-				</button>
-				{#if reportSubmitted}
-					<div
-						class="flex flex-col items-center justify-center gap-1 py-4 text-green-400 md:py-2.5"
-					>
-						<Check class="h-3.5 w-3.5" />
-						<span class="text-[0.65rem] leading-tight font-medium">{$_('report.success')}</span>
-					</div>
-				{:else}
+			<!-- Action tabs -->
+			<div class="{bleedClasses} overflow-hidden rounded-b-2xl border-t border-slate-600/30">
+				<div class="grid grid-cols-3 divide-x divide-slate-700/20 text-center">
 					<button
 						type="button"
-						onclick={() => (showReportPopup = true)}
+						onclick={handlePlayAgain}
 						class="flex flex-col items-center justify-center gap-1 py-4 text-slate-400 transition-all duration-200 hover:bg-white/5 hover:text-slate-200 md:py-2.5"
 					>
-						<Flag class="h-3.5 w-3.5" />
-						<span class="text-[0.65rem] leading-tight font-medium"
-							>{$_('common.reportProblem')}</span
-						>
+						<Play class="h-3.5 w-3.5" />
+						<span class="text-[0.65rem] leading-tight font-medium">{$_('common.playAgain')}</span>
 					</button>
-				{/if}
+					<button
+						type="button"
+						onclick={() => (showSearchPopup = true)}
+						class="flex flex-col items-center justify-center gap-1 py-4 text-slate-400 transition-all duration-200 hover:bg-white/5 hover:text-slate-200 md:py-2.5"
+					>
+						<Search class="h-3.5 w-3.5" />
+						<span class="text-[0.65rem] leading-tight font-medium">{$_('common.searchOn')}</span>
+					</button>
+					{#if reportSubmitted}
+						<div
+							class="flex flex-col items-center justify-center gap-1 py-4 text-green-400 md:py-2.5"
+						>
+							<Check class="h-3.5 w-3.5" />
+							<span class="text-[0.65rem] leading-tight font-medium">{$_('report.success')}</span>
+						</div>
+					{:else}
+						<button
+							type="button"
+							onclick={() => (showReportPopup = true)}
+							class="flex flex-col items-center justify-center gap-1 py-4 text-slate-400 transition-all duration-200 hover:bg-white/5 hover:text-slate-200 md:py-2.5"
+						>
+							<Flag class="h-3.5 w-3.5" />
+							<span class="text-[0.65rem] leading-tight font-medium"
+								>{$_('common.reportProblem')}</span
+							>
+						</button>
+					{/if}
+				</div>
 			</div>
 		</div>
 	</div>
