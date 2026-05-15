@@ -31,7 +31,11 @@
 		"searchFor": "検索対象:"
 	},
 	"trackInfo": {
-		"stats": "このカードはこれまで{played}回登場し、{correctPercent}%の確率で正しい位置に置かれました。"
+		"stats": {
+			"first": "このカードは今回が初登場です。いいデビューになりました。",
+			"low": "このカードはこれまで{played}回登場し、そのうち{correct}回は正しい位置に置かれました。",
+			"current": "このカードはこれまで{played}回登場し、{percent}%の確率で正しい位置に置かれました。"
+		}
 	},
 	"app": {
 		"title": "Liszt’n Up!",

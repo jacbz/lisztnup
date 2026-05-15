@@ -477,7 +477,13 @@
 						</div>
 					</div>
 				{:else}
-					<TrackInfo track={inspectTrack} showMirror={false} bleed="sm" fixedWidth={true} />
+					<TrackInfo
+						track={inspectTrack}
+						showMirror={false}
+						bleed="sm"
+						fixedWidth={true}
+						showTimelineStats={true}
+					/>
 				{/if}
 			</div>
 		</div>

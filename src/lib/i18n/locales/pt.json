@@ -31,7 +31,11 @@
 		"searchFor": "Pesquisar:"
 	},
 	"trackInfo": {
-		"stats": "Esta carta já saiu {played, plural, one {# vez} other {# vezes}} e ficou no lugar certo em {correctPercent} % das jogadas."
+		"stats": {
+			"first": "Esta carta acaba de sair pela primeira vez. Belo começo.",
+			"low": "Esta carta já saiu {played} {playedCount, plural, one {vez} other {vezes}} e ficou no lugar certo {correct} {correctCount, plural, one {vez} other {vezes}}.",
+			"current": "Esta carta já saiu {played} {playedCount, plural, one {vez} other {vezes}} e ficou no lugar certo em {percent} % das jogadas."
+		}
 	},
 	"app": {
 		"title": "Liszt’n Up!",

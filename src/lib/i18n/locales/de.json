@@ -31,7 +31,11 @@
 		"searchFor": "Suchen nach:"
 	},
 	"trackInfo": {
-		"stats": "Diese Karte war schon {played, plural, one {# Mal} other {# Mal}} im Spiel und lag in {correctPercent}% der Versuche richtig."
+		"stats": {
+			"first": "Diese Karte ist gerade zum ersten Mal überhaupt im Spiel. Ein schöner Auftakt.",
+			"low": "Diese Karte war schon {played} {playedCount, plural, one {Mal} other {Mal}} im Spiel und lag {correct} {correctCount, plural, one {Mal} other {Mal}} richtig.",
+			"current": "Diese Karte war schon {played} {playedCount, plural, one {Mal} other {Mal}} im Spiel und lag in {percent} % der Versuche richtig."
+		}
 	},
 	"app": {
 		"title": "Liszt’n Up!",

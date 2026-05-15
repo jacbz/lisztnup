@@ -31,7 +31,7 @@ interface LeaderboardResponse {
 
 export interface TrackInfoStats {
 	played: number;
-	correctPercent: number;
+	correct: number;
 }
 
 interface TrackStatsResponse {

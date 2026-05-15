@@ -28,9 +28,16 @@
 		/** Controls horizontal bleed to break out of parent padding. */
 		bleed?: 'none' | 'sm' | 'md' | 'lg';
 		fixedWidth?: boolean;
+		showTimelineStats?: boolean;
 	}
 
-	let { track = null, showMirror = true, bleed = 'lg', fixedWidth = false }: Props = $props();
+	let {
+		track = null,
+		showMirror = true,
+		bleed = 'lg',
+		fixedWidth = false,
+		showTimelineStats = false
+	}: Props = $props();
 
 	let showSearchPopup = $state(false);
 	let showReportPopup = $state(false);
@@ -39,6 +46,7 @@
 	let trackStats = $state<TrackInfoStats | null>(null);
 	let trackStatsStatus = $state<'loading' | 'visible' | 'hidden'>('hidden');
 	let trackStatsRequestId = 0;
+	const placeholderStats = { played: 888, correct: 88 } satisfies TrackInfoStats;
 
 	// Self-contained preview player — completely independent of the game's DeezerPlayer singleton
 	const previewPlayer = new PreviewPlayer();
@@ -89,9 +97,9 @@
 		const partGid = track?.part.gid;
 		const requestId = ++trackStatsRequestId;
 		trackStats = null;
-		trackStatsStatus = partGid ? 'loading' : 'hidden';
+		trackStatsStatus = showTimelineStats && partGid ? 'loading' : 'hidden';
 
-		if (!partGid) return;
+		if (!showTimelineStats || !partGid) return;
 
 		getTrackInfoStats(partGid)
 			.then((stats) => {
@@ -126,24 +134,38 @@
 		const era = getWorkEra(begin_year, end_year, track?.composer);
 		return $_(`eras.${era}`);
 	});
-	const placeholderStatsText = $derived(
-		$_('trackInfo.stats', {
+	function statStrong(value: string | number): string {
+		return `<span class="font-semibold">${value}</span>`;
+	}
+
+	function percentValue(stats: TrackInfoStats): number {
+		return stats.played > 0 ? Math.round((stats.correct / stats.played) * 100) : 0;
+	}
+
+	function statsHtml(stats: TrackInfoStats): string {
+		if (stats.played === 0) {
+			return $_('trackInfo.stats.first');
+		}
+
+		if (stats.played <= 10) {
+			return $_('trackInfo.stats.low', {
+				values: {
+					played: statStrong(stats.played),
+					playedCount: stats.played,
+					correct: statStrong(stats.correct),
+					correctCount: stats.correct
+				}
+			});
+		}
+
+		return $_('trackInfo.stats.current', {
 			values: {
-				played: 888,
-				correctPercent: 88
+				played: statStrong(stats.played),
+				playedCount: stats.played,
+				percent: statStrong(percentValue(stats))
 			}
-		})
-	);
-	const statsText = $derived(
-		trackStats
-			? $_('trackInfo.stats', {
-					values: {
-						played: trackStats.played,
-						correctPercent: trackStats.correctPercent
-					}
-				})
-			: ''
-	);
+		});
+	}
 
 	const bleedClasses = $derived.by(() => {
 		switch (bleed) {
@@ -277,11 +299,11 @@
 					class="relative mb-5 grid px-5 text-center text-[0.65rem] leading-snug text-slate-400 italic"
 				>
 					<span class="invisible col-start-1 row-start-1" aria-hidden="true">
-						{placeholderStatsText}
+						{@html statsHtml(placeholderStats)}
 					</span>
 					{#if trackStats}
 						<span in:fade={{ duration: 300 }} class="col-start-1 row-start-1">
-							{statsText}
+							{@html statsHtml(trackStats)}
 						</span>
 					{/if}
 				</p>

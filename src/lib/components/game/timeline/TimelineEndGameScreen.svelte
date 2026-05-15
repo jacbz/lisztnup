@@ -1027,7 +1027,13 @@
 			<div
 				class="min-h-0 flex-1 overflow-y-auto rounded-2xl border border-slate-700/50 bg-slate-950/30 p-4"
 			>
-				<TrackInfo track={inspectTrack} showMirror={false} bleed="sm" fixedWidth={true} />
+				<TrackInfo
+					track={inspectTrack}
+					showMirror={false}
+					bleed="sm"
+					fixedWidth={true}
+					showTimelineStats={true}
+				/>
 			</div>
 		</div>
 	{/if}

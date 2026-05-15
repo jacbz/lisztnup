@@ -31,7 +31,11 @@
 		"searchFor": "검색 대상:"
 	},
 	"trackInfo": {
-		"stats": "이 카드는 지금까지 {played}번 등장했고 {correctPercent}%는 제자리에 놓였습니다."
+		"stats": {
+			"first": "이 카드는 이번이 첫 등장입니다. 멋진 데뷔네요.",
+			"low": "이 카드는 지금까지 {played}번 등장했고 그중 {correct}번은 제자리에 놓였습니다.",
+			"current": "이 카드는 지금까지 {played}번 등장했고 {percent}%는 제자리에 놓였습니다."
+		}
 	},
 	"app": {
 		"title": "Liszt’n Up!",

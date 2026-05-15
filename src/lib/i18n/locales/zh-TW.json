@@ -31,7 +31,11 @@
 		"searchFor": "搜尋："
 	},
 	"trackInfo": {
-		"stats": "這張卡已出現 {played} 次，其中 {correctPercent}% 被放對了位置。"
+		"stats": {
+			"first": "這張卡第一次登場。開場很不錯。",
+			"low": "這張卡已出現 {played} 次，其中 {correct} 次被放對了位置。",
+			"current": "這張卡已出現 {played} 次，其中 {percent}% 被放對了位置。"
+		}
 	},
 	"app": {
 		"title": "Liszt’n Up!",

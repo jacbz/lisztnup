@@ -2,8 +2,6 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { logger } from '$lib/server/logging';
 
-const MIN_VISIBLE_PLAYS = 5;
-
 interface TrackStatsRow {
 	played: number;
 	correct: number | null;
@@ -16,7 +14,7 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 	}
 
 	if (!platform?.env?.DB) {
-		return json({ stats: null });
+		return json({ stats: { played: 0, correct: 0 } });
 	}
 
 	try {
@@ -30,15 +28,11 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 			.first<TrackStatsRow>();
 
 		const played = Number(row?.played ?? 0);
-		if (played < MIN_VISIBLE_PLAYS) {
-			return json({ stats: null });
-		}
-
 		const correct = Number(row?.correct ?? 0);
 		return json({
 			stats: {
 				played,
-				correctPercent: Math.round((correct / played) * 100)
+				correct
 			}
 		});
 	} catch (error) {

@@ -346,7 +346,13 @@
 			<div
 				class="min-h-0 overflow-hidden rounded-2xl border border-slate-700/50 bg-slate-950/30 p-3"
 			>
-				<TrackInfo {track} bleed="sm" showMirror={false} fixedWidth={true} />
+				<TrackInfo
+					{track}
+					bleed="sm"
+					showMirror={false}
+					fixedWidth={true}
+					showTimelineStats={true}
+				/>
 			</div>
 
 			{#if purpose === 'turn' && isCorrect && scoreBreakdown}
