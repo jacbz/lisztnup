@@ -8,6 +8,8 @@ export type GameMode = 'timeline' | 'bingo' | 'buzzer' | 'classic';
 
 export type GameState = 'loading' | 'home' | 'settings' | 'game';
 
+export const TIMELINE_TARGET_OPTIONS = [6, 10, 15] as const;
+
 export type PlayerEdge = 'bottom' | 'left' | 'top' | 'right';
 
 /**

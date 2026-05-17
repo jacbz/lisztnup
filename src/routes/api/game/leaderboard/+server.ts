@@ -3,12 +3,14 @@ import type { RequestHandler } from './$types';
 import { hashUser, getCurrentSalt } from '$lib/server/analytics';
 import { formatD1TimestampAsGermanDate } from '$lib/utils/date';
 import { logger } from '$lib/server/logging';
+import { TIMELINE_TARGET_OPTIONS } from '$lib/types/game';
 
 const MAX_NAME_LENGTH = 30;
 const MAX_SCORE = 1_000_000;
 const MAX_CARDS = 100;
 const MAX_SCORE_PER_CARD = 6000;
 const MAX_SUBMISSIONS_PER_HOUR = 60;
+const ALLOWED_TIMELINE_TARGETS = new Set<number>(TIMELINE_TARGET_OPTIONS);
 type LeaderboardScope = 'global' | 'national' | 'personal';
 
 function parseClientTimestamp(value: unknown): string | null {
@@ -239,6 +241,15 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				sessionId,
 				context: { target, log }
 			});
+		}
+		if (!Number.isInteger(target) || !ALLOWED_TIMELINE_TARGETS.has(target)) {
+			await logger.warn(db, 'Leaderboard POST rejected: invalid timeline target', {
+				userHash,
+				country,
+				sessionId,
+				context: { target, log }
+			});
+			return json({ success: false, reason: 'Invalid target' }, { status: 400 });
 		}
 		if (typeof tracklistId !== 'string' || tracklistId.length === 0) {
 			await logger.warn(db, 'Leaderboard: invalid tracklist', {

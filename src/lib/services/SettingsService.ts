@@ -1,5 +1,6 @@
 import type { GameSettings, CustomTracklist } from '$lib/types';
 import { DEFAULT_SETTINGS } from '$lib/types';
+import { TIMELINE_TARGET_OPTIONS } from '$lib/types/game';
 
 const SETTINGS_KEY = 'lisztnup-settings';
 const CUSTOM_TRACKLISTS_KEY = 'lisztnup-custom-tracklists';
@@ -30,6 +31,9 @@ export class SettingsService {
 						'tracklists.'.length,
 						-'.name'.length
 					);
+				}
+				if (!(TIMELINE_TARGET_OPTIONS as readonly number[]).includes(parsed.timelineTarget)) {
+					parsed.timelineTarget = DEFAULT_SETTINGS.timelineTarget;
 				}
 
 				return { ...DEFAULT_SETTINGS, ...parsed };

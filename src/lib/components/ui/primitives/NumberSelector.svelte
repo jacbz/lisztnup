@@ -9,7 +9,7 @@
 		 * The available options.
 		 * @default [10, 20, 30]
 		 */
-		options?: number[];
+		options?: readonly number[];
 		/**
 		 * The function to call when the value changes.
 		 */

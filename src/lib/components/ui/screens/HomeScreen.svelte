@@ -26,6 +26,7 @@
 		TimelineReplayLog,
 		TimelineReplayTurn
 	} from '$lib/types';
+	import { TIMELINE_TARGET_OPTIONS } from '$lib/types';
 	import {
 		DEFAULT_TRACKLISTS,
 		tracklistDisplayName,
@@ -740,7 +741,7 @@
 							<span class="text-sm font-semibold text-slate-400">{$_('settings.target')}</span>
 							<NumberSelector
 								value={localSettings.timelineTarget}
-								options={[6, 10, 15]}
+								options={TIMELINE_TARGET_OPTIONS}
 								onChange={handleTimelineTargetChange}
 							/>
 						</div>

@@ -122,7 +122,7 @@
 				name: t.player.name,
 				color: t.player.color,
 				score: t.score,
-				target: t.entries.length,
+				target,
 				accuracy: t.totalPlacements > 0 ? t.correctPlacements / t.totalPlacements : 0,
 				longestStreak: t.longestStreak,
 				averageTime: getAverageTime(t.replayTurns)
@@ -573,7 +573,7 @@
 								playerToken: token,
 								playerName: null,
 								score: Math.round(t.score),
-								target: t.entries.length,
+								target,
 								attempts: t.totalPlacements,
 								averageTime: getAverageTime(t.replayTurns),
 								longestStreak: t.longestStreak,
