@@ -388,40 +388,39 @@ export const WOODWINDCONCERTO_CONFIG: TracklistConfig = {
 
 export const LISZT_CONFIG: TracklistConfig = {
 	composerFilter: { mode: 'include', composers: ['2cd475bb-1abd-40c4-9904-6d4b691c752c'] },
-	maxTracksFromSingleWork: 1,
-	topWorksCount: 125
+	enablePopularityWeighting: true
 };
 
 export const BACH_CONFIG: TracklistConfig = {
 	composerFilter: { mode: 'include', composers: ['24f1766e-9635-4d58-a4d4-9413f9f98a4c'] },
-	topWorksCount: 200,
+	enablePopularityWeighting: true,
 	maxTracksFromSingleWork: 1
 };
 
 export const MOZART_CONFIG: TracklistConfig = {
 	composerFilter: { mode: 'include', composers: ['b972f589-fb0e-474e-b64a-803b0364fa75'] },
-	topWorksCount: 200,
+	enablePopularityWeighting: true,
 	maxTracksFromSingleWork: 1
 };
 
 export const BEETHOVEN_CONFIG: TracklistConfig = {
 	composerFilter: { mode: 'include', composers: ['1f9df192-a621-4f54-8850-2c5373b7eac9'] },
-	topWorksCount: 200,
+	enablePopularityWeighting: true,
 	maxTracksFromSingleWork: 1
 };
 
 export const CHOPIN_CONFIG: TracklistConfig = {
 	composerFilter: { mode: 'include', composers: ['09ff1fe8-d61c-4b98-bb82-18487c74d7b7'] },
-	maxTracksFromSingleWork: 1
+	enablePopularityWeighting: true
 };
 export const TCHAIKOVSKY_CONFIG: TracklistConfig = {
 	composerFilter: { mode: 'include', composers: ['9ddd7abc-9e1b-471d-8031-583bc6bc8be9'] },
-	maxTracksFromSingleWork: 1
+	enablePopularityWeighting: true
 };
 
 export const VIVALDI_CONFIG: TracklistConfig = {
 	composerFilter: { mode: 'include', composers: ['ad79836d-9849-44df-8789-180bbc823f3c'] },
-	topWorksCount: 200,
+	enablePopularityWeighting: true,
 	maxTracksFromSingleWork: 1
 };
 

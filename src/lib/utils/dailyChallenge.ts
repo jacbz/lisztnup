@@ -11,6 +11,11 @@ export { getGermanDateString, getUtcDateString } from './date';
 
 const EXCLUDED_DAILY_ROTATION_TRACKLIST_IDS: readonly string[] = [
 	'beginner',
+	'intermediate',
+	'skilled',
+	'advanced',
+	'expert',
+	'virtuoso',
 	'contemporary',
 	'baroque',
 	'renaissance'
@@ -35,14 +40,18 @@ const DAILY_CHALLENGE_ANCHORS: DailyChallengeAnchor[] = [
 	{ month: 3, day: 8, tracklistId: 'femalecomposers', cause: 'womensDay' },
 	{ month: 3, day: 31, tracklistId: 'bach', cause: 'birthday' },
 	{ month: 5, day: 7, tracklistId: 'tchaikovsky', cause: 'birthday' },
-	{ month: 6, day: 2, tracklistId: 'italy', cause: 'nationalDay' },
-	{ month: 6, day: 12, tracklistId: 'russia', cause: 'nationalDay' },
-	{ month: 7, day: 4, tracklistId: 'usa', cause: 'nationalDay' },
-	{ month: 7, day: 14, tracklistId: 'france', cause: 'nationalDay' },
-	{ month: 10, day: 3, tracklistId: 'germany', cause: 'nationalDay' },
-	{ month: 10, day: 12, tracklistId: 'spain', cause: 'nationalDay' },
+	{ month: 5, day: 17, tracklistId: 'scandinavia', cause: 'nationalDay' }, // NO
+	{ month: 6, day: 2, tracklistId: 'italy', cause: 'nationalDay' }, // IT
+	{ month: 6, day: 6, tracklistId: 'scandinavia', cause: 'nationalDay' }, // SE (DK ommitted on day before)
+	{ month: 6, day: 12, tracklistId: 'russia', cause: 'nationalDay' }, // RU
+	{ month: 7, day: 4, tracklistId: 'usa', cause: 'nationalDay' }, // US
+	{ month: 7, day: 14, tracklistId: 'france', cause: 'nationalDay' }, // FR
+	{ month: 10, day: 3, tracklistId: 'germany', cause: 'nationalDay' }, // DE
+	{ month: 10, day: 12, tracklistId: 'spain', cause: 'nationalDay' }, // ES
 	{ month: 10, day: 22, tracklistId: 'liszt', cause: 'birthday' },
-	{ month: 11, day: 14, tracklistId: 'uk', cause: 'nationalDay' },
+	{ month: 10, day: 26, tracklistId: 'germany', cause: 'nationalDay' }, // AT
+	{ month: 11, day: 14, tracklistId: 'uk', cause: 'nationalDay' }, // UK
+	{ month: 12, day: 6, tracklistId: 'scandinavia', cause: 'nationalDay' }, // FI
 	{ month: 12, day: 17, tracklistId: 'beethoven', cause: 'birthday' }
 ];
 

@@ -33,7 +33,7 @@
 	"trackInfo": {
 		"stats": {
 			"first": "Diese Karte ist gerade zum ersten Mal überhaupt im Spiel. Ein schöner Auftakt.",
-			"low": "Diese Karte war schon {played} {playedCount, plural, one {Mal} other {Mal}} im Spiel und lag {correct} {correctCount, plural, one {Mal} other {Mal}} richtig.",
+			"low": "Diese Karte war erst {played} {playedCount, plural, one {Mal} other {Mal}} im Spiel und lag {correct} {correctCount, plural, one {Mal} other {Mal}} richtig.",
 			"current": "Diese Karte war schon {played} {playedCount, plural, one {Mal} other {Mal}} im Spiel und lag in {percent} % der Versuche richtig."
 		}
 	},
@@ -673,13 +673,13 @@
 		"defaultNameError": "Bitte gib einen Namen ein.",
 		"dontPublish": "Erstmal überspringen",
 		"allowPublishing": "Namen eintragen",
-		"newGlobalHighScore": "Weltweit ganz oben!",
+		"newGlobalHighScore": "Weltrekord!",
 		"newGlobalHighScoreSubtitle": "Trag deinen Namen ein und lass die globale Bestenliste glänzen.",
 		"newGlobalHighScorePublishedSubtitle": "Dein Ergebnis steht jetzt weltweit ganz oben unter deinem Namen.",
 		"newCountryHighScore": "An der Landesspitze!",
 		"newCountryHighScoreSubtitle": "Trag deinen Namen ein und sicher dir Platz eins im Land.",
 		"newCountryHighScorePublishedSubtitle": "Dein Ergebnis führt jetzt die Bestenliste deines Landes an.",
-		"newPersonalHighScore": "Neuer Hausrekord!",
+		"newPersonalHighScore": "Neuer persönlicher Rekord!",
 		"newPersonalHighScoreSubtitle": "Trag deinen Namen ein und setz dir selbst die neue Marke.",
 		"newPersonalHighScorePublishedSubtitle": "Dein bester Lauf steht jetzt unter deinem Namen.",
 		"unnamedScore": "Du hast gerade den Weltrekord geknackt!",
