@@ -36,7 +36,7 @@ export const PRODUCTION_TIMELINE_SCORING = {
 	difficultyMax: 1000,
 	difficultyDecayRate: 0.0115,
 	minimumGap: 0,
-	speedBonus: 0.25,
+	speedBonus: 0.4,
 	speedWindowSeconds: 20,
 	speedMaxBonusAtSeconds: 1,
 	streakMultiplierTiers: [

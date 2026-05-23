@@ -17,7 +17,7 @@ export const PARAMETER_SETS: readonly TimelineScoringParameters[] = [
 	preset({
 		id: 'less-speed',
 		label: 'Less Speed',
-		speedBonus: 0.2
+		speedBonus: 0.25
 	})
 	// preset({
 	// 	id: 'precision-heavy',

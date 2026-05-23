@@ -42,7 +42,7 @@ $$\text{Diff} = \text{round}\left( \text{DiffMax} \times e^{-\text{DecayRate} \t
 
 ### Speed Multiplier ($\text{Speed}$)
 
-Scales from $1\times$ (20+ seconds) up to $1.25\times$ (1 second). The quadratic curve forgives slight hesitations but heavily rewards instant instinct. ($\text{Seconds}$ = seconds taken; $\text{SpeedBonus}=0.25$).
+Scales from $1\times$ (20+ seconds) up to $1.4\times$ (1 second). The quadratic curve forgives slight hesitations but heavily rewards instant instinct. ($\text{Seconds}$ = seconds taken; $\text{SpeedBonus}=0.4$).
 
 $$\text{Speed} = 1 + \text{SpeedBonus} \times \left(\frac{\max(0, 20 - \text{Seconds})}{19}\right)^2$$
 
