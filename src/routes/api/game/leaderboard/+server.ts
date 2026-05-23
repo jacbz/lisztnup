@@ -9,7 +9,7 @@ import {
 } from '$lib/utils/date';
 import { logger } from '$lib/server/logging';
 import { TIMELINE_TARGET_OPTIONS } from '$lib/types/game';
-import type { LeaderboardPeriod, LeaderboardScope } from '$lib/types';
+import type { LeaderboardCountrySummary, LeaderboardPeriod, LeaderboardScope } from '$lib/types';
 import { isCompletedLog } from '$lib/logic/timelineReplayUtils';
 
 const MAX_NAME_LENGTH = 30;
@@ -51,6 +51,7 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 	const tracklistId = url.searchParams.get('tracklist') || null;
 	const target = Number(url.searchParams.get('target')) || null;
 	const playerToken = url.searchParams.get('token') || null;
+	const requestedCountry = normalizeCountryCode(url.searchParams.get('country'));
 	const records = url.searchParams.get('records') === '1';
 	const rawScope = url.searchParams.get('scope');
 	const scope: LeaderboardScope =
@@ -72,7 +73,7 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 	}
 
 	try {
-		let nationalCountry = viewerCountry;
+		let nationalCountry = requestedCountry ?? viewerCountry;
 		let responseViewerCountry = viewerCountry;
 		if (scope === 'national') {
 			if ((!nationalCountry || nationalCountry === 'UNKNOWN') && playerToken) {
@@ -104,12 +105,11 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 			monthly: formatDateAsD1Timestamp(getGermanMonthStartUtc())
 		};
 
-		async function queryEntries(period: LeaderboardPeriod) {
-			// Use ROW_NUMBER() to keep only each player's best score per config.
-			// Partition by token+name so local multiplayer names remain separate.
-			const binds: (string | number)[] = [];
-			const conditions: string[] = [];
-
+		function addBaseConditions(
+			conditions: string[],
+			binds: (string | number)[],
+			period: LeaderboardPeriod
+		) {
 			if (tracklistId) {
 				conditions.push(`tracklist_id = ?${binds.length + 1}`);
 				binds.push(tracklistId);
@@ -122,6 +122,51 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 				conditions.push(`tracklist_id <> ?${binds.length + 1}`);
 				binds.push('custom');
 			}
+			if (!records && scope !== 'personal' && period !== 'allTime') {
+				conditions.push(`timestamp >= ?${binds.length + 1}`);
+				binds.push(periodCutoffs[period] ?? '');
+			}
+		}
+
+		async function queryCountrySummaries(period: LeaderboardPeriod) {
+			if (records || scope === 'personal') return [];
+
+			const binds: (string | number)[] = [];
+			const conditions = [`country IS NOT NULL`, `country <> 'UNKNOWN'`];
+			addBaseConditions(conditions, binds, period);
+			const whereClause = ` WHERE ${conditions.join(' AND ')}`;
+			const results = await db
+				.prepare(
+					`SELECT country, COUNT(*) AS count, MAX(score) AS bestScore
+					 FROM timeline_scores${whereClause}
+					 GROUP BY country
+					 ORDER BY count DESC, bestScore DESC, country ASC`
+				)
+				.bind(...binds)
+				.all();
+
+			const summaries: LeaderboardCountrySummary[] = (results.results ?? []).map(
+				(row: Record<string, unknown>) => ({
+					country: String(row.country ?? ''),
+					count: Number(row.count ?? 0),
+					bestScore: Number(row.bestScore ?? 0)
+				})
+			);
+			return summaries.filter(
+				(summary) =>
+					summary.country.length === 2 &&
+					Number.isFinite(summary.count) &&
+					Number.isFinite(summary.bestScore)
+			);
+		}
+
+		async function queryEntries(period: LeaderboardPeriod) {
+			// Use ROW_NUMBER() to keep only each player's best score per config.
+			// Partition by token+name so local multiplayer names remain separate.
+			const binds: (string | number)[] = [];
+			const conditions: string[] = [];
+
+			addBaseConditions(conditions, binds, period);
 			if (!records && scope === 'national' && nationalCountry) {
 				conditions.push(`country = ?${binds.length + 1}`);
 				binds.push(nationalCountry);
@@ -130,11 +175,6 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 				conditions.push(`player_token = ?${binds.length + 1}`);
 				binds.push(playerToken);
 			}
-			if (!records && scope !== 'personal' && period !== 'allTime') {
-				conditions.push(`timestamp >= ?${binds.length + 1}`);
-				binds.push(periodCutoffs[period] ?? '');
-			}
-
 			const whereClause = conditions.length > 0 ? ` WHERE ${conditions.join(' AND ')}` : '';
 			const cols = `player_token, player_name, score, attempts, target, average_time, longest_streak, tracklist_id, country, timestamp, log`;
 			const sql = records
@@ -214,10 +254,13 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 		for (const period of fallbackPeriods) {
 			const entries = await queryEntries(period);
 			if (entries.length > 0 || period === fallbackPeriods[fallbackPeriods.length - 1]) {
+				const effectivePeriod = scope === 'personal' || records ? 'allTime' : period;
+				const countries = await queryCountrySummaries(effectivePeriod);
 				return json({
 					entries,
+					countries,
 					viewerCountry: responseViewerCountry,
-					period: scope === 'personal' || records ? 'allTime' : period,
+					period: effectivePeriod,
 					requestedPeriod,
 					scope,
 					emptyPeriods
@@ -228,6 +271,7 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 
 		return json({
 			entries: [],
+			countries: [],
 			viewerCountry: responseViewerCountry,
 			period: 'allTime',
 			requestedPeriod,
@@ -240,6 +284,12 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 		return json({ entries: [], period: requestedPeriod, requestedPeriod, scope });
 	}
 };
+
+function normalizeCountryCode(value: string | null): string | null {
+	if (!value) return null;
+	const normalized = value.trim().toUpperCase();
+	return /^[A-Z]{2}$/.test(normalized) ? normalized : null;
+}
 
 export const POST: RequestHandler = async ({ request, platform, getClientAddress }) => {
 	if (!platform?.env?.DB) {

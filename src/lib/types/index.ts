@@ -1,5 +1,6 @@
 // Re-export non-catalog shared types for easy importing
 export type {
+	LeaderboardCountrySummary,
 	LeaderboardEntry,
 	LeaderboardPeriod,
 	LeaderboardRankedScope,

@@ -22,6 +22,7 @@
 		Tracklist,
 		GameMode,
 		Player,
+		LeaderboardCountrySummary,
 		LeaderboardEntry,
 		LeaderboardPeriod,
 		LeaderboardRankedScope,
@@ -88,6 +89,8 @@
 	let leaderboardScope = $state<LeaderboardScope>('global');
 	let leaderboardRankedScope = $state<LeaderboardRankedScope>('global');
 	let leaderboardPeriod = $state<LeaderboardPeriod>('weekly');
+	let leaderboardCountry = $state<string | null>(null);
+	let leaderboardCountries = $state<LeaderboardCountrySummary[]>([]);
 	let showTracklistRecords = $state(false);
 	let tracklistRecordsEntries = $state<LeaderboardEntry[]>([]);
 	let tracklistRecordsLoading = $state(false);
@@ -213,7 +216,7 @@
 		if (showTimelineLeaderboard && browser) {
 			const tracklist = localSettings.selectedTracklist;
 			const target = localSettings.timelineTarget;
-			const filterKey = `${tracklist}:${target}:${leaderboardScope}:${leaderboardPeriod}`;
+			const filterKey = `${tracklist}:${target}:${leaderboardScope}:${leaderboardPeriod}:${leaderboardCountry ?? ''}`;
 			const requestId = ++leaderboardRequestId;
 
 			leaderboardLoading = true;
@@ -229,7 +232,8 @@
 				target,
 				token: getPlayerToken(),
 				scope: leaderboardScope,
-				period: leaderboardScope === 'personal' ? undefined : leaderboardPeriod
+				period: leaderboardScope === 'personal' ? undefined : leaderboardPeriod,
+				country: leaderboardScope === 'national' ? leaderboardCountry : null
 			})
 				.then((data) => {
 					if (requestId !== leaderboardRequestId) return;
@@ -237,10 +241,12 @@
 						leaderboardPeriod = data.period;
 					}
 					leaderboardEntries = data.entries ?? [];
+					leaderboardCountries = data.countries ?? [];
 				})
 				.catch(() => {
 					if (requestId !== leaderboardRequestId) return;
 					leaderboardEntries = [];
+					leaderboardCountries = [];
 				})
 				.finally(() => {
 					if (requestId !== leaderboardRequestId) return;
@@ -250,6 +256,7 @@
 			leaderboardRequestId += 1;
 			leaderboardFilterKey = '';
 			leaderboardEntries = [];
+			leaderboardCountries = [];
 			leaderboardLoading = false;
 		}
 	});
@@ -357,10 +364,19 @@
 			leaderboardScope = leaderboardRankedScope;
 			return;
 		}
+		if (scope === 'national' && leaderboardScope !== 'national') {
+			leaderboardCountry = null;
+		}
 		leaderboardScope = scope;
 		if (scope !== 'personal') {
 			leaderboardRankedScope = scope;
 		}
+	}
+
+	function handleLeaderboardCountryChange(country: string) {
+		leaderboardCountry = country;
+		leaderboardScope = 'national';
+		leaderboardRankedScope = 'national';
 	}
 
 	function handleLeaderboardPeriodChange(period: LeaderboardPeriod) {
@@ -774,9 +790,12 @@
 								{currentLocale}
 								scope={leaderboardScope}
 								period={leaderboardPeriod}
+								countries={leaderboardCountries}
+								selectedCountry={leaderboardCountry}
 								isLoading={leaderboardLoading}
 								onScopeChange={handleLeaderboardScopeChange}
 								onPeriodChange={handleLeaderboardPeriodChange}
+								onCountryChange={handleLeaderboardCountryChange}
 								onRecordsClick={() => (showTracklistRecords = true)}
 								onShowTimeline={handleShowTimeline}
 							/>

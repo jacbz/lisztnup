@@ -2,6 +2,12 @@ export type LeaderboardPeriod = 'weekly' | 'monthly' | 'allTime';
 export type LeaderboardRankedScope = 'global' | 'national';
 export type LeaderboardScope = LeaderboardRankedScope | 'personal';
 
+export interface LeaderboardCountrySummary {
+	country: string;
+	count: number;
+	bestScore: number;
+}
+
 export interface LeaderboardEntry {
 	rank: number;
 	player_name: string | null;

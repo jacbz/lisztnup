@@ -2,14 +2,15 @@
 	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 	import ChevronUp from 'lucide-svelte/icons/chevron-up';
 	import Globe2 from 'lucide-svelte/icons/globe-2';
-	import NationalFlag from 'lucide-svelte/icons/flag';
 	import Trophy from 'lucide-svelte/icons/trophy';
 	import UserStar from 'lucide-svelte/icons/user-star';
 	import { SquareStack } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	import { slide } from 'svelte/transition';
+	import CountryDropdown from '../primitives/CountryDropdown.svelte';
 	import Flag from '../primitives/Flag.svelte';
 	import type {
+		LeaderboardCountrySummary,
 		LeaderboardEntry,
 		LeaderboardPeriod,
 		LeaderboardRankedScope,
@@ -25,9 +26,12 @@
 		currentLocale: string;
 		scope?: LeaderboardScope;
 		period?: LeaderboardPeriod;
+		countries?: LeaderboardCountrySummary[];
+		selectedCountry?: string | null;
 		isLoading?: boolean;
 		onScopeChange?: (scope: LeaderboardScope) => void;
 		onPeriodChange?: (period: LeaderboardPeriod) => void;
+		onCountryChange?: (country: string) => void;
 		onRecordsClick?: () => void;
 		onShowTimeline?: (entry: LeaderboardEntry) => void;
 	}
@@ -37,14 +41,20 @@
 		currentLocale,
 		scope = 'global',
 		period = 'weekly',
+		countries = [],
+		selectedCountry = null,
 		isLoading = false,
 		onScopeChange = () => {},
 		onPeriodChange = () => {},
+		onCountryChange = () => {},
 		onRecordsClick = () => {},
 		onShowTimeline = () => {}
 	}: Props = $props();
 
 	let showExpanded = $state(false);
+	const countryOptions = $derived(
+		countries.map((summary) => ({ code: summary.country, count: summary.count }))
+	);
 
 	$effect(() => {
 		if (entries.length <= 5) {
@@ -54,6 +64,14 @@
 
 	function handlePersonalClick() {
 		onScopeChange('personal');
+	}
+
+	function handleScopeClick(option: LeaderboardRankedScope) {
+		onScopeChange(option);
+	}
+
+	function handleCountrySelect(country: string) {
+		onCountryChange(country);
 	}
 </script>
 
@@ -169,23 +187,34 @@
 					aria-label={$_('leaderboard.scopeLabel')}
 				>
 					{#each rankedScopes as option (option)}
-						<button
-							type="button"
-							onclick={() => onScopeChange(option)}
-							class="flex w-9 items-center justify-center rounded-full py-1 transition-all {scope ===
-							option
-								? 'bg-cyan-400 text-slate-950'
-								: 'text-slate-500 hover:text-slate-200'}"
-							aria-pressed={scope === option}
-							aria-label={option}
-							title={option}
-						>
-							{#if option === 'global'}
+						{#if option === 'global'}
+							<button
+								type="button"
+								onclick={() => handleScopeClick(option)}
+								class="flex w-9 items-center justify-center rounded-full py-1 transition-all {scope ===
+								option
+									? 'bg-cyan-400 text-slate-950'
+									: 'text-slate-500 hover:text-slate-200'}"
+								aria-pressed={scope === option}
+								aria-label={option}
+								title={option}
+							>
 								<Globe2 class="h-3 w-3" />
-							{:else}
-								<NationalFlag class="h-3 w-3" />
-							{/if}
-						</button>
+							</button>
+						{:else}
+							<CountryDropdown
+								options={countryOptions}
+								value={selectedCountry}
+								variant="icon"
+								active={scope === 'national'}
+								openOn="contextmenu"
+								emptyLabel={$_('leaderboard.noScores')}
+								ariaLabel="national"
+								title="national"
+								onTriggerClick={() => handleScopeClick(option)}
+								onChange={handleCountrySelect}
+							/>
+						{/if}
 					{/each}
 				</div>
 			</div>

@@ -1,6 +1,7 @@
 import { browser } from '$app/environment';
 import type {
 	LeaderboardEntry,
+	LeaderboardCountrySummary,
 	LeaderboardPeriod,
 	LeaderboardScope,
 	TimelineReplayLog
@@ -31,6 +32,7 @@ interface QueuedWrite {
 
 interface LeaderboardResponse {
 	entries: LeaderboardEntry[];
+	countries: LeaderboardCountrySummary[];
 	viewerCountry?: string | null;
 	period: LeaderboardPeriod;
 	requestedPeriod: LeaderboardPeriod;
@@ -55,6 +57,7 @@ export interface LeaderboardQuery {
 	records?: boolean;
 	scope?: LeaderboardScope;
 	period?: LeaderboardPeriod;
+	country?: string | null;
 }
 
 export interface LeaderboardSubmission {
@@ -127,6 +130,7 @@ function normalizeLeaderboardUrl(query: LeaderboardQuery) {
 	if (query.records) params.set('records', '1');
 	if (query.scope && query.scope !== 'global') params.set('scope', query.scope);
 	if (query.period && query.period !== 'allTime') params.set('period', query.period);
+	if (query.country) params.set('country', query.country);
 	params.sort();
 	return `/api/game/leaderboard?${params.toString()}`;
 }
@@ -291,6 +295,7 @@ export async function getLeaderboard(query: LeaderboardQuery): Promise<Leaderboa
 		.then((data) => {
 			const normalized = {
 				entries: data.entries ?? [],
+				countries: data.countries ?? [],
 				viewerCountry: data.viewerCountry ?? null,
 				period: data.period ?? query.period ?? 'allTime',
 				requestedPeriod: data.requestedPeriod ?? query.period ?? 'allTime',
@@ -302,6 +307,7 @@ export async function getLeaderboard(query: LeaderboardQuery): Promise<Leaderboa
 					? {
 							...normalized,
 							entries: [],
+							countries: [],
 							period: requestedPeriod,
 							requestedPeriod
 						}
@@ -322,6 +328,7 @@ export async function getLeaderboard(query: LeaderboardQuery): Promise<Leaderboa
 					data: {
 						...normalized,
 						entries: [],
+						countries: [],
 						period: emptyPeriod,
 						requestedPeriod: emptyPeriod
 					}

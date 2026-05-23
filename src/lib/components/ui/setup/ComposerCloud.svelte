@@ -6,6 +6,7 @@
 	import Search from 'lucide-svelte/icons/search';
 	import X from 'lucide-svelte/icons/x';
 	import { SvelteMap, SvelteSet } from 'svelte/reactivity';
+	import CountryDropdown from '../primitives/CountryDropdown.svelte';
 
 	interface Props {
 		composers: Composer[];
@@ -92,7 +93,7 @@
 		}
 	}
 
-	// Build country list with counts (sorted by localized name)
+	// Build country list with counts, keeping the most represented countries first.
 	const countryOptions = $derived.by(() => {
 		const countMap = new SvelteMap<string, number>();
 		entries.forEach((e) => {
@@ -102,7 +103,7 @@
 		});
 		return [...countMap.entries()]
 			.map(([code, count]) => ({ code, name: countryName(code), count }))
-			.sort((a, b) => a.name.localeCompare(b.name));
+			.sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
 	});
 
 	const hasActiveFilters = $derived(
@@ -269,18 +270,15 @@
 		<!-- Row 2: Filters -->
 		<div class="flex flex-wrap items-center gap-x-4 gap-y-2">
 			<!-- Country dropdown -->
-			<select
-				bind:value={selectedCountry}
-				class="rounded-full border-none px-2.5 py-1 text-xs font-medium transition-all duration-150 focus:ring-1 focus:ring-cyan-400/50 focus:outline-none {selectedCountry
-					? 'bg-cyan-400/20 text-cyan-300 ring-1 ring-cyan-400/50'
-					: 'bg-slate-700/50 text-slate-400'}"
-				class:w-30={selectedCountry === ''}
-			>
-				<option value="">{$_('libraryViewer.allCountries')}</option>
-				{#each countryOptions as opt (opt.code)}
-					<option value={opt.code}>{opt.name} ({opt.count})</option>
-				{/each}
-			</select>
+			<CountryDropdown
+				options={countryOptions}
+				value={selectedCountry}
+				allLabel={$_('libraryViewer.allCountries')}
+				emptyLabel={$_('leaderboard.noScores')}
+				ariaLabel={$_('libraryViewer.allCountries')}
+				onChange={(country) => (selectedCountry = country)}
+				onClear={() => (selectedCountry = '')}
+			/>
 
 			<!-- Year filter toggle -->
 			<button
