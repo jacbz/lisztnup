@@ -610,7 +610,7 @@
       "death_year": 1827,
       "gender": "male",
       "country": "DE",
-      "score": 92.5
+      "score": 92.45
     },
     {
       "gid": "6f5bfd20-84cc-4879-8a40-05631ad576c7",
@@ -50119,23 +50119,6 @@
           "gid": "4b8dee61",
           "name": "IV. Finale. Presto",
           "deezer": [794997642],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "be4bf7f3",
-      "composer_gid": "1f9df192-a621-4f54-8850-2c5373b7eac9",
-      "name": "Ode to Joy",
-      "type": "vocal",
-      "begin_year": 1824,
-      "end_year": 1824,
-      "score": 3.4,
-      "parts": [
-        {
-          "gid": "be4bf7f3",
-          "name": "Ode to Joy",
-          "deezer": [67230580],
           "score": 100.0
         }
       ]
@@ -284357,7 +284340,7 @@
       "gid": "75ae1930",
       "composer_gid": "7be0b588-030c-4904-836f-71ff43a2dfec",
       "name": "Das Augenlicht for mixed choir and orchestra, op. 26: Langsam",
-      "type": "concerto",
+      "type": "vocal",
       "begin_year": 1935,
       "end_year": 1935,
       "score": 1.79,

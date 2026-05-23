@@ -242,7 +242,6 @@
 | `af3cad37` | Beethoven – Fidelio, op. 72 | * Overture<br>* Act I, Scene II, no. 10a. Prisoner’s Chorus „O welche Lust, in freier Luft“ (Chor, 1st Prisoner, 2nd Prisoner) | 1814 |
 | `cc6eba78` | Beethoven – Große Fuge for String Quartet in B-flat major, op. 133 | * Große Fuge for String Quartet in B-flat major, op. 133 | 1825 |
 | `2f85aec5` | Beethoven – Octet for 2 Oboes, 2 Clarinets, 2 Horns, and 2 Bassoons in E-flat major, op. 103 | * II. Andante<br>* IV. Finale. Presto | 1792 |
-| `be4bf7f3` | Beethoven – Ode to Joy | * Ode to Joy | 1824 |
 | `899f9dd3` | Beethoven – Overture “Leonore” no. 1 in C major, op. 138 | * Overture “Leonore” no. 1 in C major, op. 138 | 1805 |
 | `591fcf82` | Beethoven – Overture “Leonore” no. 3 in C major, op. 72b | * Overture “Leonore” no. 3 in C major, op. 72b | 1805‑1806 |
 | `ed5be2d7` | Beethoven – Piano Sonatas, op. 10 | * Sonata for Piano no. 7 in D major, op. 10 no. 3: I. Presto<br>* Sonata for Piano no. 7 in D major, op. 10 no. 3: III. Menuetto. Allegro | 1795‑1798 |
@@ -1816,6 +1815,7 @@
 | `1a00a184` | Stravinsky – L’Oiseau de feu, suite de 1919 | * III. Danse infernale du roi Kachtcheï<br>* III. Finale | 1919 |
 | `a79fb213` | Stravinsky – Le Chant du rossignol | * III. Chant du rossignol<br>* IV. Jeu du rossignol mécanique | 1917 |
 | `54dacada` | Stravinsky – Le Sacre du printemps | * I. L’Adoration de la terre: VI. Cortège du Sage<br>* II. Le Sacrifice: VI. Danse sacrale (L’Élue) | 1911‑1913 |
+| `6b3a726b` | Stravinsky – Octet for Wind Instruments | * I. Sinfonia<br>* III. Finale | 1923 |
 | `57deae1f` | Stravinsky – Pétrouchka | * Tableau Ic. Danse russe<br>* Tableau II. Chez Pétrouchka | 1947 |
 | `8acf6c28` | Stravinsky – Pulcinella Suite | * Pulcinella (Suite): I. Sinfonia (Ouverture)<br>* Pulcinella (Suite): IV. Tarantella | 1920 |
 | `a0872503` | Stravinsky – Symphonies of Wind Instruments | * Symphonies of Wind Instruments | 1920 |

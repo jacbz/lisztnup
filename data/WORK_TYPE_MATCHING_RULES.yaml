@@ -48,7 +48,7 @@ general_rules:
     # Core genre identifiers.
     - Concerto|Konzert\b|Concertino|Concertante|Concertstück
     - Concerto Grosso|Concerti Grossi|Sinfonia Concertante
-    - for .* and (string |small )?Orchestra|pour .* et Orchestre|für .* und Orchester
+    - for (?:(?!choir).)* and (?:string |small )?Orchestra|pour .* et Orchestre|für .* und Orchester
 
   #=============================================================================
   # Chamber Music: Music for a small ensemble.
@@ -2961,7 +2961,7 @@ composer_specific_rules:
     chamber:
       - Three Little Pieces, op\. 11
     vocal:
-      - Entflieht auf leichten Kähnen|Songs
+      - Entflieht auf leichten Kähnen|Songs|Das Augenlicht
   'Weelkes, Thomas':
     vocal:
       - Hosanna to the Son of David|O Lord, Grant the King|When David Heard|Give Ear, O Lord|Lord, to Thee|Most Mighty|O Lord, Arise
