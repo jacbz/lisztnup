@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fly } from 'svelte/transition';
 	import type { Track } from '$lib/models';
 	import TimelineCard from './TimelineCard.svelte';
 
@@ -14,6 +15,7 @@
 		dragScale?: number;
 		dragOrigin?: { x: number; y: number };
 		suppressReleaseAnimation?: boolean;
+		statusLabel?: string | null;
 
 		onPointerDown?: (e: PointerEvent) => void;
 		topCardContent?: import('svelte').Snippet;
@@ -29,6 +31,7 @@
 		dragScale = 1,
 		dragOrigin = { x: 0, y: 0 },
 		suppressReleaseAnimation = false,
+		statusLabel = null,
 		onPointerDown = () => {},
 		topCardContent
 	}: Props = $props();
@@ -44,7 +47,21 @@
 	);
 </script>
 
-<div class="relative flex items-center justify-center">
+<div class="relative mx-auto flex h-40 w-40 items-center justify-center md:h-48 md:w-48">
+	{#if statusLabel}
+		<div
+			class="pointer-events-none absolute bottom-full left-1/2 z-50 mb-4 -translate-x-1/2 whitespace-nowrap"
+			in:fly={{ y: -20, duration: 300 }}
+			out:fly={{ y: -20, duration: 300 }}
+		>
+			<div
+				class="rounded-full border border-cyan-400/30 bg-slate-900/80 px-4 py-1.5 text-sm font-bold text-cyan-400 shadow-lg backdrop-blur-md"
+			>
+				{statusLabel}
+			</div>
+		</div>
+	{/if}
+
 	{#each visibleCards as c (c.item.id)}
 		{@const isTop = c.depth === 0}
 		{@const depth = c.depth}
@@ -59,7 +76,7 @@
 
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<div
-			class="absolute"
+			class="absolute top-0 left-0"
 			class:pointer-events-none={!isTop}
 			class:cursor-grab={isTop && draggable && !dragging}
 			class:cursor-grabbing={isTop && dragging}

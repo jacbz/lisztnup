@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { flip } from 'svelte/animate';
-	import { fly } from 'svelte/transition';
 	import type { Player, PlayerEdge } from '$lib/types';
 	import { ALL_EDGES } from '$lib/types';
 	import { currentRound, resetGame, gameSession, toast } from '$lib/stores';
@@ -157,24 +156,12 @@
 <!-- SNIPPETS                                                -->
 <!-- ═══════════════════════════════════════════════════════ -->
 
-{#snippet dealingOverlay()}
-	{#if game.isDealing && game.dealingToName}
-		<div
-			class="absolute left-1/2 z-50 -translate-x-1/2 whitespace-nowrap"
-			transition:fly={{ y: -20, duration: 300 }}
-		>
-			<div
-				class="rounded-full border border-cyan-400/30 bg-slate-900/80 px-4 py-1.5 text-sm font-bold text-cyan-400 shadow-lg backdrop-blur-md"
-			>
-				{$_('timeline.dealing', { values: { name: game.dealingToName } })}
-			</div>
-		</div>
-	{/if}
-{/snippet}
-
 {#snippet cardStackDisplay()}
 	<CardStack
 		items={game.centerStack}
+		statusLabel={game.isDealing && game.dealingToName
+			? $_('timeline.dealing', { values: { name: game.dealingToName } })
+			: null}
 		isTurnActive={game.isStackInteractive}
 		draggable={!game.isDealing && game.canDragCenter}
 		dragging={game.drag.active && game.drag.kind === 'center'}
@@ -311,10 +298,7 @@
 		<div
 			class="relative top-1/2 left-1/2 z-200 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
 		>
-			{@render dealingOverlay()}
-			<div class="relative">
-				{@render cardStackDisplay()}
-			</div>
+			{@render cardStackDisplay()}
 		</div>
 
 		<!-- Render EdgeDisplay for each edge that has players -->
@@ -345,13 +329,15 @@
 		{/each}
 	{:else}
 		<!-- Compact horizontal layout for shorter screens -->
-		<div class="fixed top-[33dvh] right-50 left-50 z-200 md:left-auto">
-			{@render cardStackDisplay()}
-		</div>
-
-		<div class="fixed top-1/2 left-1/2 z-150 -translate-x-1/2">
-			{@render dealingOverlay()}
-		</div>
+		{#if players.length <= 3}
+			<div class="fixed top-[46dvh] left-1/2 z-200 -translate-x-1/2 -translate-y-1/2">
+				{@render cardStackDisplay()}
+			</div>
+		{:else}
+			<div class="fixed top-[33dvh] left-1/2 z-200 -translate-x-1/2 -translate-y-1/2">
+				{@render cardStackDisplay()}
+			</div>
+		{/if}
 
 		<div class="fixed inset-0 flex items-end px-4 pt-20 pb-4">
 			<div class="flex w-full flex-col gap-3 overflow-visible">
