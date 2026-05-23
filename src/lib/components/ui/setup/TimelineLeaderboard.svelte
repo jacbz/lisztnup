@@ -42,8 +42,8 @@
 	<colgroup>
 		<col class="w-6" />
 		<col />
-		<col class="w-22" />
-		<col class="w-18" />
+		<col class="w-16" />
+		<col class="w-15" />
 		<col class="w-5" />
 	</colgroup>
 {/snippet}
@@ -67,17 +67,15 @@
 			{entry.player_name ?? $_('leaderboard.anonymous')}
 		</td>
 		<td
-			class="pl-[clamp(0.375rem,1.5vw,1.5rem)] text-right font-bold whitespace-nowrap tabular-nums"
+			class="text-right font-bold whitespace-nowrap tabular-nums"
 			class:text-cyan-400={entry.is_me}
 		>
 			{$_('scoring.pts', { values: { points: entry.score.toLocaleString() } })}
 		</td>
-		<td
-			class="pl-[clamp(0.375rem,1.5vw,1.5rem)] text-right whitespace-nowrap text-slate-500 tabular-nums"
-		>
+		<td class="text-right whitespace-nowrap text-slate-500 tabular-nums">
 			{formatDateString(entry.timestamp, currentLocale)}
 		</td>
-		<td class="pl-[clamp(0.375rem,1.5vw,1.5rem)]">
+		<td class="pl-3">
 			<div class="flex">
 				{#if entry.log}
 					<button
