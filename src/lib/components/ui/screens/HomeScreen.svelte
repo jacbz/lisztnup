@@ -161,10 +161,14 @@
 	let startButtonReady = $derived(Boolean(selectedMode) && $isDataLoaded && !showDataLoadingCard);
 	let startButtonShellClass = $derived.by(() => {
 		if (!startButtonReady || !startButtonBackdropMeasured) {
-			return 'pointer-events-none relative mx-auto max-w-2xl md:pointer-events-auto';
+			return 'pointer-events-none relative mx-auto max-w-2xl';
 		}
 
-		return `sticky bottom-0 z-30 mx-[calc(50%-50vw)] w-screen px-6 ${isStartButtonSticky ? 'pb-[calc(env(safe-area-inset-bottom)+1rem)]' : 'pb-0'} md:static md:mx-auto md:w-auto md:max-w-2xl md:px-0 md:pb-0`;
+		if (!isStartButtonSticky) {
+			return 'relative mx-auto max-w-2xl';
+		}
+
+		return 'sticky bottom-0 z-30 mx-[calc(50%-50vw)] w-screen px-6 pb-[calc(env(safe-area-inset-bottom)+1rem)] md:pb-[calc(env(safe-area-inset-bottom)+2rem)]';
 	});
 	let DailyChallengeIcon = $derived.by(() => {
 		if (dailyChallengeEntry.cause === 'birthday') return Cake;
@@ -581,6 +585,11 @@
 		startButtonBackdropMeasured = true;
 
 		if (!wasMeasured && !showStartButtonShell) {
+			if (!nextIsSticky) {
+				showStartButtonShell = true;
+				return;
+			}
+
 			cancelStartButtonShellReveal();
 			startButtonShellRevealTimer = setTimeout(() => {
 				startButtonShellRevealTimer = null;
@@ -971,11 +980,11 @@
 
 		<!-- Start Game Button -->
 		{#if selectedMode}
-			<div bind:this={startButtonSentinel} class="h-0 md:hidden" aria-hidden="true"></div>
+			<div bind:this={startButtonSentinel} class="h-0" aria-hidden="true"></div>
 			<div bind:this={startButtonWrapper} class="mt-8 {startButtonShellClass}">
 				{#if startButtonReady && showStartButtonShell}
 					<div
-						class="pointer-events-none absolute inset-x-0 bottom-0 h-36 overflow-hidden transition-opacity duration-300 ease-out md:hidden {isStartButtonSticky
+						class="pointer-events-none absolute inset-x-0 bottom-0 h-36 overflow-hidden transition-opacity duration-300 ease-out {isStartButtonSticky
 							? 'opacity-100'
 							: 'opacity-0'}"
 					>
@@ -999,7 +1008,34 @@
 							style="--blur-target: 4px; -webkit-mask-image: linear-gradient(to top, transparent 42%, black 68%, transparent 100%); mask-image: linear-gradient(to top, transparent 42%, black 68%, transparent 100%);"
 						></div>
 					</div>
-					<div class="md:hidden" in:fly={{ y: 176, duration: 1000 }}>
+					{#if isStartButtonSticky}
+						<div in:fly={{ y: 176, duration: 1000 }}>
+							<button
+								type="button"
+								onclick={handleStartGame}
+								disabled={!playersValid || !$isDataLoaded}
+								class="group relative mx-auto block w-full max-w-2xl cursor-pointer overflow-hidden rounded-2xl border-2 border-cyan-400/50 bg-linear-to-r from-slate-900 via-cyan-950/30 to-slate-900 px-8 py-6 text-2xl font-bold text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] backdrop-blur-sm transition-all duration-300 active:scale-[0.98] active:border-cyan-400 active:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100 disabled:active:border-cyan-400/50 disabled:active:shadow-[0_0_20px_rgba(34,211,238,0.3)] md:hover:scale-[1.02] md:hover:border-cyan-400 md:hover:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] md:disabled:hover:scale-100 md:disabled:hover:border-cyan-400/50 md:disabled:hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+							>
+								<!-- Animated gradient overlay -->
+								<div
+									class="absolute inset-0 bg-linear-to-r from-transparent via-cyan-400/20 to-transparent opacity-0 transition-opacity duration-300 group-active:animate-shimmer group-active:opacity-100 group-disabled:animate-none md:group-hover:animate-shimmer md:group-hover:opacity-100"
+									style="background-size: 200% 100%;"
+								></div>
+
+								<!-- Glow effect -->
+								<div
+									class="absolute inset-0 bg-linear-to-r from-cyan-400/0 via-cyan-400/10 to-cyan-400/0 opacity-0 blur-xl transition-opacity duration-300 group-active:opacity-100 group-disabled:opacity-0 md:group-hover:opacity-100"
+								></div>
+
+								<!-- Text with gradient -->
+								<span
+									class="relative bg-linear-to-r from-cyan-300 via-cyan-400 to-cyan-300 bg-clip-text text-transparent"
+								>
+									{$_('home.startGame')}
+								</span>
+							</button>
+						</div>
+					{:else}
 						<button
 							type="button"
 							onclick={handleStartGame}
@@ -1024,33 +1060,7 @@
 								{$_('home.startGame')}
 							</span>
 						</button>
-					</div>
-					<div class="hidden md:block">
-						<button
-							type="button"
-							onclick={handleStartGame}
-							disabled={!playersValid || !$isDataLoaded}
-							class="group relative mx-auto block w-full max-w-2xl cursor-pointer overflow-hidden rounded-2xl border-2 border-cyan-400/50 bg-linear-to-r from-slate-900 via-cyan-950/30 to-slate-900 px-8 py-6 text-2xl font-bold text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] backdrop-blur-sm transition-all duration-300 active:scale-[0.98] active:border-cyan-400 active:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100 disabled:active:border-cyan-400/50 disabled:active:shadow-[0_0_20px_rgba(34,211,238,0.3)] md:hover:scale-[1.02] md:hover:border-cyan-400 md:hover:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] md:disabled:hover:scale-100 md:disabled:hover:border-cyan-400/50 md:disabled:hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
-						>
-							<!-- Animated gradient overlay -->
-							<div
-								class="absolute inset-0 bg-linear-to-r from-transparent via-cyan-400/20 to-transparent opacity-0 transition-opacity duration-300 group-active:animate-shimmer group-active:opacity-100 group-disabled:animate-none md:group-hover:animate-shimmer md:group-hover:opacity-100"
-								style="background-size: 200% 100%;"
-							></div>
-
-							<!-- Glow effect -->
-							<div
-								class="absolute inset-0 bg-linear-to-r from-cyan-400/0 via-cyan-400/10 to-cyan-400/0 opacity-0 blur-xl transition-opacity duration-300 group-active:opacity-100 group-disabled:opacity-0 md:group-hover:opacity-100"
-							></div>
-
-							<!-- Text with gradient -->
-							<span
-								class="relative bg-linear-to-r from-cyan-300 via-cyan-400 to-cyan-300 bg-clip-text text-transparent"
-							>
-								{$_('home.startGame')}
-							</span>
-						</button>
-					</div>
+					{/if}
 				{/if}
 			</div>
 		{/if}
