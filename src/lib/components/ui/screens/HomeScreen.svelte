@@ -57,7 +57,7 @@
 	import TimelinePopup from '$lib/components/game/timeline/TimelinePopup.svelte';
 	import TracklistRecordsPopup from '$lib/components/ui/setup/TracklistRecordsPopup.svelte';
 	import TimelineLeaderboard from '$lib/components/ui/setup/TimelineLeaderboard.svelte';
-	import { fade, slide } from 'svelte/transition';
+	import { fade, fly, slide } from 'svelte/transition';
 	import { getLeaderboard, preloadAsset } from '$lib/services/client';
 
 	interface Props {
@@ -122,6 +122,14 @@
 	let loadingCardTimer: ReturnType<typeof setTimeout> | null = null;
 	let showDataLoadingCard = $state(false);
 	let dataLoadFailed = $state(false);
+	let startButtonSentinel: HTMLDivElement | undefined = $state();
+	let startButtonWrapper: HTMLDivElement | undefined = $state();
+	let isStartButtonSticky = $state(false);
+	let showStartButtonShell = $state(false);
+	let startButtonBackdropMeasured = $state(false);
+	let startButtonBackdropFrame: number | null = null;
+	let startButtonShellRevealTimer: ReturnType<typeof setTimeout> | null = null;
+	let startButtonShellRevealFrame: number | null = null;
 	let previousSelectedTracklist = $settingsStore.selectedTracklist;
 	let startAudioSources = {
 		classic: '/start_classic.mp3',
@@ -150,6 +158,14 @@
 	let showTimelineLeaderboard = $derived(
 		selectedMode === 'timeline' && $selectedTracklist.kind !== 'custom'
 	);
+	let startButtonReady = $derived(Boolean(selectedMode) && $isDataLoaded && !showDataLoadingCard);
+	let startButtonShellClass = $derived.by(() => {
+		if (!startButtonReady || !startButtonBackdropMeasured) {
+			return 'pointer-events-none relative mx-auto max-w-2xl md:pointer-events-auto';
+		}
+
+		return `sticky bottom-0 z-30 mx-[calc(50%-50vw)] w-screen px-6 ${isStartButtonSticky ? 'pb-[calc(env(safe-area-inset-bottom)+1rem)]' : 'pb-0'} md:static md:mx-auto md:w-auto md:max-w-2xl md:px-0 md:pb-0`;
+	});
 	let DailyChallengeIcon = $derived.by(() => {
 		if (dailyChallengeEntry.cause === 'birthday') return Cake;
 		if (dailyChallengeEntry.cause === 'nationalDay') return Flag;
@@ -534,6 +550,70 @@
 		void Promise.all(GAME_SOUND_FILES.map((url) => preloadAsset(url)));
 	}
 
+	function cancelStartButtonShellReveal() {
+		if (startButtonShellRevealTimer !== null) {
+			clearTimeout(startButtonShellRevealTimer);
+			startButtonShellRevealTimer = null;
+		}
+		if (startButtonShellRevealFrame !== null) {
+			window.cancelAnimationFrame(startButtonShellRevealFrame);
+			startButtonShellRevealFrame = null;
+		}
+	}
+
+	function updateStartButtonBackdrop() {
+		if (!startButtonReady || !startButtonSentinel) {
+			isStartButtonSticky = false;
+			showStartButtonShell = false;
+			startButtonBackdropMeasured = false;
+			cancelStartButtonShellReveal();
+			return;
+		}
+
+		const sentinelRect = startButtonSentinel.getBoundingClientRect();
+		const wrapperHeight = startButtonWrapper?.offsetHeight ?? 112;
+		const naturalTop = sentinelRect.top + 32;
+		const stickyTop = window.innerHeight - wrapperHeight;
+		const nextIsSticky = naturalTop > stickyTop + 1;
+		const wasMeasured = startButtonBackdropMeasured;
+
+		isStartButtonSticky = nextIsSticky;
+		startButtonBackdropMeasured = true;
+
+		if (!wasMeasured && !showStartButtonShell) {
+			cancelStartButtonShellReveal();
+			startButtonShellRevealTimer = setTimeout(() => {
+				startButtonShellRevealTimer = null;
+				startButtonShellRevealFrame = window.requestAnimationFrame(() => {
+					startButtonShellRevealFrame = null;
+					showStartButtonShell = true;
+				});
+			}, 140);
+		}
+	}
+
+	function scheduleStartButtonBackdropUpdate() {
+		if (startButtonBackdropFrame !== null) return;
+
+		startButtonBackdropFrame = window.requestAnimationFrame(() => {
+			startButtonBackdropFrame = null;
+			updateStartButtonBackdrop();
+		});
+	}
+
+	$effect(() => {
+		const ready = startButtonReady;
+		if (browser) {
+			if (!ready) {
+				isStartButtonSticky = false;
+				showStartButtonShell = false;
+				startButtonBackdropMeasured = false;
+				cancelStartButtonShellReveal();
+			}
+			scheduleStartButtonBackdropUpdate();
+		}
+	});
+
 	onMount(() => {
 		// Create start audio element with initial mode
 		const initialMode = selectedMode || 'classic';
@@ -595,9 +675,19 @@
 			}
 		};
 		document.addEventListener('click', handleClickOutside);
+		window.addEventListener('scroll', scheduleStartButtonBackdropUpdate, { passive: true });
+		window.addEventListener('resize', scheduleStartButtonBackdropUpdate);
+		scheduleStartButtonBackdropUpdate();
 		return () => {
 			destroyed = true;
 			document.removeEventListener('click', handleClickOutside);
+			window.removeEventListener('scroll', scheduleStartButtonBackdropUpdate);
+			window.removeEventListener('resize', scheduleStartButtonBackdropUpdate);
+			if (startButtonBackdropFrame !== null) {
+				window.cancelAnimationFrame(startButtonBackdropFrame);
+				startButtonBackdropFrame = null;
+			}
+			cancelStartButtonShellReveal();
 			if (dailyChallengeTimer) clearTimeout(dailyChallengeTimer);
 			if (dailyChallengeCountdownTimer) clearInterval(dailyChallengeCountdownTimer);
 			if (loadingCardTimer) clearTimeout(loadingCardTimer);
@@ -881,31 +971,87 @@
 
 		<!-- Start Game Button -->
 		{#if selectedMode}
-			<div class="mx-auto mt-8 max-w-2xl">
-				<button
-					type="button"
-					onclick={handleStartGame}
-					disabled={!playersValid || !$isDataLoaded}
-					class="group relative w-full cursor-pointer overflow-hidden rounded-2xl border-2 border-cyan-400/50 bg-linear-to-r from-slate-900 via-cyan-950/30 to-slate-900 px-8 py-6 text-2xl font-bold text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-cyan-400 hover:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100 disabled:hover:border-cyan-400/50 disabled:hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
-				>
-					<!-- Animated gradient overlay -->
+			<div bind:this={startButtonSentinel} class="h-0 md:hidden" aria-hidden="true"></div>
+			<div bind:this={startButtonWrapper} class="mt-8 {startButtonShellClass}">
+				{#if startButtonReady && showStartButtonShell}
 					<div
-						class="absolute inset-0 bg-linear-to-r from-transparent via-cyan-400/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:animate-shimmer group-hover:opacity-100 group-disabled:animate-none"
-						style="background-size: 200% 100%;"
-					></div>
-
-					<!-- Glow effect -->
-					<div
-						class="absolute inset-0 bg-linear-to-r from-cyan-400/0 via-cyan-400/10 to-cyan-400/0 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100 group-disabled:opacity-0"
-					></div>
-
-					<!-- Text with gradient -->
-					<span
-						class="relative bg-linear-to-r from-cyan-300 via-cyan-400 to-cyan-300 bg-clip-text text-transparent"
+						class="pointer-events-none absolute inset-x-0 bottom-0 h-36 overflow-hidden transition-opacity duration-300 ease-out md:hidden {isStartButtonSticky
+							? 'opacity-100'
+							: 'opacity-0'}"
 					>
-						{$_('home.startGame')}
-					</span>
-				</button>
+						<div
+							class="start-dark-ramp absolute inset-x-0 bottom-0 h-full bg-linear-to-t from-slate-950/18 via-slate-950/7 to-transparent"
+						></div>
+						<div
+							class="start-blur-ramp absolute inset-x-0 bottom-0 h-16"
+							style="--blur-target: 40px; -webkit-mask-image: linear-gradient(to top, black 0%, black 42%, transparent 100%); mask-image: linear-gradient(to top, black 0%, black 42%, transparent 100%);"
+						></div>
+						<div
+							class="start-blur-ramp absolute inset-x-0 bottom-0 h-24"
+							style="--blur-target: 24px; -webkit-mask-image: linear-gradient(to top, black 0%, transparent 82%); mask-image: linear-gradient(to top, black 0%, transparent 82%);"
+						></div>
+						<div
+							class="start-blur-ramp absolute inset-x-0 bottom-0 h-32"
+							style="--blur-target: 12px; -webkit-mask-image: linear-gradient(to top, transparent 0%, black 28%, transparent 96%); mask-image: linear-gradient(to top, transparent 0%, black 28%, transparent 96%);"
+						></div>
+						<div
+							class="start-blur-ramp absolute inset-x-0 bottom-0 h-36"
+							style="--blur-target: 4px; -webkit-mask-image: linear-gradient(to top, transparent 42%, black 68%, transparent 100%); mask-image: linear-gradient(to top, transparent 42%, black 68%, transparent 100%);"
+						></div>
+					</div>
+					<div class="md:hidden" in:fly={{ y: 176, duration: 1000 }}>
+						<button
+							type="button"
+							onclick={handleStartGame}
+							disabled={!playersValid || !$isDataLoaded}
+							class="group relative mx-auto block w-full max-w-2xl cursor-pointer overflow-hidden rounded-2xl border-2 border-cyan-400/50 bg-linear-to-r from-slate-900 via-cyan-950/30 to-slate-900 px-8 py-6 text-2xl font-bold text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] backdrop-blur-sm transition-all duration-300 active:scale-[0.98] active:border-cyan-400 active:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100 disabled:active:border-cyan-400/50 disabled:active:shadow-[0_0_20px_rgba(34,211,238,0.3)] md:hover:scale-[1.02] md:hover:border-cyan-400 md:hover:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] md:disabled:hover:scale-100 md:disabled:hover:border-cyan-400/50 md:disabled:hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+						>
+							<!-- Animated gradient overlay -->
+							<div
+								class="absolute inset-0 bg-linear-to-r from-transparent via-cyan-400/20 to-transparent opacity-0 transition-opacity duration-300 group-active:animate-shimmer group-active:opacity-100 group-disabled:animate-none md:group-hover:animate-shimmer md:group-hover:opacity-100"
+								style="background-size: 200% 100%;"
+							></div>
+
+							<!-- Glow effect -->
+							<div
+								class="absolute inset-0 bg-linear-to-r from-cyan-400/0 via-cyan-400/10 to-cyan-400/0 opacity-0 blur-xl transition-opacity duration-300 group-active:opacity-100 group-disabled:opacity-0 md:group-hover:opacity-100"
+							></div>
+
+							<!-- Text with gradient -->
+							<span
+								class="relative bg-linear-to-r from-cyan-300 via-cyan-400 to-cyan-300 bg-clip-text text-transparent"
+							>
+								{$_('home.startGame')}
+							</span>
+						</button>
+					</div>
+					<div class="hidden md:block">
+						<button
+							type="button"
+							onclick={handleStartGame}
+							disabled={!playersValid || !$isDataLoaded}
+							class="group relative mx-auto block w-full max-w-2xl cursor-pointer overflow-hidden rounded-2xl border-2 border-cyan-400/50 bg-linear-to-r from-slate-900 via-cyan-950/30 to-slate-900 px-8 py-6 text-2xl font-bold text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] backdrop-blur-sm transition-all duration-300 active:scale-[0.98] active:border-cyan-400 active:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100 disabled:active:border-cyan-400/50 disabled:active:shadow-[0_0_20px_rgba(34,211,238,0.3)] md:hover:scale-[1.02] md:hover:border-cyan-400 md:hover:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] md:disabled:hover:scale-100 md:disabled:hover:border-cyan-400/50 md:disabled:hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+						>
+							<!-- Animated gradient overlay -->
+							<div
+								class="absolute inset-0 bg-linear-to-r from-transparent via-cyan-400/20 to-transparent opacity-0 transition-opacity duration-300 group-active:animate-shimmer group-active:opacity-100 group-disabled:animate-none md:group-hover:animate-shimmer md:group-hover:opacity-100"
+								style="background-size: 200% 100%;"
+							></div>
+
+							<!-- Glow effect -->
+							<div
+								class="absolute inset-0 bg-linear-to-r from-cyan-400/0 via-cyan-400/10 to-cyan-400/0 opacity-0 blur-xl transition-opacity duration-300 group-active:opacity-100 group-disabled:opacity-0 md:group-hover:opacity-100"
+							></div>
+
+							<!-- Text with gradient -->
+							<span
+								class="relative bg-linear-to-r from-cyan-300 via-cyan-400 to-cyan-300 bg-clip-text text-transparent"
+							>
+								{$_('home.startGame')}
+							</span>
+						</button>
+					</div>
+				{/if}
 			</div>
 		{/if}
 
@@ -991,4 +1137,33 @@
 />
 
 <style>
+	.start-dark-ramp {
+		animation: start-dark-ramp 1000ms ease-out both;
+	}
+
+	.start-blur-ramp {
+		-webkit-backdrop-filter: blur(0);
+		backdrop-filter: blur(0);
+		animation: start-blur-ramp 1000ms ease-out both;
+	}
+
+	@keyframes start-dark-ramp {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes start-blur-ramp {
+		from {
+			-webkit-backdrop-filter: blur(0);
+			backdrop-filter: blur(0);
+		}
+		to {
+			-webkit-backdrop-filter: blur(var(--blur-target));
+			backdrop-filter: blur(var(--blur-target));
+		}
+	}
 </style>

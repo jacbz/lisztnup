@@ -32,6 +32,8 @@ pnpm preview          # Preview production build
 pnpm sync:tracklist   # Regenerate tracklist docs in out/
 ```
 
+Do not run the dev server on your own.
+
 ## Documentation Map
 
 | Document                                 | Purpose                                                                                                                                                 |
