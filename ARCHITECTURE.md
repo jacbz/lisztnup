@@ -26,7 +26,7 @@ src/
 │   ├── logic/                 Game logic classes
 │   │   ├── timelineGame.svelte.ts  Timeline game state + logic (Svelte 5 reactive class)
 │   │   ├── timelineScoring.ts      Pure scoring functions (difficulty, speed, streak, efficiency)
-│   │   └── timelineTypes.ts, timelineMotion.ts  Timeline types + shared card motion helpers
+│   │   └── timelineTypes.ts, timelineMotion.ts, timelineReplayIndex.ts  Types, motion, replay indexes
 │   ├── server/                Server-only code (Cloudflare Workers)
 │   │   ├── analytics.ts         User hashing (GDPR-compliant daily-rotating salt)
 │   │   ├── logging.ts           Database-backed diagnostic logger

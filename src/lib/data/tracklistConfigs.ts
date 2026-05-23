@@ -394,7 +394,10 @@ export const LISZT_CONFIG: TracklistConfig = {
 export const BACH_CONFIG: TracklistConfig = {
 	composerFilter: { mode: 'include', composers: ['24f1766e-9635-4d58-a4d4-9413f9f98a4c'] },
 	enablePopularityWeighting: true,
-	maxTracksFromSingleWork: 1
+	maxTracksFromSingleWork: 1,
+	excludeWorks: [
+		'469a9f81' // Mahler arr. of Orchestral Suite no. 2
+	]
 };
 
 export const MOZART_CONFIG: TracklistConfig = {

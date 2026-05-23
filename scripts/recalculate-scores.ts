@@ -7,7 +7,17 @@ import { replayTimelineLog } from '../src/lib/logic/timelineReplayUtils';
 import type { TimelineReplayLog } from '../src/lib/types/timelineReplay';
 import { TracklistGenerator } from '../src/lib/services/TracklistGenerator';
 import * as Configs from '../src/lib/data/tracklistConfigs';
-import { Target } from 'lucide-svelte';
+
+interface TimelineScoreRow {
+	id: number;
+	score: number;
+	target: number;
+	log: string;
+	timestamp: string;
+	player_name: string | null;
+	country: string | null;
+	tracklist_id: string;
+}
 
 function hasReplayMetadata(log: unknown): log is TimelineReplayLog {
 	if (!log || typeof log !== 'object') return false;
@@ -25,6 +35,69 @@ function hasReplayMetadata(log: unknown): log is TimelineReplayLog {
 		Array.isArray(candidate.turns) &&
 		candidate.turns.length > 0
 	);
+}
+
+function formatUnknownError(error: unknown): string {
+	if (error instanceof Error) return `${error.name}: ${error.message}`;
+	return String(error);
+}
+
+function formatTimestamp(timestamp: string): string {
+	const date = new Date(timestamp);
+	return Number.isNaN(date.getTime()) ? timestamp : date.toISOString();
+}
+
+function getTurnIndexFromError(error: unknown): number | undefined {
+	const message = error instanceof Error ? error.message : String(error);
+	const match = message.match(/\[Turn (\d+):/);
+	if (!match) return undefined;
+	const turnNum = Number(match[1]);
+	return Number.isInteger(turnNum) && turnNum > 0 ? turnNum - 1 : undefined;
+}
+
+function formatReplayTurn(log: TimelineReplayLog, turnIndex: number): string {
+	const turn = log.turns[turnIndex];
+	if (!turn) return `turn ${turnIndex + 1}: <missing>`;
+	return [
+		`turn ${turnIndex + 1}`,
+		`part=${turn.part}`,
+		`index=${turn.index ?? 'null'}`,
+		`ok=${turn.ok}`,
+		`year=${turn.year ?? '<missing>'}`,
+		`points=${turn.points}`,
+		`seconds=${turn.seconds ?? 'null'}`
+	].join(' ');
+}
+
+function buildReplayErrorContext(
+	row: TimelineScoreRow,
+	log: TimelineReplayLog,
+	error: unknown
+): string {
+	const turnIndex = getTurnIndexFromError(error);
+	const date = formatTimestamp(row.timestamp);
+	const player = row.player_name ?? 'Anonymous';
+	const country = row.country ?? '??';
+	const lines = [
+		`score id=${row.id}`,
+		`timestamp=${date}`,
+		`player=${player} country=${country}`,
+		`tracklist=${row.tracklist_id} target=${row.target} storedScore=${row.score}`,
+		`initial=${log.initial} initialYear=${log.initialYear}`,
+		`tracklistBounds=${log.tracklistMin}..${log.tracklistMax}`,
+		`turnCount=${log.turns.length}`
+	];
+
+	if (turnIndex !== undefined) {
+		const start = Math.max(0, turnIndex - 2);
+		const end = Math.min(log.turns.length, turnIndex + 3);
+		lines.push(
+			`suspectTurn=${formatReplayTurn(log, turnIndex)}`,
+			`nearbyTurns=${Array.from({ length: end - start }, (_, offset) => formatReplayTurn(log, start + offset)).join(' | ')}`
+		);
+	}
+
+	return lines.join('\n');
 }
 
 async function main() {
@@ -123,16 +196,7 @@ async function main() {
 		);
 
 		const scoresRaw = fs.readFileSync(tempJsonPath, 'utf-8');
-		const scores = JSON.parse(scoresRaw) as {
-			id: number;
-			score: number;
-			target: number;
-			log: string;
-			timestamp: string;
-			player_name: string | null;
-			country: string | null;
-			tracklist_id: string;
-		}[];
+		const scores = JSON.parse(scoresRaw) as TimelineScoreRow[];
 
 		console.log(`Processing ${scores.length} scores chronologically...`);
 
@@ -194,14 +258,24 @@ async function main() {
 				}
 			}
 
-			const result = replayTimelineLog(
-				oldLog,
-				row.target,
-				trackLookup,
-				(msg) => warnings.push(msg),
-				replayMin,
-				replayMax
-			);
+			const result = (() => {
+				try {
+					return replayTimelineLog(
+						oldLog,
+						row.target,
+						trackLookup,
+						(msg) => warnings.push(msg),
+						replayMin,
+						replayMax
+					);
+				} catch (error) {
+					const replayError = new Error(
+						`Failed to replay timeline score.\n${buildReplayErrorContext(row, oldLog, error)}\nCause: ${formatUnknownError(error)}`
+					);
+					(replayError as Error & { cause?: unknown }).cause = error;
+					throw replayError;
+				}
+			})();
 
 			const newScore = result.score;
 			const newLog = result.log;

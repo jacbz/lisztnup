@@ -13,8 +13,30 @@ interface ReplayTimelineEntry {
 	year: number;
 }
 
+interface TimelineAccessContext {
+	turn: TimelineReplayTurn;
+	turnNum: number;
+	label: string;
+}
+
 function asFiniteNumber(value: unknown): number | undefined {
 	return typeof value === 'number' && Number.isFinite(value) ? value : undefined;
+}
+
+function readTimelineYear(
+	timeline: ReplayTimelineEntry[],
+	index: number,
+	context: TimelineAccessContext
+): number {
+	const entry = timeline[index];
+	if (!entry) {
+		const years = timeline.map((item) => item.year).join(', ');
+		const part = context.turn.part || '<missing part>';
+		throw new Error(
+			`[Turn ${context.turnNum}: ${part}] Invalid timeline index while reading ${context.label}: requested index ${index}, timeline length ${timeline.length}, logged index ${context.turn.index ?? 'null'}, years [${years}]`
+		);
+	}
+	return entry.year;
 }
 
 /**
@@ -86,8 +108,22 @@ export function replayTimelineLog(
 			const playerIndex = turn.index ?? 0;
 
 			// Verify if the slot chosen was actually correct for this year.
-			const leftYear = playerIndex > 0 ? timeline[playerIndex - 1].year : null;
-			const rightYear = playerIndex < timeline.length ? timeline[playerIndex].year : null;
+			const leftYear =
+				playerIndex > 0
+					? readTimelineYear(timeline, playerIndex - 1, {
+							turn,
+							turnNum,
+							label: 'left boundary'
+						})
+					: null;
+			const rightYear =
+				playerIndex < timeline.length
+					? readTimelineYear(timeline, playerIndex, {
+							turn,
+							turnNum,
+							label: 'right boundary'
+						})
+					: null;
 
 			const isCorrectSlot =
 				(leftYear === null || leftYear <= turnYear) &&
@@ -170,8 +206,22 @@ export function replayTimelineLog(
 					}
 				}
 
-				const placedLeft = turn.index > 0 ? timeline[turn.index - 1].year : null;
-				const placedRight = turn.index < timeline.length ? timeline[turn.index].year : null;
+				const placedLeft =
+					turn.index > 0
+						? readTimelineYear(timeline, turn.index - 1, {
+								turn,
+								turnNum,
+								label: 'placed left boundary'
+							})
+						: null;
+				const placedRight =
+					turn.index < timeline.length
+						? readTimelineYear(timeline, turn.index, {
+								turn,
+								turnNum,
+								label: 'placed right boundary'
+							})
+						: null;
 
 				const isTimeoutLog = turn.points === 0;
 				const isCorrectSlotButMarkedWrong =

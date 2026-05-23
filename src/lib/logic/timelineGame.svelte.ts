@@ -21,6 +21,7 @@ import {
 	calculateStreakMult,
 	PRODUCTION_TIMELINE_SCORING
 } from './timelineScoring';
+import { getReplaySlotForUiIndex } from './timelineReplayIndex';
 
 // Re-export types for convenience
 export type { TimelineEntry, StackItem, TimelineRow, DragKind, TurnPhase, TurnScoreBreakdown };
@@ -743,9 +744,12 @@ export class TimelineGame {
 
 		const track = entries[idx].track;
 		const year = this.#getTimelineYear(track);
-		const prev = idx > 0 ? this.#getTimelineYear(entries[idx - 1].track) : -Infinity;
-		const next =
-			idx < entries.length - 1 ? this.#getTimelineYear(entries[idx + 1].track) : Infinity;
+		const replaySlot = getReplaySlotForUiIndex(entries, idx);
+		const replayIndex = replaySlot.index;
+		const prevYear = replaySlot.previous ? this.#getTimelineYear(replaySlot.previous.track) : null;
+		const nextYear = replaySlot.next ? this.#getTimelineYear(replaySlot.next.track) : null;
+		const prev = prevYear ?? -Infinity;
+		const next = nextYear ?? Infinity;
 		const isCorrect = year >= prev && year <= next;
 		const placement = isCorrect ? 'correct' : year > next ? 'too_far_left' : 'too_far_right';
 		const distance = Math.min(
@@ -776,9 +780,6 @@ export class TimelineGame {
 				this.activePlayer.longestStreak = this.activePlayer.absoluteStreak;
 			}
 
-			const prevYear = idx > 0 ? this.#getTimelineYear(entries[idx - 1].track) : null;
-			const nextYear =
-				idx < entries.length - 1 ? this.#getTimelineYear(entries[idx + 1].track) : null;
 			const gap = calculateGap(
 				prevYear,
 				nextYear,
@@ -816,8 +817,8 @@ export class TimelineGame {
 
 			const consolation = calculateConsolationScore(
 				year,
-				idx > 0 ? this.#getTimelineYear(entries[idx - 1].track) : null,
-				idx < entries.length - 1 ? this.#getTimelineYear(entries[idx + 1].track) : null,
+				prevYear,
+				nextYear,
 				this.#target,
 				this.activePlayer.totalPlacements,
 				PRODUCTION_TIMELINE_SCORING,
@@ -833,7 +834,7 @@ export class TimelineGame {
 		const scoreDelta = this.activePlayer.score - this.scoreBeforeTurn;
 		this.activePlayer.replayTurns.push({
 			part: track.part.gid,
-			index: idx,
+			index: replayIndex,
 			ok: isCorrect,
 			seconds: Math.round(secondsTaken * 100) / 100,
 			points: Math.round(placementPoints),
@@ -1125,11 +1126,12 @@ export class TimelineGame {
 			const entries = this.activePlayer.entries;
 			const idx = entries.findIndex((e) => e.id === this.pendingEntryId);
 			if (idx >= 0) {
+				const replayIndex = getReplaySlotForUiIndex(entries, idx).index;
 				entries[idx].confirmed = true;
 				entries[idx].correct = false;
 				this.activePlayer.replayTurns.push({
 					part: entries[idx].track.part.gid,
-					index: idx,
+					index: replayIndex,
 					ok: false,
 					seconds: secondsTaken === null ? null : Math.round(secondsTaken * 100) / 100,
 					points: 0,

@@ -53,7 +53,9 @@ function testProductionScoring(): void {
 }
 
 import { replayTimelineLog, isCompletedLog } from '../src/lib/logic/timelineReplayUtils';
+import { getReplaySlotForUiIndex } from '../src/lib/logic/timelineReplayIndex';
 import { GameCatalog } from '../src/lib/models';
+import type { TimelineReplayLog } from '../src/lib/types/timelineReplay';
 import fs from 'fs';
 import path from 'path';
 
@@ -117,9 +119,14 @@ function testReplayConsolation(): void {
 		return;
 	}
 
-	const log = {
+	const log: TimelineReplayLog = {
 		v: 1,
 		initial: g1781,
+		initialYear: 1781,
+		tracklistMin: 1400,
+		tracklistMax: 2020,
+		score: 0,
+		completionBonus: 0,
 		turns: [
 			{
 				part: g1907,
@@ -127,7 +134,7 @@ function testReplayConsolation(): void {
 				ok: true,
 				seconds: 10,
 				points: 1000,
-				score: 1000,
+				streakMult: 1,
 				year: 1907
 			},
 			{
@@ -136,17 +143,48 @@ function testReplayConsolation(): void {
 				ok: false,
 				seconds: 10,
 				points: 1, // Non-zero
-				score: 1000,
+				streakMult: 1,
 				year: 1978
 			}
 		]
-	} as any;
+	};
 
 	const result = replayTimelineLog(log, 6, trackLookup, undefined, 1400, 2020);
 	const points = result.newTurns[1].points;
 	// Expected: dErr = min(|1978-1781|, |1978-1907|) = 71
 	// round(100 * 0.5^(71/20)) = 9
 	assert.equal(points, 9, `Consolation score should be 9, got ${points}`);
+}
+
+function testReplaySlotIgnoresTransientEntries(): void {
+	const entries = [
+		{ year: 1788, confirmed: true, correct: null },
+		{ year: 1812, confirmed: true, correct: null },
+		{ year: 1830, confirmed: true, correct: null },
+		{ year: 1808, confirmed: true, correct: false },
+		{ year: 1838, confirmed: false, correct: null }
+	];
+
+	const correctSlot = getReplaySlotForUiIndex(entries, 4);
+	assert.equal(correctSlot.index, 3);
+	assert.equal(correctSlot.previous?.year, 1830);
+	assert.equal(correctSlot.next, null);
+
+	const wrongSlot = getReplaySlotForUiIndex(
+		[
+			{ year: 1788, confirmed: true, correct: null },
+			{ year: 1783, confirmed: true, correct: false },
+			{ year: 1812, confirmed: true, correct: null },
+			{ year: 1830, confirmed: true, correct: null },
+			{ year: 1838, confirmed: true, correct: null },
+			{ year: 1931, confirmed: false, correct: null },
+			{ year: 1876, confirmed: true, correct: null }
+		],
+		5
+	);
+	assert.equal(wrongSlot.index, 4);
+	assert.equal(wrongSlot.previous?.year, 1838);
+	assert.equal(wrongSlot.next?.year, 1876);
 }
 
 function runTinyReport(seed: string) {
@@ -373,6 +411,7 @@ function emptyDataset(): DatasetSummary {
 testProductionScoring();
 testLogValidation();
 testReplayConsolation();
+testReplaySlotIgnoresTransientEntries();
 testDeterminism();
 testSkillSignal();
 testSoloMultiplayerSegregation();
