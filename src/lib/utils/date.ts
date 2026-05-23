@@ -44,6 +44,51 @@ export function getMsUntilNextGermanMidnight(date = new Date()): number {
 	return Math.max(0, high - date.getTime());
 }
 
+function dateStringFromUtcParts(date: Date): string {
+	return `${date.getUTCFullYear()}-${twoDigit(date.getUTCMonth() + 1)}-${twoDigit(date.getUTCDate())}`;
+}
+
+function startOfTimeZoneDateUtc(dateString: string, timeZone: string): Date {
+	const [year, month, day] = dateString.split('-').map(Number);
+	const approximateUtcMidnight = Date.UTC(year, month - 1, day);
+	let low = approximateUtcMidnight - 24 * 60 * 60 * 1000;
+	let high = approximateUtcMidnight + 24 * 60 * 60 * 1000;
+
+	while (high - low > 1) {
+		const mid = Math.floor((low + high) / 2);
+		if (getDateStringInTimeZone(new Date(mid), timeZone) < dateString) {
+			low = mid;
+		} else {
+			high = mid;
+		}
+	}
+
+	return new Date(high);
+}
+
+export function getGermanWeekStartUtc(date = new Date()): Date {
+	const germanDate = getGermanDateString(date);
+	const [year, month, day] = germanDate.split('-').map(Number);
+	const germanWeekday = new Intl.DateTimeFormat('en', {
+		timeZone: GERMAN_TIME_ZONE,
+		weekday: 'short'
+	}).format(date);
+	const weekdayIndex = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(germanWeekday);
+	const daysSinceMonday = weekdayIndex >= 0 ? weekdayIndex : 0;
+	const monday = new Date(Date.UTC(year, month - 1, day - daysSinceMonday));
+	return startOfTimeZoneDateUtc(dateStringFromUtcParts(monday), GERMAN_TIME_ZONE);
+}
+
+export function getGermanMonthStartUtc(date = new Date()): Date {
+	const germanDate = getGermanDateString(date);
+	const [year, month] = germanDate.split('-').map(Number);
+	return startOfTimeZoneDateUtc(`${year}-${twoDigit(month)}-01`, GERMAN_TIME_ZONE);
+}
+
+export function formatDateAsD1Timestamp(date: Date): string {
+	return date.toISOString().slice(0, 19).replace('T', ' ');
+}
+
 export function parseD1Timestamp(value: unknown): Date | null {
 	if (typeof value !== 'string') return null;
 	const normalized = value.includes('T') ? value : `${value.replace(' ', 'T')}Z`;

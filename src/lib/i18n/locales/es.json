@@ -643,6 +643,7 @@
 	},
 	"leaderboard": {
 		"title": "Clasificaci\u00f3n",
+		"personalTitle": "Mis marcas",
 		"loading": "Cargando\u2026",
 		"noScores": "A\u00fan sin puntuaciones \u2014 \u00a1s\u00e9 el primero!",
 		"tracklistRecordsTitle": "Récords de tracklists",
@@ -654,10 +655,12 @@
 			"country": "País",
 			"points": "Puntos"
 		},
-		"scope": {
-			"global": "mundo",
-			"national": "país",
-			"personal": "mi marca"
+		"scopeLabel": "Alcance de la clasificación",
+		"periodLabel": "Periodo de la clasificación",
+		"period": {
+			"weekly": "semana",
+			"monthly": "mes",
+			"allTime": "histórico"
 		},
 		"showTimeline": "Mostrar cronología",
 		"replay": "Replay",

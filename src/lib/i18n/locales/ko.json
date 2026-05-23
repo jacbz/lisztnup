@@ -643,6 +643,7 @@
 	},
 	"leaderboard": {
 		"title": "리더보드",
+		"personalTitle": "내 기록",
 		"loading": "로딩 중\u2026",
 		"noScores": "아직 점수 없음 \u2014 첨 번째가 되세요!",
 		"tracklistRecordsTitle": "트랙리스트 기록",
@@ -654,10 +655,12 @@
 			"country": "국가",
 			"points": "점수"
 		},
-		"scope": {
-			"global": "세계",
-			"national": "국내",
-			"personal": "내 기록"
+		"scopeLabel": "리더보드 범위",
+		"periodLabel": "리더보드 기간",
+		"period": {
+			"weekly": "이번 주",
+			"monthly": "이번 달",
+			"allTime": "역대"
 		},
 		"showTimeline": "타임라인 보기",
 		"replay": "리플레이",

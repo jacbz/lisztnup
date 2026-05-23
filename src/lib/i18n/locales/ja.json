@@ -643,6 +643,7 @@
 	},
 	"leaderboard": {
 		"title": "リーダーボード",
+		"personalTitle": "自分の記録",
 		"loading": "読み込み中\u2026",
 		"noScores": "まだスコアなし \u2014 最初の一人に！",
 		"tracklistRecordsTitle": "トラックリスト記録",
@@ -654,10 +655,12 @@
 			"country": "国",
 			"points": "ポイント"
 		},
-		"scope": {
-			"global": "世界",
-			"national": "国内",
-			"personal": "自分"
+		"scopeLabel": "ランキングの範囲",
+		"periodLabel": "ランキングの期間",
+		"period": {
+			"weekly": "今週",
+			"monthly": "今月",
+			"allTime": "歴代"
 		},
 		"showTimeline": "タイムラインを表示",
 		"replay": "リプレイ",

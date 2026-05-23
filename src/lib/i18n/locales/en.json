@@ -643,6 +643,7 @@
 	},
 	"leaderboard": {
 		"title": "Leaderboard",
+		"personalTitle": "My scores",
 		"loading": "Loading…",
 		"noScores": "No scores yet — be the first!",
 		"tracklistRecordsTitle": "Tracklist Records",
@@ -654,10 +655,12 @@
 			"country": "Country",
 			"points": "Points"
 		},
-		"scope": {
-			"global": "global",
-			"national": "national",
-			"personal": "personal"
+		"scopeLabel": "Leaderboard reach",
+		"periodLabel": "Leaderboard period",
+		"period": {
+			"weekly": "week",
+			"monthly": "month",
+			"allTime": "all-time"
 		},
 		"showTimeline": "Show timeline",
 		"replay": "Replay",

@@ -643,6 +643,7 @@
 	},
 	"leaderboard": {
 		"title": "Classifica",
+		"personalTitle": "I miei punteggi",
 		"loading": "Caricamento\u2026",
 		"noScores": "Nessun punteggio \u2014 sii il primo!",
 		"tracklistRecordsTitle": "Record delle tracklist",
@@ -654,10 +655,12 @@
 			"country": "Paese",
 			"points": "Punti"
 		},
-		"scope": {
-			"global": "mondo",
-			"national": "Paese",
-			"personal": "personale"
+		"scopeLabel": "Portata della classifica",
+		"periodLabel": "Periodo della classifica",
+		"period": {
+			"weekly": "settimana",
+			"monthly": "mese",
+			"allTime": "storico"
 		},
 		"showTimeline": "Mostra timeline",
 		"replay": "Replay",

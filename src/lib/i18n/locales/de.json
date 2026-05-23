@@ -643,6 +643,7 @@
 	},
 	"leaderboard": {
 		"title": "Bestenliste",
+		"personalTitle": "Meine Punkte",
 		"loading": "Laden\u2026",
 		"noScores": "Noch keine Eintr\u00e4ge \u2014 sei der Erste!",
 		"tracklistRecordsTitle": "Tracklist-Rekorde",
@@ -654,10 +655,12 @@
 			"country": "Land",
 			"points": "Punkte"
 		},
-		"scope": {
-			"global": "weltweit",
-			"national": "landesweit",
-			"personal": "meine"
+		"scopeLabel": "Reichweite der Bestenliste",
+		"periodLabel": "Zeitraum der Bestenliste",
+		"period": {
+			"weekly": "Woche",
+			"monthly": "Monat",
+			"allTime": "Gesamt"
 		},
 		"showTimeline": "Timeline anzeigen",
 		"replay": "Replay",

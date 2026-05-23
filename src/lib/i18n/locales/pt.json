@@ -643,6 +643,7 @@
 	},
 	"leaderboard": {
 		"title": "Placar",
+		"personalTitle": "Minhas marcas",
 		"loading": "Carregando\u2026",
 		"noScores": "Nenhuma pontua\u00e7\u00e3o ainda \u2014 seja o primeiro!",
 		"tracklistRecordsTitle": "Recordes das tracklists",
@@ -654,10 +655,12 @@
 			"country": "País",
 			"points": "Pontos"
 		},
-		"scope": {
-			"global": "mundo",
-			"national": "país",
-			"personal": "meu placar"
+		"scopeLabel": "Alcance do ranking",
+		"periodLabel": "Período do ranking",
+		"period": {
+			"weekly": "semana",
+			"monthly": "mês",
+			"allTime": "geral"
 		},
 		"showTimeline": "Mostrar linha do tempo",
 		"replay": "Replay",

@@ -1,9 +1,16 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { hashUser, getCurrentSalt } from '$lib/server/analytics';
-import { formatD1TimestampAsGermanDate } from '$lib/utils/date';
+import {
+	formatD1TimestampAsGermanDate,
+	formatDateAsD1Timestamp,
+	getGermanMonthStartUtc,
+	getGermanWeekStartUtc
+} from '$lib/utils/date';
 import { logger } from '$lib/server/logging';
 import { TIMELINE_TARGET_OPTIONS } from '$lib/types/game';
+import type { LeaderboardPeriod, LeaderboardScope } from '$lib/types';
+import { isCompletedLog } from '$lib/logic/timelineReplayUtils';
 
 const MAX_NAME_LENGTH = 30;
 const MAX_SCORE = 1_000_000;
@@ -11,7 +18,7 @@ const MAX_CARDS = 100;
 const MAX_SCORE_PER_CARD = 6000;
 const MAX_SUBMISSIONS_PER_HOUR = 60;
 const ALLOWED_TIMELINE_TARGETS = new Set<number>(TIMELINE_TARGET_OPTIONS);
-type LeaderboardScope = 'global' | 'national' | 'personal';
+const LEADERBOARD_PERIODS: LeaderboardPeriod[] = ['weekly', 'monthly', 'allTime'];
 
 function parseClientTimestamp(value: unknown): string | null {
 	if (typeof value !== 'string') return null;
@@ -23,11 +30,21 @@ function parseClientTimestamp(value: unknown): string | null {
 	return new Date(ms).toISOString().slice(0, 19).replace('T', ' ');
 }
 
-import { isCompletedLog } from '$lib/logic/timelineReplayUtils';
-
 export const GET: RequestHandler = async ({ url, platform }) => {
+	const rawPeriod = url.searchParams.get('period');
+	const requestedPeriod: LeaderboardPeriod = LEADERBOARD_PERIODS.includes(
+		rawPeriod as LeaderboardPeriod
+	)
+		? (rawPeriod as LeaderboardPeriod)
+		: 'allTime';
+
 	if (!platform?.env?.DB) {
-		return json({ entries: [] });
+		return json({
+			entries: [],
+			period: requestedPeriod,
+			requestedPeriod,
+			scope: 'global'
+		});
 	}
 
 	const limit = Math.min(Number(url.searchParams.get('limit')) || 10, 50);
@@ -42,9 +59,16 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 	const canIncludePlayerRank = scope === 'global' && !!playerToken && !records;
 	const canIncludeCountryRank =
 		scope === 'global' && !!viewerCountry && viewerCountry !== 'UNKNOWN' && !records;
+	const db = platform.env.DB;
 
 	if (scope === 'personal' && !playerToken) {
-		return json({ entries: [], viewerCountry });
+		return json({
+			entries: [],
+			viewerCountry,
+			period: 'allTime',
+			requestedPeriod,
+			scope
+		});
 	}
 
 	try {
@@ -52,12 +76,13 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 		let responseViewerCountry = viewerCountry;
 		if (scope === 'national') {
 			if ((!nationalCountry || nationalCountry === 'UNKNOWN') && playerToken) {
-				const savedCountry = await platform.env.DB.prepare(
-					`SELECT country FROM timeline_scores
-					 WHERE player_token = ?1 AND country IS NOT NULL
-					 ORDER BY country <> 'UNKNOWN' DESC, timestamp DESC
-					 LIMIT 1`
-				)
+				const savedCountry = await db
+					.prepare(
+						`SELECT country FROM timeline_scores
+						 WHERE player_token = ?1 AND country IS NOT NULL
+						 ORDER BY country <> 'UNKNOWN' DESC, timestamp DESC
+						 LIMIT 1`
+					)
 					.bind(playerToken)
 					.first<{ country: string | null }>();
 				nationalCountry = savedCountry?.country ?? null;
@@ -65,110 +90,154 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 			responseViewerCountry = nationalCountry;
 		}
 		if (scope === 'national' && !nationalCountry) {
-			return json({ entries: [], viewerCountry: responseViewerCountry });
+			return json({
+				entries: [],
+				viewerCountry: responseViewerCountry,
+				period: requestedPeriod,
+				requestedPeriod,
+				scope
+			});
 		}
 
-		// Use ROW_NUMBER() to keep only each player's best score per config
-		// Partition by token+name to allow multiple entries from local multiplayer
-		// NULL player_name entries collapse per token (anonymous best-of-device)
-		// We prefer entries with a replay log, then higher scores, then newer entries
-		// Anonymous entries are excluded when a named entry for the same token exists
-		// with an equal or higher score (if the named entry scores lower, both appear)
-		const binds: (string | number)[] = [];
-		const conditions: string[] = [];
+		const periodCutoffs: Partial<Record<LeaderboardPeriod, string>> = {
+			weekly: formatDateAsD1Timestamp(getGermanWeekStartUtc()),
+			monthly: formatDateAsD1Timestamp(getGermanMonthStartUtc())
+		};
 
-		if (tracklistId) {
-			conditions.push(`tracklist_id = ?${binds.length + 1}`);
-			binds.push(tracklistId);
-		}
-		if (target) {
-			conditions.push(`target = ?${binds.length + 1}`);
-			binds.push(target);
-		}
-		if (records) {
-			conditions.push(`tracklist_id <> ?${binds.length + 1}`);
-			binds.push('custom');
-		}
-		if (!records && scope === 'national' && nationalCountry) {
-			conditions.push(`country = ?${binds.length + 1}`);
-			binds.push(nationalCountry);
-		}
-		if (!records && scope === 'personal' && playerToken) {
-			conditions.push(`player_token = ?${binds.length + 1}`);
-			binds.push(playerToken);
-		}
+		async function queryEntries(period: LeaderboardPeriod) {
+			// Use ROW_NUMBER() to keep only each player's best score per config.
+			// Partition by token+name so local multiplayer names remain separate.
+			const binds: (string | number)[] = [];
+			const conditions: string[] = [];
 
-		const whereClause = conditions.length > 0 ? ` WHERE ${conditions.join(' AND ')}` : '';
-		const cols = `player_token, player_name, score, attempts, target, average_time, longest_streak, tracklist_id, country, timestamp, log`;
-		const sql = records
-			? `WITH ranked AS (
+			if (tracklistId) {
+				conditions.push(`tracklist_id = ?${binds.length + 1}`);
+				binds.push(tracklistId);
+			}
+			if (target) {
+				conditions.push(`target = ?${binds.length + 1}`);
+				binds.push(target);
+			}
+			if (records) {
+				conditions.push(`tracklist_id <> ?${binds.length + 1}`);
+				binds.push('custom');
+			}
+			if (!records && scope === 'national' && nationalCountry) {
+				conditions.push(`country = ?${binds.length + 1}`);
+				binds.push(nationalCountry);
+			}
+			if (!records && scope === 'personal' && playerToken) {
+				conditions.push(`player_token = ?${binds.length + 1}`);
+				binds.push(playerToken);
+			}
+			if (!records && scope !== 'personal' && period !== 'allTime') {
+				conditions.push(`timestamp >= ?${binds.length + 1}`);
+				binds.push(periodCutoffs[period] ?? '');
+			}
+
+			const whereClause = conditions.length > 0 ? ` WHERE ${conditions.join(' AND ')}` : '';
+			const cols = `player_token, player_name, score, attempts, target, average_time, longest_streak, tracklist_id, country, timestamp, log`;
+			const sql = records
+				? `WITH ranked AS (
+						SELECT ${cols},
+							ROW_NUMBER() OVER (PARTITION BY tracklist_id, target ORDER BY score DESC, log IS NOT NULL DESC, timestamp DESC) AS rn
+						FROM timeline_scores${whereClause}
+					)
 					SELECT ${cols},
-						ROW_NUMBER() OVER (PARTITION BY tracklist_id, target ORDER BY score DESC, log IS NOT NULL DESC, timestamp DESC) AS rn
-					FROM timeline_scores${whereClause}
-				)
-				SELECT ${cols},
-					RANK() OVER (ORDER BY timestamp DESC) as rank
-				FROM ranked
-				WHERE rn = 1
-				ORDER BY timestamp DESC LIMIT ?${binds.length + 1}`
-			: scope === 'personal'
-				? `SELECT ${cols},
-						RANK() OVER (ORDER BY score DESC, log IS NOT NULL DESC, timestamp DESC) as rank
-					FROM timeline_scores${whereClause}
-					ORDER BY rank ASC LIMIT ?${binds.length + 1}`
-				: `WITH best AS (
-					SELECT ${cols},
-						ROW_NUMBER() OVER (PARTITION BY player_token, player_name ORDER BY score DESC, log IS NOT NULL DESC, timestamp DESC) AS rn
-					FROM timeline_scores${whereClause}
-				), deduped AS (
-					SELECT ${cols} FROM best WHERE rn = 1
-				), max_named AS (
-					SELECT player_token, MAX(score) AS max_named_score
-					FROM deduped WHERE player_name IS NOT NULL
-					GROUP BY player_token
-				), final_list AS (
-					SELECT d.player_token, d.player_name, d.score, d.attempts, d.target, d.average_time, d.longest_streak, d.tracklist_id, d.country, d.timestamp, d.log,
-						RANK() OVER (ORDER BY d.score DESC, d.log IS NOT NULL DESC, d.timestamp DESC) as rank
-					FROM deduped d
-					LEFT JOIN max_named mn ON d.player_token = mn.player_token
-					WHERE d.player_name IS NOT NULL
-						OR mn.player_token IS NULL
-						OR d.score > mn.max_named_score
-				)
-				SELECT * FROM final_list
-				WHERE rank <= ?${binds.length + 1}
-					${canIncludePlayerRank ? `OR rank = (SELECT rank FROM final_list WHERE player_token = ?${binds.length + 2} ORDER BY rank ASC LIMIT 1)` : ''}
-					${canIncludeCountryRank ? `OR rank = (SELECT rank FROM final_list WHERE country = ?${binds.length + (canIncludePlayerRank ? 3 : 2)} ORDER BY rank ASC LIMIT 1)` : ''}
-				ORDER BY rank ASC`;
+						RANK() OVER (ORDER BY timestamp DESC) as rank
+					FROM ranked
+					WHERE rn = 1
+					ORDER BY timestamp DESC LIMIT ?${binds.length + 1}`
+				: scope === 'personal'
+					? `SELECT ${cols},
+							RANK() OVER (ORDER BY score DESC, log IS NOT NULL DESC, timestamp DESC) as rank
+						FROM timeline_scores${whereClause}
+						ORDER BY rank ASC LIMIT ?${binds.length + 1}`
+					: `WITH best AS (
+						SELECT ${cols},
+							ROW_NUMBER() OVER (PARTITION BY player_token, player_name ORDER BY score DESC, log IS NOT NULL DESC, timestamp DESC) AS rn
+						FROM timeline_scores${whereClause}
+					), deduped AS (
+						SELECT ${cols} FROM best WHERE rn = 1
+					), max_named AS (
+						SELECT player_token, MAX(score) AS max_named_score
+						FROM deduped WHERE player_name IS NOT NULL
+						GROUP BY player_token
+					), final_list AS (
+						SELECT d.player_token, d.player_name, d.score, d.attempts, d.target, d.average_time, d.longest_streak, d.tracklist_id, d.country, d.timestamp, d.log,
+							RANK() OVER (ORDER BY d.score DESC, d.log IS NOT NULL DESC, d.timestamp DESC) as rank
+						FROM deduped d
+						LEFT JOIN max_named mn ON d.player_token = mn.player_token
+						WHERE d.player_name IS NOT NULL
+							OR mn.player_token IS NULL
+							OR d.score > mn.max_named_score
+					)
+					SELECT * FROM final_list
+					WHERE rank <= ?${binds.length + 1}
+						${canIncludePlayerRank ? `OR rank = (SELECT rank FROM final_list WHERE player_token = ?${binds.length + 2} ORDER BY rank ASC LIMIT 1)` : ''}
+						${canIncludeCountryRank ? `OR rank = (SELECT rank FROM final_list WHERE country = ?${binds.length + (canIncludePlayerRank ? 3 : 2)} ORDER BY rank ASC LIMIT 1)` : ''}
+					ORDER BY rank ASC`;
 
-		binds.push(limit);
-		if (canIncludePlayerRank) {
-			binds.push(playerToken);
+			binds.push(limit);
+			if (canIncludePlayerRank) {
+				binds.push(playerToken);
+			}
+			if (canIncludeCountryRank) {
+				binds.push(viewerCountry);
+			}
+
+			const results = await db
+				.prepare(sql)
+				.bind(...binds)
+				.all();
+
+			return (results.results ?? []).map((row: Record<string, unknown>) => {
+				const { player_token, ...rest } = row;
+				return {
+					...rest,
+					timestamp: formatD1TimestampAsGermanDate(rest.timestamp) ?? undefined,
+					is_me: playerToken ? player_token === playerToken : false
+				};
+			});
 		}
-		if (canIncludeCountryRank) {
-			binds.push(viewerCountry);
+
+		const fallbackPeriods: LeaderboardPeriod[] =
+			records || scope === 'personal'
+				? ['allTime']
+				: requestedPeriod === 'weekly'
+					? ['weekly', 'monthly', 'allTime']
+					: requestedPeriod === 'monthly'
+						? ['monthly', 'allTime']
+						: ['allTime'];
+		const emptyPeriods: LeaderboardPeriod[] = [];
+
+		for (const period of fallbackPeriods) {
+			const entries = await queryEntries(period);
+			if (entries.length > 0 || period === fallbackPeriods[fallbackPeriods.length - 1]) {
+				return json({
+					entries,
+					viewerCountry: responseViewerCountry,
+					period: scope === 'personal' || records ? 'allTime' : period,
+					requestedPeriod,
+					scope,
+					emptyPeriods
+				});
+			}
+			emptyPeriods.push(period);
 		}
 
-		const results = await platform.env.DB.prepare(sql)
-			.bind(...binds)
-			.all();
-
-		// Map results: replace raw token with is_me flag for privacy
-		const entries = (results.results ?? []).map((row: Record<string, unknown>) => {
-			const { player_token, ...rest } = row;
-			return {
-				...rest,
-				timestamp: formatD1TimestampAsGermanDate(rest.timestamp) ?? undefined,
-				is_me: playerToken ? player_token === playerToken : false
-			};
+		return json({
+			entries: [],
+			viewerCountry: responseViewerCountry,
+			period: 'allTime',
+			requestedPeriod,
+			scope
 		});
-
-		return json({ entries, viewerCountry: responseViewerCountry });
 	} catch (err) {
 		await logger.error(platform.env.DB, 'Leaderboard GET server error', {
 			context: { error: err instanceof Error ? err.message : String(err) }
 		});
-		return json({ entries: [] });
+		return json({ entries: [], period: requestedPeriod, requestedPeriod, scope });
 	}
 };
 

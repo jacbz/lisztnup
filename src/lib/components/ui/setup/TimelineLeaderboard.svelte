@@ -1,22 +1,34 @@
 <script lang="ts">
 	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 	import ChevronUp from 'lucide-svelte/icons/chevron-up';
+	import Globe2 from 'lucide-svelte/icons/globe-2';
+	import NationalFlag from 'lucide-svelte/icons/flag';
+	import Trophy from 'lucide-svelte/icons/trophy';
+	import UserStar from 'lucide-svelte/icons/user-star';
 	import { SquareStack } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	import { slide } from 'svelte/transition';
 	import Flag from '../primitives/Flag.svelte';
-	import type { LeaderboardEntry } from '$lib/types';
+	import type {
+		LeaderboardEntry,
+		LeaderboardPeriod,
+		LeaderboardRankedScope,
+		LeaderboardScope
+	} from '$lib/types';
 	import { formatDateString } from '$lib/utils';
 
-	type LeaderboardScope = 'global' | 'national' | 'personal';
-	const scopes: LeaderboardScope[] = ['global', 'national', 'personal'];
+	const periods: LeaderboardPeriod[] = ['weekly', 'monthly', 'allTime'];
+	const rankedScopes: LeaderboardRankedScope[] = ['global', 'national'];
 
 	interface Props {
 		entries: LeaderboardEntry[];
 		currentLocale: string;
 		scope?: LeaderboardScope;
+		period?: LeaderboardPeriod;
 		isLoading?: boolean;
 		onScopeChange?: (scope: LeaderboardScope) => void;
+		onPeriodChange?: (period: LeaderboardPeriod) => void;
+		onRecordsClick?: () => void;
 		onShowTimeline?: (entry: LeaderboardEntry) => void;
 	}
 
@@ -24,8 +36,11 @@
 		entries,
 		currentLocale,
 		scope = 'global',
+		period = 'weekly',
 		isLoading = false,
 		onScopeChange = () => {},
+		onPeriodChange = () => {},
+		onRecordsClick = () => {},
 		onShowTimeline = () => {}
 	}: Props = $props();
 
@@ -36,6 +51,10 @@
 			showExpanded = false;
 		}
 	});
+
+	function handlePersonalClick() {
+		onScopeChange('personal');
+	}
 </script>
 
 {#snippet tableColgroup()}
@@ -75,7 +94,7 @@
 		<td class="text-right whitespace-nowrap text-slate-500 tabular-nums">
 			{formatDateString(entry.timestamp, currentLocale)}
 		</td>
-		<td class="pl-3">
+		<td class="pl-2">
 			<div class="flex">
 				{#if entry.log}
 					<button
@@ -92,31 +111,85 @@
 {/snippet}
 
 <div class="mt-1 transition-opacity duration-300" class:opacity-50={isLoading}>
-	<div
-		class="mb-2 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm font-semibold text-slate-400"
-	>
-		<span>{$_('leaderboard.title')}</span>
-		<div
-			class="inline-flex items-baseline gap-[0.1rem] text-[0.68rem] leading-none font-semibold text-slate-600"
-		>
-			<span aria-hidden="true">(</span>
-			{#each scopes as option, i (option)}
-				{#if i > 0}
-					<span aria-hidden="true">|</span>
-				{/if}
+	<div class="mb-2 space-y-1.5">
+		<div class="flex items-center justify-between gap-2">
+			<span class="text-sm font-semibold text-slate-400">
+				{$_(scope === 'personal' ? 'leaderboard.personalTitle' : 'leaderboard.title')}
+			</span>
+			<div class="flex items-center gap-1 text-[0.66rem] leading-none font-semibold">
 				<button
 					type="button"
-					onclick={() => onScopeChange(option)}
-					class="cursor-pointer transition-colors {scope === option
-						? 'text-slate-400'
-						: 'text-slate-600 hover:text-slate-300'}"
-					aria-pressed={scope === option}
+					onclick={handlePersonalClick}
+					class="flex w-9 items-center justify-center rounded-full py-1 transition-all {scope ===
+					'personal'
+						? 'bg-cyan-400 text-slate-950 shadow-[0_0_10px_rgba(34,211,238,0.3)]'
+						: 'bg-slate-800/80 text-slate-500 hover:bg-slate-700/80 hover:text-slate-200'}"
+					aria-pressed={scope === 'personal'}
+					aria-label="personal"
+					title="personal"
 				>
-					{$_(`leaderboard.scope.${option}`)}
+					<UserStar class="h-3 w-3" />
 				</button>
-			{/each}
-			<span aria-hidden="true">)</span>
+				<button
+					type="button"
+					onclick={onRecordsClick}
+					class="flex w-9 items-center justify-center rounded-full bg-slate-800/80 py-1 text-slate-500 transition-all hover:bg-slate-700/80 hover:text-slate-200"
+					title={$_('leaderboard.tracklistRecordsTitle')}
+					aria-label={$_('leaderboard.tracklistRecordsTitle')}
+				>
+					<Trophy class="h-3 w-3" />
+				</button>
+			</div>
 		</div>
+
+		{#if scope !== 'personal'}
+			<div class="flex items-center gap-3 text-[0.62rem] leading-none font-semibold">
+				<div
+					class="grid flex-1 grid-cols-3 rounded-full bg-slate-800/70 p-0.5"
+					role="group"
+					aria-label={$_('leaderboard.periodLabel')}
+				>
+					{#each periods as option (option)}
+						<button
+							type="button"
+							onclick={() => onPeriodChange(option)}
+							class="rounded-full px-1.5 py-1 transition-all {period === option
+								? 'bg-cyan-400 text-slate-950'
+								: 'text-slate-500 hover:text-slate-200'}"
+							aria-pressed={period === option}
+						>
+							{$_(`leaderboard.period.${option}`)}
+						</button>
+					{/each}
+				</div>
+
+				<div
+					class="grid grid-cols-2 rounded-full bg-slate-800/50 p-0.5"
+					role="group"
+					aria-label={$_('leaderboard.scopeLabel')}
+				>
+					{#each rankedScopes as option (option)}
+						<button
+							type="button"
+							onclick={() => onScopeChange(option)}
+							class="flex w-9 items-center justify-center rounded-full py-1 transition-all {scope ===
+							option
+								? 'bg-cyan-400 text-slate-950'
+								: 'text-slate-500 hover:text-slate-200'}"
+							aria-pressed={scope === option}
+							aria-label={option}
+							title={option}
+						>
+							{#if option === 'global'}
+								<Globe2 class="h-3 w-3" />
+							{:else}
+								<NationalFlag class="h-3 w-3" />
+							{/if}
+						</button>
+					{/each}
+				</div>
+			</div>
+		{/if}
 	</div>
 	{#if entries.length === 0 && !isLoading}
 		<p class="py-2 text-xs text-slate-500">{$_('leaderboard.noScores')}</p>

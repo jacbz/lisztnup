@@ -643,6 +643,7 @@
 	},
 	"leaderboard": {
 		"title": "排行榜",
+		"personalTitle": "我的紀錄",
 		"loading": "載入中\u2026",
 		"noScores": "還沒有分數\u2014\u2014成為第一個吧！",
 		"tracklistRecordsTitle": "曲目列表紀錄",
@@ -654,10 +655,12 @@
 			"country": "國家/地區",
 			"points": "分數"
 		},
-		"scope": {
-			"global": "全球",
-			"national": "全國",
-			"personal": "個人"
+		"scopeLabel": "排行榜範圍",
+		"periodLabel": "排行榜時段",
+		"period": {
+			"weekly": "本週",
+			"monthly": "本月",
+			"allTime": "總榜"
 		},
 		"showTimeline": "顯示時間軸",
 		"replay": "回放",

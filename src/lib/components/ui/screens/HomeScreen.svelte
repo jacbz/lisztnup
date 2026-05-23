@@ -23,6 +23,9 @@
 		GameMode,
 		Player,
 		LeaderboardEntry,
+		LeaderboardPeriod,
+		LeaderboardRankedScope,
+		LeaderboardScope,
 		TimelineReplayLog,
 		TimelineReplayTurn
 	} from '$lib/types';
@@ -66,8 +69,6 @@
 		pageviews24h?: number | null;
 	}
 
-	type LeaderboardScope = 'global' | 'national' | 'personal';
-
 	let { onStart = () => {}, pageviews24h = null }: Props = $props();
 
 	let showTracklistSelector = $state(false);
@@ -85,6 +86,8 @@
 	let leaderboardEntries = $state<LeaderboardEntry[]>([]);
 	let leaderboardLoading = $state(false);
 	let leaderboardScope = $state<LeaderboardScope>('global');
+	let leaderboardRankedScope = $state<LeaderboardRankedScope>('global');
+	let leaderboardPeriod = $state<LeaderboardPeriod>('weekly');
 	let showTracklistRecords = $state(false);
 	let tracklistRecordsEntries = $state<LeaderboardEntry[]>([]);
 	let tracklistRecordsLoading = $state(false);
@@ -210,7 +213,7 @@
 		if (showTimelineLeaderboard && browser) {
 			const tracklist = localSettings.selectedTracklist;
 			const target = localSettings.timelineTarget;
-			const filterKey = `${tracklist}:${target}:${leaderboardScope}`;
+			const filterKey = `${tracklist}:${target}:${leaderboardScope}:${leaderboardPeriod}`;
 			const requestId = ++leaderboardRequestId;
 
 			leaderboardLoading = true;
@@ -225,10 +228,14 @@
 				tracklist,
 				target,
 				token: getPlayerToken(),
-				scope: leaderboardScope
+				scope: leaderboardScope,
+				period: leaderboardScope === 'personal' ? undefined : leaderboardPeriod
 			})
 				.then((data) => {
 					if (requestId !== leaderboardRequestId) return;
+					if (leaderboardScope !== 'personal' && data.period !== leaderboardPeriod) {
+						leaderboardPeriod = data.period;
+					}
 					leaderboardEntries = data.entries ?? [];
 				})
 				.catch(() => {
@@ -346,7 +353,21 @@
 	}
 
 	function handleLeaderboardScopeChange(scope: LeaderboardScope) {
+		if (scope === 'personal' && leaderboardScope === 'personal') {
+			leaderboardScope = leaderboardRankedScope;
+			return;
+		}
 		leaderboardScope = scope;
+		if (scope !== 'personal') {
+			leaderboardRankedScope = scope;
+		}
+	}
+
+	function handleLeaderboardPeriodChange(period: LeaderboardPeriod) {
+		leaderboardPeriod = period;
+		if (leaderboardScope === 'personal') {
+			leaderboardScope = leaderboardRankedScope;
+		}
 	}
 
 	function handleStartGame() {
@@ -752,8 +773,11 @@
 								entries={leaderboardEntries}
 								{currentLocale}
 								scope={leaderboardScope}
+								period={leaderboardPeriod}
 								isLoading={leaderboardLoading}
 								onScopeChange={handleLeaderboardScopeChange}
+								onPeriodChange={handleLeaderboardPeriodChange}
+								onRecordsClick={() => (showTracklistRecords = true)}
 								onShowTimeline={handleShowTimeline}
 							/>
 						{/if}
@@ -851,16 +875,12 @@
 			<div class="mt-3 flex items-center justify-end md:contents">
 				{#if pageviews24h != null}
 					<div class="md:fixed md:bottom-3 md:left-3 md:z-40">
-						<button
-							type="button"
-							onclick={() => (showTracklistRecords = true)}
-							class="flex cursor-pointer items-center gap-1.5 rounded-full border border-cyan-400/20 bg-slate-900/60 px-2 py-1 text-cyan-400/70 backdrop-blur-md transition-colors hover:border-cyan-400/40 hover:bg-slate-800/80 hover:text-cyan-300"
-							title={$_('leaderboard.tracklistRecordsTitle')}
-							aria-label={$_('leaderboard.tracklistRecordsTitle')}
+						<div
+							class="flex items-center gap-1.5 rounded-full border border-cyan-400/20 bg-slate-900/60 px-2 py-1 text-cyan-400/70 backdrop-blur-md"
 						>
 							<Users class="h-3.5 w-3.5" />
 							<span class="text-xs font-medium">{pageviews24h.toLocaleString()}</span>
-						</button>
+						</div>
 					</div>
 				{/if}
 				<div

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ArrowUpDown, Check, SquareStack } from 'lucide-svelte';
+	import { ArrowUpDown, Check, SquareStack, Trophy } from 'lucide-svelte';
 	import { _ } from 'svelte-i18n';
 	import type { LeaderboardEntry, Tracklist } from '$lib/types';
 	import { tracklistDisplayName } from '$lib/data/defaultTracklists';
@@ -105,7 +105,8 @@
 
 <Popup {visible} {onClose} width="xl">
 	<div class="mb-5 flex items-start justify-between gap-3 pr-10">
-		<h2 class="text-left text-2xl font-bold text-cyan-400">
+		<h2 class="flex items-center gap-2 text-left text-2xl font-bold text-cyan-400">
+			<Trophy class="h-5 w-5 text-amber-400" />
 			{$_('leaderboard.tracklistRecordsTitle')}
 		</h2>
 		<div class="relative shrink-0">

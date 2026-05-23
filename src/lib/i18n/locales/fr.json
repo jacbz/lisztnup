@@ -643,6 +643,7 @@
 	},
 	"leaderboard": {
 		"title": "Classement",
+		"personalTitle": "Mes scores",
 		"loading": "Chargement\u2026",
 		"noScores": "Aucun score \u2014 sois le premier !",
 		"tracklistRecordsTitle": "Records par tracklist",
@@ -654,10 +655,12 @@
 			"country": "Pays",
 			"points": "Points"
 		},
-		"scope": {
-			"global": "monde",
-			"national": "pays",
-			"personal": "perso"
+		"scopeLabel": "Portée du classement",
+		"periodLabel": "Période du classement",
+		"period": {
+			"weekly": "semaine",
+			"monthly": "mois",
+			"allTime": "historique"
 		},
 		"showTimeline": "Afficher la frise",
 		"replay": "Replay",
