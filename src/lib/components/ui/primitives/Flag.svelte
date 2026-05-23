@@ -41,6 +41,5 @@
 			size
 		]} {cls}"
 		draggable="false"
-		oncontextmenu={(e) => e.preventDefault()}
 	/>
 {/if}

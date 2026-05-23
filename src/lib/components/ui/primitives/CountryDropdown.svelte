@@ -20,7 +20,8 @@
 		ariaLabel?: string;
 		title?: string;
 		showCounts?: boolean;
-		openOn?: 'click' | 'contextmenu';
+		maxMenuHeight?: number;
+		openWhenActiveOnly?: boolean;
 		onChange?: (country: string) => void;
 		onClear?: () => void;
 		onTriggerClick?: () => void;
@@ -36,7 +37,8 @@
 		ariaLabel = '',
 		title = '',
 		showCounts = true,
-		openOn = 'click',
+		maxMenuHeight = 208,
+		openWhenActiveOnly = false,
 		onChange = () => {},
 		onClear,
 		onTriggerClick = () => {}
@@ -78,16 +80,16 @@
 
 		const rect = triggerElement.getBoundingClientRect();
 		const width = variant === 'filter' ? Math.max(192, rect.width) : 208;
-		const maxHeight = 208;
+		const menuMaxHeight = Math.min(maxMenuHeight, window.innerHeight - 16);
 		const left = Math.min(window.innerWidth - width - 8, Math.max(8, rect.right - width));
 		const belowTop = rect.bottom + 4;
-		const aboveTop = rect.top - maxHeight - 4;
+		const aboveTop = rect.top - menuMaxHeight - 4;
 		const top =
-			belowTop + maxHeight <= window.innerHeight || aboveTop < 8
-				? Math.min(belowTop, window.innerHeight - maxHeight - 8)
+			belowTop + menuMaxHeight <= window.innerHeight || aboveTop < 8
+				? Math.min(belowTop, window.innerHeight - menuMaxHeight - 8)
 				: aboveTop;
 
-		menuStyle = `top: ${Math.max(8, top)}px; left: ${left}px; width: ${width}px;`;
+		menuStyle = `top: ${Math.max(8, top)}px; left: ${left}px; width: ${width}px; max-height: ${menuMaxHeight}px;`;
 	}
 
 	async function openMenu() {
@@ -105,14 +107,9 @@
 	}
 
 	function handleClick() {
+		const wasActive = active;
 		onTriggerClick();
-		if (openOn === 'click') toggleMenu();
-	}
-
-	function handleContextMenu(event: MouseEvent) {
-		if (openOn !== 'contextmenu') return;
-		event.preventDefault();
-		onTriggerClick();
+		if (openWhenActiveOnly && !wasActive) return;
 		toggleMenu();
 	}
 
@@ -157,9 +154,8 @@
 	bind:this={triggerElement}
 	type="button"
 	onclick={handleClick}
-	oncontextmenu={handleContextMenu}
 	class={variant === 'icon'
-		? `flex w-9 items-center justify-center rounded-full py-1 transition-all ${
+		? `relative flex w-9 items-center justify-center rounded-full py-1 transition-all ${
 				active ? 'bg-cyan-400 text-slate-950' : 'text-slate-500 hover:text-slate-200'
 			}`
 		: `flex items-center gap-1.5 rounded-full border-none px-2.5 py-1 text-xs font-medium transition-all duration-150 focus:ring-1 focus:ring-cyan-400/50 focus:outline-none ${
@@ -173,8 +169,11 @@
 	{title}
 >
 	{#if variant === 'icon'}
-		{#if value}
-			<Flag country={value} size="xs" />
+		{#if active && value}
+			<span class="flex items-center gap-0.5">
+				<Flag country={value} size="xs" />
+				<ChevronDown class="-mr-1 h-2.5 w-2.5 opacity-45" />
+			</span>
 		{:else}
 			<NationalFlag class="h-3 w-3" />
 		{/if}
@@ -193,7 +192,7 @@
 	<div
 		bind:this={menuElement}
 		use:portal
-		class="fixed z-[1000] max-h-52 overflow-y-auto rounded-md border border-cyan-400/20 bg-slate-950 py-1 shadow-2xl"
+		class="fixed z-1000 overflow-y-auto rounded-md border border-cyan-400/20 bg-slate-950 py-1 shadow-2xl"
 		style={menuStyle}
 		role="listbox"
 	>
@@ -201,7 +200,7 @@
 			<button
 				type="button"
 				onclick={handleClear}
-				class="flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs transition-colors {value
+				class="flex w-full items-center gap-2 px-3 py-2 text-left text-sm transition-colors {value
 					? 'text-slate-300 hover:bg-slate-800 hover:text-cyan-300'
 					: 'bg-cyan-400/10 text-cyan-300'}"
 			>
@@ -215,14 +214,14 @@
 				<button
 					type="button"
 					onclick={() => handleSelect(option.code)}
-					class="flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs transition-colors {value ===
+					class="flex w-full items-center gap-2.5 px-3 py-2 text-left text-sm transition-colors {value ===
 					option.code
 						? 'bg-cyan-400/10 text-cyan-300'
 						: 'text-slate-300 hover:bg-slate-800 hover:text-cyan-300'}"
 					role="option"
 					aria-selected={value === option.code}
 				>
-					<Flag country={option.code} size="xs" />
+					<Flag country={option.code} size="md" />
 					<span class="min-w-0 flex-1 truncate">{countryName(option.code)}</span>
 					{#if showCounts && option.count != null}
 						<span class="text-slate-500 tabular-nums">{option.count}</span>

@@ -88,8 +88,10 @@
 	let leaderboardLoading = $state(false);
 	let leaderboardScope = $state<LeaderboardScope>('global');
 	let leaderboardRankedScope = $state<LeaderboardRankedScope>('global');
+	let leaderboardPreferredPeriod = $state<LeaderboardPeriod>('weekly');
 	let leaderboardPeriod = $state<LeaderboardPeriod>('weekly');
 	let leaderboardCountry = $state<string | null>(null);
+	let leaderboardViewerCountry = $state<string | null>(null);
 	let leaderboardCountries = $state<LeaderboardCountrySummary[]>([]);
 	let showTracklistRecords = $state(false);
 	let tracklistRecordsEntries = $state<LeaderboardEntry[]>([]);
@@ -97,6 +99,7 @@
 	let tracklistRecordsRequestId = 0;
 	let leaderboardRequestId = 0;
 	let leaderboardFilterKey = '';
+	let leaderboardTimelineConfigKey = '';
 	let showTimelinePopup = $state(false);
 	let timelineTracks = $state<Track[]>([]);
 	let timelineLog = $state<TimelineReplayLog | null>(null);
@@ -216,7 +219,10 @@
 		if (showTimelineLeaderboard && browser) {
 			const tracklist = localSettings.selectedTracklist;
 			const target = localSettings.timelineTarget;
-			const filterKey = `${tracklist}:${target}:${leaderboardScope}:${leaderboardPeriod}:${leaderboardCountry ?? ''}`;
+			const timelineConfigKey = `${tracklist}:${target}`;
+			const requestedPeriod =
+				leaderboardScope === 'personal' ? 'allTime' : leaderboardPreferredPeriod;
+			const filterKey = `${timelineConfigKey}:${leaderboardScope}:${requestedPeriod}:${leaderboardCountry ?? ''}`;
 			const requestId = ++leaderboardRequestId;
 
 			leaderboardLoading = true;
@@ -225,6 +231,12 @@
 				// Do not clear leaderboardEntries here to allow smooth visual updates
 				leaderboardFilterKey = filterKey;
 			}
+			if (timelineConfigKey !== leaderboardTimelineConfigKey) {
+				leaderboardTimelineConfigKey = timelineConfigKey;
+				if (leaderboardScope !== 'personal') {
+					leaderboardPeriod = leaderboardPreferredPeriod;
+				}
+			}
 
 			getLeaderboard({
 				limit: 25,
@@ -232,12 +244,19 @@
 				target,
 				token: getPlayerToken(),
 				scope: leaderboardScope,
-				period: leaderboardScope === 'personal' ? undefined : leaderboardPeriod,
+				period: leaderboardScope === 'personal' ? undefined : leaderboardPreferredPeriod,
 				country: leaderboardScope === 'national' ? leaderboardCountry : null
 			})
 				.then((data) => {
 					if (requestId !== leaderboardRequestId) return;
-					if (leaderboardScope !== 'personal' && data.period !== leaderboardPeriod) {
+					const nextViewerCountry = data.viewerCountry ?? null;
+					if (nextViewerCountry && nextViewerCountry !== 'UNKNOWN') {
+						leaderboardViewerCountry = nextViewerCountry;
+						if (leaderboardScope === 'national' && !leaderboardCountry) {
+							leaderboardCountry = nextViewerCountry;
+						}
+					}
+					if (leaderboardScope !== 'personal') {
 						leaderboardPeriod = data.period;
 					}
 					leaderboardEntries = data.entries ?? [];
@@ -255,6 +274,7 @@
 		} else {
 			leaderboardRequestId += 1;
 			leaderboardFilterKey = '';
+			leaderboardTimelineConfigKey = '';
 			leaderboardEntries = [];
 			leaderboardCountries = [];
 			leaderboardLoading = false;
@@ -269,7 +289,8 @@
 				limit: 1,
 				tracklist: dailyChallengeEntry.tracklist.id,
 				target,
-				token: getPlayerToken()
+				token: getPlayerToken(),
+				period: 'weekly'
 			})
 				.then((data) => {
 					const top = data.entries?.[0];
@@ -364,8 +385,8 @@
 			leaderboardScope = leaderboardRankedScope;
 			return;
 		}
-		if (scope === 'national' && leaderboardScope !== 'national') {
-			leaderboardCountry = null;
+		if (scope === 'national' && leaderboardScope !== 'national' && !leaderboardCountry) {
+			leaderboardCountry = leaderboardViewerCountry;
 		}
 		leaderboardScope = scope;
 		if (scope !== 'personal') {
@@ -380,6 +401,7 @@
 	}
 
 	function handleLeaderboardPeriodChange(period: LeaderboardPeriod) {
+		leaderboardPreferredPeriod = period;
 		leaderboardPeriod = period;
 		if (leaderboardScope === 'personal') {
 			leaderboardScope = leaderboardRankedScope;

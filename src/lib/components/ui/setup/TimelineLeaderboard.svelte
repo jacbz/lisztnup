@@ -73,6 +73,12 @@
 	function handleCountrySelect(country: string) {
 		onCountryChange(country);
 	}
+
+	function handleNationalClick() {
+		if (scope !== 'national') {
+			handleScopeClick('national');
+		}
+	}
 </script>
 
 {#snippet tableColgroup()}
@@ -207,11 +213,11 @@
 								value={selectedCountry}
 								variant="icon"
 								active={scope === 'national'}
-								openOn="contextmenu"
+								openWhenActiveOnly={true}
 								emptyLabel={$_('leaderboard.noScores')}
 								ariaLabel="national"
 								title="national"
-								onTriggerClick={() => handleScopeClick(option)}
+								onTriggerClick={handleNationalClick}
 								onChange={handleCountrySelect}
 							/>
 						{/if}

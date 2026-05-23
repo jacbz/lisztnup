@@ -276,6 +276,7 @@
 				allLabel={$_('libraryViewer.allCountries')}
 				emptyLabel={$_('leaderboard.noScores')}
 				ariaLabel={$_('libraryViewer.allCountries')}
+				maxMenuHeight={384}
 				onChange={(country) => (selectedCountry = country)}
 				onClear={() => (selectedCountry = '')}
 			/>
