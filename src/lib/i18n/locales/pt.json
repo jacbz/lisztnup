@@ -657,11 +657,15 @@
 			"points": "Pontos"
 		},
 		"scopeLabel": "Alcance do ranking",
+		"scope": {
+			"global": "Global",
+			"national": "Nacional"
+		},
 		"periodLabel": "Período do ranking",
 		"period": {
-			"weekly": "semana",
-			"monthly": "mês",
-			"allTime": "geral"
+			"weekly": "Semana",
+			"monthly": "Mês",
+			"allTime": "Geral"
 		},
 		"showTimeline": "Mostrar linha do tempo",
 		"replay": "Replay",

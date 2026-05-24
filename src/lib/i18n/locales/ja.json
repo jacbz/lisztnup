@@ -657,6 +657,10 @@
 			"points": "ポイント"
 		},
 		"scopeLabel": "ランキングの範囲",
+		"scope": {
+			"global": "世界",
+			"national": "国内"
+		},
 		"periodLabel": "ランキングの期間",
 		"period": {
 			"weekly": "今週",

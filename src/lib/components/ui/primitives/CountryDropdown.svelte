@@ -17,6 +17,9 @@
 		active?: boolean;
 		allLabel?: string;
 		emptyLabel?: string;
+		label?: string;
+		reserveLabel?: string;
+		activeLabel?: string;
 		ariaLabel?: string;
 		title?: string;
 		showCounts?: boolean;
@@ -34,6 +37,9 @@
 		active = false,
 		allLabel = '',
 		emptyLabel = '',
+		label = '',
+		reserveLabel = '',
+		activeLabel = '',
 		ariaLabel = '',
 		title = '',
 		showCounts = true,
@@ -155,9 +161,9 @@
 	type="button"
 	onclick={handleClick}
 	class={variant === 'icon'
-		? `relative flex w-9 items-center justify-center rounded-full py-1 transition-all ${
-				active ? 'bg-cyan-400 text-slate-950' : 'text-slate-500 hover:text-slate-200'
-			}`
+		? `relative grid place-items-center rounded-full py-1 transition-all ${
+				label || reserveLabel || activeLabel ? 'w-full px-1.5' : 'w-9'
+			} ${active ? 'bg-cyan-400 text-slate-950' : 'text-slate-500 hover:text-slate-200'}`
 		: `flex items-center gap-1.5 rounded-full border-none px-2.5 py-1 text-xs font-medium transition-all duration-150 focus:ring-1 focus:ring-cyan-400/50 focus:outline-none ${
 				value
 					? 'bg-cyan-400/20 text-cyan-300 ring-1 ring-cyan-400/50'
@@ -169,13 +175,43 @@
 	{title}
 >
 	{#if variant === 'icon'}
-		{#if active && value}
-			<span class="flex items-center gap-0.5">
+		<span class="col-start-1 row-start-1 flex items-center justify-center gap-1 whitespace-nowrap">
+			{#if active && value}
 				<Flag country={value} size="xs" />
-				<ChevronDown class="-mr-1 h-2.5 w-2.5 opacity-45" />
+			{:else if !label}
+				<NationalFlag class="h-3 w-3" />
+			{/if}
+			{#if label}
+				<span>{label}</span>
+			{/if}
+			{#if active}
+				<ChevronDown class="h-2.5 w-2.5 opacity-35" />
+			{/if}
+		</span>
+		{#if reserveLabel}
+			<span
+				aria-hidden="true"
+				class="invisible col-start-1 row-start-1 flex items-center justify-center gap-1 whitespace-nowrap"
+			>
+				{#if !label}
+					<NationalFlag class="h-3 w-3" />
+				{/if}
+				<span>{reserveLabel}</span>
 			</span>
-		{:else}
-			<NationalFlag class="h-3 w-3" />
+		{/if}
+		{#if activeLabel}
+			<span
+				aria-hidden="true"
+				class="invisible col-start-1 row-start-1 flex items-center justify-center gap-1 whitespace-nowrap"
+			>
+				{#if value}
+					<Flag country={value} size="xs" />
+				{:else}
+					<NationalFlag class="h-3 w-3" />
+				{/if}
+				<span>{activeLabel}</span>
+				<ChevronDown class="h-2.5 w-2.5" />
+			</span>
 		{/if}
 	{:else}
 		{#if value}

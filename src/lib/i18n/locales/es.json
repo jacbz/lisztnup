@@ -657,11 +657,15 @@
 			"points": "Puntos"
 		},
 		"scopeLabel": "Alcance de la clasificación",
+		"scope": {
+			"global": "Global",
+			"national": "Nacional"
+		},
 		"periodLabel": "Periodo de la clasificación",
 		"period": {
-			"weekly": "semana",
-			"monthly": "mes",
-			"allTime": "histórico"
+			"weekly": "Semana",
+			"monthly": "Mes",
+			"allTime": "Histórico"
 		},
 		"showTimeline": "Mostrar cronología",
 		"replay": "Replay",

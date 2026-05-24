@@ -657,11 +657,15 @@
 			"points": "Points"
 		},
 		"scopeLabel": "Leaderboard reach",
+		"scope": {
+			"global": "Global",
+			"national": "National"
+		},
 		"periodLabel": "Leaderboard period",
 		"period": {
-			"weekly": "week",
-			"monthly": "month",
-			"allTime": "all-time"
+			"weekly": "Week",
+			"monthly": "Month",
+			"allTime": "All Time"
 		},
 		"showTimeline": "Show timeline",
 		"replay": "Replay",

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 	import ChevronUp from 'lucide-svelte/icons/chevron-up';
-	import Globe2 from 'lucide-svelte/icons/globe-2';
 	import Sparkles from 'lucide-svelte/icons/sparkles';
 	import Trophy from 'lucide-svelte/icons/trophy';
 	import UserStar from 'lucide-svelte/icons/user-star';
@@ -18,7 +17,7 @@
 		LeaderboardScope
 	} from '$lib/types';
 	import { isFlawlessCompletion } from '$lib/logic/timelineScoring';
-	import { formatDateString } from '$lib/utils';
+	import { formatDateString, getGermanDateString } from '$lib/utils';
 
 	const periods: LeaderboardPeriod[] = ['weekly', 'monthly', 'allTime'];
 	const rankedScopes: LeaderboardRankedScope[] = ['global', 'national'];
@@ -54,6 +53,7 @@
 	}: Props = $props();
 
 	let showExpanded = $state(false);
+	const today = $derived(getGermanDateString());
 	const countryOptions = $derived(
 		countries.map((summary) => ({ code: summary.country, count: summary.count }))
 	);
@@ -81,6 +81,12 @@
 			handleScopeClick('national');
 		}
 	}
+
+	function formatCountryScopeLabel(country: string | null | undefined) {
+		return country && country !== 'UNKNOWN'
+			? country.toUpperCase()
+			: $_('leaderboard.scope.national');
+	}
 </script>
 
 {#snippet tableColgroup()}
@@ -88,7 +94,7 @@
 		<col class="w-6" />
 		<col />
 		<col class="w-16" />
-		<col class="w-13" />
+		<col class="w-16" />
 		<col class="w-5" />
 	</colgroup>
 {/snippet}
@@ -126,7 +132,10 @@
 				</span>
 			</span>
 		</td>
-		<td class="text-right whitespace-nowrap text-slate-500 tabular-nums">
+		<td
+			class="text-right whitespace-nowrap text-slate-500 tabular-nums"
+			class:font-bold={entry.timestamp === today}
+		>
 			{formatDateString(entry.timestamp, currentLocale)}
 		</td>
 		<td class="pl-2">
@@ -158,19 +167,17 @@
 					class="flex w-9 items-center justify-center rounded-full py-1 transition-all {scope ===
 					'personal'
 						? 'bg-cyan-400 text-slate-950 shadow-[0_0_10px_rgba(34,211,238,0.3)]'
-						: 'bg-slate-800/80 text-slate-500 hover:bg-slate-700/80 hover:text-slate-200'}"
+						: 'bg-slate-800 text-slate-500 hover:bg-slate-700 hover:text-slate-200'}"
 					aria-pressed={scope === 'personal'}
-					aria-label="personal"
-					title="personal"
+					title={$_('leaderboard.personalTitle')}
 				>
 					<UserStar class="h-3 w-3" />
 				</button>
 				<button
 					type="button"
 					onclick={onRecordsClick}
-					class="flex w-9 items-center justify-center rounded-full bg-slate-800/80 py-1 text-slate-500 transition-all hover:bg-slate-700/80 hover:text-slate-200"
+					class="flex w-9 items-center justify-center rounded-full bg-slate-800 py-1 text-slate-500 transition-all hover:bg-slate-700 hover:text-slate-200"
 					title={$_('leaderboard.tracklistRecordsTitle')}
-					aria-label={$_('leaderboard.tracklistRecordsTitle')}
 				>
 					<Trophy class="h-3 w-3" />
 				</button>
@@ -178,9 +185,9 @@
 		</div>
 
 		{#if scope !== 'personal'}
-			<div class="flex items-center gap-3 text-[0.62rem] leading-none font-semibold">
+			<div class="flex items-center justify-between text-[0.62rem] leading-none font-semibold">
 				<div
-					class="grid flex-1 grid-cols-3 rounded-full bg-slate-800/70 p-0.5"
+					class="inline-grid auto-cols-fr grid-flow-col rounded-full bg-slate-800 p-0.5"
 					role="group"
 					aria-label={$_('leaderboard.periodLabel')}
 				>
@@ -199,7 +206,7 @@
 				</div>
 
 				<div
-					class="grid grid-cols-2 rounded-full bg-slate-800/50 p-0.5"
+					class="inline-grid auto-cols-fr grid-flow-col rounded-full bg-slate-800 p-0.5"
 					role="group"
 					aria-label={$_('leaderboard.scopeLabel')}
 				>
@@ -208,15 +215,15 @@
 							<button
 								type="button"
 								onclick={() => handleScopeClick(option)}
-								class="flex w-9 items-center justify-center rounded-full py-1 transition-all {scope ===
+								class="flex items-center justify-center gap-1.5 rounded-full px-1.5 py-1 transition-all {scope ===
 								option
 									? 'bg-cyan-400 text-slate-950'
 									: 'text-slate-500 hover:text-slate-200'}"
 								aria-pressed={scope === option}
-								aria-label={option}
-								title={option}
+								aria-label={$_('leaderboard.scope.global')}
+								title={$_('leaderboard.scope.global')}
 							>
-								<Globe2 class="h-3 w-3" />
+								<span>{$_('leaderboard.scope.global')}</span>
 							</button>
 						{:else}
 							<CountryDropdown
@@ -224,10 +231,17 @@
 								value={selectedCountry}
 								variant="icon"
 								active={scope === 'national'}
+								label={scope === 'national'
+									? formatCountryScopeLabel(selectedCountry)
+									: $_('leaderboard.scope.national')}
+								reserveLabel={$_('leaderboard.scope.national')}
+								activeLabel={selectedCountry && selectedCountry !== 'UNKNOWN'
+									? formatCountryScopeLabel(selectedCountry)
+									: ''}
 								openWhenActiveOnly={true}
 								emptyLabel={$_('leaderboard.noScores')}
-								ariaLabel="national"
-								title="national"
+								ariaLabel={$_('leaderboard.scope.national')}
+								title={$_('leaderboard.scope.national')}
 								onTriggerClick={handleNationalClick}
 								onChange={handleCountrySelect}
 							/>

@@ -657,11 +657,15 @@
 			"points": "Points"
 		},
 		"scopeLabel": "Portée du classement",
+		"scope": {
+			"global": "Monde",
+			"national": "Pays"
+		},
 		"periodLabel": "Période du classement",
 		"period": {
-			"weekly": "semaine",
-			"monthly": "mois",
-			"allTime": "historique"
+			"weekly": "Semaine",
+			"monthly": "Mois",
+			"allTime": "Historique"
 		},
 		"showTimeline": "Afficher la frise",
 		"replay": "Replay",

@@ -291,7 +291,7 @@
 					{playerName}
 				</h2>
 				<div class="flex items-center gap-3 text-sm font-medium text-slate-400">
-					<span class="text-cyan-400"
+					<span class={isFlawlessGame ? 'text-amber-300' : 'text-cyan-400'}
 						>{$_('scoring.pts', { values: { points: score.toLocaleString() } })}</span
 					>
 					{#if timestamp}
@@ -299,6 +299,14 @@
 						<span class="tabular-nums">{formatEntryDate(timestamp, $locale || 'en')}</span>
 					{/if}
 				</div>
+				{#if isFlawlessGame}
+					<div
+						class="mt-1 inline-flex items-center gap-1 rounded-full border border-amber-300/40 bg-amber-300/10 px-2 py-0.5 text-xs font-bold text-amber-200"
+					>
+						<Sparkles class="h-3 w-3 shrink-0" />
+						{$_('timeline.scoring.flawlessGame')}
+					</div>
+				{/if}
 				<div
 					class="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-slate-400"
 				>

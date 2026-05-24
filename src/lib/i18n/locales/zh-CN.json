@@ -657,6 +657,10 @@
 			"points": "分数"
 		},
 		"scopeLabel": "排行榜范围",
+		"scope": {
+			"global": "全球",
+			"national": "本国"
+		},
 		"periodLabel": "排行榜时段",
 		"period": {
 			"weekly": "本周",

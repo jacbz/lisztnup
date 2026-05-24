@@ -278,7 +278,7 @@
 					const nextViewerCountry = data.viewerCountry ?? null;
 					if (nextViewerCountry && nextViewerCountry !== 'UNKNOWN') {
 						leaderboardViewerCountry = nextViewerCountry;
-						if (leaderboardScope === 'national' && !leaderboardCountry) {
+						if (!leaderboardCountry) {
 							leaderboardCountry = nextViewerCountry;
 						}
 					}
