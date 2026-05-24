@@ -128,6 +128,11 @@ export function calculateMissStreak(
 	);
 }
 
+export function isFlawlessCompletion(target: number, attempts: number): boolean {
+	const cardsNeeded = Math.max(0, target - 1);
+	return cardsNeeded > 0 && attempts === cardsNeeded;
+}
+
 /**
  * One-time completion bonus awarded when a player reaches the target.
  * Only players who reach the target receive this.
@@ -141,7 +146,9 @@ export function calculateCompletion(
 	const cardsNeeded = Math.max(0, target - 1);
 	if (cardsNeeded <= 0) return 0;
 
-	const flawlessMult = attempts === cardsNeeded ? parameters.completionFlawlessMultiplier : 1.0;
+	const flawlessMult = isFlawlessCompletion(target, attempts)
+		? parameters.completionFlawlessMultiplier
+		: 1.0;
 	return Math.round(
 		(cardsNeeded / attempts) ** 2 * (cardsNeeded * parameters.completionRate) * flawlessMult
 	);

@@ -9,8 +9,10 @@
 	import TrackInfo from '$lib/components/ui/gameplay/TrackInfo.svelte';
 	import { formatDateString, formatYearRange } from '$lib/utils';
 	import Flame from 'lucide-svelte/icons/flame';
+	import Sparkles from 'lucide-svelte/icons/sparkles';
 	import { get } from 'svelte/store';
 	import { getStreakTextStyle, getStreakGlow } from '$lib/logic/timelineMotion';
+	import { isFlawlessCompletion } from '$lib/logic/timelineScoring';
 	import { Zap } from 'lucide-svelte';
 
 	const REPLAY_STEP_WIDTH_REM = 2.25;
@@ -25,6 +27,7 @@
 		country?: string | null;
 		score: number;
 		attempts?: number;
+		target?: number;
 		averageTime?: number | null;
 		longestStreak?: number | null;
 		timestamp?: string;
@@ -39,6 +42,7 @@
 		country,
 		score,
 		attempts = 0,
+		target = 0,
 		averageTime = null,
 		longestStreak = null,
 		timestamp,
@@ -64,6 +68,7 @@
 	const maxStep = $derived(turns.length);
 	const correctCount = $derived(turns.filter((turn) => turn.ok).length);
 	const accuracyPercent = $derived(attempts > 0 ? Math.round((correctCount / attempts) * 100) : 0);
+	const isFlawlessGame = $derived(isFlawlessCompletion(target, attempts));
 	const resolvedTracks = $derived(tracks.filter(isResolvedTrack));
 	const trackByPart = $derived(
 		new Map(resolvedTracks.map((track) => [track.part.gid, track] as const))
@@ -379,8 +384,11 @@
 									<span>+{turn.points.toLocaleString()}</span>
 								</div>
 								{#if i === turns.length - 1 && log.completionBonus > 0}
-									<div class="font-bold text-amber-400">
+									<div class="flex items-center justify-center gap-0.5 font-bold text-amber-400">
 										+{log.completionBonus.toLocaleString()}
+										{#if isFlawlessGame}
+											<Sparkles class="h-2.5 w-2.5 shrink-0" />
+										{/if}
 									</div>
 								{/if}
 							</div>

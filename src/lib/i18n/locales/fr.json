@@ -596,6 +596,7 @@
 			"streak": "Série",
 			"streakCount": "{count} d’affilée",
 			"completionBonus": "Bonus de complétion",
+			"flawlessGame": "Partie sans faute",
 			"turnTotal": "Total du tour",
 			"score": "Score",
 			"streakMultiplier": "Multiplicateur de série {mult}",

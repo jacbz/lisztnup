@@ -596,6 +596,7 @@
 			"streak": "Sequência",
 			"streakCount": "{count} seguidos",
 			"completionBonus": "Bônus de conclusão",
+			"flawlessGame": "Partida impecável",
 			"turnTotal": "Total da rodada",
 			"score": "Pontuação",
 			"streakMultiplier": "Multiplicador de sequência {mult}",

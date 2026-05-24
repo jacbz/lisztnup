@@ -596,6 +596,7 @@
 			"streak": "Streak",
 			"streakCount": "{count} in a row",
 			"completionBonus": "Completion Bonus",
+			"flawlessGame": "Flawless Game",
 			"turnTotal": "Turn Total",
 			"score": "Score",
 			"streakMultiplier": "{mult} Streak Multiplier",

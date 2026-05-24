@@ -596,6 +596,7 @@
 			"streak": "连续",
 			"streakCount": "连续{count}次",
 			"completionBonus": "通关奖励",
+			"flawlessGame": "完美通关",
 			"turnTotal": "回合总分",
 			"score": "分数",
 			"streakMultiplier": "连续倍数 {mult}",

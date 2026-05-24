@@ -2,6 +2,7 @@
 	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 	import ChevronUp from 'lucide-svelte/icons/chevron-up';
 	import Globe2 from 'lucide-svelte/icons/globe-2';
+	import Sparkles from 'lucide-svelte/icons/sparkles';
 	import Trophy from 'lucide-svelte/icons/trophy';
 	import UserStar from 'lucide-svelte/icons/user-star';
 	import { SquareStack } from 'lucide-svelte';
@@ -16,6 +17,7 @@
 		LeaderboardRankedScope,
 		LeaderboardScope
 	} from '$lib/types';
+	import { isFlawlessCompletion } from '$lib/logic/timelineScoring';
 	import { formatDateString } from '$lib/utils';
 
 	const periods: LeaderboardPeriod[] = ['weekly', 'monthly', 'allTime'];
@@ -86,7 +88,7 @@
 		<col class="w-6" />
 		<col />
 		<col class="w-16" />
-		<col class="w-15" />
+		<col class="w-13" />
 		<col class="w-5" />
 	</colgroup>
 {/snippet}
@@ -111,9 +113,18 @@
 		</td>
 		<td
 			class="text-right font-bold whitespace-nowrap tabular-nums"
-			class:text-cyan-400={entry.is_me}
+			class:text-cyan-400={entry.is_me && !isFlawlessCompletion(entry.target, entry.attempts)}
+			class:text-amber-300={entry.is_me && isFlawlessCompletion(entry.target, entry.attempts)}
+			class:text-amber-100={!entry.is_me && isFlawlessCompletion(entry.target, entry.attempts)}
 		>
-			{$_('scoring.pts', { values: { points: entry.score.toLocaleString() } })}
+			<span class="inline-grid grid-cols-[auto_0.5rem] items-center justify-end gap-0.5">
+				<span>{$_('scoring.pts', { values: { points: entry.score.toLocaleString() } })}</span>
+				<span class="inline-flex h-2 w-2 items-center justify-center">
+					{#if isFlawlessCompletion(entry.target, entry.attempts)}
+						<Sparkles class="h-2 w-2 shrink-0" aria-label={$_('timeline.scoring.flawlessGame')} />
+					{/if}
+				</span>
+			</span>
 		</td>
 		<td class="text-right whitespace-nowrap text-slate-500 tabular-nums">
 			{formatDateString(entry.timestamp, currentLocale)}

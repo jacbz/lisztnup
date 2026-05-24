@@ -596,6 +596,7 @@
 			"streak": "連続",
 			"streakCount": "{count}連続",
 			"completionBonus": "達成ボーナス",
+			"flawlessGame": "完璧な一局",
 			"turnTotal": "ターン合計",
 			"score": "スコア",
 			"streakMultiplier": "連続倍率 {mult}",

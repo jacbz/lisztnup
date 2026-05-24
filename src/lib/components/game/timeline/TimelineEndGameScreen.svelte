@@ -20,10 +20,12 @@
 	import Trophy from 'lucide-svelte/icons/trophy';
 	import Medal from 'lucide-svelte/icons/medal';
 	import CircleStar from 'lucide-svelte/icons/circle-star';
+	import Sparkles from 'lucide-svelte/icons/sparkles';
 	import { onMount } from 'svelte';
 	import { scale } from 'svelte/transition';
 	import { getLeaderboard, patchLeaderboardName, submitLeaderboard } from '$lib/services/client';
 	import type { LeaderboardEntry, TimelineReplayLog, TimelineReplayTurn } from '$lib/types';
+	import { isFlawlessCompletion } from '$lib/logic/timelineScoring';
 	import { selectedTracklist, settings } from '$lib/stores/settings';
 	import { Zap } from 'lucide-svelte';
 	import { SvelteSet } from 'svelte/reactivity';
@@ -763,6 +765,7 @@
 			{#each sortedTimelines as t, index (t.player.name)}
 				{@const totalScore = Math.round(t.score)}
 				{@const isWinner = index === 0 && totalScore > 0}
+				{@const isFlawlessGame = t.reachedTarget && isFlawlessCompletion(target, t.totalPlacements)}
 				<div
 					class="rounded-2xl border px-4 py-3 {isWinner
 						? 'border-amber-400/40 bg-amber-400/5'
@@ -790,7 +793,17 @@
 										<span class="hidden md:block">{$_('leaderboard.replay')}</span>
 									</button>
 								{/if}
-								<span class="text-xl font-bold text-cyan-400 tabular-nums">
+								<span
+									class="inline-flex items-center gap-1 text-xl font-bold tabular-nums {isFlawlessGame
+										? 'text-amber-300'
+										: 'text-cyan-400'}"
+								>
+									{#if isFlawlessGame}
+										<Sparkles
+											class="h-4 w-4 shrink-0"
+											aria-label={$_('timeline.scoring.flawlessGame')}
+										/>
+									{/if}
 									{$_('scoring.pts', { values: { points: totalScore.toLocaleString() } })}
 								</span>
 							</div>
@@ -1083,6 +1096,7 @@
 		country={null}
 		score={Math.round(replayTimeline.score)}
 		attempts={replayTimeline.totalPlacements}
+		{target}
 		averageTime={getAverageTime(replayTimeline.replayTurns)}
 		longestStreak={replayTimeline.longestStreak}
 		timestamp={undefined}

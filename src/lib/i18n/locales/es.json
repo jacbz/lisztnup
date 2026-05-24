@@ -596,6 +596,7 @@
 			"streak": "Racha",
 			"streakCount": "{count} seguidos",
 			"completionBonus": "Bonus de finalización",
+			"flawlessGame": "Partida impecable",
 			"turnTotal": "Total del turno",
 			"score": "Puntuación",
 			"streakMultiplier": "Multiplicador de racha {mult}",

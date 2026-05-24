@@ -107,6 +107,7 @@
 	let timelineCountry = $state<string | undefined>();
 	let timelineScore = $state(0);
 	let timelineAttempts = $state(0);
+	let timelineTarget = $state(0);
 	let timelineAverageTime = $state<number | null>(null);
 	let timelineLongestStreak = $state<number | null>(null);
 	let timelineTimestamp = $state<string | undefined>();
@@ -477,6 +478,7 @@
 		showTimelinePopup = false;
 		timelineTracks = [];
 		timelineLog = null;
+		timelineTarget = 0;
 	}
 
 	function isReplayTurn(turn: unknown): turn is TimelineReplayTurn {
@@ -536,6 +538,7 @@
 				timelineCountry = entry.country ?? undefined;
 				timelineScore = entry.score;
 				timelineAttempts = entry.attempts;
+				timelineTarget = entry.target;
 				timelineAverageTime = entry.average_time ?? null;
 				timelineLongestStreak = entry.longest_streak ?? null;
 				timelineTimestamp = entry.timestamp;
@@ -1138,6 +1141,7 @@
 	country={timelineCountry}
 	score={timelineScore}
 	attempts={timelineAttempts}
+	target={timelineTarget}
 	averageTime={timelineAverageTime}
 	longestStreak={timelineLongestStreak}
 	timestamp={timelineTimestamp}

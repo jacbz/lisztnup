@@ -596,6 +596,7 @@
 			"streak": "연속",
 			"streakCount": "{count}연속",
 			"completionBonus": "완료 보너스",
+			"flawlessGame": "완벽한 한 판",
 			"turnTotal": "턴 합계",
 			"score": "점수",
 			"streakMultiplier": "연속 배율 {mult}",

@@ -22,7 +22,7 @@
 	// Logic
 	import { getGameContext } from './context';
 	import { TimelineGame } from '$lib/logic/timelineGame.svelte';
-	import { calculateStreakMult } from '$lib/logic/timelineScoring';
+	import { calculateStreakMult, isFlawlessCompletion } from '$lib/logic/timelineScoring';
 	import type { TimelineRow } from '$lib/logic/timelineTypes';
 
 	// ─── Props ─────────────────────────────────────────────
@@ -365,6 +365,8 @@
 	consolationScore={game.lastConsolationBreakdown?.consolation ?? 0}
 	completionBonus={game.activePlayer?.completionBonus ?? 0}
 	reachedTarget={game.revealReachedWin}
+	isFlawlessGame={game.revealReachedWin &&
+		isFlawlessCompletion(target, game.activePlayer?.totalPlacements ?? 0)}
 	scoreBeforeTurn={game.scoreBeforeTurn}
 	rotation={game.popupRotation}
 	onClose={() => game.handleCloseRevealPopup()}

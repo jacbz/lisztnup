@@ -8,6 +8,7 @@
 	import type { Track } from '$lib/models';
 	import type { TurnScoreBreakdown } from '$lib/logic/timelineTypes';
 	import Flame from 'lucide-svelte/icons/flame';
+	import Sparkles from 'lucide-svelte/icons/sparkles';
 	import Trophy from 'lucide-svelte/icons/trophy';
 	import { ArrowRight, Zap } from 'lucide-svelte';
 
@@ -21,6 +22,7 @@
 		consolationScore?: number;
 		completionBonus?: number;
 		reachedTarget?: boolean;
+		isFlawlessGame?: boolean;
 		scoreBeforeTurn?: number;
 		rotation?: number;
 		onClose?: () => void;
@@ -36,6 +38,7 @@
 		consolationScore = 0,
 		completionBonus = 0,
 		reachedTarget = false,
+		isFlawlessGame = false,
 		scoreBeforeTurn = 0,
 		rotation = 0,
 		onClose = () => {}
@@ -449,8 +452,13 @@
 							style="opacity: {rowVisible.completion ? 1 : 0}; transition: opacity 400ms;"
 						>
 							<span class="flex items-center gap-1 font-bold text-amber-400">
-								<Trophy class="h-3.5 w-3.5" />
-								{$_('timeline.scoring.completionBonus')}
+								{#if isFlawlessGame}
+									<Sparkles class="h-3.5 w-3.5" />
+									{$_('timeline.scoring.flawlessGame')}
+								{:else}
+									<Trophy class="h-3.5 w-3.5" />
+									{$_('timeline.scoring.completionBonus')}
+								{/if}
 							</span>
 							<span class="font-bold text-amber-400 tabular-nums"
 								>+{$_('scoring.pts', {
