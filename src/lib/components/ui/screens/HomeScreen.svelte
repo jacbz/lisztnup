@@ -39,7 +39,7 @@
 	import Plus from 'lucide-svelte/icons/plus';
 	import AppFooter from '../primitives/AppFooter.svelte';
 	import FeedbackPopup from '../gameplay/FeedbackPopup.svelte';
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { browser } from '$app/environment';
 	import MessageSquare from 'lucide-svelte/icons/message-square';
 	import Users from 'lucide-svelte/icons/users';
@@ -57,7 +57,7 @@
 	import TimelinePopup from '$lib/components/game/timeline/TimelinePopup.svelte';
 	import TracklistRecordsPopup from '$lib/components/ui/setup/TracklistRecordsPopup.svelte';
 	import TimelineLeaderboard from '$lib/components/ui/setup/TimelineLeaderboard.svelte';
-	import { fade, fly, slide } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
 	import { getLeaderboard, preloadAsset } from '$lib/services/client';
 
 	interface Props {
@@ -126,9 +126,11 @@
 	let startButtonSentinel: HTMLDivElement | undefined = $state();
 	let startButtonWrapper: HTMLDivElement | undefined = $state();
 	let isStartButtonSticky = $state(false);
+	let animateStartButtonStickyIntro = $state(false);
 	let showStartButtonShell = $state(false);
 	let startButtonBackdropMeasured = $state(false);
 	let startButtonBackdropFrame: number | null = null;
+	let startButtonMeasureTimer: ReturnType<typeof setTimeout> | null = null;
 	let startButtonShellRevealTimer: ReturnType<typeof setTimeout> | null = null;
 	let startButtonShellRevealFrame: number | null = null;
 	let previousSelectedTracklist = $settingsStore.selectedTracklist;
@@ -148,6 +150,9 @@
 		'/start_bingo.mp3',
 		'/gameover.mp3'
 	];
+	const START_BUTTON_FALLBACK_HEIGHT = 84;
+	const START_BUTTON_READY_MEASURE_DELAY_MS = 220;
+	const START_BUTTON_STICKY_REVEAL_DELAY_MS = 700;
 
 	// Daily challenge state
 	let dailyHighScore = $state<{ name: string | null; score: number } | null>(null);
@@ -558,6 +563,10 @@
 	}
 
 	function cancelStartButtonShellReveal() {
+		if (startButtonMeasureTimer !== null) {
+			clearTimeout(startButtonMeasureTimer);
+			startButtonMeasureTimer = null;
+		}
 		if (startButtonShellRevealTimer !== null) {
 			clearTimeout(startButtonShellRevealTimer);
 			startButtonShellRevealTimer = null;
@@ -571,6 +580,7 @@
 	function updateStartButtonBackdrop() {
 		if (!startButtonReady || !startButtonSentinel) {
 			isStartButtonSticky = false;
+			animateStartButtonStickyIntro = false;
 			showStartButtonShell = false;
 			startButtonBackdropMeasured = false;
 			cancelStartButtonShellReveal();
@@ -578,7 +588,7 @@
 		}
 
 		const sentinelRect = startButtonSentinel.getBoundingClientRect();
-		const wrapperHeight = startButtonWrapper?.offsetHeight ?? 112;
+		const wrapperHeight = startButtonWrapper?.offsetHeight || START_BUTTON_FALLBACK_HEIGHT;
 		const naturalTop = sentinelRect.top + 32;
 		const stickyTop = window.innerHeight - wrapperHeight;
 		const nextIsSticky = naturalTop > stickyTop + 1;
@@ -588,6 +598,7 @@
 		startButtonBackdropMeasured = true;
 
 		if (!wasMeasured && !showStartButtonShell) {
+			animateStartButtonStickyIntro = nextIsSticky;
 			if (!nextIsSticky) {
 				showStartButtonShell = true;
 				return;
@@ -600,7 +611,7 @@
 					startButtonShellRevealFrame = null;
 					showStartButtonShell = true;
 				});
-			}, 140);
+			}, START_BUTTON_STICKY_REVEAL_DELAY_MS);
 		}
 	}
 
@@ -618,11 +629,21 @@
 		if (browser) {
 			if (!ready) {
 				isStartButtonSticky = false;
+				animateStartButtonStickyIntro = false;
 				showStartButtonShell = false;
 				startButtonBackdropMeasured = false;
 				cancelStartButtonShellReveal();
+				return;
 			}
-			scheduleStartButtonBackdropUpdate();
+			cancelStartButtonShellReveal();
+			startButtonMeasureTimer = setTimeout(() => {
+				startButtonMeasureTimer = null;
+				void tick().then(() => {
+					if (startButtonReady) {
+						scheduleStartButtonBackdropUpdate();
+					}
+				});
+			}, START_BUTTON_READY_MEASURE_DELAY_MS);
 		}
 	});
 
@@ -1012,7 +1033,7 @@
 						></div>
 					</div>
 					{#if isStartButtonSticky}
-						<div in:fly={{ y: 176, duration: 1000 }}>
+						<div class:start-button-sticky-intro={animateStartButtonStickyIntro}>
 							<button
 								type="button"
 								onclick={handleStartGame}
@@ -1151,6 +1172,10 @@
 />
 
 <style>
+	.start-button-sticky-intro {
+		animation: start-button-sticky-intro 1000ms cubic-bezier(0.22, 1, 0.36, 1) both;
+	}
+
 	.start-dark-ramp {
 		animation: start-dark-ramp 1000ms ease-out both;
 	}
@@ -1178,6 +1203,25 @@
 		to {
 			-webkit-backdrop-filter: blur(var(--blur-target));
 			backdrop-filter: blur(var(--blur-target));
+		}
+	}
+
+	@keyframes start-button-sticky-intro {
+		from {
+			opacity: 0;
+			transform: translateY(176px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.start-button-sticky-intro,
+		.start-dark-ramp,
+		.start-blur-ramp {
+			animation-duration: 1ms;
 		}
 	}
 </style>
