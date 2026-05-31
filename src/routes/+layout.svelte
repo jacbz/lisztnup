@@ -32,8 +32,8 @@
 </script>
 
 <svelte:head>
-	<title>{$_('app.title')} - {$_('app.subtitle')} ({$_('app.inspiredByHitster')})</title>
-	<meta name="description" content={$_('app.seoDescription')} />
+	<title>{data.seoTitle}</title>
+	<meta name="description" content={data.seoDescription} />
 	<link rel="canonical" href={data.canonicalUrl} />
 	{#each data.alternates as alternate (alternate.locale)}
 		<link rel="alternate" hreflang={alternate.locale} href={alternate.href} />
@@ -45,20 +45,14 @@
 	<meta name="apple-mobile-web-app-title" content="Liszt’n Up!" />
 	<link rel="manifest" href="/site.webmanifest" />
 	<meta property="og:type" content="website" />
-	<meta
-		property="og:title"
-		content="{$_('app.title')} - {$_('app.subtitle')} ({$_('app.inspiredByHitster')})"
-	/>
+	<meta property="og:title" content={data.seoTitle} />
 	<meta property="og:site_name" content={$_('app.title')} />
-	<meta property="og:description" content={$_('app.seoDescription')} />
+	<meta property="og:description" content={data.seoDescription} />
 	<meta property="og:url" content={data.canonicalUrl} />
 	<meta property="og:image" content={data.ogImageUrl} />
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta
-		name="twitter:title"
-		content="{$_('app.title')} - {$_('app.subtitle')} ({$_('app.inspiredByHitster')})"
-	/>
-	<meta name="twitter:description" content={$_('app.seoDescription')} />
+	<meta name="twitter:title" content={data.seoTitle} />
+	<meta name="twitter:description" content={data.seoDescription} />
 	<meta name="twitter:image" content={data.ogImageUrl} />
 	{#if data.includeSiteNameStructuredData}
 		{@html '<script type="application/ld+json">' +
@@ -73,5 +67,7 @@
 
 <div class="min-h-full w-full">
 	{@render children?.()}
-	<Toast />
+	<div data-nosnippet>
+		<Toast />
+	</div>
 </div>

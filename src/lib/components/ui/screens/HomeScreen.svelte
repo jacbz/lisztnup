@@ -785,7 +785,7 @@
 
 <div class="flex min-h-screen w-full items-center justify-center">
 	<!-- Locale Button (Top Right) -->
-	<div class="absolute top-8 right-8" data-locale-dropdown>
+	<div class="absolute top-8 right-8" data-locale-dropdown data-nosnippet>
 		<div class="relative">
 			<button
 				type="button"
@@ -926,6 +926,7 @@
 
 		<!-- Game Parameters Container -->
 		<div
+			data-nosnippet
 			class="mx-auto max-w-2xl rounded-2xl border-2 border-cyan-400/30 bg-slate-900/50 p-6 backdrop-blur-sm"
 			class:mt-6={showDataLoadingCard}
 			class:mt-8={!showDataLoadingCard}
@@ -1170,7 +1171,7 @@
 </div>
 
 <!-- Feedback FAB (Bottom Right) -->
-<div class="fixed right-6 bottom-6 z-40 hidden md:block">
+<div class="fixed right-6 bottom-6 z-40 hidden md:block" data-nosnippet>
 	<div class="flex flex-col gap-3">
 		<button
 			type="button"
@@ -1183,48 +1184,50 @@
 	</div>
 </div>
 
-<FeedbackPopup visible={showFeedbackPopup} onClose={() => (showFeedbackPopup = false)} />
+<div data-nosnippet>
+	<FeedbackPopup visible={showFeedbackPopup} onClose={() => (showFeedbackPopup = false)} />
 
-<TracklistSelector
-	visible={showTracklistSelector}
-	selectedTracklist={$selectedTracklist}
-	onSelect={handleTracklistSelect}
-	onClose={() => (showTracklistSelector = false)}
-/>
+	<TracklistSelector
+		visible={showTracklistSelector}
+		selectedTracklist={$selectedTracklist}
+		onSelect={handleTracklistSelect}
+		onClose={() => (showTracklistSelector = false)}
+	/>
 
-<ShareLinkPopup
-	visible={showShareLinkPopup}
-	url={bingoUrl}
-	onClose={() => (showShareLinkPopup = false)}
-	shareTitle={$_('bingo.shareTitle')}
-	shareText={$_('bingo.shareText')}
-/>
+	<ShareLinkPopup
+		visible={showShareLinkPopup}
+		url={bingoUrl}
+		onClose={() => (showShareLinkPopup = false)}
+		shareTitle={$_('bingo.shareTitle')}
+		shareText={$_('bingo.shareText')}
+	/>
 
-<TracklistRecordsPopup
-	visible={showTracklistRecords}
-	entries={tracklistRecordsEntries}
-	{currentLocale}
-	isLoading={tracklistRecordsLoading}
-	tracklists={allTracklists}
-	onClose={() => (showTracklistRecords = false)}
-	onShowTimeline={handleShowTimeline}
-	onSelectRecord={handleTracklistRecordSelect}
-/>
+	<TracklistRecordsPopup
+		visible={showTracklistRecords}
+		entries={tracklistRecordsEntries}
+		{currentLocale}
+		isLoading={tracklistRecordsLoading}
+		tracklists={allTracklists}
+		onClose={() => (showTracklistRecords = false)}
+		onShowTimeline={handleShowTimeline}
+		onSelectRecord={handleTracklistRecordSelect}
+	/>
 
-<TimelinePopup
-	visible={showTimelinePopup}
-	playerName={timelinePlayerName}
-	country={timelineCountry}
-	score={timelineScore}
-	attempts={timelineAttempts}
-	target={timelineTarget}
-	averageTime={timelineAverageTime}
-	longestStreak={timelineLongestStreak}
-	timestamp={timelineTimestamp}
-	tracks={timelineTracks}
-	log={timelineLog}
-	onClose={() => (showTimelinePopup = false)}
-/>
+	<TimelinePopup
+		visible={showTimelinePopup}
+		playerName={timelinePlayerName}
+		country={timelineCountry}
+		score={timelineScore}
+		attempts={timelineAttempts}
+		target={timelineTarget}
+		averageTime={timelineAverageTime}
+		longestStreak={timelineLongestStreak}
+		timestamp={timelineTimestamp}
+		tracks={timelineTracks}
+		log={timelineLog}
+		onClose={() => (showTimelinePopup = false)}
+	/>
+</div>
 
 <style>
 	.start-button-sticky-intro {

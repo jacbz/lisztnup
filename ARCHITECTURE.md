@@ -37,7 +37,7 @@ src/
 │       └── ui/                primitives/ screens/ setup/ gameplay/
 ├── routes/
 │   ├── +page.svelte           Home app; [locale=locale]/ mirrors it for localized SEO
-│   ├── +layout.svelte         Root layout + SEO metadata
+│   ├── +layout.svelte         Root layout + server-derived SEO metadata
 │   ├── bingo/+page.svelte     Bingo grid route (per-player device)
 │   ├── sitemap.xml/+server.ts Localized URL sitemap
 │   └── api/game/
