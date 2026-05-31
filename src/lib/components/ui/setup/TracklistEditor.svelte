@@ -29,9 +29,13 @@
 	import Ban from 'lucide-svelte/icons/ban';
 	import X from 'lucide-svelte/icons/x';
 	import ListMusic from 'lucide-svelte/icons/list-music';
+	import ChevronDown from 'lucide-svelte/icons/chevron-down';
+	import ChevronUp from 'lucide-svelte/icons/chevron-up';
 	import { COMPOSER_COUNT, MAX_WORK_YEAR, MIN_WORK_YEAR } from '$lib/types/settings';
 	import { locale } from 'svelte-i18n';
 	import { SvelteMap, SvelteSet } from 'svelte/reactivity';
+
+	const CURATION_VISIBLE_WORK_LIMIT = 10;
 
 	interface Props {
 		visible?: boolean;
@@ -90,6 +94,8 @@
 	let excludeWorkGids = $state<string[]>([]); // Work GIDs for UI
 	let showIncludeSelector = $state(false);
 	let showExcludeSelector = $state(false);
+	let includeWorksExpanded = $state(false);
+	let excludeWorksExpanded = $state(false);
 	let showTrackList = $state(false);
 
 	// Composer filter mode state
@@ -164,6 +170,8 @@
 				// Manual curation: use stored work GIDs directly
 				includeWorkGids = config.includeWorks ? [...config.includeWorks] : [];
 				excludeWorkGids = config.excludeWorks ? [...config.excludeWorks] : [];
+				includeWorksExpanded = false;
+				excludeWorksExpanded = false;
 
 				// Name filter
 				nameFilters = config.nameFilter ? [...config.nameFilter] : [];
@@ -718,6 +726,14 @@
 		if (!work) return gid;
 		const composerName = getComposerLastName(work.composer.name);
 		return composerName ? `${composerName}: ${work.name}` : work.name;
+	}
+
+	function getVisibleCurationWorkGids(gids: string[], expanded: boolean): string[] {
+		return expanded ? gids : gids.slice(0, CURATION_VISIBLE_WORK_LIMIT);
+	}
+
+	function getHiddenCurationWorkCount(gids: string[]): number {
+		return Math.max(0, gids.length - CURATION_VISIBLE_WORK_LIMIT);
 	}
 
 	// Manual curation handlers
@@ -1333,21 +1349,41 @@
 				</div>
 				{#if includeWorkGids.length > 0}
 					<div class="flex flex-wrap gap-2">
-						{#each includeWorkGids as gid (gid)}
+						{#each getVisibleCurationWorkGids(includeWorkGids, includeWorksExpanded) as gid (gid)}
+							{@const workName = getWorkName(gid)}
 							<div
-								class="flex items-center gap-1 rounded-full border-2 border-cyan-500 bg-cyan-500/20 px-3 py-1 text-xs text-cyan-300"
+								class="group flex max-w-full items-center gap-1.5 rounded-full border-2 border-cyan-500 bg-cyan-500/20 px-3 py-1 text-xs text-cyan-300 shadow-sm shadow-cyan-950/20"
+								title={workName}
 							>
-								<span>{getWorkName(gid)}</span>
+								<span class="min-w-0 max-w-[min(72vw,28rem)] truncate">{workName}</span>
 								<button
 									type="button"
 									onclick={() => handleRemoveIncludeWork(gid)}
-									class="hover:text-white"
+									class="shrink-0 rounded-full p-0.5 hover:bg-cyan-300/20 hover:text-white"
 									aria-label={$_('tracklistEditor.curation.removeWork')}
 								>
 									<X class="h-3 w-3" />
 								</button>
 							</div>
 						{/each}
+						{#if includeWorkGids.length > CURATION_VISIBLE_WORK_LIMIT}
+							<button
+								type="button"
+								onclick={() => (includeWorksExpanded = !includeWorksExpanded)}
+								class="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/40 bg-slate-900/70 px-3 py-1 text-xs font-semibold text-cyan-200 shadow-sm shadow-cyan-950/20 transition hover:border-cyan-300 hover:bg-cyan-500/20 focus:ring-2 focus:ring-cyan-300/40 focus:outline-none"
+								aria-expanded={includeWorksExpanded}
+							>
+								{#if includeWorksExpanded}
+									<ChevronUp class="h-3.5 w-3.5" />
+									{$_('tracklistEditor.curation.showFewerWorks')}
+								{:else}
+									<ChevronDown class="h-3.5 w-3.5" />
+									{$_('tracklistEditor.curation.showMoreWorks', {
+										values: { count: getHiddenCurationWorkCount(includeWorkGids) }
+									})}
+								{/if}
+							</button>
+						{/if}
 					</div>
 				{:else}
 					<p class="text-xs text-slate-500 italic">
@@ -1376,21 +1412,41 @@
 				</div>
 				{#if excludeWorkGids.length > 0}
 					<div class="flex flex-wrap gap-2">
-						{#each excludeWorkGids as gid (gid)}
+						{#each getVisibleCurationWorkGids(excludeWorkGids, excludeWorksExpanded) as gid (gid)}
+							{@const workName = getWorkName(gid)}
 							<div
-								class="flex items-center gap-1 rounded-full border-2 border-red-500 bg-red-500/20 px-3 py-1 text-xs text-red-300"
+								class="group flex max-w-full items-center gap-1.5 rounded-full border-2 border-red-500 bg-red-500/20 px-3 py-1 text-xs text-red-300 shadow-sm shadow-red-950/20"
+								title={workName}
 							>
-								<span>{getWorkName(gid)}</span>
+								<span class="min-w-0 max-w-[min(72vw,28rem)] truncate">{workName}</span>
 								<button
 									type="button"
 									onclick={() => handleRemoveExcludeWork(gid)}
-									class="hover:text-white"
+									class="shrink-0 rounded-full p-0.5 hover:bg-red-300/20 hover:text-white"
 									aria-label={$_('tracklistEditor.curation.removeExclusion')}
 								>
 									<X class="h-3 w-3" />
 								</button>
 							</div>
 						{/each}
+						{#if excludeWorkGids.length > CURATION_VISIBLE_WORK_LIMIT}
+							<button
+								type="button"
+								onclick={() => (excludeWorksExpanded = !excludeWorksExpanded)}
+								class="inline-flex items-center gap-1.5 rounded-full border border-red-400/40 bg-slate-900/70 px-3 py-1 text-xs font-semibold text-red-200 shadow-sm shadow-red-950/20 transition hover:border-red-300 hover:bg-red-500/20 focus:ring-2 focus:ring-red-300/40 focus:outline-none"
+								aria-expanded={excludeWorksExpanded}
+							>
+								{#if excludeWorksExpanded}
+									<ChevronUp class="h-3.5 w-3.5" />
+									{$_('tracklistEditor.curation.showFewerWorks')}
+								{:else}
+									<ChevronDown class="h-3.5 w-3.5" />
+									{$_('tracklistEditor.curation.showMoreWorks', {
+										values: { count: getHiddenCurationWorkCount(excludeWorkGids) }
+									})}
+								{/if}
+							</button>
+						{/if}
 					</div>
 				{:else}
 					<p class="text-xs text-slate-500 italic">
