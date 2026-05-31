@@ -61,10 +61,10 @@
 	<meta name="twitter:description" content={$_('app.seoDescription')} />
 	<meta name="twitter:image" content={data.ogImageUrl} />
 	{#if data.includeSiteNameStructuredData}
-		{@html `<script type="application/ld+json">${getSiteNameStructuredData(
-			$_('app.title'),
-			data.siteUrl
-		)}</script>`}
+		{@html '<script type="application/ld+json">' +
+			getSiteNameStructuredData($_('app.title'), data.siteUrl) +
+			'</' +
+			'script>'}
 	{/if}
 	<!-- Preconnect to Google Fonts for faster CJK font loading -->
 	<link rel="preconnect" href="https://fonts.googleapis.com" />

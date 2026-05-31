@@ -165,6 +165,8 @@ export class GameCatalog {
 	private readonly partByGid: Map<string, Part>;
 	private readonly workByPartGid: Map<string, Work>;
 	private readonly worksByComposerGid: Map<string, readonly Work[]>;
+	private readonly workCountByComposerGid: ReadonlyMap<string, number>;
+	private readonly composersWithWorks: readonly Composer[];
 	private readonly composerIdsByCountry: Map<string, readonly string[]>;
 	private readonly composerIdsByGender: Map<ComposerGender, readonly string[]>;
 	private readonly countryCounts: readonly { code: string; count: number }[];
@@ -186,6 +188,13 @@ export class GameCatalog {
 			worksByComposer.set(work.composerGid, composerWorks);
 		}
 		this.worksByComposerGid = worksByComposer;
+		this.workCountByComposerGid = new Map(
+			[...worksByComposer.entries()].map(([composerGid, composerWorks]) => [
+				composerGid,
+				composerWorks.length
+			])
+		);
+		this.composersWithWorks = composers.filter((composer) => worksByComposer.has(composer.gid));
 
 		const countries = new Map<string, string[]>();
 		const genders = new Map<ComposerGender, string[]>();
@@ -247,6 +256,14 @@ export class GameCatalog {
 
 	getWorksByComposer(composerGid: string): readonly Work[] {
 		return this.worksByComposerGid.get(composerGid) ?? [];
+	}
+
+	getWorkCountByComposerGid(): ReadonlyMap<string, number> {
+		return this.workCountByComposerGid;
+	}
+
+	getComposersWithWorks(): readonly Composer[] {
+		return this.composersWithWorks;
 	}
 
 	getComposerIdsByCountry(country: string): readonly string[] {

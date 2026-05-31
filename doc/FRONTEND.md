@@ -115,7 +115,7 @@ Uses `$effect` to watch `analyserNode`, starts visualization when available (han
 | `TrackInfo`             | Track metadata display with replay, report, search                    | Scoring flow, Timeline card inspect; optional `showMirror` for mirrored tabletop layouts |
 | `ScoringCard`           | Per-player scoring with category toggles                              | ScoringScreen                                                                            |
 | `TrackTable`            | Sortable work table with audio preview playback                       | LibraryViewer, WorkSelectorPopup                                                         |
-| `ComposerCloud`         | Word cloud with filters; country menu sorted by composer count        | LibraryViewer                                                                            |
+| `ComposerCloud`         | Chunk-rendered word cloud with filters; countries sorted by count     | LibraryViewer                                                                            |
 | `LibraryViewer`         | Multi-view library browser (cloud/composer/table)                     | TracklistSelector, TracklistEditor                                                       |
 | `WorkSelectorPopup`     | Work selection for manual curation                                    | TracklistEditor                                                                          |
 | `ShareLinkPopup`        | QR code + copy/share link                                             | BingoSetup, TracklistSelector                                                            |

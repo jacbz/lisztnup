@@ -32,11 +32,12 @@
 	import { ClipboardCopy } from 'lucide-svelte';
 	import { toast } from '$lib/stores/toast';
 	import { MIN_PART_SCORE } from '$lib/types/settings';
-	import { SvelteMap } from 'svelte/reactivity';
 
 	interface Props {
 		visible?: boolean;
 		tracklist?: Tracklist | null;
+		composers?: readonly Composer[] | null;
+		works?: readonly Work[] | null;
 		/** When true, show action buttons (Add/Remove) per work */
 		showActions?: boolean;
 		/** Set of work GIDs that are already selected (shown as checked in action column) */
@@ -62,6 +63,8 @@
 	let {
 		visible = false,
 		tracklist = null,
+		composers = null,
+		works = null,
 		showActions = false,
 		includedWorkGids = new Set<string>(),
 		tracklistWorkGids = new Set<string>(),
@@ -83,14 +86,14 @@
 		workGid: string;
 		work: string;
 		type: WorkCategory;
-		parts: { gid: string; name: string; score: number; deezerIds: number[] }[];
+		parts: { gid: string; name: string; score: number; deezerIds: readonly number[] }[];
 		popularity: number; // Work score
 		year: string;
 	}
 
 	let rawTableData = $state<TableRow[]>([]);
-	let filteredWorks = $state<Work[]>([]);
-	let filteredComposers = $state<Composer[]>([]);
+	let filteredWorks = $state<readonly Work[]>([]);
+	let filteredComposers = $state<readonly Composer[]>([]);
 	let searchQuery = $state('');
 	let sortColumn = $state<'composer' | 'work' | 'popularity' | 'year'>('composer');
 	let sortDirection = $state<'asc' | 'desc'>('asc');
@@ -103,6 +106,7 @@
 
 	// Scroll container reference to scroll to top on page change
 	let contentScrollEl: HTMLElement | null = null;
+	let loadToken = 0;
 
 	// Self-contained preview player — independent of the game's DeezerPlayer singleton
 	const previewPlayer = new PreviewPlayer();
@@ -111,11 +115,9 @@
 	$effect(() => {
 		if (visible) {
 			isLoading = true;
-			// Use setTimeout to defer heavy computation and prevent UI freeze
-			setTimeout(() => {
-				loadTracklistData();
-			}, 0);
+			void loadTracklistData();
 		} else if (!visible) {
+			loadToken += 1;
 			// Reset data and loading state when popup closes
 			rawTableData = [];
 			filteredRawData = [];
@@ -267,34 +269,44 @@
 
 	const totalPages = $derived.by(() => Math.max(1, Math.ceil(filteredRawData.length / PAGE_SIZE)));
 
-	function loadTracklistData() {
+	function nextFrame(): Promise<void> {
+		return new Promise((resolve) => {
+			requestAnimationFrame(() => resolve());
+		});
+	}
+
+	async function loadTracklistData() {
+		const token = ++loadToken;
 		const data = get(gameData);
 		if (!data) return;
 
 		try {
-			if (tracklist) {
+			let nextFilteredComposers: readonly Composer[];
+			let nextFilteredWorks: readonly Work[];
+
+			if (works && composers) {
+				nextFilteredComposers = composers;
+				nextFilteredWorks = works;
+			} else if (tracklist) {
 				// Use tracklist filtering
 				const generator = new TracklistGenerator(data, tracklist);
 				const filteredData = generator.getFilteredData();
-				filteredComposers = filteredData.composers;
-				filteredWorks = filteredData.works;
+				nextFilteredComposers = filteredData.composers;
+				nextFilteredWorks = filteredData.works;
 			} else {
 				// Show whole library - no filtering
-				filteredComposers = [...data.composers];
-				filteredWorks = [...data.works];
+				nextFilteredComposers = data.composers;
+				nextFilteredWorks = data.works;
 			}
-
-			// Create a map of composer GIDs to composer objects
-			const composerMap = new SvelteMap<string, Composer>();
-			filteredComposers.forEach((c) => composerMap.set(c.gid, c));
 
 			// Build table rows
 			const rows: TableRow[] = [];
+			const BUILD_CHUNK_SIZE = 350;
 
-			filteredWorks.forEach((work) => {
-				const composer = composerMap.get(work.composerGid);
-				if (!composer) return;
-				if (!work.parts || work.parts.length === 0) return;
+			for (let index = 0; index < nextFilteredWorks.length; index += 1) {
+				const work = nextFilteredWorks[index];
+				const composer = work.composer;
+				if (!work.parts || work.parts.length === 0) continue;
 
 				// Format year
 				const yearStr = formatYearRange(work.begin_year, work.end_year);
@@ -312,13 +324,22 @@
 						gid: p.gid,
 						name: p.name,
 						score: p.score,
-						deezerIds: [...p.deezer]
+						deezerIds: p.deezer
 					})),
 					popularity: work.score,
 					year: yearStr
 				});
-			});
 
+				if (index > 0 && index % BUILD_CHUNK_SIZE === 0) {
+					await nextFrame();
+					if (token !== loadToken) return;
+				}
+			}
+
+			if (token !== loadToken) return;
+
+			filteredComposers = nextFilteredComposers;
+			filteredWorks = nextFilteredWorks;
 			rawTableData = rows;
 			// Reset to first page whenever we load new data
 			page = 1;
@@ -327,6 +348,7 @@
 		} catch (error) {
 			console.error('Error loading tracklist data:', error);
 			rawTableData = [];
+			isLoading = false;
 		}
 	}
 
@@ -397,7 +419,7 @@
 	}
 
 	// Audio playback functions
-	async function handlePlayPart(deezerIds: number[]): Promise<void> {
+	async function handlePlayPart(deezerIds: readonly number[]): Promise<void> {
 		const randomIndex = Math.floor(Math.random() * deezerIds.length);
 		const deezerId = deezerIds[randomIndex];
 		await previewPlayer.play(deezerId);

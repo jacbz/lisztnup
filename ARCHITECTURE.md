@@ -97,7 +97,7 @@ Home loading card → delayed takeover of streamed catalog progress
 
 | Object               | Module                  | Scope                                                                                  |
 | -------------------- | ----------------------- | -------------------------------------------------------------------------------------- |
-| `GameCatalog`        | `models/GameCatalog.ts` | Immutable hydrated music catalog with GID indexes and track resolvers                  |
+| `GameCatalog`        | `models/GameCatalog.ts` | Immutable hydrated music catalog with GID, composer-count indexes, and track resolvers |
 | `deezerPlayer`       | `DeezerPlayer.ts`       | One active playback controller; buffered assets are owned by `PlayableTrackBuffer`     |
 | `playerState`        | `DeezerPlayer.ts`       | Store exported alongside player — reactive playback state                              |
 | `analytics`          | `game-logger.ts`        | One per app — fire-and-forget telemetry via sendBeacon                                 |

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { WorkCategory } from '$lib/models';
+	import type { Composer, Work, WorkCategory } from '$lib/models';
 	import type { Tracklist } from '$lib/types';
 	import { gameData, isDataLoaded } from '$lib/stores';
 	import { get } from 'svelte/store';
@@ -17,6 +17,12 @@
 	import composerIcon from '$lib/assets/icons/composer.svg?raw';
 	import { SvelteSet } from 'svelte/reactivity';
 
+	interface BrowserCatalogData {
+		composers: readonly Composer[];
+		works: readonly Work[];
+		workCountByComposerGid?: ReadonlyMap<string, number>;
+	}
+
 	interface Props {
 		visible?: boolean;
 		tracklist?: Tracklist | null;
@@ -30,31 +36,28 @@
 	let viewMode = $state<ViewMode>('cloud');
 	let selectedComposerGid = $state<string | null>(null);
 	let selectedCategories = $state(new Set<WorkCategory>());
+	let contentReady = $state(false);
 
-	// Resolve composer data for display
-	const composers = $derived.by(() => {
+	const catalogData = $derived.by<BrowserCatalogData | null>(() => {
+		if (!visible || !contentReady) return null;
 		const data = get(gameData);
-		if (!data) return [];
+		if (!data) return null;
+
 		if (tracklist) {
 			const generator = new TracklistGenerator(data, tracklist);
-			return generator.getFilteredData().composers;
+			return generator.getFilteredData();
 		}
-		return [...data.composers];
-	});
 
-	const works = $derived.by(() => {
-		const data = get(gameData);
-		if (!data) return [];
-		if (tracklist) {
-			const generator = new TracklistGenerator(data, tracklist);
-			return generator.getFilteredData().works;
-		}
-		return [...data.works];
+		return {
+			composers: data.getComposersWithWorks(),
+			works: data.works,
+			workCountByComposerGid: data.getWorkCountByComposerGid()
+		};
 	});
 
 	const selectedComposer = $derived.by(() => {
 		if (!selectedComposerGid) return null;
-		return composers.find((c) => c.gid === selectedComposerGid) || null;
+		return catalogData?.composers.find((c) => c.gid === selectedComposerGid) || null;
 	});
 
 	function handleSelectComposer(gid: string) {
@@ -84,7 +87,27 @@
 		selectedCategories = next;
 	}
 
-	// Reset state when popup closes
+	$effect(() => {
+		if (!visible) {
+			contentReady = false;
+			return;
+		}
+
+		contentReady = false;
+		let firstFrame = 0;
+		let secondFrame = 0;
+		firstFrame = requestAnimationFrame(() => {
+			secondFrame = requestAnimationFrame(() => {
+				contentReady = true;
+			});
+		});
+
+		return () => {
+			cancelAnimationFrame(firstFrame);
+			cancelAnimationFrame(secondFrame);
+		};
+	});
+
 	$effect(() => {
 		if (!visible) {
 			viewMode = tracklist ? 'table' : 'cloud';
@@ -146,7 +169,7 @@
 
 		<!-- Content -->
 		<div class="flex-1 overflow-hidden">
-			{#if !$isDataLoaded}
+			{#if !$isDataLoaded || !contentReady || !catalogData}
 				<div class="flex h-full items-center justify-center">
 					<p class="text-slate-400">{$_('trackTable.loading')}</p>
 				</div>
@@ -154,16 +177,23 @@
 				<!-- Composer word cloud -->
 				<div class="h-full overflow-y-auto" class:hidden={viewMode !== 'cloud'}>
 					<div class="mx-auto max-w-5xl">
-						<ComposerCloud {composers} {works} onSelectComposer={handleSelectComposer} />
+						<ComposerCloud
+							composers={catalogData.composers}
+							works={catalogData.works}
+							workCountByComposerGid={catalogData.workCountByComposerGid}
+							onSelectComposer={handleSelectComposer}
+						/>
 					</div>
 				</div>
 			{/if}
 
-			{#if $isDataLoaded && (viewMode !== 'cloud' || tracklist)}
+			{#if $isDataLoaded && contentReady && catalogData && (viewMode !== 'cloud' || tracklist)}
 				<!-- Table view (all works or single composer) -->
 				<TrackTable
 					{visible}
 					{tracklist}
+					composers={catalogData.composers}
+					works={catalogData.works}
 					selectedComposerGid={viewMode === 'composer' ? selectedComposerGid : null}
 					{selectedCategories}
 					onToggleCategory={handleToggleCategory}

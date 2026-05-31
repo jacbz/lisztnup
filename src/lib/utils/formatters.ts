@@ -198,21 +198,21 @@ export function getWorkEra(
  * Formats a list of works as a Markdown table.
  * Includes columns for ID, Composer - Work, Parts (as a bullet list), and Year.
  */
-export function formatWorksAsMarkdown(works: Work[], composers: Composer[]): string {
+export function formatWorksAsMarkdown(
+	works: readonly Work[],
+	composers: readonly Composer[]
+): string {
 	const composerMap = new Map(composers.map((c) => [c.gid, c]));
 
-	works.sort((a, b) => {
-		return a.name.localeCompare(b.name);
-	});
-	works.sort((a, b) => {
-		const composerA = composers.find((c) => c.gid === a.composerGid)!;
-		const composerB = composers.find((c) => c.gid === b.composerGid)!;
+	const sortedWorks = [...works].sort((a, b) => {
+		const composerA = composerMap.get(a.composerGid);
+		const composerB = composerMap.get(b.composerGid);
 		const lastNameA = getComposerLastName(composerA ? composerA.name : '');
 		const lastNameB = getComposerLastName(composerB ? composerB.name : '');
-		return lastNameA.localeCompare(lastNameB);
+		return lastNameA.localeCompare(lastNameB) || a.name.localeCompare(b.name);
 	});
 
-	const rows = works.map((work) => {
+	const rows = sortedWorks.map((work) => {
 		const composer = composerMap.get(work.composerGid);
 		const composerLastName = composer ? getComposerLastName(composer.name) : 'Unknown Composer';
 		const gidPrefix = work.gid;

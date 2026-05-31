@@ -1355,7 +1355,7 @@
 								class="group flex max-w-full items-center gap-1.5 rounded-full border-2 border-cyan-500 bg-cyan-500/20 px-3 py-1 text-xs text-cyan-300 shadow-sm shadow-cyan-950/20"
 								title={workName}
 							>
-								<span class="min-w-0 max-w-[min(72vw,28rem)] truncate">{workName}</span>
+								<span class="max-w-[min(72vw,28rem)] min-w-0 truncate">{workName}</span>
 								<button
 									type="button"
 									onclick={() => handleRemoveIncludeWork(gid)}
@@ -1418,7 +1418,7 @@
 								class="group flex max-w-full items-center gap-1.5 rounded-full border-2 border-red-500 bg-red-500/20 px-3 py-1 text-xs text-red-300 shadow-sm shadow-red-950/20"
 								title={workName}
 							>
-								<span class="min-w-0 max-w-[min(72vw,28rem)] truncate">{workName}</span>
+								<span class="max-w-[min(72vw,28rem)] min-w-0 truncate">{workName}</span>
 								<button
 									type="button"
 									onclick={() => handleRemoveExcludeWork(gid)}

@@ -9,12 +9,34 @@
 	import CountryDropdown from '../primitives/CountryDropdown.svelte';
 
 	interface Props {
-		composers: Composer[];
-		works: Work[];
+		composers: readonly Composer[];
+		works: readonly Work[];
+		workCountByComposerGid?: ReadonlyMap<string, number>;
 		onSelectComposer?: (composerGid: string) => void;
 	}
 
-	let { composers = [], works = [], onSelectComposer = () => {} }: Props = $props();
+	interface ComposerCloudEntry {
+		gid: string;
+		name: string;
+		lastName: string;
+		fullName: string;
+		sortName: string;
+		normalizedName: string;
+		normalizedSortName: string;
+		score: number;
+		workCount: number;
+		birthYear: number;
+		deathYear: number | null;
+		country: string;
+		gender: 'male' | 'female';
+	}
+
+	let {
+		composers = [],
+		works = [],
+		workCountByComposerGid,
+		onSelectComposer = () => {}
+	}: Props = $props();
 
 	// Filter state
 	let searchQuery = $state('');
@@ -25,6 +47,10 @@
 	let selectedCountry = $state('');
 	let selectedGender = $state<'male' | 'female' | ''>('');
 	let showFilters = $state(false);
+	let visibleItemCount = $state(0);
+
+	const CLOUD_INITIAL_ITEMS = 96;
+	const CLOUD_CHUNK_SIZE = 128;
 
 	// Normalize strings for search: strip diacritics and collapse to lower-case
 	function normalizeString(s: string | null | undefined): string {
@@ -37,10 +63,12 @@
 
 	// Build composer entries with work counts
 	const entries = $derived.by(() => {
-		const workCountMap = new SvelteMap<string, number>();
-		works.forEach((w) => {
-			workCountMap.set(w.composerGid, (workCountMap.get(w.composerGid) || 0) + 1);
-		});
+		const workCountMap =
+			workCountByComposerGid ??
+			works.reduce((map, work) => {
+				map.set(work.composerGid, (map.get(work.composerGid) ?? 0) + 1);
+				return map;
+			}, new SvelteMap<string, number>());
 
 		return composers
 			.filter((c) => workCountMap.has(c.gid))
@@ -65,13 +93,23 @@
 	// Compute global year bounds for placeholder hints
 	const yearBounds = $derived.by(() => {
 		if (entries.length === 0) return { minBirth: 0, maxBirth: 0, minDeath: 0, maxDeath: 0 };
-		const births = entries.map((e) => e.birthYear);
-		const deaths = entries.filter((e) => e.deathYear !== null).map((e) => e.deathYear!);
+		let minBirth = Infinity;
+		let maxBirth = -Infinity;
+		let minDeath = Infinity;
+		let maxDeath = -Infinity;
+		for (const entry of entries) {
+			minBirth = Math.min(minBirth, entry.birthYear);
+			maxBirth = Math.max(maxBirth, entry.birthYear);
+			if (entry.deathYear !== null) {
+				minDeath = Math.min(minDeath, entry.deathYear);
+				maxDeath = Math.max(maxDeath, entry.deathYear);
+			}
+		}
 		return {
-			minBirth: Math.min(...births),
-			maxBirth: Math.max(...births),
-			minDeath: deaths.length > 0 ? Math.min(...deaths) : 0,
-			maxDeath: deaths.length > 0 ? Math.max(...deaths) : 0
+			minBirth,
+			maxBirth,
+			minDeath: minDeath === Infinity ? 0 : minDeath,
+			maxDeath: maxDeath === -Infinity ? 0 : maxDeath
 		};
 	});
 
@@ -119,8 +157,7 @@
 	// Build a display-name map: for each last name group, the highest-scored composer
 	// keeps the short last-name display; subsequent composers with the same last
 	// name get their full name shown.
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	function buildDisplayNameMap(entries: Array<any>): Map<string, string> {
+	function buildDisplayNameMap(entries: readonly ComposerCloudEntry[]): SvelteMap<string, string> {
 		const map = new SvelteMap<string, string>();
 		const seen = new SvelteSet<string>();
 
@@ -201,8 +238,12 @@
 		if (filteredEntries.length === 0) return [];
 
 		// Use global score range (from all entries, not filtered) so sizes stay consistent
-		const minScore = Math.min(...entries.map((e) => e.score));
-		const maxScore = Math.max(...entries.map((e) => e.score));
+		let minScore = Infinity;
+		let maxScore = -Infinity;
+		for (const entry of entries) {
+			minScore = Math.min(minScore, entry.score);
+			maxScore = Math.max(maxScore, entry.score);
+		}
 		const range = maxScore - minScore || 1;
 
 		const MIN_SIZE = 0.7;
@@ -232,6 +273,26 @@
 		});
 	});
 
+	const visibleCloudItems = $derived(cloudItems.slice(0, visibleItemCount));
+
+	$effect(() => {
+		const totalItems = cloudItems.length;
+		const initialCount = Math.min(CLOUD_INITIAL_ITEMS, totalItems);
+		visibleItemCount = initialCount;
+		if (totalItems <= initialCount) return;
+
+		let frame = 0;
+		const revealNextChunk = () => {
+			visibleItemCount = Math.min(visibleItemCount + CLOUD_CHUNK_SIZE, totalItems);
+			if (visibleItemCount < totalItems) {
+				frame = requestAnimationFrame(revealNextChunk);
+			}
+		};
+		frame = requestAnimationFrame(revealNextChunk);
+
+		return () => cancelAnimationFrame(frame);
+	});
+
 	// Compute color from score normalized position
 	function getColor(score: number, minScore: number, maxScore: number): string {
 		const range = maxScore - minScore || 1;
@@ -247,8 +308,16 @@
 		return 'text-cyan-100';
 	}
 
-	const minScore = $derived(entries.length > 0 ? Math.min(...entries.map((e) => e.score)) : 0);
-	const maxScore = $derived(entries.length > 0 ? Math.max(...entries.map((e) => e.score)) : 100);
+	const scoreBounds = $derived.by(() => {
+		if (entries.length === 0) return { min: 0, max: 100 };
+		let min = Infinity;
+		let max = -Infinity;
+		for (const entry of entries) {
+			min = Math.min(min, entry.score);
+			max = Math.max(max, entry.score);
+		}
+		return { min, max };
+	});
 </script>
 
 <!-- Search & filters bar -->
@@ -385,14 +454,14 @@
 	class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 px-4 py-6 md:px-8 md:py-8"
 	in:fade={{ duration: 200 }}
 >
-	{#each cloudItems as item, i (item.gid)}
+	{#each visibleCloudItems as item, i (item.gid)}
 		<button
 			type="button"
 			onclick={() => onSelectComposer(item.gid)}
 			class="inline-block cursor-pointer rounded-md px-1.5 py-0.5 whitespace-nowrap transition-all duration-200 hover:scale-110 hover:bg-cyan-400/10 focus:outline-none active:scale-95 {getColor(
 				item.score,
-				minScore,
-				maxScore
+				scoreBounds.min,
+				scoreBounds.max
 			)}"
 			style="font-size: {item.size}rem; font-weight: {item.fontWeight}; opacity: {item.opacity};"
 			title="{item.fullName} ({formatLifespan(item.birthYear, item.deathYear)}) — {item.workCount}"

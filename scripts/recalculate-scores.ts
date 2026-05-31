@@ -5,6 +5,7 @@ import readline from 'readline/promises';
 import { GameCatalog, type RawLisztnupData } from '../src/lib/models';
 import { replayTimelineLog } from '../src/lib/logic/timelineReplayUtils';
 import type { TimelineReplayLog } from '../src/lib/types/timelineReplay';
+import type { Tracklist, TracklistConfig } from '../src/lib/types';
 import { TracklistGenerator } from '../src/lib/services/TracklistGenerator';
 import * as Configs from '../src/lib/data/tracklistConfigs';
 
@@ -130,7 +131,7 @@ async function main() {
 
 		// Recreate the tracklist definitions without importing the UI-heavy DEFAULT_TRACKLISTS
 		// (which would try to load SVG files via Vite/esbuild, failing in a raw Node environment).
-		const tracklists = [
+		const tracklists: { id: string; config: TracklistConfig }[] = [
 			{ id: 'beginner', config: Configs.BEGINNER_CONFIG },
 			{ id: 'intermediate', config: Configs.INTERMEDIATE_CONFIG },
 			{ id: 'skilled', config: Configs.SKILLED_CONFIG },
@@ -174,7 +175,7 @@ async function main() {
 		];
 
 		for (const tl of tracklists) {
-			const generator = new TracklistGenerator(data, tl as any);
+			const generator = new TracklistGenerator(data, tl as Tracklist);
 			const bounds = generator.getScoringYearBounds();
 			tracklistBounds.set(tl.id, bounds);
 		}
