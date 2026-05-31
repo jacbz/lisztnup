@@ -461,7 +461,7 @@
 			},
 			"step3": {
 				"title": "Fai Punti",
-				"desc": "Ogni piazzamento corretto vale punti. Più le carte vicine sono ravvicinate, più alto è il bonus Difficoltà. Meno errori fai, più sale il tuo bonus Padronanza. Le decisioni rapide premiano la Velocità, e le risposte giuste consecutive attivano un moltiplicatore Serie."
+				"desc": "Ogni piazzamento corretto vale punti. Più le carte vicine sono ravvicinate, più alto è il bonus Difficoltà. Le decisioni rapide premiano la Velocità, e le risposte giuste consecutive attivano un moltiplicatore Serie."
 			},
 			"step4": {
 				"title": "Corsa alla Vittoria",
@@ -600,7 +600,6 @@
 			"turnTotal": "Totale turno",
 			"score": "Punteggio",
 			"streakMultiplier": "Moltiplicatore di serie {mult}",
-			"mastery": "Padronanza",
 			"consolation": "Quasi!"
 		},
 		"targetReached": "Obiettivo raggiunto!",
