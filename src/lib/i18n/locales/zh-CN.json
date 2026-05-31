@@ -641,6 +641,7 @@
 		"description": "<em>Liszt’n Up!</em> 是一个出于对古典音乐的热爱而做的个人项目。简单来说就是古典音乐版的 Hitster。想看看自己和朋友们对古典曲目到底了解多少，所以做了这个小游戏。",
 		"donateHint": "这个应用永远免费。但如果你愿意请我喝杯咖啡，也非常感谢。",
 		"donateButton": "请我喝咖啡",
+		"moreAboutMe": "了解作者",
 		"viewOnGithub": "在 GitHub 上查看"
 	},
 	"leaderboard": {

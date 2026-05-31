@@ -641,6 +641,7 @@
 		"description": "<em>Liszt’n Up!</em> はクラシック音楽が大好きで作った個人プロジェクトです。Hitsterのクラシック版といったところ。友達と「本当にレパートリー知ってる？」って試したくて作りました。",
 		"donateHint": "このアプリはずっと無料です。でももしよかったら、コーヒー一杯おごってください。",
 		"donateButton": "コーヒーをおごる",
+		"moreAboutMe": "作者について",
 		"viewOnGithub": "GitHubで見る"
 	},
 	"leaderboard": {

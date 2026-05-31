@@ -641,6 +641,7 @@
 		"description": "<em>Liszt’n Up!</em> is a passion project born from a love of classical music. Think of it as Hitster, but for classical music nerds. I built it because I wanted a fun way to test how well my friends and I actually know the repertoire we claim to love.",
 		"donateHint": "This is and always will be free. But if you’re feeling generous, a coffee never hurts.",
 		"donateButton": "Buy me a coffee",
+		"moreAboutMe": "More about me",
 		"viewOnGithub": "View on GitHub"
 	},
 	"leaderboard": {

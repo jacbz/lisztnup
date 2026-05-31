@@ -127,7 +127,7 @@ Uses `$effect` to watch `analyserNode`, starts visualization when available (han
 | `TimelineLeaderboard`   | Period/scope scorebar, click-open country menu, expandable top scores | HomeScreen                                                                               |
 | `TimelineEndGameScreen` | Timeline finale with replay, score sharing, and leaderboard naming    | TimelineGameScreen                                                                       |
 | `TracklistRecordsPopup` | Latest record per tracklist/target combo                              | HomeScreen                                                                               |
-| `AboutPopup`            | App info, donation link, feedback launcher                            | HomeScreen                                                                               |
+| `AboutPopup`            | App info, author link, donation link, feedback launcher               | HomeScreen                                                                               |
 | `AppFooter`             | Attribution footer with library/feedback links                        | HomeScreen                                                                               |
 | `FeedbackPopup`         | User feedback submission                                              | HomeScreen, EndGameScreen, AboutPopup, AppFooter                                         |
 | `FlashingText`          | Rotation-aware text flash overlay (streaks, future points)            | TimelineGameScreen                                                                       |

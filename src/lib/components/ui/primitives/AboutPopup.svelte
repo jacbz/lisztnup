@@ -4,6 +4,7 @@
 	import { _ } from 'svelte-i18n';
 	import Heart from 'lucide-svelte/icons/heart';
 	import MessageSquare from 'lucide-svelte/icons/message-square';
+	import Contact from 'lucide-svelte/icons/contact';
 	import github from '$lib/assets/icons/github.svg?raw';
 
 	interface Props {
@@ -52,12 +53,22 @@
 		<div class="h-px w-24 bg-linear-to-r from-transparent via-cyan-400/40 to-transparent"></div>
 
 		<!-- Links -->
-		<div class="flex items-center gap-3 text-sm text-slate-400">
+		<div class="flex flex-wrap items-center justify-center gap-3 text-sm text-slate-400">
+			<a
+				href="https://jacobzhang.de"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="flex items-center gap-1.5 transition-colors hover:text-cyan-400"
+			>
+				<Contact class="h-4 w-4" />
+				<span>{$_('about.moreAboutMe')}</span>
+			</a>
+			<span class="opacity-30">|</span>
 			<a
 				href="https://github.com/jacbz/lisztnup"
 				target="_blank"
 				rel="noopener noreferrer"
-				class="flex items-center gap-2 transition-colors hover:text-cyan-400"
+				class="flex items-center gap-1.5 transition-colors hover:text-cyan-400"
 			>
 				<span class="h-4 w-4">{@html github}</span>
 				<span>{$_('about.viewOnGithub')}</span>
