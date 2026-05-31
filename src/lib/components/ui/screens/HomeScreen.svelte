@@ -129,6 +129,8 @@
 	let dataLoadFailed = $state(false);
 	let startButtonSentinel: HTMLDivElement | undefined = $state();
 	let startButtonWrapper: HTMLDivElement | undefined = $state();
+	let startButtonElement: HTMLButtonElement | undefined = $state();
+	let startButtonHeight = $state(84);
 	let isStartButtonSticky = $state(false);
 	let animateStartButtonStickyIntro = $state(false);
 	let showStartButtonShell = $state(false);
@@ -155,6 +157,7 @@
 		'/gameover.mp3'
 	];
 	const START_BUTTON_FALLBACK_HEIGHT = 84;
+	const START_BUTTON_FADE_FEATHER_PX = 72;
 	const DATA_LOADING_CARD_DELAY_MS = 300;
 	const START_BUTTON_READY_MEASURE_DELAY_MS = 220;
 	const START_BUTTON_STICKY_REVEAL_DELAY_MS = 700;
@@ -655,6 +658,8 @@
 		}
 
 		const sentinelRect = startButtonSentinel.getBoundingClientRect();
+		startButtonHeight =
+			startButtonElement?.getBoundingClientRect().height || START_BUTTON_FALLBACK_HEIGHT;
 		const wrapperHeight = startButtonWrapper?.offsetHeight || START_BUTTON_FALLBACK_HEIGHT;
 		const naturalTop = sentinelRect.top + 32;
 		const stickyTop = window.innerHeight - wrapperHeight;
@@ -1085,37 +1090,37 @@
 			<div bind:this={startButtonWrapper} class="mt-8 {startButtonShellClass}">
 				{#if startButtonReady && showStartButtonShell}
 					<div
-						class="pointer-events-none fixed inset-x-0 bottom-0 h-36 overflow-hidden transition-opacity duration-300 ease-out {isStartButtonSticky
+						class="pointer-events-none fixed inset-x-0 bottom-0 overflow-hidden transition-opacity duration-300 ease-out [--start-button-offset:calc(env(safe-area-inset-bottom)+1rem)] md:[--start-button-offset:calc(env(safe-area-inset-bottom)+2rem)] {isStartButtonSticky
 							? 'opacity-100'
 							: 'opacity-0'}"
+						style="--start-button-height: {startButtonHeight}px; --start-button-feather: {START_BUTTON_FADE_FEATHER_PX}px; height: calc(var(--start-button-offset) + var(--start-button-height) + var(--start-button-feather));"
 					>
 						<div
-							class="start-dark-ramp absolute inset-x-0 bottom-0 h-full bg-linear-to-t from-slate-950/18 via-slate-950/7 to-transparent"
-						></div>
-						<div
-							class="start-blur-ramp absolute inset-x-0 bottom-0 h-16"
-							style="--blur-target: 40px; -webkit-mask-image: linear-gradient(to top, black 0%, black 42%, transparent 100%); mask-image: linear-gradient(to top, black 0%, black 42%, transparent 100%);"
-						></div>
-						<div
-							class="start-blur-ramp absolute inset-x-0 bottom-0 h-24"
-							style="--blur-target: 24px; -webkit-mask-image: linear-gradient(to top, black 0%, transparent 82%); mask-image: linear-gradient(to top, black 0%, transparent 82%);"
-						></div>
-						<div
-							class="start-blur-ramp absolute inset-x-0 bottom-0 h-32"
-							style="--blur-target: 12px; -webkit-mask-image: linear-gradient(to top, transparent 0%, black 28%, transparent 96%); mask-image: linear-gradient(to top, transparent 0%, black 28%, transparent 96%);"
-						></div>
-						<div
-							class="start-blur-ramp absolute inset-x-0 bottom-0 h-36"
-							style="--blur-target: 4px; -webkit-mask-image: linear-gradient(to top, transparent 42%, black 68%, transparent 100%); mask-image: linear-gradient(to top, transparent 42%, black 68%, transparent 100%);"
+							class="start-blur-ramp absolute inset-x-0 bottom-0 h-full"
+							style="--blur-target: 12px; -webkit-mask-image: linear-gradient(to top, black 0%, black calc(var(--start-button-offset) + var(--start-button-height)), rgba(0, 0, 0, 0.82) calc(var(--start-button-offset) + var(--start-button-height) + {Math.round(
+								START_BUTTON_FADE_FEATHER_PX * 0.2
+							)}px), rgba(0, 0, 0, 0.42) calc(var(--start-button-offset) + var(--start-button-height) + {Math.round(
+								START_BUTTON_FADE_FEATHER_PX * 0.55
+							)}px), rgba(0, 0, 0, 0.1) calc(var(--start-button-offset) + var(--start-button-height) + {Math.round(
+								START_BUTTON_FADE_FEATHER_PX * 0.82
+							)}px), transparent 100%); mask-image: linear-gradient(to top, black 0%, black calc(var(--start-button-offset) + var(--start-button-height)), rgba(0, 0, 0, 0.82) calc(var(--start-button-offset) + var(--start-button-height) + {Math.round(
+								START_BUTTON_FADE_FEATHER_PX * 0.2
+							)}px), rgba(0, 0, 0, 0.42) calc(var(--start-button-offset) + var(--start-button-height) + {Math.round(
+								START_BUTTON_FADE_FEATHER_PX * 0.55
+							)}px), rgba(0, 0, 0, 0.1) calc(var(--start-button-offset) + var(--start-button-height) + {Math.round(
+								START_BUTTON_FADE_FEATHER_PX * 0.82
+							)}px), transparent 100%);"
 						></div>
 					</div>
 					{#if isStartButtonSticky}
 						<div class:start-button-sticky-intro={animateStartButtonStickyIntro}>
 							<button
+								bind:this={startButtonElement}
+								bind:clientHeight={startButtonHeight}
 								type="button"
 								onclick={handleStartGame}
 								disabled={!playersValid || !$isDataLoaded}
-								class="group relative mx-auto block w-full max-w-2xl cursor-pointer overflow-hidden rounded-2xl border-2 border-cyan-400/50 bg-linear-to-r from-slate-900 via-cyan-950/30 to-slate-900 px-8 py-6 text-2xl font-bold text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] backdrop-blur-sm transition-all duration-300 active:scale-[0.98] active:border-cyan-400 active:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100 disabled:active:border-cyan-400/50 disabled:active:shadow-[0_0_20px_rgba(34,211,238,0.3)] md:hover:scale-[1.02] md:hover:border-cyan-400 md:hover:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] md:disabled:hover:scale-100 md:disabled:hover:border-cyan-400/50 md:disabled:hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+								class="group relative mx-auto block w-full max-w-2xl cursor-pointer overflow-hidden rounded-2xl border-2 border-cyan-400/50 bg-linear-to-r from-slate-900/90 via-cyan-950/40 to-slate-900/90 px-8 py-6 text-2xl font-bold text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] backdrop-blur-[1px] transition-all duration-300 active:scale-[0.98] active:border-cyan-400 active:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100 disabled:active:border-cyan-400/50 disabled:active:shadow-[0_0_20px_rgba(34,211,238,0.3)] md:hover:scale-[1.02] md:hover:border-cyan-400 md:hover:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] md:disabled:hover:scale-100 md:disabled:hover:border-cyan-400/50 md:disabled:hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
 							>
 								<!-- Animated gradient overlay -->
 								<div
@@ -1125,7 +1130,7 @@
 
 								<!-- Glow effect -->
 								<div
-									class="absolute inset-0 bg-linear-to-r from-cyan-400/0 via-cyan-400/10 to-cyan-400/0 opacity-0 blur-xl transition-opacity duration-300 group-active:opacity-100 group-disabled:opacity-0 md:group-hover:opacity-100"
+									class="absolute inset-0 bg-linear-to-r from-cyan-400/0 via-cyan-400/10 to-cyan-400/0 opacity-0 blur-md transition-opacity duration-300 group-active:opacity-100 group-disabled:opacity-0 md:group-hover:opacity-100"
 								></div>
 
 								<!-- Text with gradient -->
@@ -1138,10 +1143,12 @@
 						</div>
 					{:else}
 						<button
+							bind:this={startButtonElement}
+							bind:clientHeight={startButtonHeight}
 							type="button"
 							onclick={handleStartGame}
 							disabled={!playersValid || !$isDataLoaded}
-							class="group relative mx-auto block w-full max-w-2xl cursor-pointer overflow-hidden rounded-2xl border-2 border-cyan-400/50 bg-linear-to-r from-slate-900 via-cyan-950/30 to-slate-900 px-8 py-6 text-2xl font-bold text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] backdrop-blur-sm transition-all duration-300 active:scale-[0.98] active:border-cyan-400 active:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100 disabled:active:border-cyan-400/50 disabled:active:shadow-[0_0_20px_rgba(34,211,238,0.3)] md:hover:scale-[1.02] md:hover:border-cyan-400 md:hover:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] md:disabled:hover:scale-100 md:disabled:hover:border-cyan-400/50 md:disabled:hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+							class="group relative mx-auto block w-full max-w-2xl cursor-pointer overflow-hidden rounded-2xl border-2 border-cyan-400/50 bg-linear-to-r from-slate-900/90 via-cyan-950/40 to-slate-900/90 px-8 py-6 text-2xl font-bold text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] backdrop-blur-[1px] transition-all duration-300 active:scale-[0.98] active:border-cyan-400 active:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100 disabled:active:border-cyan-400/50 disabled:active:shadow-[0_0_20px_rgba(34,211,238,0.3)] md:hover:scale-[1.02] md:hover:border-cyan-400 md:hover:shadow-[0_0_50px_rgba(34,211,238,0.7),0_0_100px_rgba(34,211,238,0.3)] md:disabled:hover:scale-100 md:disabled:hover:border-cyan-400/50 md:disabled:hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]"
 						>
 							<!-- Animated gradient overlay -->
 							<div
@@ -1151,7 +1158,7 @@
 
 							<!-- Glow effect -->
 							<div
-								class="absolute inset-0 bg-linear-to-r from-cyan-400/0 via-cyan-400/10 to-cyan-400/0 opacity-0 blur-xl transition-opacity duration-300 group-active:opacity-100 group-disabled:opacity-0 md:group-hover:opacity-100"
+								class="absolute inset-0 bg-linear-to-r from-cyan-400/0 via-cyan-400/10 to-cyan-400/0 opacity-0 blur-md transition-opacity duration-300 group-active:opacity-100 group-disabled:opacity-0 md:group-hover:opacity-100"
 							></div>
 
 							<!-- Text with gradient -->
