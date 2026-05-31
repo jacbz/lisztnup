@@ -58,6 +58,7 @@ export interface LeaderboardQuery {
 	scope?: LeaderboardScope;
 	period?: LeaderboardPeriod;
 	country?: string | null;
+	fallback?: boolean;
 }
 
 export interface LeaderboardSubmission {
@@ -131,6 +132,7 @@ function normalizeLeaderboardUrl(query: LeaderboardQuery) {
 	if (query.scope && query.scope !== 'global') params.set('scope', query.scope);
 	if (query.period && query.period !== 'allTime') params.set('period', query.period);
 	if (query.country) params.set('country', query.country);
+	if (query.fallback === false) params.set('fallback', '0');
 	params.sort();
 	return `/api/game/leaderboard?${params.toString()}`;
 }
@@ -301,38 +303,12 @@ export async function getLeaderboard(query: LeaderboardQuery): Promise<Leaderboa
 				requestedPeriod: data.requestedPeriod ?? query.period ?? 'allTime',
 				scope: data.scope ?? query.scope ?? 'global'
 			};
-			const requestedPeriod = query.period ?? 'allTime';
-			const requestedCacheData =
-				normalized.period !== requestedPeriod
-					? {
-							...normalized,
-							entries: [],
-							countries: [],
-							period: requestedPeriod,
-							requestedPeriod
-						}
-					: normalized;
-
 			leaderboardCache.set(url, {
 				expiresAt: Date.now() + LEADERBOARD_CACHE_TTL_MS,
-				data: requestedCacheData
+				data: normalized
 			});
-			for (const emptyPeriod of data.emptyPeriods ?? []) {
-				const emptyUrl = normalizeLeaderboardUrl({
-					...query,
-					period: emptyPeriod,
-					scope: normalized.scope
-				});
-				leaderboardCache.set(emptyUrl, {
-					expiresAt: Date.now() + LEADERBOARD_CACHE_TTL_MS,
-					data: {
-						...normalized,
-						entries: [],
-						countries: [],
-						period: emptyPeriod,
-						requestedPeriod: emptyPeriod
-					}
-				});
+			if (query.fallback === false) {
+				return normalized;
 			}
 			const effectiveUrl = normalizeLeaderboardUrl({
 				...query,

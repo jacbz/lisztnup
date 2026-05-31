@@ -92,13 +92,16 @@
 	let leaderboardPeriod = $state<LeaderboardPeriod>('weekly');
 	let leaderboardCountry = $state<string | null>(null);
 	let leaderboardViewerCountry = $state<string | null>(null);
-	let leaderboardCountries = $state<LeaderboardCountrySummary[]>([]);
+	let leaderboardCountryOptions = $state<LeaderboardCountrySummary[]>([]);
 	let showTracklistRecords = $state(false);
 	let tracklistRecordsEntries = $state<LeaderboardEntry[]>([]);
 	let tracklistRecordsLoading = $state(false);
 	let tracklistRecordsRequestId = 0;
 	let leaderboardRequestId = 0;
+	let leaderboardCountryOptionsRequestId = 0;
+	let dailyHighScoreRequestId = 0;
 	let leaderboardFilterKey = '';
+	let leaderboardCountryOptionsKey = '';
 	let leaderboardTimelineConfigKey = '';
 	let showTimelinePopup = $state(false);
 	let timelineTracks = $state<Track[]>([]);
@@ -245,10 +248,21 @@
 		if (showTimelineLeaderboard && browser) {
 			const tracklist = localSettings.selectedTracklist;
 			const target = localSettings.timelineTarget;
+			const currentScope = leaderboardScope;
+			const currentPreferredPeriod = leaderboardPreferredPeriod;
+			const currentDisplayPeriod = leaderboardPeriod;
+			const currentCountry = currentScope === 'national' ? leaderboardCountry : null;
 			const timelineConfigKey = `${tracklist}:${target}`;
+			const timelineConfigChanged = timelineConfigKey !== leaderboardTimelineConfigKey;
+			const queryCountry = currentScope === 'national' ? currentCountry : null;
 			const requestedPeriod =
-				leaderboardScope === 'personal' ? 'allTime' : leaderboardPreferredPeriod;
-			const filterKey = `${timelineConfigKey}:${leaderboardScope}:${requestedPeriod}:${leaderboardCountry ?? ''}`;
+				currentScope === 'personal'
+					? 'allTime'
+					: timelineConfigChanged
+						? currentPreferredPeriod
+						: currentDisplayPeriod;
+			const allowFallback = currentScope !== 'personal' && timelineConfigChanged;
+			const filterKey = `${timelineConfigKey}:${currentScope}:${requestedPeriod}:${queryCountry ?? ''}:${allowFallback ? 'fallback' : 'strict'}`;
 			const requestId = ++leaderboardRequestId;
 
 			leaderboardLoading = true;
@@ -257,10 +271,10 @@
 				// Do not clear leaderboardEntries here to allow smooth visual updates
 				leaderboardFilterKey = filterKey;
 			}
-			if (timelineConfigKey !== leaderboardTimelineConfigKey) {
+			if (timelineConfigChanged) {
 				leaderboardTimelineConfigKey = timelineConfigKey;
-				if (leaderboardScope !== 'personal') {
-					leaderboardPeriod = leaderboardPreferredPeriod;
+				if (currentScope !== 'personal') {
+					leaderboardPeriod = currentPreferredPeriod;
 				}
 			}
 
@@ -269,9 +283,10 @@
 				tracklist,
 				target,
 				token: getPlayerToken(),
-				scope: leaderboardScope,
-				period: leaderboardScope === 'personal' ? undefined : leaderboardPreferredPeriod,
-				country: leaderboardScope === 'national' ? leaderboardCountry : null
+				scope: currentScope,
+				period: currentScope === 'personal' ? undefined : requestedPeriod,
+				country: queryCountry,
+				fallback: allowFallback
 			})
 				.then((data) => {
 					if (requestId !== leaderboardRequestId) return;
@@ -286,12 +301,10 @@
 						leaderboardPeriod = data.period;
 					}
 					leaderboardEntries = data.entries ?? [];
-					leaderboardCountries = data.countries ?? [];
 				})
 				.catch(() => {
 					if (requestId !== leaderboardRequestId) return;
 					leaderboardEntries = [];
-					leaderboardCountries = [];
 				})
 				.finally(() => {
 					if (requestId !== leaderboardRequestId) return;
@@ -302,7 +315,6 @@
 			leaderboardFilterKey = '';
 			leaderboardTimelineConfigKey = '';
 			leaderboardEntries = [];
-			leaderboardCountries = [];
 			leaderboardLoading = false;
 		}
 	});
@@ -311,21 +323,64 @@
 	$effect(() => {
 		if (showDailyChallenge && browser) {
 			const target = localSettings.timelineTarget;
+			const requestId = ++dailyHighScoreRequestId;
 			getLeaderboard({
 				limit: 1,
 				tracklist: dailyChallengeEntry.tracklist.id,
 				target,
 				token: getPlayerToken(),
-				period: 'weekly'
+				period: 'weekly',
+				fallback: true
 			})
 				.then((data) => {
+					if (requestId !== dailyHighScoreRequestId) return;
 					const top = data.entries?.[0];
 					dailyHighScore = top ? { name: top.player_name, score: top.score } : null;
 				})
 				.catch(() => {
+					if (requestId !== dailyHighScoreRequestId) return;
 					dailyHighScore = null;
 				});
+		} else {
+			dailyHighScoreRequestId += 1;
+			dailyHighScore = null;
 		}
+	});
+
+	// Keep country options independent from the currently selected country/period rows.
+	$effect(() => {
+		if (!showTimelineLeaderboard || !browser) {
+			leaderboardCountryOptionsRequestId += 1;
+			leaderboardCountryOptionsKey = '';
+			leaderboardCountryOptions = [];
+			return;
+		}
+
+		const tracklist = localSettings.selectedTracklist;
+		const target = localSettings.timelineTarget;
+		const optionsKey = `${tracklist}:${target}`;
+		if (optionsKey === leaderboardCountryOptionsKey) return;
+
+		const requestId = ++leaderboardCountryOptionsRequestId;
+		leaderboardCountryOptionsKey = optionsKey;
+
+		getLeaderboard({
+			limit: 1,
+			tracklist,
+			target,
+			token: getPlayerToken(),
+			scope: 'global',
+			period: 'allTime',
+			fallback: false
+		})
+			.then((data) => {
+				if (requestId !== leaderboardCountryOptionsRequestId) return;
+				leaderboardCountryOptions = data.countries ?? [];
+			})
+			.catch(() => {
+				if (requestId !== leaderboardCountryOptionsRequestId) return;
+				leaderboardCountryOptions = [];
+			});
 	});
 
 	$effect(() => {
@@ -935,7 +990,7 @@
 								{currentLocale}
 								scope={leaderboardScope}
 								period={leaderboardPeriod}
-								countries={leaderboardCountries}
+								countries={leaderboardCountryOptions}
 								selectedCountry={leaderboardCountry}
 								isLoading={leaderboardLoading}
 								onScopeChange={handleLeaderboardScopeChange}

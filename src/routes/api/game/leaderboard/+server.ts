@@ -53,6 +53,7 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 	const playerToken = url.searchParams.get('token') || null;
 	const requestedCountry = normalizeCountryCode(url.searchParams.get('country'));
 	const records = url.searchParams.get('records') === '1';
+	const allowFallback = url.searchParams.get('fallback') !== '0';
 	const rawScope = url.searchParams.get('scope');
 	const scope: LeaderboardScope =
 		rawScope === 'national' || rawScope === 'personal' ? rawScope : 'global';
@@ -152,12 +153,13 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 					bestScore: Number(row.bestScore ?? 0)
 				})
 			);
-			return summaries.filter(
+			const filteredSummaries = summaries.filter(
 				(summary) =>
 					summary.country.length === 2 &&
 					Number.isFinite(summary.count) &&
 					Number.isFinite(summary.bestScore)
 			);
+			return filteredSummaries;
 		}
 
 		async function queryEntries(period: LeaderboardPeriod) {
@@ -244,13 +246,14 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 		const fallbackPeriods: LeaderboardPeriod[] =
 			records || scope === 'personal'
 				? ['allTime']
-				: requestedPeriod === 'weekly'
-					? ['weekly', 'monthly', 'allTime']
-					: requestedPeriod === 'monthly'
-						? ['monthly', 'allTime']
-						: ['allTime'];
+				: !allowFallback
+					? [requestedPeriod]
+					: requestedPeriod === 'weekly'
+						? ['weekly', 'monthly', 'allTime']
+						: requestedPeriod === 'monthly'
+							? ['monthly', 'allTime']
+							: ['allTime'];
 		const emptyPeriods: LeaderboardPeriod[] = [];
-
 		for (const period of fallbackPeriods) {
 			const entries = await queryEntries(period);
 			if (entries.length > 0 || period === fallbackPeriods[fallbackPeriods.length - 1]) {
