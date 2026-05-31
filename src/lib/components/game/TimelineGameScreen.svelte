@@ -205,8 +205,9 @@
 							progress={ctx.audioProgressValue}
 							playerSize={120}
 							disabled={ctx.isPreloading}
+							playingLabel={$_('timeline.drag')}
 							onPlay={() => {}}
-							onStop={() => game.handleStop()}
+							onStop={() => {}}
 							onReveal={() => {}}
 							onReplay={() => {}}
 						/>

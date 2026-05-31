@@ -18,6 +18,7 @@
 		onReveal?: () => void;
 		onReplay?: () => void;
 		disabled?: boolean;
+		playingLabel?: string | null;
 	}
 
 	let {
@@ -31,7 +32,8 @@
 		onStop = () => {},
 		onReveal = () => {},
 		onReplay = () => {},
-		disabled = false
+		disabled = false,
+		playingLabel = null
 	}: Props = $props();
 
 	let isHoldingReveal = $state(false);
@@ -73,6 +75,7 @@
 				onReveal();
 			}
 		} else if (isPlaying) {
+			if (playingLabel) return;
 			onStop();
 		} else {
 			onPlay();
@@ -145,7 +148,9 @@
 			<!-- Play button -->
 			<button
 				type="button"
-				class="relative z-2 flex cursor-pointer touch-none items-center justify-center overflow-hidden rounded-full border-4 border-cyan-400 bg-black/20 shadow-[0_0_30px_rgba(34,211,238,0.6)] transition-all duration-200 hover:shadow-[0_0_40px_rgba(34,211,238,0.8)] active:scale-95"
+				class="relative z-2 flex touch-none items-center justify-center overflow-hidden rounded-full border-4 border-cyan-400 bg-black/20 shadow-[0_0_30px_rgba(34,211,238,0.6)] transition-all duration-200 hover:shadow-[0_0_40px_rgba(34,211,238,0.8)] active:scale-95"
+				class:cursor-pointer={!disabled && !(isPlaying && playingLabel)}
+				class:cursor-grab={isPlaying && playingLabel}
 				class:cursor-not-allowed={disabled}
 				class:opacity-60={disabled}
 				style="width: {progressPath.buttonSize}px; height: {progressPath.buttonSize}px; font-size: {progressPath.buttonSize *
@@ -155,7 +160,13 @@
 				onpointerup={handlePointerUp}
 				onpointerleave={handlePointerUp}
 				{disabled}
-				aria-label={isPlaying ? 'Stop' : playbackEnded ? 'Reveal' : 'Play'}
+				aria-label={isPlaying && playingLabel
+					? playingLabel
+					: isPlaying
+						? 'Stop'
+						: playbackEnded
+							? 'Reveal'
+							: 'Play'}
 			>
 				{#if isPlaying && (!playerSize || playerSize > 100)}
 					<Visualizer
@@ -190,6 +201,8 @@
 						<span class="font-bold tracking-widest text-cyan-400 uppercase"
 							>{$_('game.reveal')}</span
 						>
+					{:else if isPlaying && playingLabel}
+						<span class="font-bold tracking-widest text-cyan-400 uppercase">{playingLabel}</span>
 					{:else}
 						<PlayStopIcon {isPlaying} size={progressPath.buttonSize * 0.41} />
 					{/if}
