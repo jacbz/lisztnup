@@ -57,7 +57,7 @@
 	import TimelinePopup from '$lib/components/game/timeline/TimelinePopup.svelte';
 	import TracklistRecordsPopup from '$lib/components/ui/setup/TracklistRecordsPopup.svelte';
 	import TimelineLeaderboard from '$lib/components/ui/setup/TimelineLeaderboard.svelte';
-	import { fade, slide } from 'svelte/transition';
+	import { fade, fly, slide } from 'svelte/transition';
 	import { getLeaderboard, preloadAsset } from '$lib/services/client';
 
 	interface Props {
@@ -127,6 +127,9 @@
 	let showDataLoadingCard = $state(false);
 	let dataLoadingCardShownAt = $state<number | null>(null);
 	let dataLoadFailed = $state(false);
+	let mainTracklistSelectorElement: HTMLDivElement | undefined = $state();
+	let mainTracklistSelectorInView = $state(true);
+	let showCompactTracklistSelector = $state(false);
 	let startButtonSentinel: HTMLDivElement | undefined = $state();
 	let startButtonWrapper: HTMLDivElement | undefined = $state();
 	let startButtonElement: HTMLButtonElement | undefined = $state();
@@ -139,6 +142,7 @@
 	let startButtonMeasureTimer: ReturnType<typeof setTimeout> | null = null;
 	let startButtonShellRevealTimer: ReturnType<typeof setTimeout> | null = null;
 	let startButtonShellRevealFrame: number | null = null;
+	let compactTracklistRevealTimer: ReturnType<typeof setTimeout> | null = null;
 	let previousSelectedTracklist = $settingsStore.selectedTracklist;
 	let startAudioSources = {
 		classic: '/start_classic.mp3',
@@ -157,10 +161,11 @@
 		'/gameover.mp3'
 	];
 	const START_BUTTON_FALLBACK_HEIGHT = 84;
-	const START_BUTTON_FADE_FEATHER_PX = 72;
+	const START_BUTTON_FADE_FEATHER_PX = 48;
 	const DATA_LOADING_CARD_DELAY_MS = 300;
 	const START_BUTTON_READY_MEASURE_DELAY_MS = 220;
 	const START_BUTTON_STICKY_REVEAL_DELAY_MS = 700;
+	const COMPACT_TRACKLIST_REVEAL_DELAY_MS = 500;
 
 	// Daily challenge state
 	let dailyHighScore = $state<{ name: string | null; score: number } | null>(null);
@@ -173,6 +178,9 @@
 		selectedMode === 'timeline' && $selectedTracklist.kind !== 'custom'
 	);
 	let startButtonReady = $derived(Boolean(selectedMode) && $isDataLoaded && !showDataLoadingCard);
+	let compactTracklistReady = $derived(
+		startButtonReady && showStartButtonShell && isStartButtonSticky && !mainTracklistSelectorInView
+	);
 	let startButtonShellClass = $derived.by(() => {
 		if (!startButtonReady || !startButtonBackdropMeasured) {
 			return 'pointer-events-none relative mx-auto max-w-2xl';
@@ -647,6 +655,13 @@
 		}
 	}
 
+	function cancelCompactTracklistReveal() {
+		if (compactTracklistRevealTimer !== null) {
+			clearTimeout(compactTracklistRevealTimer);
+			compactTracklistRevealTimer = null;
+		}
+	}
+
 	function updateStartButtonBackdrop() {
 		if (!startButtonReady || !startButtonSentinel) {
 			isStartButtonSticky = false;
@@ -701,6 +716,15 @@
 		});
 	}
 
+	function getTracklistVisibilityObscuredBottom() {
+		if (!browser || !isStartButtonSticky || !showStartButtonShell) return 0;
+
+		const wrapperStyle = startButtonWrapper ? window.getComputedStyle(startButtonWrapper) : null;
+		const stickyPaddingBottom = wrapperStyle ? parseFloat(wrapperStyle.paddingBottom) || 0 : 0;
+
+		return Math.ceil(stickyPaddingBottom + startButtonHeight + START_BUTTON_FADE_FEATHER_PX);
+	}
+
 	$effect(() => {
 		const ready = startButtonReady;
 		if (browser) {
@@ -722,6 +746,44 @@
 				});
 			}, START_BUTTON_READY_MEASURE_DELAY_MS);
 		}
+	});
+
+	$effect(() => {
+		if (!browser || !mainTracklistSelectorElement) {
+			mainTracklistSelectorInView = true;
+			return;
+		}
+
+		const obscuredBottom = getTracklistVisibilityObscuredBottom();
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				mainTracklistSelectorInView = entry.isIntersecting && entry.intersectionRatio > 0;
+			},
+			{
+				rootMargin: `0px 0px -${obscuredBottom}px 0px`,
+				threshold: [0, 0.01]
+			}
+		);
+		observer.observe(mainTracklistSelectorElement);
+
+		return () => observer.disconnect();
+	});
+
+	$effect(() => {
+		if (!browser) return;
+
+		if (!compactTracklistReady) {
+			cancelCompactTracklistReveal();
+			showCompactTracklistSelector = false;
+			return;
+		}
+
+		if (showCompactTracklistSelector || compactTracklistRevealTimer !== null) return;
+
+		compactTracklistRevealTimer = setTimeout(() => {
+			compactTracklistRevealTimer = null;
+			showCompactTracklistSelector = true;
+		}, COMPACT_TRACKLIST_REVEAL_DELAY_MS);
 	});
 
 	onMount(() => {
@@ -798,6 +860,7 @@
 				startButtonBackdropFrame = null;
 			}
 			cancelStartButtonShellReveal();
+			cancelCompactTracklistReveal();
 			if (dailyChallengeTimer) clearTimeout(dailyChallengeTimer);
 			if (dailyChallengeCountdownTimer) clearInterval(dailyChallengeCountdownTimer);
 			if (loadingCardTimer) clearTimeout(loadingCardTimer);
@@ -961,7 +1024,7 @@
 				<!-- Left Column -->
 				<div class="space-y-4">
 					<!-- Tracklist Selection -->
-					<div>
+					<div bind:this={mainTracklistSelectorElement}>
 						<div class="mb-2 flex items-center justify-between">
 							<span class="text-sm font-semibold text-slate-400">{$_('home.tracklist')}</span>
 							<button
@@ -1113,6 +1176,44 @@
 						></div>
 					</div>
 					{#if isStartButtonSticky}
+						{#if showCompactTracklistSelector}
+							<div
+								class="md:hidden"
+								in:fly={{ y: 12, duration: 360 }}
+								out:fly={{ y: 8, duration: 240 }}
+							>
+								<button
+									type="button"
+									onclick={() => (showTracklistSelector = true)}
+									class="group relative mx-auto flex w-fit max-w-[80%] items-center justify-center gap-0.5 overflow-hidden rounded-t-xl border-x border-t border-cyan-400/35 bg-transparent px-3 py-1.5 text-center shadow-[0_-6px_14px_rgba(15,23,42,0.16),0_0_10px_rgba(34,211,238,0.08)] transition-colors"
+								>
+									<span
+										class="pointer-events-none absolute inset-0 bg-slate-950/45 backdrop-blur-xs transition-colors group-active:bg-slate-900/65"
+										aria-hidden="true"
+									></span>
+									<span class="relative flex min-w-0 items-center gap-2">
+										<span
+											class="shrink-0 text-xs leading-none font-semibold tracking-wide text-slate-400"
+										>
+											{$_('home.tracklist')}
+										</span>
+										<span
+											class="flex min-w-0 items-center truncate text-sm leading-none font-bold text-cyan-300"
+										>
+											{#if $selectedTracklist?.icon}
+												<span class="flex shrink-0 scale-[0.82] items-center text-cyan-300/90">
+													{@html $selectedTracklist.icon}
+												</span>
+											{/if}
+											{tracklistDisplayName($selectedTracklist, $_)}
+										</span>
+									</span>
+									<ChevronRight
+										class="relative h-4 w-4 shrink-0 text-cyan-300 transition-transform group-active:translate-x-0.5"
+									/>
+								</button>
+							</div>
+						{/if}
 						<div class:start-button-sticky-intro={animateStartButtonStickyIntro}>
 							<button
 								bind:this={startButtonElement}
