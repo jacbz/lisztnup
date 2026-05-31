@@ -177,7 +177,7 @@
 			return 'relative mx-auto max-w-2xl';
 		}
 
-		return 'sticky bottom-0 z-30 mx-[calc(50%-50vw)] w-screen px-6 pb-[calc(env(safe-area-inset-bottom)+1rem)] md:pb-[calc(env(safe-area-inset-bottom)+2rem)]';
+		return 'sticky bottom-0 z-30 mx-auto max-w-2xl pb-[calc(env(safe-area-inset-bottom)+1rem)] md:pb-[calc(env(safe-area-inset-bottom)+2rem)]';
 	});
 	let DailyChallengeIcon = $derived.by(() => {
 		if (dailyChallengeEntry.cause === 'birthday') return Cake;
@@ -1063,7 +1063,7 @@
 			<div bind:this={startButtonWrapper} class="mt-8 {startButtonShellClass}">
 				{#if startButtonReady && showStartButtonShell}
 					<div
-						class="pointer-events-none absolute inset-x-0 bottom-0 h-36 overflow-hidden transition-opacity duration-300 ease-out {isStartButtonSticky
+						class="pointer-events-none fixed inset-x-0 bottom-0 h-36 overflow-hidden transition-opacity duration-300 ease-out {isStartButtonSticky
 							? 'opacity-100'
 							: 'opacity-0'}"
 					>
