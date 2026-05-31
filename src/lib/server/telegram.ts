@@ -101,7 +101,7 @@ export function formatReportMessage(
 	const partLink =
 		partGid === 'n/a'
 			? esc(part)
-			: `<a href="https://musicbrainz.org/search?query=rid%3A${escAttr(partGid)}-*&amp;type=recording&amp;limit=25&amp;method=advanced">${esc(part)}</a>`;
+			: `<a href="https://musicbrainz.org/search?query=wid%3A${escAttr(partGid)}-*&amp;type=work&amp;limit=25&amp;method=advanced">${esc(part)}</a>`;
 	const deezerLink =
 		deezerId === 'n/a'
 			? esc(deezerId)

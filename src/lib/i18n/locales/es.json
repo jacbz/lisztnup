@@ -351,6 +351,8 @@
 			"removeExclusion": "Quitar exclusión",
 			"noWorksIncluded": "Ninguna obra incluida manualmente",
 			"noWorksExcluded": "Ninguna obra excluida manualmente",
+			"showMoreWorks": "Mostrar {count} más",
+			"showFewerWorks": "Mostrar menos",
 			"selectWorksToInclude": "Seleccionar obras para incluir",
 			"selectWorksToExclude": "Seleccionar obras para excluir",
 			"selected": "selec."

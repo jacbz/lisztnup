@@ -305,7 +305,6 @@ export const VIOLINCONCERTO_CONFIG: TracklistConfig = {
 		'fe884180', // Vivaldi – La cetra, op. 9
 		'bf690cb7', // Vivaldi – La stravaganza, op. 4
 		'7044d543', // Vivaldi – The Contest Between Harmony and Invention, op. 8
-		'87886dcf', // Vivaldi – The Four Seasons
 		'2d3c2e29', // Wieniawski – Capriccio-Valse, op. 7
 		'2154dc72', // Wieniawski – Polonaise Brillante en la majeur, op. 21
 		'24c323a3', // Ysaÿe – Amitié, op. 26

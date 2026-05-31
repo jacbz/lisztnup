@@ -351,6 +351,8 @@
 			"removeExclusion": "移除排除项",
 			"noWorksIncluded": "未手动包含任何作品",
 			"noWorksExcluded": "未手动排除任何作品",
+			"showMoreWorks": "再显示 {count} 项",
+			"showFewerWorks": "收起",
 			"selectWorksToInclude": "选择要包含的作品",
 			"selectWorksToExclude": "选择要排除的作品",
 			"selected": "已选择"

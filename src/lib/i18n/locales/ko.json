@@ -351,6 +351,8 @@
 			"removeExclusion": "제외 취소",
 			"noWorksIncluded": "직접 포함한 작품 없음",
 			"noWorksExcluded": "직접 제외한 작품 없음",
+			"showMoreWorks": "{count}개 더 보기",
+			"showFewerWorks": "접어 보기",
 			"selectWorksToInclude": "포함할 작품 선택",
 			"selectWorksToExclude": "제외할 작품 선택",
 			"selected": "선택됨"

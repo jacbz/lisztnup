@@ -351,6 +351,8 @@
 			"removeExclusion": "除外を解除",
 			"noWorksIncluded": "手動で含めた作品はありません",
 			"noWorksExcluded": "手動で除外した作品はありません",
+			"showMoreWorks": "あと{count}件表示",
+			"showFewerWorks": "折りたたむ",
 			"selectWorksToInclude": "含める作品を選択",
 			"selectWorksToExclude": "除外する作品を選択",
 			"selected": "選択済み"

@@ -5,26 +5,26 @@
 | ID | Work | Parts | Year |
 | :--- | :--- | :--- | :--- |
 | `c9790161` | Albéniz – Suite española no. 1, op. 47: V. Asturias (Leyenda) | * V. Asturias (Leyenda) | 1892 |
+| `eee93bf3` | Bach – Brandenburg Concerto No. 3 in G major, BWV 1048 | * Brandenburgisches Konzert Nr. 3 G-Dur, BWV 1048: I. Allegro | 1711‑1720 |
+| `55b871c7` | Bach – Cello Suite No. 1 in G major, BWV 1007 | * I. Prélude | 1717‑1723 |
 | `fe8612d1` | Bach – Concerto for 2 Violins in D minor, BWV 1043 | * II. Largo ma non tanto | 1730‑1731 |
 | `1d51e560` | Bach – Goldberg Variations, BWV 988 | * Goldberg-Variationen, BWV 988: Aria | 1741 |
 | `e74a3a95` | Bach – Keyboard Concerto in D minor, BWV 1052 | * I. Allegro | 1738 |
 | `179cc1f2` | Bach – Orchestral Suite no. 2 in B minor, BWV 1067 | * VII. Badinerie | 1738‑1739 |
 | `1767c8ae` | Bach – Orchestral Suite no. 3 in D major, BWV 1068 | * Orchestral Suite no. 3 in D major, BWV 1068: II. Air | 1730 |
-| `7481c7f5` | Bach – Six concerts avec plusieurs instruments | * Brandenburgisches Konzert Nr. 3 G-Dur, BWV 1048: I. Allegro | 1711‑1720 |
-| `4e4b97df` | Bach – Six Suites for Unaccompanied Cello | * Cello Suite No. 1 in G major, BWV 1007: I. Prélude | 1717‑1723 |
-| `4a8c18a0` | Bach – Sonatas and Partitas for solo violin, BWV 1001–1006 | * Violin Partita no. 2 in D minor, BWV 1004: V. Chaconne | 1720 |
 | `45afb3b2` | Bach – St Matthew Passion, BWV 244 | * Matthäus-Passion, BWV 244: Teil II, XXXIX. Aria (Alto) "Erbarme dich, mein Gott" | 1727 |
 | `bd511c33` | Bach – The Well-Tempered Clavier, BWV 846–893 | * The Well-Tempered Clavier, Book I: Prelude and Fugue no. 1 in C major, BWV 846: Prelude | 1722 |
 | `c4f0bd0a` | Bach – Toccata und Fuge d-Moll, BWV 565 | * I. Toccata | 1703‑1707 |
 | `5543ddeb` | Bach – Violin Concerto in A minor, BWV 1041 | * I. Allegro | 1717‑1723 |
+| `20a652f5` | Bach – Violin Partita no. 2 in D minor, BWV 1004 | * V. Chaconne | 1720 |
 | `1ebe1abf` | Barber – Adagio for Strings | * Adagio for Strings | 1936 |
 | `aced4197` | Beethoven – Bagatelle for Piano in A minor “Für Elise”, WoO 59 | * Bagatelle for Piano in A minor “Für Elise”, WoO 59 | 1808‑1810 |
 | `2dd17c0c` | Beethoven – Concerto for Piano and Orchestra no. 4 in G major, op. 58 | * III. Rondo. Vivace | 1804‑1807 |
 | `e5cfd8b5` | Beethoven – Concerto for Piano and Orchestra no. 5 in E-flat major, op. 73 “Emperor” | * I. Allegro | 1809 |
 | `5364d796` | Beethoven – Concerto for Violin and Orchestra in D major, op. 61 | * III. Rondo. Allegro | 1806 |
 | `d42bc69b` | Beethoven – Egmont, op. 84 | * Ouvertüre. Sostenuto, ma non troppo – Allegro | 1809‑1810 |
-| `173f1261` | Beethoven – Piano Sonatas, op. 31 | * Sonata for Piano no. 17 in D minor, op. 31 no. 2 "Tempest": III. Allegretto | 1801‑1802 |
-| `591cd920` | Beethoven – Rondo a capriccio for Piano in G major, op. 129 “The Rage Over the Lost Penny”: Allegro vivace | * Rondo a capriccio for Piano in G major, op. 129 “The Rage Over the Lost Penny”: Allegro vivace | 1795 |
+| `d754d820` | Beethoven – Sonata for Piano no. 14 in C-sharp minor, op. 27 no. 2 “Moonlight” | * I. Adagio sostenuto | 1801 |
+| `3edecd40` | Beethoven – Sonata for Piano no. 17 in D minor, op. 31 no. 2 "Tempest" | * I. Largo - Allegro | 1801‑1802 |
 | `88a8eaa9` | Beethoven – Sonata for Piano no. 23 in F minor, op. 57 “Appassionata” | * I. Allegro assai | 1804‑1806 |
 | `c366ec5b` | Beethoven – Sonata for Piano no. 8 in C minor, op. 13 “Pathétique” | * II. Adagio cantabile | 1798 |
 | `26c8afae` | Beethoven – Sonata for Violin and Piano no. 5 in F major, op. 24 “Spring” | * I. Allegro | 1800‑1801 |
@@ -36,7 +36,6 @@
 | `c7caedf2` | Beethoven – Symphony no. 7 in A major, op. 92 | * II. Allegretto | 1811‑1812 |
 | `c35b4956` | Beethoven – Symphony no. 9 in D minor, op. 125 “Choral” | * IV. Finale. Presto – Allegro assai | 1823‑1824 |
 | `53ac5ed4` | Beethoven – Trio for Piano, Violin, and Cello no. 7 in B-flat major, op. 97 “Archduke” | * I. Allegro moderato | 1810‑1811 |
-| `bcd958bd` | Beethoven – Two Piano Sonatas, op. 27 | * Sonata for Piano no. 14 in C-sharp minor, op. 27 no. 2 “Moonlight”: I. Adagio sostenuto | 1801 |
 | `3ee98c65` | Bellini – Norma | * Atto I, scena 1. Scena e cavatina “Casta diva, che inargenti” (Norma, coro) | 1831 |
 | `312510a8` | Berlioz – Symphonie fantastique, op. 14 : Épisode de la vie d’un artiste … en cinq parties | * Symphonie fantastique, op. 14: IV. Marche au supplice | 1830 |
 | `45efd8f4` | Bizet – Carmen, WD 31 | * Carmen : Acte I. No. 5 Habanera « L’amour est un oiseau rebelle » (Carmen, chœur) | 1875 |
@@ -58,7 +57,7 @@
 | `8cb1e049` | Chabrier – España | * España | 1883 |
 | `d00148c7` | Charpentier – Te Deum, H. 146 | * Prélude | 1688‑1698 |
 | `d1f6b371` | Chopin – 24 Préludes pour le piano, op. 28 | * Prélude no. 15 in D‐flat major, op. 28 “Raindrop”: Sostenuto | 1835‑1839 |
-| `680c7826` | Chopin – Ballades | * Ballade no. 1 in G minor, op. 23 | 1831‑1835 |
+| `f94364c5` | Chopin – Ballade no. 1 in G minor, op. 23 | * Ballade no. 1 in G minor, op. 23 | 1831‑1835 |
 | `5f7ded0a` | Chopin – Concerto for Piano and Orchestra no. 1 in E minor, op. 11 | * I. Allegro maestoso | 1830 |
 | `dda6229e` | Chopin – Concerto for Piano and Orchestra no. 2 in F minor, op. 21 | * II. Larghetto | 1829‑1830 |
 | `09fb2287` | Chopin – Études, op. 10 | * Étude in E major, op. 10 no. 3: Lento ma non troppo | 1829‑1832 |
@@ -109,7 +108,7 @@
 | `925c3677` | Handel – Music for the Royal Fireworks, HWV 351 | * IV. La Réjouissance | 1749 |
 | `493b61ba` | Handel – Water Music, HWV 348–350 | * Water Music, Suite no. 2 in D major, HWV 349: 12. Alla hornpipe | 1717 |
 | `21ccd102` | Haydn – Piano Trios, Hob. XV:24-26 | * Piano Trio no. 39 in G major, Hob. XV:25: III. Rondo "in the Gypsies' stile". Presto | 1795 |
-| `c6360a27` | Haydn – String Quartets, op. 76 | * String Quartet in C major, op. 76 no. 3 Hob. III:77 “Kaiser”: II. Poco Adagio. Cantabile | 1796‑1797 |
+| `a723b328` | Haydn – String Quartet in C major, op. 76 no. 3 Hob. III:77 “Kaiser” | * II. Poco Adagio. Cantabile | 1796‑1797 |
 | `3e1453b3` | Haydn – Symphony no. 94 in G major, Hob. I:94 “Surprise” | * II. Andante | 1791 |
 | `0c2f8487` | Haydn – Trumpet Concerto in E-flat major | * Konzert für Trompete und Orchester Es-Dur, Hob. VIIe:1: III. Allegro | 1796 |
 | `439c1605` | Holst – The Planets, op. 32 | * IV. Jupiter, the Bringer of Jollity | 1914‑1916 |
@@ -166,7 +165,6 @@
 | `ded18a4a` | Paganini – 24 Caprices for Solo Violin, op. 1, MS 25 | * 24 Caprices for Solo Violin, MS 25, op. 1 no. 24 in A minor: Tema con variazioni. Quasi presto | 1802‑1817 |
 | `e039120f` | Piazzolla – Libertango | * Libertango | 1974 |
 | `f124195b` | Piazzolla – Oblivion | * Oblivion | 1982 |
-| `f168363e` | Prokofiev – Lieutenant Kijé Suite, op. 60 | * IV. Troika | 1933 |
 | `812b5cc4` | Prokofiev – Peter and the Wolf, op. 67 | * Peter and the Wolf, op. 67: 1. Introduction (no narration) | 1936 |
 | `0294f5e0` | Prokofiev – Romeo and Juliet: Suite no. 2, op. 64ter | * I. Montagues and Capulets | 1936 |
 | `5983b48e` | Prokofiev – Symphony no. 1 in D major, op. 25 “Classical” | * I. Allegro | 1916‑1917 |
@@ -248,7 +246,9 @@
 | `2d73a8a6` | Verdi – Messa da requiem | * IIa. Dies irae: Dies irae (coro) | 1874 |
 | `445fc058` | Verdi – Nabucco | * Parte III, scena 2. Coro “Va, pensiero, sull’ali dorate” (Coro) | 1841 |
 | `2dc7fb62` | Verdi – Rigoletto | * Atto III. “La donna è mobile” (Duca) | 1850‑1851 |
-| `87886dcf` | Vivaldi – The Four Seasons | * “The Four Seasons”: Concerto in E Major, op. 8 no. 1, RV. 269, “Spring”: 1. Allegro | 1723 |
+| `0d2a5e67` | Vivaldi – Concerto in E major, op. 8 no. 1, RV 269 “Spring” | * 1. Allegro | 1723 |
+| `6a6c97eb` | Vivaldi – Concerto in F minor, op. 8 no. 4, RV 297 “Winter” | * II. Largo | 1723 |
+| `4f9cffd7` | Vivaldi – Concerto in G minor, op. 8 no. 2, RV 315 “Summer” | * III. Presto | 1723 |
 | `597e017a` | Wagner – Der Ring des Nibelungen, WWV 86 | * The Valkyrie: Ride of the Valkyries | 1854‑1856 |
 | `1d774427` | Wagner – Lohengrin, WWV 75 | * Lohengrin: Act III, Scene I. Bridal Chorus (Choir) | 1846‑1848 |
 | `d801c361` | Wagner – Tannhäuser: Ouverture and Venusberg Music | * Tannhäuser und der Sängerkrieg auf Wartburg, WWV 70: Ouvertüre | 1843‑1845 |

@@ -39,6 +39,7 @@ excluded_composers:
   - 'Burman, Rahul Dev'
   - 'Burman, Sachin Dev'
   - 'Callery, Sean'
+  - 'Carlos, Wendy'
   - 'Calvi, Gérard'
   - 'Camilo, Michel'
   - 'Campuzano, Felipe'
@@ -328,6 +329,95 @@ excluded_works:
   'afea14ed-4f9c-4344-a6c4-18e22d8130f1': 'Sæle jolekveld'
   'be4bf7f3-bfb8-46b6-a1d0-ce301d558956': 'Ode To Joy'
 
+# --- Work Hierarchy Overrides ---
+# Promote true standalone works out of MusicBrainz container parents.
+work_hierarchy_overrides:
+  promote_subworks_to_top_level:
+    - '4cbf3d3e-11f1-4388-a0a0-681c7f249241' # Albinoni, Tomaso Giovanni - 12 Concerti a cinque, op. 10
+    - 'd9604b78-31cc-46ed-b432-a4328756c255' # Albinoni, Tomaso Giovanni - 12 Concerti a cinque, op. 5
+    - '77bb02cd-6fdd-4821-acd6-192e8cf00673' # Albinoni, Tomaso Giovanni - 12 Concerti a cinque, op. 7
+    - 'd7868317-5cbf-4663-a902-7cb186074c20' # Albinoni, Tomaso Giovanni - 12 Trattenimenti armonici, op. 6
+    - 'f6d12a95-59e3-4da6-ab36-8d2af45c4665' # Anglebert, Jean‐Henri d’ - Pièces de clavecin
+    - '6ae1ebe7-2287-4c8d-92e4-1badd38d108a' # Avison, Charles - 12 Concerti Grossi after Scarlatti
+    - '4ecf4e57-050b-4d12-87f0-8f8d6e9f3f6d' # Bach, Carl Philipp Emanuel - 6 Sonaten, Wq 63
+    - '078eed8c-e7d1-4c61-9b6a-d8c7c7ee05cb' # Bach, Carl Philipp Emanuel - 6 Symphonies, Wq. 182
+    - '7d1c4678-ad3f-4bfe-a0fb-0abcbe270e4f' # Bach, Carl Philipp Emanuel - 7 Organ Sonatas, Wq. 70
+    - 'fad5ff69-ae62-48c5-a185-a872c6a9edc6' # Bach, Carl Philipp Emanuel - Preußische Sonaten, Wq. 48
+    - '93fbd404-9241-459d-994a-2cf904474578' # Bach, Carl Philipp Emanuel - Württembergische Sonaten, Wq. 49
+    - '22e6c3a2-e0c7-40e5-a272-d8e3b58a3272' # Bach, Johann Sebastian - 16 Konzerte nach verschiedenen Meistern, BWV 972–987
+    - 'a7722307-39d3-47f6-8631-fa793dff9519' # Bach, Johann Sebastian - 6 Französische Suiten
+    - '3c1d42c1-0cdc-402e-8a0b-771b79c60742' # Bach, Johann Sebastian - 6 Partitas, BWV 825-830
+    - 'dc1b8a78-7287-44e2-a673-1ff60884e902' # Bach, Johann Sebastian - English Suites, BWV 806-811
+    - '4e4b97df-403a-4a27-b9fa-5bd8a8333604' # Bach, Johann Sebastian - Six Suites for Unaccompanied Cello
+    - '7481c7f5-71bd-464e-956a-c670f4117de3' # Bach, Johann Sebastian - Six concerts avec plusieurs instruments
+    - '4a8c18a0-efe2-4b56-a127-9958dec08ad3' # Bach, Johann Sebastian - Sonatas and Partitas for solo violin, BWV 1001–1006
+    - 'bcd958bd-7f94-4f46-803b-dc24a0fbe050' # Beethoven, Ludwig van - 2 Piano Sonatas, op. 27
+    - '9b760f24-1b25-43ba-912c-1a6733513ba9' # Beethoven, Ludwig van - 3 Quartets for Piano, Violin, Viola, and Cello, WoO 36
+    - '13c0c417-12ef-41f2-88bb-619a13ca619f' # Beethoven, Ludwig van - 3 String Quartets, op. 59
+    - 'a08f6489-80c3-4b34-a20a-ea3fe523a104' # Beethoven, Ludwig van - 3 String Trios, op. 9
+    - '3e53e5c3-02d2-4b7c-99c0-5f63a91553e1' # Beethoven, Ludwig van - 6 String Quartets, op. 18
+    - '6839959f-e575-4b56-8aca-e6d9cb477cdd' # Beethoven, Ludwig van - Cello Sonatas nos. 1 & 2, op. 5
+    - '39b3b802-8670-4ba0-b00c-c39f8bd0fa0f' # Beethoven, Ludwig van - Cello Sonatas nos. 4 & 5, op. 102
+    - 'ed5be2d7-f19d-4e29-955a-468cda8b1a80' # Beethoven, Ludwig van - Piano Sonatas, op. 10
+    - '1f69459b-ee9c-4d5f-8dbc-c7acc190cb90' # Beethoven, Ludwig van - Piano Sonatas, op. 14
+    - 'cc2b8f7f-8619-4a0d-8337-5d8659366555' # Beethoven, Ludwig van - Piano Sonatas, op. 2
+    - '173f1261-1665-48d1-86dd-f1da6e2ac9f2' # Beethoven, Ludwig van - Piano Sonatas, op. 31
+    - 'd4b6fec2-1f30-4a72-9fed-d1862a3fa13c' # Beethoven, Ludwig van - Piano Sonatas, op. 49
+    - 'c15293c6-faf3-4d8f-9bf4-b800f7a19154' # Beethoven, Ludwig van - Piano Trios nos. 1-3, op. 1
+    - '5ad519bd-aa0c-4104-ac38-83b74d28745e' # Beethoven, Ludwig van - Piano Trios nos. 5 & 6, op. 70
+    - '2a2ede75-f397-4c5f-b244-f4ae023a4e41' # Beethoven, Ludwig van - Sonatas for Violin and Piano, op. 12
+    - 'f2a1939b-6783-4f7a-a9f4-bb4c1756a06c' # Beethoven, Ludwig van - Sonatas for Violin and Piano, op. 30
+    - 'f424fb01-37b0-4965-9fbd-93b17c96ecf3' # Beethoven, Ludwig van - Three Piano Sonatas, WoO 47, "Kurfürstensonaten"
+    - '34f23db8-5107-4d2f-af58-74e5e552d4f6' # Brahms, Johannes - 2 String Quartets, op. 51
+    - 'df0fdda1-0e44-4468-9548-c4e6e2a4441f' # Brahms, Johannes - Two Clarinet Sonatas, op. 120
+    - 'dd1b7254-8887-4e8a-8c1f-dc6ad7d15821' # Clementi, Muzio - 3 Piano Sonatas, op. 23
+    - 'bf956d69-b4ad-4006-a836-6bfc20d2fcb2' # Clementi, Muzio - 3 Piano Sonatas, op. 8
+    - 'af0a9289-25cd-4c08-b18a-d058c35ecf9e' # Clementi, Muzio - 6 Piano Sonatas, op. 1
+    - '680c7826-6949-4861-9058-99dcec7b819d' # Chopin, Frédéric - Ballades
+    - 'ea194734-04d3-45cc-a3c6-3ff2ffa546d3' # Corelli, Arcangelo - 12 sonate da camera, op. 4
+    - '6e07b527-6273-4cb2-aedf-dd9b1ebbc16c' # Geminiani, Francesco - Six Cello Sonatas, op. 5
+    - 'ad27264f-0a96-42ee-923b-f1e6206d27df' # Geminiani, Francesco - Six Concertos, op. 7
+    - 'cea25928-6ad8-48e3-9e77-656cacf996c7' # Handel, George Frideric - 12 concerti grossi, op. 6
+    - '7bbe9901-8283-4db9-9b01-e36db54db596' # Handel, George Frideric - 6 Organ Concertos, op. 7, HWV 306-311
+    - 'de342f6e-d506-4cfe-aa76-cd9d94ca031d' # Handel, George Frideric - Concerti Grossi, op. 3, HWV 312–317
+    - 'bb28bccb-c099-475b-8643-7cd6c12bef94' # Handel, George Frideric - Organ Concertos, op. 4
+    - '2096a4fc-857a-44d8-9a5d-d95591fd1dbb' # Handel, George Frideric - Trio Sonatas, op. 2
+    - '4a4c29be-b1fa-488f-ac96-51c548db87f8' # Haydn, Joseph - String Quartets, op. 20
+    - '53426e7b-de6b-4850-a945-1414290202dd' # Haydn, Joseph - String Quartets, op. 33
+    - '451e07f2-fd9e-4900-a3a1-6cdcd0bc998c' # Haydn, Joseph - String Quartets, op. 50
+    - 'd1e9f952-6141-452e-8b79-c2ac74c3d0be' # Haydn, Joseph - String Quartets, op. 54
+    - '8da78395-132b-48f8-8820-a790a347f862' # Haydn, Joseph - String Quartets, op. 55
+    - '75bf87a7-89f8-4151-9345-4183606e9ae1' # Haydn, Joseph - String Quartets, op. 71
+    - '2b4a1774-33ab-4f06-85de-5341de3bbdd6' # Haydn, Joseph - String Quartets, op. 74
+    - 'c6360a27-dbf6-4065-9989-633405b96538' # Haydn, Joseph - String Quartets, op. 76
+    - 'e8b742e3-a017-418a-8afa-888d07ede65f' # Haydn, Joseph - String Quartets, op. 77
+    - 'db9f7d93-d1d8-4dc9-8966-3bd8beaf330e' # Kuhlau, Friedrich - 3 Sonatinas, op. 20
+    - '7259fd21-3adb-4536-805d-87aeeac6b02c' # Leclair, Jean‐Marie - 6 Violin Concertos, op. 7
+    - '9b176bf4-f3c9-46e7-a98a-ff97f4508661' # Locke, Matthew - Consort of Fower Parts
+    - '02f75fc9-16d1-4f46-b61a-dc64320db408' # Marais, Marin - Pieces en trio
+    - '2da65d48-f954-43b6-a7be-534d46f42168' # Mendelssohn, Felix - 3 String Quartets, op. 44
+    - '84cb100a-53ea-43c1-b1e7-d34ed7db11fd' # Mozart, Wolfgang Amadeus - 5 Divertimentos
+    - 'e8ded7ff-d408-48c4-aca9-d15b01af4be3' # Mozart, Wolfgang Amadeus - Three Concertos after J. C. Bach, K. 107
+    - 'bdfe27f6-bb16-44b9-ad02-8571d0a53118' # Onslow, George - 3 Cello Sonatas, op. 16
+    - '4ceecee0-b23b-40f1-a98f-37554b4fe1e8' # Paganini, Niccolò - Sei sonate per violino e chitarra, op. 2, MS 26
+    - '617ead5a-6eaa-403e-b8cb-f7551a1ced14' # Paganini, Niccolò - Sei sonate per violino e chitarra, op. 3, MS 27
+    - 'd5faaa7b-6e27-4a72-a1da-22cc267f387a' # Paganini, Niccolò - Tre duetti per violino e fagotto, MS 130
+    - 'a3289f34-4fe3-470a-96ab-f02c1126b8e8' # Pärt, Arvo - Two sonatinas, Op. 1
+    - '299afd59-cc75-45cb-958f-a553cbe0982f' # Rossini, Gioachino - Sei sonate a quattro (per 2 violini, violoncello, contrabasso)
+    - '1b6eceb2-0d8b-4809-9d6a-95b3eea8dfd8' # Schubert, Franz - 3 Sonatas for Violin and Piano, op. 137
+    - '608c47d7-938d-4030-b4a1-53237d506d3b' # Schumann, Robert - Three String Quartets, op. 41
+    - '52e9b2d4-46db-4bf5-9ba7-07a57f32589c' # Sibelius, Jean - 3 Sonatinas, op. 67
+    - '38b77958-aa1e-4e71-9427-17c45476b88b' # Telemann, Georg Philipp - 12 Fantasias for Flute without Bass, TWV 40:2-13
+    - 'e90a37af-8b42-442a-9381-93a025e1a101' # Telemann, Georg Philipp - Die kleine Cammer-Music
+    - '273f4211-cb0c-4eaa-a78a-2711a387c463' # Vivaldi, Antonio - 12 concerti, op. 7
+    - '40b35a3c-0790-4d6b-a336-cb5bdf2ae802' # Vivaldi, Antonio - 6 Flute Concertos, op. 10
+    - 'fe884180-25bd-4948-87ed-6c25be60a9ac' # Vivaldi, Antonio - La cetra, op. 9
+    - 'bf690cb7-f824-46e3-a701-976a98c3f05c' # Vivaldi, Antonio - La stravaganza, op. 4
+    - '161dd98a-9b6b-46b1-863b-1899af0d06f9' # Vivaldi, Antonio - L’estro armonico, op. 3
+    - '7044d543-9f9d-4598-8ee7-0f9945d28595' # Vivaldi, Antonio - The Contest Between Harmony and Invention, op. 8
+    - '87886dcf-9776-49cb-b6f5-10104da6e42c' # Vivaldi, Antonio - The Four Seasons
+    - '25f84f27-f09e-4e5b-84f9-1c0e414e5e33' # Widor, Charles‐Marie - Organ Symphonies, op. 13
+
 # --- Work Significance Score (WSS) Overrides ---
 # Manually set the WSS for specific works.
 wss_overrides:
@@ -363,6 +453,7 @@ pss_overrides:
   - 'c2cb4d52-1ea9-31b3-997b-68c0316b0f68' # Tchaikovsky - Symphony No. 6: I.
   - 'de172280-45e0-359d-9221-2189643b664f' # Tchaikovsky - Violin Concerto: I.
   - '9ffe50aa-b471-4e33-be06-61fd3625a4e3' # Verdi - Requiem: Dies Irae
+  - 'c5b55bb3-a054-3135-909a-f6b2c2efcb93' # Vivaldi - Summer: III. Presto
   - '5a75bea9-985d-4267-9a0a-2ace57e20716' # Wagner - Lohengrin: Bridal Chorus
   - ''
 
@@ -388,6 +479,7 @@ deezer_overrides:
   '5a75bea9-985d-4267-9a0a-2ace57e20716': [82564302]
   'bcfe6060-b77b-354e-9cc3-543fe9d8d2b2': [2789061702]
   'a653f923-b1cf-366a-961f-40b2afc2030b': [3215945731]
+  'c5b55bb3-a054-3135-909a-f6b2c2efcb93': [1096004882]
 
 # --- Manual Classification Overrides ---
 # Manually force a work into a specific type category.

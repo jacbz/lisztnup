@@ -34,6 +34,7 @@ import math
 import os
 import re
 import unicodedata
+from copy import deepcopy
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -327,18 +328,10 @@ class MusicbrainzProcessor:
         Initializes the processor.
         :param composers_data: A list of composer dictionaries from the raw JSON file.
         """
-        self.composers = self._parse_input_data(composers_data)
-        self._composer_map = {c.gid: c for c in self.composers}
-        self._composer_names: Dict[str, str] = {c.gid: c.name for c in self.composers}
-        self.unresolved_work_candidates: Dict[str, List[Tuple[str, str]]] = defaultdict(list)
+        self.stats: Counter = Counter()
         
-        # Load work type matching rules
-        with open("WORK_TYPE_MATCHING_RULES.yaml", "r", encoding="utf-8") as f:
-            rules = yaml.safe_load(f)
-        self.general_rules = rules.get("general_rules", {})
-        self.composer_specific_rules = rules.get("composer_specific_rules", {})
-        
-        # Load work processing configuration
+        # Load work processing configuration before parsing so raw hierarchy
+        # overrides can reshape MusicBrainz parent/child mistakes early.
         with open("WORK_PROCESSING_CONFIG.yaml", "r", encoding="utf-8") as f:
             config = yaml.safe_load(f) or {}
         self.excluded_composers = set(config.get("excluded_composers") or [])
@@ -347,7 +340,11 @@ class MusicbrainzProcessor:
         self.pss_overrides = config.get("pss_overrides") or {}
         self.manual_classification_overrides = config.get("manual_classification_overrides") or {}
         self.deezer_overrides: Dict[str, List[int]] = config.get("deezer_overrides") or {}
-        
+        hierarchy_overrides = config.get("work_hierarchy_overrides") or {}
+        self.promote_subworks_to_top_level: Set[str] = set(
+            hierarchy_overrides.get("promote_subworks_to_top_level") or []
+        )
+
         # Load year numbers from add_year_numbers pipeline
         self.year_numbers_path = Path("add_year_numbers/WORK_YEAR_NUMBERS.yml")
         self.checked_gids_path = Path("add_year_numbers/checked_gids.txt")
@@ -358,9 +355,28 @@ class MusicbrainzProcessor:
         else:
             self.year_overrides = {}
             log.warning("Year numbers file not found: %s", self.year_numbers_path)
-        
-        self.stats: Counter = Counter()
 
+        # Load work type matching rules before hierarchy overrides so dissolved
+        # children can inherit parent classifications from rules/overrides.
+        with open("WORK_TYPE_MATCHING_RULES.yaml", "r", encoding="utf-8") as f:
+            rules = yaml.safe_load(f)
+        self.general_rules = rules.get("general_rules", {})
+        self.composer_specific_rules = rules.get("composer_specific_rules", {})
+        self.final_work_types = set(self.general_rules.keys()) | {
+            work_type for work_type in TYPE_MAPPING.values() if work_type != "other"
+        }
+
+        composers_data = self._apply_work_hierarchy_overrides(composers_data)
+        self.composers = self._parse_input_data(composers_data)
+        self._composer_map = {c.gid: c for c in self.composers}
+        self._composer_names: Dict[str, str] = {c.gid: c.name for c in self.composers}
+        self._root_work_map: Dict[str, MBWork] = {
+            work.gid: work
+            for composer in self.composers
+            for work in composer.works
+        }
+        self.unresolved_work_candidates: Dict[str, List[Tuple[str, str]]] = defaultdict(list)
+        
     def _parse_input_data(self, raw_data: List[Dict[str, Any]]) -> List[MBComposer]:
         """Parses the raw list of dictionaries into a list of MBComposer objects."""
         return [
@@ -375,6 +391,127 @@ class MusicbrainzProcessor:
             )
             for c in raw_data
         ]
+
+    def _apply_year_override(
+        self,
+        work_gid: str,
+        begin_year: Optional[int],
+        end_year: Optional[int],
+    ) -> Tuple[Optional[int], Optional[int]]:
+        """Returns work years after applying add_year_numbers overrides."""
+        if work_gid not in self.year_overrides:
+            return begin_year, end_year
+
+        override = self.year_overrides[work_gid]
+        if isinstance(override, list) and len(override) >= 2:
+            return override[0], override[1]
+        if isinstance(override, int):
+            return None, override
+        if override is None:
+            return None, None
+        return begin_year, end_year
+
+    def _apply_work_hierarchy_overrides(
+        self, raw_data: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """
+        Applies raw MusicBrainz hierarchy overrides before parsing.
+
+        Some MusicBrainz parent works are catalog containers rather than real
+        top-level works. For configured parent GIDs, promote all child works
+        to composer-level roots and drop the container.
+        """
+        if not self.promote_subworks_to_top_level:
+            return raw_data
+
+        def rewrite_works(
+            works: List[Dict[str, Any]],
+            composer_name: str,
+            inherited_type: Optional[str] = None,
+            promoted_roots: Optional[List[Dict[str, Any]]] = None,
+        ) -> List[Dict[str, Any]]:
+            if promoted_roots is None:
+                promoted_roots = []
+
+            rewritten: List[Dict[str, Any]] = []
+
+            for work in works:
+                work_gid = work.get("gid")
+
+                if work_gid in self.promote_subworks_to_top_level:
+                    children = work.get("subworks", []) or []
+                    if not children:
+                        log.warning(
+                            "WORK HIERARCHY OVERRIDE EMPTY PARENT | %s (%s) | Composer: %s",
+                            work.get("name"),
+                            work_gid,
+                            composer_name,
+                        )
+                        self.stats["work_hierarchy_override_empty_parents"] += 1
+
+                    parent_source_type = work.get("type") or inherited_type or "Unknown"
+                    parent_type = self._resolve_work_type(
+                        work_gid,
+                        work.get("name", ""),
+                        parent_source_type,
+                        composer_name,
+                    )
+                    parent_begin_year, parent_end_year = self._apply_year_override(
+                        work_gid,
+                        work.get("begin_year"),
+                        work.get("end_year"),
+                    )
+                    for child_source in children:
+                        child = deepcopy(child_source)
+                        if child.get("type") in (None, "Unknown") and parent_type != "other":
+                            child["type"] = parent_type
+                        if child.get("begin_year") is None:
+                            child["begin_year"] = parent_begin_year
+                        if child.get("end_year") is None:
+                            child["end_year"] = parent_end_year
+                        child["subworks"] = rewrite_works(
+                            child.get("subworks", []) or [],
+                            composer_name,
+                            child.get("type") or parent_type,
+                            promoted_roots,
+                        )
+                        promoted_roots.append(child)
+
+                    self.stats["work_hierarchy_parents_removed"] += 1
+                    self.stats["work_hierarchy_subworks_promoted"] += len(children)
+                    log.info(
+                        "WORK HIERARCHY OVERRIDE | Promoted %d subworks from %s (%s) | Composer: %s",
+                        len(children),
+                        work.get("name"),
+                        work_gid,
+                        composer_name,
+                    )
+                    continue
+
+                work_copy = deepcopy(work)
+                current_type = work_copy.get("type") or inherited_type
+                work_copy["subworks"] = rewrite_works(
+                    work_copy.get("subworks", []) or [],
+                    composer_name,
+                    current_type,
+                    promoted_roots,
+                )
+                rewritten.append(work_copy)
+
+            return rewritten
+
+        normalized_data: List[Dict[str, Any]] = []
+        for composer in raw_data:
+            composer_copy = dict(composer)
+            promoted_roots: List[Dict[str, Any]] = []
+            composer_copy["works"] = rewrite_works(
+                composer.get("works", []) or [],
+                composer.get("name", composer.get("gid", "unknown composer")),
+                promoted_roots=promoted_roots,
+            ) + promoted_roots
+            normalized_data.append(composer_copy)
+
+        return normalized_data
 
     @staticmethod
     def _normalize_countries(composers: List[FinalComposer]) -> None:
@@ -520,6 +657,7 @@ class MusicbrainzProcessor:
 
         # Apply specific patches
         self._apply_special_patches(final_work_list)
+        self._report_potential_work_hierarchy_dissolves(final_work_list)
 
         final_output = FinalOutput(composers=final_composers, works=final_work_list)
         self._write_unresolved_log(final_output)
@@ -622,12 +760,7 @@ class MusicbrainzProcessor:
                 if root_work.gid in self.year_overrides:
                     override = self.year_overrides[root_work.gid]
                     log.debug("YEAR OVERRIDE | %s (%s) | %s/%s -> %s", root_work.name, root_work.gid, begin_year, end_year, override)
-                    if isinstance(override, list) and len(override) >= 2:
-                        begin_year, end_year = override[0], override[1]
-                    elif isinstance(override, int):
-                        begin_year, end_year = None, override
-                    elif override is None:
-                        begin_year, end_year = None, None
+                    begin_year, end_year = self._apply_year_override(root_work.gid, begin_year, end_year)
 
                 work_type = self._transform_type(root_work, composer)
                 log.info("WORK CANDIDATE | %s (%s) | Composer: %s | Source type: %s | Final type: %s | WSS: %.2f | Parts: %d",
@@ -773,6 +906,78 @@ class MusicbrainzProcessor:
             with open("missing_year_numbers.txt", "w", encoding="utf-8") as f:
                 f.write("\n".join(missing_year_gids))
             print(f"Found {len(missing_year_gids)} works without year numbers. See 'missing_year_numbers.txt'")
+
+    def _report_potential_work_hierarchy_dissolves(self, works: List[FinalWork]) -> None:
+        """
+        Reports surviving root works that look like catalog containers.
+
+        Heuristic: the root has multiple direct subworks; every direct subwork
+        has a "no." marker and at least two children; those children are all
+        leaves; and at least two direct subworks still have surviving final
+        parts. This avoids flagging a collection when filtering only retained
+        one numbered work inside it.
+        """
+        candidates = []
+        no_marker = re.compile(r"\bno\.\s+\S+", re.IGNORECASE)
+
+        for final_work in works:
+            root_work = self._root_work_map.get(final_work.gid)
+            if not root_work or root_work.gid in self.promote_subworks_to_top_level:
+                continue
+            if len(root_work.subworks) < 2:
+                continue
+
+            final_part_gids = {part.gid for part in final_work.parts}
+            represented_subworks = []
+            should_dissolve = True
+            for subwork in root_work.subworks:
+                if not no_marker.search(subwork.name):
+                    should_dissolve = False
+                    break
+                if len(subwork.subworks) < 2:
+                    should_dissolve = False
+                    break
+                if any(child.subworks for child in subwork.subworks):
+                    should_dissolve = False
+                    break
+                child_gids = {child.gid for child in subwork.subworks}
+                if child_gids & final_part_gids:
+                    represented_subworks.append(subwork)
+
+            if should_dissolve and len(represented_subworks) >= 2:
+                composer_name = self._composer_names.get(final_work.composer, final_work.composer)
+                candidates.append((composer_name, final_work, root_work, represented_subworks))
+
+        print(f"Potential work hierarchy dissolves: {len(candidates)}")
+
+        if not candidates:
+            log.info("Potential work hierarchy dissolves: 0")
+            return
+
+        log.warning("=" * 60)
+        log.warning("POTENTIAL WORK HIERARCHY DISSOLVES: %d", len(candidates))
+        log.warning(
+            "Copy these lines under work_hierarchy_overrides.promote_subworks_to_top_level:"
+        )
+        for composer_name, final_work, _, _ in candidates:
+            log.warning("    - '%s' # %s - %s", final_work.gid, composer_name, final_work.name)
+
+        for composer_name, final_work, root_work, represented_subworks in candidates:
+            log.warning(
+                "DISSOLVE CANDIDATE | %s (%s) | Composer: %s | Subworks: %d | Represented after filtering: %d",
+                final_work.name,
+                final_work.gid,
+                composer_name,
+                len(root_work.subworks),
+                len(represented_subworks),
+            )
+            for subwork in root_work.subworks:
+                log.warning(
+                    "  CHILD | %s (%s) | Leaf movements: %d",
+                    subwork.name,
+                    subwork.gid,
+                    len(subwork.subworks),
+                )
 
     def _format_part_names(self, works: List[FinalWork]) -> None:
         """
@@ -1246,28 +1451,40 @@ class MusicbrainzProcessor:
             return [work]
         return filtered_leafs
 
-    def _transform_type(self, work: MBWork, composer: MBComposer) -> str:
+    def _resolve_work_type(
+        self,
+        work_gid: str,
+        work_name: str,
+        source_type: Optional[str],
+        composer_name: str,
+        composer_gid: Optional[str] = None,
+    ) -> str:
         """Determines the simplified work type based on rules."""
-        composer_name = composer.name
-        work_name_normalized = work.name.replace("’", "'").replace("“", '"').replace("”", '"')
+        work_type = source_type or "Unknown"
+        work_name_normalized = work_name.replace("’", "'").replace("“", '"').replace("”", '"')
 
-        if work.gid in self.manual_classification_overrides:
-            result = self.manual_classification_overrides[work.gid]
+        if work_gid in self.manual_classification_overrides:
+            result = self.manual_classification_overrides[work_gid]
             log.debug("TYPE RESOLVED (manual override) | %s (%s) | %s -> %s | Composer: %s",
-                      work.name, work.gid, work.type, result, composer_name)
+                      work_name, work_gid, work_type, result, composer_name)
             return result
 
-        if "Piano Sonata" in work_name_normalized and work.type == "Sonata":
+        if work_type in self.final_work_types:
+            log.debug("TYPE RESOLVED (inherited final type) | %s (%s) | %s | Composer: %s",
+                      work_name, work_gid, work_type, composer_name)
+            return work_type
+
+        if "Piano Sonata" in work_name_normalized and work_type == "Sonata":
             log.debug("TYPE RESOLVED (Piano Sonata special case) | %s (%s) | %s -> piano | Composer: %s",
-                      work.name, work.gid, work.type, composer_name)
+                      work_name, work_gid, work_type, composer_name)
             return "piano"
 
         # match only the whole word "ballet", not variants like "ballett"
         if re.search(r"\bballet\b", work_name_normalized, re.IGNORECASE):
             log.debug("TYPE RESOLVED (ballet keyword) | %s (%s) | %s -> ballet | Composer: %s",
-                      work.name, work.gid, work.type, composer_name)
+                      work_name, work_gid, work_type, composer_name)
             return "ballet"
-        
+
         # Composer specific rules
         if composer_name in self.composer_specific_rules:
             for rule_type, patterns in self.composer_specific_rules[composer_name].items():
@@ -1275,13 +1492,13 @@ class MusicbrainzProcessor:
                     for pattern in patterns:
                         if isinstance(pattern, str) and re.search(pattern, work_name_normalized, re.IGNORECASE):
                             log.debug("TYPE RESOLVED (composer-specific rule) | %s (%s) | %s -> %s | Composer: %s | Pattern: %s",
-                                      work.name, work.gid, work.type, rule_type, composer_name, pattern)
+                                      work_name, work_gid, work_type, rule_type, composer_name, pattern)
                             return rule_type
 
-        if work.type in TYPE_MAPPING and TYPE_MAPPING[work.type] != "other":
-            result = TYPE_MAPPING[work.type]
+        if work_type in TYPE_MAPPING and TYPE_MAPPING[work_type] != "other":
+            result = TYPE_MAPPING[work_type]
             log.debug("TYPE RESOLVED (TYPE_MAPPING) | %s (%s) | %s -> %s | Composer: %s",
-                      work.name, work.gid, work.type, result, composer_name)
+                      work_name, work_gid, work_type, result, composer_name)
             return result
 
         # General rules
@@ -1290,13 +1507,24 @@ class MusicbrainzProcessor:
                 for pattern in patterns:
                     if isinstance(pattern, str) and re.search(pattern, work_name_normalized, re.IGNORECASE):
                         log.debug("TYPE RESOLVED (general rule) | %s (%s) | %s -> %s | Composer: %s | Pattern: %s",
-                                  work.name, work.gid, work.type, rule_type, composer_name, pattern)
+                                  work_name, work_gid, work_type, rule_type, composer_name, pattern)
                         return rule_type
 
         log.debug("TYPE UNRESOLVED (no rule matched) | %s (%s) | Source type: %s -> other | Composer: %s",
-                  work.name, work.gid, work.type, composer_name)
-        self.unresolved_work_candidates[composer.gid].append((work.name, work.type))
+                  work_name, work_gid, work_type, composer_name)
+        if composer_gid is not None:
+            self.unresolved_work_candidates[composer_gid].append((work_name, work_type))
         return "other"
+
+    def _transform_type(self, work: MBWork, composer: MBComposer) -> str:
+        """Determines the simplified work type based on rules."""
+        return self._resolve_work_type(
+            work.gid,
+            work.name,
+            work.type,
+            composer.name,
+            composer.gid,
+        )
 
     def _select_deezer_ids(self, recordings: List[MBRecording], max_ids: int = 5) -> List[int]:
         """

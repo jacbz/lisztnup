@@ -3,28 +3,28 @@
  */
 export const BEGINNER_TRACKLIST = [
 	'c9790161', // Albéniz – Asturias (guitar version)
+	'eee93bf3', // Bach – Brandenburg Concerto no. 3 in G major, BWV 1048
+	'55b871c7', // Bach – Cello Suite no. 1 in G major, BWV 1007
 	'fe8612d1', // Bach – Concerto for 2 Violins in D minor, BWV 1043
 	'1d51e560', // Bach – Goldberg Variations, BWV 988
 	'e74a3a95', // Bach – Keyboard Concerto in D minor, BWV 1052
 	'179cc1f2', // Bach – Orchestral Suite no. 2 in B minor, BWV 1067
 	'1767c8ae', // Bach – Orchestral Suite no. 3 in D major, BWV 1068
-	'7481c7f5', // Bach – Six concerts avec plusieurs instruments (Brandenburg no. 3)
-	'4e4b97df', // Bach – Six Suites for Unaccompanied Cello
-	'4a8c18a0', // Bach – Sonatas and Partitas for solo violin, BWV 1001–1006
 	'45afb3b2', // Bach – St Matthew Passion, BWV 244
 	'bd511c33', // Bach – The Well-Tempered Clavier, BWV 846–893
 	'c4f0bd0a', // Bach – Toccata und Fuge d-Moll, BWV 565
 	'5543ddeb', // Bach – Violin Concerto in A minor, BWV 1041
+	'20a652f5', // Bach – Violin Partita no. 2 in D minor, BWV 1004
 	'1ebe1abf', // Barber – Adagio for Strings, op. 11
 	'aced4197', // Beethoven – Bagatelle for Piano in A minor “Für Elise”, WoO 59
 	'2dd17c0c', // Beethoven – Concerto for Piano and Orchestra no. 4 in G major, op. 58
 	'e5cfd8b5', // Beethoven – Concerto for Piano and Orchestra no. 5 in E-flat major, op. 73 “Emperor”
 	'5364d796', // Beethoven – Concerto for Violin and Orchestra in D major, op. 61
 	'd42bc69b', // Beethoven - Egmont Overture, op. 84
-	'591cd920', // Beethoven – Rage over a Lost Penny
+	// '591cd920', // Beethoven – Rage over a Lost Penny
 	'c366ec5b', // Beethoven – Sonata for Piano no. 8 in C minor, op. 13 “Pathétique”
-	'bcd958bd', // Beethoven – Sonata for Piano no. 14 in C-sharp minor, op. 27 no. 2 “Moonlight”
-	'173f1261', // Beethoven – Sonata for Piano no. 17 in D minor, op. 31 no. 2 “Tempest”
+	'd754d820', // Beethoven – Sonata for Piano no. 14 in C-sharp minor, op. 27 no. 2 “Moonlight”
+	'3edecd40', // Beethoven – Sonata for Piano no. 17 in D minor, op. 31 no. 2 “Tempest”
 	'88a8eaa9', // Beethoven – Sonata for Piano no. 23 in F minor, op. 57 “Appassionata”
 	'26c8afae', // Beethoven – Sonata for Violin and Piano no. 5 in F major, op. 24 “Spring”
 	'87281f3c', // Beethoven – Sonata for Violin and Piano no. 9 in A major, op. 47 “Kreutzer”
@@ -56,7 +56,7 @@ export const BEGINNER_TRACKLIST = [
 	'8cb1e049', // Chabrier – España
 	'd00148c7', // Charpentier – Te Deum, H. 146
 	'd1f6b371', // Chopin – 24 Préludes pour le piano, op. 28
-	'680c7826', // Chopin – Ballades
+	'f94364c5', // Chopin – Ballade No. 1
 	'5f7ded0a', // Chopin – Concerto for Piano and Orchestra no. 1 in E minor, op. 11
 	'dda6229e', // Chopin – Concerto for Piano and Orchestra no. 2 in F minor, op. 21
 	'09fb2287', // Chopin – Études, op. 10
@@ -107,7 +107,7 @@ export const BEGINNER_TRACKLIST = [
 	'925c3677', // Handel – Music for the Royal Fireworks, HWV 351
 	'493b61ba', // Handel – Water Music
 	'21ccd102', // Haydn - Piano Trio in G major, Hob. XV:25 "Gypsy"
-	'c6360a27', // Haydn - String Quartets, op. 76 (Emperor Quartet)
+	'a723b328', // Haydn - String Quartet in C major, op. 76 no. 3 Hob. III:77 “Kaiser”
 	'3e1453b3', // Haydn – Symphony no. 94 in G major “Surprise”
 	'0c2f8487', // Haydn – Trumpet Concerto in E-flat major
 	'fc89d2b2', // Humperdinck – Hansel and Gretel
@@ -164,7 +164,7 @@ export const BEGINNER_TRACKLIST = [
 	'ded18a4a', // Paganini – 24 Caprices for Solo Violin, op. 1: no. 24 in A minor
 	'e039120f', // Piazzolla – Libertango
 	'f124195b', // Piazzolla – Oblivion
-	'f168363e', // Prokofiev - Lieutenant Kijé Suite (Troika)
+	// 'f168363e', // Prokofiev - Lieutenant Kijé Suite (Troika)
 	'0294f5e0', // Prokofiev – Romeo and Juliet: Suite no. 2, op. 64ter
 	'5983b48e', // Prokofiev – Symphony no. 1 in D major, op. 25 “Classical”
 	'812b5cc4', // Prokofiev – Peter and the Wolf
@@ -246,7 +246,9 @@ export const BEGINNER_TRACKLIST = [
 	'2d73a8a6', // Verdi – Messa da Requiem: II. Dies irae
 	'445fc058', // Verdi - Nabucco (Va, pensiero)
 	'2dc7fb62', // Verdi – Rigoletto (La donna è mobile)
-	'87886dcf', // Vivaldi – The Four Seasons
+	'0d2a5e67', // Vivaldi – The Four Seasons - Spring
+	'4f9cffd7', // Vivaldi – The Four Seasons - Summer
+	'6a6c97eb', // Vivaldi – The Four Seasons - Winter
 	'1d774427', // Wagner - Lohengrin (Bridal Chorus)
 	'597e017a', // Wagner – Der Ring des Nibelungen (Ride of the Valkyries)
 	'd801c361', // Wagner – Tannhäuser: Ouverture and Venusberg Music
