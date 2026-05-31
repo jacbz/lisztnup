@@ -125,6 +125,7 @@
 	let dailyChallengeCountdown = $state('');
 	let loadingCardTimer: ReturnType<typeof setTimeout> | null = null;
 	let showDataLoadingCard = $state(false);
+	let dataLoadingCardShownAt = $state<number | null>(null);
 	let dataLoadFailed = $state(false);
 	let startButtonSentinel: HTMLDivElement | undefined = $state();
 	let startButtonWrapper: HTMLDivElement | undefined = $state();
@@ -154,6 +155,7 @@
 		'/gameover.mp3'
 	];
 	const START_BUTTON_FALLBACK_HEIGHT = 84;
+	const DATA_LOADING_CARD_DELAY_MS = 300;
 	const START_BUTTON_READY_MEASURE_DELAY_MS = 220;
 	const START_BUTTON_STICKY_REVEAL_DELAY_MS = 700;
 
@@ -617,6 +619,16 @@
 		void Promise.all(GAME_SOUND_FILES.map((url) => preloadAsset(url)));
 	}
 
+	function showDataLoadingProgressCard() {
+		showDataLoadingCard = true;
+		dataLoadingCardShownAt ??= performance.now();
+	}
+
+	function getDataLoadingCardElapsedMs() {
+		if (dataLoadingCardShownAt === null) return 0;
+		return Math.max(0, performance.now() - dataLoadingCardShownAt);
+	}
+
 	function cancelStartButtonShellReveal() {
 		if (startButtonMeasureTimer !== null) {
 			clearTimeout(startButtonMeasureTimer);
@@ -660,13 +672,18 @@
 			}
 
 			cancelStartButtonShellReveal();
+			const elapsedLoadingCardMs = getDataLoadingCardElapsedMs();
+			const stickyRevealDelayMs = Math.max(
+				0,
+				START_BUTTON_STICKY_REVEAL_DELAY_MS - elapsedLoadingCardMs
+			);
 			startButtonShellRevealTimer = setTimeout(() => {
 				startButtonShellRevealTimer = null;
 				startButtonShellRevealFrame = window.requestAnimationFrame(() => {
 					startButtonShellRevealFrame = null;
 					showStartButtonShell = true;
 				});
-			}, START_BUTTON_STICKY_REVEAL_DELAY_MS);
+			}, stickyRevealDelayMs);
 		}
 	}
 
@@ -711,9 +728,9 @@
 
 		loadingCardTimer = setTimeout(() => {
 			if (!destroyed && !get(isDataLoaded)) {
-				showDataLoadingCard = true;
+				showDataLoadingProgressCard();
 			}
-		}, 300);
+		}, DATA_LOADING_CARD_DELAY_MS);
 
 		dataLoadFailed = false;
 		let loadFailed = false;
@@ -723,7 +740,7 @@
 				loadFailed = true;
 				if (!destroyed) {
 					dataLoadFailed = true;
-					showDataLoadingCard = true;
+					showDataLoadingProgressCard();
 				}
 			})
 			.finally(() => {
