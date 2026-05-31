@@ -911,11 +911,11 @@ class MusicbrainzProcessor:
         """
         Reports surviving root works that look like catalog containers.
 
-        Heuristic: the root has multiple direct subworks; every direct subwork
-        has a "no." marker and at least two children; those children are all
-        leaves; and at least two direct subworks still have surviving final
-        parts. This avoids flagging a collection when filtering only retained
-        one numbered work inside it.
+        Heuristic: the root has 2-9 direct subworks; every direct subwork has
+        a "no." marker and at least two children; those children are all leaves;
+        and at least two direct subworks still have surviving final parts. This
+        avoids flagging a collection when filtering only retained one numbered
+        work inside it.
         """
         candidates = []
         no_marker = re.compile(r"\bno\.\s+\S+", re.IGNORECASE)
@@ -924,7 +924,7 @@ class MusicbrainzProcessor:
             root_work = self._root_work_map.get(final_work.gid)
             if not root_work or root_work.gid in self.promote_subworks_to_top_level:
                 continue
-            if len(root_work.subworks) < 2:
+            if len(root_work.subworks) < 2 or len(root_work.subworks) > 9:
                 continue
 
             final_part_gids = {part.gid for part in final_work.parts}

@@ -333,18 +333,12 @@ excluded_works:
 # Promote true standalone works out of MusicBrainz container parents.
 work_hierarchy_overrides:
   promote_subworks_to_top_level:
-    - '4cbf3d3e-11f1-4388-a0a0-681c7f249241' # Albinoni, Tomaso Giovanni - 12 Concerti a cinque, op. 10
-    - 'd9604b78-31cc-46ed-b432-a4328756c255' # Albinoni, Tomaso Giovanni - 12 Concerti a cinque, op. 5
-    - '77bb02cd-6fdd-4821-acd6-192e8cf00673' # Albinoni, Tomaso Giovanni - 12 Concerti a cinque, op. 7
-    - 'd7868317-5cbf-4663-a902-7cb186074c20' # Albinoni, Tomaso Giovanni - 12 Trattenimenti armonici, op. 6
     - 'f6d12a95-59e3-4da6-ab36-8d2af45c4665' # Anglebert, Jean‐Henri d’ - Pièces de clavecin
-    - '6ae1ebe7-2287-4c8d-92e4-1badd38d108a' # Avison, Charles - 12 Concerti Grossi after Scarlatti
     - '4ecf4e57-050b-4d12-87f0-8f8d6e9f3f6d' # Bach, Carl Philipp Emanuel - 6 Sonaten, Wq 63
     - '078eed8c-e7d1-4c61-9b6a-d8c7c7ee05cb' # Bach, Carl Philipp Emanuel - 6 Symphonies, Wq. 182
     - '7d1c4678-ad3f-4bfe-a0fb-0abcbe270e4f' # Bach, Carl Philipp Emanuel - 7 Organ Sonatas, Wq. 70
     - 'fad5ff69-ae62-48c5-a185-a872c6a9edc6' # Bach, Carl Philipp Emanuel - Preußische Sonaten, Wq. 48
     - '93fbd404-9241-459d-994a-2cf904474578' # Bach, Carl Philipp Emanuel - Württembergische Sonaten, Wq. 49
-    - '22e6c3a2-e0c7-40e5-a272-d8e3b58a3272' # Bach, Johann Sebastian - 16 Konzerte nach verschiedenen Meistern, BWV 972–987
     - 'a7722307-39d3-47f6-8631-fa793dff9519' # Bach, Johann Sebastian - 6 Französische Suiten
     - '3c1d42c1-0cdc-402e-8a0b-771b79c60742' # Bach, Johann Sebastian - 6 Partitas, BWV 825-830
     - 'dc1b8a78-7287-44e2-a673-1ff60884e902' # Bach, Johann Sebastian - English Suites, BWV 806-811
@@ -374,7 +368,6 @@ work_hierarchy_overrides:
     - 'bf956d69-b4ad-4006-a836-6bfc20d2fcb2' # Clementi, Muzio - 3 Piano Sonatas, op. 8
     - 'af0a9289-25cd-4c08-b18a-d058c35ecf9e' # Clementi, Muzio - 6 Piano Sonatas, op. 1
     - '680c7826-6949-4861-9058-99dcec7b819d' # Chopin, Frédéric - Ballades
-    - 'ea194734-04d3-45cc-a3c6-3ff2ffa546d3' # Corelli, Arcangelo - 12 sonate da camera, op. 4
     - '6e07b527-6273-4cb2-aedf-dd9b1ebbc16c' # Geminiani, Francesco - Six Cello Sonatas, op. 5
     - 'ad27264f-0a96-42ee-923b-f1e6206d27df' # Geminiani, Francesco - Six Concertos, op. 7
     - 'cea25928-6ad8-48e3-9e77-656cacf996c7' # Handel, George Frideric - 12 concerti grossi, op. 6
@@ -409,11 +402,7 @@ work_hierarchy_overrides:
     - '52e9b2d4-46db-4bf5-9ba7-07a57f32589c' # Sibelius, Jean - 3 Sonatinas, op. 67
     - '38b77958-aa1e-4e71-9427-17c45476b88b' # Telemann, Georg Philipp - 12 Fantasias for Flute without Bass, TWV 40:2-13
     - 'e90a37af-8b42-442a-9381-93a025e1a101' # Telemann, Georg Philipp - Die kleine Cammer-Music
-    - '273f4211-cb0c-4eaa-a78a-2711a387c463' # Vivaldi, Antonio - 12 concerti, op. 7
     - '40b35a3c-0790-4d6b-a336-cb5bdf2ae802' # Vivaldi, Antonio - 6 Flute Concertos, op. 10
-    - 'fe884180-25bd-4948-87ed-6c25be60a9ac' # Vivaldi, Antonio - La cetra, op. 9
-    - 'bf690cb7-f824-46e3-a701-976a98c3f05c' # Vivaldi, Antonio - La stravaganza, op. 4
-    - '161dd98a-9b6b-46b1-863b-1899af0d06f9' # Vivaldi, Antonio - L’estro armonico, op. 3
     - '7044d543-9f9d-4598-8ee7-0f9945d28595' # Vivaldi, Antonio - The Contest Between Harmony and Invention, op. 8
     - '87886dcf-9776-49cb-b6f5-10104da6e42c' # Vivaldi, Antonio - The Four Seasons
     - '25f84f27-f09e-4e5b-84f9-1c0e414e5e33' # Widor, Charles‐Marie - Organ Symphonies, op. 13

@@ -301,10 +301,13 @@ export const VIOLINCONCERTO_CONFIG: TracklistConfig = {
 		'b79443b8', // Vivaldi – Concerto in E major, RV 270
 		'd9aee017', // Vivaldi – Concerto in E-flat major, RV 257
 		'598ed597', // Vivaldi – Concerto in F major, RV 286
+		'0d2a5e67', // Vivaldi – Four Seasons, Spring
+		'4f9cffd7', // Vivaldi – Four Seasons, Summer
+		'251339db', // Vivaldi – Four Seasons, Autumn
+		'6a6c97eb', // Vivaldi – Four Seasons, Winter
 		'161dd98a', // Vivaldi – L’estro armonico, op. 3
 		'fe884180', // Vivaldi – La cetra, op. 9
 		'bf690cb7', // Vivaldi – La stravaganza, op. 4
-		'7044d543', // Vivaldi – The Contest Between Harmony and Invention, op. 8
 		'2d3c2e29', // Wieniawski – Capriccio-Valse, op. 7
 		'2154dc72', // Wieniawski – Polonaise Brillante en la majeur, op. 21
 		'24c323a3', // Ysaÿe – Amitié, op. 26

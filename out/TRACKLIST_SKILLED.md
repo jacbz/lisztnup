@@ -397,6 +397,7 @@
 | `8c9813e4` | Fauré – Fantaisie pour flûte & piano en ut majeur, op. 79 | * Fantaisie pour flûte & piano en ut majeur, op. 79 | 1898 |
 | `fd26fa0f` | Fauré – Pavane in F-sharp minor, op. 50 | * Pavane in F-sharp minor, op. 50 | 1887 |
 | `74bcefb4` | Fauré – Pelléas et Mélisande, op. 80 | * III. Sicilienne | 1893‑1902 |
+| `ddf3869c` | Fauré – Piano Quartet no. 1 in C minor, op. 15 | * II. Scherzo (Allegro vivo) | 1876‑1883 |
 | `5cb34cb0` | Fauré – Requiem, op. 48 | * IV. Pie Jesu | 1887‑1890 |
 | `d4a90ba5` | Fauré – Sicilienne, op. 78 | * Sicilienne, op. 78 | 1898 |
 | `5f4a4898` | Fauré – Sonata for Violin and Piano no. 1 in A major, op. 13 | * I. Allegro molto | 1876 |
@@ -516,6 +517,7 @@
 | `f0be02e5` | Mason – Nearer, My God, to Thee | * Nearer, My God, to Thee | 1856 |
 | `2a3bf259` | Massenet – Thaïs | * Acte II. Entr’acte “Méditation” | 1894 |
 | `e2a0b12c` | Mendelssohn – A Midsummer Night's Dream, op. 61 | * A Midsummer Night’s Dream, op. 61: no. 9. Wedding March: Allegro vivace | 1842 |
+| `750a717e` | Mendelssohn – Cello Sonata no. 2 in D major, op. 58 | * I. Allegro assai vivace | 1843 |
 | `7481155b` | Mendelssohn – Hear My Prayer | * II. “O For the Wings of a Dove!” Con un poco più di moto | 1844 |
 | `19dab9f1` | Mendelssohn – Octet in E-flat major, op. 20 | * III. Scherzo: Allegro leggerissimo | 1825 |
 | `16dea66a` | Mendelssohn – Piano Concerto no. 1 in G minor, op. 25 | * II. Andante | 1831 |
@@ -669,6 +671,8 @@
 | `b54d962b` | Rachmaninoff – Piano Concerto no. 1 in F-sharp minor, op. 1 | * II. Andante | 1890‑1891 |
 | `aca4167a` | Rachmaninoff – Piano Concerto no. 2 in C minor, op. 18 | * II. Adagio sostenuto | 1900‑1901 |
 | `21b5596b` | Rachmaninoff – Piano Concerto no. 3 in D minor, op. 30 | * I. Allegro ma non tanto | 1909 |
+| `42f2a0b3` | Rachmaninoff – Piano Concerto no. 4 in G minor, op. 40 | * II. Largo | 1914‑1941 |
+| `47afb42f` | Rachmaninoff – Piano Sonata no. 2 in B-flat minor, op. 36 | * III. L’istesso tempo; Allegro molto | 1913 |
 | `17eea09b` | Rachmaninoff – Rhapsody on a Theme of Paganini, op. 43 | * Variation XVIII: Andante cantabile | 1934 |
 | `f2ad7b77` | Rachmaninoff – Sonata for Cello and Piano in G minor, op. 19 | * III. Andante | 1901 |
 | `a452d093` | Rachmaninoff – Symphonic Dances, op. 45 | * I. Non allegro - Lento - Tempo I | 1940 |
@@ -966,10 +970,7 @@
 | `c2818719` | Vivaldi – Concerto for Strings in G major, RV 151 “Concerto alla rustica” | * I. Presto | 1729‑1730 |
 | `75ee223a` | Vivaldi – Concerto for Two Cellos in G minor, RV 531 | * I. Allegro | ? |
 | `8955ab0c` | Vivaldi – Concerto for Two Trumpets in C major, RV 537 | * I. Allegro | ? |
-| `dfb255b5` | Vivaldi – Concerto in A minor for Two Violins, Cello and Strings, op. 3 no. 8, RV 522, 'Con due Violini obligati' | * I. Allegro | 1711 |
-| `b70c9d43` | Vivaldi – Concerto in B minor for Four Violins, Cello and Strings, op. 3 no. 10, RV 580 | * I. Allegro | 1711 |
 | `6a4ec984` | Vivaldi – Concerto in D major, op. 10 no. 3, RV 428 “Il gardellino” | * I. Allegro | 1729 |
-| `71bd68d0` | Vivaldi – Concerto in D minor for Two Violins, Cello and Strings, op. 3 no. 11, RV 565 | * II. Largo e spiccato | 1711 |
 | `0d2a5e67` | Vivaldi – Concerto in E major, op. 8 no. 1, RV 269 “Spring” | * 1. Allegro | 1723 |
 | `ba4e031d` | Vivaldi – Concerto in E-flat major, op. 8 no. 5, RV 253 "La tempesta di mare" | * I. (Allegro e) Presto | 1725 |
 | `ed77747a` | Vivaldi – Concerto in F major, op. 10 no. 1, RV 433 "La tempesta di mare" | * I. Allegro | 1729 |
@@ -983,8 +984,7 @@
 | `e7a37d0c` | Vivaldi – Flautino Concerto in C major, RV 443 | * II. Largo | 1728‑1729 |
 | `313c10ad` | Vivaldi – Flute Concerto in C minor, RV 441 | * I. Allegro non molto | ? |
 | `ec764fa1` | Vivaldi – Gloria in D major, RV 589 | * I. Gloria in excelsis Deo | 1713 |
-| `9750af34` | Vivaldi – Violin Concerto in A minor, op. 3 no. 6, RV 356 | * I. Allegro moderato | 1711 |
-| `ceea933c` | Vivaldi – Violin Concerto in D major, op. 3 no. 9, RV 230 | * II. Larghetto | 1711 |
+| `161dd98a` | Vivaldi – L’estro armonico, op. 3 | * Concerto in A minor for Two Violins, Cello and Strings, op. 3 no. 8, RV 522, 'Con due Violini obligati': III. Allegro | 1711 |
 | `597e017a` | Wagner – Der Ring des Nibelungen, WWV 86 | * The Valkyrie: Ride of the Valkyries | 1854‑1856 |
 | `4d644732` | Wagner – Die Meistersinger von Nürnberg, WWV 96 | * Vorspiel | 1863‑1867 |
 | `1d774427` | Wagner – Lohengrin, WWV 75 | * Lohengrin: Act III, Scene I. Bridal Chorus (Choir) | 1846‑1848 |
