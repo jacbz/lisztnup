@@ -783,49 +783,53 @@
 	});
 </script>
 
+{#snippet localeDropdown(menuClass: string)}
+	<div class="relative">
+		<button
+			type="button"
+			onclick={() => (showLocaleDropdown = !showLocaleDropdown)}
+			class="flex items-center gap-2 rounded-lg border-2 border-cyan-400/30 bg-slate-900/50 px-4 py-2 text-cyan-400 backdrop-blur-sm transition-all hover:border-cyan-400/60 hover:bg-slate-800/70 active:scale-95"
+			title="Change Language"
+		>
+			<Languages class="h-5 w-5" />
+			<span class="font-semibold">{locales.find((l) => l.code === currentLocale)?.name}</span>
+		</button>
+
+		{#if showLocaleDropdown}
+			<div
+				class="absolute z-50 rounded-lg border-2 border-cyan-400/30 bg-slate-900/95 shadow-lg backdrop-blur-sm {menuClass}"
+			>
+				{#each locales as loc (loc.code)}
+					<button
+						type="button"
+						onclick={() => {
+							handleLocaleChange(loc.code);
+							showLocaleDropdown = false;
+						}}
+						lang={loc.code}
+						class="w-full px-4 py-2 text-left text-cyan-400 transition-colors first:rounded-t-md last:rounded-b-md hover:bg-slate-800/70 {currentLocale ===
+						loc.code
+							? 'bg-cyan-400/10 font-semibold'
+							: ''}"
+					>
+						{loc.name}
+					</button>
+				{/each}
+			</div>
+		{/if}
+	</div>
+{/snippet}
+
 <div class="flex min-h-screen w-full items-center justify-center">
 	<!-- Locale Button (Top Right) -->
-	<div class="absolute top-8 right-8" data-locale-dropdown data-nosnippet>
-		<div class="relative">
-			<button
-				type="button"
-				onclick={() => (showLocaleDropdown = !showLocaleDropdown)}
-				class="flex items-center gap-2 rounded-lg border-2 border-cyan-400/30 bg-slate-900/50 px-4 py-2 text-cyan-400 backdrop-blur-sm transition-all hover:border-cyan-400/60 hover:bg-slate-800/70 active:scale-95"
-				title="Change Language"
-			>
-				<Languages class="h-5 w-5" />
-				<span class="font-semibold">{locales.find((l) => l.code === currentLocale)?.name}</span>
-			</button>
-
-			{#if showLocaleDropdown}
-				<div
-					class="absolute right-0 z-50 mt-2 rounded-lg border-2 border-cyan-400/30 bg-slate-900/95 shadow-lg backdrop-blur-sm"
-				>
-					{#each locales as loc (loc.code)}
-						<button
-							type="button"
-							onclick={() => {
-								handleLocaleChange(loc.code);
-								showLocaleDropdown = false;
-							}}
-							lang={loc.code}
-							class="w-full px-4 py-2 text-left text-cyan-400 transition-colors first:rounded-t-md last:rounded-b-md hover:bg-slate-800/70 {currentLocale ===
-							loc.code
-								? 'bg-cyan-400/10 font-semibold'
-								: ''}"
-						>
-							{loc.name}
-						</button>
-					{/each}
-				</div>
-			{/if}
-		</div>
+	<div class="absolute top-8 right-8 hidden md:block" data-locale-dropdown data-nosnippet>
+		{@render localeDropdown('right-0 mt-2')}
 	</div>
 
 	<div class="w-full max-w-5xl px-6 text-center">
 		<!-- Title / Logo -->
 		<h1
-			class="center mt-32 font-streamster text-6xl font-bold text-nowrap text-cyan-400 select-none sm:text-7xl md:mt-16 md:text-8xl"
+			class="center mt-16 font-streamster text-6xl font-bold text-nowrap text-cyan-400 select-none sm:text-7xl md:text-8xl"
 		>
 			{$_('app.title')}
 		</h1>
@@ -1145,8 +1149,12 @@
 			</div>
 		{/if}
 
+		<div class="mt-8 flex justify-center md:hidden" data-locale-dropdown data-nosnippet>
+			{@render localeDropdown('bottom-full left-1/2 mb-2 -translate-x-1/2')}
+		</div>
+
 		<!-- Footer -->
-		<div class="mt-16 mb-6">
+		<div class="mt-8 mb-6 md:mt-16">
 			<AppFooter />
 			<!-- Player count + build date: in-flow on mobile, fixed corners on desktop -->
 			<div class="mt-3 flex items-center justify-end md:contents">
