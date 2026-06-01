@@ -139,15 +139,11 @@ export class TracklistGenerator {
 	private applyFilters(works: readonly Work[], config: TracklistConfig): ScoredWork[] {
 		let filtered = works.map((work) => ({
 			work,
-			score:
-				work.score + (config.categoryAdjustments?.[work.type as keyof CategoryAdjustments] ?? 0)
+			score: work.score
 		}));
 
-		// Category Adjustments
-		// Enforce positive score after adjustments
-		filtered = filtered.filter((candidate) => candidate.score > 0);
-
-		// Work Score Range
+		// Work Score Range uses raw catalog popularity. Category adjustments bias ranking/sampling
+		// after this, so a penalty cannot pull high-popularity works into a low-popularity range.
 		if (config.workScoreRange) {
 			const minScore = config.workScoreRange[0];
 			const maxScore =
@@ -156,6 +152,17 @@ export class TracklistGenerator {
 				(candidate) => candidate.score >= minScore && candidate.score <= maxScore
 			);
 		}
+
+		// Category Adjustments
+		filtered = filtered.map(({ work }) => ({
+			work,
+			score:
+				work.score + (config.categoryAdjustments?.[work.type as keyof CategoryAdjustments] ?? 0)
+		}));
+
+		// Enforce positive score after adjustments. This keeps large negative adjustments useful for
+		// category exclusion tracklists.
+		filtered = filtered.filter((candidate) => candidate.score > 0);
 
 		// Year Range Filter
 		if (config.yearFilter) {

@@ -84,7 +84,7 @@ export const VIRTUOSO_CONFIG: TracklistConfig = {};
 export const CADENZA_CONFIG: TracklistConfig = {
 	workScoreRange: [0, 2.5],
 	categoryAdjustments: {
-		vocal: -0.8,
+		vocal: -1.7,
 		chamber: 0,
 		orchestral: 0,
 		piano: 0,
