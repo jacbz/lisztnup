@@ -58,7 +58,8 @@ DOWNLOAD_LOCATION = Path("downloads")
 BANNED_ARTISTS = [
     'Rosemary Standley',
     'Berdien Stenberg',
-    'Aasmund Nordstoga'
+    'Aasmund Nordstoga',
+    'Bill Murray'
 ]
 
 

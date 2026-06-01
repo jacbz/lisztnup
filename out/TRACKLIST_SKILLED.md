@@ -125,7 +125,7 @@
 | `d754d820` | Beethoven – Sonata for Piano no. 14 in C-sharp minor, op. 27 no. 2 “Moonlight” | * I. Adagio sostenuto | 1801 |
 | `85b66ee4` | Beethoven – Sonata for Piano no. 15 in D major, op. 28 "Pastorale" | * I. Allegro | 1801 |
 | `4e9f3cae` | Beethoven – Sonata for Piano no. 16 in G major, op. 31 no. 1 | * I. Allegro vivace | 1801‑1802 |
-| `3edecd40` | Beethoven – Sonata for Piano no. 17 in D minor, op. 31 no. 2 "Tempest" | * I. Largo - Allegro | 1801‑1802 |
+| `3edecd40` | Beethoven – Sonata for Piano no. 17 in D minor, op. 31 no. 2 "Tempest" | * III. Allegretto | 1801‑1802 |
 | `eab83ac8` | Beethoven – Sonata for Piano no. 18 in E-flat major, op. 31 no. 3 | * I. Allegro | 1801‑1802 |
 | `05ffeac8` | Beethoven – Sonata for Piano no. 19 in G minor, op. 49 no. 1 | * I. Andante | 1797 |
 | `2a2ed89a` | Beethoven – Sonata for Piano no. 2 in A major, op. 2 no. 2 | * I. Allegro vivace | 1794‑1795 |
