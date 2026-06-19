@@ -355,6 +355,7 @@
 					showMirror={false}
 					fixedWidth={true}
 					showTimelineStats={true}
+					{rotation}
 				/>
 			</div>
 

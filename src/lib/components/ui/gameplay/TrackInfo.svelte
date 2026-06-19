@@ -29,6 +29,7 @@
 		bleed?: 'none' | 'sm' | 'md' | 'lg';
 		fixedWidth?: boolean;
 		showTimelineStats?: boolean;
+		rotation?: number;
 	}
 
 	let {
@@ -36,7 +37,8 @@
 		showMirror = true,
 		bleed = 'lg',
 		fixedWidth = false,
-		showTimelineStats = false
+		showTimelineStats = false,
+		rotation = 0
 	}: Props = $props();
 
 	let showSearchPopup = $state(false);
@@ -367,5 +369,6 @@
 		{track}
 		onClose={() => (showReportPopup = false)}
 		onSuccess={handleReportSuccess}
+		rotation={-rotation}
 	/>
 {/if}

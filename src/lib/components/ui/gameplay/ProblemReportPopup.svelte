@@ -16,9 +16,10 @@
 		track: Track;
 		onClose: () => void;
 		onSuccess: () => void;
+		rotation?: number;
 	}
 
-	let { visible, track, onClose, onSuccess }: Props = $props();
+	let { visible, track, onClose, onSuccess, rotation = 0 }: Props = $props();
 
 	let message = $state('');
 	let email = $state('');
@@ -81,7 +82,7 @@
 	}
 </script>
 
-<Popup {visible} onClose={handleClose} width="w-full max-w-4xl">
+<Popup {visible} onClose={handleClose} width="w-full max-w-4xl" {rotation}>
 	<div class="flex flex-col gap-6">
 		<!-- Header -->
 		<div class="flex items-center gap-3 border-b border-slate-800 pb-4">
