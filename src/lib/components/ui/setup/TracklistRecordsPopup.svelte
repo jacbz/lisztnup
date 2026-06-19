@@ -61,12 +61,20 @@
 						groupCompare || indexCompare || labelCompare || a.target - b.target || b.score - a.score
 					);
 				}
-				case 'country':
+				case 'country': {
+					const countryCompare = (a.country ?? '').localeCompare(
+						b.country ?? '',
+						currentLocale
+					);
+					const aName = a.player_name ?? '';
+					const bName = b.player_name ?? '';
 					return (
-						(a.country ?? '').localeCompare(b.country ?? '', currentLocale) ||
+						countryCompare ||
+						aName.localeCompare(bName, currentLocale) ||
 						b.score - a.score ||
 						a.rank - b.rank
 					);
+				}
 				case 'points':
 					return b.score - a.score || a.rank - b.rank;
 				case 'date':
