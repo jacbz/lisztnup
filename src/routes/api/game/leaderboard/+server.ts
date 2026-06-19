@@ -47,12 +47,14 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 		});
 	}
 
-	const limit = Math.min(Number(url.searchParams.get('limit')) || 10, 50);
+	const records = url.searchParams.get('records') === '1';
+	const limit = records
+		? Math.min(Number(url.searchParams.get('limit')) || 500, 500)
+		: Math.min(Number(url.searchParams.get('limit')) || 10, 50);
 	const tracklistId = url.searchParams.get('tracklist') || null;
 	const target = Number(url.searchParams.get('target')) || null;
 	const playerToken = url.searchParams.get('token') || null;
 	const requestedCountry = normalizeCountryCode(url.searchParams.get('country'));
-	const records = url.searchParams.get('records') === '1';
 	const allowFallback = url.searchParams.get('fallback') !== '0';
 	const rawScope = url.searchParams.get('scope');
 	const scope: LeaderboardScope =

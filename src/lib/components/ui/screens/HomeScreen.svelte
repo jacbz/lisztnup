@@ -403,7 +403,7 @@
 		tracklistRecordsLoading = true;
 
 		getLeaderboard({
-			limit: 50,
+			limit: 500,
 			records: true,
 			token: getPlayerToken()
 		})
