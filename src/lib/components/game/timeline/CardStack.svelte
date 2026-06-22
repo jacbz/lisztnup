@@ -9,6 +9,8 @@
 		maxDepth?: number;
 
 		isTurnActive?: boolean;
+		/** Rotates each card's face so the in-turn player views the stack upright. */
+		contentRotation?: number;
 		draggable?: boolean;
 		dragging?: boolean;
 		dragTranslate?: { x: number; y: number };
@@ -26,6 +28,7 @@
 		items,
 		maxDepth = 6,
 		isTurnActive = false,
+		contentRotation = 0,
 		draggable = false,
 		dragging = false,
 		dragTranslate = { x: 0, y: 0 },
@@ -108,6 +111,7 @@
 				<TimelineCard
 					size="lg"
 					state={isTop && isTurnActive ? 'interactive' : 'face-down'}
+					{contentRotation}
 					draggable={false}
 					borderVariant="neutral"
 					onClick={isTop && isTurnActive ? onCardClick : () => {}}

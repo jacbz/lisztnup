@@ -170,6 +170,7 @@
 			? $_('timeline.dealing', { values: { name: game.dealingToName } })
 			: null}
 		isTurnActive={game.isStackInteractive}
+		contentRotation={game.activeStackRotation}
 		draggable={!game.isDealing && game.canDragCenter}
 		dragging={game.drag.active && game.drag.kind === 'center'}
 		dragTranslate={game.drag.kind === 'center' ? game.drag.translate : { x: 0, y: 0 }}

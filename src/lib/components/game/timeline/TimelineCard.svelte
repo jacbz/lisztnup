@@ -16,6 +16,12 @@
 		yearText?: string;
 		showMirrorYear?: boolean;
 
+		/**
+		 * Rotates the card's face (deg) so a player seated at any edge views it
+		 * upright. Animated to match the player-change flip.
+		 */
+		contentRotation?: number;
+
 		// Interaction
 		draggable?: boolean;
 		onClick?: () => void;
@@ -31,6 +37,7 @@
 		borderVariant = 'neutral',
 		yearText = '',
 		showMirrorYear = false,
+		contentRotation = 0,
 		draggable = false,
 		onClick = () => {},
 		onPointerDown = () => {},
@@ -83,7 +90,10 @@
 		class={`pointer-events-none absolute inset-0 ${borderRadius} bg-linear-to-br from-white/8 to-transparent`}
 	></div>
 
-	<div class="relative flex h-full w-full flex-col items-center justify-center overflow-hidden">
+	<div
+		class="relative flex h-full w-full flex-col items-center justify-center overflow-hidden"
+		style={`transform: rotate(${contentRotation}deg); transition: transform 500ms cubic-bezier(0.33, 1, 0.68, 1);`}
+	>
 		{#if state === 'interactive'}
 			<div class="h-full w-full">
 				{@render children?.()}

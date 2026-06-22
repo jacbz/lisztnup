@@ -193,6 +193,11 @@ export class TimelineGame {
 	activePlayer = $derived(this.timelines[this.activePlayerIndex]);
 	activePlayerName = $derived(this.activePlayer?.player.name ?? '');
 
+	/** Screen rotation (deg) so the in-turn player views the center stack upright. */
+	activeStackRotation = $derived(
+		this.activePlayer ? this.#getRotationForPlayer(this.activePlayer.player) : 0
+	);
+
 	/** Per-player analytics: timeline years, accuracy, longest streak, and score. */
 	playerStats = $derived(
 		this.timelines.map((t) => ({
