@@ -169,12 +169,13 @@
 		dragScale={game.centerDragScale}
 		dragOrigin={game.drag.origin}
 		onPointerDown={(ev) => game.startDragFromCenter(ev)}
+		onCardClick={() => !game.hasPlaybackStarted && !ctx.isPreloading && game.handlePlay()}
 	>
 		{#snippet topCardContent()}
 			<div class="absolute inset-0 flex flex-col items-center justify-center gap-4 p-4">
 				{#if !game.hasPlaybackStarted}
-					<!-- Fresh card — show play button -->
-					<div class="relative h-42.5 w-42.5">
+					<!-- Fresh card — whole card is the play hitbox; PlayerControl is decorative -->
+					<div class="pointer-events-none relative h-42.5 w-42.5">
 						<PlayerControl
 							visible={true}
 							isPlaying={false}
@@ -183,10 +184,10 @@
 							progress={ctx.audioProgressValue}
 							playerSize={120}
 							disabled={ctx.isPreloading}
-							onPlay={() => game.handlePlay()}
-							onStop={() => game.handleStop()}
+							onPlay={() => {}}
+							onStop={() => {}}
 							onReveal={() => {}}
-							onReplay={() => game.handlePlay()}
+							onReplay={() => {}}
 						/>
 					</div>
 				{:else if !$currentRound.isPlaying}

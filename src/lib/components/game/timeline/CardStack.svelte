@@ -18,6 +18,7 @@
 		statusLabel?: string | null;
 
 		onPointerDown?: (e: PointerEvent) => void;
+		onCardClick?: () => void;
 		topCardContent?: import('svelte').Snippet;
 	}
 
@@ -33,6 +34,7 @@
 		suppressReleaseAnimation = false,
 		statusLabel = null,
 		onPointerDown = () => {},
+		onCardClick = () => {},
 		topCardContent
 	}: Props = $props();
 
@@ -108,6 +110,7 @@
 					state={isTop && isTurnActive ? 'interactive' : 'face-down'}
 					draggable={false}
 					borderVariant="neutral"
+					onClick={isTop && isTurnActive ? onCardClick : () => {}}
 				>
 					{#if isTop && isTurnActive && topCardContent}
 						{@render topCardContent()}
