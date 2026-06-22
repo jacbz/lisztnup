@@ -1,4 +1,5 @@
 // Re-export all utilities
+export * from './edges';
 export * from './formatters';
 export * from './random';
 export * from './svg';

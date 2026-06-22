@@ -222,26 +222,26 @@
 {#snippet timelineDisplay(timeline: TimelineRow, rotation: number, edge: PlayerEdge)}
 	{@const isTurnOwner = timeline.player.name === game.activePlayerName}
 	{@const isActive = !game.isDealing && isTurnOwner}
-	{@const isEndgameTrigger =
-		game.endgameActive &&
-		game.timelines.indexOf(timeline) === game.timelines.findIndex((t) => t.reachedTarget)}
 
 	{#if game.endgameActive && !isSoloMode && !game.showEndGame}
-		<div class="mb-1 text-center">
-			{#if isEndgameTrigger}
+		{#if timeline.reachedTarget}
+			<div class="mb-1 text-center">
 				<span
 					class="inline-block animate-pulse rounded-full bg-amber-500/20 px-3 py-0.5 text-[10px] font-bold tracking-wider text-amber-400 uppercase"
 				>
 					{$_('timeline.targetReached')}
 				</span>
-			{:else}
+			</div>
+		{:else if game.willPlayFinalTurn(game.timelines.indexOf(timeline))}
+			<!-- Only players who still have a turn this round see the "final round" prompt. -->
+			<div class="mb-1 text-center">
 				<span
 					class="inline-block animate-pulse rounded-full bg-red-500/15 px-3 py-0.5 text-[10px] font-bold tracking-wider text-red-400 uppercase"
 				>
 					{$_('timeline.finalRound')}
 				</span>
-			{/if}
-		</div>
+			</div>
+		{/if}
 	{/if}
 
 	<PlayerTimeline
@@ -307,9 +307,7 @@
 		{#each ALL_EDGES as edge (edge)}
 			{@const edgeTimelines = game.timelinesByEdge.get(edge) || []}
 			{#if edgeTimelines.length > 0}
-				{@const hideTop = edge !== 'top'}
-				{@const hideLeftRight = edge !== 'left' && edge !== 'right'}
-				<EdgeDisplay visible={true} disablePointerEvents={false} {hideTop} {hideLeftRight}>
+				<EdgeDisplay visible={true} disablePointerEvents={false} edges={[edge]}>
 					{#snippet children({ rotation })}
 						{@const isCorrectRotation =
 							(edge === 'bottom' && rotation === 0) ||
@@ -405,9 +403,13 @@
 	onComplete={() => game.handleStreakFlashComplete()}
 />
 
+<!-- Final-round announcement is global: broadcast to every occupied edge so each
+     player sees it upright. In the compact (short-screen) layout all players share
+     the bottom edge, so a single centered flash reads better. -->
 <FlashingText
 	text={$_('timeline.finalRound')}
 	visible={game.endgameFlash}
+	edges={game.isMdHeight ? game.occupiedEdges : undefined}
 	intensity={3}
 	icon={TriangleAlert}
 	onComplete={() => (game.endgameFlash = false)}

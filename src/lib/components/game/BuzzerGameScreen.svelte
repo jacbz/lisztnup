@@ -9,6 +9,7 @@
 	import { getCategoryDefinition } from '$lib/data/categories';
 	import { getGameContext } from './context';
 	import { shuffle } from '$lib/utils/random';
+	import { edgesForPlayerCount } from '$lib/utils';
 	import { gameSession, toast } from '$lib/stores';
 	import { BUZZER_PREVIEW_COUNTDOWN } from '$lib/types/game';
 
@@ -314,8 +315,7 @@
 			<!-- Category & Time Display -->
 			<EdgeDisplay
 				visible={hasStartedPlaying && !isBuzzerPressed}
-				hideTop={$gameSession.players.length < 2}
-				hideLeftRight={$gameSession.players.length < 3}
+				edges={edgesForPlayerCount($gameSession.players.length)}
 			>
 				<div class="flex max-w-[90vw] items-center justify-center gap-2 md:gap-3">
 					{#each categoriesToDisplay as category (category)}

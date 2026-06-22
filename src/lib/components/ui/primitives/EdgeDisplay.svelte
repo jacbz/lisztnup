@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 	import type { Snippet } from 'svelte';
+	import { ALL_EDGES, type PlayerEdge } from '$lib/types';
 
 	interface Props {
 		/**
@@ -13,15 +14,11 @@
 		 */
 		children: Snippet<[{ rotation: number }]>;
 		/**
-		 * Whether to hide the top display.
-		 * @default false
+		 * Which screen edges to render the content on. Each rendered edge orients
+		 * the content towards the player seated there.
+		 * @default ALL_EDGES
 		 */
-		hideTop?: boolean;
-		/**
-		 * Whether to hide the left and right displays.
-		 * @default false
-		 */
-		hideLeftRight?: boolean;
+		edges?: PlayerEdge[];
 		/**
 		 * The margin of the display.
 		 * @default '20px'
@@ -37,8 +34,7 @@
 	let {
 		visible = true,
 		children,
-		hideTop = false,
-		hideLeftRight = false,
+		edges = ALL_EDGES,
 		margin = '20px',
 		disablePointerEvents = true
 	}: Props = $props();
@@ -71,15 +67,9 @@
 			hideOnNarrow: true,
 			flyParams: { x: 100, duration: 300 }
 		}
-	]);
+	] satisfies Array<{ name: PlayerEdge; [key: string]: unknown }>);
 
-	const filteredPositions = $derived(
-		positions.filter(
-			(position) =>
-				!(hideTop && position.name === 'top') &&
-				!(hideLeftRight && (position.name === 'left' || position.name === 'right'))
-		)
-	);
+	const filteredPositions = $derived(positions.filter((position) => edges.includes(position.name)));
 </script>
 
 {#each filteredPositions as position (position.name)}

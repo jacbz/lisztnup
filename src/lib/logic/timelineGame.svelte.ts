@@ -265,6 +265,11 @@ export class TimelineGame {
 		return grouped;
 	});
 
+	/** Effective screen edges that currently have at least one player's timeline. */
+	occupiedEdges = $derived(
+		ALL_EDGES.filter((edge) => (this.timelinesByEdge.get(edge)?.length ?? 0) > 0)
+	);
+
 	// ═══════════════════════════════════════════════════════
 	// CONSTRUCTOR
 	// ═══════════════════════════════════════════════════════
@@ -1062,6 +1067,16 @@ export class TimelineGame {
 	/** Called by FlashingText onComplete — clears flash (turn already finalized). */
 	handleStreakFlashComplete() {
 		this.streakFlash = null;
+	}
+
+	/**
+	 * During the final round, whether the player at `index` still has a turn
+	 * coming. A round runs from player 0 back to 0, so players with an index
+	 * below the active player have already taken their final turn and won't
+	 * play again — their "final round" prompt is therefore suppressed.
+	 */
+	willPlayFinalTurn(index: number): boolean {
+		return this.endgameActive && index >= this.activePlayerIndex;
 	}
 
 	#clearRevealState() {

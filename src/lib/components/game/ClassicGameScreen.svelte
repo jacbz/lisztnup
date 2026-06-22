@@ -6,6 +6,7 @@
 	import { _ } from 'svelte-i18n';
 	import { getGameContext } from './context';
 	import { CATEGORY_POINTS } from '$lib/types';
+	import { edgesForPlayerCount } from '$lib/utils';
 	import EdgeDisplay from '../ui/primitives/EdgeDisplay.svelte';
 
 	const ctx = getGameContext();
@@ -20,8 +21,7 @@
 	<EdgeDisplay
 		margin="42px"
 		visible={$currentRound.isPlaying}
-		hideTop={$gameSession.players.length < 2}
-		hideLeftRight={$gameSession.players.length < 3}
+		edges={edgesForPlayerCount($gameSession.players.length)}
 	>
 		<div class="flex w-[80vw] flex-wrap justify-center gap-1.5 md:max-w-[60vmin] md:min-w-[60vmin]">
 			{#each activeCategories as category (category)}

@@ -250,7 +250,7 @@ export const BEGINNER_TRACKLIST = [
 	'4f9cffd7', // Vivaldi – The Four Seasons - Summer
 	'6a6c97eb', // Vivaldi – The Four Seasons - Winter
 	'1d774427', // Wagner - Lohengrin (Bridal Chorus)
-	'597e017a', // Wagner – Der Ring des Nibelungen (Ride of the Valkyries)
+	'a87e8996', // Wagner – Die Walküre (Ride of the Valkyries)
 	'd801c361', // Wagner – Tannhäuser: Ouverture and Venusberg Music
 	'ae217ba8', // Wagner – Tristan und Isolde
 	'3148af46' // Williams – Three Pieces from Schindler’s List (Theme)

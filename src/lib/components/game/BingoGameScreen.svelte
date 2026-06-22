@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { scale } from 'svelte/transition';
-	import type { GuessCategory } from '$lib/types';
+	import type { GuessCategory, PlayerEdge } from '$lib/types';
 	import { currentRound } from '$lib/stores';
 	import SpinningWheel from './SpinningWheel.svelte';
 	import PlayerControl from '../ui/gameplay/PlayerControl.svelte';
@@ -13,6 +13,9 @@
 
 	// Get disabled categories from context
 	const disabledCategories = $derived(ctx.disabledCategories);
+
+	// Bingo shares one rotating display; the top edge is reserved for the wheel.
+	const bingoEdges: PlayerEdge[] = ['bottom', 'left', 'right'];
 
 	let hasSpunOnce = $state(false); // Track if wheel has been spun in this round
 
@@ -83,7 +86,7 @@
 <!-- Category Display (shown briefly when wheel stops) -->
 <EdgeDisplay
 	visible={!!($currentRound.category && !$currentRound.isRevealed && !$currentRound.isSpinning)}
-	hideTop={true}
+	edges={bingoEdges}
 >
 	{@const categoryDef = getCategoryDefinition($currentRound.category!)}
 	<div

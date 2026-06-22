@@ -3,6 +3,8 @@
 	import { cubicOut } from 'svelte/easing';
 	import { onMount } from 'svelte';
 	import Flame from 'lucide-svelte/icons/flame';
+	import EdgeDisplay from '$lib/components/ui/primitives/EdgeDisplay.svelte';
+	import type { PlayerEdge } from '$lib/types';
 
 	interface Props {
 		/** The text to display. */
@@ -11,7 +13,15 @@
 		secondLine?: string;
 		/** Whether the flash is visible. */
 		visible?: boolean;
-		/** Rotation angle (from EdgeDisplay) to orient the text correctly. */
+		/**
+		 * Screen edges to broadcast the flash to. When set, the flash is mirrored
+		 * at each edge, oriented towards the player seated there — use this for
+		 * global announcements (e.g. the final round). When omitted, a single
+		 * centered flash is shown, rotated by {@link rotation} — use this for
+		 * player-specific events (e.g. a streak).
+		 */
+		edges?: PlayerEdge[];
+		/** Rotation angle for the centered flash (ignored when `edges` is set). */
 		rotation?: number;
 		/** Intensity level 1–5. Controls glow size and text scale. */
 		intensity?: number;
@@ -25,6 +35,7 @@
 		text,
 		secondLine = '',
 		visible = false,
+		edges,
 		rotation = 0,
 		intensity = 1,
 		icon: IconComponent = Flame,
@@ -72,36 +83,49 @@
 	});
 </script>
 
-{#if showing}
-	<div class="pointer-events-none fixed inset-0 z-1100 flex items-center justify-center">
-		<div style="transform: rotate({rotation}deg);">
-			<div
-				class="rounded-2xl border border-orange-400/40 bg-slate-950/85 px-6 py-4 backdrop-blur-lg"
-				style="box-shadow: 0 0 {glowSpread}px rgba(251,146,60,0.5), 0 0 {glowSpread *
-					2.5}px rgba(249,115,22,0.2);"
-				in:scale={{ duration: 350, start: 0.5, easing: cubicOut }}
-				out:fade={{ duration: 300 }}
-			>
-				<div class="flex items-center gap-3">
-					<div class="shrink-0 animate-streak-flash">
-						<IconComponent
-							class="text-orange-400"
-							style="width: {iconSize}em; height: {iconSize}em; filter: drop-shadow(0 0 6px rgba(251,146,60,0.8));"
-						/>
-					</div>
-					<div class="flex flex-col">
-						<span
-							class="font-extrabold tracking-wide whitespace-nowrap text-orange-300 select-none"
-							style="font-size: {1.5 + intensity * 0.25}rem;"
-						>
-							{text}
-						</span>
-						{#if secondLine}
-							<span class="text-sm text-orange-400/70">{secondLine}</span>
-						{/if}
-					</div>
-				</div>
+{#snippet card()}
+	<div
+		class="rounded-2xl border border-orange-400/40 bg-slate-950/85 px-6 py-4 backdrop-blur-lg"
+		style="box-shadow: 0 0 {glowSpread}px rgba(251,146,60,0.5), 0 0 {glowSpread *
+			2.5}px rgba(249,115,22,0.2);"
+		in:scale={{ duration: 350, start: 0.5, easing: cubicOut }}
+		out:fade={{ duration: 300 }}
+	>
+		<div class="flex items-center gap-3">
+			<div class="shrink-0 animate-streak-flash">
+				<IconComponent
+					class="text-orange-400"
+					style="width: {iconSize}em; height: {iconSize}em; filter: drop-shadow(0 0 6px rgba(251,146,60,0.8));"
+				/>
+			</div>
+			<div class="flex flex-col">
+				<span
+					class="font-extrabold tracking-wide whitespace-nowrap text-orange-300 select-none"
+					style="font-size: {1.5 + intensity * 0.25}rem;"
+				>
+					{text}
+				</span>
+				{#if secondLine}
+					<span class="text-sm text-orange-400/70">{secondLine}</span>
+				{/if}
 			</div>
 		</div>
 	</div>
+{/snippet}
+
+{#if showing}
+	{#if edges && edges.length > 0}
+		<!-- Broadcast to every occupied edge; EdgeDisplay handles per-edge orientation. -->
+		<div class="pointer-events-none fixed inset-0 z-1100 select-none">
+			<EdgeDisplay {edges}>
+				{@render card()}
+			</EdgeDisplay>
+		</div>
+	{:else}
+		<div class="pointer-events-none fixed inset-0 z-1100 flex items-center justify-center">
+			<div style="transform: rotate({rotation}deg);">
+				{@render card()}
+			</div>
+		</div>
+	{/if}
 {/if}

@@ -82,7 +82,7 @@ All UI components re-exported from `src/lib/components/ui/index.ts`.
 
 ## Rotation-Aware Components
 
-**`EdgeDisplay`** wraps content for display on any screen edge (Top/Bottom/Left/Right). Passes rotation context to children via snippet parameters so they can counter-rotate for correct hit-testing and drag visualization.
+**`EdgeDisplay`** mirrors content onto an explicit set of screen edges via the `edges: PlayerEdge[]` prop (default all four), orienting each copy towards the player seated there. Passes rotation context to children via snippet parameters so they can counter-rotate for correct hit-testing and drag visualization. Compute the edge set with `edgesForPlayerCount()` (`$lib/utils`) for modes that share one broadcast display (Classic/Buzzer), or from per-player edges (Timeline's `occupiedEdges`).
 
 Used in Timeline mode where multiple players sit around a tablet. `PlayerTimeline` and drag-and-drop logic use `document.elementsFromPoint` for rotation-agnostic hit testing and vector rotation for drag ghosts.
 
@@ -130,7 +130,7 @@ Uses `$effect` to watch `analyserNode`, starts visualization when available (han
 | `AboutPopup`            | App info, author link, donation link, feedback launcher               | HomeScreen                                                                               |
 | `AppFooter`             | Attribution footer with library/feedback links                        | HomeScreen                                                                               |
 | `FeedbackPopup`         | User feedback submission                                              | HomeScreen, EndGameScreen, AboutPopup, AppFooter                                         |
-| `FlashingText`          | Rotation-aware text flash overlay (streaks, future points)            | TimelineGameScreen                                                                       |
+| `FlashingText`          | Flash overlay: centered+rotated (per-player streaks) or `edges`-broadcast (global, e.g. final round) | TimelineGameScreen                                          |
 | `ProblemReportPopup`    | Track problem report with metadata                                    | TrackInfo                                                                                |
 
 ## Responsive Design
