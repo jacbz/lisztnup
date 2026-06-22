@@ -36,6 +36,13 @@
 
 	let { players, target, isSoloMode = false, onHome = () => {} }: Props = $props();
 
+	const OPPOSITE_EDGE: Record<PlayerEdge, PlayerEdge> = {
+		top: 'bottom',
+		bottom: 'top',
+		left: 'right',
+		right: 'left'
+	};
+
 	// ─── Context & Game Logic ──────────────────────────────
 
 	const ctx = getGameContext();
@@ -222,6 +229,7 @@
 {#snippet timelineDisplay(timeline: TimelineRow, rotation: number, edge: PlayerEdge)}
 	{@const isTurnOwner = timeline.player.name === game.activePlayerName}
 	{@const isActive = !game.isDealing && isTurnOwner}
+	{@const showMirrorYear = game.isMdHeight && (game.timelinesByEdge.get(OPPOSITE_EDGE[edge])?.length ?? 0) > 0}
 
 	{#if game.endgameActive && !isSoloMode && !game.showEndGame}
 		{#if timeline.reachedTarget}
@@ -284,6 +292,7 @@
 		onConfirm={() => game.handleConfirmPlacement()}
 		onConfirmedCardClick={(entry) => game.openInspectCard(entry.id, entry.track, rotation)}
 		onPendingPointerDown={(id, ev) => game.startDragPending(id, ev)}
+		{showMirrorYear}
 	/>
 {/snippet}
 

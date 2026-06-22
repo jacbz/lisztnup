@@ -14,6 +14,7 @@
 
 		// For 'revealed' state
 		yearText?: string;
+		showMirrorYear?: boolean;
 
 		// Interaction
 		draggable?: boolean;
@@ -29,6 +30,7 @@
 		size = 'md',
 		borderVariant = 'neutral',
 		yearText = '',
+		showMirrorYear = false,
 		draggable = false,
 		onClick = () => {},
 		onPointerDown = () => {},
@@ -87,6 +89,15 @@
 				{@render children?.()}
 			</div>
 		{:else if state === 'revealed'}
+			<!-- Upside-down year for players sitting across the table -->
+			{#if showMirrorYear}
+				<div
+					class="pointer-events-none absolute top-0 right-0 left-0 flex rotate-180 justify-center font-black tracking-widest text-slate-400 select-none"
+					style="font-size: max(20cqw, 8px); line-height: 1;"
+				>
+					{yearText}
+				</div>
+			{/if}
 			<div class="font-black tracking-wide text-slate-200" style="font-size: 40cqw;">
 				{yearText}
 			</div>

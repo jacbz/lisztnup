@@ -54,6 +54,7 @@
 		hideCount?: boolean;
 		animateCards?: boolean;
 		fixedWidth?: number | null;
+		showMirrorYear?: boolean;
 	}
 
 	let {
@@ -83,7 +84,8 @@
 		hideHeader = false,
 		hideCount = false,
 		animateCards = true,
-		fixedWidth = null
+		fixedWidth = null,
+		showMirrorYear = false
 	}: Props = $props();
 
 	let el: HTMLDivElement | null = $state(null);
@@ -237,6 +239,7 @@
 									? 'correct'
 									: 'neutral'}
 							{yearText}
+							showMirrorYear={entry.confirmed && showMirrorYear}
 							onClick={() => !entry.isDiscarding && onConfirmedCardClick(entry)}
 							onPointerDown={(ev) => !entry.isDiscarding && onPendingPointerDown(entry.id, ev)}
 						/>
