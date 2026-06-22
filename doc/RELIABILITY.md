@@ -95,7 +95,9 @@ If a track can't load after exhausting all Deezer IDs, `PlayableTrackBuffer` sam
 
 - **Dual playback modes**: Web Audio API (Chromium default) vs HTML Audio Element (WebKit default). User-configurable via `enableAudioNormalization` setting.
 - **Audio context initialization**: `start.mp3` played on user gesture (Start Game button) to satisfy Safari autoplay restrictions.
-- **LUFS normalization**: Both modes analyze loudness (ITU-R BS.1770-4, target -23 LUFS). Web Audio uses `GainNode`; HTML Audio translates gain to volume (gain 2 → volume 1.0).
+- **LUFS normalization**: Both modes analyze loudness (ITU-R BS.1770-4, target -23 LUFS). Web Audio uses `GainNode`; HTML Audio translates gain to volume (gain 2 → volume 1.0). Pure DSP lives in `audioProcessing.ts` (`calculateLUFS`, `calculateGain`, `detectLeadingSilence`), shared by `DeezerPlayer` and `PreviewPlayer` (library previews now reuse `deezerPlayer.preload`, so they get the same pipeline).
+- **Analysis decode**: `preload` always fetches + decodes the preview for analysis (even on the iOS no-volume path) so silence-trim works everywhere; when normalization is off this decode is best-effort (failure → play untrimmed, never blocks fallback playback).
+- **Leading-silence trim**: detected silence is skipped via a playback start offset (Web Audio `start(0, offset, …)`; HTML Audio `currentTime = offset`), capped at 5s. The offset is invisible: a track's reported `duration` is the **playable** length (`full − offset`) and playback time is 0-based, so progress, Buzzer category timing, and the Timeline wall-clock speed bonus are unaffected. `getEffectiveTrackLength()` (one source of truth) caps playback to the track-length setting, bounded by the playable duration — no hardcoded 30s.
 
 ### Buffered Preloading
 

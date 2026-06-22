@@ -1,10 +1,8 @@
 import { writable, type Readable, get } from 'svelte/store';
 import { waitForOnline } from '$lib/stores/networkStatus';
+import { calculateGain, calculateLUFS, detectLeadingSilence } from './audioProcessing';
 
-// Target LUFS for normalization.
-const TARGET_LUFS = -23;
 const FADE_DURATION = 0.3;
-const MAX_GAIN = 2.5; // Maximum allowed gain to prevent excessive amplification
 const FETCH_TIMEOUT_MS = 15_000; // 15s timeout for audio data fetch
 const AUDIO_PRELOAD_TIMEOUT_MS = 15_000; // 15s timeout for HTML audio preload
 
@@ -36,6 +34,9 @@ export interface LoadedPlayableTrack {
 	data: DeezerTrackData;
 	mode: 'webAudio' | 'htmlAudio';
 	gain: number;
+	/** Leading silence (seconds) skipped at playback start. */
+	startOffset: number;
+	/** Playable duration in seconds = full decoded duration − startOffset. */
 	duration: number;
 	audioBuffer: AudioBuffer | null;
 	audioElement: HTMLAudioElement | null;
@@ -326,117 +327,94 @@ class DeezerPlayer {
 
 			const trackData = currentTrackData;
 
-			// Fetch and analyze audio for LUFS (when normalization is enabled or volume control is supported)
-			if (this.enableAudioNormalization || supportsVolumeControl) {
+			// Decode the preview for analysis: silence-trim offset always, plus LUFS when we
+			// normalize. Required for Web Audio playback (normalization on); best-effort
+			// otherwise so a network/decode hiccup never breaks plain fallback playback.
+			let audioBuffer: AudioBuffer | null = null;
+			try {
 				const response = await this.fetchWithTimeout(trackData.preview, FETCH_TIMEOUT_MS);
-
 				const arrayBuffer = await response.arrayBuffer();
-
-				// Decode audio data for analysis (and for Web Audio API playback if enabled)
 				const audioContext = this.getAudioContext();
-				const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+				audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+			} catch (error) {
+				if (this.enableAudioNormalization) throw error; // Web Audio playback needs the buffer.
+				console.debug('[DeezerPlayer] analysis decode failed; playing untrimmed', {
+					deezerId,
+					error
+				});
+			}
 
-				// Calculate LUFS for normalization
-				const lufs = await this.calculateLUFS(audioBuffer);
+			// Leading-silence trim offset (0 when no buffer or no meaningful silence).
+			const startOffset = audioBuffer ? detectLeadingSilence(audioBuffer) : 0;
 
-				console.debug(
-					`[DeezerPlayer] Calculated LUFS for track ${trackData.id}: ${lufs.toFixed(2)}`
-				);
-
-				let gain = 10 ** ((TARGET_LUFS - lufs) / 20);
-				if (gain > MAX_GAIN) {
-					console.debug(
-						`[DeezerPlayer] Max gain exceeded: ${gain.toFixed(2)}. Clamping gain to ${MAX_GAIN.toFixed(2)}.`
-					);
-					gain = MAX_GAIN;
-				}
-				console.debug(
-					`[DeezerPlayer] Calculated gain of ${gain.toFixed(2)} to reach ${TARGET_LUFS} LUFS.`
-				);
-
-				if (this.enableAudioNormalization) {
-					console.debug(`[DeezerPlayer] Web Audio API mode: applying gain via GainNode`);
-					console.debug('[DeezerPlayer] preload ready', {
-						deezerId,
-						mode: 'webAudio',
-						duration: audioBuffer.duration,
-						gain
-					});
-					return {
-						deezerId,
-						data: trackData,
-						mode: 'webAudio',
-						gain,
-						duration: audioBuffer.duration,
-						audioBuffer,
-						audioElement: null,
-						destroy: () => {}
-					};
-				} else {
-					// HTML Audio Element mode - translate gain to volume
-					const audioElement = new Audio(trackData.preview);
-					audioElement.crossOrigin = 'anonymous';
-
-					// Preload the audio with timeout
-					await this.preloadAudioElement(audioElement, AUDIO_PRELOAD_TIMEOUT_MS);
-
-					// Translate gain to volume: gain of 2 = volume 1.0, gain of 1 = volume 0.5
-					// Volume = min(1, gain / 2)
-					const volume = Math.min(1, gain / 2);
-					audioElement.volume = volume;
-					console.debug(
-						`[DeezerPlayer] HTML Audio mode: translated gain ${gain.toFixed(2)} to volume ${volume.toFixed(2)}`
-					);
-					console.debug('[DeezerPlayer] preload ready', {
-						deezerId,
-						mode: 'htmlAudio',
-						duration: audioElement.duration || 30,
-						gain,
-						volume
-					});
-					return {
-						deezerId,
-						data: trackData,
-						mode: 'htmlAudio',
-						gain,
-						duration: audioElement.duration || 30,
-						audioBuffer: null,
-						audioElement,
-						destroy: () => {
-							audioElement.pause();
-							audioElement.removeAttribute('src');
-							audioElement.load();
-						}
-					};
-				}
-			} else {
-				// iOS without normalization: use HTML Audio without volume adjustment
-				const audioElement = new Audio(trackData.preview);
-				audioElement.crossOrigin = 'anonymous';
-
-				// Preload the audio with timeout
-				await this.preloadAudioElement(audioElement, AUDIO_PRELOAD_TIMEOUT_MS);
+			// Web Audio API mode: play the decoded buffer with a GainNode for normalization.
+			if (this.enableAudioNormalization && audioBuffer) {
+				const lufs = await calculateLUFS(audioBuffer);
+				console.debug(`[DeezerPlayer] LUFS for track ${trackData.id}: ${lufs.toFixed(2)}`);
+				const gain = calculateGain(lufs);
+				const duration = Math.max(0, audioBuffer.duration - startOffset);
 				console.debug('[DeezerPlayer] preload ready', {
 					deezerId,
-					mode: 'htmlAudio',
-					duration: audioElement.duration || 30,
-					gain: 1
+					mode: 'webAudio',
+					duration,
+					startOffset,
+					gain
 				});
 				return {
 					deezerId,
 					data: trackData,
-					mode: 'htmlAudio',
-					gain: 1,
-					duration: audioElement.duration || 30,
-					audioBuffer: null,
-					audioElement,
-					destroy: () => {
-						audioElement.pause();
-						audioElement.removeAttribute('src');
-						audioElement.load();
-					}
+					mode: 'webAudio',
+					gain,
+					startOffset,
+					duration,
+					audioBuffer,
+					audioElement: null,
+					destroy: () => {}
 				};
 			}
+
+			// HTML Audio Element mode (normalization off). Translate gain to volume where the
+			// platform supports it; on iOS (no volume control) play at native level.
+			const audioElement = new Audio(trackData.preview);
+			audioElement.crossOrigin = 'anonymous';
+			await this.preloadAudioElement(audioElement, AUDIO_PRELOAD_TIMEOUT_MS);
+
+			let gain = 1;
+			if (audioBuffer && supportsVolumeControl) {
+				const lufs = await calculateLUFS(audioBuffer);
+				console.debug(`[DeezerPlayer] LUFS for track ${trackData.id}: ${lufs.toFixed(2)}`);
+				gain = calculateGain(lufs);
+				// gain of 2 → volume 1.0, gain of 1 → volume 0.5
+				const volume = Math.min(1, gain / 2);
+				audioElement.volume = volume;
+				console.debug(
+					`[DeezerPlayer] HTML Audio mode: gain ${gain.toFixed(2)} → volume ${volume.toFixed(2)}`
+				);
+			}
+
+			const duration = Math.max(0, (audioElement.duration || 30) - startOffset);
+			console.debug('[DeezerPlayer] preload ready', {
+				deezerId,
+				mode: 'htmlAudio',
+				duration,
+				startOffset,
+				gain
+			});
+			return {
+				deezerId,
+				data: trackData,
+				mode: 'htmlAudio',
+				gain,
+				startOffset,
+				duration,
+				audioBuffer: null,
+				audioElement,
+				destroy: () => {
+					audioElement.pause();
+					audioElement.removeAttribute('src');
+					audioElement.load();
+				}
+			};
 		} catch (error) {
 			console.error('DeezerPlayer: Error loading track', error);
 			throw error;
@@ -458,6 +436,17 @@ class DeezerPlayer {
 			this.setLoadedTrack(loadedTrack);
 		}
 		await this.play();
+	}
+
+	/**
+	 * The amount of audio (seconds) to actually play for the active track.
+	 * Buzzer mode (ignoreTrackLength) plays the full clip; otherwise the configurable
+	 * track-length setting caps it. Bounded by the track's dynamic playable duration so
+	 * we never request more audio than exists after the silence trim.
+	 */
+	private getEffectiveTrackLength(): number {
+		const playable = this.activeLoadedTrack?.duration ?? this.trackLength;
+		return this.ignoreTrackLength ? playable : Math.min(this.trackLength, playable);
 	}
 
 	/**
@@ -507,9 +496,8 @@ class DeezerPlayer {
 				audioContext.currentTime + FADE_DURATION
 			);
 
-			const effectiveTrackLength = this.ignoreTrackLength ? 30 : this.trackLength;
-
-			this.sourceNode.start(0, 0, effectiveTrackLength);
+			// Start at the music (skipping leading silence) and play the dynamic length.
+			this.sourceNode.start(0, this.activeLoadedTrack.startOffset, this.getEffectiveTrackLength());
 
 			this.playbackStartTime = audioContext.currentTime;
 
@@ -537,8 +525,10 @@ class DeezerPlayer {
 				return;
 			}
 
-			this.audioElement.currentTime = 0;
-			const effectiveTrackLength = this.ignoreTrackLength ? 30 : this.trackLength;
+			// Start at the music (skipping leading silence); stop after the dynamic length.
+			const startOffset = this.activeLoadedTrack?.startOffset ?? 0;
+			const effectiveTrackLength = this.getEffectiveTrackLength();
+			this.audioElement.currentTime = startOffset;
 			await this.audioElement.play();
 			this.playbackStartTime = performance.now() / 1000;
 
@@ -558,7 +548,7 @@ class DeezerPlayer {
 			};
 
 			const handleTimeUpdate = () => {
-				if (audioEl.currentTime >= effectiveTrackLength) {
+				if (audioEl.currentTime >= startOffset + effectiveTrackLength) {
 					this.removeAudioEventListeners();
 					this.stop();
 					this.onPlaybackEndCallback?.();
@@ -645,8 +635,7 @@ class DeezerPlayer {
 	private startProgressTracking(): void {
 		this.stopProgressTracking();
 		this.progressInterval = window.setInterval(() => {
-			const effectiveTrackLength = this.ignoreTrackLength ? 30 : this.trackLength;
-			const duration = effectiveTrackLength;
+			const duration = this.getEffectiveTrackLength();
 			const currentTime = this.getCurrentTime();
 			const progress = duration > 0 ? currentTime / duration : 0;
 			playerState.update((s) => ({ ...s, progress }));
@@ -665,11 +654,13 @@ class DeezerPlayer {
 	 * @returns The current time of the track.
 	 */
 	getCurrentTime(): number {
+		// Reported as elapsed-since-music-start (0-based) so the leading-silence offset is
+		// invisible to progress and any duration-based scoring.
 		if (this.isPlaying()) {
 			if (this.activeLoadedTrack?.mode === 'webAudio' && this.audioContext) {
 				return this.audioContext.currentTime - this.playbackStartTime;
 			} else if (this.activeLoadedTrack?.mode === 'htmlAudio' && this.audioElement) {
-				return this.audioElement.currentTime;
+				return this.audioElement.currentTime - this.activeLoadedTrack.startOffset;
 			}
 		}
 		return 0;
@@ -761,100 +752,13 @@ class DeezerPlayer {
 
 			this.removeAudioEventListeners();
 			this.audioElement.pause();
-			this.audioElement.currentTime = 0;
+			this.audioElement.currentTime = this.activeLoadedTrack?.startOffset ?? 0;
 		}
 
 		this.stopProgressTracking();
 		playerState.update((s) => ({ ...s, isPlaying: false, progress: 0 }));
 
 		await this.play();
-	}
-
-	// LUFS Calculation (based on ITU-R BS.1770-4)
-	private async calculateLUFS(buffer: AudioBuffer): Promise<number> {
-		const sampleRate = buffer.sampleRate;
-		const offlineCtx = new OfflineAudioContext(buffer.numberOfChannels, buffer.length, sampleRate);
-
-		// Stage 1: K-weighting pre-filter (high-shelf)
-		const kFilter1 = offlineCtx.createBiquadFilter();
-		kFilter1.type = 'highshelf';
-		kFilter1.frequency.value = 1681.9744509555319;
-		kFilter1.gain.value = 4;
-
-		// Stage 2: K-weighting high-pass filter
-		const kFilter2 = offlineCtx.createBiquadFilter();
-		kFilter2.type = 'highpass';
-		kFilter2.frequency.value = 38.13547087613982;
-		kFilter2.Q.value = 0.5003270373238773;
-
-		const source = offlineCtx.createBufferSource();
-		source.buffer = buffer;
-		source.connect(kFilter1);
-		kFilter1.connect(kFilter2);
-		kFilter2.connect(offlineCtx.destination);
-		source.start(0);
-
-		const filteredBuffer = await offlineCtx.startRendering();
-
-		const channels = Array.from({ length: filteredBuffer.numberOfChannels }, (_, i) =>
-			filteredBuffer.getChannelData(i)
-		);
-
-		// Gating block duration: 400ms
-		const gateBlockSize = Math.floor(0.4 * sampleRate);
-		const overlap = 0.75; // 75% overlap
-		const stepSize = Math.floor(gateBlockSize * (1 - overlap));
-		const numBlocks = Math.floor((filteredBuffer.length - gateBlockSize) / stepSize);
-
-		if (numBlocks <= 0) return -70; // Not enough audio data
-
-		const blockLoudness: number[] = [];
-
-		for (let i = 0; i < numBlocks; i++) {
-			const start = i * stepSize;
-			const end = start + gateBlockSize;
-			let blockPower = 0;
-			for (const channel of channels) {
-				let channelPower = 0;
-				for (let j = start; j < end; j++) {
-					channelPower += channel[j] * channel[j];
-				}
-				blockPower += channelPower / gateBlockSize;
-			}
-			if (blockPower > 0) {
-				const loudness = -0.691 + 10 * Math.log10(blockPower);
-				blockLoudness.push(loudness);
-			}
-		}
-
-		if (blockLoudness.length === 0) return -70; // Silence
-
-		// Absolute gate at -70 LUFS
-		const absoluteThreshold = -70;
-		const gatedBlocks = blockLoudness.filter((l) => l > absoluteThreshold);
-
-		if (gatedBlocks.length === 0) return -70;
-
-		const averageLoudness =
-			-0.691 +
-			10 *
-				Math.log10(
-					gatedBlocks.reduce((sum, l) => sum + 10 ** ((l + 0.691) / 10), 0) / gatedBlocks.length
-				);
-
-		// Relative gate
-		const relativeThreshold = averageLoudness - 10;
-		const finalGatedBlocks = gatedBlocks.filter((l) => l > relativeThreshold);
-
-		if (finalGatedBlocks.length === 0) return -70;
-
-		const finalAveragePower =
-			finalGatedBlocks.reduce((sum, l) => sum + 10 ** ((l + 0.691) / 10), 0) /
-			finalGatedBlocks.length;
-
-		const integratedLUFS = -0.691 + 10 * Math.log10(finalAveragePower);
-
-		return isFinite(integratedLUFS) ? integratedLUFS : -70;
 	}
 }
 

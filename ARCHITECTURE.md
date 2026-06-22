@@ -18,6 +18,7 @@ src/
 │   ├── services/              Business logic singletons
 │   │   ├── client.ts           Browser API client + leaderboard cache + background retry queue
 │   │   ├── DeezerPlayer.ts      Active playback + preloadable audio assets
+│   │   ├── audioProcessing.ts   Pure DSP: LUFS, gain, leading-silence detection
 │   │   ├── PlayableTrackBuffer.svelte.ts Shared current+2 playable preload queue
 │   │   ├── ReplayPlayer.svelte.ts  Independent replay (Svelte 5 reactive)
 │   │   ├── TracklistGenerator.ts   O(1) weighted sampling + curation

@@ -1,8 +1,13 @@
-import { fetchDeezerTrackData } from './DeezerPlayer';
+import { deezerPlayer, type LoadedPlayableTrack } from './DeezerPlayer';
 
 /**
  * Self-contained audio preview player with Svelte 5 reactive state.
- * Each instance manages its own HTMLAudioElement, avoiding conflicts with the game audio pipeline.
+ *
+ * Reuses the shared {@link deezerPlayer} pipeline (`preload`) so previews get the same
+ * LUFS normalization and leading-silence trim as in-game playback, then plays the
+ * resulting asset through its OWN audio graph so it never conflicts with the active
+ * game player. Previews always play the full (trimmed) clip — the per-game track-length
+ * limit does not apply here.
  *
  * Used by:
  * - **TrackInfo**: replay the revealed track
@@ -16,14 +21,22 @@ export class PreviewPlayer {
 	progress = $state(0);
 	currentDeezerId = $state<number | null>(null);
 
-	private audio: HTMLAudioElement | null = null;
+	// htmlAudio fallback element (owned by the LoadedPlayableTrack)
+	private loaded: LoadedPlayableTrack | null = null;
+
+	// Web Audio graph (created lazily, reused across plays, closed on destroy)
+	private audioContext: AudioContext | null = null;
+	private sourceNode: AudioBufferSourceNode | null = null;
+	private gainNode: GainNode | null = null;
+	private playbackStart = 0;
+
 	private progressInterval: number | null = null;
 	private generation = 0;
 
 	/**
 	 * Loads and plays a track by its Deezer ID.
 	 * Stops any currently playing audio first. If stop/destroy is called while
-	 * the fetch is in flight, the stale operation is silently discarded.
+	 * the load is in flight, the stale operation is silently discarded.
 	 */
 	async play(deezerId: number): Promise<void> {
 		console.log('PreviewPlayer: playing Deezer ID', deezerId);
@@ -39,28 +52,37 @@ export class PreviewPlayer {
 		const currentGeneration = ++this.generation;
 		this.currentDeezerId = deezerId;
 
-		const trackData = await fetchDeezerTrackData(deezerId);
-
-		// Bail out if a newer operation has started (stop/destroy/another play)
-		if (this.generation !== currentGeneration) return;
-
-		if (!trackData?.preview) {
-			console.warn('PreviewPlayer: No preview URL available for track', deezerId);
-			this.currentDeezerId = null;
+		let loaded: LoadedPlayableTrack;
+		try {
+			loaded = await deezerPlayer.preload(deezerId);
+		} catch (error) {
+			console.error('PreviewPlayer: Error loading track', deezerId, error);
+			if (this.generation === currentGeneration) this.currentDeezerId = null;
 			return;
 		}
 
-		this.audio = new Audio(trackData.preview);
-		this.audio.crossOrigin = 'anonymous';
-		this.audio.addEventListener('ended', () => this.stop(), { once: true });
+		// Bail out if a newer operation has started (stop/destroy/another play)
+		if (this.generation !== currentGeneration) {
+			loaded.destroy();
+			return;
+		}
+
+		this.loaded = loaded;
 
 		try {
-			await this.audio.play();
+			if (loaded.mode === 'webAudio' && loaded.audioBuffer) {
+				await this.playWebAudio(loaded);
+			} else if (loaded.audioElement) {
+				await this.playHtmlAudio(loaded);
+			} else {
+				console.warn('PreviewPlayer: No playable asset for track', deezerId);
+				this.stop();
+				return;
+			}
 
 			// Check again after the async play() call
 			if (this.generation !== currentGeneration) {
-				this.audio?.pause();
-				this.audio = null;
+				this.stop();
 				return;
 			}
 
@@ -69,21 +91,57 @@ export class PreviewPlayer {
 			this.startProgressTracking();
 		} catch (error) {
 			console.error('PreviewPlayer: Error playing audio', error);
-			if (this.generation === currentGeneration) {
-				this.stop();
-			}
+			if (this.generation === currentGeneration) this.stop();
 		}
 	}
 
+	private async playWebAudio(loaded: LoadedPlayableTrack): Promise<void> {
+		if (!this.audioContext) this.audioContext = new AudioContext();
+		const ctx = this.audioContext;
+		if (ctx.state === 'suspended') await ctx.resume();
+
+		this.sourceNode = ctx.createBufferSource();
+		this.sourceNode.buffer = loaded.audioBuffer;
+		this.gainNode = ctx.createGain();
+		this.gainNode.gain.value = loaded.gain;
+		this.sourceNode.connect(this.gainNode);
+		this.gainNode.connect(ctx.destination);
+
+		this.sourceNode.onended = () => this.stop();
+		// Start at the music (skip leading silence); play the full trimmed remainder.
+		this.sourceNode.start(0, loaded.startOffset);
+		this.playbackStart = ctx.currentTime;
+	}
+
+	private async playHtmlAudio(loaded: LoadedPlayableTrack): Promise<void> {
+		const audio = loaded.audioElement!;
+		audio.currentTime = loaded.startOffset;
+		audio.addEventListener('ended', () => this.stop(), { once: true });
+		await audio.play();
+	}
+
 	/**
-	 * Stops playback and resets state.
+	 * Stops playback and resets state. Reuses the AudioContext across plays.
 	 */
 	stop(): void {
 		this.generation++;
-		if (this.audio) {
-			this.audio.pause();
-			this.audio = null;
+
+		if (this.sourceNode) {
+			this.sourceNode.onended = null;
+			try {
+				this.sourceNode.stop();
+			} catch {
+				// Already stopped.
+			}
+			this.sourceNode.disconnect();
+			this.gainNode?.disconnect();
+			this.sourceNode = null;
+			this.gainNode = null;
 		}
+
+		this.loaded?.destroy();
+		this.loaded = null;
+
 		this.stopProgressTracking();
 		this.isPlaying = false;
 		this.progress = 0;
@@ -91,18 +149,27 @@ export class PreviewPlayer {
 	}
 
 	/**
-	 * Stops playback and releases all resources.
+	 * Stops playback and releases all resources, including the AudioContext.
 	 */
 	destroy(): void {
 		this.stop();
+		this.audioContext?.close();
+		this.audioContext = null;
 	}
 
 	private startProgressTracking(): void {
 		this.stopProgressTracking();
 		this.progressInterval = window.setInterval(() => {
-			if (this.audio && this.audio.duration > 0) {
-				this.progress = this.audio.currentTime / this.audio.duration;
+			const loaded = this.loaded;
+			if (!loaded || loaded.duration <= 0) return;
+
+			let elapsed = 0;
+			if (this.sourceNode && this.audioContext) {
+				elapsed = this.audioContext.currentTime - this.playbackStart;
+			} else if (loaded.audioElement) {
+				elapsed = loaded.audioElement.currentTime - loaded.startOffset;
 			}
+			this.progress = Math.min(1, Math.max(0, elapsed / loaded.duration));
 		}, 100);
 	}
 

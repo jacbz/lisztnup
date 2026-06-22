@@ -49,7 +49,7 @@
 		}
 	});
 
-	let trackDuration = $state(30); // Track duration from player
+	let trackDuration = $state(ctx.currentTrackDuration); // Dynamic playable duration from player
 	let hasStartedPlaying = $state(false);
 	let isBuzzerPressed = $state(false);
 	let wasManuallyBuzzed = $state(false); // Track if someone actually pressed the buzzer (vs timeout)
@@ -274,7 +274,7 @@
 		isBuzzerPressed = false;
 		wasManuallyBuzzed = false;
 		showReveal = false;
-		trackDuration = 30;
+		trackDuration = ctx.currentTrackDuration;
 		buzzedRevealedCategories = [];
 	}
 
