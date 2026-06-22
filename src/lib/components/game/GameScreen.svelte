@@ -351,7 +351,9 @@
 	}
 
 	function handleViewStatsFromEndGame(): void {
-		showEndGameScreen = false;
+		// Keep the end-game screen mounted underneath. StatsScreen is a Popup (z-1000)
+		// that overlays the end-game screen (z-40), so closing stats returns here instead
+		// of resuming the finished game.
 		showStatsScreen = true;
 	}
 

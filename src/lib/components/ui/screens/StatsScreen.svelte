@@ -43,17 +43,38 @@
 		return playerCumulativeScores;
 	});
 
-	const maxScore = $derived.by(() => {
-		if (!chartData) return 100;
-		return Math.max(...chartData.flatMap((d) => d.scores), 50);
-	});
+	// Round a number to a "nice" value (1/2/5 × 10ⁿ) so axis ticks fall on clean
+	// increments (e.g. 10, 20, 50) instead of arbitrary fractions of the data range.
+	function niceNum(value: number, round: boolean): number {
+		const exponent = Math.floor(Math.log10(value));
+		const fraction = value / 10 ** exponent;
+		let niceFraction: number;
+		if (round) {
+			if (fraction < 1.5) niceFraction = 1;
+			else if (fraction < 3) niceFraction = 2;
+			else if (fraction < 7) niceFraction = 5;
+			else niceFraction = 10;
+		} else {
+			if (fraction <= 1) niceFraction = 1;
+			else if (fraction <= 2) niceFraction = 2;
+			else if (fraction <= 5) niceFraction = 5;
+			else niceFraction = 10;
+		}
+		return niceFraction * 10 ** exponent;
+	}
 
-	const minScore = $derived.by(() => {
-		if (!chartData) return 0;
-		return Math.min(...chartData.flatMap((d) => d.scores), 0);
+	// Compute axis bounds and tick values on nice increments (~4 intervals).
+	const axis = $derived.by(() => {
+		const scores = chartData ? chartData.flatMap((d) => d.scores) : [];
+		const rawMax = Math.max(...scores, 50);
+		const rawMin = Math.min(...scores, 0);
+		const step = niceNum(Math.max(rawMax - rawMin, 1) / 4, true);
+		const min = Math.floor(rawMin / step) * step;
+		const max = Math.ceil(rawMax / step) * step;
+		const ticks: number[] = [];
+		for (let v = min; v <= max + step / 2; v += step) ticks.push(Math.round(v));
+		return { min, max, ticks };
 	});
-
-	const scoreRange = $derived(maxScore - minScore);
 	const roundIndices = $derived([...rounds.keys()]);
 	const chartHeight = 300;
 	const chartWidth = $derived(
@@ -74,7 +95,8 @@
 
 	function getY(score: number): number {
 		const chartH = chartHeight - padding.top - padding.bottom;
-		const normalized = scoreRange > 0 ? (score - minScore) / scoreRange : 0.5;
+		const range = axis.max - axis.min;
+		const normalized = range > 0 ? (score - axis.min) / range : 0.5;
 		return padding.top + chartH - normalized * chartH;
 	}
 
@@ -100,8 +122,7 @@
 			<svg width={chartWidth} height={chartHeight} class="mx-auto block w-full">
 				<!-- Grid lines -->
 				<g class="grid-lines">
-					{#each [0, 1, 2, 3, 4] as i (i)}
-						{@const score = minScore + (scoreRange / 4) * i}
+					{#each axis.ticks as score (score)}
 						{@const y = getY(score)}
 						<line
 							x1={padding.left}

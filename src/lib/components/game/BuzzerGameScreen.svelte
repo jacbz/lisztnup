@@ -9,7 +9,6 @@
 	import { getCategoryDefinition } from '$lib/data/categories';
 	import { getGameContext } from './context';
 	import { shuffle } from '$lib/utils/random';
-	import { playerState } from '$lib/services';
 	import { gameSession, toast } from '$lib/stores';
 	import { BUZZER_PREVIEW_COUNTDOWN } from '$lib/types/game';
 
@@ -22,6 +21,11 @@
 
 	// Initialize category progression when round changes
 	$effect(() => {
+		// Re-run on every round: the track index changes once per round, so reading it
+		// here forces a fresh shuffle. (hasValidYears/activeCategories alone are stable
+		// across rounds, which previously froze the progression for the whole game.)
+		void $currentRound.currentTrackIndex;
+
 		// Filter active categories based on year data availability
 		const validCategories = ctx.hasValidYears
 			? ctx.activeCategories
@@ -61,26 +65,31 @@
 	// Calculate playback time from progress and duration
 	const playbackTime = $derived(ctx.audioProgressValue * trackDuration);
 
-	// Monitor playback to detect when time's up (auto-buzz)
+	// Snapshot of the categories revealed at buzz time. Captured BEFORE stopping the
+	// track, because stopTrack() resets playback progress to 0, which would otherwise
+	// collapse the derived currentCategory/revealedCategories back to the first category.
+	let buzzedRevealedCategories = $state<GuessCategory[]>([]);
+
+	// Auto-reveal when the track finishes without anyone buzzing.
+	// Driven by playbackEnded (set when the clip ends) rather than a progress threshold:
+	// the player resets progress to 0 on stop, so a threshold check could never fire.
 	$effect(() => {
-		if (
-			hasStartedPlaying &&
-			!isBuzzerPressed &&
-			(playbackTime >= trackDuration || (!$playerState.isPlaying && ctx.audioProgressValue >= 0.99))
-		) {
-			// Time's up - auto-buzz and reveal immediately (but wasManuallyBuzzed stays false)
-			ctx.stopTrack();
+		if (hasStartedPlaying && !isBuzzerPressed && $currentRound.playbackEnded) {
+			// Nobody buzzed before the track ended → reveal the full progression.
 			isBuzzerPressed = true;
 			wasManuallyBuzzed = false;
 
+			const allCategories =
+				categoryProgression.length > 0 ? [...categoryProgression] : [currentCategory];
+
 			currentRound.update((state) => ({
 				...state,
-				category: currentCategory
+				category: allCategories[allCategories.length - 1]
 			}));
 
 			ctx.revealTrack({
 				showScoring: false,
-				scoringCategories: [...revealedCategories],
+				scoringCategories: allCategories,
 				beforeNextRound: resetBuzzerState
 			});
 		}
@@ -198,7 +207,12 @@
 			// Start playback on first press
 			await handleBuzzerPlay();
 		} else if (!isBuzzerPressed) {
-			// Buzzer pressed during playback - pause and show reveal button
+			// Buzzer pressed during playback - pause and show reveal button.
+			// Capture category state BEFORE stopping: stopTrack() resets progress to 0,
+			// which collapses the derived currentCategory/revealedCategories.
+			buzzedRevealedCategories = [...revealedCategories];
+			const buzzedCategory = currentCategory;
+
 			playBuzzerSound();
 			ctx.stopTrack();
 			isBuzzerPressed = true;
@@ -208,7 +222,7 @@
 			// Set the current category in the round state
 			currentRound.update((state) => ({
 				...state,
-				category: currentCategory
+				category: buzzedCategory
 			}));
 		}
 	}
@@ -248,7 +262,7 @@
 		showReveal = false;
 		ctx.revealTrack({
 			showScoring: ctx.enableScoring && wasManuallyBuzzed,
-			scoringCategories: [...revealedCategories],
+			scoringCategories: buzzedRevealedCategories,
 			beforeNextRound: resetBuzzerState
 		});
 	}
@@ -260,6 +274,7 @@
 		wasManuallyBuzzed = false;
 		showReveal = false;
 		trackDuration = 30;
+		buzzedRevealedCategories = [];
 	}
 
 	onMount(() => {

@@ -62,10 +62,7 @@
 					);
 				}
 				case 'country': {
-					const countryCompare = (a.country ?? '').localeCompare(
-						b.country ?? '',
-						currentLocale
-					);
+					const countryCompare = (a.country ?? '').localeCompare(b.country ?? '', currentLocale);
 					const aName = a.player_name ?? '';
 					const bName = b.player_name ?? '';
 					return (
