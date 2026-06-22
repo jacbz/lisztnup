@@ -1286,7 +1286,6 @@
 | `66dadd60` | Prokofiev – Piano Concerto no. 5 in G major, op. 55 | * I. Allegro con brio<br>* V. Vivo | 1931‑1932 |
 | `7c2b2fbe` | Prokofiev – Piano Sonata no. 2 in D minor, op. 14 | * I. Allegro, ma non troppo<br>* II. Scherzo - Allegro marcato | 1912 |
 | `bb6a6a90` | Prokofiev – Piano Sonata no. 3 in A minor, op. 28 | * Piano Sonata no. 3 in A minor, op. 28 | 1907 |
-| `599739eb` | Prokofiev – Piano Sonata no. 4 in C minor, op. 29 | * II. Andante assai<br>* III. Allegro con brio, ma non leggiero | 1908‑1917 |
 | `e70d0050` | Prokofiev – Piano Sonata no. 6 in A major, op. 82 | * II. Allegretto<br>* IV. Vivace | 1939‑1940 |
 | `45d6ee5d` | Prokofiev – Piano Sonata no. 7 in B-flat major, op. 83 | * I. Allegro inquieto - Andantino<br>* III. Precipitato | 1939‑1942 |
 | `57513a93` | Prokofiev – Piano Sonata no. 8 in B-flat major, op. 84 | * II. Andante sognando<br>* III. Vivace - Allegro ben marcato - Andantino - Vivace | 1939‑1944 |
@@ -1875,7 +1874,6 @@
 | `c66461d2` | Telemann – Concerto in E minor for Recorder, Traverso, Strings and Continuo, TWV 52:e1 | * III. Largo<br>* IV. Presto | ? |
 | `569af4af` | Telemann – Ouverture-Suite, TWV 55:a2 | * I. Overture<br>* V. Réjouissance | 1725 |
 | `601f5c2c` | Telemann – Trumpet Concerto in D major, TWV 51:D7 | * I. Adagio<br>* II. Allegro | 1708 |
-| `50cb3abf` | Telemann – Viola Concerto, TWV 51:G9 | * I. Largo<br>* III. Andante | 1716‑1721 |
 | `5c66ac50` | Thomas – Mignon | * Ouverture<br>* Acte II, no. 12ter. Polonaise « Oui ! Pour ce soir » ... « Je suis Titania, la blonde » (Philine) | 1866 |
 | `dce3a717` | Turina – Fandanguillo, op. 36 | * Fandanguillo, op. 36 | 1925 |
 | `d710bc6e` | Varèse – Ionisation | * Ionisation | 1929‑1931 |
@@ -1956,7 +1954,6 @@
 | `6e356053` | Vivaldi – Concerto in G minor, op. 10 no. 2, RV 439 “La notte” | * V. Largo “Il sonno”<br>* VI. Allegro | 1729 |
 | `4f9cffd7` | Vivaldi – Concerto in G minor, op. 8 no. 2, RV 315 “Summer” | * II. Adagio e piano – Presto e forte<br>* III. Presto | 1723 |
 | `3cd1e47d` | Vivaldi – Concerto in G minor, op. 8 no. 8, RV 332 | * I. Allegro<br>* II. Largo | 1725 |
-| `133407bc` | Vivaldi – Concerto in G minor, RV 156 | * I. Allegro<br>* II. Adagio | 1729‑1730 |
 | `152f72c3` | Vivaldi – Concerto in G minor, RV 157 | * I. Allegro<br>* III. Allegro | ? |
 | `e7a37d0c` | Vivaldi – Flautino Concerto in C major, RV 443 | * II. Largo<br>* III. Allegro molto | 1728‑1729 |
 | `313c10ad` | Vivaldi – Flute Concerto in C minor, RV 441 | * I. Allegro non molto<br>* II. Largo | ? |
@@ -1968,14 +1965,17 @@
 | `884e6e88` | Vivaldi – Sinfonia for Strings in B minor, RV 169 “Al Santo Sepolcro” | * I. Adagio molto<br>* II. Allegro ma poco | 1730 |
 | `b0fc53c1` | Vivaldi – Stabat Mater, RV 621 | * I. Largo "Stabat mater dolorosa"<br>* VII. Largo "Eja Mater" | ? |
 | `89c9864b` | Vivaldi – Trio in C major for Lute, Violin, Cello and Continuo, RV 82 | * II. Larghetto<br>* III. Allegro | 1730‑1731 |
-| `597e017a` | Wagner – Der Ring des Nibelungen, WWV 86 | * The Valkyrie: Ride of the Valkyries<br>* Excerpt from Götterdämmerung, WWV 86D: Akt III, Scene II. Trauermusik beim Tode Siegfrieds | 1854‑1856 |
+| `45798fca` | Wagner – Das Rheingold, WWV 86A | * Das Rheingold: Scene I<br>* Das Rheingold: Scene II | 1854‑1856 |
 | `4d644732` | Wagner – Die Meistersinger von Nürnberg, WWV 96 | * Vorspiel | 1863‑1867 |
+| `a87e8996` | Wagner – Die Walküre, WWV 86B | * The Valkyrie: Ride of the Valkyries | 1854‑1856 |
 | `15947da1` | Wagner – Faust Overture | * Faust Overture | 1839‑1840 |
+| `c906f057` | Wagner – Götterdämmerung, WWV 86D | * Excerpt from Götterdämmerung, WWV 86D: Vorspiel: Siegfrieds Rheinfahrt<br>* Excerpt from Götterdämmerung, WWV 86D: Akt III, Scene II. Trauermusik beim Tode Siegfrieds | 1869‑1874 |
 | `1d774427` | Wagner – Lohengrin, WWV 75 | * Lohengrin, WWV 75: Akt III. Vorspiel<br>* Lohengrin: Act III, Scene I. Bridal Chorus (Choir) | 1846‑1848 |
 | `9181dd6e` | Wagner – Parsifal | * Atto II. “Ho visto il figlio sul materno sen” | 1877‑1882 |
 | `98434ad8` | Wagner – Parsifal, WWV 111 | * I. Aufzug, Vorspiel<br>* II. Aufzug, 2. Szene | 1877‑1882 |
 | `315a0fe2` | Wagner – Rienzi, der letzte der Tribunen, WWV 49 | * Ouvertüre | 1838‑1840 |
 | `b7db99d4` | Wagner – Siegfried Idyll, WWV 103 | * Siegfried Idyll, WWV 103 | 1870 |
+| `fcf065d9` | Wagner – Siegfried, WWV 86C | * Akt I, Scene III "Verfluchtes Licht!"<br>* Akt III, Scene III "Selige Öde auf sonniger Höh’!" | 1854‑1856 |
 | `d6897b63` | Wagner – Siegfried: Waldweben | * Siegfried: Waldweben | 1856‑1871 |
 | `9b1bd955` | Wagner – Tannhäuser und der Sängerkrieg auf Wartburg, WWV 70 | * Excerpt from Tannhäuser und der Sängerkrieg auf Wartburg, WWV 70: Aufzug II, Scene IV. Festmarsch<br>* Excerpt from Tannhäuser und der Sängerkrieg auf Wartburg, WWV 70: Aufzug III, Scene I. Pilgerchor: “Beglückt darf nun dich” | 1843‑1845 |
 | `d801c361` | Wagner – Tannhäuser: Ouverture and Venusberg Music | * Tannhäuser und der Sängerkrieg auf Wartburg, WWV 70: Ouvertüre | 1843‑1845 |

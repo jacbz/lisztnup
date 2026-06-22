@@ -7639,7 +7639,7 @@
       "death_year": 1883,
       "gender": "male",
       "country": "DE",
-      "score": 60.19
+      "score": 62.16
     },
     {
       "gid": "e14012c0-56bf-4746-8b94-1df391fac113",
@@ -284740,25 +284740,37 @@
       ]
     },
     {
-      "gid": "597e017a",
+      "gid": "45798fca",
       "composer_gid": "eefd7c1e-abcf-4ccc-ba60-0fd435c9061f",
-      "name": "Der Ring des Nibelungen, WWV 86",
+      "name": "Das Rheingold, WWV 86A",
       "type": "opera",
       "begin_year": 1854,
       "end_year": 1856,
-      "score": 4.85,
+      "score": 4.07,
       "parts": [
         {
-          "gid": "6996fc77",
-          "name": "The Valkyrie: Ride of the Valkyries",
-          "deezer": [553055982, 3523877, 65395049, 68297786, 2775048391],
+          "gid": "1cd0358f",
+          "name": "Das Rheingold: Scene I. Vorspiel",
+          "deezer": [392080562, 1356225192],
+          "score": 82.31
+        },
+        {
+          "gid": "5468c7c3",
+          "name": "Das Rheingold: Scene I",
+          "deezer": [2747836211, 2747836201, 2747836231, 2747836181],
+          "score": 92.17
+        },
+        {
+          "gid": "104ad98e",
+          "name": "Das Rheingold: Scene II",
+          "deezer": [2747836351, 2747836331, 2747836341, 2747836381, 2747836361],
           "score": 100.0
         },
         {
-          "gid": "b4d7c421",
-          "name": "Excerpt from Götterdämmerung, WWV 86D: Akt III, Scene II. Trauermusik beim Tode Siegfrieds",
-          "deezer": [68297791, 64197139, 392082262, 392083152, 528495831],
-          "score": 81.91
+          "gid": "bed1bc99",
+          "name": "Das Rheingold: Scene III",
+          "deezer": [2747836421, 2747836451],
+          "score": 86.65
         }
       ]
     },
@@ -284832,6 +284844,23 @@
           "gid": "3aada8c6",
           "name": "Die Meistersinger von Nürnberg (Suite from Act 3): Act 3. Dance of the Apprentices",
           "deezer": [3195540961],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "a87e8996",
+      "composer_gid": "eefd7c1e-abcf-4ccc-ba60-0fd435c9061f",
+      "name": "Die Walküre, WWV 86B",
+      "type": "opera",
+      "begin_year": 1854,
+      "end_year": 1856,
+      "score": 4.96,
+      "parts": [
+        {
+          "gid": "6996fc77",
+          "name": "The Valkyrie: Ride of the Valkyries",
+          "deezer": [553055982, 3523877, 65395049, 68297786, 2775048391],
           "score": 100.0
         }
       ]
@@ -284917,6 +284946,29 @@
           "gid": "e6c93989",
           "name": "Grand Sonata in A major",
           "deezer": [2798406872, 2798406852],
+          "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "c906f057",
+      "composer_gid": "eefd7c1e-abcf-4ccc-ba60-0fd435c9061f",
+      "name": "Götterdämmerung, WWV 86D",
+      "type": "opera",
+      "begin_year": 1869,
+      "end_year": 1874,
+      "score": 4.23,
+      "parts": [
+        {
+          "gid": "b6999177",
+          "name": "Excerpt from Götterdämmerung, WWV 86D: Vorspiel: Siegfrieds Rheinfahrt",
+          "deezer": [64197092, 549273222, 2747837651, 3396467, 517078702],
+          "score": 95.0
+        },
+        {
+          "gid": "b4d7c421",
+          "name": "Excerpt from Götterdämmerung, WWV 86D: Akt III, Scene II. Trauermusik beim Tode Siegfrieds",
+          "deezer": [68297791, 64197139, 392082262, 392083152, 528495831],
           "score": 100.0
         }
       ]
@@ -285095,6 +285147,47 @@
           "name": "Siegfried Idyll, WWV 103",
           "deezer": [1231710922, 2410342185, 1617955402, 80963510, 3351202],
           "score": 100.0
+        }
+      ]
+    },
+    {
+      "gid": "fcf065d9",
+      "composer_gid": "eefd7c1e-abcf-4ccc-ba60-0fd435c9061f",
+      "name": "Siegfried, WWV 86C",
+      "type": "opera",
+      "begin_year": 1854,
+      "end_year": 1856,
+      "score": 3.63,
+      "parts": [
+        {
+          "gid": "7c3b9bbc",
+          "name": "Akt I, Vorspiel",
+          "deezer": [392081292, 2747837081],
+          "score": 92.72
+        },
+        {
+          "gid": "fd1832c5",
+          "name": "Akt I, Scene III \"Verfluchtes Licht!\"",
+          "deezer": [3396463],
+          "score": 100.0
+        },
+        {
+          "gid": "569a6e82",
+          "name": "Akt II, Vorspiel",
+          "deezer": [392081492, 68248120],
+          "score": 90.09
+        },
+        {
+          "gid": "0d379527",
+          "name": "Akt III, Vorspiel",
+          "deezer": [392081662, 68248131],
+          "score": 90.09
+        },
+        {
+          "gid": "869efcc3",
+          "name": "Akt III, Scene III \"Selige Öde auf sonniger Höh’!\"",
+          "deezer": [770738992],
+          "score": 99.36
         }
       ]
     },

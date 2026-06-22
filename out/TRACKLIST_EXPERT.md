@@ -1648,7 +1648,6 @@
 | `0c00dc59` | Haydn – Piano Trios, Hob. XV:27-29 | * Piano Trio in C major, Hob. XV:27: I. Allegro<br>* Piano Trio in C major, Hob. XV:27: II. Andante<br>* Piano Trio in C major, Hob. XV:27: III. Presto | 1797 |
 | `b800dd41` | Haydn – Septem Verba Christi in Cruce, Hob. XX:1 | * I. L'introduzione. Maestoso ed Adagio<br>* III. Sonata II. Grave e Cantabile<br>* IX. Il Terremoto. Presto con tutta la forza | 1786 |
 | `c5f89522` | Haydn – Sinfonia Concertante for Violin, Cello, Oboe & Bassoon in B-flat major, Hob. I:105 | * I. Allegro<br>* II. Andante<br>* III. Allegro con spirito | 1792 |
-| `c8cf44da` | Haydn – Sonata no. 11 in B-flat major, Hob. XVI:2 | * I. Moderato<br>* II. Largo<br>* III. Menuet | 1760 |
 | `e38e4e80` | Haydn – Sonata no. 13 in G major, Hob. XVI:6 | * I. Allegro<br>* II. Minuet<br>* IV. Finale: Allegro molto | 1760‑1766 |
 | `f58c3966` | Haydn – Sonata no. 30 in D major, Hob. XVI:19 | * I. Moderato<br>* II. Andante<br>* III. Finale - Allegro assai | 1767 |
 | `689cecda` | Haydn – Sonata no. 31 in A-flat major, Hob. XVI:46 | * I. Allegro moderato<br>* II. Adagio<br>* III. Finale - Presto | 1767‑1770 |
@@ -1829,7 +1828,6 @@
 | `19dd75a1` | Janáček – Sonata for Violin & Piano, JW VII/7 | * I. Con moto<br>* II. Ballada<br>* IV. Adagio | 1914 |
 | `ed491125` | Janáček – String Quartet no. 1, JW VII/8 “Kreutzer Sonata” | * String Quartet no. 1: I. Adagio - Con moto<br>* String Quartet no. 1: III. Con moto - Vivo - Andante<br>* String Quartet no. 1: IV. Con moto - Adagio - Maestoso | 1923 |
 | `96adb6a3` | Janáček – String Quartet no. 2 "Intimate Letters" | * I. Andante<br>* II. Adagio<br>* III. Moderato | 1928 |
-| `590781e9` | Janáček – Suite, JW VI/2 | * II. Adagio - Meno<br>* III. Andante con moto<br>* IV. Presto - Andante - Presto | 1877 |
 | `bfcbf232` | Janáček – Taras Bulba | * I. Death of Andrey<br>* II. Death of Ostap<br>* III. Prophecy and Death of Taras Bulba | 1918 |
 | `efacd02d` | Järnefelt – Berceuse (Kehtolaulu) | * Berceuse (Kehtolaulu) | 1904 |
 | `51d827a8` | Jolivet – Chant de Linos | * Chant de Linos | 1944 |
@@ -1855,7 +1853,6 @@
 | `6862716a` | Joplin – The Strenuous Life | * The Strenuous Life | 1902 |
 | `027de9df` | Joplin – Weeping Willow | * Weeping Willow | 1903 |
 | `cc35aa66` | Kabalevsky – Colas Breugnon, op. 24 | * Overture | 1936‑1938 |
-| `f697753d` | Kabalevsky – Piano Sonata no. 3 in F major, op. 46 | * I. Allegro con moto<br>* II. Andante cantabile<br>* III. Allegro giocoso | 1946 |
 | `17e46c4f` | Kabalevsky – The Comedians, op. 26 | * II. Galop. Presto | 1940 |
 | `d0253af1` | Kálmán – Die Zirkusprinzessin | * Akt I. „Zwei Märchenaugen” | 1925 |
 | `817e48eb` | Kálmán – Gräfin Mariza | * Akt I. „Komm Zigány“ (Tassilo) | 1924 |
@@ -3910,14 +3907,17 @@
 | `2bcb51ae` | Vivaldi – Trio in G minor for Lute, Violin, and Continuo, RV 85 | * I. Andante molto<br>* II. Larghetto<br>* III. Allegro | 1731 |
 | `3ff464e1` | Vivaldi – Viola d'Amore Concerto in D minor, RV 394 | * I. Allegro<br>* II. Andante<br>* III. Allegro | ? |
 | `49959bb9` | Wagner – Das Liebesverbot, WWV 38 | * Nr. 1. Ouvertüre | 1834 |
-| `597e017a` | Wagner – Der Ring des Nibelungen, WWV 86 | * The Valkyrie: Ride of the Valkyries<br>* Excerpt from Götterdämmerung, WWV 86D: Akt III, Scene II. Trauermusik beim Tode Siegfrieds | 1854‑1856 |
+| `45798fca` | Wagner – Das Rheingold, WWV 86A | * Das Rheingold: Scene I<br>* Das Rheingold: Scene II<br>* Das Rheingold: Scene III | 1854‑1856 |
 | `4d644732` | Wagner – Die Meistersinger von Nürnberg, WWV 96 | * Vorspiel | 1863‑1867 |
+| `a87e8996` | Wagner – Die Walküre, WWV 86B | * The Valkyrie: Ride of the Valkyries | 1854‑1856 |
 | `15947da1` | Wagner – Faust Overture | * Faust Overture | 1839‑1840 |
+| `c906f057` | Wagner – Götterdämmerung, WWV 86D | * Excerpt from Götterdämmerung, WWV 86D: Vorspiel: Siegfrieds Rheinfahrt<br>* Excerpt from Götterdämmerung, WWV 86D: Akt III, Scene II. Trauermusik beim Tode Siegfrieds | 1869‑1874 |
 | `1d774427` | Wagner – Lohengrin, WWV 75 | * Lohengrin, WWV 75: Vorspiel<br>* Lohengrin, WWV 75: Akt III. Vorspiel<br>* Lohengrin: Act III, Scene I. Bridal Chorus (Choir) | 1846‑1848 |
 | `9181dd6e` | Wagner – Parsifal | * Atto II. “Ho visto il figlio sul materno sen” | 1877‑1882 |
 | `98434ad8` | Wagner – Parsifal, WWV 111 | * I. Aufzug, Vorspiel<br>* II. Aufzug, 2. Szene<br>* III. Aufzug, 1. Szene: Karfreitagszauber | 1877‑1882 |
 | `315a0fe2` | Wagner – Rienzi, der letzte der Tribunen, WWV 49 | * Ouvertüre | 1838‑1840 |
 | `b7db99d4` | Wagner – Siegfried Idyll, WWV 103 | * Siegfried Idyll, WWV 103 | 1870 |
+| `fcf065d9` | Wagner – Siegfried, WWV 86C | * Akt I, Vorspiel<br>* Akt I, Scene III "Verfluchtes Licht!"<br>* Akt III, Scene III "Selige Öde auf sonniger Höh’!" | 1854‑1856 |
 | `d6897b63` | Wagner – Siegfried: Waldweben | * Siegfried: Waldweben | 1856‑1871 |
 | `9b1bd955` | Wagner – Tannhäuser und der Sängerkrieg auf Wartburg, WWV 70 | * Tannhäuser und der Sängerkrieg auf Wartburg, WWV 70: Aufzug II, Einleitung und Szene I. "Dich, teure Halle, grüss ich wieder" (Elisabeth)<br>* Excerpt from Tannhäuser und der Sängerkrieg auf Wartburg, WWV 70: Aufzug II, Scene IV. Festmarsch<br>* Excerpt from Tannhäuser und der Sängerkrieg auf Wartburg, WWV 70: Aufzug III, Scene I. Pilgerchor: “Beglückt darf nun dich” | 1843‑1845 |
 | `d801c361` | Wagner – Tannhäuser: Ouverture and Venusberg Music | * Tannhäuser und der Sängerkrieg auf Wartburg, WWV 70: Ouvertüre | 1843‑1845 |

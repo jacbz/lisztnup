@@ -671,8 +671,6 @@
 | `b54d962b` | Rachmaninoff – Piano Concerto no. 1 in F-sharp minor, op. 1 | * II. Andante | 1890‑1891 |
 | `aca4167a` | Rachmaninoff – Piano Concerto no. 2 in C minor, op. 18 | * II. Adagio sostenuto | 1900‑1901 |
 | `21b5596b` | Rachmaninoff – Piano Concerto no. 3 in D minor, op. 30 | * I. Allegro ma non tanto | 1909 |
-| `42f2a0b3` | Rachmaninoff – Piano Concerto no. 4 in G minor, op. 40 | * II. Largo | 1914‑1941 |
-| `47afb42f` | Rachmaninoff – Piano Sonata no. 2 in B-flat minor, op. 36 | * III. L’istesso tempo; Allegro molto | 1913 |
 | `17eea09b` | Rachmaninoff – Rhapsody on a Theme of Paganini, op. 43 | * Variation XVIII: Andante cantabile | 1934 |
 | `f2ad7b77` | Rachmaninoff – Sonata for Cello and Piano in G minor, op. 19 | * III. Andante | 1901 |
 | `a452d093` | Rachmaninoff – Symphonic Dances, op. 45 | * I. Non allegro - Lento - Tempo I | 1940 |
@@ -985,8 +983,10 @@
 | `313c10ad` | Vivaldi – Flute Concerto in C minor, RV 441 | * I. Allegro non molto | ? |
 | `ec764fa1` | Vivaldi – Gloria in D major, RV 589 | * I. Gloria in excelsis Deo | 1713 |
 | `161dd98a` | Vivaldi – L’estro armonico, op. 3 | * Concerto in A minor for Two Violins, Cello and Strings, op. 3 no. 8, RV 522, 'Con due Violini obligati': III. Allegro | 1711 |
-| `597e017a` | Wagner – Der Ring des Nibelungen, WWV 86 | * The Valkyrie: Ride of the Valkyries | 1854‑1856 |
+| `45798fca` | Wagner – Das Rheingold, WWV 86A | * Das Rheingold: Scene II | 1854‑1856 |
 | `4d644732` | Wagner – Die Meistersinger von Nürnberg, WWV 96 | * Vorspiel | 1863‑1867 |
+| `a87e8996` | Wagner – Die Walküre, WWV 86B | * The Valkyrie: Ride of the Valkyries | 1854‑1856 |
+| `c906f057` | Wagner – Götterdämmerung, WWV 86D | * Excerpt from Götterdämmerung, WWV 86D: Akt III, Scene II. Trauermusik beim Tode Siegfrieds | 1869‑1874 |
 | `1d774427` | Wagner – Lohengrin, WWV 75 | * Lohengrin: Act III, Scene I. Bridal Chorus (Choir) | 1846‑1848 |
 | `9181dd6e` | Wagner – Parsifal | * Atto II. “Ho visto il figlio sul materno sen” | 1877‑1882 |
 | `98434ad8` | Wagner – Parsifal, WWV 111 | * I. Aufzug, Vorspiel | 1877‑1882 |

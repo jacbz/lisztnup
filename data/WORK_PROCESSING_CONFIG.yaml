@@ -405,6 +405,7 @@ work_hierarchy_overrides:
     - '40b35a3c-0790-4d6b-a336-cb5bdf2ae802' # Vivaldi, Antonio - 6 Flute Concertos, op. 10
     - '7044d543-9f9d-4598-8ee7-0f9945d28595' # Vivaldi, Antonio - The Contest Between Harmony and Invention, op. 8
     - '87886dcf-9776-49cb-b6f5-10104da6e42c' # Vivaldi, Antonio - The Four Seasons
+    - '597e017a-2c97-40c0-9eeb-430a0461e4ad' # Wagner, Richard - Der Ring des Nibelungen
     - '25f84f27-f09e-4e5b-84f9-1c0e414e5e33' # Widor, Charles‐Marie - Organ Symphonies, op. 13
 
 # --- Work Significance Score (WSS) Overrides ---
