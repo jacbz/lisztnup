@@ -4,6 +4,7 @@
 	import { _ } from 'svelte-i18n';
 	import { allCategories } from '$lib/data/categories';
 	import { shuffle } from '$lib/utils/random';
+	import CircularText from '$lib/components/ui/primitives/CircularText.svelte';
 
 	interface Props {
 		onCategorySelected?: (category: GuessCategory) => void;
@@ -284,22 +285,8 @@
 		ctx.fill();
 		ctx.restore();
 
-		if (showSpinText) {
-			ctx.fillStyle = 'white';
-			ctx.font = `800 ${size * 0.064}px Rajdhani, sans-serif`;
-			ctx.textAlign = 'center';
-			ctx.textBaseline = 'middle';
-			ctx.shadowColor = 'rgba(34, 211, 238, 0.8)';
-			ctx.shadowBlur = 8;
-			ctx.shadowOffsetX = 0;
-			ctx.shadowOffsetY = 2;
-
-			const spinText = ($_('game.spin') as string).toUpperCase();
-			ctx.fillText(spinText, centerX, centerY);
-
-			ctx.shadowColor = 'transparent';
-			ctx.shadowBlur = 0;
-		}
+		// "Spin!" hub label is a static DOM overlay (see CircularText below) so it
+		// stays legible from every side of the table instead of spinning along.
 
 		// Draw pointer
 		const pointerY = glowPadding + size * 0.01;
@@ -777,6 +764,17 @@
 			</text>
 		{/each}
 	</svg>
+
+	<!-- Static hub label — stays upright per edge instead of spinning with the wheel -->
+	{#if showSpinText}
+		<div class="spin-hub" style="width: {wheelSize * 0.32}px; height: {wheelSize * 0.32}px;">
+			<CircularText
+				text={$_('game.spin')}
+				fontSize={16}
+				class="text-white drop-shadow-[0_2px_8px_rgba(34,211,238,0.8)]"
+			/>
+		</div>
+	{/if}
 </div>
 
 <style>
@@ -800,6 +798,14 @@
 		pointer-events: none;
 		transform-origin: center;
 		transition: transform 0s linear;
+	}
+
+	.spin-hub {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		pointer-events: none;
 	}
 
 	.segment-text-outer,

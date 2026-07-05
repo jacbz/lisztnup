@@ -230,7 +230,8 @@
 {#snippet timelineDisplay(timeline: TimelineRow, rotation: number, edge: PlayerEdge)}
 	{@const isTurnOwner = timeline.player.name === game.activePlayerName}
 	{@const isActive = !game.isDealing && isTurnOwner}
-	{@const showMirrorYear = game.isMdHeight && (game.timelinesByEdge.get(OPPOSITE_EDGE[edge])?.length ?? 0) > 0}
+	{@const showMirrorYear =
+		game.isMdHeight && (game.timelinesByEdge.get(OPPOSITE_EDGE[edge])?.length ?? 0) > 0}
 
 	{#if game.endgameActive && !isSoloMode && !game.showEndGame}
 		{#if timeline.reachedTarget}

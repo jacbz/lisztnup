@@ -5,6 +5,7 @@
 	import { BUZZER_TIME_PERCENTAGES, CATEGORY_POINTS } from '$lib/types';
 	import { currentRound, settings } from '$lib/stores';
 	import EdgeDisplay from '../ui/primitives/EdgeDisplay.svelte';
+	import CircularText from '../ui/primitives/CircularText.svelte';
 	import { _ } from 'svelte-i18n';
 	import { getCategoryDefinition } from '$lib/data/categories';
 	import { getGameContext } from './context';
@@ -386,26 +387,27 @@
 			<div class="relative z-50 flex items-center justify-center">
 				<button
 					type="button"
-					class="relative z-100 flex aspect-square w-80 max-w-[80vw] cursor-pointer items-center justify-center rounded-full border-8 px-8 transition-all duration-200 hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 md:w-125 {buzzerButtonClasses}"
+					class="relative z-100 flex aspect-square w-80 max-w-[80vw] cursor-pointer items-center justify-center rounded-full border-8 transition-all duration-200 hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 md:w-125 {buzzerButtonClasses}"
 					onmousedown={hasTouch ? undefined : handleBuzzerDown}
 					ontouchstart={hasTouch ? handleBuzzerDown : undefined}
 					disabled={isBuzzerPressed && !showReveal}
 				>
 					{#if showReveal}
-						<span
-							class="font-bold tracking-[0.15em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
-							style="font-size: clamp(2rem, 8vw, 4rem);">{$_('game.reveal')}</span
-						>
+						<CircularText
+							text={$_('game.reveal')}
+							class="text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
+						/>
 					{:else if !hasStartedPlaying}
-						<span
-							class="font-bold tracking-[0.15em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
-							style="font-size: clamp(2rem, 8vw, 4rem);">{$_('game.buzzer.pressToStart')}</span
-						>
+						<CircularText
+							text={$_('game.buzzer.pressToStart')}
+							class="text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
+						/>
 					{:else}
-						<span
-							class="font-bold tracking-[0.15em] text-white uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
-							style="font-size: clamp(3rem, 10vw, 5rem);">{$_('game.buzzer.buzz')}</span
-						>
+						<CircularText
+							text={$_('game.buzzer.buzz')}
+							fontSize={14}
+							class="text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
+						/>
 					{/if}
 				</button>
 			</div>

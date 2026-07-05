@@ -4,6 +4,7 @@
 	import { playerState } from '$lib/services';
 	import Visualizer from './Visualizer.svelte';
 	import PlayStopIcon from './PlayStopIcon.svelte';
+	import CircularText from '$lib/components/ui/primitives/CircularText.svelte';
 
 	interface Props {
 		visible?: boolean;
@@ -196,17 +197,15 @@
 				{/if}
 
 				<!-- Button content -->
-				<div class="relative z-10 flex items-center justify-center">
-					{#if playbackEnded}
-						<span class="font-bold tracking-widest text-cyan-400 uppercase"
-							>{$_('game.reveal')}</span
-						>
-					{:else if isPlaying && playingLabel}
-						<span class="font-bold tracking-widest text-cyan-400 uppercase">{playingLabel}</span>
-					{:else}
+				{#if playbackEnded}
+					<CircularText text={$_('game.reveal')} class="z-10 text-cyan-400" />
+				{:else if isPlaying && playingLabel}
+					<CircularText text={playingLabel} class="z-10 text-cyan-400" />
+				{:else}
+					<div class="relative z-10 flex items-center justify-center">
 						<PlayStopIcon {isPlaying} size={progressPath.buttonSize * 0.41} />
-					{/if}
-				</div>
+					</div>
+				{/if}
 			</button>
 		</div>
 	{/if}

@@ -14,6 +14,7 @@ export { default as RangeSlider } from './primitives/RangeSlider.svelte';
 export { default as ExternalLink } from './primitives/ExternalLink.svelte';
 export { default as QRCode } from './primitives/QRCode.svelte';
 export { default as Logo } from './primitives/Logo.svelte';
+export { default as CircularText } from './primitives/CircularText.svelte';
 export { default as LoadingProgress } from './primitives/LoadingProgress.svelte';
 export { default as ScoringCard } from './primitives/ScoringCard.svelte';
 export { default as SearchPopup } from './primitives/SearchPopup.svelte';
