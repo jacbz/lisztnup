@@ -36,13 +36,6 @@
 
 	let { players, target, isSoloMode = false, onHome = () => {} }: Props = $props();
 
-	const OPPOSITE_EDGE: Record<PlayerEdge, PlayerEdge> = {
-		top: 'bottom',
-		bottom: 'top',
-		left: 'right',
-		right: 'left'
-	};
-
 	// ─── Context & Game Logic ──────────────────────────────
 
 	const ctx = getGameContext();
@@ -230,8 +223,7 @@
 {#snippet timelineDisplay(timeline: TimelineRow, rotation: number, edge: PlayerEdge)}
 	{@const isTurnOwner = timeline.player.name === game.activePlayerName}
 	{@const isActive = !game.isDealing && isTurnOwner}
-	{@const showMirrorYear =
-		game.isMdHeight && (game.timelinesByEdge.get(OPPOSITE_EDGE[edge])?.length ?? 0) > 0}
+	{@const showMirrorYear = game.isMdHeight && game.occupiedEdges.length > 1}
 
 	{#if game.endgameActive && !isSoloMode && !game.showEndGame}
 		{#if timeline.reachedTarget}
@@ -308,8 +300,11 @@
 >
 	{#if game.isMdHeight}
 		<!-- Standard centred layout for taller screens -->
+		<!-- w-fit is required: as a block-level flex box this would otherwise span the
+		     full viewport width and, sitting at the vertical center over z-200, form an
+		     invisible band that swallows clicks on the left/right edge timelines. -->
 		<div
-			class="relative top-1/2 left-1/2 z-200 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
+			class="relative top-1/2 left-1/2 z-200 flex w-fit -translate-x-1/2 -translate-y-1/2 items-center justify-center"
 		>
 			{@render cardStackDisplay()}
 		</div>
