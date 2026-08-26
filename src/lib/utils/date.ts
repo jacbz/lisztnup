@@ -89,6 +89,28 @@ export function formatDateAsD1Timestamp(date: Date): string {
 	return date.toISOString().slice(0, 19).replace('T', ' ');
 }
 
+/**
+ * Leaderboard rollup period keys.
+ *
+ * A key is the literal D1 timestamp of the period's start, prefixed by grain.
+ * Deriving it from the same helpers that produce the query cutoffs means the
+ * rollup's buckets and the reader's notion of "this week" can never drift.
+ */
+export const ALL_TIME_PERIOD_KEY = 'all';
+
+export function getWeekPeriodKey(date = new Date()): string {
+	return `W:${formatDateAsD1Timestamp(getGermanWeekStartUtc(date))}`;
+}
+
+export function getMonthPeriodKey(date = new Date()): string {
+	return `M:${formatDateAsD1Timestamp(getGermanMonthStartUtc(date))}`;
+}
+
+/** The three buckets a score recorded at `date` belongs to. */
+export function getPeriodKeysForDate(date: Date): string[] {
+	return [ALL_TIME_PERIOD_KEY, getWeekPeriodKey(date), getMonthPeriodKey(date)];
+}
+
 export function parseD1Timestamp(value: unknown): Date | null {
 	if (typeof value !== 'string') return null;
 	const normalized = value.includes('T') ? value : `${value.replace(' ', 'T')}Z`;

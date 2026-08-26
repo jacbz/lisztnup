@@ -140,7 +140,7 @@
 		</td>
 		<td class="pl-2">
 			<div class="flex">
-				{#if entry.log}
+				{#if entry.has_log}
 					<button
 						type="button"
 						onclick={() => onShowTimeline(entry)}

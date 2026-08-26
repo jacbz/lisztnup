@@ -58,7 +58,7 @@
 	import TracklistRecordsPopup from '$lib/components/ui/setup/TracklistRecordsPopup.svelte';
 	import TimelineLeaderboard from '$lib/components/ui/setup/TimelineLeaderboard.svelte';
 	import { fade, fly, slide } from 'svelte/transition';
-	import { getLeaderboard, preloadAsset } from '$lib/services/client';
+	import { getLeaderboard, getReplayLog, preloadAsset } from '$lib/services/client';
 
 	interface Props {
 		onStart?: (
@@ -594,10 +594,13 @@
 		};
 	}
 
-	function handleShowTimeline(entry: LeaderboardEntry) {
-		if (!entry.log) return;
+	async function handleShowTimeline(entry: LeaderboardEntry) {
+		if (!entry.has_log || entry.score_id == null) return;
 		try {
-			const log = parseTimelineReplayLog(entry.log);
+			// The list response carries only has_log; the blob is fetched here.
+			const rawLog = await getReplayLog(entry.score_id);
+			if (!rawLog) return;
+			const log = parseTimelineReplayLog(rawLog);
 			const data = get(gameData);
 			if (data && log) {
 				const allPartGids = [...new Set([log.initial, ...log.turns.map((t) => t.part)])].filter(

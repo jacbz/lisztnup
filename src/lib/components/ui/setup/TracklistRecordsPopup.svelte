@@ -216,7 +216,7 @@
 									{$_('scoring.pts', { values: { points: entry.score.toLocaleString() } })}
 								</td>
 								<td>
-									{#if entry.log}
+									{#if entry.has_log}
 										<button
 											type="button"
 											onclick={() => onShowTimeline(entry)}

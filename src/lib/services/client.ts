@@ -49,6 +49,10 @@ interface TrackStatsResponse {
 	stats: TrackInfoStats | null;
 }
 
+interface ReplayResponse {
+	log: string | null;
+}
+
 export interface LeaderboardQuery {
 	limit?: number;
 	tracklist?: string | null;
@@ -99,6 +103,9 @@ const leaderboardCache = new Map<string, { expiresAt: number; data: LeaderboardR
 const inFlightLeaderboard = new Map<string, Promise<LeaderboardResponse>>();
 const trackStatsCache = new Map<string, { expiresAt: number; data: TrackInfoStats | null }>();
 const inFlightTrackStats = new Map<string, Promise<TrackInfoStats | null>>();
+// Replays are immutable, so this cache never expires within a session.
+const replayCache = new Map<number, string | null>();
+const inFlightReplays = new Map<number, Promise<string | null>>();
 let isDraining = false;
 let drainTimer: ReturnType<typeof setTimeout> | null = null;
 let fallbackSequence = Date.now();
@@ -354,6 +361,35 @@ export async function getTrackInfoStats(partGid: string): Promise<TrackInfoStats
 		});
 
 	inFlightTrackStats.set(partGid, request);
+	return request;
+}
+
+/**
+ * Fetches a leaderboard entry's replay blob on demand.
+ *
+ * The list endpoint returns only `has_log`, so opening a replay is what pays
+ * for it — a records view of 500 rows no longer ships 500 timelines.
+ */
+export async function getReplayLog(scoreId: number): Promise<string | null> {
+	if (!Number.isFinite(scoreId)) return null;
+
+	if (replayCache.has(scoreId)) return replayCache.get(scoreId) ?? null;
+
+	const inFlight = inFlightReplays.get(scoreId);
+	if (inFlight) return inFlight;
+
+	const request = fetchJson<ReplayResponse>(`/api/game/leaderboard/replay?id=${scoreId}`)
+		.then((data) => {
+			const log = data.log ?? null;
+			replayCache.set(scoreId, log);
+			return log;
+		})
+		.catch(() => null)
+		.finally(() => {
+			inFlightReplays.delete(scoreId);
+		});
+
+	inFlightReplays.set(scoreId, request);
 	return request;
 }
 

@@ -20,5 +20,8 @@ export interface LeaderboardEntry {
 	country?: string;
 	timestamp?: string;
 	is_me?: boolean;
-	log?: string | null;
+	/** Row id in `timeline_scores`; the handle for fetching this entry's replay. */
+	score_id?: number;
+	/** Whether a replay exists, without shipping it. Fetch via getReplayLog(). */
+	has_log?: boolean;
 }

@@ -7,6 +7,11 @@ interface TrackStatsRow {
 	correct: number | null;
 }
 
+/**
+ * Reads the `track_stats` rollup, maintained by the events endpoint alongside
+ * every placement insert. This is a primary-key lookup — one row — where it
+ * used to aggregate across all of `timeline_placements` once per card played.
+ */
 export const GET: RequestHandler = async ({ url, platform }) => {
 	const partGid = url.searchParams.get('partGid')?.trim();
 	if (!partGid) {
@@ -19,20 +24,16 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 
 	try {
 		const row = await platform.env.DB.prepare(
-			`SELECT COUNT(*) AS played,
-				SUM(CASE WHEN placed_correctly THEN 1 ELSE 0 END) AS correct
-			 FROM timeline_placements
-			 WHERE part_gid = ?1`
+			`SELECT played, correct FROM track_stats WHERE part_gid = ?1`
 		)
 			.bind(partGid)
 			.first<TrackStatsRow>();
 
-		const played = Number(row?.played ?? 0);
-		const correct = Number(row?.correct ?? 0);
+		// A track nobody has placed yet simply has no rollup row.
 		return json({
 			stats: {
-				played,
-				correct
+				played: Number(row?.played ?? 0),
+				correct: Number(row?.correct ?? 0)
 			}
 		});
 	} catch (error) {

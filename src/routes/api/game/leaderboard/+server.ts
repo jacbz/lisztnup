@@ -1,13 +1,15 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
+import type { D1Database } from '@cloudflare/workers-types';
 import { hashUser, getCurrentSalt } from '$lib/server/analytics';
 import {
+	ALL_TIME_PERIOD_KEY,
 	formatD1TimestampAsGermanDate,
-	formatDateAsD1Timestamp,
-	getGermanMonthStartUtc,
-	getGermanWeekStartUtc
+	getMonthPeriodKey,
+	getWeekPeriodKey
 } from '$lib/utils/date';
 import { logger } from '$lib/server/logging';
+import { rebuildPlayerRollup } from '$lib/server/leaderboardRollup';
 import { TIMELINE_TARGET_OPTIONS } from '$lib/types/game';
 import type { LeaderboardCountrySummary, LeaderboardPeriod, LeaderboardScope } from '$lib/types';
 import { isCompletedLog } from '$lib/logic/timelineReplayUtils';
@@ -20,6 +22,22 @@ const MAX_SUBMISSIONS_PER_HOUR = 60;
 const ALLOWED_TIMELINE_TARGETS = new Set<number>(TIMELINE_TARGET_OPTIONS);
 const LEADERBOARD_PERIODS: LeaderboardPeriod[] = ['weekly', 'monthly', 'allTime'];
 
+/**
+ * All reads below go through `leaderboard_best`, where "one row per player per
+ * config" is the primary key. That is what removes the old ROW_NUMBER() dedup
+ * CTE: ranking is now an index-ordered LIMIT against `idx_lb_best_rank`, so a
+ * top-10 request reads ~10 rows rather than the whole score history.
+ */
+
+const ENTRY_COLUMNS = `player_token, player_name, score, attempts, target, average_time, longest_streak, tracklist_id, country, timestamp, score_id, has_log`;
+const ENTRY_ORDER = `score DESC, has_log DESC, timestamp DESC`;
+
+function periodKeyFor(period: LeaderboardPeriod): string {
+	if (period === 'weekly') return getWeekPeriodKey();
+	if (period === 'monthly') return getMonthPeriodKey();
+	return ALL_TIME_PERIOD_KEY;
+}
+
 function parseClientTimestamp(value: unknown): string | null {
 	if (typeof value !== 'string') return null;
 	const ms = Date.parse(value);
@@ -28,6 +46,35 @@ function parseClientTimestamp(value: unknown): string | null {
 	if (ms > now + 5 * 60_000) return null;
 	if (ms < now - 30 * 24 * 60 * 60_000) return null;
 	return new Date(ms).toISOString().slice(0, 19).replace('T', ' ');
+}
+
+function normalizeCountryCode(value: string | null): string | null {
+	if (!value) return null;
+	const normalized = value.trim().toUpperCase();
+	return /^[A-Z]{2}$/.test(normalized) ? normalized : null;
+}
+
+interface RollupEntryRow extends Record<string, unknown> {
+	player_token: string;
+	player_name: string;
+	score: number;
+	country: string | null;
+	timestamp: string;
+	score_id: number;
+	has_log: number;
+}
+
+function shapeEntry(row: RollupEntryRow, playerToken: string | null, rank: number) {
+	const { player_token, player_name, has_log, ...rest } = row;
+	return {
+		...rest,
+		rank,
+		// '' is the rollup's internal spelling of "anonymous"; the API contract is null.
+		player_name: player_name === '' ? null : player_name,
+		has_log: has_log === 1,
+		timestamp: formatD1TimestampAsGermanDate(rest.timestamp) ?? undefined,
+		is_me: playerToken ? player_token === playerToken : false
+	};
 }
 
 export const GET: RequestHandler = async ({ url, platform }) => {
@@ -82,7 +129,7 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 			if ((!nationalCountry || nationalCountry === 'UNKNOWN') && playerToken) {
 				const savedCountry = await db
 					.prepare(
-						`SELECT country FROM timeline_scores
+						`SELECT country FROM leaderboard_best
 						 WHERE player_token = ?1 AND country IS NOT NULL
 						 ORDER BY country <> 'UNKNOWN' DESC, timestamp DESC
 						 LIMIT 1`
@@ -103,16 +150,11 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 			});
 		}
 
-		const periodCutoffs: Partial<Record<LeaderboardPeriod, string>> = {
-			weekly: formatDateAsD1Timestamp(getGermanWeekStartUtc()),
-			monthly: formatDateAsD1Timestamp(getGermanMonthStartUtc())
-		};
+		/** Filters shared by every read, all of them index-seekable. */
+		function baseFilter(period: LeaderboardPeriod) {
+			const binds: (string | number)[] = [periodKeyFor(period)];
+			const conditions = [`period_key = ?1`, `suppressed = 0`];
 
-		function addBaseConditions(
-			conditions: string[],
-			binds: (string | number)[],
-			period: LeaderboardPeriod
-		) {
 			if (tracklistId) {
 				conditions.push(`tracklist_id = ?${binds.length + 1}`);
 				binds.push(tracklistId);
@@ -125,52 +167,6 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 				conditions.push(`tracklist_id <> ?${binds.length + 1}`);
 				binds.push('custom');
 			}
-			if (!records && scope !== 'personal' && period !== 'allTime') {
-				conditions.push(`timestamp >= ?${binds.length + 1}`);
-				binds.push(periodCutoffs[period] ?? '');
-			}
-		}
-
-		async function queryCountrySummaries(period: LeaderboardPeriod) {
-			if (records || scope === 'personal') return [];
-
-			const binds: (string | number)[] = [];
-			const conditions = [`country IS NOT NULL`, `country <> 'UNKNOWN'`];
-			addBaseConditions(conditions, binds, period);
-			const whereClause = ` WHERE ${conditions.join(' AND ')}`;
-			const results = await db
-				.prepare(
-					`SELECT country, COUNT(*) AS count, MAX(score) AS bestScore
-					 FROM timeline_scores${whereClause}
-					 GROUP BY country
-					 ORDER BY count DESC, bestScore DESC, country ASC`
-				)
-				.bind(...binds)
-				.all();
-
-			const summaries: LeaderboardCountrySummary[] = (results.results ?? []).map(
-				(row: Record<string, unknown>) => ({
-					country: String(row.country ?? ''),
-					count: Number(row.count ?? 0),
-					bestScore: Number(row.bestScore ?? 0)
-				})
-			);
-			const filteredSummaries = summaries.filter(
-				(summary) =>
-					summary.country.length === 2 &&
-					Number.isFinite(summary.count) &&
-					Number.isFinite(summary.bestScore)
-			);
-			return filteredSummaries;
-		}
-
-		async function queryEntries(period: LeaderboardPeriod) {
-			// Use ROW_NUMBER() to keep only each player's best score per config.
-			// Partition by token+name so local multiplayer names remain separate.
-			const binds: (string | number)[] = [];
-			const conditions: string[] = [];
-
-			addBaseConditions(conditions, binds, period);
 			if (!records && scope === 'national' && nationalCountry) {
 				conditions.push(`country = ?${binds.length + 1}`);
 				binds.push(nationalCountry);
@@ -179,70 +175,134 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 				conditions.push(`player_token = ?${binds.length + 1}`);
 				binds.push(playerToken);
 			}
-			const whereClause = conditions.length > 0 ? ` WHERE ${conditions.join(' AND ')}` : '';
-			const cols = `player_token, player_name, score, attempts, target, average_time, longest_streak, tracklist_id, country, timestamp, log`;
-			const sql = records
-				? `WITH ranked AS (
-						SELECT ${cols},
-							ROW_NUMBER() OVER (PARTITION BY tracklist_id, target ORDER BY score DESC, log IS NOT NULL DESC, timestamp DESC) AS rn
-						FROM timeline_scores${whereClause}
-					)
-					SELECT ${cols},
-						RANK() OVER (ORDER BY timestamp DESC) as rank
-					FROM ranked
-					WHERE rn = 1
-					ORDER BY timestamp DESC LIMIT ?${binds.length + 1}`
-				: scope === 'personal'
-					? `SELECT ${cols},
-							RANK() OVER (ORDER BY score DESC, log IS NOT NULL DESC, timestamp DESC) as rank
-						FROM timeline_scores${whereClause}
-						ORDER BY rank ASC LIMIT ?${binds.length + 1}`
-					: `WITH best AS (
-						SELECT ${cols},
-							ROW_NUMBER() OVER (PARTITION BY player_token, player_name ORDER BY score DESC, log IS NOT NULL DESC, timestamp DESC) AS rn
-						FROM timeline_scores${whereClause}
-					), deduped AS (
-						SELECT ${cols} FROM best WHERE rn = 1
-					), max_named AS (
-						SELECT player_token, MAX(score) AS max_named_score
-						FROM deduped WHERE player_name IS NOT NULL
-						GROUP BY player_token
-					), final_list AS (
-						SELECT d.player_token, d.player_name, d.score, d.attempts, d.target, d.average_time, d.longest_streak, d.tracklist_id, d.country, d.timestamp, d.log,
-							RANK() OVER (ORDER BY d.score DESC, d.log IS NOT NULL DESC, d.timestamp DESC) as rank
-						FROM deduped d
-						LEFT JOIN max_named mn ON d.player_token = mn.player_token
-						WHERE d.player_name IS NOT NULL
-							OR mn.player_token IS NULL
-							OR d.score > mn.max_named_score
-					)
-					SELECT * FROM final_list
-					WHERE rank <= ?${binds.length + 1}
-						${canIncludePlayerRank ? `OR rank = (SELECT rank FROM final_list WHERE player_token = ?${binds.length + 2} ORDER BY rank ASC LIMIT 1)` : ''}
-						${canIncludeCountryRank ? `OR rank = (SELECT rank FROM final_list WHERE country = ?${binds.length + (canIncludePlayerRank ? 3 : 2)} ORDER BY rank ASC LIMIT 1)` : ''}
-					ORDER BY rank ASC`;
+			return { conditions, binds };
+		}
 
-			binds.push(limit);
-			if (canIncludePlayerRank) {
-				binds.push(playerToken);
-			}
-			if (canIncludeCountryRank) {
-				binds.push(viewerCountry);
-			}
+		async function queryCountrySummaries(period: LeaderboardPeriod) {
+			if (records || scope === 'personal') return [];
 
+			const { conditions, binds } = baseFilter(period);
+			const whereClause = [...conditions, `country IS NOT NULL`, `country <> 'UNKNOWN'`].join(
+				' AND '
+			);
 			const results = await db
-				.prepare(sql)
+				.prepare(
+					`SELECT country, COUNT(*) AS count, MAX(score) AS bestScore
+					 FROM leaderboard_best
+					 WHERE ${whereClause}
+					 GROUP BY country
+					 ORDER BY count DESC, bestScore DESC, country ASC`
+				)
 				.bind(...binds)
 				.all();
 
-			return (results.results ?? []).map((row: Record<string, unknown>) => {
-				const { player_token, ...rest } = row;
-				return {
-					...rest,
-					timestamp: formatD1TimestampAsGermanDate(rest.timestamp) ?? undefined,
-					is_me: playerToken ? player_token === playerToken : false
-				};
-			});
+			return (results.results ?? [])
+				.map((row: Record<string, unknown>) => ({
+					country: String(row.country ?? ''),
+					count: Number(row.count ?? 0),
+					bestScore: Number(row.bestScore ?? 0)
+				}))
+				.filter(
+					(summary: LeaderboardCountrySummary) =>
+						summary.country.length === 2 &&
+						Number.isFinite(summary.count) &&
+						Number.isFinite(summary.bestScore)
+				);
+		}
+
+		/** Rank of a row scoring `score` = how many rows beat it, plus one. */
+		async function rankOf(period: LeaderboardPeriod, score: number): Promise<number | null> {
+			const { conditions, binds } = baseFilter(period);
+			const row = await db
+				.prepare(
+					`SELECT COUNT(*) AS ahead FROM leaderboard_best
+					 WHERE ${conditions.join(' AND ')} AND score > ?${binds.length + 1}`
+				)
+				.bind(...binds, score)
+				.first<{ ahead: number }>();
+			return row ? Number(row.ahead) + 1 : null;
+		}
+
+		/**
+		 * A single row outside the top-N that we still want to show: the viewer's
+		 * own best, or their country's best. Fetched individually so the main
+		 * query stays a clean LIMIT instead of an OR against subqueries.
+		 */
+		async function queryOutlier(
+			period: LeaderboardPeriod,
+			column: 'player_token' | 'country',
+			value: string
+		) {
+			const { conditions, binds } = baseFilter(period);
+			const row = await db
+				.prepare(
+					`SELECT ${ENTRY_COLUMNS} FROM leaderboard_best
+					 WHERE ${conditions.join(' AND ')} AND ${column} = ?${binds.length + 1}
+					 ORDER BY ${ENTRY_ORDER} LIMIT 1`
+				)
+				.bind(...binds, value)
+				.first<RollupEntryRow>();
+			return row ?? null;
+		}
+
+		async function queryEntries(period: LeaderboardPeriod) {
+			const { conditions, binds } = baseFilter(period);
+
+			// Records mode wants the single best run per (tracklist, target). The
+			// window function keeps the same tiebreak as everywhere else; the rollup
+			// it ranks over is one row per player, and the WHERE is index-seeked.
+			const sql = records
+				? `WITH ranked AS (
+				     SELECT ${ENTRY_COLUMNS},
+				       ROW_NUMBER() OVER (PARTITION BY tracklist_id, target ORDER BY ${ENTRY_ORDER}) AS rn
+				     FROM leaderboard_best
+				     WHERE ${conditions.join(' AND ')}
+				   )
+				   SELECT ${ENTRY_COLUMNS} FROM ranked WHERE rn = 1
+				   ORDER BY timestamp DESC
+				   LIMIT ?${binds.length + 1}`
+				: `SELECT ${ENTRY_COLUMNS}
+				   FROM leaderboard_best
+				   WHERE ${conditions.join(' AND ')}
+				   ORDER BY ${ENTRY_ORDER}
+				   LIMIT ?${binds.length + 1}`;
+
+			const results = await db
+				.prepare(sql)
+				.bind(...binds, limit)
+				.all();
+			const rows = (results.results ?? []) as unknown as RollupEntryRow[];
+
+			if (records) {
+				return rows.map((row, index) => shapeEntry(row, playerToken, index + 1));
+			}
+
+			const entries = rows.map((row, index) => shapeEntry(row, playerToken, index + 1));
+			if (entries.length === 0) return entries;
+
+			// Append the viewer's own row and their country's best when either falls
+			// below the cut, matching the old query's OR-branches.
+			const seen = new Set(rows.map((row) => `${row.player_token}|${row.score_id}`));
+			const outliers: Array<{ column: 'player_token' | 'country'; value: string }> = [];
+			if (canIncludePlayerRank && playerToken) {
+				outliers.push({ column: 'player_token', value: playerToken });
+			}
+			if (canIncludeCountryRank && viewerCountry) {
+				outliers.push({ column: 'country', value: viewerCountry });
+			}
+
+			for (const { column, value } of outliers) {
+				const row = await queryOutlier(period, column, value);
+				if (!row) continue;
+				const identity = `${row.player_token}|${row.score_id}`;
+				if (seen.has(identity)) continue;
+				seen.add(identity);
+				const rank = await rankOf(period, row.score);
+				entries.push(shapeEntry(row, playerToken, rank ?? entries.length + 1));
+			}
+
+			entries.sort((a, b) => a.rank - b.rank);
+			return entries;
 		}
 
 		const fallbackPeriods: LeaderboardPeriod[] =
@@ -289,12 +349,6 @@ export const GET: RequestHandler = async ({ url, platform }) => {
 		return json({ entries: [], period: requestedPeriod, requestedPeriod, scope });
 	}
 };
-
-function normalizeCountryCode(value: string | null): string | null {
-	if (!value) return null;
-	const normalized = value.trim().toUpperCase();
-	return /^[A-Z]{2}$/.test(normalized) ? normalized : null;
-}
 
 export const POST: RequestHandler = async ({ request, platform, getClientAddress }) => {
 	if (!platform?.env?.DB) {
@@ -429,10 +483,13 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 
 		const timestamp = parseClientTimestamp(occurredAt);
 		const logJson = log ? JSON.stringify(log) : null;
+		const hasLog = logJson ? 1 : 0;
 
 		// ── Idempotency check: same session + player + exact score payload ──
 		// Anonymous submissions can be retried after the server inserted but the client
 		// missed the response, so dedupe them too without collapsing local multiplayer rows.
+		// Seeks via idx_scores_session; the replay blob is no longer part of the
+		// comparison since it now lives in its own table.
 		if (sessionId && typeof sessionId === 'string') {
 			const duplicateNameCondition = nameProvided ? 'player_name = ?3' : 'player_name IS NULL';
 			const duplicatePayload = nameProvided
@@ -444,7 +501,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 						Math.round(target),
 						Math.round(attempts),
 						tracklistId,
-						logJson
+						hasLog
 					]
 				: [
 						sessionId,
@@ -453,7 +510,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 						Math.round(target),
 						Math.round(attempts),
 						tracklistId,
-						logJson
+						hasLog
 					];
 			const dupCheck = await db
 				.prepare(
@@ -465,7 +522,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 					   AND target = ?${nameProvided ? 5 : 4}
 					   AND attempts = ?${nameProvided ? 6 : 5}
 					   AND tracklist_id = ?${nameProvided ? 7 : 6}
-					   AND (log = ?${nameProvided ? 8 : 7} OR (log IS NULL AND ?${nameProvided ? 8 : 7} IS NULL))
+					   AND has_log = ?${nameProvided ? 8 : 7}
 					 ORDER BY id DESC LIMIT 1`
 				)
 				.bind(...duplicatePayload)
@@ -475,7 +532,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 			}
 		}
 
-		// ── Rate limit: max submissions per IP per hour ───
+		// ── Rate limit: max submissions per IP per hour (seeks idx_scores_ratelimit) ─
 		const rateCheck = await db
 			.prepare(
 				`SELECT COUNT(*) AS cnt FROM timeline_scores
@@ -496,7 +553,7 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		// ── Insert ────────────────────────────────────────
 		const result = await db
 			.prepare(
-				`INSERT INTO timeline_scores (timestamp, player_token, player_name, score, attempts, target, average_time, longest_streak, tracklist_id, country, user_hash, session_id, log)
+				`INSERT INTO timeline_scores (timestamp, player_token, player_name, score, attempts, target, average_time, longest_streak, tracklist_id, country, user_hash, session_id, has_log)
 			 VALUES (COALESCE(?1, CURRENT_TIMESTAMP), ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13)`
 			)
 			.bind(
@@ -512,11 +569,25 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 				country,
 				userHash,
 				sessionId ?? null,
-				logJson
+				hasLog
 			)
 			.run();
 
-		return json({ success: true, id: result.meta.last_row_id });
+		const scoreId = result.meta.last_row_id;
+
+		if (logJson && scoreId) {
+			await db
+				.prepare(
+					`INSERT INTO timeline_score_logs (score_id, log) VALUES (?1, ?2)
+					 ON CONFLICT(score_id) DO UPDATE SET log = ?2`
+				)
+				.bind(scoreId, logJson)
+				.run();
+		}
+
+		await rebuildPlayerRollup(db, playerToken);
+
+		return json({ success: true, id: scoreId });
 	} catch (err) {
 		await logger.error(db, 'Leaderboard POST server error', {
 			userHash,
@@ -547,7 +618,7 @@ export const PATCH: RequestHandler = async ({ request, platform }) => {
 			return json({ success: false, reason: 'Invalid name' }, { status: 400 });
 		}
 
-		const db = platform.env.DB;
+		const db: D1Database = platform.env.DB;
 		const trimmedName = playerName.trim().slice(0, MAX_NAME_LENGTH);
 		const numericId = typeof id === 'number' && Number.isFinite(id) ? Math.round(id) : null;
 
@@ -576,6 +647,10 @@ export const PATCH: RequestHandler = async ({ request, platform }) => {
 			}
 			return json({ success: true });
 		}
+
+		// Renaming changes both the rollup's key and its suppression flags, so the
+		// player's rows are rebuilt wholesale rather than patched in place.
+		await rebuildPlayerRollup(db, playerToken);
 
 		return json({ success: true });
 	} catch (err) {

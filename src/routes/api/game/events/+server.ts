@@ -94,7 +94,9 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 						.bind(payload.sessionId, country, userHash, gameInfoJson, occurredAt)
 						.run();
 				} else if (payload.type === 'timeline_placement') {
-					await db
+					const placedCorrectly = payload.placedCorrectly ? 1 : 0;
+
+					const insertPlacement = db
 						.prepare(
 							`INSERT INTO timeline_placements (session_id, work_gid, part_gid, deezer_id, placement, placed_correctly, turn_score, seconds_taken, streak_count, gap, distance, timestamp)
 							 VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, COALESCE(?12, CURRENT_TIMESTAMP))`
@@ -105,15 +107,33 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 							payload.partGid,
 							payload.deezerId ?? null,
 							payload.placement ?? (payload.placedCorrectly ? 'correct' : null),
-							payload.placedCorrectly ? 1 : 0,
+							placedCorrectly,
 							payload.turnScore ?? null,
 							payload.secondsTaken ?? null,
 							payload.streakCount ?? null,
 							payload.gap ?? null,
 							payload.distance ?? null,
 							occurredAt
-						)
-						.run();
+						);
+
+					// Keep the track_stats rollup in step with the raw placement in one
+					// transaction, so /api/game/track-stats can answer with a PK lookup
+					// instead of aggregating the placements table on every card.
+					if (payload.partGid) {
+						await db.batch([
+							insertPlacement,
+							db
+								.prepare(
+									`INSERT INTO track_stats (part_gid, played, correct) VALUES (?1, 1, ?2)
+									 ON CONFLICT(part_gid) DO UPDATE SET
+									   played = played + 1,
+									   correct = correct + ?2`
+								)
+								.bind(payload.partGid, placedCorrectly)
+						]);
+					} else {
+						await insertPlacement.run();
+					}
 				}
 			} catch (e) {
 				await logger.error(db, 'Failed to write event to analytics', {
