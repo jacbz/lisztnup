@@ -21,7 +21,10 @@ CREATE TABLE IF NOT EXISTS pageviews (
   user_hash TEXT,
   device TEXT,
   os TEXT,
-  user_agent TEXT
+  user_agent TEXT,
+  referer TEXT,
+  asn INTEGER,
+  as_organization TEXT
 );
 
 -- Covering index for the hooks.server.ts 10-minute debounce: the query selects

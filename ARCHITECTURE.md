@@ -101,19 +101,19 @@ Cloudflare Pages with D1. Config in `wrangler.toml`: binding `DB` → `lisztnup-
 
 ### Database Schema (database.sql)
 
-| Table                 | Purpose                 | Key columns                                                                |
-| --------------------- | ----------------------- | -------------------------------------------------------------------------- |
-| `pageviews`           | Server-side page views  | `user_hash`, `country`, `path`, `device`, `os`, `user_agent`               |
-| `game_sessions`       | Game lifecycle tracking | `id` (UUID), `state`, `mode`, `tracklist_id`, `locale`, `game_info` (JSON) |
-| `timeline_placements` | Per-placement tracking  | `session_id`, `work_gid`, `part_gid`, `deezer_id`, `placement`, `distance` |
-| `problem_reports`     | User-reported issues    | `session_id`, `message`, `track_metadata` (JSON: MB/Deezer ids + labels)   |
-| `feedback`            | General user feedback   | `session_id`, `message`, `email`                                           |
-| `timeline_scores`     | Timeline solo scores    | `player_token`, `score`, `attempts`, `target`, `average_time`, `has_log`   |
-| `timeline_score_logs` | Replay blobs, split out | `score_id` (PK), `log` — fetched only when a replay is opened              |
-| `logs`                | Server-side diagnostics | `severity`, `message`, `context` (includes user/country), `session_id`     |
-| `leaderboard_best`    | Leaderboard rollup      | PK `(period_key, player_token, player_name, tracklist_id, target)`         |
-| `track_stats`         | Placement rollup        | `part_gid` (PK), `played`, `correct`                                       |
-| `metrics`             | Materialized aggregates | `key` (PK), `value`, `updated_at`                                          |
+| Table                 | Purpose                 | Key columns                                                                                                              |
+| --------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `pageviews`           | Server-side page views  | `user_hash`, `country`, `path`, `device`, `os`, `user_agent`, `referer` (same-origin stripped), `asn`, `as_organization` |
+| `game_sessions`       | Game lifecycle tracking | `id` (UUID), `state`, `mode`, `tracklist_id`, `locale`, `game_info` (JSON)                                               |
+| `timeline_placements` | Per-placement tracking  | `session_id`, `work_gid`, `part_gid`, `deezer_id`, `placement`, `distance`                                               |
+| `problem_reports`     | User-reported issues    | `session_id`, `message`, `track_metadata` (JSON: MB/Deezer ids + labels)                                                 |
+| `feedback`            | General user feedback   | `session_id`, `message`, `email`                                                                                         |
+| `timeline_scores`     | Timeline solo scores    | `player_token`, `score`, `attempts`, `target`, `average_time`, `has_log`                                                 |
+| `timeline_score_logs` | Replay blobs, split out | `score_id` (PK), `log` — fetched only when a replay is opened                                                            |
+| `logs`                | Server-side diagnostics | `severity`, `message`, `context` (includes user/country), `session_id`                                                   |
+| `leaderboard_best`    | Leaderboard rollup      | PK `(period_key, player_token, player_name, tracklist_id, target)`                                                       |
+| `track_stats`         | Placement rollup        | `part_gid` (PK), `played`, `correct`                                                                                     |
+| `metrics`             | Materialized aggregates | `key` (PK), `value`, `updated_at`                                                                                        |
 
 All tables include `user_hash` (SHA-256 of IP + daily-rotating salt — never stores raw IPs) and `country` (from Cloudflare headers).
 

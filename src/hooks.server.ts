@@ -61,6 +61,19 @@ function getOS(userAgent: string | null): string {
 	return 'OTHER';
 }
 
+// Acquisition source only: a same-origin referrer is in-app navigation and
+// tells us nothing about where the visitor came from, so it is dropped rather
+// than stored as noise. Malformed values are discarded too.
+function getReferer(referer: string | null, origin: string): string | null {
+	if (!referer) return null;
+	try {
+		if (new URL(referer).origin === origin) return null;
+	} catch {
+		return null;
+	}
+	return referer.slice(0, 512);
+}
+
 function getDeviceType(userAgent: string | null, cfDeviceType: string | null): string {
 	if (cfDeviceType) return cfDeviceType;
 	if (!userAgent) return 'UNKNOWN';
@@ -83,8 +96,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	if (cf && context) {
 		const userAgent = event.request.headers.get('user-agent');
-		const botScoreStr = event.request.headers.get('cf-bot-management');
-		const isVerifiedBot = botScoreStr ? parseInt(botScoreStr) < 30 : isBot(userAgent);
+		// Cloudflare exposes the bot score on the `cf` object, not as a request
+		// header — the score is 1 (almost certainly a bot) to 99 (almost certainly
+		// human). `botManagement` is only populated for Bot Management
+		// subscribers, so the user-agent heuristic stays as the fallback.
+		const botScore = (cf.botManagement as { score?: number } | undefined)?.score;
+		const isBotRequest = typeof botScore === 'number' ? botScore < 30 : isBot(userAgent);
 
 		// Filter out everything except the main game entry points
 		const isLocalizedHome =
@@ -99,7 +116,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 			event.isDataRequest ||
 			event.request.method !== 'GET';
 
-		if (!isVerifiedBot && !isAsset && isMainPath && event.platform?.env?.DB) {
+		if (!isBotRequest && !isAsset && isMainPath && event.platform?.env?.DB) {
 			const ip =
 				event.getClientAddress() || event.request.headers.get('cf-connecting-ip') || '0.0.0.0';
 			// Daily rotating salt for GDPR compliance
@@ -121,11 +138,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 					if (!recentView) {
 						const device = getDeviceType(userAgent, event.request.headers.get('cf-device-type'));
 						const os = getOS(userAgent);
+						const referer = getReferer(event.request.headers.get('referer'), event.url.origin);
 
 						await event
 							.platform!.env.DB.prepare(
-								`INSERT INTO pageviews (timestamp, country, path, user_hash, device, os, user_agent) 
-							 VALUES (CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?)`
+								`INSERT INTO pageviews (timestamp, country, path, user_hash, device, os, user_agent, referer, asn, as_organization)
+							 VALUES (CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 							)
 							.bind(
 								cf.country || 'UNKNOWN',
@@ -133,7 +151,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 								userHash,
 								device,
 								os,
-								userAgent || 'UNKNOWN'
+								userAgent || 'UNKNOWN',
+								referer,
+								typeof cf.asn === 'number' ? cf.asn : null,
+								typeof cf.asOrganization === 'string' ? cf.asOrganization : null
 							)
 							.run();
 					}
