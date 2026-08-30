@@ -356,7 +356,7 @@
 | `312510a8` | Berlioz – Symphonie fantastique, op. 14 : Épisode de la vie d’un artiste … en cinq parties | * Symphonie fantastique, op. 14: II. Un bal<br>* Symphonie fantastique, op. 14: IV. Marche au supplice | 1830 |
 | `6574405c` | Berlioz – The Damnation of Faust, op. 24 | * La Damnation de Faust : Première Partie : Scène 3. Marche Hongroise (Orchestre)<br>* La Damnation de Faust : Deuxième Partie : Scène 7. Ballet des sylphes (Orchestre) | 1845‑1846 |
 | `3f4b1135` | Berlioz – The Roman Carnival Overture for Orchestra, op. 9 | * The Roman Carnival Overture for Orchestra, op. 9 | 1843 |
-| `22936d59` | Bernstein – Candide | * Overture | ? |
+| `22936d59` | Bernstein – Candide | * Overture | 1956 |
 | `67cb661e` | Bernstein – Symphonic Dances from West Side Story (orch. Kostal, Ramin) | * II. “Somewhere”. Adagio<br>* IV. Mambo. Presto | 1960 |
 | `386166d9` | Binge – Elizabethan Serenade | * Elizabethan Serenade | 1951 |
 | `4a2e78cd` | Bizet – Agnus Dei (arr. Guiraud) | * Agnus Dei (arr. Guiraud) | 1872 |
@@ -372,7 +372,7 @@
 | `0e9d27ec` | Bloch – Schelomo | * Schelomo | 1915‑1916 |
 | `491aba59` | Boccherini – 6 String Quintets, op. 11 (G.271-276) | * Quintet in E major, G. 275, op. 11 no. 5: III. Minuetto (con un poco di moto) | 1771 |
 | `5e6d614e` | Boëllmann – Suite Gothique, op. 25 | * IV. Toccata | 1895 |
-| `6bff49fd` | Boito – Mefistofele | * Atto I, Scena IIa. “Dai campi, dai prati” (Faust)<br>* Atto III. “L’altra notte in fondo al mare” (Margherita, Faust, Mefistofele) | ? |
+| `6bff49fd` | Boito – Mefistofele | * Atto I, Scena IIa. “Dai campi, dai prati” (Faust)<br>* Atto III. “L’altra notte in fondo al mare” (Margherita, Faust, Mefistofele) | 1868 |
 | `be546cd2` | Borodin – In the Steppes of Central Asia | * In the Steppes of Central Asia | 1880 |
 | `9a81051a` | Borodin – Polovtsian Dances (arr. Glazunov, Rimsky‐Korsakov) | * Polovtsian Dances no. 8, “Dance of the Polovtsian Maidens”: Presto, 6/8, F major<br>* Polovtsian Dances no. 17, “Polovtsian Dance with Chorus”: II. Gliding Dance of the Maidens: Andantino, 4/4, A major | 1887 |
 | `8b585d9b` | Borodin – Prince Igor | * Overture<br>* Act II. Dance of the Polovtsian Maidens | 1869‑1887 |
@@ -784,7 +784,7 @@
 | `7e1bfeed` | Grieg – Symphonic dances, op. 64 | * No. 2 in A major, Allegretto grazioso<br>* No. 3 in D major, Allegro giocoso | 1896 |
 | `71060811` | Grieg – Two Elegiac Melodies, op. 34 | * No. 1. Heartwounds<br>* No. 2. The Last Spring | 1880 |
 | `7cdb9553` | Grofé – Grand Canyon Suite | * III. On the Trail<br>* V. Cloudburst | 1929‑1931 |
-| `f01ea5aa` | Halévy – La Juive | * Acte IV. « Rachel, quand du Seigneur » (Éléazar) | ? |
+| `f01ea5aa` | Halévy – La Juive | * Acte IV. « Rachel, quand du Seigneur » (Éléazar) | 1835 |
 | `0da9347d` | Handel – Concerto grosso in A major, op. 6 no. 11, HWV 329 | * I. Andante larghetto e staccato<br>* II. Allegro | 1739 |
 | `a163c285` | Handel – Concerto grosso in A minor, op. 6 no. 4, HWV 322 | * I. Larghetto affettuoso<br>* II. Allegro | 1739 |
 | `2de9e81a` | Handel – Concerto grosso in B minor, op. 6 no. 12, HWV 330 | * I. Largo<br>* III. Aria: larghetto e piano | 1739 |
@@ -884,7 +884,7 @@
 | `9bef57e9` | Haydn – Violin Concerto in G major, Hob. VIIa:4 | * I. Allegro moderato<br>* II. Adagio | 1769 |
 | `4fc010e0` | Herbert – Babes in Toyland | * Babes in Toyland: Act II. March of the Toys<br>* Toyland | 1903 |
 | `8d983092` | Herbert – Mlle. Modiste | * Act I. "Kiss Me Again" (Fifi) | 1905 |
-| `4194fab6` | Heuberger – Der Opernball | * Akt II. "Im chambre séparée" | ? |
+| `4194fab6` | Heuberger – Der Opernball | * Akt II. "Im chambre séparée" | 1898 |
 | `775ac08a` | Hindemith – Mathis der Maler | * I. Engelkonzert. Ruhig bewegt<br>* III. Versuchung des heiligen Antonius. Sehr langsam, frei im Zeitmaß - Sehr lebhaft | 1934 |
 | `e4fa390d` | Hindemith – Symphonic Metamorphosis after Themes by Carl Maria von Weber | * I. Allegro<br>* IV. Marsch | 1943 |
 | `085103a5` | Holst – 3 Hymns for the English Hymnal | * In the Bleak Midwinter | 1904‑1905 |
@@ -1328,7 +1328,7 @@
 | `f667a29a` | Purcell – Oedipus, King of Thebes, Z. 583 | * II. "Music for a While" | 1692 |
 | `2e5a678a` | Purcell – Pausanias, the Betrayer of his Country, Z. 585 | * I. "Sweeter than roses" | 1695 |
 | `2b877e34` | Purcell – Sonata for trumpet, strings, and basso continuo in D major, Z. 850 | * I. Allegro<br>* II. Adagio | ? |
-| `7df68bbd` | Purcell – The Indian Queen, Z. 630 | * Trumpet Overture<br>* Act III: 17h. "I Attempt From Love's Sickness to Fly" | ? |
+| `7df68bbd` | Purcell – The Indian Queen, Z. 630 | * Trumpet Overture<br>* Act III: 17h. "I Attempt From Love's Sickness to Fly" | 1695 |
 | `820e42e0` | Rachmaninoff – 10 Preludes, op. 23 | * No. 4 in D major: Andante cantabile<br>* No. 5 in G minor: Alla marcia | 1901‑1903 |
 | `b1fc68bd` | Rachmaninoff – 13 Preludes, op. 32 | * No. 5 in G major: Moderato<br>* No. 12 in G-sharp minor. Allegro | 1910 |
 | `ec96faf2` | Rachmaninoff – 6 moments musicaux, op. 16 | * No. 3. Andante cantabile in B minor<br>* No. 4. Presto in E minor | 1896 |
@@ -1398,7 +1398,7 @@
 | `51fa49f1` | Respighi – Pines of Rome | * Pini di Roma, P 141: III. I pini del Gianicolo<br>* Pini di Roma, P 141: IV. I pini della Via Appia | 1924 |
 | `289e6f27` | Respighi – Roman Festivals | * I. Circus Maximus<br>* IV. Epiphany | 1928 |
 | `36ee25fe` | Respighi – The Birds, P.154 | * The Birds: I. Prelude<br>* The Birds: II. The dove | 1928 |
-| `e9e615b3` | Reznicek – Donna Diana | * Overture | ? |
+| `e9e615b3` | Reznicek – Donna Diana | * Overture | 1894 |
 | `874eec4c` | Rheinberger – Drei geistliche Gesänge, op. 69 | * Abendlied, op. 69 nr. 3 | 1873 |
 | `a645d42f` | Riley – In C | * In C | 1964 |
 | `18d5c524` | Rimsky‐Korsakov – Capriccio espagnol, Op. 34 | * I. Alborada<br>* II. Variazioni | 1887 |
@@ -1821,7 +1821,7 @@
 | `2fbaaf2d` | Stravinsky – The Firebird | * The Firebird: Act I, no. 7: The Princesses' Game with the Golden Apples (scherzo)<br>* The Firebird: Act I, no. 14: Disappearance of Kastchei's Palace and Magical Creations, Return to Life of the Petrified Knights, General Rejoicing | 1909‑1910 |
 | `53eb4c7c` | Stravinsky – Violin Concerto in D major | * I. Toccata<br>* II. Aria I | 1931 |
 | `66689031` | Sullivan – H.M.S. Pinafore | * Act I, no. 1, Chorus, “We Sail the Ocean Blue” (Sailors) | 1878 |
-| `2fe9b4f0` | Sullivan – The Mikado | * Act I, no. 7. “Three little maids from school are we” (Yum-Yum, Peep-Bo, Pitti-Sing, and Girls)<br>* Act II, no. 13. “The sun, whose rays are all ablaze” (Yum-Yum) | ? |
+| `2fe9b4f0` | Sullivan – The Mikado | * Act I, no. 7. “Three little maids from school are we” (Yum-Yum, Peep-Bo, Pitti-Sing, and Girls)<br>* Act II, no. 13. “The sun, whose rays are all ablaze” (Yum-Yum) | 1885 |
 | `cd6f30e2` | Sullivan – The Pirates of Penzance | * Act I, no. 13. “I am the very model of a modern Major-General” (Major-General, Chorus)<br>* Act II, no. 24. “When a felon’s not engaged in his employment” (Sergeant, Policemen) | 1879 |
 | `77b37e65` | Suppè – Light Cavalry | * Overture | 1866 |
 | `2c4e43c3` | Suppè – Morning, Noon, and Night in Vienna | * Overture | 1844 |
@@ -1892,12 +1892,12 @@
 | `d83f0a23` | Verdi – Don Carlo | * Atto III, scena 1. N°13 “O don fatale, o don crudel” (Eboli)<br>* Atto IV. N°15 “Tu che le vanità” – “O Francia, nobile suol” (Elisabetta) | 1866 |
 | `4b0c1526` | Verdi – Ernani | * Atto I. (no. 4a) Scena “Surta è la notte” (Elvira)<br>* Atto I. (no. 4b) Cavatina “Ernani!… Ernani, involami” (Elvira) | 1843 |
 | `f2019482` | Verdi – Four Sacred Pieces | * Ave Maria<br>* Lauda alla Vergine Maria | 1889‑1897 |
-| `a10ad121` | Verdi – I Lombardi alla prima crociata. Dramma lirico in quattro atti | * I Lombardi: Atto II. N°7 “La mia letizia infondere vorrei” (Oronte, Sofia) | ? |
-| `44b45a6f` | Verdi – I vespri siciliani | * Sinfonia<br>* Atto V. Bolero “Mercè, dilette amiche” (Elena) | ? |
+| `a10ad121` | Verdi – I Lombardi alla prima crociata. Dramma lirico in quattro atti | * I Lombardi: Atto II. N°7 “La mia letizia infondere vorrei” (Oronte, Sofia) | 1843 |
+| `44b45a6f` | Verdi – I vespri siciliani | * Sinfonia<br>* Atto V. Bolero “Mercè, dilette amiche” (Elena) | 1855 |
 | `74301cbd` | Verdi – Il trovatore | * Atto II, scena 1. “Vedi! Le fosche notturne” (zingari)<br>* Atto III, scena 2. “Di quella pira l’orrendo foco” (Manrico, Leonora, Ruiz, armed men) | 1853 |
 | `2d9b73da` | Verdi – La forza del destino | * Sinfonia<br>* Atto IV, scena 2. “Pace, pace, mio Dio” (Leonora) | 1861 |
 | `24df0a9b` | Verdi – La traviata | * Preludio<br>* Atto I. Brindisi “Libiamo, ne’ lieti calici” (Alfredo, Coro, Violetta) | 1853 |
-| `1facfcc8` | Verdi – Luisa Miller | * Atto II. “Oh! fede negar potessi” / “Quando le sere al placido” (Rodolfo) | ? |
+| `1facfcc8` | Verdi – Luisa Miller | * Atto II. “Oh! fede negar potessi” / “Quando le sere al placido” (Rodolfo) | 1849 |
 | `9ba64e41` | Verdi – Macbeth | * Atto IV. N°12 Coro “Patria oppressa! il dolce nome” (Profughi scozzesi)<br>* Atto IV. N°13b Aria "Ah, la paterna mano" (Macduff) | 1847 |
 | `2d73a8a6` | Verdi – Messa da requiem | * IIa. Dies irae: Dies irae (coro)<br>* IIh. Dies irae: Ingemisco (tenore) | 1874 |
 | `445fc058` | Verdi – Nabucco | * Parte III, scena 2. Coro “Va, pensiero, sull’ali dorate” (Coro) | 1841 |

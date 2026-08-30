@@ -9,7 +9,8 @@ or ranges in a YAML file.
 Logic Pipeline:
 1. Loads GIDs from "../missing_year_numbers.txt".
 2. Queries the MusicBrainz API for associated URL relations.
-3. Evaluates sources in order of preference: Wikidata > IMSLP > AllMusic.
+3. Evaluates sources in order of preference: Wikidata > IMSLP > AllMusic, then
+   falls back to the Wikidata premiere date (P1191) if none of them has one.
 4. Parsing Rules:
    - Single Year -> `1767`
    - Range -> `[1777, 1779]`
@@ -17,7 +18,9 @@ Logic Pipeline:
 5. Writes/appends successfully found dates to "WORK_YEAR_NUMBERS.yml".
 6. Keeps a "checked_gids.txt" state file to resume gracefully without hitting APIs twice.
 
-Note: Only composition dates are extracted. Publication dates are ignored.
+Note: Publication dates are never used - they can trail composition by a century.
+The one proxy allowed is the premiere date, as a last resort and only when it does
+not postdate the composer's death.
 
 Usage:
   Run script normally:   python add_year_numbers.py
@@ -48,6 +51,18 @@ PROCESS_RATE_SECONDS = float(os.getenv("PROCESS_RATE_SECONDS", "1.0"))
 # Wikidata time precision: 6 = millennium, 7 = century, 8 = decade, 9 = year,
 # 10 = month, 11 = day. Anything coarser than a year is not a usable date.
 WD_PRECISION_YEAR = 9
+
+# MusicBrainz meters a shared per-IP budget (the x-ratelimit-* headers), not a fixed
+# interval between calls. PROCESS_RATE_SECONDS alone cannot keep us inside it: two
+# overlapping runs, or a retry storm, empty the window and then every request 503s
+# until it rolls over.
+RATE_LIMIT_STATUS_CODES = (429, 503)
+MAX_REQUEST_ATTEMPTS = 5
+BACKOFF_BASE_SECONDS = 4
+MAX_BACKOFF_SECONDS = 120
+# Yield while this many requests are left in the window, rather than spending the last
+# of it and taking the lockout.
+RATE_LIMIT_HEADROOM = 50
 
 INPUT_FILE = "../missing_year_numbers.txt"
 OUTPUT_FILE = "WORK_YEAR_NUMBERS.yml"
@@ -80,6 +95,70 @@ logger.propagate = False # Prevent double printing to console if root logger is 
 # Silence noisy third-party loggers
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 
+
+# ==========================================
+# HTTP
+# ==========================================
+def _header_int(response, name):
+    """Reads an integer header, or None if absent/malformed."""
+    raw = response.headers.get(name)
+    if raw is None:
+        return None
+    try:
+        return int(float(raw))
+    except ValueError:
+        logger.debug(f"[HTTP] Could not parse '{name}' header: {raw!r}")
+        return None
+
+def _server_requested_wait(response):
+    """How long the server itself says to wait, or None if it does not say."""
+    retry_after = _header_int(response, 'Retry-After')
+    if retry_after is not None:
+        return max(1, retry_after)
+
+    reset_epoch = _header_int(response, 'x-ratelimit-reset')
+    if reset_epoch is not None:
+        return max(1, reset_epoch - int(time.time()))
+
+    return None
+
+def _yield_if_budget_low(response, url):
+    """Pauses before spending the last of a rate-limit window."""
+    remaining = _header_int(response, 'x-ratelimit-remaining')
+    if remaining is None or remaining > RATE_LIMIT_HEADROOM:
+        return
+
+    wait = min(MAX_BACKOFF_SECONDS, _server_requested_wait(response) or BACKOFF_BASE_SECONDS)
+    logger.warning(f"[HTTP] Rate-limit budget nearly spent ({remaining} left) at {url}; "
+                   f"pausing {wait}s for the window to roll over")
+    time.sleep(wait)
+
+def request_with_backoff(url, headers):
+    """
+    GET that waits out rate limiting instead of failing the work.
+
+    Retrying immediately after a 429/503 just drains the next window, so honour the
+    server's own Retry-After / x-ratelimit-reset when it offers one and fall back to
+    exponential backoff when it does not. Raises like `raise_for_status` once the
+    attempts are exhausted, or on any non-rate-limit error status.
+    """
+    for attempt in range(1, MAX_REQUEST_ATTEMPTS + 1):
+        response = requests.get(url, headers=headers)
+
+        if response.status_code not in RATE_LIMIT_STATUS_CODES:
+            _yield_if_budget_low(response, url)
+            response.raise_for_status()
+            return response
+
+        if attempt == MAX_REQUEST_ATTEMPTS:
+            logger.error(f"[HTTP] Still rate limited by {url} after {attempt} attempts; giving up")
+            response.raise_for_status()
+
+        backoff = BACKOFF_BASE_SECONDS * (2 ** (attempt - 1))
+        wait = min(MAX_BACKOFF_SECONDS, _server_requested_wait(response) or backoff)
+        logger.warning(f"[HTTP] {response.status_code} from {url}; waiting {wait}s "
+                       f"(attempt {attempt}/{MAX_REQUEST_ATTEMPTS})")
+        time.sleep(wait)
 
 # ==========================================
 # Helpers
@@ -350,8 +429,7 @@ def get_urls_from_mb(gid):
     headers = {'User-Agent': MB_USER_AGENT}
     logger.debug(f"[{gid}] Fetching MusicBrainz data from: {url}")
     
-    resp = requests.get(url, headers=headers)
-    resp.raise_for_status()
+    resp = request_with_backoff(url, headers)
     logger.debug(f"[{gid}] MusicBrainz API response status: {resp.status_code}")
     
     data = resp.json()
@@ -378,44 +456,62 @@ def get_urls_from_mb(gid):
     logger.info(f"[{gid}] URL discovery complete - Wikidata: {bool(urls['wikidata'])}, IMSLP: {bool(urls['imslp'])}, AllMusic: {bool(urls['allmusic'])}")
     return urls
 
-def get_year_from_wikidata(url):
-    qid = url.rstrip('/').split('/')[-1].upper()
-    logger.debug(f"[Wikidata] Extracted QID: {qid} from URL: {url}")
-    
+# Entities are fetched more than once per work (P571, then P1191, then the
+# composer's death date), so keep them for the lifetime of the run.
+_wikidata_claim_cache = {}
+
+def fetch_wikidata_claims(qid):
+    """Fetches an entity's claims. Returns (claims, actual_qid); claims is {} if missing."""
+    qid = qid.upper()
+    if qid in _wikidata_claim_cache:
+        logger.debug(f"[Wikidata] Reusing cached claims for QID: {qid}")
+        return _wikidata_claim_cache[qid]
+
     api_url = f"https://www.wikidata.org/w/api.php?action=wbgetentities&ids={qid}&props=claims&format=json"
     logger.debug(f"[Wikidata] API URL: {api_url}")
-    
+
     headers = {'User-Agent': MB_USER_AGENT}
     if WD_ACCESS_TOKEN:
         headers['Authorization'] = f"Bearer {WD_ACCESS_TOKEN}"
         logger.debug(f"[Wikidata] Using access token for authentication")
     else:
         logger.debug(f"[Wikidata] No access token configured, using anonymous access")
-        
-    resp = requests.get(api_url, headers=headers)
-    resp.raise_for_status()
+
+    resp = request_with_backoff(api_url, headers)
     logger.debug(f"[Wikidata] API response status: {resp.status_code}")
-    
+
     response_json = resp.json()
     entities = response_json.get('entities', {})
-    
+
     if not entities:
         logger.warning(f"[Wikidata] No entities found in response for QID: {qid}")
         logger.debug(f"[Wikidata] Full response: {response_json}")
+        result = ({}, qid)
+    else:
+        logger.debug(f"[Wikidata] Found {len(entities)} entities in response")
+
+        # ALWAYS read the first dictionary value to avoid QID redirect bugs
+        entity = list(entities.values())[0]
+        actual_qid = entity.get('id', qid)
+
+        if actual_qid != qid:
+            logger.info(f"[Wikidata] QID redirect detected: {qid} -> {actual_qid}")
+
+        claims = entity.get('claims', {})
+        logger.debug(f"[Wikidata] Available properties in claims: {list(claims.keys())}")
+        result = (claims, actual_qid)
+
+    _wikidata_claim_cache[qid] = result
+    return result
+
+def get_year_from_wikidata(url):
+    qid = url.rstrip('/').split('/')[-1].upper()
+    logger.debug(f"[Wikidata] Extracted QID: {qid} from URL: {url}")
+
+    claims, actual_qid = fetch_wikidata_claims(qid)
+    if not claims:
         return None
-    
-    logger.debug(f"[Wikidata] Found {len(entities)} entities in response")
-    
-    # ALWAYS read the first dictionary value to avoid QID redirect bugs
-    entity = list(entities.values())[0]
-    actual_qid = entity.get('id', qid)
-    
-    if actual_qid != qid:
-        logger.info(f"[Wikidata] QID redirect detected: {qid} -> {actual_qid}")
-    
-    claims = entity.get('claims', {})
-    logger.debug(f"[Wikidata] Available properties in claims: {list(claims.keys())}")
-    
+
     # Check ONLY Inception (P571) - composition date
     prop = 'P571'
     prop_name = 'Inception'
@@ -459,10 +555,70 @@ def get_year_from_wikidata(url):
     logger.warning(f"[Wikidata] No composition date (P571) found for QID: {actual_qid}")
     return None
 
+def get_composer_death_year_from_wikidata(claims):
+    """Death year of the work's composer (P86 -> P570), or None if unknown."""
+    for claim in claims.get('P86') or []:
+        value = claim.get('mainsnak', {}).get('datavalue', {}).get('value', {})
+        composer_qid = value.get('id') if isinstance(value, dict) else None
+        if not composer_qid:
+            continue
+
+        logger.debug(f"[Wikidata] Looking up death date for composer {composer_qid}")
+        try:
+            composer_claims, _ = fetch_wikidata_claims(composer_qid)
+        except requests.exceptions.RequestException as e:
+            logger.warning(f"[Wikidata] Could not fetch composer {composer_qid}: {e}")
+            return None
+
+        for death_claim in composer_claims.get('P570') or []:
+            death_year = extract_year_from_snak(death_claim.get('mainsnak', {}))
+            if death_year is not None:
+                logger.debug(f"[Wikidata] Composer {composer_qid} died {death_year}")
+                return death_year
+
+    logger.debug(f"[Wikidata] No usable composer death date found")
+    return None
+
+def get_premiere_year_from_wikidata(url):
+    """
+    Last resort: date of first performance (P1191).
+
+    A premiere is not a composition date, but for the stage works that dominate the
+    remaining gap it lands within a season or two of one - and it reads as "finished
+    no later than this", which is exactly how a bare year is stored. Rejected outright
+    when it postdates the composer's death, where the two come apart by decades.
+    """
+    qid = url.rstrip('/').split('/')[-1].upper()
+    claims, actual_qid = fetch_wikidata_claims(qid)
+    if not claims:
+        return None
+
+    # Several claims mean several stagings; the earliest is the first performance.
+    years = [
+        year for year in (
+            extract_year_from_snak(claim.get('mainsnak', {}))
+            for claim in claims.get('P1191') or []
+        ) if year is not None
+    ]
+
+    if not years:
+        logger.debug(f"[Wikidata] No usable premiere date (P1191) for QID: {actual_qid}")
+        return None
+
+    premiere = min(years)
+
+    death_year = get_composer_death_year_from_wikidata(claims)
+    if death_year is not None and premiere > death_year:
+        logger.warning(f"[Wikidata] Rejected posthumous premiere {premiere} for QID "
+                       f"{actual_qid}: composer died {death_year}")
+        return None
+
+    logger.info(f"[Wikidata] Extracted premiere year from P1191 (First Performance): {premiere}")
+    return premiere
+
 def get_year_from_imslp(url):
     logger.debug(f"[IMSLP] Fetching page: {url}")
-    resp = requests.get(url, headers=SCRAPE_HEADERS)
-    resp.raise_for_status()
+    resp = request_with_backoff(url, SCRAPE_HEADERS)
     logger.debug(f"[IMSLP] Response status: {resp.status_code}, content length: {len(resp.text)}")
     
     soup = BeautifulSoup(resp.text, 'html.parser')
@@ -510,8 +666,7 @@ def get_year_from_imslp(url):
 
 def get_year_from_allmusic(url):
     logger.debug(f"[AllMusic] Fetching page: {url}")
-    resp = requests.get(url, headers=SCRAPE_HEADERS)
-    resp.raise_for_status()
+    resp = request_with_backoff(url, SCRAPE_HEADERS)
     logger.debug(f"[AllMusic] Response status: {resp.status_code}, content length: {len(resp.text)}")
     
     soup = BeautifulSoup(resp.text, 'html.parser')
@@ -598,7 +753,21 @@ def process_gid(gid):
             logger.error(f"[{gid}] AllMusic extraction failed with error: {e}", exc_info=True)
     else:
         logger.info(f"[{gid}] No AllMusic URL available, skipping")
-    
+
+    # Premiere date is a proxy, not a composition date, so it runs only once every
+    # real source has come up empty.
+    if urls.get('wikidata'):
+        logger.info(f"[{gid}] Attempting Wikidata premiere (P1191) extraction...")
+        try:
+            year = get_premiere_year_from_wikidata(urls['wikidata'])
+            if year is not None:
+                logger.info(f"[{gid}] ✓ Found premiere date in Wikidata: {year}")
+                return year, 'wikidata-premiere'
+            else:
+                logger.warning(f"[{gid}] ✗ No usable premiere date in Wikidata")
+        except Exception as e:
+            logger.error(f"[{gid}] Wikidata premiere extraction failed with error: {e}", exc_info=True)
+
     logger.warning(f"[{gid}] ========== No year found across available sources ==========")
     return None, None
 
@@ -653,6 +822,7 @@ def print_summary(stats: dict, total_years_in_file: int):
         print(f"   Wikidata:                  {stats['found_wikidata']} ({stats['found_wikidata']/stats['years_added']*100:.1f}%)")
         print(f"   IMSLP:                     {stats['found_imslp']} ({stats['found_imslp']/stats['years_added']*100:.1f}%)")
         print(f"   AllMusic:                  {stats['found_allmusic']} ({stats['found_allmusic']/stats['years_added']*100:.1f}%)")
+        print(f"   Wikidata premiere:         {stats['found_premiere']} ({stats['found_premiere']/stats['years_added']*100:.1f}%)")
     
     # Error breakdown
     total_errors = stats['network_errors'] + stats['other_errors']
@@ -703,6 +873,7 @@ def main():
         'found_wikidata': 0,
         'found_imslp': 0,
         'found_allmusic': 0,
+        'found_premiere': 0,
         'not_found': 0,
         'network_errors': 0,
         'parse_errors': 0,
@@ -725,6 +896,8 @@ def main():
                     stats['found_imslp'] += 1
                 elif source == 'allmusic':
                     stats['found_allmusic'] += 1
+                elif source == 'wikidata-premiere':
+                    stats['found_premiere'] += 1
             else:
                 stats['not_found'] += 1
                 
@@ -764,7 +937,110 @@ class TestYearExtraction(unittest.TestCase):
         year, source = process_gid(gid)
         self.assertEqual(source, 'allmusic')
         self.assertEqual(year, [None, 1742])
-        
+
+    def test_backoff_waits_out_rate_limiting(self):
+        """A 503 must cost a pause, not the work."""
+        class FakeResponse:
+            def __init__(self, status_code, headers=None):
+                self.status_code = status_code
+                self.headers = headers or {}
+            def raise_for_status(self):
+                if self.status_code >= 400:
+                    raise requests.exceptions.HTTPError(f"{self.status_code}", response=self)
+
+        responses = [FakeResponse(503, {'Retry-After': '7'}),
+                     FakeResponse(503, {'x-ratelimit-reset': str(int(time.time()) + 11)}),
+                     FakeResponse(200, {'x-ratelimit-remaining': '900'})]
+        slept = []
+        real_get, real_sleep = requests.get, time.sleep
+        try:
+            requests.get = lambda url, headers=None: responses.pop(0)
+            time.sleep = slept.append
+            result = request_with_backoff('https://example.invalid', {})
+            self.assertEqual(result.status_code, 200)
+            # Honours Retry-After, then x-ratelimit-reset - not blind exponential backoff.
+            self.assertEqual(slept, [7, 11])
+
+            # Exhausting the attempts must raise rather than return a rate-limited body.
+            responses.extend(FakeResponse(503) for _ in range(MAX_REQUEST_ATTEMPTS))
+            with self.assertRaises(requests.exceptions.HTTPError):
+                request_with_backoff('https://example.invalid', {})
+        finally:
+            requests.get, time.sleep = real_get, real_sleep
+
+    def test_backoff_yields_before_exhausting_budget(self):
+        """Pause while requests remain, instead of spending the last of the window."""
+        class FakeResponse:
+            def __init__(self, headers):
+                self.status_code = 200
+                self.headers = headers
+            def raise_for_status(self):
+                pass
+
+        slept = []
+        real_get, real_sleep = requests.get, time.sleep
+        try:
+            time.sleep = slept.append
+            requests.get = lambda url, headers=None: FakeResponse(
+                {'x-ratelimit-remaining': '900', 'x-ratelimit-reset': str(int(time.time()) + 9)})
+            request_with_backoff('https://example.invalid', {})
+            self.assertEqual(slept, [], "should not pause while the budget is healthy")
+
+            requests.get = lambda url, headers=None: FakeResponse(
+                {'x-ratelimit-remaining': '3', 'x-ratelimit-reset': str(int(time.time()) + 9)})
+            request_with_backoff('https://example.invalid', {})
+            self.assertEqual(len(slept), 1, "should pause when the budget is nearly spent")
+        finally:
+            requests.get, time.sleep = real_get, real_sleep
+
+    def test_premiere_extraction(self):
+        # Auber, Fra Diavolo: no inception, no IMSLP/AllMusic date, premiere 1830.
+        gid = '143dbd14-6214-3dbc-928d-8973b57b383d'
+        year, source = process_gid(gid)
+        self.assertEqual(source, 'wikidata-premiere')
+        self.assertEqual(year, 1830)
+
+    def test_wikidata_rejects_imprecise_dates(self):
+        # Wikidata writes "19th century" as +1850-00-00 at precision 7. Reading the
+        # time string without the precision turns a whole century into the year 1850.
+        def snak(time_str, precision):
+            return {'snaktype': 'value',
+                    'datavalue': {'value': {'time': time_str, 'precision': precision}}}
+
+        self.assertIsNone(extract_year_from_snak(snak('+1850-00-00T00:00:00Z', 7)))
+        self.assertIsNone(extract_year_from_snak(snak('+1845-00-00T00:00:00Z', 8)))
+        self.assertEqual(extract_year_from_snak(snak('+1810-00-00T00:00:00Z', 9)), 1810)
+        self.assertEqual(extract_year_from_snak(snak('+1810-11-03T00:00:00Z', 11)), 1810)
+
+    def test_premiere_rejects_posthumous(self):
+        # Handel's "Gloria, HWV deest" was first performed in 2001.
+        def time_snak(year):
+            return {'snaktype': 'value', 'datavalue': {'value': {
+                'time': f'+{year}-01-01T00:00:00Z', 'precision': 11}}}
+
+        _wikidata_claim_cache['Q_COMPOSER'] = (
+            {'P570': [{'mainsnak': time_snak(1759)}]}, 'Q_COMPOSER')
+        composer_claim = {'mainsnak': {'snaktype': 'value', 'datatype': 'wikibase-item',
+                                       'datavalue': {'value': {'id': 'Q_COMPOSER'}}}}
+
+        try:
+            _wikidata_claim_cache['Q_POSTHUMOUS'] = (
+                {'P1191': [{'mainsnak': time_snak(2001)}], 'P86': [composer_claim]},
+                'Q_POSTHUMOUS')
+            self.assertIsNone(get_premiere_year_from_wikidata(
+                'https://www.wikidata.org/wiki/Q_POSTHUMOUS'))
+
+            # ... but a premiere within the composer's lifetime is kept.
+            _wikidata_claim_cache['Q_LIVING'] = (
+                {'P1191': [{'mainsnak': time_snak(1741)}], 'P86': [composer_claim]},
+                'Q_LIVING')
+            self.assertEqual(get_premiere_year_from_wikidata(
+                'https://www.wikidata.org/wiki/Q_LIVING'), 1741)
+        finally:
+            for qid in ('Q_COMPOSER', 'Q_POSTHUMOUS', 'Q_LIVING'):
+                _wikidata_claim_cache.pop(qid, None)
+
+
     def test_range_parser(self):
         """Test comprehensive year parsing patterns - EXACT years only"""
         # Basic patterns
