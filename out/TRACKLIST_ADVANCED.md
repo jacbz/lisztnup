@@ -723,7 +723,7 @@
 | `5869a0b5` | Fauré – Sonate pour violoncelle & piano no. 1, op. 109 | * II. Andante<br>* III. Final. Allegro commodo | 1917 |
 | `60e0e6ca` | Fauré – Sonate pour violoncelle & piano no. 2, op. 117 | * I. Allegro<br>* II. Andante | 1921 |
 | `f0857c3e` | Fauré – Violin Sonata in E minor, op. 108 | * II. Andante<br>* III. Finale (Allegro non troppo) | 1916‑1917 |
-| `79c5f442` | Flotow – Martha | * The Last Rose of Summer<br>* Martha: Akt III. „Ach! so fromm, ach! so traut“ (Lyonel) | 1850 |
+| `79c5f442` | Flotow – Martha | * The Last Rose of Summer<br>* Martha: Akt III. „Ach! so fromm, ach! so traut“ (Lyonel) | 1844‑1847 |
 | `671c59bc` | Flotow – Martha: Atto III. “M’apparì tutt’amor” (Lionel) | * Martha: Atto III. “M’apparì tutt’amor” (Lionel) | 1849 |
 | `0a987622` | Franck – 3 Pièces pour grand orgue | * Cantabile, FWV 36<br>* Pièce héroïque, FWV 37 | 1878 |
 | `8d174eb6` | Franck – Le Chasseur maudit, CFF 128 | * Le Chasseur maudit, CFF 128 | 1882 |
@@ -784,7 +784,7 @@
 | `7e1bfeed` | Grieg – Symphonic dances, op. 64 | * No. 2 in A major, Allegretto grazioso<br>* No. 3 in D major, Allegro giocoso | 1896 |
 | `71060811` | Grieg – Two Elegiac Melodies, op. 34 | * No. 1. Heartwounds<br>* No. 2. The Last Spring | 1880 |
 | `7cdb9553` | Grofé – Grand Canyon Suite | * III. On the Trail<br>* V. Cloudburst | 1929‑1931 |
-| `f01ea5aa` | Halévy – La Juive | * Acte IV. « Rachel, quand du Seigneur » (Éléazar) | 1850 |
+| `f01ea5aa` | Halévy – La Juive | * Acte IV. « Rachel, quand du Seigneur » (Éléazar) | ? |
 | `0da9347d` | Handel – Concerto grosso in A major, op. 6 no. 11, HWV 329 | * I. Andante larghetto e staccato<br>* II. Allegro | 1739 |
 | `a163c285` | Handel – Concerto grosso in A minor, op. 6 no. 4, HWV 322 | * I. Larghetto affettuoso<br>* II. Allegro | 1739 |
 | `2de9e81a` | Handel – Concerto grosso in B minor, op. 6 no. 12, HWV 330 | * I. Largo<br>* III. Aria: larghetto e piano | 1739 |
@@ -1047,7 +1047,7 @@
 | `92eab622` | Messiaen – Quartet for the End of Time | * Quatuor pour la fin du Temps : III. Abîme des oiseaux<br>* Quatuor pour la fin du Temps : V. Louange à l'Éternité de Jesus | 1940 |
 | `ec48e2cb` | Messiaen – Turangalîla-Symphonie, I/29 | * III. Turangalîla 1<br>* VI. Jardin du sommeil d’amour | 1946‑1948 |
 | `ee96d77a` | Messiaen – Vingt regards sur l’enfant Jésus | * XI. Première communion de la Vierge<br>* XIII. Noël | 1944 |
-| `a7b2da79` | Meyerbeer – Dinorah | * Acte II. "Ombre légère (Shadow Song)" (Dinorah) | 1850 |
+| `a7b2da79` | Meyerbeer – Dinorah | * Acte II. "Ombre légère (Shadow Song)" (Dinorah) | 1859 |
 | `a8f66df8` | Meyerbeer – L’Africaine | * Acte IV. "Pays merveilleux" ... "Ô Paradis" | 1837 |
 | `fe664803` | Meyerbeer – L’africana: Atto IV. “Mi batte il cor” … “O Paradiso” | * L’africana: Atto IV. “Mi batte il cor” … “O Paradiso” | ? |
 | `5f573870` | Milhaud – Scaramouche, op. 165b | * II. Modéré<br>* III. Brazileira (Mouvement de samba) | 1937 |
@@ -1233,7 +1233,7 @@
 | `dc59f081` | Nielsen – Symphony no. 4, op. 29, FS 76 “The Inextinguishable” | * I. Allegro<br>* II. Poco allegretto | 1914‑1916 |
 | `83d29ec3` | Nielsen – Symphony no. 5, op. 50 | * I. Tempo giusto – Adagio non troppo<br>* II. Allegro – Presto – Andante un poco tranquillo – Allegro | 1920‑1922 |
 | `c283b670` | Offenbach – Die schöne Helena | * La Belle Hélène: Ouverture | ? |
-| `a03d3609` | Offenbach – La Belle Hélène | * Acte I, Scène 7. Jugement de Pâris « Au mont Ida, trois déesses » (Pâris)<br>* Acte II, Scène 3. « On me nomme Hélène la blonde … Dis-moi, Vénus … » (Hélène) | 1850 |
+| `a03d3609` | Offenbach – La Belle Hélène | * Acte I, Scène 7. Jugement de Pâris « Au mont Ida, trois déesses » (Pâris)<br>* Acte II, Scène 3. « On me nomme Hélène la blonde … Dis-moi, Vénus … » (Hélène) | 1864 |
 | `7ca9655b` | Offenbach – Les Contes d’Hoffmann | * Acte II. « Les oiseaux dans la charmille » (Olympia, Spalanzani, Les invités, Hoffmann, Nicklausse, Cochenille)<br>* Acte III. “Belle nuit, ô nuit d’amour” (Nicklausse, Giulietta) | 1880 |
 | `ee79cd92` | Offenbach – Orpheus in the Underworld | * Infernal Galop<br>* Overture | 1860 |
 | `76c6b9c5` | Orff – Trionfi | * Carmina Burana: Fortuna imperatrix mundi: I. O Fortuna<br>* Carmina Burana: III. Cour d’amours: XXI. In trutina mentis dubia | 1936 |
@@ -1398,7 +1398,7 @@
 | `51fa49f1` | Respighi – Pines of Rome | * Pini di Roma, P 141: III. I pini del Gianicolo<br>* Pini di Roma, P 141: IV. I pini della Via Appia | 1924 |
 | `289e6f27` | Respighi – Roman Festivals | * I. Circus Maximus<br>* IV. Epiphany | 1928 |
 | `36ee25fe` | Respighi – The Birds, P.154 | * The Birds: I. Prelude<br>* The Birds: II. The dove | 1928 |
-| `e9e615b3` | Reznicek – Donna Diana | * Overture | 1850 |
+| `e9e615b3` | Reznicek – Donna Diana | * Overture | ? |
 | `874eec4c` | Rheinberger – Drei geistliche Gesänge, op. 69 | * Abendlied, op. 69 nr. 3 | 1873 |
 | `a645d42f` | Riley – In C | * In C | 1964 |
 | `18d5c524` | Rimsky‐Korsakov – Capriccio espagnol, Op. 34 | * I. Alborada<br>* II. Variazioni | 1887 |
@@ -1419,7 +1419,7 @@
 | `3eb0c94b` | Rossini – L’italiana in Algeri | * Sinfonia | 1813 |
 | `2ca5f83a` | Rossini – La Cenerentola, ossia La bontà in trionfo | * La Cenerentola: Sinfonia<br>* La Cenerentola: Atto II, scena 3. Finale II, coro e scena “Della Fortuna instabile” … “Nacqui all’affanno” … “Non più mesta” (Coro, Cenerentola, Ramiro, Dandini, Alidoro, Clorinda, Tisbe, Magnifico) | 1816 |
 | `676bdcd4` | Rossini – La gazza ladra | * The Thieving Magpie: Overture | 1817 |
-| `32d80f02` | Rossini – La scala di seta | * Sinfonia | 1850 |
+| `32d80f02` | Rossini – La scala di seta | * Sinfonia | 1812 |
 | `2598d21a` | Rossini – Semiramide | * Sinfonia<br>* Atto I. Cavatina “Bel raggio lusinghier” (Semiramide) | 1823 |
 | `dcbe6a0d` | Rossini – Stabat Mater | * II. Aria - Cuius animam gementem (tenore) | 1831‑1841 |
 | `ea8e9fc8` | Rossini – String Sonata no. 1 in G major | * I. Moderato<br>* III. Allegro | 1804 |
@@ -1892,12 +1892,12 @@
 | `d83f0a23` | Verdi – Don Carlo | * Atto III, scena 1. N°13 “O don fatale, o don crudel” (Eboli)<br>* Atto IV. N°15 “Tu che le vanità” – “O Francia, nobile suol” (Elisabetta) | 1866 |
 | `4b0c1526` | Verdi – Ernani | * Atto I. (no. 4a) Scena “Surta è la notte” (Elvira)<br>* Atto I. (no. 4b) Cavatina “Ernani!… Ernani, involami” (Elvira) | 1843 |
 | `f2019482` | Verdi – Four Sacred Pieces | * Ave Maria<br>* Lauda alla Vergine Maria | 1889‑1897 |
-| `a10ad121` | Verdi – I Lombardi alla prima crociata. Dramma lirico in quattro atti | * I Lombardi: Atto II. N°7 “La mia letizia infondere vorrei” (Oronte, Sofia) | 1850 |
+| `a10ad121` | Verdi – I Lombardi alla prima crociata. Dramma lirico in quattro atti | * I Lombardi: Atto II. N°7 “La mia letizia infondere vorrei” (Oronte, Sofia) | ? |
 | `44b45a6f` | Verdi – I vespri siciliani | * Sinfonia<br>* Atto V. Bolero “Mercè, dilette amiche” (Elena) | ? |
 | `74301cbd` | Verdi – Il trovatore | * Atto II, scena 1. “Vedi! Le fosche notturne” (zingari)<br>* Atto III, scena 2. “Di quella pira l’orrendo foco” (Manrico, Leonora, Ruiz, armed men) | 1853 |
 | `2d9b73da` | Verdi – La forza del destino | * Sinfonia<br>* Atto IV, scena 2. “Pace, pace, mio Dio” (Leonora) | 1861 |
 | `24df0a9b` | Verdi – La traviata | * Preludio<br>* Atto I. Brindisi “Libiamo, ne’ lieti calici” (Alfredo, Coro, Violetta) | 1853 |
-| `1facfcc8` | Verdi – Luisa Miller | * Atto II. “Oh! fede negar potessi” / “Quando le sere al placido” (Rodolfo) | 1850 |
+| `1facfcc8` | Verdi – Luisa Miller | * Atto II. “Oh! fede negar potessi” / “Quando le sere al placido” (Rodolfo) | ? |
 | `9ba64e41` | Verdi – Macbeth | * Atto IV. N°12 Coro “Patria oppressa! il dolce nome” (Profughi scozzesi)<br>* Atto IV. N°13b Aria "Ah, la paterna mano" (Macduff) | 1847 |
 | `2d73a8a6` | Verdi – Messa da requiem | * IIa. Dies irae: Dies irae (coro)<br>* IIh. Dies irae: Ingemisco (tenore) | 1874 |
 | `445fc058` | Verdi – Nabucco | * Parte III, scena 2. Coro “Va, pensiero, sull’ali dorate” (Coro) | 1841 |

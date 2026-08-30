@@ -833,8 +833,11 @@ class MusicbrainzProcessor:
             death = composer.death_year
             
             issue = None
-            if birth and work.begin_year is not None and work.begin_year < birth:
-                issue = f"Work start {work.begin_year} < Composer birth {birth}"
+            # A scalar year override lands in end_year with begin_year null, so fall
+            # back to it — otherwise a work dated before its composer was born slips through.
+            start_year = work.begin_year if work.begin_year is not None else work.end_year
+            if birth and start_year is not None and start_year < birth:
+                issue = f"Work start {start_year} < Composer birth {birth}"
                 self.stats["date_anomaly_before_birth"] += 1
 
             comp_year = work.end_year if work.end_year is not None else work.begin_year

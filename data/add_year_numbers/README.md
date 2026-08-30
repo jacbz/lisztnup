@@ -52,6 +52,9 @@ PROCESS_RATE_SECONDS=1.0
 1. **Wikidata** (highest priority)
    - Property: P571 (Inception) - composition date only
    - Supports qualifiers for date ranges (P580/P582)
+   - Claims coarser than `precision: 9` (year) are rejected. Wikidata stores imprecise
+     dates as a midpoint — "19th century" is `+1850-00-00` at precision 7 — so reading the
+     time string alone silently turns a whole century into the year 1850.
 
 2. **IMSLP** (International Music Score Library Project)
    - Scrapes composition date fields only:

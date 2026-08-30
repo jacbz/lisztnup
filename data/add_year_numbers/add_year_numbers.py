@@ -45,6 +45,10 @@ MB_USER_AGENT = os.getenv("MB_USER_AGENT", "LisztnUp/1.0.0 (mail@jacobzhang.de)"
 WD_ACCESS_TOKEN = os.getenv("WD_ACCESS_TOKEN")
 PROCESS_RATE_SECONDS = float(os.getenv("PROCESS_RATE_SECONDS", "1.0"))
 
+# Wikidata time precision: 6 = millennium, 7 = century, 8 = decade, 9 = year,
+# 10 = month, 11 = day. Anything coarser than a year is not a usable date.
+WD_PRECISION_YEAR = 9
+
 INPUT_FILE = "../missing_year_numbers.txt"
 OUTPUT_FILE = "WORK_YEAR_NUMBERS.yml"
 CHECKED_GIDS_FILE = "checked_gids.txt"
@@ -232,7 +236,9 @@ def parse_year_text(text):
     # - If YY <= 12 AND has spaces around dash: likely a year range
     # - If YY <= 12 AND no spaces: likely a date (reject)
     # ============================================================
-    match = re.search(r'(?:ca\.?|circa|c\.?)?\s*(\d{4})\s*(-)\s*(\d{2})(?:\s*(?:ca\.?|circa|c\.?))?(?:\s|$|[,;.])', text, re.IGNORECASE)
+    # The terminator also accepts uncertainty/bracket markers so "1844-47?" and
+    # "[1844-47]" still parse as ranges instead of falling through to a single year.
+    match = re.search(r'(?:ca\.?|circa|c\.?)?\s*(\d{4})\s*(-)\s*(\d{2})(?:\s*(?:ca\.?|circa|c\.?))?(?:\s|$|[,;.?)\]])', text, re.IGNORECASE)
     if match:
         y1, separator_context, y2_short = match.group(1), match.group(2), match.group(3)
         y2_int = int(y2_short)
@@ -308,14 +314,22 @@ def parse_year_text(text):
 def extract_year_from_snak(snak):
     """Helper to pull the year integer from a Wikidata snak dictionary."""
     logger.debug(f"[Wikidata] Extracting year from snak: snaktype={snak.get('snaktype')}")
-    
+
     if snak.get('snaktype') == 'value':
         datavalue = snak.get('datavalue', {})
         value = datavalue.get('value', {})
         time_str = value.get('time', '')
-        
-        logger.debug(f"[Wikidata] Time string from snak: {time_str}")
-        
+        precision = value.get('precision')
+
+        logger.debug(f"[Wikidata] Time string from snak: {time_str} (precision: {precision})")
+
+        # Wikidata stores imprecise dates as a midpoint year: "19th century" is
+        # +1850-00-00 at precision 7, "1840s" is +1845-00-00 at precision 8.
+        # Only precision 9 (year) or finer names an actual year.
+        if precision is not None and precision < WD_PRECISION_YEAR:
+            logger.debug(f"[Wikidata] Rejected imprecise date (precision {precision} < {WD_PRECISION_YEAR}): {time_str}")
+            return None
+
         match = re.search(r'[+-](\d{4})', time_str)
         if match:
             year = int(match.group(1))
