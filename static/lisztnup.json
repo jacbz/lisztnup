@@ -4678,7 +4678,7 @@
       "death_year": 1937,
       "gender": "male",
       "country": "FI",
-      "score": 14.07
+      "score": 11.14
     },
     {
       "gid": "48da5735-c75a-443d-ad72-1e338697ba19",
@@ -6252,7 +6252,7 @@
       "birth_year": 1952,
       "death_year": 2023,
       "gender": "female",
-      "country": "FR",
+      "country": "FI",
       "score": 26.32
     },
     {
@@ -6910,7 +6910,7 @@
       "death_year": 1949,
       "gender": "male",
       "country": "DE",
-      "score": 66.8
+      "score": 66.71
     },
     {
       "gid": "c278de2c-9696-4fdf-a919-0781cd945e2c",
@@ -88400,7 +88400,7 @@
         {
           "gid": "1fb7717b",
           "name": "The Girl with the Flaxen Hair",
-          "deezer": [2601226452, 1457581422, 1412873322, 2203912887, 1477894502],
+          "deezer": [2601226452, 1457581422, 1412873322, 1477894502],
           "score": 100.0
         },
         {
@@ -99588,7 +99588,7 @@
         {
           "gid": "56063a15",
           "name": "Chanson d'Amour, op. 27 no. 1",
-          "deezer": [1401387322, 1391170912],
+          "deezer": [1391170912, 1718591547],
           "score": 100.0
         }
       ]
@@ -133396,8 +133396,8 @@
       "composer_gid": "325f8afe-eb01-442c-bc09-65cc093ceaf3",
       "name": "Fervaal, op. 40",
       "type": "opera",
-      "begin_year": null,
-      "end_year": 1850,
+      "begin_year": 1889,
+      "end_year": 1895,
       "score": 1.61,
       "parts": [
         {
@@ -152694,23 +152694,6 @@
           "gid": "7769a74e",
           "name": "VI. Festive March",
           "deezer": [2774685901, 64602738],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "f764495e",
-      "composer_gid": "5b3f4700-d190-4f70-8f36-9b68e76d9464",
-      "name": "Sleeping Beauty, op. 22",
-      "type": "orchestral",
-      "begin_year": 1904,
-      "end_year": 1904,
-      "score": 1.79,
-      "parts": [
-        {
-          "gid": "dc6e30f9",
-          "name": "Prinsessa Ruusunen, op. 22: No. 17. Perhoisvalssi",
-          "deezer": [75801692],
           "score": 100.0
         }
       ]
@@ -182927,7 +182910,7 @@
       "gid": "1d607671",
       "composer_gid": "cf70e8e8-224b-4abe-b87b-9b4f096f4b7b",
       "name": "Pictures From Finland, op. 24",
-      "type": "piano",
+      "type": "orchestral",
       "begin_year": 1908,
       "end_year": 1908,
       "score": 1.75,
@@ -201564,7 +201547,7 @@
       "gid": "44f2ee7e",
       "composer_gid": "788c380d-247b-42f0-b7a9-64881e1f0fd9",
       "name": "Adagio con variazioni",
-      "type": "orchestral",
+      "type": "concerto",
       "begin_year": 1921,
       "end_year": 1921,
       "score": 2.71,
@@ -250418,23 +250401,6 @@
           "gid": "74a7c9cc",
           "name": "Der Rosenkavalier, zweite Walzerfolge for orchestra, TrV 227a",
           "deezer": [66756825],
-          "score": 100.0
-        }
-      ]
-    },
-    {
-      "gid": "351988dc",
-      "composer_gid": "4cb43d82-824e-4034-b03d-1a98f36f6e16",
-      "name": "Der Rosenkavalier: erste Walzerfolge, TrV 227c, AV 139",
-      "type": "opera",
-      "begin_year": null,
-      "end_year": 1944,
-      "score": 2.4,
-      "parts": [
-        {
-          "gid": "351988dc",
-          "name": "Der Rosenkavalier: erste Walzerfolge, TrV 227c, AV 139",
-          "deezer": [1762409637],
           "score": 100.0
         }
       ]

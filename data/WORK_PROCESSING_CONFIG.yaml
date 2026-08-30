@@ -328,6 +328,7 @@ excluded_works:
   '81687c4d-2cc5-304f-9ae1-33e8555f7ef8': 'Swan Lake'
   'afea14ed-4f9c-4344-a6c4-18e22d8130f1': 'Sæle jolekveld'
   'be4bf7f3-bfb8-46b6-a1d0-ce301d558956': 'Ode To Joy'
+  '351988dc-f04c-4c9c-a311-cd5ece243cf9': 'Der Rosenkavalier: erste Walzerfolge, TrV 227c, AV 139'
 
 # --- Work Hierarchy Overrides ---
 # Promote true standalone works out of MusicBrainz container parents.

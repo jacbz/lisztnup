@@ -393,6 +393,8 @@ composer_specific_rules:
   'Bizet, Georges':
     orchestral:
       - L'Arlésienne|Carmen Suite|Jeux d'enfants|Scènes bohémiennes
+    chamber:
+      - Jeux d'enfants
     piano:
       - Chants du Rhin|nocturne
       - Variations chromatiques
@@ -1990,6 +1992,8 @@ composer_specific_rules:
     vocal:
       - Super flumina Babylonis|Lamentationum
   'Palmgren, Selim':
+    orchestral:
+      - Pictures From Finland
     piano:
       - Poppelit|Spring|The Preludes|Nocturne in Three Scenes|Pictures From Finland|Sonata in D minor|Three Piano Pieces
       - Youth
@@ -2245,6 +2249,8 @@ composer_specific_rules:
       - Sei pezzi
     orchestral:
       - Trittico botticelliano|Ancient Airs|Belkis|Impressione brasiliane|Rossiniana|The Birds
+    concerto:
+      - Adagio con variazioni
   'Richards, David':
     vocal:
       - Cymru Fach

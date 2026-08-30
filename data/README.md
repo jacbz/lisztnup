@@ -16,6 +16,15 @@ You will need the following primary data dumps:
 
 Make sure you have sufficient disk space.
 
+### Python Environment
+
+The pipeline scripts need Python 3.9+ and the packages in `requirements.txt`:
+
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+```
+
 #### Setting Up PostgreSQL
 
 You can use the MusicBrainz Docker setup or setup PostgreSQL manually. Here's how to do it manually:

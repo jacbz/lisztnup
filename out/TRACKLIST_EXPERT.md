@@ -1648,6 +1648,7 @@
 | `0c00dc59` | Haydn – Piano Trios, Hob. XV:27-29 | * Piano Trio in C major, Hob. XV:27: I. Allegro<br>* Piano Trio in C major, Hob. XV:27: II. Andante<br>* Piano Trio in C major, Hob. XV:27: III. Presto | 1797 |
 | `b800dd41` | Haydn – Septem Verba Christi in Cruce, Hob. XX:1 | * I. L'introduzione. Maestoso ed Adagio<br>* III. Sonata II. Grave e Cantabile<br>* IX. Il Terremoto. Presto con tutta la forza | 1786 |
 | `c5f89522` | Haydn – Sinfonia Concertante for Violin, Cello, Oboe & Bassoon in B-flat major, Hob. I:105 | * I. Allegro<br>* II. Andante<br>* III. Allegro con spirito | 1792 |
+| `c8cf44da` | Haydn – Sonata no. 11 in B-flat major, Hob. XVI:2 | * I. Moderato<br>* II. Largo<br>* III. Menuet | 1760 |
 | `e38e4e80` | Haydn – Sonata no. 13 in G major, Hob. XVI:6 | * I. Allegro<br>* II. Minuet<br>* IV. Finale: Allegro molto | 1760‑1766 |
 | `f58c3966` | Haydn – Sonata no. 30 in D major, Hob. XVI:19 | * I. Moderato<br>* II. Andante<br>* III. Finale - Allegro assai | 1767 |
 | `689cecda` | Haydn – Sonata no. 31 in A-flat major, Hob. XVI:46 | * I. Allegro moderato<br>* II. Adagio<br>* III. Finale - Presto | 1767‑1770 |
@@ -3453,7 +3454,6 @@
 | `8a385dbd` | Strauss – Champagner Polka, op. 211 | * Champagner Polka, op. 211 | 1858 |
 | `840f637a` | Strauss – Delirien Waltz, op. 212 | * Delirien Waltz, op. 212 | 1867 |
 | `74a7c9cc` | Strauss – Der Rosenkavalier, zweite Walzerfolge for orchestra, TrV 227a | * Der Rosenkavalier, zweite Walzerfolge for orchestra, TrV 227a | 1910‑1911 |
-| `351988dc` | Strauss – Der Rosenkavalier: erste Walzerfolge, TrV 227c, AV 139 | * Der Rosenkavalier: erste Walzerfolge, TrV 227c, AV 139 | 1944 |
 | `f2d0754e` | Strauss – Der Zigeunerbaron | * Ouvertüre | 1885 |
 | `65c78abb` | Strauss – Die Bajadere. Polka Schnell, op. 351 | * Die Bajadere. Polka Schnell, op. 351 | 1871 |
 | `88504b20` | Strauss – Die Fledermaus | * Overture | 1874 |

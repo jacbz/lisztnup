@@ -114,7 +114,8 @@ COUNTRY_REGION_MAP: Dict[str, str] = {
 }
 
 # Per-composer country overrides by full GID (alpha-2).
-# Used for dissolved states (Soviet Union) and composers with null MusicBrainz area.
+# Used for dissolved states (Soviet Union), composers with null MusicBrainz area,
+# and expatriates whose MusicBrainz area is where they settled, not their nationality.
 COUNTRY_COMPOSER_MAP: Dict[str, str] = {
     # Soviet Union
     "c74a60bb-7f8b-4d73-90d0-c993861b8779": "AM",  # Babajanian, Arno
@@ -128,6 +129,8 @@ COUNTRY_COMPOSER_MAP: Dict[str, str] = {
     # Null area
     "0e3cc8e1-7bfe-4110-830e-dca6e8e6a999": "SI",  # Gallus, Jacobus
     "9a99004f-87b1-4598-b049-ff79d9993357": "GB",  # Richards, David
+    # Expatriates (MusicBrainz area records residence, not nationality)
+    "456596a9-1d4f-4b47-b4e0-ac402ca672b0": "FI",  # Saariaho, Kaija
 }
 
 # Deezer IDs excluded via external configuration files (loaded in main)
@@ -518,7 +521,7 @@ class MusicbrainzProcessor:
         """Normalizes all composer countries to ISO 3166-1 alpha-2 codes.
 
         Resolution order:
-        1. Per-composer GID override (dissolved states, null areas)
+        1. Per-composer GID override (dissolved states, null areas, expatriates)
         2. Historical region mapping (England → GB, etc.)
         3. pycountry lookup for standard country names
         """
