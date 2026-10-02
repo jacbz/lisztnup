@@ -85,7 +85,7 @@ Five difficulty levels (Beginner → Expert) with pre-configured filters. Genera
 
 ### Daily Challenge
 
-The daily challenge uses a global German-calendar month schedule, flipping for everyone at 00:00 Europe/Berlin without server storage. Fixed dates reserve composer birthdays, national days, and Women’s Day; monthly filler excludes some tracklists, repeating allowed filler only when the month needs more days.
+The daily challenge uses a global German-calendar month schedule, flipping for everyone at 00:00 Europe/Berlin without server storage. Fixed dates reserve composer birthdays, national days, and Women’s Day; monthly filler excludes some tracklists, repeating allowed filler only when the month needs more days. A tracklist may anchor several dates (e.g. `germany` for DE and AT). Anchors are validated for every month at dev load; in prod an invalid anchor is skipped, never fatal.
 
 ### Custom Tracklists
 

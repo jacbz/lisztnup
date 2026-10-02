@@ -49,34 +49,45 @@ function getDaysInUtcMonth(year: number, month: number): number {
 	return new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
 }
 
-function validateAnchorsForMonth(
-	anchors: readonly DailyChallengeAnchor[],
-	monthNumber: number
-): void {
-	const monthlyAnchors = anchors.filter((anchor) => anchor.month === monthNumber);
-	const seenDays = new Set<number>();
-	const seenTracklists = new Set<string>();
+/**
+ * Checks the whole anchor table (every month, not just the current one) so a bad entry surfaces
+ * immediately instead of when its month arrives. Returns human-readable problems; empty when valid.
+ * The same tracklist may be anchored several times (e.g. `germany` for both DE and AT national days).
+ */
+export function findDailyChallengeAnchorProblems(
+	candidates: readonly DailyChallengeCandidate[],
+	anchors: readonly DailyChallengeAnchor[]
+): string[] {
+	const problems: string[] = [];
+	const candidateIds = new Set(candidates.map((candidate) => candidate.id));
+	const seenDates = new Set<string>();
 
-	for (const anchor of monthlyAnchors) {
-		if (seenDays.has(anchor.day)) {
-			throw new Error(`Daily challenge anchors conflict on day ${monthNumber}-${anchor.day}`);
+	for (const { month, day, tracklistId } of anchors) {
+		const date = `${month}-${day}`;
+		// Leap year so Feb 29 counts as a real date; it is simply skipped in other years.
+		if (!Number.isInteger(month) || month < 1 || month > 12) {
+			problems.push(`Anchor ${date} (${tracklistId}) has an invalid month`);
+		} else if (!Number.isInteger(day) || day < 1 || day > getDaysInUtcMonth(2024, month - 1)) {
+			problems.push(`Anchor ${date} (${tracklistId}) has an invalid day`);
 		}
-		if (seenTracklists.has(anchor.tracklistId)) {
-			throw new Error(
-				`Daily challenge tracklist ${anchor.tracklistId} is anchored more than once in month ${monthNumber}`
-			);
+		if (!candidateIds.has(tracklistId)) {
+			problems.push(`Anchor ${date} references unknown tracklist ${tracklistId}`);
 		}
-
-		seenDays.add(anchor.day);
-		seenTracklists.add(anchor.tracklistId);
+		if (seenDates.has(date)) {
+			problems.push(`Multiple anchors on ${date}`);
+		}
+		seenDates.add(date);
 	}
+
+	return problems;
 }
 
 /**
  * Builds a deterministic UTC schedule for the month of `date`.
  *
- * Fixed themed dates are reserved first, then the remaining days are filled from the rotation pool.
- * If the month has more open days than rotation candidates, filler candidates repeat deterministically.
+ * Fixed themed dates are reserved first, then the remaining days are filled from the rotation pool
+ * (falling back to all candidates if it is empty). If the month has more open days than rotation
+ * candidates, filler candidates repeat deterministically.
  */
 export function buildDailyChallengeSchedule<T extends DailyChallengeCandidate>(
 	candidates: readonly T[],
@@ -84,43 +95,33 @@ export function buildDailyChallengeSchedule<T extends DailyChallengeCandidate>(
 	date = new Date(),
 	rotationCandidates: readonly T[] = candidates
 ): DailyChallengeScheduleEntry<T>[] {
+	const fillerPool = rotationCandidates.length > 0 ? rotationCandidates : candidates;
 	const year = date.getUTCFullYear();
 	const month = date.getUTCMonth();
 	const daysInMonth = getDaysInUtcMonth(year, month);
 	const schedule = new Array<DailyChallengeScheduleEntry<T> | null>(daysInMonth).fill(null);
 	const usedCandidateIds = new Set<string>();
 	const monthNumber = month + 1;
-	validateAnchorsForMonth(anchors, monthNumber);
 
-	const monthlyAnchors = anchors.filter((anchor) => anchor.month === monthNumber);
-
-	for (const anchor of monthlyAnchors) {
+	// Invalid anchors are skipped rather than thrown so a config mistake can never take down the
+	// home screen; `findDailyChallengeAnchorProblems` is what reports them.
+	for (const anchor of anchors) {
+		if (anchor.month !== monthNumber) continue;
 		const candidate = candidates.find((item) => item.id === anchor.tracklistId);
-		if (!candidate) {
-			throw new Error(`Daily challenge anchor references unknown tracklist ${anchor.tracklistId}`);
-		}
-
 		const dayIndex = anchor.day - 1;
-		if (dayIndex < 0 || dayIndex >= schedule.length) continue;
-		if (schedule[dayIndex] !== null) {
-			throw new Error(`Daily challenge anchor collision on day ${monthNumber}-${anchor.day}`);
-		}
-		if (usedCandidateIds.has(candidate.id)) {
-			throw new Error(
-				`Daily challenge tracklist ${anchor.tracklistId} is anchored more than once in month ${monthNumber}`
-			);
-		}
+		if (!candidate || dayIndex < 0 || dayIndex >= schedule.length) continue;
+		if (schedule[dayIndex] !== null) continue;
 
 		schedule[dayIndex] = { tracklist: candidate, cause: anchor.cause };
 		usedCandidateIds.add(candidate.id);
 	}
 
 	const remainingCandidates = seededShuffle(
-		rotationCandidates.filter((item) => !usedCandidateIds.has(item.id)),
+		fillerPool.filter((item) => !usedCandidateIds.has(item.id)),
 		hashString(`${year}-${String(monthNumber).padStart(2, '0')}`)
 	);
 	const repeatCandidates = seededShuffle(
-		rotationCandidates,
+		fillerPool,
 		hashString(`${year}-${String(monthNumber).padStart(2, '0')}-repeat`)
 	);
 

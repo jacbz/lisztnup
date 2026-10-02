@@ -1,7 +1,9 @@
 import { DEFAULT_TRACKLISTS } from '$lib/data/defaultTracklists';
 import type { DefaultTracklist } from '$lib/types';
+import { dev } from '$app/environment';
 import {
 	buildDailyChallengeSchedule,
+	findDailyChallengeAnchorProblems,
 	type DailyChallengeAnchor,
 	type DailyChallengeScheduleEntry
 } from './dailyChallengeSchedule';
@@ -42,7 +44,7 @@ const DAILY_CHALLENGE_ANCHORS: DailyChallengeAnchor[] = [
 	{ month: 5, day: 7, tracklistId: 'tchaikovsky', cause: 'birthday' },
 	{ month: 5, day: 17, tracklistId: 'scandinavia', cause: 'nationalDay' }, // NO
 	{ month: 6, day: 2, tracklistId: 'italy', cause: 'nationalDay' }, // IT
-	{ month: 6, day: 6, tracklistId: 'scandinavia', cause: 'nationalDay' }, // SE (DK ommitted on day before)
+	{ month: 6, day: 6, tracklistId: 'scandinavia', cause: 'nationalDay' }, // SE (DK omitted on day before)
 	{ month: 6, day: 12, tracklistId: 'russia', cause: 'nationalDay' }, // RU
 	{ month: 7, day: 4, tracklistId: 'usa', cause: 'nationalDay' }, // US
 	{ month: 7, day: 14, tracklistId: 'france', cause: 'nationalDay' }, // FR
@@ -54,6 +56,18 @@ const DAILY_CHALLENGE_ANCHORS: DailyChallengeAnchor[] = [
 	{ month: 12, day: 6, tracklistId: 'scandinavia', cause: 'nationalDay' }, // FI
 	{ month: 12, day: 17, tracklistId: 'beethoven', cause: 'birthday' }
 ];
+
+// Validate every month at load so a bad anchor fails loudly in dev, not when its month arrives.
+// In prod invalid anchors are skipped, never fatal.
+const anchorProblems = findDailyChallengeAnchorProblems(
+	DAILY_ANCHOR_CANDIDATES,
+	DAILY_CHALLENGE_ANCHORS
+);
+if (anchorProblems.length > 0) {
+	const message = `Invalid daily challenge anchors:\n${anchorProblems.join('\n')}`;
+	if (dev) throw new Error(message);
+	console.error(message);
+}
 
 /** Backwards-compatible alias for the daily challenge calendar date helper. */
 export const getTodayDateString = getGermanDateString;
